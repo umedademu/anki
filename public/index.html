@@ -7,16 +7,76 @@
       name="description"
       content="毎日の学習と復習を支える学習用アプリ Anki"
     />
-    <title>Anki | 学習用アプリ</title>
+    <title>Anki | 逆一問一答</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
+    <script src="/config.js" defer></script>
+    <script src="/app.js" defer></script>
   </head>
   <body>
-    <main class="page">
-      <section class="hero" aria-labelledby="app-title">
-        <p class="eyebrow">Learning companion</p>
-        <h1 id="app-title">Anki</h1>
-        <p class="tagline">毎日の学びを、シンプルに。</p>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
+      <div class="subject-name" id="subject-name">世界史</div>
+    </header>
+
+    <main class="page" id="app" aria-live="polite">
+      <section class="loading-panel" id="loading-panel">
+        <p class="eyebrow">逆一問一答</p>
+        <h1>学習データを準備しています</h1>
+        <p>少しだけお待ちください。</p>
+      </section>
+
+      <section class="study-shell is-hidden" id="study-shell">
+        <div class="progress-row">
+          <span id="term-progress">用語 1 / 100</span>
+          <span id="question-progress">質問 1 / 4</span>
+        </div>
+        <div class="progress-track" aria-hidden="true">
+          <span id="progress-bar"></span>
+        </div>
+
+        <article class="term-card">
+          <p class="eyebrow">今回の用語</p>
+          <h1 id="term">新石器革命</h1>
+          <div class="term-details" id="term-details"></div>
+        </article>
+
+        <article class="question-card" id="question-card">
+          <div class="question-heading">
+            <span class="question-number" id="question-number">質問 1</span>
+            <span class="axis-badge" id="question-axis">定義</span>
+          </div>
+          <h2 id="question-text"></h2>
+
+          <div class="answer is-hidden" id="answer-panel">
+            <p class="answer-label">答え</p>
+            <p id="answer-text"></p>
+          </div>
+
+          <button class="primary-button" id="question-action" type="button">
+            答えを見る
+          </button>
+        </article>
+
+        <article class="summary-card is-hidden" id="summary-card">
+          <p class="eyebrow">知識をつなげる</p>
+          <h2>統合説明</h2>
+          <p class="integrated-question" id="integrated-question"></p>
+          <p class="integrated-answer" id="integrated-answer"></p>
+          <div class="keywords" id="keywords"></div>
+          <button class="primary-button" id="next-term" type="button">
+            次の用語へ
+          </button>
+        </article>
+      </section>
+
+      <section class="error-panel is-hidden" id="error-panel">
+        <p class="eyebrow">読み込みエラー</p>
+        <h1>学習データを読み込めませんでした</h1>
+        <p id="error-message"></p>
+        <button class="secondary-button" id="retry-button" type="button">
+          もう一度試す
+        </button>
       </section>
     </main>
   </body>

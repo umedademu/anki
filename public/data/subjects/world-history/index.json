@@ -1,0 +1,1 @@
+{"id":"world-history","title":"世界史","description":"用語から複数の問いをたどり、最後に知識を統合する世界史学習データ","version":"6f24300ce117","termCount":100,"questionCount":400,"chunks":[{"number":1,"path":"subjects/world-history/chunks/0001.json","count":50,"firstTerm":"新石器革命","lastTerm":"アステカ王国"},{"number":2,"path":"subjects/world-history/chunks/0002.json","count":50,"firstTerm":"インカ帝国","lastTerm":"ソ連崩壊"}]}

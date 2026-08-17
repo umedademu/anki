@@ -1,0 +1,9 @@
+{
+  "name": "anki-learning-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:data": "node scripts/build-learning-data.mjs",
+    "check": "node --check public/app.js && node --check scripts/build-learning-data.mjs && node scripts/test-variable-questions.mjs && node scripts/verify-learning-data.mjs"
+  }
+}

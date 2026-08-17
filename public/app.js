@@ -4,6 +4,8 @@ const elements = {
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
+  shuffleToggle: document.querySelector("#shuffle-toggle"),
+  shuffleLabel: document.querySelector("#shuffle-label"),
   subjectName: document.querySelector("#subject-name"),
   termProgress: document.querySelector("#term-progress"),
   questionProgress: document.querySelector("#question-progress"),
@@ -26,11 +28,14 @@ const elements = {
 const state = {
   subject: null,
   chunkIndex: 0,
+  chunkOrder: [],
+  chunkOrderPosition: 0,
   terms: [],
   termIndex: 0,
   completedTerms: 0,
   questionIndex: 0,
   answerVisible: false,
+  shuffleEnabled: false,
 };
 
 function getConfig() {
@@ -54,6 +59,15 @@ async function fetchJson(relativePath) {
   return response.json();
 }
 
+function shuffled(values) {
+  const result = [...values];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1));
+    [result[index], result[randomIndex]] = [result[randomIndex], result[index]];
+  }
+  return result;
+}
+
 function showOnly(panel) {
   [elements.loadingPanel, elements.studyShell, elements.errorPanel].forEach(
     (candidate) => candidate.classList.toggle("is-hidden", candidate !== panel),
@@ -64,8 +78,23 @@ async function loadChunk(index) {
   const chunk = state.subject.chunks[index];
   const payload = await fetchJson(chunk.path);
   state.chunkIndex = index;
-  state.terms = payload.terms;
+  state.terms = state.shuffleEnabled ? shuffled(payload.terms) : payload.terms;
   state.termIndex = 0;
+}
+
+function updateShuffleButton() {
+  elements.shuffleToggle.setAttribute("aria-pressed", String(state.shuffleEnabled));
+  elements.shuffleLabel.textContent = `シャッフル：${state.shuffleEnabled ? "オン" : "オフ"}`;
+}
+
+async function startLearningCycle() {
+  const regularOrder = state.subject.chunks.map((_, index) => index);
+  state.chunkOrder = state.shuffleEnabled ? shuffled(regularOrder) : regularOrder;
+  state.chunkOrderPosition = 0;
+  state.completedTerms = 0;
+  state.questionIndex = 0;
+  state.answerVisible = false;
+  await loadChunk(state.chunkOrder[0]);
 }
 
 function currentTerm() {
@@ -123,11 +152,11 @@ async function moveToNextTerm() {
 
   if (state.termIndex + 1 < state.terms.length) {
     state.termIndex += 1;
-  } else if (state.chunkIndex + 1 < state.subject.chunks.length) {
-    await loadChunk(state.chunkIndex + 1);
+  } else if (state.chunkOrderPosition + 1 < state.chunkOrder.length) {
+    state.chunkOrderPosition += 1;
+    await loadChunk(state.chunkOrder[state.chunkOrderPosition]);
   } else {
-    state.completedTerms = 0;
-    await loadChunk(0);
+    await startLearningCycle();
   }
 
   renderQuestion();
@@ -146,14 +175,10 @@ async function start() {
     }
 
     state.subject = await fetchJson(subjectEntry.indexPath);
-    state.chunkIndex = 0;
-    state.termIndex = 0;
-    state.completedTerms = 0;
-    state.questionIndex = 0;
-    state.answerVisible = false;
-    await loadChunk(0);
+    await startLearningCycle();
 
     elements.subjectName.textContent = state.subject.title;
+    updateShuffleButton();
     renderQuestion();
     showOnly(elements.studyShell);
   } catch (error) {
@@ -184,6 +209,23 @@ elements.nextTerm.addEventListener("click", async () => {
     await moveToNextTerm();
   } finally {
     elements.nextTerm.disabled = false;
+  }
+});
+
+elements.shuffleToggle.addEventListener("click", async () => {
+  elements.shuffleToggle.disabled = true;
+  state.shuffleEnabled = !state.shuffleEnabled;
+  updateShuffleButton();
+
+  try {
+    await startLearningCycle();
+    renderQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  } catch (error) {
+    elements.errorMessage.textContent = error.message;
+    showOnly(elements.errorPanel);
+  } finally {
+    elements.shuffleToggle.disabled = false;
   }
 });
 

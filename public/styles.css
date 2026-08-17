@@ -68,6 +68,46 @@ button {
   gap: 22px;
 }
 
+.study-toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.shuffle-button {
+  display: inline-flex;
+  min-height: 40px;
+  padding: 8px 13px;
+  align-items: center;
+  gap: 7px;
+  color: #4c5d52;
+  background: rgb(255 255 255 / 72%);
+  border: 1px solid rgb(34 80 53 / 14%);
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 0.76rem;
+  font-weight: 800;
+  transition:
+    color 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.shuffle-button[aria-pressed="true"] {
+  color: #fff;
+  background: #2b6747;
+  border-color: #2b6747;
+}
+
+.shuffle-button:focus-visible {
+  outline: 3px solid rgb(64 128 91 / 35%);
+  outline-offset: 3px;
+}
+
+.shuffle-button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
 .progress-row {
   display: flex;
   justify-content: space-between;

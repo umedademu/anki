@@ -9,7 +9,6 @@ const elements = {
   questionProgress: document.querySelector("#question-progress"),
   progressBar: document.querySelector("#progress-bar"),
   term: document.querySelector("#term"),
-  termDetails: document.querySelector("#term-details"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
   questionAxis: document.querySelector("#question-axis"),
@@ -73,17 +72,6 @@ function currentTerm() {
   return state.terms[state.termIndex];
 }
 
-function renderTermDetails(term) {
-  const details = [term.level, term.unit, term.period, term.region].filter(Boolean);
-  elements.termDetails.replaceChildren(
-    ...details.map((detail) => {
-      const span = document.createElement("span");
-      span.textContent = detail;
-      return span;
-    }),
-  );
-}
-
 function renderQuestion() {
   const term = currentTerm();
   const question = term.questions[state.questionIndex];
@@ -91,7 +79,6 @@ function renderQuestion() {
   const questionNumber = state.questionIndex + 1;
 
   elements.term.textContent = term.term;
-  renderTermDetails(term);
   elements.termProgress.textContent = `用語 ${termNumber} / ${state.subject.termCount}`;
   elements.questionProgress.textContent = `質問 ${questionNumber} / ${term.questions.length}`;
   elements.progressBar.style.width = `${(questionNumber / term.questions.length) * 100}%`;

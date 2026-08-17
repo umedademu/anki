@@ -131,14 +131,6 @@ p {
   letter-spacing: -0.04em;
 }
 
-.term-details {
-  display: flex;
-  margin-top: 22px;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.term-details span,
 .keywords span {
   padding: 7px 11px;
   color: #56645c;

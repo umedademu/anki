@@ -31,7 +31,7 @@ button {
 
 .site-header {
   display: flex;
-  width: min(100% - 32px, 920px);
+  width: min(100% - 32px, 1080px);
   min-height: 72px;
   margin: 0 auto;
   align-items: center;
@@ -58,7 +58,7 @@ button {
 }
 
 .page {
-  width: min(100% - 32px, 760px);
+  width: min(100% - 32px, 1080px);
   margin: 0 auto;
   padding: 32px 0 72px;
 }
@@ -166,9 +166,9 @@ p {
 .term-card h1 {
   margin: 0;
   color: #173d29;
-  font-size: clamp(2.2rem, 8vw, 4.5rem);
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  line-height: 1.25;
+  letter-spacing: -0.03em;
 }
 
 .keywords span {
@@ -207,7 +207,14 @@ p {
 }
 
 .question-card h2,
-.summary-card h2,
+.summary-card h2 {
+  margin: 20px 0 28px;
+  color: #202b24;
+  font-size: clamp(1.25rem, 3vw, 1.85rem);
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+}
+
 .loading-panel h1,
 .error-panel h1 {
   margin: 20px 0 28px;
@@ -235,8 +242,8 @@ p {
 .answer p:last-child {
   margin: 0;
   color: #29362e;
-  font-size: 1rem;
-  line-height: 1.8;
+  font-size: clamp(1.05rem, 2vw, 1.18rem);
+  line-height: 1.75;
 }
 
 .primary-button,
@@ -295,6 +302,7 @@ p {
 .integrated-question {
   margin: 0 0 22px;
   color: #4b5a50;
+  font-size: 1.02rem;
   font-weight: 700;
   line-height: 1.75;
 }
@@ -302,8 +310,8 @@ p {
 .integrated-answer {
   margin: 0;
   color: #23342a;
-  font-size: 1.03rem;
-  line-height: 1.95;
+  font-size: clamp(1.05rem, 2vw, 1.18rem);
+  line-height: 1.8;
 }
 
 .keywords {
@@ -329,10 +337,39 @@ p {
   display: none !important;
 }
 
+@media (min-width: 700px) and (orientation: landscape) {
+  .study-shell {
+    grid-template-columns: minmax(220px, 0.82fr) minmax(0, 1.48fr);
+    align-items: start;
+    column-gap: 20px;
+  }
+
+  .study-toolbar,
+  .progress-row,
+  .progress-track {
+    grid-column: 1 / -1;
+  }
+
+  .term-card {
+    display: flex;
+    min-height: 100%;
+    grid-column: 1;
+    grid-row: 4;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .question-card,
+  .summary-card {
+    grid-column: 2;
+    grid-row: 4;
+  }
+}
+
 @media (max-width: 560px) {
   .site-header,
   .page {
-    width: min(100% - 24px, 760px);
+    width: min(100% - 24px, 1080px);
   }
 
   .site-header {
@@ -353,6 +390,93 @@ p {
 
   .progress-row {
     font-size: 0.72rem;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .site-header,
+  .page {
+    width: min(100% - 20px, 1080px);
+  }
+
+  .site-header {
+    min-height: 48px;
+  }
+
+  .brand {
+    font-size: 1.35rem;
+  }
+
+  .subject-name {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .page {
+    padding: 6px 0 24px;
+  }
+
+  .study-shell {
+    gap: 10px 14px;
+  }
+
+  .shuffle-button {
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+
+  .progress-track {
+    margin-top: -4px;
+  }
+
+  .term-card,
+  .question-card,
+  .summary-card {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .eyebrow {
+    margin-bottom: 6px;
+    font-size: 0.62rem;
+  }
+
+  .term-card h1 {
+    font-size: clamp(1.6rem, 4.2vw, 2.25rem);
+  }
+
+  .question-card h2,
+  .summary-card h2 {
+    margin: 12px 0 16px;
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+    line-height: 1.45;
+  }
+
+  .answer {
+    margin-bottom: 14px;
+    padding: 14px;
+  }
+
+  .answer p:last-child,
+  .integrated-answer {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .integrated-question {
+    margin-bottom: 14px;
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  .keywords {
+    margin: 14px 0 18px;
+  }
+
+  .primary-button,
+  .secondary-button {
+    min-height: 44px;
   }
 }
 

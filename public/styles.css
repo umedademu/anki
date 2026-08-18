@@ -166,9 +166,9 @@ p {
 .term-card h1 {
   margin: 0;
   color: #173d29;
-  font-size: clamp(1.9rem, 5vw, 3rem);
-  line-height: 1.25;
-  letter-spacing: -0.03em;
+  font-size: clamp(1.25rem, 3vw, 1.85rem);
+  line-height: 1.5;
+  letter-spacing: -0.02em;
 }
 
 .keywords span {
@@ -449,7 +449,7 @@ p {
   }
 
   .term-card h1 {
-    font-size: clamp(1.6rem, 4.2vw, 2.25rem);
+    font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   }
 
   .question-card h2,

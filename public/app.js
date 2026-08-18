@@ -83,6 +83,34 @@ function renderEmphasizedText(element, text) {
   );
 }
 
+function setContentDensity(element, ...texts) {
+  const length = texts
+    .map((text) => String(text ?? "").replaceAll("**", "").length)
+    .reduce((total, value) => total + value, 0);
+  element.dataset.contentDensity = length >= 88 ? "compact" : length >= 68 ? "dense" : "normal";
+}
+
+function fitTextInsideCard(card, textElement, shouldFit = true) {
+  textElement.style.removeProperty("font-size");
+  textElement.style.removeProperty("line-height");
+
+  if (
+    !shouldFit ||
+    !window.matchMedia("(orientation: landscape) and (max-height: 600px)").matches
+  ) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    let fontSize = Number.parseFloat(window.getComputedStyle(textElement).fontSize);
+    while (card.scrollHeight > card.clientHeight && fontSize > 8) {
+      fontSize -= 0.5;
+      textElement.style.fontSize = `${fontSize}px`;
+      textElement.style.lineHeight = "1.18";
+    }
+  });
+}
+
 function showOnly(panel) {
   [elements.loadingPanel, elements.studyShell, elements.errorPanel].forEach(
     (candidate) => candidate.classList.toggle("is-hidden", candidate !== panel),
@@ -132,6 +160,7 @@ function renderQuestion() {
   elements.questionAxis.textContent = question.label || "確認";
   elements.questionText.textContent = question.prompt;
   renderEmphasizedText(elements.answerText, question.answer);
+  setContentDensity(elements.questionCard, question.prompt, question.answer);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
   const forwardLabel = state.answerVisible
     ? questionNumber === term.questions.length
@@ -143,6 +172,7 @@ function renderQuestion() {
   elements.questionBack.disabled = state.questionIndex === 0;
   elements.questionCard.classList.remove("is-hidden");
   elements.summaryCard.classList.add("is-hidden");
+  fitTextInsideCard(elements.questionCard, elements.answerText, state.answerVisible);
 }
 
 function renderSummary() {
@@ -156,6 +186,12 @@ function renderSummary() {
   elements.integratedQuestion.textContent =
     term.integrated.prompt || `${term.term}について、学んだ内容をつなげて説明してみましょう。`;
   renderEmphasizedText(elements.integratedAnswer, term.integrated.explanation);
+  setContentDensity(
+    elements.summaryCard,
+    term.integrated.prompt,
+    term.integrated.explanation,
+    ...term.integrated.keywords,
+  );
   elements.keywords.replaceChildren(
     ...term.integrated.keywords.map((keyword) => {
       const span = document.createElement("span");
@@ -167,6 +203,7 @@ function renderSummary() {
     state.completedTerms + 1 >= state.subject.termCount ? "最初の用語へ戻る" : "次の用語へ";
   elements.forwardAction.setAttribute("aria-label", forwardLabel);
   elements.forwardAction.title = forwardLabel;
+  fitTextInsideCard(elements.summaryCard, elements.integratedAnswer);
 }
 
 async function moveToNextTerm() {
@@ -273,5 +310,18 @@ elements.shuffleToggle.addEventListener("click", async () => {
 });
 
 elements.retryButton.addEventListener("click", start);
+
+window.addEventListener("resize", () => {
+  if (!state.subject) {
+    return;
+  }
+
+  if (state.showingSummary) {
+    fitTextInsideCard(elements.summaryCard, elements.integratedAnswer);
+    return;
+  }
+
+  fitTextInsideCard(elements.questionCard, elements.answerText, state.answerVisible);
+});
 
 start();

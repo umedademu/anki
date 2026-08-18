@@ -68,6 +68,20 @@ function shuffled(values) {
   return result;
 }
 
+function renderEmphasizedText(element, text) {
+  const parts = String(text ?? "").split("**");
+  element.replaceChildren(
+    ...parts.map((part, index) => {
+      if (index % 2 === 0) {
+        return document.createTextNode(part);
+      }
+      const strong = document.createElement("strong");
+      strong.textContent = part;
+      return strong;
+    }),
+  );
+}
+
 function showOnly(panel) {
   [elements.loadingPanel, elements.studyShell, elements.errorPanel].forEach(
     (candidate) => candidate.classList.toggle("is-hidden", candidate !== panel),
@@ -112,9 +126,9 @@ function renderQuestion() {
   elements.questionProgress.textContent = `質問 ${questionNumber} / ${term.questions.length}`;
   elements.progressBar.style.width = `${(questionNumber / term.questions.length) * 100}%`;
   elements.questionNumber.textContent = `質問 ${questionNumber}`;
-  elements.questionAxis.textContent = question.axis || "確認";
+  elements.questionAxis.textContent = question.label || "確認";
   elements.questionText.textContent = question.prompt;
-  elements.answerText.textContent = question.answer;
+  renderEmphasizedText(elements.answerText, question.answer);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
   elements.questionAction.textContent = state.answerVisible
     ? questionNumber === term.questions.length
@@ -133,9 +147,9 @@ function renderSummary() {
   elements.summaryCard.classList.remove("is-hidden");
   elements.integratedQuestion.textContent =
     term.integrated.prompt || `${term.term}について、学んだ内容をつなげて説明してみましょう。`;
-  elements.integratedAnswer.textContent = term.integrated.explanation;
+  renderEmphasizedText(elements.integratedAnswer, term.integrated.explanation);
   elements.keywords.replaceChildren(
-    ...term.keywords.map((keyword) => {
+    ...term.integrated.keywords.map((keyword) => {
       const span = document.createElement("span");
       span.textContent = keyword;
       return span;

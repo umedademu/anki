@@ -246,6 +246,12 @@ p {
   line-height: 1.75;
 }
 
+.answer strong,
+.integrated-answer strong {
+  color: #1f6845;
+  font-weight: 800;
+}
+
 .primary-button,
 .secondary-button {
   width: 100%;

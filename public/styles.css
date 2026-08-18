@@ -452,8 +452,8 @@ p {
   .page {
     height: 100dvh;
     padding:
-      3px calc(50px + env(safe-area-inset-right)) 3px
-      calc(50px + env(safe-area-inset-left));
+      max(3px, env(safe-area-inset-top)) max(3px, env(safe-area-inset-right))
+      max(3px, env(safe-area-inset-bottom)) max(3px, env(safe-area-inset-left));
     overflow: hidden;
   }
 
@@ -589,31 +589,7 @@ p {
   }
 
   .question-action-dock {
-    top: 0;
-    height: 100dvh;
-    background: none;
-  }
-
-  .question-action-dock .navigation-button {
-    top: max(4px, env(safe-area-inset-top));
-    bottom: max(4px, env(safe-area-inset-bottom));
-    display: flex;
-    width: 42px;
-    min-height: 0;
-    height: auto;
-    padding: 0;
-    align-items: center;
-    justify-content: center;
-    border-radius: 11px;
-    font-size: 1.15rem;
-  }
-
-  #question-back {
-    left: max(4px, env(safe-area-inset-left));
-  }
-
-  #forward-action {
-    right: max(4px, env(safe-area-inset-right));
+    display: none;
   }
 }
 

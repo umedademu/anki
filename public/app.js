@@ -169,7 +169,10 @@ function renderQuestion() {
     : "答えを見る";
   elements.forwardAction.setAttribute("aria-label", forwardLabel);
   elements.forwardAction.title = forwardLabel;
-  elements.questionBack.disabled = state.questionIndex === 0;
+  const backLabel = state.answerVisible ? "回答を隠す" : "一手戻る";
+  elements.questionBack.setAttribute("aria-label", backLabel);
+  elements.questionBack.title = backLabel;
+  elements.questionBack.disabled = state.questionIndex === 0 && !state.answerVisible;
   elements.questionCard.classList.remove("is-hidden");
   elements.summaryCard.classList.add("is-hidden");
   fitTextInsideCard(elements.questionCard, elements.answerText, state.answerVisible);
@@ -183,6 +186,8 @@ function renderSummary() {
   elements.questionCard.classList.add("is-hidden");
   elements.summaryCard.classList.remove("is-hidden");
   elements.questionBack.disabled = false;
+  elements.questionBack.setAttribute("aria-label", "最後の質問の回答へ戻る");
+  elements.questionBack.title = "最後の質問の回答へ戻る";
   elements.integratedQuestion.textContent =
     term.integrated.prompt || `${term.term}について、学んだ内容をつなげて説明してみましょう。`;
   renderEmphasizedText(elements.integratedAnswer, term.integrated.explanation);
@@ -283,6 +288,12 @@ elements.questionBack.addEventListener("click", () => {
     return;
   }
 
+  if (state.answerVisible) {
+    state.answerVisible = false;
+    renderQuestion();
+    return;
+  }
+
   if (state.questionIndex === 0) {
     return;
   }
@@ -290,6 +301,27 @@ elements.questionBack.addEventListener("click", () => {
   state.questionIndex -= 1;
   state.answerVisible = true;
   renderQuestion();
+});
+
+elements.studyShell.addEventListener("click", (event) => {
+  const usesHalfScreenNavigation = window.matchMedia(
+    "(orientation: landscape) and (max-height: 600px)",
+  ).matches;
+
+  if (
+    !usesHalfScreenNavigation ||
+    event.target.closest("button, a, input, select, textarea, label")
+  ) {
+    return;
+  }
+
+  const action = event.clientX < window.innerWidth / 2
+    ? elements.questionBack
+    : elements.forwardAction;
+
+  if (!action.disabled) {
+    action.click();
+  }
 });
 
 elements.shuffleToggle.addEventListener("click", async () => {

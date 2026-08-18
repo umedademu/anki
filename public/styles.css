@@ -68,11 +68,6 @@ button {
   gap: 22px;
 }
 
-.study-toolbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .shuffle-button {
   display: inline-flex;
   min-height: 40px;
@@ -108,12 +103,15 @@ button {
   opacity: 0.65;
 }
 
-.progress-row {
+.term-status {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 12px;
   color: #68746d;
   font-size: 0.78rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .progress-track {
@@ -387,17 +385,16 @@ p {
     column-gap: 20px;
   }
 
-  .study-toolbar,
-  .progress-row,
   .progress-track {
     grid-column: 1 / -1;
+    grid-row: 1;
   }
 
   .term-card {
     display: flex;
     min-height: 100%;
     grid-column: 1;
-    grid-row: 4;
+    grid-row: 2;
     flex-direction: column;
     justify-content: center;
   }
@@ -405,7 +402,7 @@ p {
   .question-card,
   .summary-card {
     grid-column: 2;
-    grid-row: 4;
+    grid-row: 2;
   }
 }
 
@@ -431,7 +428,7 @@ p {
     border-radius: 20px;
   }
 
-  .progress-row {
+  .term-status {
     font-size: 0.72rem;
   }
 }
@@ -462,43 +459,22 @@ p {
 
   .study-shell {
     height: 100%;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    grid-template-rows: 23px 3px auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 3px minmax(0, 1fr);
     align-items: stretch;
-    gap: 3px 8px;
-  }
-
-  .study-toolbar {
-    grid-column: 2;
-    grid-row: 1;
-    justify-content: center;
-  }
-
-  .progress-row {
-    display: contents;
+    gap: 3px;
   }
 
   #term-progress,
   #question-progress {
-    align-self: center;
     font-size: 0.64rem;
     line-height: 1;
-  }
-
-  #term-progress {
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  #question-progress {
-    grid-column: 3;
-    grid-row: 1;
   }
 
   .progress-track {
     height: 3px;
     margin: 0;
-    grid-column: 1 / -1;
+    grid-column: 1;
     grid-row: 2;
   }
 
@@ -509,13 +485,22 @@ p {
   }
 
   .term-card {
+    display: grid;
     min-height: 0;
     padding: 3px 12px;
     animation: none !important;
-    grid-column: 1 / -1;
-    grid-row: 3;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-column: 1;
+    grid-row: 1;
+    align-items: center;
+    gap: 12px;
     border-radius: 10px;
     box-shadow: 0 6px 18px rgb(38 62 45 / 5%);
+  }
+
+  .term-status {
+    justify-content: flex-end;
+    gap: clamp(7px, 1.6vw, 14px);
   }
 
   .question-card,
@@ -524,8 +509,8 @@ p {
     padding: 7px 14px;
     overflow: hidden;
     animation: none !important;
-    grid-column: 1 / -1;
-    grid-row: 4;
+    grid-column: 1;
+    grid-row: 3;
     border-radius: 12px;
     box-shadow: 0 8px 22px rgb(38 62 45 / 6%);
   }

@@ -60,7 +60,7 @@ button {
 .page {
   width: min(100% - 32px, 1080px);
   margin: 0 auto;
-  padding: 32px 0 72px;
+  padding: 32px 0 calc(92px + env(safe-area-inset-bottom));
 }
 
 .study-shell {
@@ -266,6 +266,38 @@ p {
     opacity 160ms ease;
 }
 
+.question-action-dock {
+  position: fixed;
+  z-index: 20;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: calc(84px + env(safe-area-inset-bottom));
+  pointer-events: none;
+  background: linear-gradient(to top, #f3f5f0 68%, rgb(243 245 240 / 0%));
+}
+
+.question-action-dock .navigation-button {
+  position: absolute;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  width: 56px;
+  min-height: 56px;
+  height: 56px;
+  padding: 0;
+  pointer-events: auto;
+  border-radius: 999px;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+#question-back {
+  left: max(12px, env(safe-area-inset-left));
+}
+
+#forward-action {
+  right: max(12px, env(safe-area-inset-right));
+}
+
 .primary-button {
   color: #fff;
   background: #245c3e;
@@ -291,9 +323,14 @@ p {
   outline-offset: 3px;
 }
 
-.primary-button:disabled {
+.primary-button:disabled,
+.secondary-button:disabled {
   cursor: wait;
   opacity: 0.65;
+}
+
+.secondary-button:disabled {
+  cursor: default;
 }
 
 .summary-card {
@@ -419,11 +456,29 @@ p {
   }
 
   .page {
-    padding: 6px 0 24px;
+    padding: 6px 0 calc(76px + env(safe-area-inset-bottom));
   }
 
   .study-shell {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
     gap: 10px 14px;
+  }
+
+  .study-toolbar,
+  .progress-row,
+  .progress-track,
+  .term-card,
+  .question-card,
+  .summary-card {
+    grid-column: 1;
+  }
+
+  .term-card,
+  .question-card,
+  .summary-card {
+    min-height: 0;
+    grid-row: auto;
   }
 
   .shuffle-button {
@@ -483,6 +538,17 @@ p {
   .primary-button,
   .secondary-button {
     min-height: 44px;
+  }
+
+  .question-action-dock {
+    height: calc(68px + env(safe-area-inset-bottom));
+  }
+
+  .question-action-dock .navigation-button {
+    bottom: max(8px, env(safe-area-inset-bottom));
+    width: 48px;
+    min-height: 48px;
+    height: 48px;
   }
 }
 

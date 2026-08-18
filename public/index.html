@@ -61,11 +61,29 @@
             <p class="answer-label">答え</p>
             <p id="answer-text"></p>
           </div>
-
-          <button class="primary-button" id="question-action" type="button">
-            答えを見る
-          </button>
         </article>
+
+        <nav class="question-action-dock" aria-label="学習操作">
+          <button
+            class="secondary-button navigation-button"
+            id="question-back"
+            type="button"
+            aria-label="前の質問へ戻る"
+            title="前の質問へ戻る"
+            disabled
+          >
+            <span aria-hidden="true">←</span>
+          </button>
+          <button
+            class="primary-button navigation-button"
+            id="forward-action"
+            type="button"
+            aria-label="答えを見る"
+            title="答えを見る"
+          >
+            <span aria-hidden="true">→</span>
+          </button>
+        </nav>
 
         <article class="summary-card is-hidden" id="summary-card">
           <p class="eyebrow">知識をつなげる</p>
@@ -73,9 +91,6 @@
           <p class="integrated-question" id="integrated-question"></p>
           <p class="integrated-answer" id="integrated-answer"></p>
           <div class="keywords" id="keywords"></div>
-          <button class="primary-button" id="next-term" type="button">
-            次の用語へ
-          </button>
         </article>
       </section>
 

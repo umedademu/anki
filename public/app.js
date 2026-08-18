@@ -17,12 +17,12 @@ const elements = {
   questionText: document.querySelector("#question-text"),
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
-  questionAction: document.querySelector("#question-action"),
+  questionBack: document.querySelector("#question-back"),
+  forwardAction: document.querySelector("#forward-action"),
   summaryCard: document.querySelector("#summary-card"),
   integratedQuestion: document.querySelector("#integrated-question"),
   integratedAnswer: document.querySelector("#integrated-answer"),
   keywords: document.querySelector("#keywords"),
-  nextTerm: document.querySelector("#next-term"),
 };
 
 const state = {
@@ -35,6 +35,7 @@ const state = {
   completedTerms: 0,
   questionIndex: 0,
   answerVisible: false,
+  showingSummary: false,
   shuffleEnabled: false,
 };
 
@@ -108,6 +109,7 @@ async function startLearningCycle() {
   state.completedTerms = 0;
   state.questionIndex = 0;
   state.answerVisible = false;
+  state.showingSummary = false;
   await loadChunk(state.chunkOrder[0]);
 }
 
@@ -116,6 +118,7 @@ function currentTerm() {
 }
 
 function renderQuestion() {
+  state.showingSummary = false;
   const term = currentTerm();
   const question = term.questions[state.questionIndex];
   const termNumber = Math.min(state.completedTerms + 1, state.subject.termCount);
@@ -130,21 +133,26 @@ function renderQuestion() {
   elements.questionText.textContent = question.prompt;
   renderEmphasizedText(elements.answerText, question.answer);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
-  elements.questionAction.textContent = state.answerVisible
+  const forwardLabel = state.answerVisible
     ? questionNumber === term.questions.length
       ? "統合説明へ"
       : "次の質問へ"
     : "答えを見る";
+  elements.forwardAction.setAttribute("aria-label", forwardLabel);
+  elements.forwardAction.title = forwardLabel;
+  elements.questionBack.disabled = state.questionIndex === 0;
   elements.questionCard.classList.remove("is-hidden");
   elements.summaryCard.classList.add("is-hidden");
 }
 
 function renderSummary() {
+  state.showingSummary = true;
   const term = currentTerm();
   elements.questionProgress.textContent = "全質問 完了";
   elements.progressBar.style.width = "100%";
   elements.questionCard.classList.add("is-hidden");
   elements.summaryCard.classList.remove("is-hidden");
+  elements.questionBack.disabled = false;
   elements.integratedQuestion.textContent =
     term.integrated.prompt || `${term.term}について、学んだ内容をつなげて説明してみましょう。`;
   renderEmphasizedText(elements.integratedAnswer, term.integrated.explanation);
@@ -155,14 +163,17 @@ function renderSummary() {
       return span;
     }),
   );
-  elements.nextTerm.textContent =
+  const forwardLabel =
     state.completedTerms + 1 >= state.subject.termCount ? "最初の用語へ戻る" : "次の用語へ";
+  elements.forwardAction.setAttribute("aria-label", forwardLabel);
+  elements.forwardAction.title = forwardLabel;
 }
 
 async function moveToNextTerm() {
   state.completedTerms += 1;
   state.questionIndex = 0;
   state.answerVisible = false;
+  state.showingSummary = false;
 
   if (state.termIndex + 1 < state.terms.length) {
     state.termIndex += 1;
@@ -201,7 +212,18 @@ async function start() {
   }
 }
 
-elements.questionAction.addEventListener("click", () => {
+elements.forwardAction.addEventListener("click", async () => {
+  if (state.showingSummary) {
+    elements.forwardAction.disabled = true;
+    elements.questionBack.disabled = true;
+    try {
+      await moveToNextTerm();
+    } finally {
+      elements.forwardAction.disabled = false;
+    }
+    return;
+  }
+
   if (!state.answerVisible) {
     state.answerVisible = true;
     renderQuestion();
@@ -217,13 +239,20 @@ elements.questionAction.addEventListener("click", () => {
   }
 });
 
-elements.nextTerm.addEventListener("click", async () => {
-  elements.nextTerm.disabled = true;
-  try {
-    await moveToNextTerm();
-  } finally {
-    elements.nextTerm.disabled = false;
+elements.questionBack.addEventListener("click", () => {
+  if (state.showingSummary) {
+    state.answerVisible = true;
+    renderQuestion();
+    return;
   }
+
+  if (state.questionIndex === 0) {
+    return;
+  }
+
+  state.questionIndex -= 1;
+  state.answerVisible = true;
+  renderQuestion();
 });
 
 elements.shuffleToggle.addEventListener("click", async () => {

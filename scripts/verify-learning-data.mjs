@@ -47,15 +47,15 @@ const generatedQuestionCount = Object.values(generatedCounts).reduce(
   0,
 );
 
-if (generatedTerms.length !== 55 || generatedQuestionCount !== 300) {
+if (generatedTerms.length !== 300 || generatedQuestionCount !== 1770) {
   throw new Error(
     `新しい用語集の件数が一致しません: ${generatedTerms.length}用語・${generatedQuestionCount}問`,
   );
 }
 if (
-  generatedCounts.beginner !== 165 ||
-  generatedCounts.reverse !== 80 ||
-  generatedCounts.integrated !== 55
+  generatedCounts.beginner !== 900 ||
+  generatedCounts.reverse !== 570 ||
+  generatedCounts.integrated !== 300
 ) {
   throw new Error(
     `段階別件数が一致しません: ${JSON.stringify(generatedCounts)}`,
@@ -82,11 +82,10 @@ if (subject.sourceFile !== path.basename(sourcePath)) {
   throw new Error("科目情報の元ファイル名が一致しません。");
 }
 if (
-  subject.chunks.length !== 2 ||
-  subject.chunks[0].count !== 50 ||
-  subject.chunks[1].count !== 5
+  subject.chunks.length !== 6 ||
+  subject.chunks.some((chunk) => chunk.count !== 50)
 ) {
-  throw new Error("55用語が50語と5語へ正しく分割されていません。");
+  throw new Error("300用語が50語ずつ6個へ正しく分割されていません。");
 }
 
 const questionIds = generatedTerms.flatMap((term) =>
@@ -99,5 +98,5 @@ if (new Set(questionIds).size !== questionIds.length) {
 }
 
 console.log(
-  "検証完了: 55用語・300問（短答165、逆一問一答80、統合説明55）・新形式",
+  "検証完了: 300用語・1770問（短答900、逆一問一答570、統合説明300）・新形式",
 );

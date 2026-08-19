@@ -255,7 +255,9 @@ function renderQuestion() {
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.stageName.textContent = stageLabels[question.stage];
   elements.termTitle.textContent = hidesTerm ? "通常の一問一答" : term.term;
-  elements.termReading.textContent = hidesTerm ? "答えを見るまで関連用語は表示されません" : term.reading;
+  elements.termReading.textContent = hidesTerm
+    ? "問題文とは別の用語欄と読みは、答えを見るまで表示されません"
+    : term.reading;
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
   elements.questionNumber.textContent = `出題 ${state.answeredThisSession + 1}`;

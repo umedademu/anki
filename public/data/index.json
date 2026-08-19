@@ -1,1 +1,1 @@
-{"schemaVersion":2,"version":"f063fe7b8d2a","subjects":[{"id":"world-history","title":"世界史","datasetLabel":"大学受験・最重要","termCount":100,"questionCount":333,"indexPath":"subjects/world-history/index.json"}]}
+{"schemaVersion":3,"version":"02ff19bda95a","subjects":[{"id":"world-history","title":"世界史","datasetLabel":"大学受験世界史・通史骨格55用語（全300問）","termCount":55,"questionCount":300,"indexPath":"subjects/world-history/index.json"}]}

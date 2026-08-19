@@ -1002,7 +1002,7 @@ integrated
 例：
 
 ```text
-world_history_university_essential_100.csv
+world_history_university_core_55_terms_300_questions.csv
 ```
 
 ファイル生成機能がない場合は、CSV全体を1つの`csv`コードブロック内に出力してください。

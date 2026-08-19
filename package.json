@@ -4,6 +4,6 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-learning-data.mjs",
-    "check": "node --check public/app.js && node --check scripts/build-learning-data.mjs && node scripts/test-variable-questions.mjs && node scripts/verify-learning-data.mjs"
+    "check": "node --check public/app.js && node --check public/learning-engine.js && node --check scripts/build-learning-data.mjs && node scripts/test-variable-questions.mjs && node scripts/test-app-contract.mjs && node scripts/verify-learning-data.mjs"
   }
 }

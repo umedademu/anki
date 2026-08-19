@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="毎日の学習と復習を支える学習用アプリ Anki"
+      content="短答から逆一問一答、統合説明へ段階的に進む世界史学習アプリ"
     />
-    <title>Anki | 逆一問一答</title>
+    <title>Anki | 三段階世界史学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/config.js" defer></script>
-    <script src="/app.js" defer></script>
+    <script src="/app.js" type="module"></script>
   </head>
   <body>
     <header class="site-header">
@@ -21,73 +21,97 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">逆一問一答</p>
+        <p class="eyebrow">三段階学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="study-shell is-hidden" id="study-shell">
-        <article class="term-card">
-          <h1 id="term">新石器革命</h1>
-          <div class="term-status" aria-label="学習状況">
-            <span id="term-progress">用語 1 / 100</span>
-            <button
-              class="shuffle-button"
-              id="shuffle-toggle"
-              type="button"
-              aria-pressed="false"
-            >
-              <span aria-hidden="true">⇄</span>
-              <span id="shuffle-label">シャッフル：オフ</span>
-            </button>
-            <span id="question-progress">質問 1 / 3</span>
+        <p class="unlock-notice is-hidden" id="unlock-notice" role="status"></p>
+
+        <article class="context-card" id="context-card">
+          <div class="context-heading">
+            <p class="stage-name" id="stage-name">基礎 一問一答</p>
+            <div class="study-controls">
+              <button
+                class="compact-button"
+                id="shuffle-toggle"
+                type="button"
+                aria-pressed="false"
+              >
+                <span aria-hidden="true">⇄</span>
+                <span id="shuffle-label">シャッフル：オフ</span>
+              </button>
+              <button class="compact-button" id="reset-progress" type="button">
+                記録を初期化
+              </button>
+            </div>
+          </div>
+
+          <h1 id="term-title">通常の一問一答</h1>
+          <p class="term-reading" id="term-reading">
+            答えを見るまで関連用語は表示されません
+          </p>
+
+          <div class="progress-summary" aria-label="学習状況">
+            <span id="overall-progress">習得 0 / 300問</span>
+            <span id="term-progress">完全習得 0 / 55語</span>
+            <span id="queue-progress">この回の残り 165問</span>
           </div>
         </article>
+
         <div class="progress-track" aria-hidden="true">
           <span id="progress-bar"></span>
         </div>
 
         <article class="question-card" id="question-card">
           <div class="question-heading">
-            <span class="question-number" id="question-number">質問 1</span>
-            <span class="axis-badge" id="question-axis">時期</span>
+            <span class="question-number" id="question-number">出題 1</span>
+            <span class="axis-badge" id="question-axis">用語の特定</span>
           </div>
           <h2 id="question-text"></h2>
 
           <div class="answer is-hidden" id="answer-panel">
             <p class="answer-label">答え</p>
             <p id="answer-text"></p>
+            <p class="accepted-answer is-hidden" id="accepted-panel">
+              別解：<span id="accepted-text"></span>
+            </p>
+            <p class="answer-note is-hidden" id="answer-note"></p>
           </div>
+
+          <aside class="mastery-panel is-hidden" id="mastery-panel">
+            <p class="mastery-term" id="mastery-term"></p>
+            <div class="mastery-stages" id="mastery-stages"></div>
+            <p class="current-streak" id="current-streak"></p>
+          </aside>
         </article>
 
-        <nav class="question-action-dock" aria-label="学習操作">
-          <button
-            class="secondary-button navigation-button"
-            id="question-back"
-            type="button"
-            aria-label="前の質問へ戻る"
-            title="前の質問へ戻る"
-            disabled
-          >
-            <span aria-hidden="true">←</span>
+        <nav class="action-dock" id="action-dock" aria-label="学習操作">
+          <button class="primary-button reveal-action" id="reveal-action" type="button">
+            答えを見る
           </button>
-          <button
-            class="primary-button navigation-button"
-            id="forward-action"
-            type="button"
-            aria-label="答えを見る"
-            title="答えを見る"
-          >
-            <span aria-hidden="true">→</span>
-          </button>
+          <div class="rating-actions is-hidden" id="rating-actions">
+            <button class="secondary-button" id="again-action" type="button">
+              まだ
+              <small>もう一度出題</small>
+            </button>
+            <button class="primary-button" id="remembered-action" type="button">
+              覚えた
+              <small>習得へ進める</small>
+            </button>
+          </div>
         </nav>
 
-        <article class="summary-card is-hidden" id="summary-card">
-          <p class="eyebrow">知識をつなげる</p>
-          <h2>統合説明</h2>
-          <p class="integrated-question" id="integrated-question"></p>
-          <p class="integrated-answer" id="integrated-answer"></p>
-          <div class="keywords" id="keywords"></div>
+        <article class="completion-card is-hidden" id="completion-card">
+          <p class="eyebrow">全段階完了</p>
+          <h1 id="completion-title">すべての用語と問題を完全習得しました</h1>
+          <p>
+            短答、逆一問一答、統合説明のすべてを習得済みです。最初から学び直す場合だけ、記録を初期化してください。
+          </p>
+          <button class="secondary-button" id="completion-reset" type="button">
+            最初から学び直す
+          </button>
         </article>
       </section>
 

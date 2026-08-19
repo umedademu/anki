@@ -2,11 +2,12 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  countQuestionsByStage,
   findSourcePath,
-  getQuestionNumbers,
-  normalizeTerm,
+  groupTerms,
   parseCsv,
   toObjects,
+  validateTerms,
 } from "./build-learning-data.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -15,54 +16,88 @@ const readJson = async (relativePath) =>
   JSON.parse(await readFile(path.join(dataRoot, relativePath), "utf8"));
 
 const sourcePath = await findSourcePath();
-const sourceRows = toObjects(parseCsv(await readFile(sourcePath, "utf8")));
-const questionNumbers = getQuestionNumbers(Object.keys(sourceRows[0]));
-const expectedTerms = sourceRows.map((row, index) =>
-  normalizeTerm(row, index, questionNumbers),
+const expectedTerms = groupTerms(
+  toObjects(parseCsv(await readFile(sourcePath, "utf8"))),
 );
-const expectedQuestionCount = expectedTerms.reduce(
-  (sum, term) => sum + term.questions.length,
+validateTerms(expectedTerms);
+const expectedCounts = countQuestionsByStage(expectedTerms);
+const expectedQuestionCount = Object.values(expectedCounts).reduce(
+  (sum, count) => sum + count,
   0,
 );
 
 const catalog = await readJson("index.json");
-if (catalog.schemaVersion !== 2 || catalog.subjects.length !== 1) {
-  throw new Error("科目一覧の形式が想定どおりではありません。");
+if (catalog.schemaVersion !== 3 || catalog.subjects.length !== 1) {
+  throw new Error("科目一覧が三段階学習用の新形式ではありません。");
 }
 
 const subject = await readJson(catalog.subjects[0].indexPath);
+if (subject.schemaVersion !== 3 || subject.masteryTarget !== 2) {
+  throw new Error("科目情報の形式または習得条件が想定どおりではありません。");
+}
 const chunks = await Promise.all(subject.chunks.map((chunk) => readJson(chunk.path)));
-if (chunks.some((chunk) => chunk.schemaVersion !== 2)) {
+if (chunks.some((chunk) => chunk.schemaVersion !== 3)) {
   throw new Error("旧形式の分割データが残っています。");
 }
 
 const generatedTerms = chunks.flatMap((chunk) => chunk.terms);
-const generatedQuestionCount = generatedTerms.reduce(
-  (sum, term) => sum + term.questions.length,
+const generatedCounts = countQuestionsByStage(generatedTerms);
+const generatedQuestionCount = Object.values(generatedCounts).reduce(
+  (sum, count) => sum + count,
   0,
 );
 
-if (generatedTerms.length !== subject.termCount) {
-  throw new Error(`用語数が科目情報と一致しません: ${generatedTerms.length}/${subject.termCount}`);
-}
-if (generatedQuestionCount !== subject.questionCount) {
+if (generatedTerms.length !== 55 || generatedQuestionCount !== 300) {
   throw new Error(
-    `質問数が科目情報と一致しません: ${generatedQuestionCount}/${subject.questionCount}`,
+    `新しい用語集の件数が一致しません: ${generatedTerms.length}用語・${generatedQuestionCount}問`,
   );
 }
 if (
+  generatedCounts.beginner !== 165 ||
+  generatedCounts.reverse !== 80 ||
+  generatedCounts.integrated !== 55
+) {
+  throw new Error(
+    `段階別件数が一致しません: ${JSON.stringify(generatedCounts)}`,
+  );
+}
+if (
+  generatedTerms.length !== subject.termCount ||
+  generatedQuestionCount !== subject.questionCount ||
+  JSON.stringify(generatedCounts) !== JSON.stringify(subject.questionCounts)
+) {
+  throw new Error("生成データの件数が科目情報と一致しません。");
+}
+if (
   generatedTerms.length !== expectedTerms.length ||
-  generatedQuestionCount !== expectedQuestionCount
+  generatedQuestionCount !== expectedQuestionCount ||
+  JSON.stringify(generatedCounts) !== JSON.stringify(expectedCounts)
 ) {
   throw new Error("元CSVと生成データの件数が一致しません。");
 }
 if (JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms)) {
-  throw new Error("元CSVの内容が生成データへ正確に反映されていません。");
+  throw new Error("元CSVの問題・回答・出典が生成データへ正確に反映されていません。");
 }
 if (subject.sourceFile !== path.basename(sourcePath)) {
   throw new Error("科目情報の元ファイル名が一致しません。");
 }
+if (
+  subject.chunks.length !== 2 ||
+  subject.chunks[0].count !== 50 ||
+  subject.chunks[1].count !== 5
+) {
+  throw new Error("55用語が50語と5語へ正しく分割されていません。");
+}
+
+const questionIds = generatedTerms.flatMap((term) =>
+  Object.values(term.stages).flatMap((questions) =>
+    questions.map((question) => question.id),
+  ),
+);
+if (new Set(questionIds).size !== questionIds.length) {
+  throw new Error("生成後の問題IDが重複しています。");
+}
 
 console.log(
-  `検証完了: ${generatedTerms.length}用語・${generatedQuestionCount}問・新形式`,
+  "検証完了: 55用語・300問（短答165、逆一問一答80、統合説明55）・新形式",
 );

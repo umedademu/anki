@@ -30,9 +30,10 @@ if (!html.includes('<script src="/app.js" type="module"></script>')) {
 if (
   !html.includes('id="setup-panel"') ||
   !html.includes('id="start-study"') ||
+  !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.004") ||
-  !changelog.includes("v0.004")
+  !html.includes("v0.005") ||
+  !changelog.includes("v0.005")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }

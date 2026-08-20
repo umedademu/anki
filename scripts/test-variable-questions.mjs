@@ -192,6 +192,27 @@ if (
   throw new Error("未学習時に短答問題だけを出題できませんでした。");
 }
 
+const reverseOnlyQueue = createQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  "reverse",
+);
+const integratedOnlyQueue = createQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  "integrated",
+);
+if (
+  reverseOnlyQueue.length !== 3 ||
+  reverseOnlyQueue.some((task) => task.stage !== "reverse") ||
+  integratedOnlyQueue.length !== 2 ||
+  integratedOnlyQueue.some((task) => task.stage !== "integrated")
+) {
+  throw new Error("選択した問題スタイルだけを直接出題できませんでした。");
+}
+
 if (
   !shouldHideTerm(terms[0].stages.beginner[0], false) ||
   shouldHideTerm(terms[0].stages.beginner[0], true) ||
@@ -310,6 +331,20 @@ if (overall.masteredTerms !== 1 || overall.totalTerms !== 2) {
   throw new Error("用語全体の習得数を正しく集計できませんでした。");
 }
 
+const integratedOverall = getOverallMastery(
+  terms,
+  progress,
+  masteryTarget,
+  ["integrated"],
+);
+if (
+  integratedOverall.masteredQuestions !== 1 ||
+  integratedOverall.totalQuestions !== 2 ||
+  integratedOverall.masteredTerms !== 1
+) {
+  throw new Error("選択した問題スタイルだけの習得数を集計できませんでした。");
+}
+
 console.log(
-  "三段階学習検証完了: 学習範囲選択・解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
+  "三段階学習検証完了: 学習範囲・問題スタイル選択・解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
 );

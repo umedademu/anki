@@ -30,6 +30,7 @@ const elements = {
   macroRegionFilter: document.querySelector("#macro-region-filter"),
   regionDetailFilter: document.querySelector("#region-detail-filter"),
   categoryFilter: document.querySelector("#category-filter"),
+  questionStyleFilter: document.querySelector("#question-style-filter"),
   setupShuffle: document.querySelector("#setup-shuffle"),
   selectionSummary: document.querySelector("#selection-summary"),
   startStudy: document.querySelector("#start-study"),
@@ -79,6 +80,7 @@ const state = {
   currentTask: null,
   answerVisible: false,
   shuffleEnabled: false,
+  selectedStage: "",
   answeredThisSession: 0,
   unlockMessage: "",
 };
@@ -251,11 +253,24 @@ function selectedFilters() {
   };
 }
 
-function countQuestions(terms) {
+const questionStyleLabels = {
+  "": "三段階すべて",
+  beginner: "通常の一問一答",
+  reverse: "逆一問一答",
+  integrated: "統合説明",
+};
+
+function activeStages() {
+  return learningStages.includes(state.selectedStage)
+    ? [state.selectedStage]
+    : learningStages;
+}
+
+function countQuestions(terms, stages = learningStages) {
   return terms.reduce(
     (total, term) =>
       total +
-      learningStages.reduce(
+      stages.reduce(
         (termTotal, stage) => termTotal + (term.stages[stage]?.length ?? 0),
         0,
       ),
@@ -288,7 +303,11 @@ function updateRegionDetailOptions(resetSelection = false) {
 
 function updateSetupPreview() {
   const terms = filterTermsBySelection(state.allTerms, selectedFilters());
-  const questions = countQuestions(terms);
+  const selectedStage = elements.questionStyleFilter.value;
+  const stages = learningStages.includes(selectedStage)
+    ? [selectedStage]
+    : learningStages;
+  const questions = countQuestions(terms, stages);
   const beginnerQuestions = terms.reduce(
     (total, term) => total + (term.stages.beginner?.length ?? 0),
     0,
@@ -297,7 +316,9 @@ function updateSetupPreview() {
   elements.selectionSummary.textContent =
     terms.length === 0
       ? "条件に合う用語がありません。選択を変更してください。"
-      : `${terms.length}語・${questions}問（開始時は基礎 ${beginnerQuestions}問）`;
+      : selectedStage
+        ? `${terms.length}語・${questions}問（${questionStyleLabels[selectedStage]}）`
+        : `${terms.length}語・${questions}問（開始時は通常の一問一答 ${beginnerQuestions}問）`;
 }
 
 function configureSetup() {
@@ -317,13 +338,16 @@ function updateOverallProgress() {
     state.terms,
     state.progress,
     state.subject.masteryTarget,
+    activeStages(),
   );
   const percent =
     mastery.totalQuestions === 0
       ? 0
       : (mastery.masteredQuestions / mastery.totalQuestions) * 100;
   elements.overallProgress.textContent = `習得 ${mastery.masteredQuestions} / ${mastery.totalQuestions}問`;
-  elements.termProgress.textContent = `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}語`;
+  elements.termProgress.textContent = state.selectedStage
+    ? `このスタイル習得 ${mastery.masteredTerms} / ${mastery.totalTerms}語`
+    : `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}語`;
   elements.progressBar.style.width = `${percent}%`;
 }
 
@@ -358,7 +382,7 @@ function renderQuestion() {
   elements.actionDock.classList.remove("is-hidden");
 
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
-  elements.stageName.textContent = stageLabels[question.stage];
+  elements.stageName.textContent = questionStyleLabels[question.stage];
   elements.termTitle.textContent = hidesTerm ? "通常の一問一答" : term.term;
   elements.termReading.textContent = hidesTerm
     ? "問題文とは別の用語欄と読みは、答えを見るまで表示されません"
@@ -433,6 +457,7 @@ function buildQueue() {
     state.terms,
     state.progress,
     state.subject.masteryTarget,
+    state.selectedStage,
   );
   state.queue = state.shuffleEnabled ? shuffleTasks(tasks) : tasks;
 }
@@ -454,11 +479,9 @@ function rateCurrentQuestion(remembered) {
     return;
   }
 
-  const stageBefore = getTermStage(
-    term,
-    state.progress,
-    state.subject.masteryTarget,
-  );
+  const stageBefore = state.selectedStage
+    ? null
+    : getTermStage(term, state.progress, state.subject.masteryTarget);
   rateQuestion(
     state.progress,
     question.id,
@@ -477,25 +500,27 @@ function rateCurrentQuestion(remembered) {
     state.queue = scheduleRetryTask(state.queue, state.currentTask, remembered);
   }
 
-  const stageAfter = getTermStage(
-    term,
-    state.progress,
-    state.subject.masteryTarget,
-  );
-  if (stageAfter !== stageBefore) {
-    if (stageAfter === "complete") {
-      state.unlockMessage = `${term.term}を完全習得しました。`;
-    } else {
-      state.unlockMessage = `${term.term}の「${stageLabels[stageAfter]}」を解放しました。`;
-      state.queue = enqueueUniqueTasks(
-        state.queue,
-        getTasksForCurrentTermStage(
-          term,
-          state.progress,
-          state.subject.masteryTarget,
-        ),
-        [state.currentTask.questionId],
-      );
+  if (!state.selectedStage) {
+    const stageAfter = getTermStage(
+      term,
+      state.progress,
+      state.subject.masteryTarget,
+    );
+    if (stageAfter !== stageBefore) {
+      if (stageAfter === "complete") {
+        state.unlockMessage = `${term.term}を完全習得しました。`;
+      } else {
+        state.unlockMessage = `${term.term}の「${stageLabels[stageAfter]}」を解放しました。`;
+        state.queue = enqueueUniqueTasks(
+          state.queue,
+          getTasksForCurrentTermStage(
+            term,
+            state.progress,
+            state.subject.masteryTarget,
+          ),
+          [state.currentTask.questionId],
+        );
+      }
     }
   }
 
@@ -544,6 +569,7 @@ function beginStudy() {
       ),
     ),
   );
+  state.selectedStage = elements.questionStyleFilter.value;
   state.shuffleEnabled = elements.setupShuffle.checked;
   saveShufflePreference();
   buildQueue();
@@ -552,8 +578,11 @@ function beginStudy() {
   state.answeredThisSession = 0;
   state.unlockMessage = "";
 
-  const questionCount = countQuestions(state.terms);
-  elements.completionTitle.textContent = `${state.terms.length}語・${questionCount}問を完全習得しました`;
+  const questionCount = countQuestions(state.terms, activeStages());
+  const selectedStyle = questionStyleLabels[state.selectedStage];
+  elements.completionTitle.textContent = state.selectedStage
+    ? `${selectedStyle}：${state.terms.length}語・${questionCount}問を習得しました`
+    : `${state.terms.length}語・${questionCount}問を完全習得しました`;
   renderQuestion();
   showOnly(elements.studyShell);
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -601,6 +630,7 @@ elements.macroRegionFilter.addEventListener("change", () => {
 });
 elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
 elements.categoryFilter.addEventListener("change", updateSetupPreview);
+elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
 elements.setupShuffle.addEventListener("change", updateSetupPreview);
 elements.startStudy.addEventListener("click", beginStudy);
 

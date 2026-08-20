@@ -134,15 +134,23 @@ export function getTermMastery(term, progress, masteryTarget) {
   );
 }
 
-export function getOverallMastery(terms, progress, masteryTarget) {
+export function getOverallMastery(
+  terms,
+  progress,
+  masteryTarget,
+  stages = learningStages,
+) {
   const allQuestions = terms.flatMap((term) =>
-    learningStages.flatMap((stage) => term.stages[stage] ?? []),
+    stages.flatMap((stage) => term.stages[stage] ?? []),
   );
   const masteredQuestions = allQuestions.filter((question) =>
     isQuestionMastered(progress, question.id, masteryTarget),
   ).length;
   const masteredTerms = terms.filter(
-    (term) => getTermStage(term, progress, masteryTarget) === "complete",
+    (term) =>
+      stages.every((stage) =>
+        isStageMastered(term, stage, progress, masteryTarget),
+      ),
   ).length;
   return {
     masteredQuestions,
@@ -152,7 +160,32 @@ export function getOverallMastery(terms, progress, masteryTarget) {
   };
 }
 
-export function createQuestionQueue(terms, progress, masteryTarget) {
+export function createQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  selectedStage = "",
+) {
+  if (learningStages.includes(selectedStage)) {
+    const largestStageSize = Math.max(
+      0,
+      ...terms.map((term) => term.stages[selectedStage]?.length ?? 0),
+    );
+    const tasks = [];
+    for (let questionIndex = 0; questionIndex < largestStageSize; questionIndex += 1) {
+      for (const term of terms) {
+        const question = term.stages[selectedStage]?.[questionIndex];
+        if (
+          question &&
+          !isQuestionMastered(progress, question.id, masteryTarget)
+        ) {
+          tasks.push({ termId: term.id, questionId: question.id, stage: selectedStage });
+        }
+      }
+    }
+    return tasks;
+  }
+
   const tasks = [];
   const currentStages = new Map(
     terms.map((term) => [term.id, getTermStage(term, progress, masteryTarget)]),

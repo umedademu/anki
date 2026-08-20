@@ -32,13 +32,13 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.012") ||
-  !changelog.includes("v0.012")
+  !html.includes("v0.013") ||
+  !changelog.includes("v0.013")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.012"') ||
+  !html.includes('href="/styles.css?v=0.013"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -52,6 +52,19 @@ if (
   !app.includes("const minimumFontSize = 15")
 ) {
   throw new Error("回答・解説の見出し撤去または横向きの文字サイズ調整が不完全です。");
+}
+if (
+  !html.includes('id="back-action"') ||
+  !html.includes('id="next-action"') ||
+  html.includes('id="reveal-action"') ||
+  !app.includes("createRatingUndoSnapshot") ||
+  !app.includes("restoreRatingUndoSnapshot") ||
+  !app.includes("function goBackOneStep()") ||
+  !app.includes("performRightSideAction(true)") ||
+  !styles.includes(".back-action::before") ||
+  !styles.includes(".next-action,\n  .again-action")
+) {
+  throw new Error("一手戻しまたは横向きの左右タップ操作が揃っていません。");
 }
 if (
   !app.includes(

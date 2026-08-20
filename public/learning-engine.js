@@ -279,6 +279,56 @@ export function rateQuestion(
   return progress.questions[questionId];
 }
 
+function cloneTask(task) {
+  return task ? { ...task } : null;
+}
+
+export function createRatingUndoSnapshot({
+  progress,
+  questionId,
+  queue,
+  currentTask,
+  answerVisible,
+  answeredThisSession,
+  unlockMessage,
+}) {
+  const previousQuestionRecord = progress.questions[questionId];
+  return {
+    type: "rating",
+    questionId,
+    previousQuestionRecord: previousQuestionRecord
+      ? { ...previousQuestionRecord }
+      : null,
+    previousUpdatedAt: progress.updatedAt,
+    queue: queue.map((task) => cloneTask(task)),
+    currentTask: cloneTask(currentTask),
+    answerVisible: Boolean(answerVisible),
+    answeredThisSession,
+    unlockMessage,
+  };
+}
+
+export function restoreRatingUndoSnapshot(progress, snapshot) {
+  if (!snapshot || snapshot.type !== "rating" || !snapshot.questionId) {
+    return null;
+  }
+  if (snapshot.previousQuestionRecord) {
+    progress.questions[snapshot.questionId] = {
+      ...snapshot.previousQuestionRecord,
+    };
+  } else {
+    delete progress.questions[snapshot.questionId];
+  }
+  progress.updatedAt = snapshot.previousUpdatedAt ?? null;
+  return {
+    queue: snapshot.queue.map((task) => cloneTask(task)),
+    currentTask: cloneTask(snapshot.currentTask),
+    answerVisible: Boolean(snapshot.answerVisible),
+    answeredThisSession: snapshot.answeredThisSession,
+    unlockMessage: snapshot.unlockMessage,
+  };
+}
+
 export function shuffleTasks(tasks, random = Math.random) {
   const result = [...tasks];
   for (let index = result.length - 1; index > 0; index -= 1) {

@@ -1,6 +1,7 @@
 import {
   createEmptyProgress,
   createQuestionQueue,
+  createRatingUndoSnapshot,
   deserializeProgress,
   enqueueUniqueTasks,
   filterTermsBySelection,
@@ -13,6 +14,7 @@ import {
   isQuestionMastered,
   learningStages,
   rateQuestion,
+  restoreRatingUndoSnapshot,
   scheduleRetryTask,
   serializeProgress,
   shuffleTasks,
@@ -58,8 +60,9 @@ const elements = {
   masteryPanel: document.querySelector("#mastery-panel"),
   masteryStages: document.querySelector("#mastery-stages"),
   actionDock: document.querySelector("#action-dock"),
-  revealAction: document.querySelector("#reveal-action"),
-  ratingActions: document.querySelector("#rating-actions"),
+  actionButtons: document.querySelector("#action-buttons"),
+  backAction: document.querySelector("#back-action"),
+  nextAction: document.querySelector("#next-action"),
   againAction: document.querySelector("#again-action"),
   rememberedAction: document.querySelector("#remembered-action"),
   completionCard: document.querySelector("#completion-card"),
@@ -82,7 +85,12 @@ const state = {
   selectedStage: "",
   answeredThisSession: 0,
   unlockMessage: "",
+  history: [],
+  answerRevealedAt: 0,
 };
+
+const historyLimit = 200;
+const halfScreenRatingDelay = 400;
 
 function getConfig() {
   const config = window.ANKI_CONFIG ?? {};
@@ -185,6 +193,90 @@ function saveProgress() {
   } catch {
     // 保存できない環境でも、その場の学習は続けられるようにする。
   }
+}
+
+function pushHistory(entry) {
+  state.history.push(entry);
+  if (state.history.length > historyLimit) {
+    state.history.shift();
+  }
+}
+
+function renderActionControls() {
+  const hasQuestion = Boolean(state.currentTask);
+  const canGoBack = state.history.length > 0;
+  const showsRatingActions = hasQuestion && state.answerVisible;
+  elements.actionDock.classList.toggle("is-answer-visible", showsRatingActions);
+  elements.actionDock.classList.toggle("is-back-only", !hasQuestion);
+  elements.actionDock.classList.toggle("is-hidden", !hasQuestion && !canGoBack);
+  elements.backAction.disabled = !canGoBack;
+  elements.nextAction.classList.toggle(
+    "is-hidden",
+    !hasQuestion || state.answerVisible,
+  );
+  elements.againAction.classList.toggle("is-hidden", !showsRatingActions);
+  elements.rememberedAction.classList.toggle("is-hidden", !showsRatingActions);
+}
+
+function revealCurrentAnswer() {
+  if (!state.currentTask || state.answerVisible) {
+    return;
+  }
+  pushHistory({
+    type: "reveal",
+    currentTask: { ...state.currentTask },
+  });
+  state.answerVisible = true;
+  state.answerRevealedAt = window.performance.now();
+  renderQuestion();
+}
+
+function goBackOneStep() {
+  const snapshot = state.history.pop();
+  if (!snapshot) {
+    renderActionControls();
+    return;
+  }
+
+  if (snapshot.type === "reveal") {
+    state.currentTask = snapshot.currentTask
+      ? { ...snapshot.currentTask }
+      : state.currentTask;
+    state.answerVisible = false;
+  } else if (snapshot.type === "rating") {
+    const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
+    if (!restored) {
+      renderActionControls();
+      return;
+    }
+    state.queue = restored.queue;
+    state.currentTask = restored.currentTask;
+    state.answerVisible = restored.answerVisible;
+    state.answeredThisSession = restored.answeredThisSession;
+    state.unlockMessage = restored.unlockMessage;
+    saveProgress();
+  }
+
+  state.answerRevealedAt = 0;
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function performRightSideAction(fromHalfScreen = false) {
+  if (!state.currentTask) {
+    return;
+  }
+  if (!state.answerVisible) {
+    revealCurrentAnswer();
+    return;
+  }
+  if (
+    fromHalfScreen &&
+    window.performance.now() - state.answerRevealedAt < halfScreenRatingDelay
+  ) {
+    return;
+  }
+  rateCurrentQuestion(false);
 }
 
 function loadShufflePreference() {
@@ -390,7 +482,7 @@ function renderQuestion() {
   elements.stageName.textContent = questionStyleLabels[question.stage];
   elements.termTitle.textContent = hidesTerm ? "通常の一問一答" : term.term;
   elements.termReading.textContent = hidesTerm
-    ? "問題文とは別の用語欄と読みは、答えを見るまで表示されません"
+    ? "問題文とは別の用語欄と読みは、回答を表示するまで表示されません"
     : term.reading;
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
@@ -425,8 +517,7 @@ function renderQuestion() {
     renderTermMastery(term);
   }
 
-  elements.revealAction.classList.toggle("is-hidden", state.answerVisible);
-  elements.ratingActions.classList.toggle("is-hidden", !state.answerVisible);
+  renderActionControls();
   elements.queueProgress.textContent = `この回の残り ${state.queue.length + 1}問`;
   elements.unlockNotice.textContent = state.unlockMessage;
   elements.unlockNotice.classList.toggle("is-hidden", !state.unlockMessage);
@@ -452,8 +543,8 @@ function renderCompletion() {
   state.currentTask = null;
   elements.contextCard.classList.add("is-hidden");
   elements.questionCard.classList.add("is-hidden");
-  elements.actionDock.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
+  renderActionControls();
   updateOverallProgress();
 }
 
@@ -467,16 +558,6 @@ function buildQueue() {
   state.queue = state.shuffleEnabled ? shuffleTasks(tasks) : tasks;
 }
 
-function takeNextTask() {
-  if (state.queue.length === 0) {
-    buildQueue();
-  }
-  state.currentTask = state.queue.shift() ?? null;
-  state.answerVisible = false;
-  renderQuestion();
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
 function rateCurrentQuestion(remembered) {
   const term = currentTerm();
   const question = currentQuestion();
@@ -487,6 +568,17 @@ function rateCurrentQuestion(remembered) {
   const stageBefore = state.selectedStage
     ? null
     : getTermStage(term, state.progress, state.subject.masteryTarget);
+  pushHistory(
+    createRatingUndoSnapshot({
+      progress: state.progress,
+      questionId: question.id,
+      queue: state.queue,
+      currentTask: state.currentTask,
+      answerVisible: state.answerVisible,
+      answeredThisSession: state.answeredThisSession,
+      unlockMessage: state.unlockMessage,
+    }),
+  );
   rateQuestion(
     state.progress,
     question.id,
@@ -536,6 +628,7 @@ function rateCurrentQuestion(remembered) {
     state.currentTask = state.queue.shift() ?? null;
   }
   state.answerVisible = false;
+  state.answerRevealedAt = 0;
   renderQuestion();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -552,6 +645,8 @@ function resetAllProgress() {
   state.queue = [];
   state.currentTask = null;
   state.answerVisible = false;
+  state.history = [];
+  state.answerRevealedAt = 0;
   updateSetupPreview();
   elements.selectionSummary.textContent = `学習記録を初期化しました。${elements.selectionSummary.textContent}`;
 }
@@ -583,6 +678,8 @@ function beginStudy() {
   state.answerVisible = false;
   state.answeredThisSession = 0;
   state.unlockMessage = "";
+  state.history = [];
+  state.answerRevealedAt = 0;
 
   const questionCount = countQuestions(state.terms, activeStages());
   const selectedStyle = questionStyleLabels[state.selectedStage];
@@ -620,6 +717,8 @@ async function start() {
     state.answerVisible = false;
     state.answeredThisSession = 0;
     state.unlockMessage = "";
+    state.history = [];
+    state.answerRevealedAt = 0;
 
     elements.subjectName.textContent = state.subject.title;
     configureSetup();
@@ -640,11 +739,8 @@ elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
 elements.setupShuffle.addEventListener("change", updateSetupPreview);
 elements.startStudy.addEventListener("click", beginStudy);
 
-elements.revealAction.addEventListener("click", () => {
-  state.answerVisible = true;
-  renderQuestion();
-});
-
+elements.backAction.addEventListener("click", goBackOneStep);
+elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.againAction.addEventListener("click", () => rateCurrentQuestion(false));
 elements.rememberedAction.addEventListener("click", () => rateCurrentQuestion(true));
 
@@ -665,27 +761,30 @@ elements.studyShell.addEventListener("click", (event) => {
   ) {
     return;
   }
-  if (!state.answerVisible && event.clientX >= window.innerWidth / 2) {
-    elements.revealAction.click();
-  } else if (state.answerVisible) {
-    (event.clientX < window.innerWidth / 2
-      ? elements.againAction
-      : elements.rememberedAction
-    ).click();
+  if (event.clientX < window.innerWidth / 2) {
+    goBackOneStep();
+  } else {
+    performRightSideAction(true);
   }
 });
 
 window.addEventListener("keydown", (event) => {
-  if (!state.currentTask || event.target.closest("input, textarea, select")) {
+  if (event.target.closest("input, textarea, select") || event.repeat) {
     return;
   }
-  if ((event.key === " " || event.key === "Enter") && !state.answerVisible) {
+  if (event.key === "ArrowLeft") {
     event.preventDefault();
-    elements.revealAction.click();
-  } else if (state.answerVisible && event.key === "ArrowLeft") {
-    elements.againAction.click();
-  } else if (state.answerVisible && event.key === "ArrowRight") {
-    elements.rememberedAction.click();
+    goBackOneStep();
+  } else if (state.currentTask && event.key === "ArrowRight") {
+    event.preventDefault();
+    performRightSideAction();
+  } else if (state.currentTask && (event.key === " " || event.key === "Enter")) {
+    event.preventDefault();
+    if (state.answerVisible) {
+      rateCurrentQuestion(true);
+    } else {
+      revealCurrentAnswer();
+    }
   }
 });
 

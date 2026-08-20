@@ -6,6 +6,7 @@ import {
 import {
   createEmptyProgress,
   createQuestionQueue,
+  createRatingUndoSnapshot,
   deserializeProgress,
   enqueueUniqueTasks,
   filterTermsBySelection,
@@ -14,6 +15,7 @@ import {
   getOverallMastery,
   getTermStage,
   rateQuestion,
+  restoreRatingUndoSnapshot,
   scheduleRetryTask,
   serializeProgress,
   shouldHideTerm,
@@ -258,6 +260,66 @@ if (
   throw new Error("再出題列から同じ問題の重複を除けませんでした。");
 }
 
+const undoProgress = createEmptyProgress();
+rateQuestion(
+  undoProgress,
+  "UNDO-QUESTION",
+  true,
+  masteryTarget,
+  new Date("2026-08-20T00:00:00.000Z"),
+);
+const undoQueue = [retryBaseQueue[0], retryBaseQueue[1]];
+const undoCurrentTask = {
+  termId: "WH-TEST-001",
+  questionId: "UNDO-QUESTION",
+  stage: "beginner",
+};
+const undoSnapshot = createRatingUndoSnapshot({
+  progress: undoProgress,
+  questionId: "UNDO-QUESTION",
+  queue: undoQueue,
+  currentTask: undoCurrentTask,
+  answerVisible: true,
+  answeredThisSession: 7,
+  unlockMessage: "",
+});
+rateQuestion(
+  undoProgress,
+  "UNDO-QUESTION",
+  false,
+  masteryTarget,
+  new Date("2026-08-20T01:00:00.000Z"),
+);
+const restoredUndo = restoreRatingUndoSnapshot(undoProgress, undoSnapshot);
+if (
+  undoProgress.questions["UNDO-QUESTION"].streak !== 1 ||
+  undoProgress.questions["UNDO-QUESTION"].attempts !== 1 ||
+  undoProgress.updatedAt !== "2026-08-20T00:00:00.000Z" ||
+  restoredUndo.queue.map((task) => task.questionId).join(",") !==
+    undoQueue.map((task) => task.questionId).join(",") ||
+  restoredUndo.currentTask.questionId !== "UNDO-QUESTION" ||
+  !restoredUndo.answerVisible ||
+  restoredUndo.answeredThisSession !== 7
+) {
+  throw new Error("評価前の習得記録・出題列・回答表示へ一手戻しできませんでした。");
+}
+
+const newRecordProgress = createEmptyProgress();
+const newRecordSnapshot = createRatingUndoSnapshot({
+  progress: newRecordProgress,
+  questionId: "NEW-QUESTION",
+  queue: [],
+  currentTask: undoCurrentTask,
+  answerVisible: true,
+  answeredThisSession: 0,
+  unlockMessage: "",
+});
+rateQuestion(newRecordProgress, "NEW-QUESTION", true, masteryTarget);
+restoreRatingUndoSnapshot(newRecordProgress, newRecordSnapshot);
+if ("NEW-QUESTION" in newRecordProgress.questions) {
+  throw new Error("初回答の評価を戻したときに新しい習得記録を取り消せませんでした。");
+}
+
 const addedTasks = enqueueUniqueTasks(
   retryBaseQueue,
   [
@@ -346,5 +408,5 @@ if (
 }
 
 console.log(
-  "三段階学習検証完了: 学習範囲・問題スタイル選択・解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
+  "三段階学習検証完了: 学習範囲・問題スタイル選択・解説表示・段階移行・一手戻し・再出題・保存復元を確認",
 );

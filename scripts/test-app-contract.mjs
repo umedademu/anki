@@ -32,10 +32,17 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.010") ||
-  !changelog.includes("v0.010")
+  !html.includes("v0.011") ||
+  !changelog.includes("v0.011")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !html.includes('href="/styles.css?v=0.011"') ||
+  !styles.includes("-webkit-text-size-adjust: 100%") ||
+  !styles.includes("text-size-adjust: 100%")
+) {
+  throw new Error("Safariの文字自動拡大防止または装飾ファイルの版指定がありません。");
 }
 if (
   html.includes('class="answer-label"') ||

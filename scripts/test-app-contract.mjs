@@ -32,17 +32,24 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.006") ||
-  !changelog.includes("v0.006")
+  !html.includes("v0.007") ||
+  !changelog.includes("v0.007")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
   !app.includes('question.stage === "beginner"') ||
   !styles.includes(".context-card.is-beginner-stage") ||
-  !styles.includes(".is-beginner-stage > h1")
+  !styles.includes(".context-card.is-beginner-stage {\n  display: none;")
 ) {
-  throw new Error("通常の一問一答を省スペース表示にする処理が見つかりません。");
+  throw new Error("通常の一問一答の不要な上部枠を隠す処理が見つかりません。");
+}
+if (
+  !html.match(/class="question-heading"[\s\S]*?class="progress-summary"/) ||
+  html.includes('id="completion-reset"') ||
+  html.indexOf('id="reset-progress"') > html.indexOf('id="study-shell"')
+) {
+  throw new Error("進捗または記録初期化の表示位置が正しくありません。");
 }
 if (
   styles.includes(

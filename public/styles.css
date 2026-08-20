@@ -78,8 +78,7 @@ p {
   text-decoration: none;
 }
 
-.subject-name,
-.compact-button {
+.subject-name {
   color: #486153;
   background: rgb(255 255 255 / 72%);
   border: 1px solid rgb(34 80 53 / 12%);
@@ -208,10 +207,12 @@ p {
   text-align: center;
 }
 
-.setup-start {
-  display: block;
-  max-width: 420px;
+.setup-actions {
+  display: grid;
+  width: min(100%, 680px);
   margin: 0 auto;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 10px;
 }
 
 .context-card {
@@ -232,29 +233,6 @@ p {
   font-weight: 900;
   letter-spacing: 0.1em;
   white-space: nowrap;
-}
-
-.study-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 7px;
-}
-
-.compact-button {
-  min-height: 36px;
-  padding: 7px 11px;
-  cursor: pointer;
-  transition:
-    color 160ms ease,
-    background 160ms ease,
-    border-color 160ms ease;
-}
-
-.compact-button[aria-pressed="true"] {
-  color: #fff;
-  background: #2b6747;
-  border-color: #2b6747;
 }
 
 .context-card h1 {
@@ -279,37 +257,19 @@ p {
 
 .progress-summary {
   display: flex;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 8px 18px;
+  min-width: 0;
+  margin-left: auto;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  gap: 4px 12px;
   color: #68746d;
-  font-size: 0.75rem;
+  font-size: clamp(0.52rem, 1.2vw, 0.7rem);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .context-card.is-beginner-stage {
-  display: flex;
-  padding: 14px 18px;
-  align-items: center;
-  gap: 12px;
-}
-
-.is-beginner-stage .stage-name,
-.is-beginner-stage > h1,
-.is-beginner-stage > .term-reading {
   display: none;
-}
-
-.is-beginner-stage .context-heading {
-  order: 2;
-  margin-left: auto;
-}
-
-.is-beginner-stage .progress-summary {
-  margin-top: 0;
-  justify-content: flex-start;
-  order: 1;
 }
 
 .progress-track {
@@ -336,7 +296,7 @@ p {
 .question-heading {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .question-number {
@@ -530,8 +490,7 @@ p {
 }
 
 .primary-button:hover,
-.secondary-button:hover,
-.compact-button:hover {
+.secondary-button:hover {
   transform: translateY(-1px);
 }
 
@@ -544,7 +503,6 @@ p {
 
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
-.compact-button:focus-visible,
 .header-link:focus-visible,
 .brand:focus-visible {
   outline: 3px solid rgb(64 128 91 / 35%);
@@ -577,13 +535,6 @@ p {
 .error-panel .secondary-button {
   max-width: 320px;
   margin-top: 16px;
-}
-
-.completion-actions {
-  display: flex;
-  max-width: 660px;
-  margin: 16px auto 0;
-  gap: 10px;
 }
 
 .eyebrow {
@@ -686,18 +637,23 @@ p {
     align-items: flex-start;
   }
 
-  .study-controls {
-    max-width: 190px;
+  .question-heading {
+    gap: 4px;
   }
 
-  .compact-button {
-    min-height: 32px;
-    padding: 6px 9px;
-    font-size: 0.68rem;
+  .question-number {
+    font-size: 0.56rem;
   }
 
-  .progress-summary {
-    font-size: 0.69rem;
+  .axis-badge {
+    padding: 3px 5px;
+    font-size: 0.5rem;
+  }
+
+  .question-heading .progress-summary {
+    gap: 2px;
+    font-size: 0.42rem;
+    letter-spacing: -0.02em;
   }
 }
 
@@ -782,7 +738,8 @@ p {
     font-size: 0.58rem;
   }
 
-  .setup-start {
+  .setup-actions .primary-button,
+  .setup-actions .secondary-button {
     min-height: 34px;
     padding: 4px 12px;
     border-radius: 8px;
@@ -829,11 +786,6 @@ p {
     box-shadow: none;
   }
 
-  .context-card.is-beginner-stage {
-    padding: 3px 10px;
-    gap: 8px;
-  }
-
   .context-heading {
     display: contents;
   }
@@ -841,18 +793,6 @@ p {
   .stage-name {
     grid-column: 1;
     font-size: 0.58rem;
-  }
-
-  .study-controls {
-    grid-column: 2;
-    grid-row: 1 / span 2;
-    flex-wrap: nowrap;
-  }
-
-  .compact-button {
-    min-height: 22px;
-    padding: 2px 7px;
-    font-size: 0.56rem;
   }
 
   .context-card h1 {
@@ -868,9 +808,8 @@ p {
 
   .progress-summary {
     margin: 0;
-    grid-column: 1 / -1;
     flex-wrap: nowrap;
-    gap: 12px;
+    gap: 6px;
     font-size: 0.54rem;
     line-height: 1.1;
   }

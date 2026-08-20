@@ -64,7 +64,6 @@ const elements = {
   rememberedAction: document.querySelector("#remembered-action"),
   completionCard: document.querySelector("#completion-card"),
   completionTitle: document.querySelector("#completion-title"),
-  completionReset: document.querySelector("#completion-reset"),
   unlockNotice: document.querySelector("#unlock-notice"),
 };
 
@@ -547,11 +546,12 @@ function resetAllProgress() {
     // 端末内保存が使えなくても画面内の記録は初期化する。
   }
   state.answeredThisSession = 0;
-  state.unlockMessage = "学習記録を初期化しました。";
-  buildQueue();
-  state.currentTask = state.queue.shift() ?? null;
+  state.unlockMessage = "";
+  state.queue = [];
+  state.currentTask = null;
   state.answerVisible = false;
-  renderQuestion();
+  updateSetupPreview();
+  elements.selectionSummary.textContent = `学習記録を初期化しました。${elements.selectionSummary.textContent}`;
 }
 
 function beginStudy() {
@@ -651,7 +651,6 @@ elements.resetProgress.addEventListener("click", () => {
     resetAllProgress();
   }
 });
-elements.completionReset.addEventListener("click", resetAllProgress);
 elements.retryButton.addEventListener("click", start);
 
 elements.studyShell.addEventListener("click", (event) => {

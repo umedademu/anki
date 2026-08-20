@@ -32,10 +32,17 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.005") ||
-  !changelog.includes("v0.005")
+  !html.includes("v0.006") ||
+  !changelog.includes("v0.006")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !app.includes('question.stage === "beginner"') ||
+  !styles.includes(".context-card.is-beginner-stage") ||
+  !styles.includes(".is-beginner-stage > h1")
+) {
+  throw new Error("通常の一問一答を省スペース表示にする処理が見つかりません。");
 }
 if (
   styles.includes(

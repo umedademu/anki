@@ -288,6 +288,30 @@ p {
   font-weight: 700;
 }
 
+.context-card.is-beginner-stage {
+  display: flex;
+  padding: 14px 18px;
+  align-items: center;
+  gap: 12px;
+}
+
+.is-beginner-stage .stage-name,
+.is-beginner-stage > h1,
+.is-beginner-stage > .term-reading {
+  display: none;
+}
+
+.is-beginner-stage .context-heading {
+  order: 2;
+  margin-left: auto;
+}
+
+.is-beginner-stage .progress-summary {
+  margin-top: 0;
+  justify-content: flex-start;
+  order: 1;
+}
+
 .progress-track {
   height: 6px;
   margin-top: -9px;
@@ -803,6 +827,11 @@ p {
     gap: 1px 12px;
     border-radius: 9px;
     box-shadow: none;
+  }
+
+  .context-card.is-beginner-stage {
+    padding: 3px 10px;
+    gap: 8px;
   }
 
   .context-heading {

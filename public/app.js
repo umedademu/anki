@@ -381,6 +381,10 @@ function renderQuestion() {
   elements.questionCard.classList.remove("is-hidden");
   elements.actionDock.classList.remove("is-hidden");
 
+  elements.contextCard.classList.toggle(
+    "is-beginner-stage",
+    question.stage === "beginner",
+  );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.stageName.textContent = questionStyleLabels[question.stage];
   elements.termTitle.textContent = hidesTerm ? "通常の一問一答" : term.term;

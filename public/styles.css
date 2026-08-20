@@ -923,39 +923,10 @@ body.is-studying .page {
     height: 0;
   }
 
-  .back-action {
-    position: fixed;
-    z-index: 25;
-    top: 50%;
-    left: max(3px, env(safe-area-inset-left));
-    width: 30px;
-    min-height: 64px;
-    padding: 0;
-    transform: translateY(-50%);
-    border-radius: 0 8px 8px 0;
-    font-size: 0;
-    opacity: 0.48;
-  }
-
-  .back-action::before {
-    content: "‹";
-    font-size: 1.4rem;
-    line-height: 1;
-  }
-
-  .back-action small,
+  .back-action,
   .next-action,
   .again-action {
     display: none !important;
-  }
-
-  .back-action:hover,
-  .back-action:disabled {
-    transform: translateY(-50%);
-  }
-
-  .back-action:disabled {
-    opacity: 0.15;
   }
 
   .remembered-action {

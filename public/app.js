@@ -106,6 +106,7 @@ async function fetchJson(relativePath) {
 }
 
 function showOnly(panel) {
+  document.body.classList.toggle("is-studying", panel === elements.studyShell);
   [
     elements.loadingPanel,
     elements.setupPanel,

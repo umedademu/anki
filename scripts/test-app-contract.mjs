@@ -32,10 +32,19 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.008") ||
-  !changelog.includes("v0.008")
+  !html.includes("v0.009") ||
+  !changelog.includes("v0.009")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !app.includes(
+    'document.body.classList.toggle("is-studying", panel === elements.studyShell)',
+  ) ||
+  !styles.includes("body.is-studying .site-header") ||
+  !styles.includes("body.is-studying .page")
+) {
+  throw new Error("学習開始後にヘッダーを隠して上部余白を縮める処理がありません。");
 }
 if (
   !styles.includes(".progress-track {\n    height: 3px;\n    margin: 0;\n    grid-row: 2;") ||

@@ -97,6 +97,14 @@ p {
   padding: 28px 0 calc(126px + env(safe-area-inset-bottom));
 }
 
+body.is-studying .site-header {
+  display: none;
+}
+
+body.is-studying .page {
+  padding-top: 10px;
+}
+
 .study-shell {
   display: grid;
   gap: 18px;
@@ -675,6 +683,10 @@ p {
       max(3px, env(safe-area-inset-top)) max(3px, env(safe-area-inset-right))
       max(3px, env(safe-area-inset-bottom)) max(3px, env(safe-area-inset-left));
     overflow: hidden;
+  }
+
+  body.is-studying .page {
+    padding-top: max(3px, env(safe-area-inset-top));
   }
 
   .setup-panel {

@@ -45,14 +45,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.018") ||
-  !changelog.includes("v0.018") ||
-  !settingsHtml.includes("v0.018")
+  !html.includes("v0.019") ||
+  !changelog.includes("v0.019") ||
+  !settingsHtml.includes("v0.019")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.018"') ||
+  !html.includes('href="/styles.css?v=0.019"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -61,6 +61,7 @@ if (
 if (
   !generationPrompt.includes("冒頓単于(ぼくとつぜんう)") ||
   !generationPrompt.includes("坤輿万国全図(こんよばんこくぜんず)") ||
+  !generationPrompt.includes("鄭氏台湾(ていしたいわん)") ||
   !generationPrompt.includes("王安石(おうあんせき)の低利融資政策を何という？") ||
   !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます")
 ) {

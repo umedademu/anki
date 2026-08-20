@@ -10,6 +10,7 @@ import {
   validateTerms,
 } from "./build-learning-data.mjs";
 import { getQuestionPromptForDisplay } from "../public/learning-engine.js";
+import { hasMissingRequiredReadings } from "./reading-rules.mjs";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataRoot = path.join(projectRoot, "public", "data");
@@ -93,6 +94,14 @@ const questionReadingOccurrences = generatedQuestions.reduce(
     total + (question.prompt.match(readingPatternGlobal)?.length ?? 0),
   0,
 );
+const answersWithReading = generatedQuestions.filter((question) =>
+  readingPattern.test(question.answer),
+);
+const answerReadingOccurrences = generatedQuestions.reduce(
+  (total, question) =>
+    total + (question.answer.match(readingPatternGlobal)?.length ?? 0),
+  0,
+);
 const invalidPromptPatterns = [
   /\)\(/,
   /(?<!靖難の)変\(せいなんのへん\)/,
@@ -101,8 +110,10 @@ const invalidPromptPatterns = [
   /(?<!三藩の)乱\(さんぱんのらん\)/,
 ];
 if (
-  questionsWithReading.length !== 173 ||
-  questionReadingOccurrences !== 197 ||
+  questionsWithReading.length !== 226 ||
+  questionReadingOccurrences !== 277 ||
+  answersWithReading.length !== 388 ||
+  answerReadingOccurrences !== 729 ||
   generatedQuestions.some((question) =>
     invalidPromptPatterns.some((pattern) => pattern.test(question.prompt)),
   ) ||
@@ -116,6 +127,15 @@ if (
   throw new Error("問題文の読み仮名を回答前だけ隠すためのデータが正しくありません。");
 }
 if (
+  generatedQuestions.some(
+    (question) =>
+      hasMissingRequiredReadings(question.prompt) ||
+      hasMissingRequiredReadings(question.answer),
+  )
+) {
+  throw new Error("問題文または回答に、登録済みの難読語の読み仮名漏れがあります。");
+}
+if (
   generatedQuestions.some((question) =>
     [...question.keywords, ...question.acceptedAnswers].some((value) =>
       readingPattern.test(value),
@@ -126,6 +146,7 @@ if (
 }
 const xiongnu = generatedTerms.find((term) => term.id === "WH-000052");
 const wangAnshi = generatedTerms.find((term) => term.id === "WH-000126");
+const kangxi = generatedTerms.find((term) => term.id === "WH-000204");
 if (
   xiongnu?.stages.beginner[0]?.answer !== "匈奴(きょうど)" ||
   xiongnu?.stages.beginner[0]?.prompt !==
@@ -140,7 +161,9 @@ if (
   wangAnshi?.stages.beginner[2]?.prompt !==
     "王安石(おうあんせき)の低利融資政策を何という？" ||
   getQuestionPromptForDisplay(wangAnshi?.stages.beginner[2], false) !==
-    "王安石の低利融資政策を何という？"
+    "王安石の低利融資政策を何という？" ||
+  !kangxi?.stages.reverse[0]?.answer.includes("鄭氏台湾(ていしたいわん)") ||
+  !kangxi?.stages.integrated[0]?.answer.includes("鄭氏台湾(ていしたいわん)")
 ) {
   throw new Error("問題・回答・解説の代表的な難読語に読み仮名がありません。");
 }

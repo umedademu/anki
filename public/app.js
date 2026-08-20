@@ -3,6 +3,7 @@ import {
   createQuestionQueue,
   deserializeProgress,
   enqueueUniqueTasks,
+  getIntegratedExplanationQuestion,
   getOverallMastery,
   getTasksForCurrentTermStage,
   getTermMastery,
@@ -44,6 +45,8 @@ const elements = {
   acceptedPanel: document.querySelector("#accepted-panel"),
   acceptedText: document.querySelector("#accepted-text"),
   answerNote: document.querySelector("#answer-note"),
+  termOverview: document.querySelector("#term-overview"),
+  termOverviewText: document.querySelector("#term-overview-text"),
   masteryPanel: document.querySelector("#mastery-panel"),
   masteryTerm: document.querySelector("#mastery-term"),
   masteryStages: document.querySelector("#mastery-stages"),
@@ -123,9 +126,12 @@ function setContentDensity(element, ...texts) {
     length >= 150 ? "compact" : length >= 100 ? "dense" : "normal";
 }
 
-function fitTextInsideCard(card, textElement, shouldFit = true) {
-  textElement.style.removeProperty("font-size");
-  textElement.style.removeProperty("line-height");
+function fitTextInsideCard(card, textElements, shouldFit = true) {
+  const targets = Array.isArray(textElements) ? textElements : [textElements];
+  targets.forEach((element) => {
+    element.style.removeProperty("font-size");
+    element.style.removeProperty("line-height");
+  });
   if (
     !shouldFit ||
     !window.matchMedia("(orientation: landscape) and (max-height: 600px)").matches
@@ -134,11 +140,18 @@ function fitTextInsideCard(card, textElement, shouldFit = true) {
   }
 
   window.requestAnimationFrame(() => {
-    let fontSize = Number.parseFloat(window.getComputedStyle(textElement).fontSize);
-    while (card.scrollHeight > card.clientHeight && fontSize > 8) {
-      fontSize -= 0.5;
-      textElement.style.fontSize = `${fontSize}px`;
-      textElement.style.lineHeight = "1.18";
+    const fontSizes = targets.map((element) =>
+      Number.parseFloat(window.getComputedStyle(element).fontSize),
+    );
+    while (
+      card.scrollHeight > card.clientHeight &&
+      fontSizes.some((fontSize) => fontSize > 8)
+    ) {
+      targets.forEach((element, index) => {
+        fontSizes[index] = Math.max(8, fontSizes[index] - 0.5);
+        element.style.fontSize = `${fontSizes[index]}px`;
+        element.style.lineHeight = "1.18";
+      });
     }
   });
 }
@@ -279,6 +292,14 @@ function renderQuestion() {
   );
   elements.answerNote.textContent = question.answerNote;
 
+  const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  const showsTermOverview = state.answerVisible && Boolean(integratedExplanation);
+  elements.termOverview.classList.toggle("is-hidden", !showsTermOverview);
+  renderEmphasizedText(
+    elements.termOverviewText,
+    integratedExplanation?.answer ?? "",
+  );
+
   if (state.answerVisible) {
     renderTermMastery(term, question);
   }
@@ -291,8 +312,19 @@ function renderQuestion() {
   state.unlockMessage = "";
 
   updateOverallProgress();
-  setContentDensity(elements.questionCard, question.prompt, question.answer);
-  fitTextInsideCard(elements.questionCard, elements.answerText, state.answerVisible);
+  setContentDensity(
+    elements.questionCard,
+    question.prompt,
+    question.answer,
+    integratedExplanation?.answer,
+  );
+  fitTextInsideCard(
+    elements.questionCard,
+    showsTermOverview
+      ? [elements.answerText, elements.termOverviewText]
+      : elements.answerText,
+    state.answerVisible,
+  );
 }
 
 function renderCompletion() {
@@ -507,7 +539,15 @@ window.addEventListener("keydown", (event) => {
 
 window.addEventListener("resize", () => {
   if (state.currentTask && state.answerVisible) {
-    fitTextInsideCard(elements.questionCard, elements.answerText, true);
+    const question = currentQuestion();
+    const explanation = getIntegratedExplanationQuestion(currentTerm(), question);
+    fitTextInsideCard(
+      elements.questionCard,
+      explanation
+        ? [elements.answerText, elements.termOverviewText]
+        : elements.answerText,
+      true,
+    );
   }
 });
 

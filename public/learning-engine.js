@@ -72,6 +72,13 @@ export function shouldHideTerm(question, answerVisible) {
   return question?.stage === "beginner" && !answerVisible;
 }
 
+export function getIntegratedExplanationQuestion(term, question) {
+  if (!term || !question || question.stage === "integrated") {
+    return null;
+  }
+  return term.stages?.integrated?.[0] ?? null;
+}
+
 export function isQuestionMastered(progress, questionId, masteryTarget) {
   return questionRecord(progress, questionId).streak >= masteryTarget;
 }

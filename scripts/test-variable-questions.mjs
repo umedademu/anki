@@ -8,6 +8,7 @@ import {
   createQuestionQueue,
   deserializeProgress,
   enqueueUniqueTasks,
+  getIntegratedExplanationQuestion,
   getOverallMastery,
   getTermStage,
   rateQuestion,
@@ -179,6 +180,19 @@ if (
   throw new Error("回答前の短答だけで用語名を隠す判定ができませんでした。");
 }
 
+const integratedExplanation = terms[0].stages.integrated[0];
+if (
+  getIntegratedExplanationQuestion(terms[0], terms[0].stages.beginner[0]) !==
+    integratedExplanation ||
+  getIntegratedExplanationQuestion(terms[0], terms[0].stages.reverse[0]) !==
+    integratedExplanation ||
+  getIntegratedExplanationQuestion(terms[0], integratedExplanation) !== null
+) {
+  throw new Error(
+    "統合説明以外の回答だけに、統合説明を解説として対応付けられませんでした。",
+  );
+}
+
 const retryTask = { termId: "WH-TEST-001", questionId: "RETRY", stage: "beginner" };
 const retryBaseQueue = Array.from({ length: 10 }, (_, index) => ({
   termId: `WH-TEST-${index + 10}`,
@@ -277,5 +291,5 @@ if (overall.masteredTerms !== 1 || overall.totalTerms !== 2) {
 }
 
 console.log(
-  "三段階学習検証完了: 段階移行・用語非表示・再出題・重複防止・保存復元を確認",
+  "三段階学習検証完了: 解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
 );

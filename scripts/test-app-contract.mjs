@@ -32,10 +32,18 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.009") ||
-  !changelog.includes("v0.009")
+  !html.includes("v0.010") ||
+  !changelog.includes("v0.010")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  html.includes('class="answer-label"') ||
+  html.includes('class="term-overview-label"') ||
+  !styles.includes("[data-content-density=\"dense\"] #answer-text") ||
+  !app.includes("element === elements.answerText ? 10 : 9")
+) {
+  throw new Error("回答・解説の見出し撤去または横向きの文字サイズ調整が不完全です。");
 }
 if (
   !app.includes(

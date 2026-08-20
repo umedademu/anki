@@ -156,12 +156,18 @@ function fitTextInsideCard(card, textElements, shouldFit = true) {
     const fontSizes = targets.map((element) =>
       Number.parseFloat(window.getComputedStyle(element).fontSize),
     );
+    const minimumFontSizes = targets.map((element) =>
+      element === elements.answerText ? 10 : 9,
+    );
     while (
       card.scrollHeight > card.clientHeight &&
-      fontSizes.some((fontSize) => fontSize > 8)
+      fontSizes.some((fontSize, index) => fontSize > minimumFontSizes[index])
     ) {
       targets.forEach((element, index) => {
-        fontSizes[index] = Math.max(8, fontSizes[index] - 0.5);
+        fontSizes[index] = Math.max(
+          minimumFontSizes[index],
+          fontSizes[index] - 0.5,
+        );
         element.style.fontSize = `${fontSizes[index]}px`;
         element.style.lineHeight = "1.18";
       });

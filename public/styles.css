@@ -861,17 +861,6 @@ body.is-studying .page {
     border-radius: 0 8px 8px 0;
   }
 
-  #answer-text {
-    font-size: clamp(0.75rem, 1.75vw, 0.9rem);
-    line-height: 1.32;
-  }
-
-  [data-content-density="dense"] #answer-text,
-  [data-content-density="compact"] #answer-text {
-    font-size: clamp(0.66rem, 1.5vw, 0.78rem);
-    line-height: 1.22;
-  }
-
   .accepted-answer,
   .answer-note {
     margin-top: 3px;
@@ -885,15 +874,14 @@ body.is-studying .page {
     border-radius: 8px;
   }
 
-  #term-overview-text {
-    font-size: clamp(0.66rem, 1.5vw, 0.78rem);
-    line-height: 1.22;
-  }
-
+  #answer-text,
+  #term-overview-text,
+  [data-content-density="dense"] #answer-text,
+  [data-content-density="compact"] #answer-text,
   [data-content-density="dense"] #term-overview-text,
   [data-content-density="compact"] #term-overview-text {
-    font-size: clamp(0.58rem, 1.3vw, 0.7rem);
-    line-height: 1.16;
+    font-size: clamp(0.95rem, 2vw, 1rem);
+    line-height: 1.25;
   }
 
   .mastery-panel {

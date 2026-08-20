@@ -44,6 +44,9 @@ const cloudProgress = await readFile(
 );
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
+const speechSegmentsBlock = app.match(
+  /function speechSegmentsFor\(target\)[\s\S]*?function speakTarget\(target\)/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -69,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.024") ||
-  !changelog.includes("v0.024") ||
-  !settingsHtml.includes("v0.024")
+  !html.includes("v0.025") ||
+  !changelog.includes("v0.025") ||
+  !settingsHtml.includes("v0.025")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.024"') ||
+  !html.includes('href="/styles.css?v=0.025"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -135,6 +138,19 @@ if (
   !app.includes("const minimumFontSize = 15")
 ) {
   throw new Error("回答・解説の見出し撤去または横向きの文字サイズ調整が不完全です。");
+}
+if (
+  !html.includes('id="term-tags"') ||
+  !app.includes("function renderTermTags(term, question, visible)") ||
+  !app.includes("stageLabels[question.stage]") ||
+  !app.includes("question.focus") ||
+  !styles.includes(".term-tags") ||
+  !styles.includes("font-size: 0.52rem") ||
+  !speechSegmentsBlock ||
+  speechSegmentsBlock.includes("termTags") ||
+  speechSegmentsBlock.includes("renderTermTags")
+) {
+  throw new Error("解説欄の分類タグ表示が揃っていません。");
 }
 if (
   !html.includes('id="back-action"') ||

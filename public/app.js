@@ -75,6 +75,7 @@ const elements = {
   answerNote: document.querySelector("#answer-note"),
   termOverview: document.querySelector("#term-overview"),
   termOverviewText: document.querySelector("#term-overview-text"),
+  termTags: document.querySelector("#term-tags"),
   overviewSpeech: document.querySelector("#overview-speech"),
   masteryPanel: document.querySelector("#mastery-panel"),
   masteryStages: document.querySelector("#mastery-stages"),
@@ -500,6 +501,29 @@ function autoSpeakAnswerAndOverview() {
   ]);
 }
 
+function renderTermTags(term, question, visible) {
+  const tags = [
+    ...getMacroRegionTags(term),
+    term.geography?.regionDetail,
+    term.era,
+    term.category,
+    stageLabels[question.stage],
+    question.focus,
+  ]
+    .map((value) => String(value ?? "").trim())
+    .filter(Boolean)
+    .filter((value, index, values) => values.indexOf(value) === index);
+
+  elements.termTags.replaceChildren(
+    ...tags.map((tag) => {
+      const item = document.createElement("span");
+      item.textContent = `#${tag.replaceAll(" ", "")}`;
+      return item;
+    }),
+  );
+  elements.termTags.classList.toggle("is-hidden", !visible || tags.length === 0);
+}
+
 function currentQuestion() {
   if (!state.currentTask) {
     return null;
@@ -759,6 +783,7 @@ function renderQuestion() {
     elements.termOverviewText,
     integratedExplanation?.answer ?? "",
   );
+  renderTermTags(term, question, showsTermOverview);
 
   if (state.answerVisible) {
     renderTermMastery(term);

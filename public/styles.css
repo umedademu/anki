@@ -452,6 +452,22 @@ body.is-studying .page {
   font-weight: 850;
 }
 
+.term-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin-top: 10px;
+  padding-top: 7px;
+  color: #6a776e;
+  border-top: 1px solid rgb(52 91 65 / 10%);
+  font-size: 0.68rem;
+  line-height: 1.25;
+}
+
+.term-tags span {
+  white-space: nowrap;
+}
+
 .mastery-panel {
   padding: 16px 18px;
   background: #f7f3e8;
@@ -1221,6 +1237,14 @@ body.is-studying .page {
   #answer-text,
   #term-overview-text {
     padding-right: 25px;
+  }
+
+  .term-tags {
+    gap: 2px 5px;
+    margin-top: 3px;
+    padding-top: 3px;
+    font-size: 0.52rem;
+    line-height: 1.1;
   }
 
   .mastery-panel {

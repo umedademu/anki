@@ -10,7 +10,7 @@ import {
   validateTerms,
 } from "./build-learning-data.mjs";
 import { getQuestionPromptForDisplay } from "../public/learning-engine.js";
-import { hasMissingRequiredReadings } from "./reading-rules.mjs";
+import { hasMissingRequiredReadings } from "../public/reading-rules.js";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataRoot = path.join(projectRoot, "public", "data");

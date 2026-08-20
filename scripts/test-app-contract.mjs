@@ -45,14 +45,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.019") ||
-  !changelog.includes("v0.019") ||
-  !settingsHtml.includes("v0.019")
+  !html.includes("v0.020") ||
+  !changelog.includes("v0.020") ||
+  !settingsHtml.includes("v0.020")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.019"') ||
+  !html.includes('href="/styles.css?v=0.020"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -66,6 +66,18 @@ if (
   !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
+}
+if (
+  !html.includes('id="setup-speech"') ||
+  !html.includes('id="question-speech"') ||
+  !html.includes('id="answer-speech"') ||
+  !html.includes('id="overview-speech"') ||
+  !app.includes("createSpeechController") ||
+  !app.includes("autoSpeakQuestion") ||
+  !app.includes("autoSpeakAnswerAndOverview") ||
+  !styles.includes(".speech-button")
+) {
+  throw new Error("問題・回答・解説の音声読み上げ操作が揃っていません。");
 }
 if (
   html.includes('class="answer-label"') ||

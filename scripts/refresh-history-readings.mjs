@@ -11,7 +11,7 @@ import {
 import {
   addRequiredReadings,
   requiredHistoryReadings,
-} from "./reading-rules.mjs";
+} from "../public/reading-rules.js";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");

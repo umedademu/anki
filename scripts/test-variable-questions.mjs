@@ -8,7 +8,9 @@ import {
   createQuestionQueue,
   deserializeProgress,
   enqueueUniqueTasks,
+  filterTermsBySelection,
   getIntegratedExplanationQuestion,
+  getMacroRegionTags,
   getOverallMastery,
   getTermStage,
   rateQuestion,
@@ -33,13 +35,14 @@ function makeRow({
     term_id: termId,
     importance_rank: String(rank),
     difficulty_label: "大学受験標準",
-    category: "事件・革命",
+    category: termId === "WH-TEST-001" ? "事件・革命" : "人物",
     term,
     reading: "かくにん",
     aliases: "",
     era: "近代",
-    macro_region: "世界",
-    region_detail: "確認地域",
+    macro_region:
+      termId === "WH-TEST-001" ? "ヨーロッパ・西アジア" : "東アジア",
+    region_detail: termId === "WH-TEST-001" ? "確認地域A" : "確認地域B",
     display_period: `${sortYear}年`,
     sort_year: String(sortYear),
     question_id: questionId,
@@ -160,6 +163,23 @@ if (
   terms[1].stages.reverse.length !== 2
 ) {
   throw new Error("1行1問のデータを用語・段階別に正しくまとめられませんでした。");
+}
+
+if (
+  !getMacroRegionTags(terms[0]).includes("西アジア") ||
+  filterTermsBySelection(terms, { macroRegion: "西アジア" })[0]?.id !==
+    "WH-TEST-001" ||
+  filterTermsBySelection(terms, {
+    macroRegion: "東アジア",
+    regionDetail: "確認地域B",
+    category: "人物",
+  })[0]?.id !== "WH-TEST-002" ||
+  filterTermsBySelection(terms, {
+    macroRegion: "西アジア",
+    category: "人物",
+  }).length !== 0
+) {
+  throw new Error("地域・小地域・カテゴリを組み合わせて用語を絞り込めませんでした。");
 }
 
 const masteryTarget = 2;
@@ -291,5 +311,5 @@ if (overall.masteredTerms !== 1 || overall.totalTerms !== 2) {
 }
 
 console.log(
-  "三段階学習検証完了: 解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
+  "三段階学習検証完了: 学習範囲選択・解説表示・段階移行・用語非表示・再出題・重複防止・保存復元を確認",
 );

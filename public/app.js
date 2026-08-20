@@ -3,7 +3,9 @@ import {
   createQuestionQueue,
   deserializeProgress,
   enqueueUniqueTasks,
+  filterTermsBySelection,
   getIntegratedExplanationQuestion,
+  getMacroRegionTags,
   getOverallMastery,
   getTasksForCurrentTermStage,
   getTermMastery,
@@ -20,10 +22,18 @@ import {
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
+  setupPanel: document.querySelector("#setup-panel"),
   studyShell: document.querySelector("#study-shell"),
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
+  macroRegionFilter: document.querySelector("#macro-region-filter"),
+  regionDetailFilter: document.querySelector("#region-detail-filter"),
+  categoryFilter: document.querySelector("#category-filter"),
+  setupShuffle: document.querySelector("#setup-shuffle"),
+  selectionSummary: document.querySelector("#selection-summary"),
+  startStudy: document.querySelector("#start-study"),
+  changeConditions: document.querySelector("#change-conditions"),
   shuffleToggle: document.querySelector("#shuffle-toggle"),
   shuffleLabel: document.querySelector("#shuffle-label"),
   resetProgress: document.querySelector("#reset-progress"),
@@ -58,12 +68,16 @@ const elements = {
   rememberedAction: document.querySelector("#remembered-action"),
   completionCard: document.querySelector("#completion-card"),
   completionTitle: document.querySelector("#completion-title"),
+  completionChangeConditions: document.querySelector(
+    "#completion-change-conditions",
+  ),
   completionReset: document.querySelector("#completion-reset"),
   unlockNotice: document.querySelector("#unlock-notice"),
 };
 
 const state = {
   subject: null,
+  allTerms: [],
   terms: [],
   termById: new Map(),
   questionById: new Map(),
@@ -99,8 +113,13 @@ async function fetchJson(relativePath) {
 }
 
 function showOnly(panel) {
-  [elements.loadingPanel, elements.studyShell, elements.errorPanel].forEach(
-    (candidate) => candidate.classList.toggle("is-hidden", candidate !== panel),
+  [
+    elements.loadingPanel,
+    elements.setupPanel,
+    elements.studyShell,
+    elements.errorPanel,
+  ].forEach((candidate) =>
+    candidate.classList.toggle("is-hidden", candidate !== panel),
   );
 }
 
@@ -210,6 +229,101 @@ function currentTerm() {
 function updateShuffleButton() {
   elements.shuffleToggle.setAttribute("aria-pressed", String(state.shuffleEnabled));
   elements.shuffleLabel.textContent = `シャッフル：${state.shuffleEnabled ? "オン" : "オフ"}`;
+  elements.setupShuffle.checked = state.shuffleEnabled;
+}
+
+function sortedUnique(values) {
+  return [...new Set(values.filter(Boolean))].sort((left, right) =>
+    left.localeCompare(right, "ja"),
+  );
+}
+
+function setSelectOptions(select, values, firstLabel) {
+  const previousValue = select.value;
+  const firstOption = document.createElement("option");
+  firstOption.value = "";
+  firstOption.textContent = firstLabel;
+  select.replaceChildren(
+    firstOption,
+    ...values.map((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      return option;
+    }),
+  );
+  if (values.includes(previousValue)) {
+    select.value = previousValue;
+  }
+}
+
+function selectedFilters() {
+  return {
+    macroRegion: elements.macroRegionFilter.value,
+    regionDetail: elements.regionDetailFilter.value,
+    category: elements.categoryFilter.value,
+  };
+}
+
+function countQuestions(terms) {
+  return terms.reduce(
+    (total, term) =>
+      total +
+      learningStages.reduce(
+        (termTotal, stage) => termTotal + (term.stages[stage]?.length ?? 0),
+        0,
+      ),
+    0,
+  );
+}
+
+function updateRegionDetailOptions(resetSelection = false) {
+  const macroRegion = elements.macroRegionFilter.value;
+  if (!macroRegion) {
+    setSelectOptions(
+      elements.regionDetailFilter,
+      [],
+      "大分類を選ぶと選択できます",
+    );
+    elements.regionDetailFilter.disabled = true;
+    return;
+  }
+
+  const matchingTerms = filterTermsBySelection(state.allTerms, { macroRegion });
+  const details = sortedUnique(
+    matchingTerms.map((term) => term.geography?.regionDetail),
+  );
+  if (resetSelection) {
+    elements.regionDetailFilter.value = "";
+  }
+  setSelectOptions(elements.regionDetailFilter, details, "すべての小分類");
+  elements.regionDetailFilter.disabled = false;
+}
+
+function updateSetupPreview() {
+  const terms = filterTermsBySelection(state.allTerms, selectedFilters());
+  const questions = countQuestions(terms);
+  const beginnerQuestions = terms.reduce(
+    (total, term) => total + (term.stages.beginner?.length ?? 0),
+    0,
+  );
+  elements.startStudy.disabled = terms.length === 0;
+  elements.selectionSummary.textContent =
+    terms.length === 0
+      ? "条件に合う用語がありません。選択を変更してください。"
+      : `${terms.length}語・${questions}問（開始時は基礎 ${beginnerQuestions}問）`;
+}
+
+function configureSetup() {
+  const macroRegions = sortedUnique(
+    state.allTerms.flatMap((term) => getMacroRegionTags(term)),
+  );
+  const categories = sortedUnique(state.allTerms.map((term) => term.category));
+  setSelectOptions(elements.macroRegionFilter, macroRegions, "すべての大分類");
+  setSelectOptions(elements.categoryFilter, categories, "すべてのカテゴリ");
+  updateRegionDetailOptions();
+  updateShuffleButton();
+  updateSetupPreview();
 }
 
 function updateOverallProgress() {
@@ -433,6 +547,50 @@ function resetAllProgress() {
   renderQuestion();
 }
 
+function beginStudy() {
+  const selectedTerms = filterTermsBySelection(
+    state.allTerms,
+    selectedFilters(),
+  );
+  if (selectedTerms.length === 0) {
+    updateSetupPreview();
+    return;
+  }
+
+  state.terms = selectedTerms;
+  state.termById = new Map(state.terms.map((term) => [term.id, term]));
+  state.questionById = new Map(
+    state.terms.flatMap((term) =>
+      learningStages.flatMap((stage) =>
+        term.stages[stage].map((question) => [question.id, question]),
+      ),
+    ),
+  );
+  state.shuffleEnabled = elements.setupShuffle.checked;
+  saveShufflePreference();
+  buildQueue();
+  state.currentTask = state.queue.shift() ?? null;
+  state.answerVisible = false;
+  state.answeredThisSession = 0;
+  state.unlockMessage = "";
+
+  const questionCount = countQuestions(state.terms);
+  elements.completionTitle.textContent = `${state.terms.length}語・${questionCount}問を完全習得しました`;
+  updateShuffleButton();
+  renderQuestion();
+  showOnly(elements.studyShell);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function returnToSetup() {
+  state.currentTask = null;
+  state.answerVisible = false;
+  elements.setupShuffle.checked = state.shuffleEnabled;
+  updateSetupPreview();
+  showOnly(elements.setupPanel);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 async function start() {
   showOnly(elements.loadingPanel);
   try {
@@ -447,34 +605,37 @@ async function start() {
     const chunks = await Promise.all(
       state.subject.chunks.map((chunk) => fetchJson(chunk.path)),
     );
-    state.terms = chunks.flatMap((chunk) => chunk.terms);
-    state.termById = new Map(state.terms.map((term) => [term.id, term]));
-    state.questionById = new Map(
-      state.terms.flatMap((term) =>
-        learningStages.flatMap((stage) =>
-          term.stages[stage].map((question) => [question.id, question]),
-        ),
-      ),
-    );
+    state.allTerms = chunks.flatMap((chunk) => chunk.terms);
+    state.terms = [];
+    state.termById = new Map();
+    state.questionById = new Map();
     state.progressKey = `anki-progress:${state.subject.id}:${state.subject.version}:v1`;
     loadStoredProgress();
     loadShufflePreference();
-    buildQueue();
-    state.currentTask = state.queue.shift() ?? null;
+    state.queue = [];
+    state.currentTask = null;
     state.answerVisible = false;
     state.answeredThisSession = 0;
     state.unlockMessage = "";
 
     elements.subjectName.textContent = state.subject.title;
-    elements.completionTitle.textContent = `${state.subject.termCount}語・${state.subject.questionCount}問を完全習得しました`;
-    updateShuffleButton();
-    renderQuestion();
-    showOnly(elements.studyShell);
+    configureSetup();
+    showOnly(elements.setupPanel);
   } catch (error) {
     elements.errorMessage.textContent = error.message;
     showOnly(elements.errorPanel);
   }
 }
+
+elements.macroRegionFilter.addEventListener("change", () => {
+  updateRegionDetailOptions(true);
+  updateSetupPreview();
+});
+elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
+elements.categoryFilter.addEventListener("change", updateSetupPreview);
+elements.setupShuffle.addEventListener("change", updateSetupPreview);
+elements.startStudy.addEventListener("click", beginStudy);
+elements.changeConditions.addEventListener("click", returnToSetup);
 
 elements.revealAction.addEventListener("click", () => {
   state.answerVisible = true;
@@ -486,6 +647,7 @@ elements.rememberedAction.addEventListener("click", () => rateCurrentQuestion(tr
 
 elements.shuffleToggle.addEventListener("click", () => {
   state.shuffleEnabled = !state.shuffleEnabled;
+  elements.setupShuffle.checked = state.shuffleEnabled;
   saveShufflePreference();
   updateShuffleButton();
   buildQueue();
@@ -500,6 +662,7 @@ elements.resetProgress.addEventListener("click", () => {
     resetAllProgress();
   }
 });
+elements.completionChangeConditions.addEventListener("click", returnToSetup);
 elements.completionReset.addEventListener("click", resetAllProgress);
 elements.retryButton.addEventListener("click", start);
 

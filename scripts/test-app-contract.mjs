@@ -5,6 +5,10 @@ import { runInNewContext } from "node:vm";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const html = await readFile(path.join(projectRoot, "public", "index.html"), "utf8");
+const changelog = await readFile(
+  path.join(projectRoot, "public", "changelog.html"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 
@@ -21,6 +25,15 @@ if (missingIds.length > 0) {
 }
 if (!html.includes('<script src="/app.js" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
+}
+if (
+  !html.includes('id="setup-panel"') ||
+  !html.includes('id="start-study"') ||
+  !html.includes('href="/changelog.html"') ||
+  !html.includes("v0.001") ||
+  !changelog.includes("v0.001")
+) {
+  throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 const configForHostname = (hostname) => {
   const context = { window: { location: { hostname } } };
@@ -43,4 +56,6 @@ if (app.includes('config.dataBaseUrl ?? "/data"')) {
 if (localhostConfig.dataBaseUrl !== "/data" || loopbackConfig.dataBaseUrl !== "/data") {
   throw new Error("手元確認だけに限定したローカルデータ設定が見つかりません。");
 }
-console.log("画面構成検証完了: 画面部品とCloudflare読込設定を確認");
+console.log(
+  "画面構成検証完了: 条件選択画面・更新情報・画面部品・Cloudflare読込設定を確認",
+);

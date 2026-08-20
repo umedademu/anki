@@ -79,6 +79,25 @@ export function getIntegratedExplanationQuestion(term, question) {
   return term.stages?.integrated?.[0] ?? null;
 }
 
+export function getMacroRegionTags(term) {
+  return String(term?.geography?.macroRegion ?? "")
+    .split("・")
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+export function filterTermsBySelection(
+  terms,
+  { macroRegion = "", regionDetail = "", category = "" } = {},
+) {
+  return terms.filter(
+    (term) =>
+      (!macroRegion || getMacroRegionTags(term).includes(macroRegion)) &&
+      (!regionDetail || term.geography?.regionDetail === regionDetail) &&
+      (!category || term.category === category),
+  );
+}
+
 export function isQuestionMastered(progress, questionId, masteryTarget) {
   return questionRecord(progress, questionId).streak >= masteryTarget;
 }

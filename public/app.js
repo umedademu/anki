@@ -12,7 +12,6 @@ import {
   getOverallMastery,
   getQuestionPromptForDisplay,
   getTasksForStage,
-  getTermMastery,
   getTermStage,
   learningStages,
   normalizeReviewSettings,
@@ -77,8 +76,6 @@ const elements = {
   termOverviewText: document.querySelector("#term-overview-text"),
   termTags: document.querySelector("#term-tags"),
   overviewSpeech: document.querySelector("#overview-speech"),
-  masteryPanel: document.querySelector("#mastery-panel"),
-  masteryStages: document.querySelector("#mastery-stages"),
   actionDock: document.querySelector("#action-dock"),
   actionButtons: document.querySelector("#action-buttons"),
   backAction: document.querySelector("#back-action"),
@@ -711,23 +708,6 @@ function updateOverallProgress() {
   elements.progressBar.style.width = `${percent}%`;
 }
 
-function renderTermMastery(term) {
-  const mastery = getTermMastery(
-    term,
-    state.progress,
-    state.subject.masteryTarget,
-  );
-  elements.masteryStages.replaceChildren(
-    ...learningStages.map((stage) => {
-      const item = document.createElement("span");
-      const stats = mastery[stage];
-      item.textContent = `${stageLabels[stage]} ${stats.mastered}/${stats.total}`;
-      item.classList.toggle("is-mastered", stats.total > 0 && stats.mastered === stats.total);
-      return item;
-    }),
-  );
-}
-
 function renderQuestion() {
   const term = currentTerm();
   const question = currentQuestion();
@@ -762,7 +742,6 @@ function renderQuestion() {
   elements.questionText.textContent = displayedQuestionPrompt;
   renderEmphasizedText(elements.answerText, question.answer);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
-  elements.masteryPanel.classList.toggle("is-hidden", !state.answerVisible);
 
   const acceptedText = question.acceptedAnswers.join("・");
   elements.acceptedPanel.classList.toggle(
@@ -784,10 +763,6 @@ function renderQuestion() {
     integratedExplanation?.answer ?? "",
   );
   renderTermTags(term, question, showsTermOverview);
-
-  if (state.answerVisible) {
-    renderTermMastery(term);
-  }
 
   renderActionControls();
   elements.queueProgress.textContent = `この回の残り ${state.queue.length + 1}問`;

@@ -72,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.025") ||
-  !changelog.includes("v0.025") ||
-  !settingsHtml.includes("v0.025")
+  !html.includes("v0.026") ||
+  !changelog.includes("v0.026") ||
+  !settingsHtml.includes("v0.026")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.025"') ||
+  !html.includes('href="/styles.css?v=0.026"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -244,11 +244,14 @@ if (
   throw new Error("大きな画面向けの左右二列表示が残っています。");
 }
 if (
+  html.includes('id="mastery-panel"') ||
+  html.includes('id="mastery-stages"') ||
   html.includes('id="mastery-term"') ||
   html.includes('id="current-streak"') ||
+  app.includes("renderTermMastery") ||
   app.includes("あと${remaining}回連続")
 ) {
-  throw new Error("習得件数以外の補足表示が残っています。");
+  throw new Error("問題ごとの習得状況表示が残っています。");
 }
 if (
   html.includes('id="change-conditions"') ||

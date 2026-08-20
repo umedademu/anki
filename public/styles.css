@@ -468,33 +468,6 @@ body.is-studying .page {
   white-space: nowrap;
 }
 
-.mastery-panel {
-  padding: 16px 18px;
-  background: #f7f3e8;
-  border: 1px solid rgb(139 112 48 / 12%);
-  border-radius: 16px;
-}
-
-.mastery-stages {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px;
-}
-
-.mastery-stages span {
-  padding: 6px 9px;
-  color: #6b6046;
-  background: rgb(255 255 255 / 72%);
-  border-radius: 999px;
-  font-size: 0.69rem;
-  font-weight: 800;
-}
-
-.mastery-stages span.is-mastered {
-  color: #fff;
-  background: #397251;
-}
-
 .unlock-notice {
   position: fixed;
   z-index: 30;
@@ -1245,20 +1218,6 @@ body.is-studying .page {
     padding-top: 3px;
     font-size: 0.52rem;
     line-height: 1.1;
-  }
-
-  .mastery-panel {
-    padding: 4px 8px;
-    border-radius: 8px;
-  }
-
-  .mastery-stages {
-    gap: 4px;
-  }
-
-  .mastery-stages span {
-    padding: 2px 6px;
-    font-size: 0.52rem;
   }
 
   .action-dock {

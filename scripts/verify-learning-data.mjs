@@ -1,10 +1,11 @@
-import { readFile } from "node:fs/promises";
+import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   findSourcePath,
   groupTerms,
+  loadTermImageManifest,
   parseCsv,
   toObjects,
   validateTerms,
@@ -22,6 +23,7 @@ const expectedTerms = groupTerms(
   toObjects(parseCsv(await readFile(sourcePath, "utf8"))),
 );
 validateTerms(expectedTerms);
+const expectedTermImages = await loadTermImageManifest(expectedTerms);
 const expectedCounts = countQuestionsByStage(expectedTerms);
 const expectedQuestionCount = Object.values(expectedCounts).reduce(
   (sum, count) => sum + count,
@@ -38,6 +40,7 @@ if (subject.schemaVersion !== 3 || subject.masteryTarget !== 2) {
   throw new Error("科目情報の形式または習得条件が想定どおりではありません。");
 }
 const chunks = await Promise.all(subject.chunks.map((chunk) => readJson(chunk.path)));
+const generatedTermImages = await readJson("term-images.json");
 if (chunks.some((chunk) => chunk.schemaVersion !== 3)) {
   throw new Error("旧形式の分割データが残っています。");
 }
@@ -83,6 +86,22 @@ if (
 if (JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms)) {
   throw new Error("元CSVの問題・回答・出典が生成データへ正確に反映されていません。");
 }
+if (JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages)) {
+  throw new Error("関連画像一覧が元データから正確に生成されていません。");
+}
+if (
+  generatedTermImages.images.length !== 20 ||
+  generatedTerms.slice(0, 20).some(
+    (term) => !generatedTermImages.images.some((image) => image.termId === term.id),
+  )
+) {
+  throw new Error("試験用画像がシャッフルなしの先頭20語へ揃っていません。");
+}
+await Promise.all(
+  generatedTermImages.images.map((image) =>
+    stat(path.join(dataRoot, image.path)),
+  ),
+);
 
 const readingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/;
 const readingPatternGlobal = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/g;
@@ -187,5 +206,5 @@ if (new Set(questionIds).size !== questionIds.length) {
 }
 
 console.log(
-  "検証完了: 300用語・1770問（短答900、逆一問一答570、統合説明300）・新形式",
+  "検証完了: 300用語・1770問（短答900、逆一問一答570、統合説明300）・関連画像20語",
 );

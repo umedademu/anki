@@ -72,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.028") ||
-  !changelog.includes("v0.028") ||
-  !settingsHtml.includes("v0.028")
+  !html.includes("v0.029") ||
+  !changelog.includes("v0.029") ||
+  !settingsHtml.includes("v0.029")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.028"') ||
+  !html.includes('href="/styles.css?v=0.029"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -152,6 +152,19 @@ if (
   speechSegmentsBlock.includes("renderTermTags")
 ) {
   throw new Error("解説欄の分類タグ表示が揃っていません。");
+}
+if (
+  !html.includes('id="term-image"') ||
+  !html.includes('id="term-image-content"') ||
+  !html.includes('id="term-image-license"') ||
+  !app.includes('fetchJson("term-images.json")') ||
+  !app.includes("function renderTermImage(term, visible)") ||
+  !app.includes("const showsTermImage = renderTermImage(term, state.answerVisible)") ||
+  !styles.includes(".term-overview-main.has-image") ||
+  !styles.includes(".term-image figcaption") ||
+  speechSegmentsBlock.includes("termImage")
+) {
+  throw new Error("回答後の関連画像、出典表示、読み上げ除外が揃っていません。");
 }
 if (
   !generationPrompt.includes("すべての統合説明の回答本文には、次の2点を例外なく明記してください") ||

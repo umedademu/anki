@@ -73,7 +73,14 @@ const elements = {
   acceptedText: document.querySelector("#accepted-text"),
   answerNote: document.querySelector("#answer-note"),
   termOverview: document.querySelector("#term-overview"),
+  termOverviewMain: document.querySelector("#term-overview-main"),
   termOverviewText: document.querySelector("#term-overview-text"),
+  termImage: document.querySelector("#term-image"),
+  termImageLink: document.querySelector("#term-image-link"),
+  termImageContent: document.querySelector("#term-image-content"),
+  termImageCaption: document.querySelector("#term-image-caption"),
+  termImageCreator: document.querySelector("#term-image-creator"),
+  termImageLicense: document.querySelector("#term-image-license"),
   termTags: document.querySelector("#term-tags"),
   overviewSpeech: document.querySelector("#overview-speech"),
   actionDock: document.querySelector("#action-dock"),
@@ -97,6 +104,7 @@ const state = {
   terms: [],
   termById: new Map(),
   questionById: new Map(),
+  termImages: new Map(),
   progress: createEmptyProgress(),
   progressKey: "",
   reviewSettings: { ...defaultReviewSettings },
@@ -152,6 +160,28 @@ async function fetchJson(relativePath) {
     throw new Error(`データ取得に失敗しました（${response.status}）。`);
   }
   return response.json();
+}
+
+function getDataUrl(relativePath) {
+  const { dataBaseUrl } = getConfig();
+  return `${dataBaseUrl}/${String(relativePath).replace(/^\/+/, "")}`;
+}
+
+async function loadTermImages() {
+  try {
+    const manifest = await fetchJson("term-images.json");
+    if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.images)) {
+      throw new Error("関連画像データの形式が正しくありません。");
+    }
+    return new Map(
+      manifest.images
+        .filter((image) => image?.termId && image?.path)
+        .map((image) => [image.termId, image]),
+    );
+  } catch (error) {
+    console.warn("関連画像を読み込めませんでした。画像なしで学習を続けます。", error);
+    return new Map();
+  }
 }
 
 function showOnly(panel) {
@@ -522,6 +552,33 @@ function renderTermTags(term, question, visible) {
   elements.termTags.classList.toggle("is-hidden", !visible || tags.length === 0);
 }
 
+function renderTermImage(term, visible) {
+  const image = state.termImages.get(term.id);
+  const showsImage = visible && Boolean(image);
+  elements.termImage.classList.toggle("is-hidden", !showsImage);
+  elements.termOverviewMain.classList.toggle("has-image", showsImage);
+  elements.termOverviewMain.classList.toggle(
+    "image-only",
+    showsImage && elements.termOverviewText.classList.contains("is-hidden"),
+  );
+  if (!showsImage) {
+    elements.termImageContent.removeAttribute("src");
+    elements.termImageContent.alt = "";
+    elements.termImageLink.removeAttribute("href");
+    elements.termImageLicense.removeAttribute("href");
+    return false;
+  }
+
+  elements.termImageContent.src = getDataUrl(image.path);
+  elements.termImageContent.alt = image.alt;
+  elements.termImageLink.href = image.sourcePageUrl;
+  elements.termImageCaption.textContent = image.caption;
+  elements.termImageCreator.textContent = image.creator;
+  elements.termImageLicense.textContent = image.license;
+  elements.termImageLicense.href = image.licenseUrl;
+  return true;
+}
+
 function currentQuestion() {
   if (!state.currentTask) {
     return null;
@@ -758,12 +815,19 @@ function renderQuestion() {
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
   const showsTermOverview = state.answerVisible && Boolean(integratedExplanation);
-  elements.termOverview.classList.toggle("is-hidden", !showsTermOverview);
+  elements.termOverviewText.classList.toggle("is-hidden", !showsTermOverview);
+  elements.overviewSpeech.classList.toggle(
+    "is-hidden",
+    !speechController.supported || !showsTermOverview,
+  );
   renderEmphasizedText(
     elements.termOverviewText,
     integratedExplanation?.answer ?? "",
   );
-  renderTermTags(term, question, showsTermOverview);
+  const showsTermImage = renderTermImage(term, state.answerVisible);
+  const showsSupplement = showsTermOverview || showsTermImage;
+  elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
+  renderTermTags(term, question, showsSupplement);
 
   renderActionControls();
   elements.queueProgress.textContent = `この回の残り ${state.queue.length + 1}問`;
@@ -1006,7 +1070,11 @@ async function start() {
   showOnly(elements.loadingPanel);
   try {
     const { subjectId } = getConfig();
-    const catalog = await fetchJson("index.json");
+    const [catalog, termImages] = await Promise.all([
+      fetchJson("index.json"),
+      loadTermImages(),
+    ]);
+    state.termImages = termImages;
     const subjectEntry = catalog.subjects.find((subject) => subject.id === subjectId);
     if (!subjectEntry) {
       throw new Error("指定された科目が見つかりません。");
@@ -1078,6 +1146,10 @@ elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.questionSpeech.addEventListener("click", () => speakTarget("question"));
 elements.answerSpeech.addEventListener("click", () => speakTarget("answer"));
 elements.overviewSpeech.addEventListener("click", () => speakTarget("overview"));
+elements.termImageContent.addEventListener("error", () => {
+  elements.termImage.classList.add("is-hidden");
+  elements.termOverviewMain.classList.remove("has-image", "image-only");
+});
 elements.incorrectAction.addEventListener("click", () => rateCurrentQuestion("again"));
 elements.hardAction.addEventListener("click", () => rateCurrentQuestion("hard"));
 elements.goodAction.addEventListener("click", () => rateCurrentQuestion("good"));

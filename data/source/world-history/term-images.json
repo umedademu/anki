@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "images": [
+    {
+      "termId": "WH-000001",
+      "path": "term-images/WH-000001.png",
+      "alt": "約700万年前から現生人類までの人類進化の年代図",
+      "caption": "約700万年前から現生人類までの人類進化の年代図",
+      "creator": "Federigo Federighi",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Human_evolution_timeline.svg"
+    },
+    {
+      "termId": "WH-000002",
+      "path": "term-images/WH-000002.jpg",
+      "alt": "オルドヴァイ渓谷出土の旧石器時代のハンドアックス",
+      "caption": "オルドヴァイ渓谷出土の旧石器時代のハンドアックス",
+      "creator": "The British Museum",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:British_Museum_Olduvai_handaxe.jpg"
+    },
+    {
+      "termId": "WH-000003",
+      "path": "term-images/WH-000003.png",
+      "alt": "紀元前7500年ごろの肥沃な三日月地帯と新石器時代の遺跡",
+      "caption": "紀元前7500年ごろの肥沃な三日月地帯と新石器時代の遺跡",
+      "creator": "Bjoertvedt / Lars A",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fertile_crescent_Neolithic_B_circa_7500_BC.svg"
+    },
+    {
+      "termId": "WH-000004",
+      "path": "term-images/WH-000004.png",
+      "alt": "紀元前2千年紀のメソポタミア諸地域",
+      "caption": "紀元前2千年紀のメソポタミア諸地域",
+      "creator": "Joeyhewitt",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mesopotamia_in_2nd_millennium_BC.svg"
+    },
+    {
+      "termId": "WH-000005",
+      "path": "term-images/WH-000005.jpg",
+      "alt": "マリ出土のシュメール人奉納者像",
+      "caption": "マリ出土のシュメール人奉納者像",
+      "creator": "Ywpark2003",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sumerian_Votive_Statue_of_a_Worshipper_from_Mari_Damascus_Museum.jpg"
+    },
+    {
+      "termId": "WH-000006",
+      "path": "term-images/WH-000006.jpg",
+      "alt": "アッカド語が楔形文字で記された粘土板",
+      "caption": "アッカド語が楔形文字で記された粘土板",
+      "creator": "作者不詳（翻訳協力：Manuel Molina）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cuneiform_Akkadian_clay_tablet_1.jpg"
+    },
+    {
+      "termId": "WH-000007",
+      "path": "term-images/WH-000007.jpg",
+      "alt": "上空から撮影されたギザの三大ピラミッド",
+      "caption": "上空から撮影されたギザの三大ピラミッド",
+      "creator": "Eduard Spelterini",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Spelterini_Pyramids.jpg"
+    },
+    {
+      "termId": "WH-000008",
+      "path": "term-images/WH-000008.jpg",
+      "alt": "モヘンジョ＝ダーロの遺跡",
+      "caption": "モヘンジョ＝ダーロの遺跡",
+      "creator": "Saqib Qayyum",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mohenjo-daro.jpg"
+    },
+    {
+      "termId": "WH-000009",
+      "path": "term-images/WH-000009.jpg",
+      "alt": "クノッソス宮殿の牛跳び壁画",
+      "caption": "クノッソス宮殿の牛跳び壁画",
+      "creator": "Jebulon",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bull_leaping_minoan_fresco_archmus_Heraklion.jpg"
+    },
+    {
+      "termId": "WH-000010",
+      "path": "term-images/WH-000010.png",
+      "alt": "ハンムラビ時代から古バビロニア王国末期までの領域",
+      "caption": "ハンムラビ時代から古バビロニア王国末期までの領域",
+      "creator": "Sémhur / Zunkir",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Babylone_1.PNG"
+    },
+    {
+      "termId": "WH-000011",
+      "path": "term-images/WH-000011.jpg",
+      "alt": "ハンムラビ法典碑",
+      "caption": "ハンムラビ法典碑",
+      "creator": "Urko Dorronsoro",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Code_Of_Hammurabi.jpg"
+    },
+    {
+      "termId": "WH-000012",
+      "path": "term-images/WH-000012.jpg",
+      "alt": "殷代の青銅製の鼎",
+      "caption": "殷代の青銅製の鼎",
+      "creator": "Windmemories",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:20210529_Bronze_Ding_of_Shang_Dynasty.jpg"
+    },
+    {
+      "termId": "WH-000013",
+      "path": "term-images/WH-000013.jpg",
+      "alt": "インド＝ヨーロッパ語族の移動を示す地図",
+      "caption": "インド＝ヨーロッパ語族の移動を示す地図",
+      "creator": "Koba-chan / パータリプトラ",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Indo-European_migrations.jpg"
+    },
+    {
+      "termId": "WH-000014",
+      "path": "term-images/WH-000014.jpg",
+      "alt": "殷代の甲骨文字が刻まれた牛骨",
+      "caption": "殷代の甲骨文字が刻まれた牛骨",
+      "creator": "The British Library",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chinese_oracle_bone_(16th-10th_C_BC)_-_BL_Or._7694.jpg"
+    },
+    {
+      "termId": "WH-000015",
+      "path": "term-images/WH-000015.jpg",
+      "alt": "リグ＝ヴェーダの写本",
+      "caption": "『リグ＝ヴェーダ』の写本",
+      "creator": "作者不詳 / Library of Congress",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Rig_Veda.jpg"
+    },
+    {
+      "termId": "WH-000016",
+      "path": "term-images/WH-000016.jpg",
+      "alt": "イスラエルへの言及を含むメルエンプタハ碑文",
+      "caption": "イスラエルへの言及を含むメルエンプタハ碑文",
+      "creator": "Wellcome Library, London",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Merneptah_stele,_including_inscription._Wellcome_M0008443.jpg"
+    },
+    {
+      "termId": "WH-000017",
+      "path": "term-images/WH-000017.jpg",
+      "alt": "フェニキア文字が刻まれたアヒラム王の石棺",
+      "caption": "フェニキア文字が刻まれたアヒラム王の石棺",
+      "creator": "Matson Photo Service",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ahiram_sarcophag_from_Biblos_XIII-XBC.jpg"
+    },
+    {
+      "termId": "WH-000018",
+      "path": "term-images/WH-000018.jpg",
+      "alt": "西周の青銅製酒器",
+      "caption": "西周の青銅製酒器",
+      "creator": "Gary Lee Todd, Ph.D.",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Western_Zhou_Bronze_Sigong_Wine_Vessel.jpg"
+    },
+    {
+      "termId": "WH-000019",
+      "path": "term-images/WH-000019.jpg",
+      "alt": "火への供物を行うバラモンの祭式",
+      "caption": "火への供物を行うバラモンの祭式",
+      "creator": "Onkar Hoysala",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:1_Brahmin_performing_homa_fire_yajna_sacrifice,_offerings_in_a_Hindu_ritual.jpg"
+    },
+    {
+      "termId": "WH-000020",
+      "path": "term-images/WH-000020.jpg",
+      "alt": "四ヴァルナについて語る場面を描いた16世紀の細密画",
+      "caption": "四ヴァルナについて語る場面を描いた16世紀の細密画",
+      "creator": "Jamal（作画） / Ashmolean Museum",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bhishma_advises_Yudhishthira_on_the_nature_of_the_four_varnas,_or_castes.jpg"
+    }
+  ]
+}

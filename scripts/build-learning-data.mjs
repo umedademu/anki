@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -7,6 +7,8 @@ const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceDirectory = path.join(projectRoot, "data", "source", "world-history");
 const outputRoot = path.join(projectRoot, "public", "data");
+const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
+const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
 const subjectId = "world-history";
 const subjectTitle = "世界史";
 const chunkSize = 50;
@@ -380,11 +382,48 @@ async function writeJson(targetPath, value) {
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
 }
 
+export async function loadTermImageManifest(terms) {
+  const manifest = JSON.parse(await readFile(termImageManifestPath, "utf8"));
+  if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.images)) {
+    throw new Error("関連画像データの形式が正しくありません。");
+  }
+  const termIds = new Set(terms.map((term) => term.id));
+  const imageTermIds = new Set();
+  for (const image of manifest.images) {
+    if (!termIds.has(image.termId) || imageTermIds.has(image.termId)) {
+      throw new Error(`関連画像の用語IDが不正です: ${image.termId}`);
+    }
+    imageTermIds.add(image.termId);
+    for (const field of [
+      "path",
+      "alt",
+      "caption",
+      "creator",
+      "license",
+      "licenseUrl",
+      "sourcePageUrl",
+    ]) {
+      if (!String(image[field] ?? "").trim()) {
+        throw new Error(`関連画像の${field}が空です: ${image.termId}`);
+      }
+    }
+    if (!image.path.startsWith("term-images/") || image.path.includes("..")) {
+      throw new Error(`関連画像の保存先が不正です: ${image.path}`);
+    }
+    await stat(path.join(sourceDirectory, image.path));
+  }
+  if (manifest.images.length === 0) {
+    throw new Error("関連画像を1件以上設定してください。");
+  }
+  return manifest;
+}
+
 export async function main() {
   const sourcePath = await findSourcePath();
   const sourceText = await readFile(sourcePath, "utf8");
   const terms = groupTerms(toObjects(parseCsv(sourceText)));
   validateTerms(terms);
+  const termImageManifest = await loadTermImageManifest(terms);
 
   const version = createHash("sha256").update(sourceText).digest("hex").slice(0, 12);
   const relativeOutput = path.relative(projectRoot, outputRoot);
@@ -392,6 +431,10 @@ export async function main() {
     throw new Error("出力先が作業フォルダー内ではありません。");
   }
   await rm(outputRoot, { recursive: true, force: true });
+  await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
+    recursive: true,
+  });
+  await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
 
   const chunks = [];
   for (let offset = 0; offset < terms.length; offset += chunkSize) {

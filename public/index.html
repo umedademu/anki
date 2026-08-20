@@ -9,7 +9,7 @@
     />
     <title>Anki | 三段階世界史学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.028" />
+    <link rel="stylesheet" href="/styles.css?v=0.029" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.028</span>
+        <span class="app-version">v0.029</span>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <div class="subject-name" id="subject-name">世界史</div>
@@ -26,13 +26,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.028｜三段階学習</p>
+        <p class="eyebrow">v0.029｜三段階学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow">v0.028｜学習を始める</p>
+        <p class="eyebrow">v0.029｜学習を始める</p>
         <h1>今回の学習範囲を選ぶ</h1>
         <p class="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -162,7 +162,29 @@
             >
               <span aria-hidden="true">🔊</span>
             </button>
-            <p id="term-overview-text"></p>
+            <div class="term-overview-main" id="term-overview-main">
+              <p id="term-overview-text"></p>
+              <figure class="term-image is-hidden" id="term-image">
+                <a
+                  id="term-image-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img id="term-image-content" alt="" loading="lazy" decoding="async" />
+                </a>
+                <figcaption>
+                  <span id="term-image-caption"></span>
+                  <span class="term-image-credit">
+                    <span id="term-image-creator"></span>
+                    <a
+                      id="term-image-license"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    ></a>
+                  </span>
+                </figcaption>
+              </figure>
+            </div>
             <div class="term-tags is-hidden" id="term-tags" aria-label="分類"></div>
           </aside>
 

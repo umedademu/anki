@@ -384,16 +384,24 @@ async function writeJson(targetPath, value) {
 
 export async function loadTermImageManifest(terms) {
   const manifest = JSON.parse(await readFile(termImageManifestPath, "utf8"));
-  if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.images)) {
+  if (
+    manifest.schemaVersion !== 2 ||
+    !Array.isArray(manifest.assets) ||
+    !Array.isArray(manifest.termFallbacks) ||
+    !Array.isArray(manifest.assignments)
+  ) {
     throw new Error("関連画像データの形式が正しくありません。");
   }
   const termIds = new Set(terms.map((term) => term.id));
-  const imageTermIds = new Set();
-  for (const image of manifest.images) {
-    if (!termIds.has(image.termId) || imageTermIds.has(image.termId)) {
-      throw new Error(`関連画像の用語IDが不正です: ${image.termId}`);
+  const questionIds = new Set(
+    terms.flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)),
+  );
+  const assetIds = new Set();
+  for (const image of manifest.assets) {
+    if (!image.id || assetIds.has(image.id)) {
+      throw new Error(`関連画像の画像IDが不正です: ${image.id}`);
     }
-    imageTermIds.add(image.termId);
+    assetIds.add(image.id);
     for (const field of [
       "path",
       "alt",
@@ -404,7 +412,7 @@ export async function loadTermImageManifest(terms) {
       "sourcePageUrl",
     ]) {
       if (!String(image[field] ?? "").trim()) {
-        throw new Error(`関連画像の${field}が空です: ${image.termId}`);
+        throw new Error(`関連画像の${field}が空です: ${image.id}`);
       }
     }
     if (!image.path.startsWith("term-images/") || image.path.includes("..")) {
@@ -412,8 +420,37 @@ export async function loadTermImageManifest(terms) {
     }
     await stat(path.join(sourceDirectory, image.path));
   }
-  if (manifest.images.length === 0) {
-    throw new Error("関連画像を1件以上設定してください。");
+  const fallbackTermIds = new Set();
+  for (const fallback of manifest.termFallbacks) {
+    if (
+      !termIds.has(fallback.termId) ||
+      fallbackTermIds.has(fallback.termId) ||
+      !assetIds.has(fallback.assetId)
+    ) {
+      throw new Error(`用語の基準画像が不正です: ${fallback.termId}`);
+    }
+    fallbackTermIds.add(fallback.termId);
+  }
+  const assignedQuestionIds = new Set();
+  for (const assignment of manifest.assignments) {
+    if (
+      !questionIds.has(assignment.questionId) ||
+      assignedQuestionIds.has(assignment.questionId) ||
+      !termIds.has(assignment.termId) ||
+      !assetIds.has(assignment.assetId) ||
+      !String(assignment.target ?? "").trim()
+    ) {
+      throw new Error(`問題別画像の割り当てが不正です: ${assignment.questionId}`);
+    }
+    assignedQuestionIds.add(assignment.questionId);
+  }
+  if (
+    fallbackTermIds.size !== termIds.size ||
+    assignedQuestionIds.size !== questionIds.size
+  ) {
+    throw new Error(
+      `関連画像が全用語・全問題に揃っていません: ${fallbackTermIds.size}用語・${assignedQuestionIds.size}問`,
+    );
   }
   return manifest;
 }

@@ -72,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.030") ||
-  !changelog.includes("v0.030") ||
-  !settingsHtml.includes("v0.030")
+  !html.includes("v0.031") ||
+  !changelog.includes("v0.031") ||
+  !settingsHtml.includes("v0.031")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.030"') ||
+  !html.includes('href="/styles.css?v=0.031"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -158,9 +158,10 @@ if (
   !html.includes('id="term-image-content"') ||
   !html.includes('id="term-image-license"') ||
   !app.includes('fetchJson("term-images.json")') ||
-  !app.includes("function renderTermImage(term, visible)") ||
+  !app.includes("function renderQuestionImage(question, visible)") ||
+  !app.includes("const image = state.questionImages.get(question.id)") ||
   !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
-  !app.includes("const showsTermImage = renderTermImage(term, state.answerVisible)") ||
+  !app.includes("const showsTermImage = renderQuestionImage(question, state.answerVisible)") ||
   !styles.includes(".term-overview-main.has-image") ||
   !styles.includes(".term-overview.has-image .term-image img") ||
   !styles.includes("grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr)") ||

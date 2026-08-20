@@ -104,7 +104,7 @@ const state = {
   terms: [],
   termById: new Map(),
   questionById: new Map(),
-  termImages: new Map(),
+  questionImages: new Map(),
   progress: createEmptyProgress(),
   progressKey: "",
   reviewSettings: { ...defaultReviewSettings },
@@ -167,16 +167,28 @@ function getDataUrl(relativePath) {
   return `${dataBaseUrl}/${String(relativePath).replace(/^\/+/, "")}`;
 }
 
-async function loadTermImages() {
+async function loadQuestionImages() {
   try {
     const manifest = await fetchJson("term-images.json");
-    if (manifest.schemaVersion !== 1 || !Array.isArray(manifest.images)) {
+    if (
+      manifest.schemaVersion !== 2 ||
+      !Array.isArray(manifest.assets) ||
+      !Array.isArray(manifest.assignments)
+    ) {
       throw new Error("関連画像データの形式が正しくありません。");
     }
+    const assets = new Map(
+      manifest.assets
+        .filter((image) => image?.id && image?.path)
+        .map((image) => [image.id, image]),
+    );
     return new Map(
-      manifest.images
-        .filter((image) => image?.termId && image?.path)
-        .map((image) => [image.termId, image]),
+      manifest.assignments
+        .filter(
+          (assignment) =>
+            assignment?.questionId && assets.has(assignment?.assetId),
+        )
+        .map((assignment) => [assignment.questionId, assets.get(assignment.assetId)]),
     );
   } catch (error) {
     console.warn("関連画像を読み込めませんでした。画像なしで学習を続けます。", error);
@@ -552,8 +564,8 @@ function renderTermTags(term, question, visible) {
   elements.termTags.classList.toggle("is-hidden", !visible || tags.length === 0);
 }
 
-function renderTermImage(term, visible) {
-  const image = state.termImages.get(term.id);
+function renderQuestionImage(question, visible) {
+  const image = state.questionImages.get(question.id);
   const showsImage = visible && Boolean(image);
   elements.termImage.classList.toggle("is-hidden", !showsImage);
   elements.termOverview.classList.toggle("has-image", showsImage);
@@ -825,7 +837,7 @@ function renderQuestion() {
     elements.termOverviewText,
     integratedExplanation?.answer ?? "",
   );
-  const showsTermImage = renderTermImage(term, state.answerVisible);
+  const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
   renderTermTags(term, question, showsSupplement);
@@ -1071,11 +1083,11 @@ async function start() {
   showOnly(elements.loadingPanel);
   try {
     const { subjectId } = getConfig();
-    const [catalog, termImages] = await Promise.all([
+    const [catalog, questionImages] = await Promise.all([
       fetchJson("index.json"),
-      loadTermImages(),
+      loadQuestionImages(),
     ]);
-    state.termImages = termImages;
+    state.questionImages = questionImages;
     const subjectEntry = catalog.subjects.find((subject) => subject.id === subjectId);
     if (!subjectEntry) {
       throw new Error("指定された科目が見つかりません。");

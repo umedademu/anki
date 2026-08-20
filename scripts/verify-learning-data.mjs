@@ -89,16 +89,29 @@ if (JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms)) {
 if (JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages)) {
   throw new Error("関連画像一覧が元データから正確に生成されていません。");
 }
+const fallbackByTerm = new Map(
+  generatedTermImages.termFallbacks.map((fallback) => [
+    fallback.termId,
+    fallback.assetId,
+  ]),
+);
+const alternateAssignments = generatedTermImages.assignments.filter(
+  (assignment) => assignment.assetId !== fallbackByTerm.get(assignment.termId),
+);
 if (
-  generatedTermImages.images.length !== 20 ||
-  generatedTerms.slice(0, 20).some(
-    (term) => !generatedTermImages.images.some((image) => image.termId === term.id),
-  )
+  generatedTermImages.schemaVersion !== 2 ||
+  generatedTermImages.assets.length < generatedTerms.length ||
+  generatedTermImages.termFallbacks.length !== generatedTerms.length ||
+  generatedTermImages.assignments.length !== generatedQuestionCount ||
+  alternateAssignments.length < 200 ||
+  generatedTermImages.assignments.find(
+    (assignment) => assignment.questionId === "WH-000047-B03",
+  )?.assetId === fallbackByTerm.get("WH-000047")
 ) {
-  throw new Error("試験用画像がシャッフルなしの先頭20語へ揃っていません。");
+  throw new Error("全用語・全問題の固定画像または問題別画像が揃っていません。");
 }
 await Promise.all(
-  generatedTermImages.images.map((image) =>
+  generatedTermImages.assets.map((image) =>
     stat(path.join(dataRoot, image.path)),
   ),
 );
@@ -206,5 +219,5 @@ if (new Set(questionIds).size !== questionIds.length) {
 }
 
 console.log(
-  "検証完了: 300用語・1770問（短答900、逆一問一答570、統合説明300）・関連画像20語",
+  `検証完了: 300用語・1770問（短答900、逆一問一答570、統合説明300）・固定画像${generatedTermImages.assets.length}点（問題別${alternateAssignments.length}問）`,
 );

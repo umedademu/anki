@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "anki-progress-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-20",
+  "workers_dev": true,
+  "preview_urls": false,
+  "vars": {
+    "ALLOWED_ORIGIN": "https://anki-ume.vercel.app"
+  },
+  "secrets": {
+    "required": ["SYNC_TOKEN"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "anki-progress",
+      "database_id": "0a9f1da0-06a7-416b-95a4-db0e98926f77",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

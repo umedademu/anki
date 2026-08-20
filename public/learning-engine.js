@@ -7,19 +7,83 @@ export const stageLabels = {
   complete: "完全習得",
 };
 
-function questionRecord(progress, questionId) {
-  return progress.questions[questionId] ?? {
+export const ratingValues = ["again", "hard", "good", "easy"];
+
+export const defaultReviewSettings = {
+  againSeconds: 60,
+  hardSeconds: 4 * 60 * 60,
+  goodSeconds: 12 * 60 * 60,
+  easySeconds: 6 * 24 * 60 * 60,
+};
+
+const ratingSettingKeys = {
+  again: "againSeconds",
+  hard: "hardSeconds",
+  good: "goodSeconds",
+  easy: "easySeconds",
+};
+
+function clampInteger(value, minimum, maximum, fallback) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(maximum, Math.max(minimum, parsed))
+    : fallback;
+}
+
+export function normalizeReviewSettings(value) {
+  const settings = value && typeof value === "object" ? value : {};
+  return Object.fromEntries(
+    Object.entries(defaultReviewSettings).map(([key, fallback]) => [
+      key,
+      clampInteger(settings[key], 1, 365 * 24 * 60 * 60, fallback),
+    ]),
+  );
+}
+
+function emptyQuestionRecord() {
+  return {
     streak: 0,
     attempts: 0,
     rememberedCount: 0,
+    lastRating: null,
+    lastAnsweredAt: null,
+    nextReviewAt: null,
+    everMastered: false,
   };
+}
+
+function normalizeQuestionRecord(record, masteryTarget = 2) {
+  const source = record && typeof record === "object" ? record : {};
+  const streak = Math.max(0, Number.parseInt(source.streak, 10) || 0);
+  return {
+    streak,
+    attempts: Math.max(0, Number.parseInt(source.attempts, 10) || 0),
+    rememberedCount: Math.max(
+      0,
+      Number.parseInt(source.rememberedCount, 10) || 0,
+    ),
+    lastRating: ratingValues.includes(source.lastRating)
+      ? source.lastRating
+      : null,
+    lastAnsweredAt:
+      typeof source.lastAnsweredAt === "string" ? source.lastAnsweredAt : null,
+    nextReviewAt:
+      typeof source.nextReviewAt === "string" ? source.nextReviewAt : null,
+    everMastered: Boolean(source.everMastered) || streak >= masteryTarget,
+  };
+}
+
+function questionRecord(progress, questionId, masteryTarget = 2) {
+  return progress.questions[questionId]
+    ? normalizeQuestionRecord(progress.questions[questionId], masteryTarget)
+    : emptyQuestionRecord();
 }
 
 export function createEmptyProgress() {
   return { questions: {}, updatedAt: null };
 }
 
-export function normalizeProgress(value) {
+export function normalizeProgress(value, masteryTarget = 2) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     return createEmptyProgress();
   }
@@ -29,43 +93,29 @@ export function normalizeProgress(value) {
       : {};
   return {
     questions: Object.fromEntries(
-      Object.entries(questions).flatMap(([questionId, record]) => {
-        if (!record || typeof record !== "object") {
-          return [];
-        }
-        return [
-          [
-            questionId,
-            {
-              streak: Math.max(0, Number.parseInt(record.streak, 10) || 0),
-              attempts: Math.max(0, Number.parseInt(record.attempts, 10) || 0),
-              rememberedCount: Math.max(
-                0,
-                Number.parseInt(record.rememberedCount, 10) || 0,
-              ),
-            },
-          ],
-        ];
-      }),
+      Object.entries(questions).flatMap(([questionId, record]) =>
+        record && typeof record === "object"
+          ? [[questionId, normalizeQuestionRecord(record, masteryTarget)]]
+          : [],
+      ),
     ),
     updatedAt: typeof value.updatedAt === "string" ? value.updatedAt : null,
   };
 }
 
-export function deserializeProgress(serializedProgress) {
+export function deserializeProgress(serializedProgress, masteryTarget = 2) {
   if (typeof serializedProgress !== "string" || serializedProgress.trim() === "") {
     return createEmptyProgress();
   }
-
   try {
-    return normalizeProgress(JSON.parse(serializedProgress));
+    return normalizeProgress(JSON.parse(serializedProgress), masteryTarget);
   } catch {
     return createEmptyProgress();
   }
 }
 
-export function serializeProgress(progress) {
-  return JSON.stringify(normalizeProgress(progress));
+export function serializeProgress(progress, masteryTarget = 2) {
+  return JSON.stringify(normalizeProgress(progress, masteryTarget));
 }
 
 export function shouldHideTerm(question, answerVisible) {
@@ -106,7 +156,17 @@ export function filterTermsBySelection(
 }
 
 export function isQuestionMastered(progress, questionId, masteryTarget) {
-  return questionRecord(progress, questionId).streak >= masteryTarget;
+  const record = questionRecord(progress, questionId, masteryTarget);
+  return record.everMastered || record.streak >= masteryTarget;
+}
+
+export function isQuestionDue(progress, questionId, now = new Date()) {
+  const record = questionRecord(progress, questionId);
+  if (!record.lastAnsweredAt || !record.nextReviewAt) {
+    return true;
+  }
+  const dueAt = Date.parse(record.nextReviewAt);
+  return !Number.isFinite(dueAt) || dueAt <= now.getTime();
 }
 
 export function getStageStats(term, stage, progress, masteryTarget) {
@@ -124,12 +184,30 @@ export function isStageMastered(term, stage, progress, masteryTarget) {
   return stats.total > 0 && stats.mastered === stats.total;
 }
 
+export function isStageUnlocked(term, stage, progress, masteryTarget) {
+  if (stage === "beginner") {
+    return true;
+  }
+  if (stage === "reverse") {
+    return isStageMastered(term, "beginner", progress, masteryTarget);
+  }
+  if (stage === "integrated") {
+    return isStageMastered(term, "reverse", progress, masteryTarget);
+  }
+  return false;
+}
+
 export function getTermStage(term, progress, masteryTarget) {
-  return (
-    learningStages.find(
-      (stage) => !isStageMastered(term, stage, progress, masteryTarget),
-    ) ?? "complete"
-  );
+  if (isStageMastered(term, "integrated", progress, masteryTarget)) {
+    return "complete";
+  }
+  if (isStageUnlocked(term, "integrated", progress, masteryTarget)) {
+    return "integrated";
+  }
+  if (isStageUnlocked(term, "reverse", progress, masteryTarget)) {
+    return "reverse";
+  }
+  return "beginner";
 }
 
 export function getTermMastery(term, progress, masteryTarget) {
@@ -153,11 +231,8 @@ export function getOverallMastery(
   const masteredQuestions = allQuestions.filter((question) =>
     isQuestionMastered(progress, question.id, masteryTarget),
   ).length;
-  const masteredTerms = terms.filter(
-    (term) =>
-      stages.every((stage) =>
-        isStageMastered(term, stage, progress, masteryTarget),
-      ),
+  const masteredTerms = terms.filter((term) =>
+    stages.every((stage) => isStageMastered(term, stage, progress, masteryTarget)),
   ).length;
   return {
     masteredQuestions,
@@ -172,66 +247,43 @@ export function createQuestionQueue(
   progress,
   masteryTarget,
   selectedStage = "",
+  now = new Date(),
 ) {
-  if (learningStages.includes(selectedStage)) {
+  const stages = learningStages.includes(selectedStage)
+    ? [selectedStage]
+    : learningStages;
+  const tasks = [];
+  for (const stage of stages) {
     const largestStageSize = Math.max(
       0,
-      ...terms.map((term) => term.stages[selectedStage]?.length ?? 0),
+      ...terms.map((term) => term.stages[stage]?.length ?? 0),
     );
-    const tasks = [];
     for (let questionIndex = 0; questionIndex < largestStageSize; questionIndex += 1) {
       for (const term of terms) {
-        const question = term.stages[selectedStage]?.[questionIndex];
         if (
-          question &&
-          !isQuestionMastered(progress, question.id, masteryTarget)
+          !selectedStage &&
+          !isStageUnlocked(term, stage, progress, masteryTarget)
         ) {
-          tasks.push({ termId: term.id, questionId: question.id, stage: selectedStage });
-        }
-      }
-    }
-    return tasks;
-  }
-
-  const tasks = [];
-  const currentStages = new Map(
-    terms.map((term) => [term.id, getTermStage(term, progress, masteryTarget)]),
-  );
-  const largestStageSize = Math.max(
-    0,
-    ...terms.map((term) => {
-      const stage = currentStages.get(term.id);
-      return stage === "complete" ? 0 : term.stages[stage].length;
-    }),
-  );
-
-  for (const stage of learningStages) {
-    for (let questionIndex = 0; questionIndex < largestStageSize; questionIndex += 1) {
-      for (const term of terms) {
-        if (currentStages.get(term.id) !== stage) {
           continue;
         }
-        const question = term.stages[stage][questionIndex];
-        if (
-          question &&
-          !isQuestionMastered(progress, question.id, masteryTarget)
-        ) {
+        const question = term.stages[stage]?.[questionIndex];
+        if (question && isQuestionDue(progress, question.id, now)) {
           tasks.push({ termId: term.id, questionId: question.id, stage });
         }
       }
     }
   }
-
   return tasks;
 }
 
-export function getTasksForCurrentTermStage(term, progress, masteryTarget) {
-  const stage = getTermStage(term, progress, masteryTarget);
-  if (stage === "complete") {
-    return [];
-  }
-  return term.stages[stage]
-    .filter((question) => !isQuestionMastered(progress, question.id, masteryTarget))
+export function getTasksForStage(
+  term,
+  stage,
+  progress,
+  now = new Date(),
+) {
+  return (term.stages[stage] ?? [])
+    .filter((question) => isQuestionDue(progress, question.id, now))
     .map((question) => ({ termId: term.id, questionId: question.id, stage }));
 }
 
@@ -241,46 +293,73 @@ export function enqueueUniqueTasks(queue, tasks, blockedQuestionIds = []) {
     ...blockedQuestionIds,
   ]);
   const uniqueTasks = [];
-
   for (const task of tasks) {
-    if (knownQuestionIds.has(task.questionId)) {
-      continue;
+    if (!knownQuestionIds.has(task.questionId)) {
+      knownQuestionIds.add(task.questionId);
+      uniqueTasks.push(task);
     }
-    knownQuestionIds.add(task.questionId);
-    uniqueTasks.push(task);
   }
-
   return [...queue, ...uniqueTasks];
 }
 
-export function scheduleRetryTask(queue, task, remembered) {
-  const gap = remembered ? 8 : 3;
-  const queueWithoutTask = queue.filter(
-    (queuedTask) => queuedTask.questionId !== task.questionId,
-  );
-  const insertAt = Math.min(gap, queueWithoutTask.length);
-  return [
-    ...queueWithoutTask.slice(0, insertAt),
-    task,
-    ...queueWithoutTask.slice(insertAt),
-  ];
+export function getNextDueAt(
+  terms,
+  progress,
+  masteryTarget,
+  selectedStage = "",
+) {
+  const dates = [];
+  for (const term of terms) {
+    for (const stage of learningStages) {
+      if (
+        selectedStage
+          ? stage !== selectedStage
+          : !isStageUnlocked(term, stage, progress, masteryTarget)
+      ) {
+        continue;
+      }
+      for (const question of term.stages[stage] ?? []) {
+        const nextReviewAt = questionRecord(progress, question.id).nextReviewAt;
+        const timestamp = Date.parse(nextReviewAt ?? "");
+        if (Number.isFinite(timestamp)) {
+          dates.push(timestamp);
+        }
+      }
+    }
+  }
+  return dates.length > 0 ? new Date(Math.min(...dates)).toISOString() : null;
 }
 
 export function rateQuestion(
   progress,
   questionId,
-  remembered,
+  rating,
   masteryTarget,
+  reviewSettings = defaultReviewSettings,
   now = new Date(),
 ) {
-  const previous = questionRecord(progress, questionId);
-  const nextStreak = remembered
-    ? Math.min(masteryTarget, previous.streak + 1)
-    : 0;
+  if (!ratingValues.includes(rating)) {
+    throw new Error(`不明な評価です: ${rating}`);
+  }
+  const settings = normalizeReviewSettings(reviewSettings);
+  const previous = questionRecord(progress, questionId, masteryTarget);
+  const nextStreak =
+    rating === "again"
+      ? 0
+      : rating === "easy"
+        ? masteryTarget
+        : Math.min(masteryTarget, previous.streak + 1);
+  const intervalSeconds = settings[ratingSettingKeys[rating]];
   progress.questions[questionId] = {
     streak: nextStreak,
     attempts: previous.attempts + 1,
-    rememberedCount: previous.rememberedCount + (remembered ? 1 : 0),
+    rememberedCount: previous.rememberedCount + (rating === "again" ? 0 : 1),
+    lastRating: rating,
+    lastAnsweredAt: now.toISOString(),
+    nextReviewAt: new Date(
+      now.getTime() + intervalSeconds * 1000,
+    ).toISOString(),
+    everMastered: previous.everMastered || nextStreak >= masteryTarget,
   };
   progress.updatedAt = now.toISOString();
   return progress.questions[questionId];
@@ -320,9 +399,7 @@ export function restoreRatingUndoSnapshot(progress, snapshot) {
     return null;
   }
   if (snapshot.previousQuestionRecord) {
-    progress.questions[snapshot.questionId] = {
-      ...snapshot.previousQuestionRecord,
-    };
+    progress.questions[snapshot.questionId] = { ...snapshot.previousQuestionRecord };
   } else {
     delete progress.questions[snapshot.questionId];
   }

@@ -9,7 +9,15 @@ const changelog = await readFile(
   path.join(projectRoot, "public", "changelog.html"),
   "utf8",
 );
+const settingsHtml = await readFile(
+  path.join(projectRoot, "public", "settings.html"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
+const cloudProgress = await readFile(
+  path.join(projectRoot, "public", "cloud-progress.js"),
+  "utf8",
+);
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
 const generationPrompt = await readFile(
@@ -36,13 +44,15 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.017") ||
-  !changelog.includes("v0.017")
+  !html.includes('href="/settings.html"') ||
+  !html.includes("v0.018") ||
+  !changelog.includes("v0.018") ||
+  !settingsHtml.includes("v0.018")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.017"') ||
+  !html.includes('href="/styles.css?v=0.018"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -75,9 +85,34 @@ if (
   !app.includes("function goBackOneStep()") ||
   !app.includes("performRightSideAction(true)") ||
   styles.includes(".back-action::before") ||
-  !styles.includes(".back-action,\n  .next-action,\n  .again-action")
+  !styles.includes(".rating-buttons")
 ) {
   throw new Error("一手戻しまたは横向きの左右タップ操作が揃っていません。");
+}
+if (
+  !html.includes('id="incorrect-action"') ||
+  !html.includes('id="hard-action"') ||
+  !html.includes('id="good-action"') ||
+  !html.includes('id="easy-action"') ||
+  !styles.includes("grid-template-columns: repeat(4, minmax(0, 1fr))") ||
+  !app.includes('rateCurrentQuestion("again")') ||
+  !app.includes('rateCurrentQuestion("hard")') ||
+  !app.includes('rateCurrentQuestion("good")') ||
+  !app.includes('rateCurrentQuestion("easy")') ||
+  html.includes('id="again-action"') ||
+  html.includes('id="remembered-action"')
+) {
+  throw new Error("4段階評価または横一列の評価ボタンが揃っていません。");
+}
+if (
+  !settingsHtml.includes('id="review-settings-form"') ||
+  !settingsHtml.includes('id="access-key"') ||
+  !cloudProgress.includes("saveCloudSettings") ||
+  !cloudProgress.includes("saveCloudQuestion") ||
+  !app.includes("loadProgressFromCloud") ||
+  app.includes("window.localStorage.setItem(state.progressKey")
+) {
+  throw new Error("Cloudflare上の学習記録または専用の復習設定ページが揃っていません。");
 }
 if (
   !app.includes(
@@ -145,12 +180,24 @@ if (
 ) {
   throw new Error("本番の学習データ読込先がCloudflareに設定されていません。");
 }
+if (
+  productionConfig.progressApiBaseUrl !==
+  "https://anki-progress-api.umedademu.workers.dev"
+) {
+  throw new Error("本番の学習記録保存先がCloudflareに設定されていません。");
+}
 if (app.includes('config.dataBaseUrl ?? "/data"')) {
   throw new Error("本番でローカルデータへ暗黙に切り替わる処理が残っています。");
 }
 if (localhostConfig.dataBaseUrl !== "/data" || loopbackConfig.dataBaseUrl !== "/data") {
   throw new Error("手元確認だけに限定したローカルデータ設定が見つかりません。");
 }
+if (
+  localhostConfig.progressApiBaseUrl !== "http://localhost:8787" ||
+  loopbackConfig.progressApiBaseUrl !== "http://localhost:8787"
+) {
+  throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
+}
 console.log(
-  "画面構成検証完了: 条件選択画面・更新情報・画面部品・Cloudflare読込設定を確認",
+  "画面構成検証完了: 4段階評価・復習設定・Cloudflare読込保存設定を確認",
 );

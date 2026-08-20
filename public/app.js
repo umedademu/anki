@@ -2,26 +2,34 @@ import {
   createEmptyProgress,
   createQuestionQueue,
   createRatingUndoSnapshot,
+  defaultReviewSettings,
   deserializeProgress,
   enqueueUniqueTasks,
   filterTermsBySelection,
   getIntegratedExplanationQuestion,
   getMacroRegionTags,
+  getNextDueAt,
   getOverallMastery,
   getQuestionPromptForDisplay,
-  getTasksForCurrentTermStage,
+  getTasksForStage,
   getTermMastery,
   getTermStage,
-  isQuestionMastered,
   learningStages,
+  normalizeReviewSettings,
   rateQuestion,
   restoreRatingUndoSnapshot,
-  scheduleRetryTask,
-  serializeProgress,
   shuffleTasks,
   shouldHideTerm,
   stageLabels,
 } from "./learning-engine.js";
+import {
+  deleteCloudQuestion,
+  getStoredAccessKey,
+  importCloudProgress,
+  loadCloudState,
+  resetCloudProgress,
+  saveCloudQuestion,
+} from "./cloud-progress.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
@@ -38,6 +46,7 @@ const elements = {
   selectionSummary: document.querySelector("#selection-summary"),
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
+  cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
   contextCard: document.querySelector("#context-card"),
   stageName: document.querySelector("#stage-name"),
@@ -64,10 +73,14 @@ const elements = {
   actionButtons: document.querySelector("#action-buttons"),
   backAction: document.querySelector("#back-action"),
   nextAction: document.querySelector("#next-action"),
-  againAction: document.querySelector("#again-action"),
-  rememberedAction: document.querySelector("#remembered-action"),
+  ratingButtons: document.querySelector("#rating-buttons"),
+  incorrectAction: document.querySelector("#incorrect-action"),
+  hardAction: document.querySelector("#hard-action"),
+  goodAction: document.querySelector("#good-action"),
+  easyAction: document.querySelector("#easy-action"),
   completionCard: document.querySelector("#completion-card"),
   completionTitle: document.querySelector("#completion-title"),
+  completionMessage: document.querySelector("#completion-message"),
   unlockNotice: document.querySelector("#unlock-notice"),
 };
 
@@ -79,6 +92,10 @@ const state = {
   questionById: new Map(),
   progress: createEmptyProgress(),
   progressKey: "",
+  reviewSettings: { ...defaultReviewSettings },
+  cloudReady: false,
+  cloudError: "",
+  saving: false,
   queue: [],
   currentTask: null,
   answerVisible: false,
@@ -96,11 +113,19 @@ const halfScreenRatingDelay = 400;
 function getConfig() {
   const config = window.ANKI_CONFIG ?? {};
   const dataBaseUrl = String(config.dataBaseUrl ?? "").replace(/\/$/, "");
+  const progressApiBaseUrl = String(config.progressApiBaseUrl ?? "").replace(
+    /\/$/,
+    "",
+  );
   if (!dataBaseUrl) {
     throw new Error("Cloudflareの学習データ読込先が設定されていません。");
   }
+  if (!progressApiBaseUrl) {
+    throw new Error("Cloudflareの学習記録保存先が設定されていません。");
+  }
   return {
     dataBaseUrl,
+    progressApiBaseUrl,
     subjectId: String(config.subjectId ?? "world-history"),
   };
 }
@@ -179,21 +204,57 @@ function fitTextInsideCard(card, textElements, shouldFit = true) {
   });
 }
 
-function loadStoredProgress() {
+function readLegacyProgress() {
   try {
     const saved = window.localStorage.getItem(state.progressKey);
-    state.progress = deserializeProgress(saved);
+    return deserializeProgress(saved, state.subject.masteryTarget);
   } catch {
-    state.progress = createEmptyProgress();
+    return createEmptyProgress();
   }
 }
 
-function saveProgress() {
+function clearLegacyProgress() {
   try {
-    window.localStorage.setItem(state.progressKey, serializeProgress(state.progress));
+    window.localStorage.removeItem(state.progressKey);
   } catch {
-    // 保存できない環境でも、その場の学習は続けられるようにする。
+    // 旧記録を消せない環境でもCloudflare上の記録を優先する。
   }
+}
+
+async function loadProgressFromCloud() {
+  state.cloudReady = false;
+  state.cloudError = "";
+  if (!getStoredAccessKey()) {
+    state.progress = createEmptyProgress();
+    state.reviewSettings = { ...defaultReviewSettings };
+    return;
+  }
+
+  const cloudState = await loadCloudState(
+    state.subject.masteryTarget,
+    state.subject.version,
+  );
+  state.progress = cloudState.progress;
+  state.reviewSettings = normalizeReviewSettings(cloudState.settings);
+
+  const legacyProgress = readLegacyProgress();
+  const missingLegacyQuestions = Object.fromEntries(
+    Object.entries(legacyProgress.questions).filter(
+      ([questionId]) => !(questionId in state.progress.questions),
+    ),
+  );
+  if (Object.keys(missingLegacyQuestions).length > 0) {
+    await importCloudProgress(state.subject.version, {
+      questions: missingLegacyQuestions,
+      updatedAt: legacyProgress.updatedAt,
+    });
+    state.progress.questions = {
+      ...missingLegacyQuestions,
+      ...state.progress.questions,
+    };
+  }
+  clearLegacyProgress();
+  state.cloudReady = true;
 }
 
 function pushHistory(entry) {
@@ -215,8 +276,15 @@ function renderActionControls() {
     "is-hidden",
     !hasQuestion || state.answerVisible,
   );
-  elements.againAction.classList.toggle("is-hidden", !showsRatingActions);
-  elements.rememberedAction.classList.toggle("is-hidden", !showsRatingActions);
+  elements.ratingButtons.classList.toggle("is-hidden", !showsRatingActions);
+  [
+    elements.incorrectAction,
+    elements.hardAction,
+    elements.goodAction,
+    elements.easyAction,
+  ].forEach((button) => {
+    button.disabled = state.saving;
+  });
 }
 
 function revealCurrentAnswer() {
@@ -232,7 +300,10 @@ function revealCurrentAnswer() {
   renderQuestion();
 }
 
-function goBackOneStep() {
+async function goBackOneStep() {
+  if (state.saving) {
+    return;
+  }
   const snapshot = state.history.pop();
   if (!snapshot) {
     renderActionControls();
@@ -255,7 +326,37 @@ function goBackOneStep() {
     state.answerVisible = restored.answerVisible;
     state.answeredThisSession = restored.answeredThisSession;
     state.unlockMessage = restored.unlockMessage;
-    saveProgress();
+    state.saving = true;
+    renderActionControls();
+    try {
+      if (snapshot.previousQuestionRecord) {
+        await saveCloudQuestion(
+          state.subject.version,
+          snapshot.questionId,
+          snapshot.previousQuestionRecord,
+        );
+      } else {
+        await deleteCloudQuestion(state.subject.version, snapshot.questionId);
+      }
+    } catch (error) {
+      const cloudState = await loadCloudState(
+        state.subject.masteryTarget,
+        state.subject.version,
+      ).catch(() => null);
+      if (cloudState) {
+        state.progress = cloudState.progress;
+        state.reviewSettings = cloudState.settings;
+        buildQueue();
+        state.currentTask = state.queue.shift() ?? null;
+        state.answerVisible = false;
+        state.history = [];
+      } else {
+        state.history.push(snapshot);
+      }
+      state.unlockMessage = error.message;
+    } finally {
+      state.saving = false;
+    }
   }
 
   state.answerRevealedAt = 0;
@@ -277,7 +378,7 @@ function performRightSideAction(fromHalfScreen = false) {
   ) {
     return;
   }
-  rateCurrentQuestion(false);
+  rateCurrentQuestion("again");
 }
 
 function loadShufflePreference() {
@@ -406,13 +507,45 @@ function updateSetupPreview() {
     (total, term) => total + (term.stages.beginner?.length ?? 0),
     0,
   );
-  elements.startStudy.disabled = terms.length === 0;
+  elements.startStudy.disabled = terms.length === 0 || !state.cloudReady;
   elements.selectionSummary.textContent =
     terms.length === 0
       ? "条件に合う用語がありません。選択を変更してください。"
       : selectedStage
         ? `${terms.length}語・${questions}問（${questionStyleLabels[selectedStage]}）`
         : `${terms.length}語・${questions}問（開始時は通常の一問一答 ${beginnerQuestions}問）`;
+  elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
+  elements.cloudStatus.innerHTML = state.cloudReady
+    ? "学習記録：Cloudflareに接続済み"
+    : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
+}
+
+function formatInterval(seconds) {
+  if (seconds % 86400 === 0) {
+    return `${seconds / 86400}日後`;
+  }
+  if (seconds % 3600 === 0) {
+    return `${seconds / 3600}時間後`;
+  }
+  if (seconds % 60 === 0) {
+    return `${seconds / 60}分後`;
+  }
+  return `${seconds}秒後`;
+}
+
+function updateRatingIntervals() {
+  const mappings = [
+    [elements.incorrectAction, state.reviewSettings.againSeconds],
+    [elements.hardAction, state.reviewSettings.hardSeconds],
+    [elements.goodAction, state.reviewSettings.goodSeconds],
+    [elements.easyAction, state.reviewSettings.easySeconds],
+  ];
+  for (const [button, seconds] of mappings) {
+    const interval = button.querySelector("small");
+    if (interval) {
+      interval.textContent = formatInterval(seconds);
+    }
+  }
 }
 
 function configureSetup() {
@@ -424,6 +557,7 @@ function configureSetup() {
   setSelectOptions(elements.categoryFilter, categories, "すべてのカテゴリ");
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
+  updateRatingIntervals();
   updateSetupPreview();
 }
 
@@ -549,6 +683,32 @@ function renderCompletion() {
   elements.contextCard.classList.add("is-hidden");
   elements.questionCard.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
+  const nextDueAt = getNextDueAt(
+    state.terms,
+    state.progress,
+    state.subject.masteryTarget,
+    state.selectedStage,
+  );
+  const mastery = getOverallMastery(
+    state.terms,
+    state.progress,
+    state.subject.masteryTarget,
+    activeStages(),
+  );
+  if (nextDueAt) {
+    elements.completionTitle.textContent = "現在、復習時刻を迎えた問題はありません";
+    elements.completionMessage.textContent = `次の復習は ${new Intl.DateTimeFormat("ja-JP", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    }).format(new Date(nextDueAt))} です。`;
+  } else if (mastery.masteredTerms === mastery.totalTerms) {
+    elements.completionMessage.textContent =
+      "今回選んだ範囲を完全習得しました。復習予定は設定した間隔で追加されます。";
+  } else {
+    elements.completionTitle.textContent = "現在出題できる問題はありません";
+    elements.completionMessage.textContent =
+      "前段階の問題を習得すると、次の段階がデッキへ追加されます。";
+  }
   renderActionControls();
   updateOverallProgress();
 }
@@ -563,44 +723,49 @@ function buildQueue() {
   state.queue = state.shuffleEnabled ? shuffleTasks(tasks) : tasks;
 }
 
-function rateCurrentQuestion(remembered) {
+async function rateCurrentQuestion(rating) {
   const term = currentTerm();
   const question = currentQuestion();
-  if (!term || !question || !state.answerVisible) {
+  if (!term || !question || !state.answerVisible || state.saving) {
     return;
   }
 
   const stageBefore = state.selectedStage
     ? null
     : getTermStage(term, state.progress, state.subject.masteryTarget);
-  pushHistory(
-    createRatingUndoSnapshot({
-      progress: state.progress,
-      questionId: question.id,
-      queue: state.queue,
-      currentTask: state.currentTask,
-      answerVisible: state.answerVisible,
-      answeredThisSession: state.answeredThisSession,
-      unlockMessage: state.unlockMessage,
-    }),
-  );
+  const snapshot = createRatingUndoSnapshot({
+    progress: state.progress,
+    questionId: question.id,
+    queue: state.queue,
+    currentTask: state.currentTask,
+    answerVisible: state.answerVisible,
+    answeredThisSession: state.answeredThisSession,
+    unlockMessage: state.unlockMessage,
+  });
   rateQuestion(
     state.progress,
     question.id,
-    remembered,
+    rating,
     state.subject.masteryTarget,
+    state.reviewSettings,
   );
-  saveProgress();
-
-  if (
-    !isQuestionMastered(
-      state.progress,
+  state.saving = true;
+  renderActionControls();
+  try {
+    await saveCloudQuestion(
+      state.subject.version,
       question.id,
-      state.subject.masteryTarget,
-    )
-  ) {
-    state.queue = scheduleRetryTask(state.queue, state.currentTask, remembered);
+      state.progress.questions[question.id],
+    );
+  } catch (error) {
+    restoreRatingUndoSnapshot(state.progress, snapshot);
+    state.unlockMessage = error.message;
+    state.saving = false;
+    renderQuestion();
+    return;
   }
+  state.saving = false;
+  pushHistory(snapshot);
 
   if (!state.selectedStage) {
     const stageAfter = getTermStage(
@@ -612,13 +777,13 @@ function rateCurrentQuestion(remembered) {
       if (stageAfter === "complete") {
         state.unlockMessage = `${term.term}を完全習得しました。`;
       } else {
-        state.unlockMessage = `${term.term}の「${stageLabels[stageAfter]}」を解放しました。`;
+        state.unlockMessage = `${term.term}の「${stageLabels[stageAfter]}」をデッキへ追加しました。`;
         state.queue = enqueueUniqueTasks(
           state.queue,
-          getTasksForCurrentTermStage(
+          getTasksForStage(
             term,
+            stageAfter,
             state.progress,
-            state.subject.masteryTarget,
           ),
           [state.currentTask.questionId],
         );
@@ -638,13 +803,22 @@ function rateCurrentQuestion(remembered) {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-function resetAllProgress() {
-  state.progress = createEmptyProgress();
-  try {
-    window.localStorage.removeItem(state.progressKey);
-  } catch {
-    // 端末内保存が使えなくても画面内の記録は初期化する。
+async function resetAllProgress() {
+  if (!state.cloudReady || state.saving) {
+    return;
   }
+  state.saving = true;
+  elements.resetProgress.disabled = true;
+  try {
+    await resetCloudProgress(state.subject.version);
+  } catch (error) {
+    elements.selectionSummary.textContent = error.message;
+    state.saving = false;
+    elements.resetProgress.disabled = false;
+    return;
+  }
+  state.progress = createEmptyProgress();
+  clearLegacyProgress();
   state.answeredThisSession = 0;
   state.unlockMessage = "";
   state.queue = [];
@@ -652,8 +826,10 @@ function resetAllProgress() {
   state.answerVisible = false;
   state.history = [];
   state.answerRevealedAt = 0;
+  state.saving = false;
+  elements.resetProgress.disabled = false;
   updateSetupPreview();
-  elements.selectionSummary.textContent = `学習記録を初期化しました。${elements.selectionSummary.textContent}`;
+  elements.cloudStatus.textContent = "学習記録をCloudflare上で初期化しました。";
 }
 
 function beginStudy() {
@@ -661,7 +837,7 @@ function beginStudy() {
     state.allTerms,
     selectedFilters(),
   );
-  if (selectedTerms.length === 0) {
+  if (selectedTerms.length === 0 || !state.cloudReady) {
     updateSetupPreview();
     return;
   }
@@ -715,7 +891,14 @@ async function start() {
     state.termById = new Map();
     state.questionById = new Map();
     state.progressKey = `anki-progress:${state.subject.id}:${state.subject.version}:v1`;
-    loadStoredProgress();
+    try {
+      await loadProgressFromCloud();
+    } catch (error) {
+      state.progress = createEmptyProgress();
+      state.reviewSettings = { ...defaultReviewSettings };
+      state.cloudReady = false;
+      state.cloudError = error.message;
+    }
     loadShufflePreference();
     state.queue = [];
     state.currentTask = null;
@@ -724,9 +907,13 @@ async function start() {
     state.unlockMessage = "";
     state.history = [];
     state.answerRevealedAt = 0;
+    state.saving = false;
 
     elements.subjectName.textContent = state.subject.title;
     configureSetup();
+    if (!state.cloudReady && state.cloudError) {
+      elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
+    }
     showOnly(elements.setupPanel);
   } catch (error) {
     elements.errorMessage.textContent = error.message;
@@ -746,12 +933,14 @@ elements.startStudy.addEventListener("click", beginStudy);
 
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
-elements.againAction.addEventListener("click", () => rateCurrentQuestion(false));
-elements.rememberedAction.addEventListener("click", () => rateCurrentQuestion(true));
+elements.incorrectAction.addEventListener("click", () => rateCurrentQuestion("again"));
+elements.hardAction.addEventListener("click", () => rateCurrentQuestion("hard"));
+elements.goodAction.addEventListener("click", () => rateCurrentQuestion("good"));
+elements.easyAction.addEventListener("click", () => rateCurrentQuestion("easy"));
 
 elements.resetProgress.addEventListener("click", () => {
   if (window.confirm("すべての学習記録を初期化しますか？")) {
-    resetAllProgress();
+    void resetAllProgress();
   }
 });
 elements.retryButton.addEventListener("click", start);
@@ -786,10 +975,13 @@ window.addEventListener("keydown", (event) => {
   } else if (state.currentTask && (event.key === " " || event.key === "Enter")) {
     event.preventDefault();
     if (state.answerVisible) {
-      rateCurrentQuestion(true);
+      rateCurrentQuestion("good");
     } else {
       revealCurrentAnswer();
     }
+  } else if (state.currentTask && state.answerVisible && /^[1-4]$/.test(event.key)) {
+    event.preventDefault();
+    rateCurrentQuestion(["again", "hard", "good", "easy"][Number(event.key) - 1]);
   }
 });
 

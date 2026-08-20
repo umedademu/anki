@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Anki世界史学習アプリの復習設定" />
+    <title>Anki | 復習設定</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css?v=0.018" />
+    <script src="/config.js" defer></script>
+    <script src="/settings.js" type="module"></script>
+  </head>
+  <body class="settings-body">
+    <header class="site-header">
+      <a class="brand" href="/">Anki</a>
+      <div class="header-meta">
+        <span class="app-version">v0.018</span>
+        <a class="header-link" href="/changelog.html">更新情報</a>
+        <a class="header-link" href="/">学習画面へ戻る</a>
+      </div>
+    </header>
+
+    <main class="page settings-page">
+      <section class="settings-heading">
+        <p class="eyebrow">復習設定</p>
+        <h1>4段階の復習間隔</h1>
+        <p>評価ごとに、同じ問題を次に出すまでの時間を設定します。</p>
+      </section>
+
+      <section class="settings-card">
+        <h2>Cloudflareへの接続</h2>
+        <p class="settings-description">
+          学習記録はCloudflare上の一人用データへ保存します。新しい端末では、同じアクセスキーを一度入力してください。
+        </p>
+        <label class="access-key-field" for="access-key">
+          <span>アクセスキー</span>
+          <input id="access-key" type="password" autocomplete="current-password" />
+        </label>
+        <button class="secondary-button settings-connect" id="connect-cloud" type="button">
+          接続を確認
+        </button>
+      </section>
+
+      <form class="settings-card" id="review-settings-form">
+        <h2>次の復習までの時間</h2>
+        <div class="interval-list">
+          <label class="interval-row rating-incorrect-row">
+            <strong>× 不正解</strong>
+            <input id="again-value" type="number" min="1" step="1" required />
+            <select id="again-unit" aria-label="不正解の時間単位">
+              <option value="1">秒</option>
+              <option value="60">分</option>
+              <option value="3600">時間</option>
+              <option value="86400">日</option>
+            </select>
+          </label>
+          <label class="interval-row rating-hard-row">
+            <strong>△ 難しい</strong>
+            <input id="hard-value" type="number" min="1" step="1" required />
+            <select id="hard-unit" aria-label="難しいの時間単位">
+              <option value="1">秒</option>
+              <option value="60">分</option>
+              <option value="3600">時間</option>
+              <option value="86400">日</option>
+            </select>
+          </label>
+          <label class="interval-row rating-good-row">
+            <strong>○ 正解</strong>
+            <input id="good-value" type="number" min="1" step="1" required />
+            <select id="good-unit" aria-label="正解の時間単位">
+              <option value="1">秒</option>
+              <option value="60">分</option>
+              <option value="3600">時間</option>
+              <option value="86400">日</option>
+            </select>
+          </label>
+          <label class="interval-row rating-easy-row">
+            <strong>◎ 簡単</strong>
+            <input id="easy-value" type="number" min="1" step="1" required />
+            <select id="easy-unit" aria-label="簡単の時間単位">
+              <option value="1">秒</option>
+              <option value="60">分</option>
+              <option value="3600">時間</option>
+              <option value="86400">日</option>
+            </select>
+          </label>
+        </div>
+        <button class="primary-button settings-save" id="save-settings" type="submit">
+          復習間隔を保存
+        </button>
+      </form>
+
+      <p class="settings-status" id="settings-status" role="status"></p>
+    </main>
+  </body>
+</html>

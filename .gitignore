@@ -1,1 +1,5 @@
 .vercel
+node_modules/
+.wrangler/
+worker/.dev.vars
+worker/.env

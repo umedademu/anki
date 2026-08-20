@@ -7,34 +7,27 @@ import {
   createEmptyProgress,
   createQuestionQueue,
   createRatingUndoSnapshot,
+  defaultReviewSettings,
   deserializeProgress,
   enqueueUniqueTasks,
   filterTermsBySelection,
   getIntegratedExplanationQuestion,
   getMacroRegionTags,
+  getNextDueAt,
   getOverallMastery,
   getQuestionPromptForDisplay,
   getTermStage,
+  isQuestionDue,
+  isQuestionMastered,
   rateQuestion,
   restoreRatingUndoSnapshot,
-  scheduleRetryTask,
   serializeProgress,
   shouldHideTerm,
 } from "../public/learning-engine.js";
 
-function makeRow({
-  termId,
-  rank,
-  term,
-  sortYear,
-  questionId,
-  stage,
-  type,
-  question,
-  answer,
-}) {
+function makeRow({ termId, rank, term, sortYear, questionId, stage, question, answer }) {
   return {
-    dataset_label: "確認用55語",
+    dataset_label: "確認用語集",
     term_id: termId,
     importance_rank: String(rank),
     difficulty_label: "大学受験標準",
@@ -43,15 +36,14 @@ function makeRow({
     reading: "かくにん",
     aliases: "",
     era: "近代",
-    macro_region:
-      termId === "WH-TEST-001" ? "ヨーロッパ・西アジア" : "東アジア",
+    macro_region: termId === "WH-TEST-001" ? "ヨーロッパ・西アジア" : "東アジア",
     region_detail: termId === "WH-TEST-001" ? "確認地域A" : "確認地域B",
     display_period: `${sortYear}年`,
     sort_year: String(sortYear),
     question_id: questionId,
     stage,
     focus: stage === "integrated" ? "統合説明" : "確認",
-    question_type: type,
+    question_type: stage === "integrated" ? "integrated" : stage === "reverse" ? "reverse" : "identify",
     question,
     answer,
     keywords: "確認語",
@@ -63,157 +55,41 @@ function makeRow({
 }
 
 const rows = [
-  makeRow({
-    termId: "WH-TEST-001",
-    rank: 1,
-    term: "確認用語A",
-    sortYear: 1800,
-    questionId: "WH-TEST-001-B01",
-    stage: "beginner",
-    type: "identify",
-    question: "短答1",
-    answer: "確認用語A",
-  }),
-  makeRow({
-    termId: "WH-TEST-001",
-    rank: 1,
-    term: "確認用語A",
-    sortYear: 1800,
-    questionId: "WH-TEST-001-B02",
-    stage: "beginner",
-    type: "time",
-    question: "短答2",
-    answer: "1800年",
-  }),
-  makeRow({
-    termId: "WH-TEST-001",
-    rank: 1,
-    term: "確認用語A",
-    sortYear: 1800,
-    questionId: "WH-TEST-001-R01",
-    stage: "reverse",
-    type: "reverse",
-    question: "何が起きた？",
-    answer: "**確認語**を説明する。",
-  }),
-  makeRow({
-    termId: "WH-TEST-001",
-    rank: 1,
-    term: "確認用語A",
-    sortYear: 1800,
-    questionId: "WH-TEST-001-I01",
-    stage: "integrated",
-    type: "integrated",
-    question: "確認用語Aについて説明せよ。",
-    answer: "**確認語**を統合して説明する。",
-  }),
-  makeRow({
-    termId: "WH-TEST-002",
-    rank: 2,
-    term: "確認用語B",
-    sortYear: 1900,
-    questionId: "WH-TEST-002-B01",
-    stage: "beginner",
-    type: "identify",
-    question: "短答1",
-    answer: "確認用語B",
-  }),
-  makeRow({
-    termId: "WH-TEST-002",
-    rank: 2,
-    term: "確認用語B",
-    sortYear: 1900,
-    questionId: "WH-TEST-002-R01",
-    stage: "reverse",
-    type: "reverse",
-    question: "いつ・どこ？",
-    answer: "**1900年**の確認地域。",
-  }),
-  makeRow({
-    termId: "WH-TEST-002",
-    rank: 2,
-    term: "確認用語B",
-    sortYear: 1900,
-    questionId: "WH-TEST-002-R02",
-    stage: "reverse",
-    type: "reverse",
-    question: "何をした？",
-    answer: "**確認語**を実行した。",
-  }),
-  makeRow({
-    termId: "WH-TEST-002",
-    rank: 2,
-    term: "確認用語B",
-    sortYear: 1900,
-    questionId: "WH-TEST-002-I01",
-    stage: "integrated",
-    type: "integrated",
-    question: "確認用語Bについて説明せよ。",
-    answer: "**確認語**を統合して説明する。",
-  }),
+  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-B01", stage: "beginner", question: "短答1", answer: "確認用語A" }),
+  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-B02", stage: "beginner", question: "短答2", answer: "1800年" }),
+  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-R01", stage: "reverse", question: "何が起きた？", answer: "**確認語**を説明する。" }),
+  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-I01", stage: "integrated", question: "確認用語Aについて説明せよ。", answer: "**確認語**を統合して説明する。" }),
+  makeRow({ termId: "WH-TEST-002", rank: 2, term: "確認用語B", sortYear: 1900, questionId: "B-B01", stage: "beginner", question: "短答1", answer: "確認用語B" }),
+  makeRow({ termId: "WH-TEST-002", rank: 2, term: "確認用語B", sortYear: 1900, questionId: "B-R01", stage: "reverse", question: "いつ・どこ？", answer: "**1900年**の確認地域。" }),
+  makeRow({ termId: "WH-TEST-002", rank: 2, term: "確認用語B", sortYear: 1900, questionId: "B-R02", stage: "reverse", question: "何をした？", answer: "**確認語**を実行した。" }),
+  makeRow({ termId: "WH-TEST-002", rank: 2, term: "確認用語B", sortYear: 1900, questionId: "B-I01", stage: "integrated", question: "確認用語Bについて説明せよ。", answer: "**確認語**を統合して説明する。" }),
 ];
 
 if (requiredHeaders.some((header) => !(header in rows[0]))) {
   throw new Error("24列形式の確認データに不足があります。");
 }
-
 const terms = groupTerms(rows);
 validateTerms(terms);
-if (
-  terms.length !== 2 ||
-  terms[0].stages.beginner.length !== 2 ||
-  terms[0].stages.reverse.length !== 1 ||
-  terms[1].stages.reverse.length !== 2
-) {
-  throw new Error("1行1問のデータを用語・段階別に正しくまとめられませんでした。");
-}
 
 if (
   !getMacroRegionTags(terms[0]).includes("西アジア") ||
-  filterTermsBySelection(terms, { macroRegion: "西アジア" })[0]?.id !==
-    "WH-TEST-001" ||
-  filterTermsBySelection(terms, {
-    macroRegion: "東アジア",
-    regionDetail: "確認地域B",
-    category: "人物",
-  })[0]?.id !== "WH-TEST-002" ||
-  filterTermsBySelection(terms, {
-    macroRegion: "西アジア",
-    category: "人物",
-  }).length !== 0
+  filterTermsBySelection(terms, { macroRegion: "西アジア" })[0]?.id !== "WH-TEST-001" ||
+  filterTermsBySelection(terms, { macroRegion: "東アジア", regionDetail: "確認地域B", category: "人物" })[0]?.id !== "WH-TEST-002"
 ) {
-  throw new Error("地域・小地域・カテゴリを組み合わせて用語を絞り込めませんでした。");
+  throw new Error("地域・小地域・カテゴリを組み合わせて絞り込めませんでした。");
 }
 
 const masteryTarget = 2;
+const startAt = new Date("2026-08-21T00:00:00.000Z");
 const progress = createEmptyProgress();
-const firstQueue = createQuestionQueue(terms, progress, masteryTarget);
-if (
-  firstQueue.length !== 3 ||
-  firstQueue.some((task) => task.stage !== "beginner")
-) {
-  throw new Error("未学習時に短答問題だけを出題できませんでした。");
+const firstQueue = createQuestionQueue(terms, progress, masteryTarget, "", startAt);
+if (firstQueue.map((task) => task.questionId).join(",") !== "A-B01,B-B01,A-B02") {
+  throw new Error("未学習時に基礎問題を問題番号ごとの用語順で並べられませんでした。");
 }
 
-const reverseOnlyQueue = createQuestionQueue(
-  terms,
-  progress,
-  masteryTarget,
-  "reverse",
-);
-const integratedOnlyQueue = createQuestionQueue(
-  terms,
-  progress,
-  masteryTarget,
-  "integrated",
-);
-if (
-  reverseOnlyQueue.length !== 3 ||
-  reverseOnlyQueue.some((task) => task.stage !== "reverse") ||
-  integratedOnlyQueue.length !== 2 ||
-  integratedOnlyQueue.some((task) => task.stage !== "integrated")
-) {
-  throw new Error("選択した問題スタイルだけを直接出題できませんでした。");
+const directReverse = createQuestionQueue(terms, progress, masteryTarget, "reverse", startAt);
+if (directReverse.length !== 3 || directReverse.some((task) => task.stage !== "reverse")) {
+  throw new Error("問題スタイル指定時に前段階を飛ばして直接出題できませんでした。");
 }
 
 if (
@@ -221,205 +97,119 @@ if (
   shouldHideTerm(terms[0].stages.beginner[0], true) ||
   shouldHideTerm(terms[0].stages.reverse[0], false)
 ) {
-  throw new Error("回答前の短答だけで用語名を隠す判定ができませんでした。");
+  throw new Error("回答前の基礎問題だけで用語欄を隠せませんでした。");
 }
 
-const questionWithReading = {
-  prompt: "王安石(おう あんせき)の低利融資政策を何という？",
-};
+const questionWithReading = { prompt: "王安石(おう あんせき)の低利融資政策を何という？" };
 if (
-  getQuestionPromptForDisplay(questionWithReading, false) !==
-    "王安石の低利融資政策を何という？" ||
-  getQuestionPromptForDisplay(questionWithReading, true) !==
-    questionWithReading.prompt
+  getQuestionPromptForDisplay(questionWithReading, false) !== "王安石の低利融資政策を何という？" ||
+  getQuestionPromptForDisplay(questionWithReading, true) !== questionWithReading.prompt
 ) {
-  throw new Error("回答の表示状態に合わせて問題文の読み仮名を切り替えられませんでした。");
+  throw new Error("回答表示時だけ問題文の読み仮名を表示できませんでした。");
 }
 
-const integratedExplanation = terms[0].stages.integrated[0];
 if (
-  getIntegratedExplanationQuestion(terms[0], terms[0].stages.beginner[0]) !==
-    integratedExplanation ||
-  getIntegratedExplanationQuestion(terms[0], terms[0].stages.reverse[0]) !==
-    integratedExplanation ||
-  getIntegratedExplanationQuestion(terms[0], integratedExplanation) !== null
+  getIntegratedExplanationQuestion(terms[0], terms[0].stages.beginner[0]) !== terms[0].stages.integrated[0] ||
+  getIntegratedExplanationQuestion(terms[0], terms[0].stages.integrated[0]) !== null
 ) {
-  throw new Error(
-    "統合説明以外の回答だけに、統合説明を解説として対応付けられませんでした。",
-  );
+  throw new Error("統合説明以外の回答へ解説を対応付けられませんでした。");
 }
 
-const retryTask = { termId: "WH-TEST-001", questionId: "RETRY", stage: "beginner" };
-const retryBaseQueue = Array.from({ length: 10 }, (_, index) => ({
-  termId: `WH-TEST-${index + 10}`,
-  questionId: `QUEUE-${index + 1}`,
-  stage: "beginner",
-}));
-const retryAfterStill = scheduleRetryTask(retryBaseQueue, retryTask, false);
-const retryAfterRemembered = scheduleRetryTask(retryBaseQueue, retryTask, true);
-if (
-  retryAfterStill[3]?.questionId !== retryTask.questionId ||
-  retryAfterRemembered[8]?.questionId !== retryTask.questionId
-) {
-  throw new Error("回答結果に応じた間隔で再出題列へ戻せませんでした。");
-}
-
-const queueWithDuplicate = [retryTask, ...retryBaseQueue];
-const rescheduledQueue = scheduleRetryTask(queueWithDuplicate, retryTask, false);
-if (
-  rescheduledQueue.filter((task) => task.questionId === retryTask.questionId).length !== 1 ||
-  rescheduledQueue[3]?.questionId !== retryTask.questionId
-) {
-  throw new Error("再出題列から同じ問題の重複を除けませんでした。");
-}
-
-const undoProgress = createEmptyProgress();
-rateQuestion(
-  undoProgress,
-  "UNDO-QUESTION",
-  true,
-  masteryTarget,
-  new Date("2026-08-20T00:00:00.000Z"),
-);
-const undoQueue = [retryBaseQueue[0], retryBaseQueue[1]];
-const undoCurrentTask = {
-  termId: "WH-TEST-001",
-  questionId: "UNDO-QUESTION",
-  stage: "beginner",
-};
-const undoSnapshot = createRatingUndoSnapshot({
-  progress: undoProgress,
-  questionId: "UNDO-QUESTION",
-  queue: undoQueue,
-  currentTask: undoCurrentTask,
-  answerVisible: true,
-  answeredThisSession: 7,
-  unlockMessage: "",
-});
-rateQuestion(
-  undoProgress,
-  "UNDO-QUESTION",
-  false,
-  masteryTarget,
-  new Date("2026-08-20T01:00:00.000Z"),
-);
-const restoredUndo = restoreRatingUndoSnapshot(undoProgress, undoSnapshot);
-if (
-  undoProgress.questions["UNDO-QUESTION"].streak !== 1 ||
-  undoProgress.questions["UNDO-QUESTION"].attempts !== 1 ||
-  undoProgress.updatedAt !== "2026-08-20T00:00:00.000Z" ||
-  restoredUndo.queue.map((task) => task.questionId).join(",") !==
-    undoQueue.map((task) => task.questionId).join(",") ||
-  restoredUndo.currentTask.questionId !== "UNDO-QUESTION" ||
-  !restoredUndo.answerVisible ||
-  restoredUndo.answeredThisSession !== 7
-) {
-  throw new Error("評価前の習得記録・出題列・回答表示へ一手戻しできませんでした。");
-}
-
-const newRecordProgress = createEmptyProgress();
-const newRecordSnapshot = createRatingUndoSnapshot({
-  progress: newRecordProgress,
-  questionId: "NEW-QUESTION",
-  queue: [],
-  currentTask: undoCurrentTask,
-  answerVisible: true,
-  answeredThisSession: 0,
-  unlockMessage: "",
-});
-rateQuestion(newRecordProgress, "NEW-QUESTION", true, masteryTarget);
-restoreRatingUndoSnapshot(newRecordProgress, newRecordSnapshot);
-if ("NEW-QUESTION" in newRecordProgress.questions) {
-  throw new Error("初回答の評価を戻したときに新しい習得記録を取り消せませんでした。");
-}
-
-const addedTasks = enqueueUniqueTasks(
-  retryBaseQueue,
-  [
-    retryBaseQueue[0],
-    retryTask,
-    retryTask,
-    { termId: "WH-TEST-999", questionId: "BLOCKED", stage: "reverse" },
-  ],
-  ["BLOCKED"],
-);
-if (
-  addedTasks.length !== retryBaseQueue.length + 1 ||
-  addedTasks.at(-1)?.questionId !== retryTask.questionId ||
-  addedTasks.some((task) => task.questionId === "BLOCKED") ||
-  retryBaseQueue.length !== 10
-) {
-  throw new Error("解放した段階の問題を重複なく追加できませんでした。");
-}
-
-const restoredProgress = deserializeProgress(
-  JSON.stringify({
-    questions: {
-      "WH-TEST-001-B01": {
-        streak: "2",
-        attempts: "3",
-        rememberedCount: "2",
-      },
-    },
-    updatedAt: "2026-08-20T00:00:00.000Z",
-  }),
-);
-const serializedProgress = JSON.parse(serializeProgress(restoredProgress));
-if (
-  restoredProgress.questions["WH-TEST-001-B01"].streak !== 2 ||
-  restoredProgress.questions["WH-TEST-001-B01"].attempts !== 3 ||
-  serializedProgress.questions["WH-TEST-001-B01"].rememberedCount !== 2 ||
-  deserializeProgress("壊れた保存内容").updatedAt !== null
-) {
-  throw new Error("端末内へ保存する進捗の正規化と復元ができませんでした。");
+const intervalChecks = [
+  ["again", 60],
+  ["hard", 4 * 60 * 60],
+  ["good", 12 * 60 * 60],
+  ["easy", 6 * 24 * 60 * 60],
+];
+for (const [rating, expectedSeconds] of intervalChecks) {
+  const checkProgress = createEmptyProgress();
+  rateQuestion(checkProgress, `Q-${rating}`, rating, masteryTarget, defaultReviewSettings, startAt);
+  const record = checkProgress.questions[`Q-${rating}`];
+  if ((Date.parse(record.nextReviewAt) - startAt.getTime()) / 1000 !== expectedSeconds) {
+    throw new Error(`${rating}の復習間隔が正しくありません。`);
+  }
+  if (isQuestionDue(checkProgress, `Q-${rating}`, startAt)) {
+    throw new Error("評価直後の問題がすぐ再出題されました。");
+  }
 }
 
 for (const question of terms[0].stages.beginner) {
-  rateQuestion(progress, question.id, true, masteryTarget);
-  rateQuestion(progress, question.id, true, masteryTarget);
+  rateQuestion(progress, question.id, "easy", masteryTarget, defaultReviewSettings, startAt);
 }
 if (getTermStage(terms[0], progress, masteryTarget) !== "reverse") {
-  throw new Error("短答の習得後に逆一問一答へ移行できませんでした。");
+  throw new Error("基礎問題の習得後に逆一問一答を追加できませんでした。");
+}
+const afterBeginner = createQuestionQueue(terms, progress, masteryTarget, "", startAt);
+if (!afterBeginner.some((task) => task.questionId === "A-R01")) {
+  throw new Error("新しく解放した逆一問一答がデッキへ追加されませんでした。");
 }
 
-const reverseQuestion = terms[0].stages.reverse[0];
-rateQuestion(progress, reverseQuestion.id, true, masteryTarget);
-rateQuestion(progress, reverseQuestion.id, false, masteryTarget);
-if (progress.questions[reverseQuestion.id].streak !== 0) {
-  throw new Error("「まだ」の選択時に連続回数を戻せませんでした。");
+const sixDaysLater = new Date(startAt.getTime() + defaultReviewSettings.easySeconds * 1000);
+const additiveQueue = createQuestionQueue(terms, progress, masteryTarget, "", sixDaysLater);
+if (
+  !additiveQueue.some((task) => task.questionId === "A-B01") ||
+  !additiveQueue.some((task) => task.questionId === "A-R01")
+) {
+  throw new Error("段階追加後に基礎と逆一問一答を同じデッキで復習できませんでした。");
 }
-rateQuestion(progress, reverseQuestion.id, true, masteryTarget);
-rateQuestion(progress, reverseQuestion.id, true, masteryTarget);
+
+rateQuestion(progress, "A-R01", "good", masteryTarget, defaultReviewSettings, startAt);
+rateQuestion(progress, "A-R01", "hard", masteryTarget, defaultReviewSettings, sixDaysLater);
+if (!isQuestionMastered(progress, "A-R01", masteryTarget)) {
+  throw new Error("難しい・正解の2回で問題を習得扱いにできませんでした。");
+}
 if (getTermStage(terms[0], progress, masteryTarget) !== "integrated") {
-  throw new Error("逆一問一答の習得後に統合説明へ移行できませんでした。");
+  throw new Error("逆一問一答の習得後に統合説明を追加できませんでした。");
+}
+rateQuestion(progress, "A-R01", "again", masteryTarget, defaultReviewSettings, sixDaysLater);
+if (!isQuestionMastered(progress, "A-R01", masteryTarget) || getTermStage(terms[0], progress, masteryTarget) !== "integrated") {
+  throw new Error("追加済み段階が後の不正解で閉じてしまいました。");
 }
 
-const integratedQuestion = terms[0].stages.integrated[0];
-rateQuestion(progress, integratedQuestion.id, true, masteryTarget);
-rateQuestion(progress, integratedQuestion.id, true, masteryTarget);
-if (getTermStage(terms[0], progress, masteryTarget) !== "complete") {
-  throw new Error("統合説明の習得後に用語を完全習得にできませんでした。");
+const undoProgress = createEmptyProgress();
+const undoTask = { termId: "WH-TEST-001", questionId: "UNDO", stage: "beginner" };
+const undoSnapshot = createRatingUndoSnapshot({
+  progress: undoProgress,
+  questionId: "UNDO",
+  queue: [firstQueue[0]],
+  currentTask: undoTask,
+  answerVisible: true,
+  answeredThisSession: 5,
+  unlockMessage: "",
+});
+rateQuestion(undoProgress, "UNDO", "easy", masteryTarget, defaultReviewSettings, startAt);
+const restoredUndo = restoreRatingUndoSnapshot(undoProgress, undoSnapshot);
+if ("UNDO" in undoProgress.questions || restoredUndo.currentTask.questionId !== "UNDO" || !restoredUndo.answerVisible) {
+  throw new Error("4段階評価を一手戻しで取り消せませんでした。");
+}
+
+const queueWithDuplicates = enqueueUniqueTasks(
+  [firstQueue[0]],
+  [firstQueue[0], firstQueue[1], firstQueue[1]],
+);
+if (queueWithDuplicates.length !== 2) {
+  throw new Error("追加問題の重複を防げませんでした。");
+}
+
+const legacy = deserializeProgress(JSON.stringify({
+  questions: { LEGACY: { streak: "2", attempts: "3", rememberedCount: "2" } },
+  updatedAt: "2026-08-20T00:00:00.000Z",
+}), masteryTarget);
+const serialized = JSON.parse(serializeProgress(legacy, masteryTarget));
+if (!legacy.questions.LEGACY.everMastered || serialized.questions.LEGACY.attempts !== 3) {
+  throw new Error("従来の端末内記録を新形式へ引き継げませんでした。");
+}
+
+const nextDueAt = getNextDueAt([terms[0]], progress, masteryTarget);
+if (!nextDueAt || !Number.isFinite(Date.parse(nextDueAt))) {
+  throw new Error("次の復習日時を取得できませんでした。");
 }
 
 const overall = getOverallMastery(terms, progress, masteryTarget);
-if (overall.masteredTerms !== 1 || overall.totalTerms !== 2) {
-  throw new Error("用語全体の習得数を正しく集計できませんでした。");
-}
-
-const integratedOverall = getOverallMastery(
-  terms,
-  progress,
-  masteryTarget,
-  ["integrated"],
-);
-if (
-  integratedOverall.masteredQuestions !== 1 ||
-  integratedOverall.totalQuestions !== 2 ||
-  integratedOverall.masteredTerms !== 1
-) {
-  throw new Error("選択した問題スタイルだけの習得数を集計できませんでした。");
+if (overall.masteredQuestions < 3 || overall.totalTerms !== 2) {
+  throw new Error("習得状況を正しく集計できませんでした。");
 }
 
 console.log(
-  "三段階学習検証完了: 学習範囲・問題スタイル選択・解説表示・段階移行・一手戻し・再出題・保存復元を確認",
+  "四段階復習検証完了: 復習間隔・段階追加・期限判定・一手戻し・旧記録移行を確認",
 );

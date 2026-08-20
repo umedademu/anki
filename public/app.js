@@ -55,9 +55,7 @@ const elements = {
   termOverview: document.querySelector("#term-overview"),
   termOverviewText: document.querySelector("#term-overview-text"),
   masteryPanel: document.querySelector("#mastery-panel"),
-  masteryTerm: document.querySelector("#mastery-term"),
   masteryStages: document.querySelector("#mastery-stages"),
-  currentStreak: document.querySelector("#current-streak"),
   actionDock: document.querySelector("#action-dock"),
   revealAction: document.querySelector("#reveal-action"),
   ratingActions: document.querySelector("#rating-actions"),
@@ -329,13 +327,12 @@ function updateOverallProgress() {
   elements.progressBar.style.width = `${percent}%`;
 }
 
-function renderTermMastery(term, question) {
+function renderTermMastery(term) {
   const mastery = getTermMastery(
     term,
     state.progress,
     state.subject.masteryTarget,
   );
-  elements.masteryTerm.textContent = `${term.term}の習得状況`;
   elements.masteryStages.replaceChildren(
     ...learningStages.map((stage) => {
       const item = document.createElement("span");
@@ -345,13 +342,6 @@ function renderTermMastery(term, question) {
       return item;
     }),
   );
-
-  const record = state.progress.questions[question.id] ?? { streak: 0 };
-  const remaining = Math.max(0, state.subject.masteryTarget - record.streak);
-  elements.currentStreak.textContent =
-    remaining === 0
-      ? "この問題は習得済みです。"
-      : `この問題は、あと${remaining}回連続で「覚えた」を選ぶと習得です。`;
 }
 
 function renderQuestion() {
@@ -403,7 +393,7 @@ function renderQuestion() {
   );
 
   if (state.answerVisible) {
-    renderTermMastery(term, question);
+    renderTermMastery(term);
   }
 
   elements.revealAction.classList.toggle("is-hidden", state.answerVisible);

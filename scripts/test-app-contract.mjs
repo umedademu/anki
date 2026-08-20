@@ -30,10 +30,17 @@ if (
   !html.includes('id="setup-panel"') ||
   !html.includes('id="start-study"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.002") ||
-  !changelog.includes("v0.002")
+  !html.includes("v0.003") ||
+  !changelog.includes("v0.003")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  html.includes('id="mastery-term"') ||
+  html.includes('id="current-streak"') ||
+  app.includes("あと${remaining}回連続")
+) {
+  throw new Error("習得件数以外の補足表示が残っています。");
 }
 if (
   html.includes('id="change-conditions"') ||

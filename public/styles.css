@@ -407,13 +407,6 @@ p {
   border-radius: 16px;
 }
 
-.mastery-term {
-  margin: 0 0 11px;
-  color: #5e4d27;
-  font-size: 0.82rem;
-  font-weight: 900;
-}
-
 .mastery-stages {
   display: flex;
   flex-wrap: wrap;
@@ -432,13 +425,6 @@ p {
 .mastery-stages span.is-mastered {
   color: #fff;
   background: #397251;
-}
-
-.current-streak {
-  margin: 11px 0 0;
-  color: #71664f;
-  font-size: 0.72rem;
-  line-height: 1.55;
 }
 
 .unlock-notice {
@@ -974,11 +960,6 @@ p {
     border-radius: 8px;
   }
 
-  .mastery-term {
-    margin: 0 0 3px;
-    font-size: 0.59rem;
-  }
-
   .mastery-stages {
     gap: 4px;
   }
@@ -986,12 +967,6 @@ p {
   .mastery-stages span {
     padding: 2px 6px;
     font-size: 0.52rem;
-  }
-
-  .current-streak {
-    margin: 3px 0 0;
-    font-size: 0.52rem;
-    line-height: 1.15;
   }
 
   .action-dock {

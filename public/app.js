@@ -33,9 +33,6 @@ const elements = {
   setupShuffle: document.querySelector("#setup-shuffle"),
   selectionSummary: document.querySelector("#selection-summary"),
   startStudy: document.querySelector("#start-study"),
-  changeConditions: document.querySelector("#change-conditions"),
-  shuffleToggle: document.querySelector("#shuffle-toggle"),
-  shuffleLabel: document.querySelector("#shuffle-label"),
   resetProgress: document.querySelector("#reset-progress"),
   subjectName: document.querySelector("#subject-name"),
   contextCard: document.querySelector("#context-card"),
@@ -68,9 +65,6 @@ const elements = {
   rememberedAction: document.querySelector("#remembered-action"),
   completionCard: document.querySelector("#completion-card"),
   completionTitle: document.querySelector("#completion-title"),
-  completionChangeConditions: document.querySelector(
-    "#completion-change-conditions",
-  ),
   completionReset: document.querySelector("#completion-reset"),
   unlockNotice: document.querySelector("#unlock-notice"),
 };
@@ -226,12 +220,6 @@ function currentTerm() {
   return state.termById.get(state.currentTask.termId) ?? null;
 }
 
-function updateShuffleButton() {
-  elements.shuffleToggle.setAttribute("aria-pressed", String(state.shuffleEnabled));
-  elements.shuffleLabel.textContent = `シャッフル：${state.shuffleEnabled ? "オン" : "オフ"}`;
-  elements.setupShuffle.checked = state.shuffleEnabled;
-}
-
 function sortedUnique(values) {
   return [...new Set(values.filter(Boolean))].sort((left, right) =>
     left.localeCompare(right, "ja"),
@@ -322,7 +310,7 @@ function configureSetup() {
   setSelectOptions(elements.macroRegionFilter, macroRegions, "すべての大分類");
   setSelectOptions(elements.categoryFilter, categories, "すべてのカテゴリ");
   updateRegionDetailOptions();
-  updateShuffleButton();
+  elements.setupShuffle.checked = state.shuffleEnabled;
   updateSetupPreview();
 }
 
@@ -576,18 +564,8 @@ function beginStudy() {
 
   const questionCount = countQuestions(state.terms);
   elements.completionTitle.textContent = `${state.terms.length}語・${questionCount}問を完全習得しました`;
-  updateShuffleButton();
   renderQuestion();
   showOnly(elements.studyShell);
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-function returnToSetup() {
-  state.currentTask = null;
-  state.answerVisible = false;
-  elements.setupShuffle.checked = state.shuffleEnabled;
-  updateSetupPreview();
-  showOnly(elements.setupPanel);
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -635,7 +613,6 @@ elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
 elements.categoryFilter.addEventListener("change", updateSetupPreview);
 elements.setupShuffle.addEventListener("change", updateSetupPreview);
 elements.startStudy.addEventListener("click", beginStudy);
-elements.changeConditions.addEventListener("click", returnToSetup);
 
 elements.revealAction.addEventListener("click", () => {
   state.answerVisible = true;
@@ -645,24 +622,11 @@ elements.revealAction.addEventListener("click", () => {
 elements.againAction.addEventListener("click", () => rateCurrentQuestion(false));
 elements.rememberedAction.addEventListener("click", () => rateCurrentQuestion(true));
 
-elements.shuffleToggle.addEventListener("click", () => {
-  state.shuffleEnabled = !state.shuffleEnabled;
-  elements.setupShuffle.checked = state.shuffleEnabled;
-  saveShufflePreference();
-  updateShuffleButton();
-  buildQueue();
-  state.currentTask = state.queue.shift() ?? null;
-  state.answerVisible = false;
-  state.answeredThisSession = 0;
-  renderQuestion();
-});
-
 elements.resetProgress.addEventListener("click", () => {
   if (window.confirm("すべての学習記録を初期化しますか？")) {
     resetAllProgress();
   }
 });
-elements.completionChangeConditions.addEventListener("click", returnToSetup);
 elements.completionReset.addEventListener("click", resetAllProgress);
 elements.retryButton.addEventListener("click", start);
 

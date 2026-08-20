@@ -30,10 +30,17 @@ if (
   !html.includes('id="setup-panel"') ||
   !html.includes('id="start-study"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.001") ||
-  !changelog.includes("v0.001")
+  !html.includes("v0.002") ||
+  !changelog.includes("v0.002")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  html.includes('id="change-conditions"') ||
+  html.includes('id="shuffle-toggle"') ||
+  html.includes('id="completion-change-conditions"')
+) {
+  throw new Error("開始後の画面に条件変更またはシャッフル操作が残っています。");
 }
 const configForHostname = (hostname) => {
   const context = { window: { location: { hostname } } };

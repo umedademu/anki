@@ -66,7 +66,7 @@ async function cloudRequest(path, options = {}) {
   return payload;
 }
 
-export async function requestCloudSpeech(text) {
+export async function requestCloudSpeech(text, voice) {
   const accessKey = getStoredAccessKey();
   if (!accessKey) {
     throw new Error("Cloudflareのアクセスキーが登録されていません。");
@@ -78,7 +78,10 @@ export async function requestCloudSpeech(text) {
       Authorization: `Bearer ${accessKey}`,
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ text: String(text ?? "") }),
+    body: JSON.stringify({
+      text: String(text ?? ""),
+      voice: String(voice ?? ""),
+    }),
   });
   if (!response.ok) {
     const payload = await response.json().catch(() => ({}));

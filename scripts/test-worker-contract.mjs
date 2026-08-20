@@ -1,5 +1,6 @@
 import {
   escapeSsml,
+  normalizeAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
@@ -32,7 +33,9 @@ if (
 
 if (
   normalizeSpeechPrompt("  王安石  の政策  ") !== "王安石 の政策" ||
-  escapeSsml("王安石の政策<&\"") !== "王安石の政策&lt;&amp;&quot;"
+  escapeSsml("王安石の政策<&\"") !== "王安石の政策&lt;&amp;&quot;" ||
+  normalizeAzureSpeechVoice("ja-JP-KeitaNeural") !== "ja-JP-KeitaNeural" ||
+  normalizeAzureSpeechVoice("invalid") !== "ja-JP-NanamiNeural"
 ) {
   throw new Error("Azure音声の文章または読み上げ形式を処理できませんでした。");
 }
@@ -49,6 +52,7 @@ for (const invalidPrompt of ["", "あ".repeat(2001)]) {
 }
 
 let azureRequestCount = 0;
+const requestedAzureVoices = [];
 const speechObjects = new Map();
 const speechEnv = {
   ALLOWED_ORIGIN: "https://anki-ume.vercel.app",
@@ -57,6 +61,10 @@ const speechEnv = {
   AZURE_SPEECH_REGION: "japaneast",
   async AZURE_SPEECH_FETCH(url, options) {
     azureRequestCount += 1;
+    const voice = ["ja-JP-KeitaNeural", "ja-JP-NaokiNeural"].find(
+      (candidate) => options.body.includes(`voice name="${candidate}"`),
+    );
+    requestedAzureVoices.push(voice);
     if (
       url !==
         "https://japaneast.tts.speech.microsoft.com/cognitiveservices/v1" ||
@@ -64,7 +72,7 @@ const speechEnv = {
       options.headers["Ocp-Apim-Subscription-Key"] !== "test-azure-key" ||
       options.headers["X-Microsoft-OutputFormat"] !==
         "audio-24khz-48kbitrate-mono-mp3" ||
-      !options.body.includes('voice name="ja-JP-NanamiNeural"') ||
+      !voice ||
       !options.body.includes("王安石の政策")
     ) {
       throw new Error("Azure音声への入力が不正です。");
@@ -84,7 +92,7 @@ const speechEnv = {
     },
   },
 };
-const speechRequest = () =>
+const speechRequest = (voice = "ja-JP-KeitaNeural") =>
   new Request("https://anki-progress-api.example/v1/speech", {
     method: "POST",
     headers: {
@@ -92,10 +100,14 @@ const speechRequest = () =>
       "Content-Type": "application/json",
       Origin: "https://anki-ume.vercel.app",
     },
-    body: JSON.stringify({ text: "王安石の政策" }),
+    body: JSON.stringify({ text: "王安石の政策", voice }),
   });
 const firstSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
 const secondSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
+const alternateSpeechResponse = await worker.fetch(
+  speechRequest("ja-JP-NaokiNeural"),
+  speechEnv,
+);
 if (
   firstSpeechResponse.status !== 200 ||
   firstSpeechResponse.headers.get("Content-Type") !== "audio/mpeg" ||
@@ -103,7 +115,11 @@ if (
   secondSpeechResponse.headers.get("X-Speech-Cache") !== "HIT" ||
   secondSpeechResponse.headers.get("Access-Control-Allow-Origin") !==
     "https://anki-ume.vercel.app" ||
-  azureRequestCount !== 1 ||
+  alternateSpeechResponse.headers.get("X-Speech-Cache") !== "MISS" ||
+  azureRequestCount !== 2 ||
+  requestedAzureVoices.join("|") !==
+    "ja-JP-KeitaNeural|ja-JP-NaokiNeural" ||
+  speechObjects.size !== 2 ||
   new Uint8Array(await secondSpeechResponse.arrayBuffer()).join(",") !== "1,2,3"
 ) {
   throw new Error("Azure音声の生成・再利用・読取許可が不正です。");

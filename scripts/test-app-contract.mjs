@@ -65,14 +65,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.022") ||
-  !changelog.includes("v0.022") ||
-  !settingsHtml.includes("v0.022")
+  !html.includes("v0.023") ||
+  !changelog.includes("v0.023") ||
+  !settingsHtml.includes("v0.023")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.022"') ||
+  !html.includes('href="/styles.css?v=0.023"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -101,12 +101,15 @@ if (
 }
 if (
   !settingsHtml.includes('id="speech-source"') ||
+  !settingsHtml.includes('id="azure-voice"') ||
   !settingsHtml.includes('id="device-voice"') ||
   !settingsHtml.includes('id="speech-rate"') ||
   !settingsHtml.includes('id="preview-speech"') ||
   !settingsApp.includes("getJapaneseVoices") ||
   !settingsApp.includes("saveSpeechSettings") ||
   !speechSettings.includes('source: "cloud"') ||
+  !speechSettings.includes('id: "ja-JP-KeitaNeural"') ||
+  !speechSettings.includes('id: "ja-JP-NaokiNeural"') ||
   !speech.includes("requestCloudAudio") ||
   !speech.includes("onFallback") ||
   !cloudProgress.includes("requestCloudSpeech") ||

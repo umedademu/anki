@@ -4,6 +4,8 @@ import {
   selectJapaneseVoice,
 } from "../public/speech.js";
 import {
+  azureSpeechVoices,
+  defaultAzureSpeechVoiceId,
   getJapaneseVoices,
   getVoiceId,
   loadSpeechSettings,
@@ -51,16 +53,26 @@ const fakeStorage = {
   setItem: (key, value) => storedValues.set(key, value),
 };
 const savedSpeechSettings = saveSpeechSettings(
-  { source: "device", voiceId: "japanese-natural", rate: 0.9 },
+  {
+    source: "device",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    voiceId: "japanese-natural",
+    rate: 0.9,
+  },
   fakeStorage,
 );
 if (
   loadSpeechSettings(fakeStorage).voiceId !== "japanese-natural" ||
+  loadSpeechSettings(fakeStorage).azureVoiceId !== "ja-JP-KeitaNeural" ||
   savedSpeechSettings.rate !== 0.9 ||
   normalizeSpeechSettings({ source: "invalid", rate: 9 }).source !== "cloud" ||
+  normalizeSpeechSettings({ azureVoiceId: "invalid" }).azureVoiceId !==
+    defaultAzureSpeechVoiceId ||
+  azureSpeechVoices.length !== 7 ||
+  azureSpeechVoices.filter((voice) => voice.label.includes("男性")).length !== 3 ||
   normalizeSpeechSettings({ rate: 9 }).rate !== 1.2
 ) {
-  throw new Error("端末ごとの音声設定を安全に保存・復元できませんでした。");
+  throw new Error("Azure・端末音声の設定を安全に保存・復元できませんでした。");
 }
 
 class FakeUtterance {
@@ -150,11 +162,16 @@ const cloudController = createSpeechController({
   AudioPlayer: FakeAudio,
   createObjectUrl: () => `blob:test-${cloudRequests.length}`,
   revokeObjectUrl: (url) => revokedUrls.push(url),
-  requestCloudAudio: async (text) => {
-    cloudRequests.push(text);
+  requestCloudAudio: async (text, voice) => {
+    cloudRequests.push({ text, voice });
     return { type: "audio/mpeg", size: 100 };
   },
-  getSettings: () => ({ source: "cloud", voiceId: "", rate: 1.05 }),
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    voiceId: "",
+    rate: 1.05,
+  }),
   onTargetChange: (target) => cloudTargets.push(target),
 });
 cloudController.speak([
@@ -163,7 +180,11 @@ cloudController.speak([
 ]);
 await new Promise((resolve) => setTimeout(resolve, 0));
 if (
-  cloudRequests.join("|") !== "こうきてい|ていしたいわん" ||
+  cloudRequests.map((request) => request.text).join("|") !==
+    "こうきてい|ていしたいわん" ||
+  cloudRequests.some(
+    (request) => request.voice !== "ja-JP-KeitaNeural",
+  ) ||
   cloudTargets.at(-1) !== "" ||
   revokedUrls.length !== 2
 ) {

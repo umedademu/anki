@@ -11,6 +11,7 @@ import {
 } from "./cloud-progress.js";
 import { createSpeechController } from "./speech.js";
 import {
+  azureSpeechVoices,
   getJapaneseVoices,
   getVoiceId,
   loadSpeechSettings,
@@ -33,6 +34,7 @@ const elements = {
   easyValue: document.querySelector("#easy-value"),
   easyUnit: document.querySelector("#easy-unit"),
   speechSource: document.querySelector("#speech-source"),
+  azureVoice: document.querySelector("#azure-voice"),
   deviceVoice: document.querySelector("#device-voice"),
   speechRate: document.querySelector("#speech-rate"),
   speechRateOutput: document.querySelector("#speech-rate-output"),
@@ -55,6 +57,7 @@ let previewStarted = false;
 function readSpeechForm() {
   return normalizeSpeechSettings({
     source: elements.speechSource.value,
+    azureVoiceId: elements.azureVoice.value,
     voiceId: elements.deviceVoice.value,
     rate: Number(elements.speechRate.value),
   });
@@ -90,9 +93,20 @@ function populateDeviceVoices() {
   elements.deviceVoice.disabled = voices.length === 0;
 }
 
+function populateAzureVoices() {
+  elements.azureVoice.replaceChildren();
+  for (const voice of azureSpeechVoices) {
+    const option = document.createElement("option");
+    option.value = voice.id;
+    option.textContent = voice.label;
+    elements.azureVoice.append(option);
+  }
+}
+
 function fillSpeechForm(settings) {
   speechSettings = normalizeSpeechSettings(settings);
   elements.speechSource.value = speechSettings.source;
+  elements.azureVoice.value = speechSettings.azureVoiceId;
   elements.speechRate.value = String(speechSettings.rate);
   populateDeviceVoices();
   elements.deviceVoice.value = [...elements.deviceVoice.options].some(
@@ -235,6 +249,7 @@ globalThis.speechSynthesis?.addEventListener?.("voiceschanged", populateDeviceVo
 window.addEventListener("pagehide", () => previewController.stop());
 
 fillForm(defaultReviewSettings);
+populateAzureVoices();
 fillSpeechForm(speechSettings);
 if (getStoredAccessKey()) {
   elements.accessKey.placeholder = "保存済み";

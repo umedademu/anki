@@ -126,12 +126,26 @@ function normalizeSpeechPrompt(value) {
   return prompt;
 }
 
-const azureSpeechVoice = "ja-JP-NanamiNeural";
+const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
+const azureSpeechVoices = new Set([
+  defaultAzureSpeechVoice,
+  "ja-JP-AoiNeural",
+  "ja-JP-MayuNeural",
+  "ja-JP-ShioriNeural",
+  "ja-JP-KeitaNeural",
+  "ja-JP-DaichiNeural",
+  "ja-JP-NaokiNeural",
+]);
 const azureSpeechOutputFormat = "audio-24khz-48kbitrate-mono-mp3";
 
-async function speechCacheKey(prompt) {
+function normalizeAzureSpeechVoice(value) {
+  const voice = String(value ?? "");
+  return azureSpeechVoices.has(voice) ? voice : defaultAzureSpeechVoice;
+}
+
+async function speechCacheKey(prompt, voice) {
   const input = new TextEncoder().encode(
-    `azure-speech-v1\0${azureSpeechVoice}\0${prompt}`,
+    `azure-speech-v1\0${voice}\0${prompt}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
   return `speech-cache/azure-speech-v1/${[...digest]
@@ -148,7 +162,7 @@ function escapeSsml(value) {
     .replaceAll("'", "&apos;");
 }
 
-async function generateJapaneseSpeech(env, prompt) {
+async function generateJapaneseSpeech(env, prompt, voice) {
   const region = String(env.AZURE_SPEECH_REGION ?? "").trim().toLowerCase();
   if (!env.AZURE_SPEECH_KEY || !/^[a-z0-9-]+$/.test(region)) {
     throw new Error("Azure音声の接続設定がありません。");
@@ -164,7 +178,7 @@ async function generateJapaneseSpeech(env, prompt) {
         "X-Microsoft-OutputFormat": azureSpeechOutputFormat,
         "User-Agent": "anki-world-history",
       },
-      body: `<speak version="1.0" xml:lang="ja-JP"><voice name="${azureSpeechVoice}">${escapeSsml(prompt)}</voice></speak>`,
+      body: `<speak version="1.0" xml:lang="ja-JP"><voice name="${voice}">${escapeSsml(prompt)}</voice></speak>`,
     },
   );
   if (!response.ok) {
@@ -183,19 +197,20 @@ async function handleSpeech(request, env) {
   }
   const body = await request.json();
   const prompt = normalizeSpeechPrompt(body.text);
-  const key = await speechCacheKey(prompt);
+  const voice = normalizeAzureSpeechVoice(body.voice);
+  const key = await speechCacheKey(prompt, voice);
   const cached = await env.SPEECH_CACHE.get(key);
   if (cached) {
     return new Response(cached.body, {
       headers: audioHeaders(request, env, "HIT"),
     });
   }
-  const audio = await generateJapaneseSpeech(env, prompt);
+  const audio = await generateJapaneseSpeech(env, prompt, voice);
   await env.SPEECH_CACHE.put(key, audio, {
     httpMetadata: { contentType: "audio/mpeg" },
     customMetadata: {
       generatedBy: "azure-speech",
-      voice: azureSpeechVoice,
+      voice,
     },
   });
   return new Response(audio, {
@@ -403,6 +418,7 @@ export default {
 
 export {
   escapeSsml,
+  normalizeAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,

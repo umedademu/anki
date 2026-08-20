@@ -153,7 +153,10 @@ export function createSpeechController({
         return;
       }
       try {
-        const blob = await requestCloudAudio(segment.text);
+        const blob = await requestCloudAudio(
+          segment.text,
+          settings.azureVoiceId,
+        );
         if (ticket !== generation) {
           return;
         }

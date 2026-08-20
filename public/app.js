@@ -556,6 +556,7 @@ function renderTermImage(term, visible) {
   const image = state.termImages.get(term.id);
   const showsImage = visible && Boolean(image);
   elements.termImage.classList.toggle("is-hidden", !showsImage);
+  elements.termOverview.classList.toggle("has-image", showsImage);
   elements.termOverviewMain.classList.toggle("has-image", showsImage);
   elements.termOverviewMain.classList.toggle(
     "image-only",

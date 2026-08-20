@@ -72,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.029") ||
-  !changelog.includes("v0.029") ||
-  !settingsHtml.includes("v0.029")
+  !html.includes("v0.030") ||
+  !changelog.includes("v0.030") ||
+  !settingsHtml.includes("v0.030")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.029"') ||
+  !html.includes('href="/styles.css?v=0.030"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -159,8 +159,11 @@ if (
   !html.includes('id="term-image-license"') ||
   !app.includes('fetchJson("term-images.json")') ||
   !app.includes("function renderTermImage(term, visible)") ||
+  !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
   !app.includes("const showsTermImage = renderTermImage(term, state.answerVisible)") ||
   !styles.includes(".term-overview-main.has-image") ||
+  !styles.includes(".term-overview.has-image .term-image img") ||
+  !styles.includes("grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr)") ||
   !styles.includes(".term-image figcaption") ||
   speechSegmentsBlock.includes("termImage")
 ) {
@@ -239,7 +242,7 @@ if (
 }
 if (
   !styles.includes(".progress-track {\n    height: 3px;\n    margin: 0;\n    grid-row: 2;") ||
-  !styles.includes(".question-card {\n    min-height: 0;\n    padding: 5px 12px;\n    grid-row: 3;") ||
+  !styles.includes(".question-card {\n    display: flex;\n    flex-direction: column;\n    min-height: 0;\n    padding: 5px 12px;\n    grid-row: 3;") ||
   !styles.includes(".action-dock {\n    position: static;\n    min-height: 0;\n    padding: 0;\n    grid-row: 4;")
 ) {
   throw new Error("横向き画面の問題・操作欄に固定の配置行がありません。");

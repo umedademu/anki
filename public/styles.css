@@ -1197,6 +1197,8 @@ body.is-studying .page {
   }
 
   .question-card {
+    display: flex;
+    flex-direction: column;
     min-height: 0;
     padding: 5px 12px;
     grid-row: 3;
@@ -1260,18 +1262,43 @@ body.is-studying .page {
     border-radius: 8px;
   }
 
+  .term-overview.has-image {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
   .term-overview-main.has-image,
   .term-overview-main.image-only {
-    grid-template-columns: minmax(0, 1fr) minmax(120px, 26%);
+    min-height: 0;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr);
     gap: 6px;
+    align-items: stretch;
   }
 
   .term-overview-main.image-only {
-    grid-template-columns: minmax(180px, 42%);
+    grid-template-columns: minmax(260px, 68%);
   }
 
-  .term-image img {
-    height: clamp(64px, 18vh, 105px);
+  .term-overview.has-image .term-image {
+    display: grid;
+    min-height: 0;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .term-overview.has-image .term-image > a {
+    display: grid;
+    min-height: 0;
+    height: 100%;
+    place-items: center;
+  }
+
+  .term-overview.has-image .term-image img {
+    min-height: 0;
+    height: 100%;
+    max-height: 100%;
   }
 
   .term-image figcaption {

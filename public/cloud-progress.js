@@ -1,10 +1,36 @@
 import {
   createEmptyProgress,
+  defaultReviewSettings,
   normalizeProgress,
   normalizeReviewSettings,
 } from "./learning-engine.js";
+import {
+  defaultSpeechSettings,
+  normalizeSpeechSettings,
+} from "./speech-settings.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
+
+export const defaultSharedSettings = Object.freeze({
+  ...defaultReviewSettings,
+  ...defaultSpeechSettings,
+  shuffleEnabled: false,
+  autoSpeechEnabled: true,
+});
+
+export function normalizeSharedSettings(value) {
+  const source = value && typeof value === "object" ? value : {};
+  return {
+    ...normalizeReviewSettings(source),
+    ...normalizeSpeechSettings(source),
+    shuffleEnabled:
+      source.shuffleEnabled === true || source.shuffleEnabled === "true",
+    autoSpeechEnabled:
+      source.autoSpeechEnabled == null
+        ? true
+        : source.autoSpeechEnabled === true || source.autoSpeechEnabled === "true",
+  };
+}
 
 function getApiBaseUrl() {
   const apiBaseUrl = String(window.ANKI_CONFIG?.progressApiBaseUrl ?? "").replace(
@@ -106,7 +132,7 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   const payload = await cloudRequest(`/v1/state${query}`);
   return {
     progress: normalizeProgress(payload.progress ?? createEmptyProgress(), masteryTarget),
-    settings: normalizeReviewSettings(payload.settings),
+    settings: normalizeSharedSettings(payload.settings),
   };
 }
 
@@ -148,8 +174,8 @@ export async function resetCloudProgress(datasetVersion) {
 
 export async function saveCloudSettings(settings) {
   const payload = await cloudRequest("/v1/settings", {
-    method: "PUT",
-    body: JSON.stringify(normalizeReviewSettings(settings)),
+    method: "PATCH",
+    body: JSON.stringify(settings),
   });
-  return normalizeReviewSettings(payload.settings);
+  return normalizeSharedSettings(payload.settings);
 }

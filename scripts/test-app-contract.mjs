@@ -33,6 +33,10 @@ const wrangler = await readFile(
   path.join(projectRoot, "worker", "wrangler.jsonc"),
   "utf8",
 );
+const sharedSettingsMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0003_shared_settings.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -65,14 +69,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.023") ||
-  !changelog.includes("v0.023") ||
-  !settingsHtml.includes("v0.023")
+  !html.includes("v0.024") ||
+  !changelog.includes("v0.024") ||
+  !settingsHtml.includes("v0.024")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.023"') ||
+  !html.includes('href="/styles.css?v=0.024"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -171,6 +175,22 @@ if (
   throw new Error("Cloudflare上の学習記録または専用の復習設定ページが揃っていません。");
 }
 if (
+  !cloudProgress.includes("normalizeSharedSettings") ||
+  !cloudProgress.includes('method: "PATCH"') ||
+  !settingsApp.includes("saveCloudSettings(readSpeechForm())") ||
+  !app.includes("queueSetupPreferenceSave") ||
+  app.includes("anki-shuffle:") ||
+  app.includes("anki-auto-speech:v1") ||
+  !worker.includes("shuffle_enabled") ||
+  !worker.includes("auto_speech_enabled") ||
+  !sharedSettingsMigration.includes("speech_source") ||
+  !sharedSettingsMigration.includes("azure_voice_id") ||
+  !sharedSettingsMigration.includes("device_voice_id") ||
+  !sharedSettingsMigration.includes("speech_rate")
+) {
+  throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
+}
+if (
   !app.includes(
     'document.body.classList.toggle("is-studying", panel === elements.studyShell)',
   ) ||
@@ -255,5 +275,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・Azure音声選択・Cloudflare読込保存設定を確認",
+  "画面構成検証完了: 4段階評価・Azure音声選択・Cloudflare共通設定を確認",
 );

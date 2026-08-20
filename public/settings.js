@@ -144,6 +144,7 @@ const previewController = createSpeechController({
 function setBusy(busy) {
   elements.connectCloud.disabled = busy;
   elements.saveSettings.disabled = busy;
+  elements.saveSpeechSettings.disabled = busy;
 }
 
 function setStatus(message, isError = false) {
@@ -192,9 +193,12 @@ async function connect() {
     }
     const cloudState = await loadCloudState();
     fillForm(cloudState.settings);
+    speechSettings = saveSpeechSettings(cloudState.settings);
+    fillSpeechForm(speechSettings);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
-    setStatus("Cloudflareへ接続しました。学習記録と復習設定を同期できます。");
+    setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
+    setSpeechStatus("Cloudflareから共有設定を読み込みました。");
   } catch (error) {
     setStatus(error.message, true);
   } finally {
@@ -235,13 +239,17 @@ elements.previewSpeech.addEventListener("click", () => {
   ]);
   previewStarted = previewController.currentTarget === "preview";
 });
-elements.saveSpeechSettings.addEventListener("click", () => {
+elements.saveSpeechSettings.addEventListener("click", async () => {
+  setBusy(true);
   try {
-    speechSettings = saveSpeechSettings(readSpeechForm());
+    const saved = await saveCloudSettings(readSpeechForm());
+    speechSettings = saveSpeechSettings(saved);
     fillSpeechForm(speechSettings);
-    setSpeechStatus("この端末の音声設定を保存しました。");
-  } catch {
-    setSpeechStatus("音声設定をこの端末へ保存できませんでした。", true);
+    setSpeechStatus("音声設定をCloudflareへ保存し、端末間で共有しました。");
+  } catch (error) {
+    setSpeechStatus(error.message, true);
+  } finally {
+    setBusy(false);
   }
 });
 

@@ -29,10 +29,11 @@ import {
   loadCloudState,
   resetCloudProgress,
   requestCloudSpeech,
+  saveCloudSettings,
   saveCloudQuestion,
 } from "./cloud-progress.js";
 import { createSpeechController } from "./speech.js";
-import { loadSpeechSettings } from "./speech-settings.js";
+import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
@@ -118,7 +119,8 @@ const state = {
 
 const historyLimit = 200;
 const halfScreenRatingDelay = 400;
-const speechPreferenceKey = "anki-auto-speech:v1";
+let setupPreferenceSave = Promise.resolve();
+let startingStudy = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -245,6 +247,8 @@ async function loadProgressFromCloud() {
   if (!getStoredAccessKey()) {
     state.progress = createEmptyProgress();
     state.reviewSettings = { ...defaultReviewSettings };
+    state.shuffleEnabled = false;
+    state.autoSpeechEnabled = true;
     return;
   }
 
@@ -254,6 +258,9 @@ async function loadProgressFromCloud() {
   );
   state.progress = cloudState.progress;
   state.reviewSettings = normalizeReviewSettings(cloudState.settings);
+  state.shuffleEnabled = cloudState.settings.shuffleEnabled;
+  state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
+  saveSpeechSettings(cloudState.settings);
 
   const legacyProgress = readLegacyProgress();
   const missingLegacyQuestions = Object.fromEntries(
@@ -402,44 +409,23 @@ function performRightSideAction(fromHalfScreen = false) {
   rateCurrentQuestion("again");
 }
 
-function loadShufflePreference() {
-  try {
-    state.shuffleEnabled =
-      window.localStorage.getItem(`anki-shuffle:${state.subject.id}`) === "true";
-  } catch {
-    state.shuffleEnabled = false;
-  }
-}
-
-function saveShufflePreference() {
-  try {
-    window.localStorage.setItem(
-      `anki-shuffle:${state.subject.id}`,
-      String(state.shuffleEnabled),
-    );
-  } catch {
-    // 設定の保存に失敗しても出題は継続する。
-  }
-}
-
-function loadSpeechPreference() {
-  try {
-    const saved = window.localStorage.getItem(speechPreferenceKey);
-    state.autoSpeechEnabled = saved === null ? true : saved === "true";
-  } catch {
-    state.autoSpeechEnabled = true;
-  }
-}
-
-function saveSpeechPreference() {
-  try {
-    window.localStorage.setItem(
-      speechPreferenceKey,
-      String(state.autoSpeechEnabled),
-    );
-  } catch {
-    // 音声設定の保存に失敗しても学習は継続する。
-  }
+function queueSetupPreferenceSave() {
+  state.shuffleEnabled = elements.setupShuffle.checked;
+  state.autoSpeechEnabled = elements.setupSpeech.checked;
+  const patch = {
+    shuffleEnabled: state.shuffleEnabled,
+    autoSpeechEnabled: state.autoSpeechEnabled,
+  };
+  setupPreferenceSave = setupPreferenceSave
+    .catch(() => {})
+    .then(async () => {
+      const saved = await saveCloudSettings(patch);
+      state.shuffleEnabled = saved.shuffleEnabled;
+      state.autoSpeechEnabled = saved.autoSpeechEnabled;
+      elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
+      return saved;
+    });
+  return setupPreferenceSave;
 }
 
 function updateSpeechButtons(activeTarget = "") {
@@ -957,12 +943,26 @@ async function resetAllProgress() {
   elements.cloudStatus.textContent = "学習記録をCloudflare上で初期化しました。";
 }
 
-function beginStudy() {
+async function beginStudy() {
+  if (startingStudy) {
+    return;
+  }
   const selectedTerms = filterTermsBySelection(
     state.allTerms,
     selectedFilters(),
   );
   if (selectedTerms.length === 0 || !state.cloudReady) {
+    updateSetupPreview();
+    return;
+  }
+
+  startingStudy = true;
+  elements.startStudy.disabled = true;
+  try {
+    await queueSetupPreferenceSave();
+  } catch (error) {
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
+    startingStudy = false;
     updateSetupPreview();
     return;
   }
@@ -980,8 +980,6 @@ function beginStudy() {
   state.shuffleEnabled = elements.setupShuffle.checked;
   state.autoSpeechEnabled =
     speechController.supported && elements.setupSpeech.checked;
-  saveShufflePreference();
-  saveSpeechPreference();
   speechController.stop();
   buildQueue();
   state.currentTask = state.queue.shift() ?? null;
@@ -1000,6 +998,7 @@ function beginStudy() {
   showOnly(elements.studyShell);
   autoSpeakQuestion();
   window.scrollTo({ top: 0, behavior: "smooth" });
+  startingStudy = false;
 }
 
 async function start() {
@@ -1026,11 +1025,11 @@ async function start() {
     } catch (error) {
       state.progress = createEmptyProgress();
       state.reviewSettings = { ...defaultReviewSettings };
+      state.shuffleEnabled = false;
+      state.autoSpeechEnabled = true;
       state.cloudReady = false;
       state.cloudError = error.message;
     }
-    loadShufflePreference();
-    loadSpeechPreference();
     state.queue = [];
     state.currentTask = null;
     state.answerVisible = false;
@@ -1059,12 +1058,19 @@ elements.macroRegionFilter.addEventListener("change", () => {
 elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
 elements.categoryFilter.addEventListener("change", updateSetupPreview);
 elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
-elements.setupShuffle.addEventListener("change", updateSetupPreview);
+elements.setupShuffle.addEventListener("change", () => {
+  updateSetupPreview();
+  void queueSetupPreferenceSave().catch((error) => {
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
+  });
+});
 elements.setupSpeech.addEventListener("change", () => {
   state.autoSpeechEnabled = elements.setupSpeech.checked;
-  saveSpeechPreference();
+  void queueSetupPreferenceSave().catch((error) => {
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
+  });
 });
-elements.startStudy.addEventListener("click", beginStudy);
+elements.startStudy.addEventListener("click", () => void beginStudy());
 
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);

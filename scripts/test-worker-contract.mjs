@@ -7,6 +7,7 @@ import {
   normalizeSpeechPrompt,
 } from "../worker/src/index.js";
 import worker from "../worker/src/index.js";
+import { normalizeSharedSettings } from "../public/cloud-progress.js";
 
 if (normalizeDatasetVersion("d5d13f1099e9") !== "d5d13f1099e9") {
   throw new Error("問題集の版を保存範囲として扱えませんでした。");
@@ -130,14 +131,38 @@ const settings = normalizeSettings({
   hardSeconds: 7200,
   goodSeconds: 21600,
   easySeconds: 259200,
+  source: "device",
+  azureVoiceId: "ja-JP-NaokiNeural",
+  voiceId: "device-voice-id",
+  rate: 1.2,
+  shuffleEnabled: true,
+  autoSpeechEnabled: false,
 });
 if (
   settings.againSeconds !== 90 ||
   settings.hardSeconds !== 7200 ||
   settings.goodSeconds !== 21600 ||
-  settings.easySeconds !== 259200
+  settings.easySeconds !== 259200 ||
+  settings.source !== "device" ||
+  settings.azureVoiceId !== "ja-JP-NaokiNeural" ||
+  settings.voiceId !== "device-voice-id" ||
+  settings.rate !== 1.2 ||
+  !settings.shuffleEnabled ||
+  settings.autoSpeechEnabled
 ) {
-  throw new Error("Cloudflareへ保存する復習間隔を正規化できませんでした。");
+  throw new Error("Cloudflareへ保存する共通設定を正規化できませんでした。");
+}
+
+const browserSettings = normalizeSharedSettings(settings);
+if (
+  browserSettings.source !== "device" ||
+  browserSettings.azureVoiceId !== "ja-JP-NaokiNeural" ||
+  browserSettings.voiceId !== "device-voice-id" ||
+  browserSettings.rate !== 1.2 ||
+  !browserSettings.shuffleEnabled ||
+  browserSettings.autoSpeechEnabled
+) {
+  throw new Error("Cloudflareの共通設定をブラウザー側へ反映できませんでした。");
 }
 
 for (const invalid of [
@@ -156,5 +181,5 @@ for (const invalid of [
 }
 
 console.log(
-  "Cloudflare窓口検証完了: 学習記録・復習設定・Azure音声生成を確認",
+  "Cloudflare窓口検証完了: 学習記録・共通設定・Azure音声生成を確認",
 );

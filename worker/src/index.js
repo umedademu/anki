@@ -1,8 +1,25 @@
+const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
+const azureSpeechVoices = new Set([
+  defaultAzureSpeechVoice,
+  "ja-JP-AoiNeural",
+  "ja-JP-MayuNeural",
+  "ja-JP-ShioriNeural",
+  "ja-JP-KeitaNeural",
+  "ja-JP-DaichiNeural",
+  "ja-JP-NaokiNeural",
+]);
+
 const defaultSettings = {
   againSeconds: 60,
   hardSeconds: 4 * 60 * 60,
   goodSeconds: 12 * 60 * 60,
   easySeconds: 6 * 24 * 60 * 60,
+  source: "cloud",
+  azureVoiceId: defaultAzureSpeechVoice,
+  voiceId: "",
+  rate: 1,
+  shuffleEnabled: false,
+  autoSpeechEnabled: true,
 };
 
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
@@ -17,7 +34,8 @@ function corsHeaders(request, env) {
   if (origin && origin === env.ALLOWED_ORIGIN) {
     headers["Access-Control-Allow-Origin"] = origin;
     headers["Access-Control-Allow-Headers"] = "Authorization, Content-Type";
-    headers["Access-Control-Allow-Methods"] = "GET, PUT, POST, DELETE, OPTIONS";
+    headers["Access-Control-Allow-Methods"] =
+      "GET, PUT, PATCH, POST, DELETE, OPTIONS";
     headers["Access-Control-Max-Age"] = "86400";
   }
   return headers;
@@ -67,6 +85,13 @@ function integer(value, fallback, minimum = 0, maximum = 1_000_000_000) {
     : fallback;
 }
 
+function decimal(value, fallback, minimum, maximum) {
+  const parsed = Number(value);
+  return Number.isFinite(parsed)
+    ? Math.min(maximum, Math.max(minimum, parsed))
+    : fallback;
+}
+
 function optionalDate(value) {
   if (value == null || value === "") {
     return null;
@@ -99,12 +124,39 @@ function normalizeQuestionRecord(value) {
 
 function normalizeSettings(value) {
   const source = value && typeof value === "object" ? value : {};
-  return Object.fromEntries(
-    Object.entries(defaultSettings).map(([key, fallback]) => [
-      key,
-      integer(source[key], fallback, 1, 365 * 24 * 60 * 60),
-    ]),
-  );
+  return {
+    againSeconds: integer(
+      source.againSeconds,
+      defaultSettings.againSeconds,
+      1,
+      365 * 24 * 60 * 60,
+    ),
+    hardSeconds: integer(
+      source.hardSeconds,
+      defaultSettings.hardSeconds,
+      1,
+      365 * 24 * 60 * 60,
+    ),
+    goodSeconds: integer(
+      source.goodSeconds,
+      defaultSettings.goodSeconds,
+      1,
+      365 * 24 * 60 * 60,
+    ),
+    easySeconds: integer(
+      source.easySeconds,
+      defaultSettings.easySeconds,
+      1,
+      365 * 24 * 60 * 60,
+    ),
+    source: source.source === "device" ? "device" : "cloud",
+    azureVoiceId: normalizeAzureSpeechVoice(source.azureVoiceId),
+    voiceId: String(source.voiceId ?? "").slice(0, 500),
+    rate: decimal(source.rate, 1, 0.7, 1.2),
+    shuffleEnabled: source.shuffleEnabled === true,
+    autoSpeechEnabled:
+      source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
+  };
 }
 
 function normalizeDatasetVersion(value) {
@@ -126,16 +178,6 @@ function normalizeSpeechPrompt(value) {
   return prompt;
 }
 
-const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
-const azureSpeechVoices = new Set([
-  defaultAzureSpeechVoice,
-  "ja-JP-AoiNeural",
-  "ja-JP-MayuNeural",
-  "ja-JP-ShioriNeural",
-  "ja-JP-KeitaNeural",
-  "ja-JP-DaichiNeural",
-  "ja-JP-NaokiNeural",
-]);
 const azureSpeechOutputFormat = "audio-24khz-48kbitrate-mono-mp3";
 
 function normalizeAzureSpeechVoice(value) {
@@ -255,7 +297,9 @@ async function readState(env, datasetVersion) {
        FROM question_progress WHERE dataset_version = ?`,
     ).bind(datasetVersion).all(),
     env.DB.prepare(
-      `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds, updated_at
+      `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
+        speech_source, azure_voice_id, device_voice_id, speech_rate,
+        shuffle_enabled, auto_speech_enabled, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
   ]);
@@ -287,10 +331,56 @@ async function readState(env, datasetVersion) {
           hardSeconds: settingsRow.hard_seconds,
           goodSeconds: settingsRow.good_seconds,
           easySeconds: settingsRow.easy_seconds,
+          source: settingsRow.speech_source,
+          azureVoiceId: settingsRow.azure_voice_id,
+          voiceId: settingsRow.device_voice_id,
+          rate: settingsRow.speech_rate,
+          shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
+          autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
           updatedAt: settingsRow.updated_at,
         }
       : defaultSettings,
   };
+}
+
+async function saveSettings(env, patch) {
+  const current = (await readState(env, "__settings_only__")).settings;
+  const settings = normalizeSettings({ ...current, ...patch });
+  const updatedAt = new Date().toISOString();
+  await env.DB.prepare(
+    `INSERT INTO review_settings (
+      profile_id, again_seconds, hard_seconds, good_seconds, easy_seconds,
+      speech_source, azure_voice_id, device_voice_id, speech_rate,
+      shuffle_enabled, auto_speech_enabled, updated_at
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(profile_id) DO UPDATE SET
+      again_seconds = excluded.again_seconds,
+      hard_seconds = excluded.hard_seconds,
+      good_seconds = excluded.good_seconds,
+      easy_seconds = excluded.easy_seconds,
+      speech_source = excluded.speech_source,
+      azure_voice_id = excluded.azure_voice_id,
+      device_voice_id = excluded.device_voice_id,
+      speech_rate = excluded.speech_rate,
+      shuffle_enabled = excluded.shuffle_enabled,
+      auto_speech_enabled = excluded.auto_speech_enabled,
+      updated_at = excluded.updated_at`,
+  )
+    .bind(
+      settings.againSeconds,
+      settings.hardSeconds,
+      settings.goodSeconds,
+      settings.easySeconds,
+      settings.source,
+      settings.azureVoiceId,
+      settings.voiceId,
+      settings.rate,
+      settings.shuffleEnabled ? 1 : 0,
+      settings.autoSpeechEnabled ? 1 : 0,
+      updatedAt,
+    )
+    .run();
+  return { ...settings, updatedAt };
 }
 
 async function handleRequest(request, env) {
@@ -378,29 +468,16 @@ async function handleRequest(request, env) {
     return json(request, env, { ok: true });
   }
 
-  if (url.pathname === "/v1/settings" && request.method === "PUT") {
-    const settings = normalizeSettings(await request.json());
-    const updatedAt = new Date().toISOString();
-    await env.DB.prepare(
-      `INSERT INTO review_settings (
-        profile_id, again_seconds, hard_seconds, good_seconds, easy_seconds, updated_at
-      ) VALUES (1, ?, ?, ?, ?, ?)
-      ON CONFLICT(profile_id) DO UPDATE SET
-        again_seconds = excluded.again_seconds,
-        hard_seconds = excluded.hard_seconds,
-        good_seconds = excluded.good_seconds,
-        easy_seconds = excluded.easy_seconds,
-        updated_at = excluded.updated_at`,
-    )
-      .bind(
-        settings.againSeconds,
-        settings.hardSeconds,
-        settings.goodSeconds,
-        settings.easySeconds,
-        updatedAt,
-      )
-      .run();
-    return json(request, env, { ok: true, settings: { ...settings, updatedAt } });
+  if (
+    url.pathname === "/v1/settings" &&
+    ["PATCH", "PUT"].includes(request.method)
+  ) {
+    const patch = await request.json();
+    if (!patch || typeof patch !== "object" || Array.isArray(patch)) {
+      return json(request, env, { error: "設定の形式が正しくありません。" }, 400);
+    }
+    const settings = await saveSettings(env, patch);
+    return json(request, env, { ok: true, settings });
   }
 
   return json(request, env, { error: "該当する処理がありません。" }, 404);

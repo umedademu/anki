@@ -347,6 +347,7 @@ body.is-studying .page {
   margin: 0;
   color: #29362e;
   font-size: clamp(1.05rem, 2vw, 1.18rem);
+  font-weight: 850;
   line-height: 1.75;
 }
 

@@ -779,6 +779,7 @@ p {
     display: grid;
     min-height: 0;
     padding: 3px 10px;
+    grid-row: 1;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
     gap: 1px 12px;
@@ -817,11 +818,13 @@ p {
   .progress-track {
     height: 3px;
     margin: 0;
+    grid-row: 2;
   }
 
   .question-card {
     min-height: 0;
     padding: 5px 12px;
+    grid-row: 3;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: none;
@@ -915,6 +918,7 @@ p {
     position: static;
     min-height: 0;
     padding: 0;
+    grid-row: 4;
     background: none;
   }
 

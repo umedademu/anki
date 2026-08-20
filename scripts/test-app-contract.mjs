@@ -32,10 +32,17 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.007") ||
-  !changelog.includes("v0.007")
+  !html.includes("v0.008") ||
+  !changelog.includes("v0.008")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !styles.includes(".progress-track {\n    height: 3px;\n    margin: 0;\n    grid-row: 2;") ||
+  !styles.includes(".question-card {\n    min-height: 0;\n    padding: 5px 12px;\n    grid-row: 3;") ||
+  !styles.includes(".action-dock {\n    position: static;\n    min-height: 0;\n    padding: 0;\n    grid-row: 4;")
+) {
+  throw new Error("横向き画面の問題・操作欄に固定の配置行がありません。");
 }
 if (
   !app.includes('question.stage === "beginner"') ||

@@ -6,7 +6,8 @@ import {
 } from "./speech-settings.js";
 
 const annotatedReadingPattern =
-  /([^\s。、！？「」『』【】（）()]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
+  /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー＝・0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
+const remainingReadingPattern = /\([\p{Script=Hiragana}ー・\s]+\)/gu;
 
 export function prepareSpeechText(value) {
   let text = String(value ?? "").replaceAll("**", "");
@@ -20,6 +21,7 @@ export function prepareSpeechText(value) {
 
   return text
     .replace(annotatedReadingPattern, (_, __, reading) => reading)
+    .replace(remainingReadingPattern, "")
     .replace(/[\r\n]+/g, "。")
     .replace(/[|]/g, "、")
     .replace(/〜/g, "から")

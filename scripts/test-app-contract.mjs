@@ -13,6 +13,26 @@ const settingsHtml = await readFile(
   path.join(projectRoot, "public", "settings.html"),
   "utf8",
 );
+const settingsApp = await readFile(
+  path.join(projectRoot, "public", "settings.js"),
+  "utf8",
+);
+const speech = await readFile(
+  path.join(projectRoot, "public", "speech.js"),
+  "utf8",
+);
+const speechSettings = await readFile(
+  path.join(projectRoot, "public", "speech-settings.js"),
+  "utf8",
+);
+const worker = await readFile(
+  path.join(projectRoot, "worker", "src", "index.js"),
+  "utf8",
+);
+const wrangler = await readFile(
+  path.join(projectRoot, "worker", "wrangler.jsonc"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -45,14 +65,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.020") ||
-  !changelog.includes("v0.020") ||
-  !settingsHtml.includes("v0.020")
+  !html.includes("v0.021") ||
+  !changelog.includes("v0.021") ||
+  !settingsHtml.includes("v0.021")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.020"') ||
+  !html.includes('href="/styles.css?v=0.021"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -78,6 +98,24 @@ if (
   !styles.includes(".speech-button")
 ) {
   throw new Error("問題・回答・解説の音声読み上げ操作が揃っていません。");
+}
+if (
+  !settingsHtml.includes('id="speech-source"') ||
+  !settingsHtml.includes('id="device-voice"') ||
+  !settingsHtml.includes('id="speech-rate"') ||
+  !settingsHtml.includes('id="preview-speech"') ||
+  !settingsApp.includes("getJapaneseVoices") ||
+  !settingsApp.includes("saveSpeechSettings") ||
+  !speechSettings.includes('source: "cloud"') ||
+  !speech.includes("requestCloudAudio") ||
+  !speech.includes("onFallback") ||
+  !cloudProgress.includes("requestCloudSpeech") ||
+  !worker.includes('url.pathname === "/v1/speech"') ||
+  !worker.includes('"@cf/myshell-ai/melotts"') ||
+  !wrangler.includes('"binding": "AI"') ||
+  !wrangler.includes('"binding": "SPEECH_CACHE"')
+) {
+  throw new Error("Cloudflare音声と端末音声を選択・自動切替する構成が揃っていません。");
 }
 if (
   html.includes('class="answer-label"') ||
@@ -212,5 +250,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・復習設定・Cloudflare読込保存設定を確認",
+  "画面構成検証完了: 4段階評価・音声選択・Cloudflare読込保存設定を確認",
 );

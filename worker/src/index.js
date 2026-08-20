@@ -23,6 +23,14 @@ function corsHeaders(request, env) {
   return headers;
 }
 
+function audioHeaders(request, env, cacheStatus) {
+  const headers = corsHeaders(request, env);
+  headers["Content-Type"] = "audio/mpeg";
+  headers["Cache-Control"] = "private, max-age=604800";
+  headers["X-Speech-Cache"] = cacheStatus;
+  return headers;
+}
+
 function json(request, env, payload, status = 200) {
   return new Response(JSON.stringify(payload), {
     status,
@@ -105,6 +113,88 @@ function normalizeDatasetVersion(value) {
     throw new Error("問題集の版が正しくありません。");
   }
   return datasetVersion;
+}
+
+function normalizeSpeechPrompt(value) {
+  const prompt = String(value ?? "").replace(/\s+/g, " ").trim();
+  if (!prompt) {
+    throw new Error("読み上げる文章が空です。");
+  }
+  if (prompt.length > 2000) {
+    throw new Error("一度に読み上げられる文章は2000文字までです。");
+  }
+  return prompt;
+}
+
+async function speechCacheKey(prompt) {
+  const input = new TextEncoder().encode(`melotts-jp-v1\0${prompt}`);
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
+  return `speech-cache/melotts-jp-v1/${[...digest]
+    .map((value) => value.toString(16).padStart(2, "0"))
+    .join("")}.mp3`;
+}
+
+function decodeBase64(value) {
+  const binary = atob(value);
+  return Uint8Array.from(binary, (character) => character.charCodeAt(0));
+}
+
+async function audioBytesFrom(result) {
+  if (result instanceof Response) {
+    return new Uint8Array(await result.arrayBuffer());
+  }
+  if (result instanceof ReadableStream) {
+    return new Uint8Array(await new Response(result).arrayBuffer());
+  }
+  if (result instanceof ArrayBuffer) {
+    return new Uint8Array(result);
+  }
+  if (ArrayBuffer.isView(result)) {
+    return new Uint8Array(result.buffer, result.byteOffset, result.byteLength);
+  }
+  const audio = result?.audio ?? result?.data;
+  if (typeof audio === "string") {
+    return decodeBase64(audio.includes(",") ? audio.split(",").at(-1) : audio);
+  }
+  if (Array.isArray(audio)) {
+    return Uint8Array.from(audio);
+  }
+  throw new Error("Cloudflareから音声データを受け取れませんでした。");
+}
+
+async function generateJapaneseSpeech(env, prompt) {
+  const result = await env.AI.run("@cf/myshell-ai/melotts", {
+    prompt,
+    lang: "JP",
+  });
+  const audio = await audioBytesFrom(result);
+  if (audio.byteLength === 0) {
+    throw new Error("Cloudflareが空の音声を返しました。");
+  }
+  return audio;
+}
+
+async function handleSpeech(request, env) {
+  if (!env.AI || !env.SPEECH_CACHE) {
+    throw new Error("Cloudflare音声の接続設定がありません。");
+  }
+  const body = await request.json();
+  const prompt = normalizeSpeechPrompt(body.text);
+  const key = await speechCacheKey(prompt);
+  const cached = await env.SPEECH_CACHE.get(key);
+  if (cached) {
+    return new Response(cached.body, {
+      headers: audioHeaders(request, env, "HIT"),
+    });
+  }
+  const audio = await generateJapaneseSpeech(env, prompt);
+  await env.SPEECH_CACHE.put(key, audio, {
+    httpMetadata: { contentType: "audio/mpeg" },
+    customMetadata: { generatedBy: "@cf/myshell-ai/melotts" },
+  });
+  return new Response(audio, {
+    headers: audioHeaders(request, env, "MISS"),
+  });
 }
 
 function progressStatement(env, datasetVersion, questionId, record, updatedAt) {
@@ -194,6 +284,10 @@ async function handleRequest(request, env) {
   }
   if (!(await isAuthorized(request, env))) {
     return json(request, env, { error: "認証に失敗しました。" }, 401);
+  }
+
+  if (url.pathname === "/v1/speech" && request.method === "POST") {
+    return handleSpeech(request, env);
   }
 
   if (url.pathname === "/v1/state" && request.method === "GET") {
@@ -301,4 +395,10 @@ export default {
   },
 };
 
-export { normalizeDatasetVersion, normalizeQuestionRecord, normalizeSettings };
+export {
+  audioBytesFrom,
+  normalizeDatasetVersion,
+  normalizeQuestionRecord,
+  normalizeSettings,
+  normalizeSpeechPrompt,
+};

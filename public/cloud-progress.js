@@ -66,6 +66,36 @@ async function cloudRequest(path, options = {}) {
   return payload;
 }
 
+export async function requestCloudSpeech(text) {
+  const accessKey = getStoredAccessKey();
+  if (!accessKey) {
+    throw new Error("Cloudflareのアクセスキーが登録されていません。");
+  }
+  const response = await fetch(`${getApiBaseUrl()}/v1/speech`, {
+    method: "POST",
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${accessKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ text: String(text ?? "") }),
+  });
+  if (!response.ok) {
+    const payload = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      throw new Error("Cloudflareのアクセスキーが正しくありません。");
+    }
+    throw new Error(
+      payload.error || `Cloudflare音声の生成に失敗しました（${response.status}）。`,
+    );
+  }
+  const audio = await response.blob();
+  if (!audio.type.startsWith("audio/") || audio.size === 0) {
+    throw new Error("Cloudflareから音声を受け取れませんでした。");
+  }
+  return audio;
+}
+
 export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   const query = datasetVersion
     ? `?dataset=${encodeURIComponent(datasetVersion)}`

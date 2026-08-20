@@ -28,9 +28,11 @@ import {
   importCloudProgress,
   loadCloudState,
   resetCloudProgress,
+  requestCloudSpeech,
   saveCloudQuestion,
 } from "./cloud-progress.js";
 import { createSpeechController } from "./speech.js";
+import { loadSpeechSettings } from "./speech-settings.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
@@ -118,6 +120,8 @@ const historyLimit = 200;
 const halfScreenRatingDelay = 400;
 const speechPreferenceKey = "anki-auto-speech:v1";
 const speechController = createSpeechController({
+  requestCloudAudio: requestCloudSpeech,
+  getSettings: loadSpeechSettings,
   onTargetChange: updateSpeechButtons,
 });
 

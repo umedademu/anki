@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Anki世界史学習アプリの復習設定" />
-    <title>Anki | 復習設定</title>
+    <meta name="description" content="Anki世界史学習アプリの復習・音声設定" />
+    <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.020" />
+    <link rel="stylesheet" href="/styles.css?v=0.021" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.020</span>
+        <span class="app-version">v0.021</span>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -22,9 +22,9 @@
 
     <main class="page settings-page">
       <section class="settings-heading">
-        <p class="eyebrow">復習設定</p>
-        <h1>4段階の復習間隔</h1>
-        <p>評価ごとに、同じ問題を次に出すまでの時間を設定します。</p>
+        <p class="eyebrow">設定</p>
+        <h1>復習と音声読み上げ</h1>
+        <p>復習間隔と、学習中に使用する日本語音声を設定します。</p>
       </section>
 
       <section class="settings-card">
@@ -39,6 +39,38 @@
         <button class="secondary-button settings-connect" id="connect-cloud" type="button">
           接続を確認
         </button>
+      </section>
+
+      <section class="settings-card speech-settings-card">
+        <h2>音声読み上げ</h2>
+        <p class="settings-description">
+          自然さを優先するCloudflare音声と、この端末で利用できる日本語音声を選択できます。Cloudflare音声を再生できない場合は、選択した端末音声へ自動的に切り替わります。
+        </p>
+        <div class="speech-settings-list">
+          <label class="speech-setting-row" for="speech-source">
+            <span>優先する音声</span>
+            <select id="speech-source">
+              <option value="cloud">Cloudflare音声（自然さ優先）</option>
+              <option value="device">端末内音声（通信不要）</option>
+            </select>
+          </label>
+          <label class="speech-setting-row" for="device-voice">
+            <span>端末音声</span>
+            <select id="device-voice" aria-describedby="device-voice-note"></select>
+          </label>
+          <p class="settings-description speech-setting-note" id="device-voice-note">
+            端末音声を選んだ場合と、Cloudflare音声から自動切替するときに使用します。
+          </p>
+          <label class="speech-setting-row" for="speech-rate">
+            <span>読み上げ速度 <output id="speech-rate-output">1.00倍</output></span>
+            <input id="speech-rate" type="range" min="0.7" max="1.2" step="0.05" value="1" />
+          </label>
+        </div>
+        <div class="speech-setting-actions">
+          <button class="secondary-button" id="preview-speech" type="button">選んだ音声を試す</button>
+          <button class="primary-button" id="save-speech-settings" type="button">音声設定を保存</button>
+        </div>
+        <p class="speech-settings-status" id="speech-settings-status" role="status"></p>
       </section>
 
       <form class="settings-card" id="review-settings-form">

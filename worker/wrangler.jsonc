@@ -8,6 +8,9 @@
   "vars": {
     "ALLOWED_ORIGIN": "https://anki-ume.vercel.app"
   },
+  "ai": {
+    "binding": "AI"
+  },
   "secrets": {
     "required": ["SYNC_TOKEN"]
   },
@@ -17,6 +20,12 @@
       "database_name": "anki-progress",
       "database_id": "0a9f1da0-06a7-416b-95a4-db0e98926f77",
       "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "SPEECH_CACHE",
+      "bucket_name": "anki-world-history"
     }
   ]
 }

@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build:data": "node scripts/build-learning-data.mjs",
-    "check": "node --check public/app.js && node --check public/learning-engine.js && node --check public/cloud-progress.js && node --check public/settings.js && node --check public/speech.js && node --check public/reading-rules.js && node --check worker/src/index.js && node --check scripts/build-learning-data.mjs && node scripts/test-variable-questions.mjs && node scripts/test-speech.mjs && node scripts/test-worker-contract.mjs && node scripts/test-app-contract.mjs && node scripts/verify-learning-data.mjs"
+    "check": "node --check public/app.js && node --check public/learning-engine.js && node --check public/cloud-progress.js && node --check public/settings.js && node --check public/speech.js && node --check public/speech-settings.js && node --check public/reading-rules.js && node --check worker/src/index.js && node --check scripts/build-learning-data.mjs && node scripts/test-variable-questions.mjs && node scripts/test-speech.mjs && node scripts/test-worker-contract.mjs && node scripts/test-app-contract.mjs && node scripts/verify-learning-data.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.124.0"

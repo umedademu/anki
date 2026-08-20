@@ -750,6 +750,56 @@ body.is-studying .page {
   max-width: 320px;
 }
 
+.speech-settings-list {
+  display: grid;
+  margin: 20px 0 12px;
+  gap: 12px;
+}
+
+.speech-setting-row {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.65fr) minmax(0, 1.35fr);
+  align-items: center;
+  gap: 14px;
+  color: #2f493a;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.speech-setting-row select,
+.speech-setting-row input[type="range"] {
+  width: 100%;
+}
+
+.speech-setting-row output {
+  margin-left: 6px;
+  color: #2b6747;
+  font-size: 0.8rem;
+}
+
+.speech-setting-note {
+  margin: -4px 0 0;
+  text-align: right;
+}
+
+.speech-setting-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.speech-settings-status {
+  min-height: 1.5em;
+  margin: 10px 0 0;
+  color: #2b6747;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.speech-settings-status.is-error {
+  color: #a03932;
+}
+
 .interval-list {
   display: grid;
   margin: 20px 0;
@@ -855,6 +905,19 @@ body.is-studying .page {
   }
 
   .setup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .speech-setting-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .speech-setting-note {
+    text-align: left;
+  }
+
+  .speech-setting-actions {
     grid-template-columns: 1fr;
   }
 

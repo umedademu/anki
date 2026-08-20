@@ -41,6 +41,9 @@ if (chunks.some((chunk) => chunk.schemaVersion !== 3)) {
 }
 
 const generatedTerms = chunks.flatMap((chunk) => chunk.terms);
+const generatedQuestions = generatedTerms.flatMap((term) =>
+  Object.values(term.stages).flat(),
+);
 const generatedCounts = countQuestionsByStage(generatedTerms);
 const generatedQuestionCount = Object.values(generatedCounts).reduce(
   (sum, count) => sum + count,
@@ -77,6 +80,33 @@ if (
 }
 if (JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms)) {
   throw new Error("元CSVの問題・回答・出典が生成データへ正確に反映されていません。");
+}
+
+const readingPattern = /\([ぁ-ゖー]+(?:・[ぁ-ゖー]+)*\)/;
+if (generatedQuestions.some((question) => readingPattern.test(question.prompt))) {
+  throw new Error("問題文に読み仮名が混入しています。");
+}
+if (
+  generatedQuestions.some((question) =>
+    [...question.keywords, ...question.acceptedAnswers].some((value) =>
+      readingPattern.test(value),
+    ),
+  )
+) {
+  throw new Error("キーワードまたは別解に読み仮名が混入しています。");
+}
+const xiongnu = generatedTerms.find((term) => term.id === "WH-000052");
+if (
+  xiongnu?.stages.beginner[0]?.answer !== "匈奴(きょうど)" ||
+  !xiongnu?.stages.beginner.some((question) => question.answer === "単于(ぜんう)") ||
+  !xiongnu?.stages.reverse.some((question) =>
+    question.answer.includes("冒頓単于(ぼくとつぜんう)"),
+  ) ||
+  !xiongnu?.stages.integrated[0]?.answer.includes(
+    "冒頓単于(ぼくとつぜんう)",
+  )
+) {
+  throw new Error("回答・解説の代表的な難読語に読み仮名がありません。");
 }
 if (subject.sourceFile !== path.basename(sourcePath)) {
   throw new Error("科目情報の元ファイル名が一致しません。");

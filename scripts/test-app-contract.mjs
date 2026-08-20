@@ -12,6 +12,10 @@ const changelog = await readFile(
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
+const generationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
+  "utf8",
+);
 
 const htmlIds = new Set(
   [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
@@ -32,17 +36,24 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.014") ||
-  !changelog.includes("v0.014")
+  !html.includes("v0.015") ||
+  !changelog.includes("v0.015")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.014"') ||
+  !html.includes('href="/styles.css?v=0.015"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
   throw new Error("Safariの文字自動拡大防止または装飾ファイルの版指定がありません。");
+}
+if (
+  !generationPrompt.includes("冒頓単于(ぼくとつぜんう)") ||
+  !generationPrompt.includes("坤輿万国全図(こんよばんこくぜんず)") ||
+  !generationPrompt.includes("`question`には読み仮名を付けないでください")
+) {
+  throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
 }
 if (
   html.includes('class="answer-label"') ||

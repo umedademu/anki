@@ -72,6 +72,13 @@ export function shouldHideTerm(question, answerVisible) {
   return question?.stage === "beginner" && !answerVisible;
 }
 
+const questionReadingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/g;
+
+export function getQuestionPromptForDisplay(question, answerVisible) {
+  const prompt = String(question?.prompt ?? "");
+  return answerVisible ? prompt : prompt.replace(questionReadingPattern, "");
+}
+
 export function getIntegratedExplanationQuestion(term, question) {
   if (!term || !question || question.stage === "integrated") {
     return null;

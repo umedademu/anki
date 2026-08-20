@@ -36,13 +36,13 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.015") ||
-  !changelog.includes("v0.015")
+  !html.includes("v0.016") ||
+  !changelog.includes("v0.016")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.015"') ||
+  !html.includes('href="/styles.css?v=0.016"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -51,7 +51,8 @@ if (
 if (
   !generationPrompt.includes("冒頓単于(ぼくとつぜんう)") ||
   !generationPrompt.includes("坤輿万国全図(こんよばんこくぜんず)") ||
-  !generationPrompt.includes("`question`には読み仮名を付けないでください")
+  !generationPrompt.includes("王安石(おうあんせき)の低利融資政策を何という？") ||
+  !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
 }

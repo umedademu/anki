@@ -9,6 +9,7 @@ import {
   toObjects,
   validateTerms,
 } from "./build-learning-data.mjs";
+import { getQuestionPromptForDisplay } from "../public/learning-engine.js";
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const dataRoot = path.join(projectRoot, "public", "data");
@@ -82,9 +83,37 @@ if (JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms)) {
   throw new Error("元CSVの問題・回答・出典が生成データへ正確に反映されていません。");
 }
 
-const readingPattern = /\([ぁ-ゖー]+(?:・[ぁ-ゖー]+)*\)/;
-if (generatedQuestions.some((question) => readingPattern.test(question.prompt))) {
-  throw new Error("問題文に読み仮名が混入しています。");
+const readingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/;
+const readingPatternGlobal = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/g;
+const questionsWithReading = generatedQuestions.filter((question) =>
+  readingPattern.test(question.prompt),
+);
+const questionReadingOccurrences = generatedQuestions.reduce(
+  (total, question) =>
+    total + (question.prompt.match(readingPatternGlobal)?.length ?? 0),
+  0,
+);
+const invalidPromptPatterns = [
+  /\)\(/,
+  /(?<!靖難の)変\(せいなんのへん\)/,
+  /(?<!安史の)乱\(あんしのらん\)/,
+  /(?<!黄巾の)乱\(こうきんのらん\)/,
+  /(?<!三藩の)乱\(さんぱんのらん\)/,
+];
+if (
+  questionsWithReading.length !== 173 ||
+  questionReadingOccurrences !== 197 ||
+  generatedQuestions.some((question) =>
+    invalidPromptPatterns.some((pattern) => pattern.test(question.prompt)),
+  ) ||
+  generatedQuestions.some((question) =>
+    readingPattern.test(getQuestionPromptForDisplay(question, false)),
+  ) ||
+  generatedQuestions.some(
+    (question) => getQuestionPromptForDisplay(question, true) !== question.prompt,
+  )
+) {
+  throw new Error("問題文の読み仮名を回答前だけ隠すためのデータが正しくありません。");
 }
 if (
   generatedQuestions.some((question) =>
@@ -96,17 +125,24 @@ if (
   throw new Error("キーワードまたは別解に読み仮名が混入しています。");
 }
 const xiongnu = generatedTerms.find((term) => term.id === "WH-000052");
+const wangAnshi = generatedTerms.find((term) => term.id === "WH-000126");
 if (
   xiongnu?.stages.beginner[0]?.answer !== "匈奴(きょうど)" ||
+  xiongnu?.stages.beginner[0]?.prompt !==
+    "冒頓単于(ぼくとつぜんう)のもとでモンゴル高原を統一し、漢と対立した騎馬遊牧国家は？" ||
   !xiongnu?.stages.beginner.some((question) => question.answer === "単于(ぜんう)") ||
   !xiongnu?.stages.reverse.some((question) =>
     question.answer.includes("冒頓単于(ぼくとつぜんう)"),
   ) ||
   !xiongnu?.stages.integrated[0]?.answer.includes(
     "冒頓単于(ぼくとつぜんう)",
-  )
+  ) ||
+  wangAnshi?.stages.beginner[2]?.prompt !==
+    "王安石(おうあんせき)の低利融資政策を何という？" ||
+  getQuestionPromptForDisplay(wangAnshi?.stages.beginner[2], false) !==
+    "王安石の低利融資政策を何という？"
 ) {
-  throw new Error("回答・解説の代表的な難読語に読み仮名がありません。");
+  throw new Error("問題・回答・解説の代表的な難読語に読み仮名がありません。");
 }
 if (subject.sourceFile !== path.basename(sourcePath)) {
   throw new Error("科目情報の元ファイル名が一致しません。");

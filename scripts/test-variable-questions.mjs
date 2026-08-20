@@ -13,6 +13,7 @@ import {
   getIntegratedExplanationQuestion,
   getMacroRegionTags,
   getOverallMastery,
+  getQuestionPromptForDisplay,
   getTermStage,
   rateQuestion,
   restoreRatingUndoSnapshot,
@@ -221,6 +222,18 @@ if (
   shouldHideTerm(terms[0].stages.reverse[0], false)
 ) {
   throw new Error("回答前の短答だけで用語名を隠す判定ができませんでした。");
+}
+
+const questionWithReading = {
+  prompt: "王安石(おう あんせき)の低利融資政策を何という？",
+};
+if (
+  getQuestionPromptForDisplay(questionWithReading, false) !==
+    "王安石の低利融資政策を何という？" ||
+  getQuestionPromptForDisplay(questionWithReading, true) !==
+    questionWithReading.prompt
+) {
+  throw new Error("回答の表示状態に合わせて問題文の読み仮名を切り替えられませんでした。");
 }
 
 const integratedExplanation = terms[0].stages.integrated[0];

@@ -8,6 +8,7 @@ import {
   getIntegratedExplanationQuestion,
   getMacroRegionTags,
   getOverallMastery,
+  getQuestionPromptForDisplay,
   getTasksForCurrentTermStage,
   getTermMastery,
   getTermStage,
@@ -488,7 +489,11 @@ function renderQuestion() {
 
   elements.questionNumber.textContent = `出題 ${state.answeredThisSession + 1}`;
   elements.questionAxis.textContent = question.focus || question.label;
-  elements.questionText.textContent = question.prompt;
+  const displayedQuestionPrompt = getQuestionPromptForDisplay(
+    question,
+    state.answerVisible,
+  );
+  elements.questionText.textContent = displayedQuestionPrompt;
   renderEmphasizedText(elements.answerText, question.answer);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
   elements.masteryPanel.classList.toggle("is-hidden", !state.answerVisible);
@@ -526,7 +531,7 @@ function renderQuestion() {
   updateOverallProgress();
   setContentDensity(
     elements.questionCard,
-    question.prompt,
+    displayedQuestionPrompt,
     question.answer,
     integratedExplanation?.answer,
   );

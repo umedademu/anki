@@ -500,6 +500,7 @@ function autoSpeakAnswerAndOverview() {
 
 function renderTermTags(term, question, visible) {
   const tags = [
+    term.chronology?.displayPeriod,
     ...getMacroRegionTags(term),
     term.geography?.regionDetail,
     term.era,

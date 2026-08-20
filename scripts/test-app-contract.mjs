@@ -72,14 +72,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.027") ||
-  !changelog.includes("v0.027") ||
-  !settingsHtml.includes("v0.027")
+  !html.includes("v0.028") ||
+  !changelog.includes("v0.028") ||
+  !settingsHtml.includes("v0.028")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.027"') ||
+  !html.includes('href="/styles.css?v=0.028"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -142,6 +142,7 @@ if (
 if (
   !html.includes('id="term-tags"') ||
   !app.includes("function renderTermTags(term, question, visible)") ||
+  !app.includes("const tags = [\n    term.chronology?.displayPeriod,\n    ...getMacroRegionTags(term),") ||
   !app.includes("stageLabels[question.stage]") ||
   !app.includes("question.focus") ||
   !styles.includes(".term-tags") ||
@@ -151,6 +152,14 @@ if (
   speechSegmentsBlock.includes("renderTermTags")
 ) {
   throw new Error("解説欄の分類タグ表示が揃っていません。");
+}
+if (
+  !generationPrompt.includes("すべての統合説明の回答本文には、次の2点を例外なく明記してください") ||
+  !generationPrompt.includes("西暦・紀元前の年、年代、世紀、または期間") ||
+  !generationPrompt.includes("国・地域・都市・海域") ||
+  !generationPrompt.includes("統合説明の本文自体へ自然な文章として含めてください")
+) {
+  throw new Error("今後の統合説明へ時期と場所を含める規則が不足しています。");
 }
 if (
   !html.includes('id="back-action"') ||

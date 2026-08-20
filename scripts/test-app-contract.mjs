@@ -65,14 +65,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.021") ||
-  !changelog.includes("v0.021") ||
-  !settingsHtml.includes("v0.021")
+  !html.includes("v0.022") ||
+  !changelog.includes("v0.022") ||
+  !settingsHtml.includes("v0.022")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.021"') ||
+  !html.includes('href="/styles.css?v=0.022"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -111,11 +111,13 @@ if (
   !speech.includes("onFallback") ||
   !cloudProgress.includes("requestCloudSpeech") ||
   !worker.includes('url.pathname === "/v1/speech"') ||
-  !worker.includes('"@cf/myshell-ai/melotts"') ||
-  !wrangler.includes('"binding": "AI"') ||
+  !worker.includes("tts.speech.microsoft.com/cognitiveservices/v1") ||
+  !worker.includes('"ja-JP-NanamiNeural"') ||
+  !wrangler.includes('"AZURE_SPEECH_REGION": "japaneast"') ||
+  !wrangler.includes('"AZURE_SPEECH_KEY"') ||
   !wrangler.includes('"binding": "SPEECH_CACHE"')
 ) {
-  throw new Error("Cloudflare音声と端末音声を選択・自動切替する構成が揃っていません。");
+  throw new Error("Azure音声と端末音声を選択・自動切替する構成が揃っていません。");
 }
 if (
   html.includes('class="answer-label"') ||
@@ -250,5 +252,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・音声選択・Cloudflare読込保存設定を確認",
+  "画面構成検証完了: 4段階評価・Azure音声選択・Cloudflare読込保存設定を確認",
 );

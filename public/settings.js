@@ -121,7 +121,7 @@ const previewController = createSpeechController({
   onFallback(error) {
     cloudFallbackMessage = error.message;
     setSpeechStatus(
-      `Cloudflare音声を利用できなかったため、端末音声へ切り替えました。${error.message}`,
+      `Azure音声を利用できなかったため、端末音声へ切り替えました。${error.message}`,
       true,
     );
   },

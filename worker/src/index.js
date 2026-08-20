@@ -126,57 +126,60 @@ function normalizeSpeechPrompt(value) {
   return prompt;
 }
 
+const azureSpeechVoice = "ja-JP-NanamiNeural";
+const azureSpeechOutputFormat = "audio-24khz-48kbitrate-mono-mp3";
+
 async function speechCacheKey(prompt) {
-  const input = new TextEncoder().encode(`melotts-jp-v1\0${prompt}`);
+  const input = new TextEncoder().encode(
+    `azure-speech-v1\0${azureSpeechVoice}\0${prompt}`,
+  );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
-  return `speech-cache/melotts-jp-v1/${[...digest]
+  return `speech-cache/azure-speech-v1/${[...digest]
     .map((value) => value.toString(16).padStart(2, "0"))
     .join("")}.mp3`;
 }
 
-function decodeBase64(value) {
-  const binary = atob(value);
-  return Uint8Array.from(binary, (character) => character.charCodeAt(0));
-}
-
-async function audioBytesFrom(result) {
-  if (result instanceof Response) {
-    return new Uint8Array(await result.arrayBuffer());
-  }
-  if (result instanceof ReadableStream) {
-    return new Uint8Array(await new Response(result).arrayBuffer());
-  }
-  if (result instanceof ArrayBuffer) {
-    return new Uint8Array(result);
-  }
-  if (ArrayBuffer.isView(result)) {
-    return new Uint8Array(result.buffer, result.byteOffset, result.byteLength);
-  }
-  const audio = result?.audio ?? result?.data;
-  if (typeof audio === "string") {
-    return decodeBase64(audio.includes(",") ? audio.split(",").at(-1) : audio);
-  }
-  if (Array.isArray(audio)) {
-    return Uint8Array.from(audio);
-  }
-  throw new Error("Cloudflareから音声データを受け取れませんでした。");
+function escapeSsml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
 }
 
 async function generateJapaneseSpeech(env, prompt) {
-  const result = await env.AI.run("@cf/myshell-ai/melotts", {
-    prompt,
-    lang: "JP",
-  });
-  const audio = await audioBytesFrom(result);
+  const region = String(env.AZURE_SPEECH_REGION ?? "").trim().toLowerCase();
+  if (!env.AZURE_SPEECH_KEY || !/^[a-z0-9-]+$/.test(region)) {
+    throw new Error("Azure音声の接続設定がありません。");
+  }
+  const requestSpeech = env.AZURE_SPEECH_FETCH ?? fetch;
+  const response = await requestSpeech(
+    `https://${region}.tts.speech.microsoft.com/cognitiveservices/v1`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/ssml+xml",
+        "Ocp-Apim-Subscription-Key": env.AZURE_SPEECH_KEY,
+        "X-Microsoft-OutputFormat": azureSpeechOutputFormat,
+        "User-Agent": "anki-world-history",
+      },
+      body: `<speak version="1.0" xml:lang="ja-JP"><voice name="${azureSpeechVoice}">${escapeSsml(prompt)}</voice></speak>`,
+    },
+  );
+  if (!response.ok) {
+    throw new Error(`Azure音声の生成に失敗しました（${response.status}）。`);
+  }
+  const audio = new Uint8Array(await response.arrayBuffer());
   if (audio.byteLength === 0) {
-    throw new Error("Cloudflareが空の音声を返しました。");
+    throw new Error("Azureから空の音声が返されました。");
   }
   return audio;
 }
 
 async function handleSpeech(request, env) {
-  if (!env.AI || !env.SPEECH_CACHE) {
-    throw new Error("Cloudflare音声の接続設定がありません。");
+  if (!env.AZURE_SPEECH_KEY || !env.AZURE_SPEECH_REGION || !env.SPEECH_CACHE) {
+    throw new Error("Azure音声の接続設定がありません。");
   }
   const body = await request.json();
   const prompt = normalizeSpeechPrompt(body.text);
@@ -190,7 +193,10 @@ async function handleSpeech(request, env) {
   const audio = await generateJapaneseSpeech(env, prompt);
   await env.SPEECH_CACHE.put(key, audio, {
     httpMetadata: { contentType: "audio/mpeg" },
-    customMetadata: { generatedBy: "@cf/myshell-ai/melotts" },
+    customMetadata: {
+      generatedBy: "azure-speech",
+      voice: azureSpeechVoice,
+    },
   });
   return new Response(audio, {
     headers: audioHeaders(request, env, "MISS"),
@@ -396,7 +402,7 @@ export default {
 };
 
 export {
-  audioBytesFrom,
+  escapeSsml,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,

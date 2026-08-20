@@ -86,12 +86,12 @@ export async function requestCloudSpeech(text) {
       throw new Error("Cloudflareのアクセスキーが正しくありません。");
     }
     throw new Error(
-      payload.error || `Cloudflare音声の生成に失敗しました（${response.status}）。`,
+      payload.error || `Azure音声の生成に失敗しました（${response.status}）。`,
     );
   }
   const audio = await response.blob();
   if (!audio.type.startsWith("audio/") || audio.size === 0) {
-    throw new Error("Cloudflareから音声を受け取れませんでした。");
+    throw new Error("Azureから音声を受け取れませんでした。");
   }
   return audio;
 }

@@ -148,7 +148,7 @@ export function createSpeechController({
 
     async function speakWithCloud(segment, settings, done) {
       if (!cloudSupported || ticket !== generation) {
-        onFallback(new Error("Cloudflare音声を利用できません。"));
+        onFallback(new Error("Azure音声を利用できません。"));
         speakWithDevice(segment, settings, done);
         return;
       }
@@ -191,7 +191,7 @@ export function createSpeechController({
         if (ticket !== generation) {
           return;
         }
-        onFallback(error instanceof Error ? error : new Error("Cloudflare音声を利用できません。"));
+        onFallback(error instanceof Error ? error : new Error("Azure音声を利用できません。"));
         speakWithDevice(segment, settings, done);
       }
     }

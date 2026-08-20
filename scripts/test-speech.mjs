@@ -167,7 +167,7 @@ if (
   cloudTargets.at(-1) !== "" ||
   revokedUrls.length !== 2
 ) {
-  throw new Error("Cloudflare音声を回答から解説へ順番に再生できませんでした。");
+  throw new Error("Azure音声を回答から解説へ順番に再生できませんでした。");
 }
 
 const fallbackSpokenBefore = spoken.length;
@@ -208,5 +208,5 @@ if (unsupported.supported || unsupported.speak([{ target: "question", text: "問
 }
 
 console.log(
-  "音声読み上げ検証完了: Cloudflare音声・端末音声選択・自動切替・停止を確認",
+  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止を確認",
 );

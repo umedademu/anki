@@ -6,13 +6,11 @@
   "workers_dev": true,
   "preview_urls": false,
   "vars": {
-    "ALLOWED_ORIGIN": "https://anki-ume.vercel.app"
-  },
-  "ai": {
-    "binding": "AI"
+    "ALLOWED_ORIGIN": "https://anki-ume.vercel.app",
+    "AZURE_SPEECH_REGION": "japaneast"
   },
   "secrets": {
-    "required": ["SYNC_TOKEN"]
+    "required": ["SYNC_TOKEN", "AZURE_SPEECH_KEY"]
   },
   "d1_databases": [
     {

@@ -1,5 +1,5 @@
 import {
-  audioBytesFrom,
+  escapeSsml,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
@@ -32,9 +32,9 @@ if (
 
 if (
   normalizeSpeechPrompt("  王安石  の政策  ") !== "王安石 の政策" ||
-  (await audioBytesFrom({ audio: "AQID" })).join(",") !== "1,2,3"
+  escapeSsml("王安石の政策<&\"") !== "王安石の政策&lt;&amp;&quot;"
 ) {
-  throw new Error("Cloudflare音声の文章または音声データを処理できませんでした。");
+  throw new Error("Azure音声の文章または読み上げ形式を処理できませんでした。");
 }
 for (const invalidPrompt of ["", "あ".repeat(2001)]) {
   let failed = false;
@@ -44,27 +44,35 @@ for (const invalidPrompt of ["", "あ".repeat(2001)]) {
     failed = true;
   }
   if (!failed) {
-    throw new Error("不正なCloudflare音声の文章を拒否できませんでした。");
+    throw new Error("不正なAzure音声の文章を拒否できませんでした。");
   }
 }
 
-let aiRunCount = 0;
+let azureRequestCount = 0;
 const speechObjects = new Map();
 const speechEnv = {
   ALLOWED_ORIGIN: "https://anki-ume.vercel.app",
   SYNC_TOKEN: "test-key",
-  AI: {
-    async run(model, input) {
-      aiRunCount += 1;
-      if (
-        model !== "@cf/myshell-ai/melotts" ||
-        input.lang !== "JP" ||
-        input.prompt !== "王安石の政策"
-      ) {
-        throw new Error("Cloudflare音声モデルへの入力が不正です。");
-      }
-      return { audio: "AQID" };
-    },
+  AZURE_SPEECH_KEY: "test-azure-key",
+  AZURE_SPEECH_REGION: "japaneast",
+  async AZURE_SPEECH_FETCH(url, options) {
+    azureRequestCount += 1;
+    if (
+      url !==
+        "https://japaneast.tts.speech.microsoft.com/cognitiveservices/v1" ||
+      options.method !== "POST" ||
+      options.headers["Ocp-Apim-Subscription-Key"] !== "test-azure-key" ||
+      options.headers["X-Microsoft-OutputFormat"] !==
+        "audio-24khz-48kbitrate-mono-mp3" ||
+      !options.body.includes('voice name="ja-JP-NanamiNeural"') ||
+      !options.body.includes("王安石の政策")
+    ) {
+      throw new Error("Azure音声への入力が不正です。");
+    }
+    return new Response(Uint8Array.from([1, 2, 3]), {
+      status: 200,
+      headers: { "Content-Type": "audio/mpeg" },
+    });
   },
   SPEECH_CACHE: {
     async get(key) {
@@ -95,10 +103,10 @@ if (
   secondSpeechResponse.headers.get("X-Speech-Cache") !== "HIT" ||
   secondSpeechResponse.headers.get("Access-Control-Allow-Origin") !==
     "https://anki-ume.vercel.app" ||
-  aiRunCount !== 1 ||
+  azureRequestCount !== 1 ||
   new Uint8Array(await secondSpeechResponse.arrayBuffer()).join(",") !== "1,2,3"
 ) {
-  throw new Error("Cloudflare音声の生成・再利用・読取許可が不正です。");
+  throw new Error("Azure音声の生成・再利用・読取許可が不正です。");
 }
 
 const settings = normalizeSettings({
@@ -132,5 +140,5 @@ for (const invalid of [
 }
 
 console.log(
-  "Cloudflare窓口検証完了: 学習記録・復習設定・音声生成の入力検査を確認",
+  "Cloudflare窓口検証完了: 学習記録・復習設定・Azure音声生成を確認",
 );

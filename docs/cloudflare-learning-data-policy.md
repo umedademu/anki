@@ -19,7 +19,9 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 
 ## 音声読み上げ
 
-- 自然さを優先する音声は`anki-progress-api`からWorkers AIのMeloTTSを呼び出して生成する
+- 自然さを優先する音声は`anki-progress-api`からAzure AI Speechを呼び出して生成する
+- Azureの接続キーはCloudflare Workerの秘密情報`AZURE_SPEECH_KEY`としてだけ保存し、ブラウザーやGitへ含めない
+- Azureのリージョンは`japaneast`、音声は`ja-JP-NanamiNeural`を使用する
 - 音声生成も一人用アクセスキーで保護し、本番Webアプリ以外からの通信を許可しない
 - 生成済み音声はR2の`anki-world-history`内の`speech-cache`へ保存し、同じ文章では再生成しない
 - 無料枠超過、通信失敗、生成失敗時は、利用者が端末ごとに選択した日本語音声へ切り替える

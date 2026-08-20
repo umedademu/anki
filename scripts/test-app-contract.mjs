@@ -11,6 +11,7 @@ const changelog = await readFile(
 );
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
+const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
 
 const htmlIds = new Set(
   [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
@@ -30,10 +31,17 @@ if (
   !html.includes('id="setup-panel"') ||
   !html.includes('id="start-study"') ||
   !html.includes('href="/changelog.html"') ||
-  !html.includes("v0.003") ||
-  !changelog.includes("v0.003")
+  !html.includes("v0.004") ||
+  !changelog.includes("v0.004")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  styles.includes(
+    "grid-template-columns: minmax(250px, 0.85fr) minmax(0, 1.45fr)",
+  )
+) {
+  throw new Error("大きな画面向けの左右二列表示が残っています。");
 }
 if (
   html.includes('id="mastery-term"') ||

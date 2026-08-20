@@ -614,32 +614,6 @@ p {
   display: none !important;
 }
 
-@media (min-width: 760px) and (orientation: landscape) and (min-height: 601px) {
-  .study-shell {
-    grid-template-columns: minmax(250px, 0.85fr) minmax(0, 1.45fr);
-    align-items: start;
-    column-gap: 20px;
-  }
-
-  .unlock-notice,
-  .progress-track,
-  .completion-card {
-    grid-column: 1 / -1;
-  }
-
-  .context-card {
-    grid-column: 1;
-  }
-
-  .question-card {
-    grid-column: 2;
-  }
-
-  .progress-track {
-    grid-row: 2;
-  }
-}
-
 @media (max-width: 560px) {
   .site-header,
   .page {

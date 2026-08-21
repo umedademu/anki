@@ -25,7 +25,7 @@ import {
   shouldHideTerm,
 } from "../public/learning-engine.js";
 
-function makeRow({ termId, rank, term, sortYear, questionId, stage, question, answer }) {
+function makeRow({ termId, rank, term, sortYear, questionId, stage, questionType, question, answer }) {
   return {
     dataset_label: "確認用語集",
     term_id: termId,
@@ -43,7 +43,7 @@ function makeRow({ termId, rank, term, sortYear, questionId, stage, question, an
     question_id: questionId,
     stage,
     focus: stage === "integrated" ? "統合説明" : "確認",
-    question_type: stage === "integrated" ? "integrated" : stage === "reverse" ? "reverse" : "identify",
+    question_type: stage === "integrated" ? "integrated" : stage === "reverse" ? "reverse" : (questionType ?? "identify"),
     question,
     answer,
     keywords: "確認語",
@@ -51,7 +51,7 @@ function makeRow({ termId, rank, term, sortYear, questionId, stage, question, an
     answer_note: "",
     year_mnemonic:
       questionId === "A-B02" || questionId === "A-I01"
-        ? "1800年：確認用の語呂合わせ"
+        ? "1800年：開始年の確認用語呂合わせ|1850年：終了年の確認用語呂合わせ"
         : "",
     source_name: "確認資料",
     source_url: "https://example.com/source",
@@ -60,7 +60,7 @@ function makeRow({ termId, rank, term, sortYear, questionId, stage, question, an
 
 const rows = [
   makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-B01", stage: "beginner", question: "短答1", answer: "確認用語A" }),
-  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-B02", stage: "beginner", question: "短答2", answer: "1800年" }),
+  makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-B02", stage: "beginner", questionType: "time", question: "確認用語Aの期間は？", answer: "1800〜1850年" }),
   makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-R01", stage: "reverse", question: "何が起きた？", answer: "**確認語**を説明する。" }),
   makeRow({ termId: "WH-TEST-001", rank: 1, term: "確認用語A", sortYear: 1800, questionId: "A-I01", stage: "integrated", question: "確認用語Aについて説明せよ。", answer: "**確認語**を統合して説明する。" }),
   makeRow({ termId: "WH-TEST-002", rank: 2, term: "確認用語B", sortYear: 1900, questionId: "B-B01", stage: "beginner", question: "短答1", answer: "確認用語B" }),
@@ -76,10 +76,10 @@ const terms = groupTerms(rows);
 validateTerms(terms);
 
 if (
-  terms[0].stages.beginner[1].yearMnemonic !== "1800年：確認用の語呂合わせ" ||
-  terms[0].stages.integrated[0].yearMnemonic !== "1800年：確認用の語呂合わせ"
+  terms[0].stages.beginner[1].yearMnemonic !== "1800年：開始年の確認用語呂合わせ|1850年：終了年の確認用語呂合わせ" ||
+  terms[0].stages.integrated[0].yearMnemonic !== "1800年：開始年の確認用語呂合わせ|1850年：終了年の確認用語呂合わせ"
 ) {
-  throw new Error("年号の語呂合わせを問題データへ取り込めませんでした。");
+  throw new Error("期間の両端を含む語呂合わせを問題データへ取り込めませんでした。");
 }
 
 if (

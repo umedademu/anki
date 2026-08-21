@@ -603,6 +603,7 @@ body.is-studying .page {
   font-size: 0.9rem;
   font-weight: 750;
   line-height: 1.65;
+  white-space: pre-line;
 }
 
 .term-overview-main.has-image {

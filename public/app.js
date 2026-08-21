@@ -670,7 +670,11 @@ function speechSegmentsFor(target) {
         ? [
             {
               target,
-              text: `年号の語呂合わせ。${question.yearMnemonic}`,
+              text: `年号の語呂合わせ。${question.yearMnemonic
+                .split("|")
+                .map((mnemonic) => mnemonic.trim())
+                .filter(Boolean)
+                .join("。")}`,
               language: "ja-JP",
             },
           ]
@@ -1263,7 +1267,11 @@ function renderQuestion() {
     !state.answerVisible || !integratedExplanation,
   );
   elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic);
-  elements.yearMnemonicText.textContent = question.yearMnemonic ?? "";
+  elements.yearMnemonicText.textContent = (question.yearMnemonic ?? "")
+    .split("|")
+    .map((mnemonic) => mnemonic.trim())
+    .filter(Boolean)
+    .join("\n");
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
     !speechController.supported || !showsTermOverview,
@@ -1587,7 +1595,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.044｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.045｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

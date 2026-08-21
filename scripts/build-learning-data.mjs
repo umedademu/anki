@@ -421,9 +421,60 @@ export function validateTerms(terms) {
           `${term.term}の単一年・年月・年月日の問題に、統一した年号語呂合わせがありません。`,
         );
       }
-      if (term.stages.integrated[0].yearMnemonic !== [...mnemonics][0]) {
+      const integratedMnemonics = new Set(
+        term.stages.integrated[0].yearMnemonic
+          .split("|")
+          .map((mnemonic) => mnemonic.trim())
+          .filter(Boolean),
+      );
+      if (![...mnemonics].every((mnemonic) => integratedMnemonics.has(mnemonic))) {
         throw new Error(
           `${term.term}の統合説明に、年号問題と同じ語呂合わせがありません。`,
+        );
+      }
+    }
+
+    const datedPeriodQuestions = Object.values(term.stages)
+      .flat()
+      .filter(
+        (question) =>
+          question.type === "time" &&
+          /\d/.test(question.answer.replaceAll("**", "").trim()),
+      );
+    if (datedPeriodQuestions.length > 0) {
+      const mnemonicsByAnswer = new Map();
+      for (const question of datedPeriodQuestions) {
+        const answer = question.answer.replaceAll("**", "").trim();
+        const mnemonics = mnemonicsByAnswer.get(answer) ?? new Set();
+        mnemonics.add(question.yearMnemonic.trim());
+        mnemonicsByAnswer.set(answer, mnemonics);
+      }
+      if (
+        datedPeriodQuestions.some((question) => !question.yearMnemonic.trim()) ||
+        [...mnemonicsByAnswer.values()].some(
+          (mnemonics) => mnemonics.size !== 1 || mnemonics.has(""),
+        )
+      ) {
+        throw new Error(
+          `${term.term}の数字を含む時期問題に、統一した年号語呂合わせがありません。`,
+        );
+      }
+      const integratedMnemonics = new Set(
+        term.stages.integrated[0].yearMnemonic
+          .split("|")
+          .map((mnemonic) => mnemonic.trim())
+          .filter(Boolean),
+      );
+      if (
+        [...mnemonicsByAnswer.values()].some(
+          (mnemonics) =>
+            !splitPipeList([...mnemonics][0]).every((mnemonic) =>
+              integratedMnemonics.has(mnemonic),
+            ),
+        )
+      ) {
+        throw new Error(
+          `${term.term}の統合説明に、数字を含む時期問題の語呂合わせがありません。`,
         );
       }
     }

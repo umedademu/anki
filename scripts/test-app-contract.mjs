@@ -88,9 +88,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.044") ||
-  !changelog.includes("v0.044") ||
-  !settingsHtml.includes("v0.044")
+  !html.includes("v0.045") ||
+  !changelog.includes("v0.045") ||
+  !settingsHtml.includes("v0.045")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -125,7 +125,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.044"') ||
+  !html.includes('href="/styles.css?v=0.045"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -242,9 +242,12 @@ if (
   !html.includes('id="year-mnemonic"') ||
   !html.includes('id="year-mnemonic-text"') ||
   !app.includes("question.yearMnemonic") ||
-  !app.includes('text: `年号の語呂合わせ。${question.yearMnemonic}`') ||
+  !app.includes('.split("|")') ||
+  !app.includes('.join("。")') ||
+  !app.includes('.join("\\n")') ||
   !app.includes('elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic)') ||
   !styles.includes(".year-mnemonic") ||
+  !styles.includes("white-space: pre-line") ||
   !speechSegmentsBlock.includes("question.yearMnemonic")
 ) {
   throw new Error("年号の語呂合わせの表示または解説音声への追加が揃っていません。");
@@ -259,9 +262,14 @@ if (
 }
 if (
   !generationPrompt.includes("year_mnemonic") ||
-  !generationPrompt.includes("単一年、`1789年6月`のような年月") ||
+  !generationPrompt.includes("`question_type=time`で、`answer`に数字が含まれる問題") ||
+  !generationPrompt.includes("`前550〜前330年`のような期間") ||
+  !generationPrompt.includes("`485年以降`のような開始時期") ||
+  !generationPrompt.includes("`11世紀`のような世紀") ||
+  !generationPrompt.includes("`前1千年紀`のような千年紀") ||
+  !generationPrompt.includes("期間では開始点と終了点の両方") ||
   !generationPrompt.includes("これらの問題では空欄を禁止") ||
-  !generationPrompt.includes("`integrated`行には、同じ`year_mnemonic`") ||
+  !generationPrompt.includes("`integrated`行で各語呂合わせを半角パイプで区切ります") ||
   !generationPrompt.includes("`reverse`や`integrated`の説明文に含まれる重要年号も対象") ||
   !generationPrompt.includes("問題文に年号が手掛かりとして書かれているだけ") ||
   !generationPrompt.includes("適切な定番がない場合は")

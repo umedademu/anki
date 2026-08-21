@@ -21,6 +21,11 @@ const readJson = async (relativePath) =>
   JSON.parse(await readFile(path.join(dataRoot, relativePath), "utf8"));
 const digestJson = (value) =>
   createHash("sha256").update(JSON.stringify(value)).digest("hex");
+const splitMnemonicList = (value) =>
+  String(value ?? "")
+    .split("|")
+    .map((mnemonic) => mnemonic.trim())
+    .filter(Boolean);
 
 const expectedSpecs = new Map([
   [
@@ -28,16 +33,19 @@ const expectedSpecs = new Map([
     {
       number: 1,
       version: "0836119c5d45",
-      contentVersion: "38a0118c46ca",
+      contentVersion: "6dd2eeeb145e",
       datasetLabel: "世界史段階別デッキ｜Deck 1｜最重要骨格400語",
       difficultyLabel: "Deck 1｜骨格・基礎",
       termCount: 400,
       questionCount: 2782,
       questionCounts: { beginner: 1200, reverse: 1182, integrated: 400 },
-      mnemonicCount: 213,
-      distinctMnemonicCount: 70,
+      mnemonicCount: 1187,
+      distinctMnemonicCount: 403,
       exactDateQuestionCount: 116,
       exactDateTermCount: 59,
+      datedPeriodQuestionCount: 781,
+      datedPeriodTermCount: 399,
+      datedPeriodExpressionCount: 399,
     },
   ],
   [
@@ -45,16 +53,19 @@ const expectedSpecs = new Map([
     {
       number: 2,
       version: "8acba0d50165",
-      contentVersion: "e0904a4f00d5",
+      contentVersion: "3e6705a12980",
       datasetLabel: "世界史段階別デッキ｜Deck 2｜共通テスト基礎400語",
       difficultyLabel: "Deck 2｜骨格・基礎",
       termCount: 400,
       questionCount: 2400,
       questionCounts: { beginner: 1200, reverse: 800, integrated: 400 },
-      mnemonicCount: 204,
-      distinctMnemonicCount: 68,
+      mnemonicCount: 1173,
+      distinctMnemonicCount: 398,
       exactDateQuestionCount: 133,
       exactDateTermCount: 69,
+      datedPeriodQuestionCount: 780,
+      datedPeriodTermCount: 390,
+      datedPeriodExpressionCount: 392,
     },
   ],
 ]);
@@ -201,14 +212,86 @@ for (const deckEntry of subjectEntry.decks) {
       const mnemonics = new Set(
         targetQuestions.map((question) => question.yearMnemonic),
       );
+      const integratedMnemonics = new Set(
+        term.stages.integrated[0].yearMnemonic
+          .split("|")
+          .map((mnemonic) => mnemonic.trim())
+          .filter(Boolean),
+      );
       return (
         mnemonics.size !== 1 ||
-        term.stages.integrated[0].yearMnemonic !== [...mnemonics][0]
+        !integratedMnemonics.has([...mnemonics][0])
       );
     })
   ) {
     throw new Error(
       `${deckEntry.id}の単一年・年月・年月日の語呂合わせが不足または不統一です。`,
+    );
+  }
+
+  const datedPeriodTerms = terms.filter((term) =>
+    Object.values(term.stages)
+      .flat()
+      .some(
+        (question) =>
+          question.type === "time" &&
+          /\d/.test(question.answer.replaceAll("**", "").trim()),
+      ),
+  );
+  const datedPeriodQuestions = datedPeriodTerms.flatMap((term) =>
+    Object.values(term.stages)
+      .flat()
+      .filter(
+        (question) =>
+          question.type === "time" &&
+          /\d/.test(question.answer.replaceAll("**", "").trim()),
+      ),
+  );
+  const datedPeriodExpressions = new Set(
+    datedPeriodQuestions.map(
+      (question) =>
+        `${question.id.split("-").slice(0, 2).join("-")}\0${question.answer
+          .replaceAll("**", "")
+          .trim()}`,
+    ),
+  );
+  if (
+    datedPeriodQuestions.length !== spec.datedPeriodQuestionCount ||
+    datedPeriodTerms.length !== spec.datedPeriodTermCount ||
+    datedPeriodExpressions.size !== spec.datedPeriodExpressionCount ||
+    datedPeriodQuestions.some((question) => !question.yearMnemonic.trim()) ||
+    datedPeriodTerms.some((term) => {
+      const targetQuestions = Object.values(term.stages)
+        .flat()
+        .filter(
+          (question) =>
+            question.type === "time" &&
+            /\d/.test(question.answer.replaceAll("**", "").trim()),
+        );
+      const mnemonicsByAnswer = new Map();
+      for (const question of targetQuestions) {
+        const answer = question.answer.replaceAll("**", "").trim();
+        const mnemonics = mnemonicsByAnswer.get(answer) ?? new Set();
+        mnemonics.add(question.yearMnemonic);
+        mnemonicsByAnswer.set(answer, mnemonics);
+      }
+      const integratedMnemonics = new Set(
+        term.stages.integrated[0].yearMnemonic
+          .split("|")
+          .map((mnemonic) => mnemonic.trim())
+          .filter(Boolean),
+      );
+      return [...mnemonicsByAnswer.values()].some(
+        (mnemonics) =>
+          mnemonics.size !== 1 ||
+          !splitMnemonicList([...mnemonics][0]).every((mnemonic) =>
+            integratedMnemonics.has(mnemonic),
+          ),
+      );
+    })
+  ) {
+    throw new Error(
+      `${deckEntry.id}の数字を含む時期問題の語呂合わせが不足または不統一です。`,
     );
   }
   generatedDecks.push({ entry: deckEntry, subject, terms, questions });

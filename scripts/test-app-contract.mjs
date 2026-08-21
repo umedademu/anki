@@ -76,14 +76,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.033") ||
-  !changelog.includes("v0.033") ||
-  !settingsHtml.includes("v0.033")
+  !html.includes("v0.034") ||
+  !changelog.includes("v0.034") ||
+  !settingsHtml.includes("v0.034")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.033"') ||
+  !html.includes('href="/styles.css?v=0.034"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -182,6 +182,15 @@ if (
   !generationPrompt.includes("統合説明の本文自体へ自然な文章として含めてください")
 ) {
   throw new Error("今後の統合説明へ時期と場所を含める規則が不足しています。");
+}
+if (
+  !generationPrompt.includes("year_mnemonic") ||
+  !generationPrompt.includes("`answer`に暗記対象となる西暦または紀元前の特定の年") ||
+  !generationPrompt.includes("`reverse`や`integrated`の説明文に含まれる重要年号も対象") ||
+  !generationPrompt.includes("問題文に年号が手掛かりとして書かれているだけ") ||
+  !generationPrompt.includes("自然で正確な語呂合わせを作れない場合は、無理に作らず空欄")
+) {
+  throw new Error("問題集生成用プロンプトの年号語呂合わせ規則が不足しています。");
 }
 if (
   !html.includes('id="back-action"') ||

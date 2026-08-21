@@ -94,9 +94,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.046") ||
-  !changelog.includes("v0.046") ||
-  !settingsHtml.includes("v0.046")
+  !html.includes("v0.047") ||
+  !changelog.includes("v0.047") ||
+  !settingsHtml.includes("v0.047")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -131,7 +131,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.046"') ||
+  !html.includes('href="/styles.css?v=0.047"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -281,12 +281,18 @@ if (
   !generationPrompt.includes("`485年以降`のような開始時期") ||
   !generationPrompt.includes("`11世紀`のような世紀") ||
   !generationPrompt.includes("`前1千年紀`のような千年紀") ||
-  !generationPrompt.includes("期間では開始点と終了点の両方") ||
+  !generationPrompt.includes("年号・時期の重要度を理由に対象から外してはいけません") ||
+  !generationPrompt.includes("太字記号`**`を除いた`answer`") ||
   !generationPrompt.includes("これらの問題では空欄を禁止") ||
-  !generationPrompt.includes("`integrated`行で各語呂合わせを半角パイプで区切ります") ||
-  !generationPrompt.includes("`reverse`や`integrated`の説明文に含まれる重要年号も対象") ||
+  !generationPrompt.includes("文字単位で同じ`year_mnemonic`") ||
+  !generationPrompt.includes("問題行で作った表現を言い換えずに並べてください") ||
   !generationPrompt.includes("問題文に年号が手掛かりとして書かれているだけ") ||
-  !generationPrompt.includes("適切な定番がない場合は")
+  !generationPrompt.includes("期間の開始点と終了点は、別々の項目へ分けず") ||
+  !generationPrompt.includes("約700万年前〜約200万年前：「な・丸々」") ||
+  !generationPrompt.includes("前5千年紀〜前2千年紀：「ご」") ||
+  !generationPrompt.includes("一流の勉強 世界史の年号暗記に役立つ語呂合わせ一覧") ||
+  !generationPrompt.includes("語呂合わせサイトのURLを`source_url`へ記録してはいけません") ||
+  !generationPrompt.includes("必須対象の件数と、`year_mnemonic`が空欄でない必須対象の件数が完全に一致")
 ) {
   throw new Error("問題集生成用プロンプトの年号語呂合わせ規則が不足しています。");
 }

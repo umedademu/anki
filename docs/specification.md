@@ -14,7 +14,7 @@
 
 ## 提供形態
 
-- 現在のアプリバージョンは`v0.055`とする
+- 現在のアプリバージョンは`v0.056`とする
 - パソコンやスマートフォンのブラウザーで利用するWebアプリ
 - WebアプリはVercelの`https://anki-ume.vercel.app`で公開する
 - 更新情報は`/changelog.html`で公開する
@@ -43,6 +43,10 @@
 - 英単語Deck 1：英単語段階別デッキ｜Deck 1｜基礎確認500語
   - 500語・1,500問
   - 英語から意味500問、意味から英語500問、例文から和訳500問
+- 英単語Deck 2：英単語段階別デッキ｜Deck 2｜受験基礎500語
+  - 500語・1,500問
+  - 英語から意味500問、意味から英語500問、例文から和訳500問
+- 英単語合計：1,000語・3,000問
 - 世界史と英単語は別の科目・版番号・学習履歴として保存する
 
 旧「大学受験世界史・重要300用語（三段階学習）」の300語・1,770問と、それ以前の問題集は、元CSVと公開用データの両方から撤廃しています。
@@ -316,7 +320,8 @@ source_url
 
 ### 英単語
 
-- 保存場所：`data/source/english-vocabulary/english_vocabulary_deck1_foundation_500.csv`
+- Deck 1保存場所：`data/source/english-vocabulary/english_vocabulary_deck1_foundation_500.csv`
+- Deck 2保存場所：`data/source/english-vocabulary/english_vocabulary_deck2_exam_foundation_500.csv`
 - 生成用プロンプト：`docs/prompts/english-vocabulary-csv-generation.md`
 - 文字コード：UTF-8 BOM付き
 - 1英単語を1行として扱い、次の10列を使用する
@@ -348,11 +353,12 @@ example_translation
 - `npm run build:data`でCSVからCloudflare登録用データを生成する
 - 公開用データ形式は第3版とする
 - Deck 1の2,782行とDeck 2の2,400行を、それぞれ400用語・三段階の問題配列へまとめる
-- 用語データはDeckごとに50語ずつ8ファイル、合計16ファイルへ分割する
+- 英単語はDeck 1・Deck 2の各500行から、それぞれ1,500問の三方向学習データを生成する
+- 用語データは50語ずつ、世界史16ファイル・英単語20ファイルへ分割する
 - 公開用データを作り直す前に、以前の公開用データを削除するため旧用語集は残らない
 - 科目情報には総問題数と段階別問題数、習得に必要な連続回数を記録する
 - 元CSVと生成後データの問題文、回答、別解、補足、出典まで全件照合する
-- 生成した`index.json`と科目・Deckごとの索引、世界史16個・英単語10個の分割データをCloudflare R2へ登録する
+- 生成した`index.json`と科目・Deckごとの索引、世界史16個・英単語20個の分割データをCloudflare R2へ登録する
 - `npm run preview:data:cloudflare`で旧問題集だけの削除件数を確認し、`npm run replace:data:cloudflare`で新規データを登録・照合した後に不要データを削除する
 - Cloudflareへの登録は画像・分割データ、Deck索引、画像一覧、全体索引の順に段階分けし、公開URLからの照合には取得間隔と回数制限時の再試行を設ける
 - Cloudflare置換処理は`speech-cache`とD1の学習履歴を対象に含めない
@@ -377,6 +383,7 @@ example_translation
 - 学習記録を保存可能な文字列へ変換し、正常な記録と壊れた記録を安全に復元できること
 - 本番の読込先がCloudflareで、ローカルデータへの暗黙の切替がないこと
 - Deck 1の400語・2,782問、Deck 2の400語・2,400問、合計800語・5,182問と段階別件数が元CSVに一致すること
+- 英単語Deck 1・Deck 2が各500語・1,500問、合計1,000語・3,000問で、元CSVと全件一致すること
 - 生成後の全問題が元CSVと一致すること
 - Deck 1の1,187問・403種類、Deck 2の1,173問・398種類の`year_mnemonic`が元CSVと一致すること
 - 単一年・年月・年月日だけを答えるDeck 1の116問・59用語、Deck 2の133問・69用語で語呂合わせが空欄でなく、統合説明と一致すること

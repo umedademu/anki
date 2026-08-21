@@ -378,7 +378,7 @@ function assertUnique(terms, selector, label) {
   }
 }
 
-export function validateTerms(terms) {
+export function validateTerms(terms, { rankStart = 1 } = {}) {
   assertUnique(terms, (term) => term.id, "用語ID");
   assertUnique(terms, (term) => term.term, "用語名");
   assertUnique(terms, (term) => term.importanceRank, "重要度順位");
@@ -483,8 +483,10 @@ export function validateTerms(terms) {
   const ranks = terms
     .map((term) => term.importanceRank)
     .sort((left, right) => left - right);
-  if (ranks.some((rank, index) => rank !== index + 1)) {
-    throw new Error("重要度順位は1から用語数までの連番にしてください。");
+  if (ranks.some((rank, index) => rank !== rankStart + index)) {
+    throw new Error(
+      `重要度順位は${rankStart}から${rankStart + terms.length - 1}までの連番にしてください。`,
+    );
   }
 }
 
@@ -505,6 +507,7 @@ const stableDatasetVersions = new Map([
   ["world-history:deck-1", "0836119c5d45"],
   ["world-history:deck-2", "8acba0d50165"],
   ["english-vocabulary:deck-1", "en-6984fb69efaf"],
+  ["english-vocabulary:deck-2", "en-abb710688392"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -729,7 +732,9 @@ export function groupEnglishTerms(rows) {
       source: { name: "", url: "" },
     };
   });
-  validateTerms(terms);
+  validateTerms(terms, {
+    rankStart: Math.min(...terms.map((term) => term.importanceRank)),
+  });
   return terms;
 }
 

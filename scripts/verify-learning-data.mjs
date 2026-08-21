@@ -70,6 +70,33 @@ const expectedSpecs = new Map([
   ],
 ]);
 
+const expectedEnglishSpecs = new Map([
+  [
+    "deck-1",
+    {
+      number: 1,
+      version: "en-6984fb69efaf",
+      contentVersion: "6984fb69efaf",
+      datasetLabel: "英単語段階別デッキ｜Deck 1｜基礎確認500語",
+      difficultyLabel: "Deck 1｜基礎確認",
+      termCount: 500,
+      questionCount: 1500,
+    },
+  ],
+  [
+    "deck-2",
+    {
+      number: 2,
+      version: "en-abb710688392",
+      contentVersion: "abb710688392",
+      datasetLabel: "英単語段階別デッキ｜Deck 2｜受験基礎500語",
+      difficultyLabel: "Deck 2｜受験基礎",
+      termCount: 500,
+      questionCount: 1500,
+    },
+  ],
+]);
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
@@ -315,51 +342,80 @@ if (
 
 const { decks: sourceEnglishDecks, terms: expectedEnglishTerms } =
   await loadEnglishDecks();
+const sourceEnglishDeckById = new Map(
+  sourceEnglishDecks.map((deck) => [deck.id, deck]),
+);
 if (
-  sourceEnglishDecks.length !== 1 ||
+  sourceEnglishDecks.length !== 2 ||
+  sourceEnglishDecks.some((deck) => !expectedEnglishSpecs.has(deck.id)) ||
   !englishSubjectEntry ||
   englishSubjectEntry.defaultDeckId !== "deck-1" ||
-  englishSubjectEntry.termCount !== 500 ||
-  englishSubjectEntry.questionCount !== 1500 ||
-  englishSubjectEntry.decks.length !== 1
+  englishSubjectEntry.datasetLabel !== "英単語段階別デッキ｜Deck 1〜2" ||
+  englishSubjectEntry.termCount !== 1000 ||
+  englishSubjectEntry.questionCount !== 3000 ||
+  englishSubjectEntry.decks.length !== 2 ||
+  englishSubjectEntry.decks.map((deck) => deck.id).join(",") !==
+    "deck-1,deck-2"
 ) {
-  throw new Error("英単語Deck 1の科目一覧が正しくありません。");
+  throw new Error("英単語Deck 1・Deck 2の科目一覧が正しくありません。");
 }
-const englishDeckEntry = englishSubjectEntry.decks[0];
-const englishSubject = await readJson(englishDeckEntry.indexPath);
-const englishChunks = await Promise.all(
-  englishSubject.chunks.map((chunk) => readJson(chunk.path)),
-);
-const generatedEnglishTerms = englishChunks.flatMap((chunk) => chunk.terms);
-const generatedEnglishQuestions = generatedEnglishTerms.flatMap((term) =>
-  Object.values(term.stages).flat(),
-);
-const generatedEnglishCounts = countQuestionsByStage(generatedEnglishTerms);
-if (
-  englishDeckEntry.version !== "en-6984fb69efaf" ||
-  englishDeckEntry.contentVersion !== "6984fb69efaf" ||
-  englishSubject.version !== "en-6984fb69efaf" ||
-  englishSubject.contentVersion !== "6984fb69efaf" ||
-  englishSubject.id !== "english-vocabulary" ||
-  englishSubject.learningType !== "vocabulary" ||
-  englishSubject.filterLabels.category !== "品詞" ||
-  englishSubject.stageLabels.beginner !== "英語から意味" ||
-  englishSubject.stageLabels.reverse !== "意味から英語" ||
-  englishSubject.stageLabels.integrated !== "例文から和訳" ||
-  englishSubject.termCount !== 500 ||
-  englishSubject.questionCount !== 1500 ||
-  englishSubject.chunks.length !== 10 ||
-  englishSubject.chunks.some((chunk) => chunk.count !== 50) ||
-  JSON.stringify(generatedEnglishCounts) !==
-    JSON.stringify({ beginner: 500, reverse: 500, integrated: 500 }) ||
-  JSON.stringify(generatedEnglishTerms) !== JSON.stringify(expectedEnglishTerms)
-) {
-  throw new Error("英単語Deck 1の生成内容が元CSVと一致しません。");
+const generatedEnglishTerms = [];
+const generatedEnglishQuestions = [];
+for (const englishDeckEntry of englishSubjectEntry.decks) {
+  const sourceEnglishDeck = sourceEnglishDeckById.get(englishDeckEntry.id);
+  const spec = expectedEnglishSpecs.get(englishDeckEntry.id);
+  if (!sourceEnglishDeck || !spec) {
+    throw new Error(`想定外の英単語Deckです: ${englishDeckEntry.id}`);
+  }
+  const englishSubject = await readJson(englishDeckEntry.indexPath);
+  const englishChunks = await Promise.all(
+    englishSubject.chunks.map((chunk) => readJson(chunk.path)),
+  );
+  const deckTerms = englishChunks.flatMap((chunk) => chunk.terms);
+  const deckQuestions = deckTerms.flatMap((term) =>
+    Object.values(term.stages).flat(),
+  );
+  const generatedEnglishCounts = countQuestionsByStage(deckTerms);
+  if (
+    englishDeckEntry.number !== spec.number ||
+    englishDeckEntry.version !== spec.version ||
+    englishDeckEntry.contentVersion !== spec.contentVersion ||
+    englishDeckEntry.datasetLabel !== spec.datasetLabel ||
+    englishDeckEntry.difficultyLabel !== spec.difficultyLabel ||
+    englishDeckEntry.termCount !== spec.termCount ||
+    englishDeckEntry.questionCount !== spec.questionCount ||
+    englishSubject.version !== spec.version ||
+    englishSubject.contentVersion !== spec.contentVersion ||
+    englishSubject.deckId !== englishDeckEntry.id ||
+    englishSubject.deckNumber !== spec.number ||
+    englishSubject.datasetLabel !== spec.datasetLabel ||
+    englishSubject.difficultyLabel !== spec.difficultyLabel ||
+    englishSubject.id !== "english-vocabulary" ||
+    englishSubject.learningType !== "vocabulary" ||
+    englishSubject.filterLabels.category !== "品詞" ||
+    englishSubject.stageLabels.beginner !== "英語から意味" ||
+    englishSubject.stageLabels.reverse !== "意味から英語" ||
+    englishSubject.stageLabels.integrated !== "例文から和訳" ||
+    englishSubject.termCount !== 500 ||
+    englishSubject.questionCount !== 1500 ||
+    englishSubject.chunks.length !== 10 ||
+    englishSubject.chunks.some((chunk) => chunk.count !== 50) ||
+    JSON.stringify(generatedEnglishCounts) !==
+      JSON.stringify({ beginner: 500, reverse: 500, integrated: 500 }) ||
+    JSON.stringify(deckTerms) !== JSON.stringify(sourceEnglishDeck.terms)
+  ) {
+    throw new Error(
+      `英単語${englishDeckEntry.id}の生成内容が元CSVと一致しません。`,
+    );
+  }
+  generatedEnglishTerms.push(...deckTerms);
+  generatedEnglishQuestions.push(...deckQuestions);
 }
 if (
-  new Set(generatedEnglishTerms.map((term) => term.id)).size !== 500 ||
-  new Set(generatedEnglishTerms.map((term) => term.term)).size !== 500 ||
-  new Set(generatedEnglishQuestions.map((question) => question.id)).size !== 1500 ||
+  JSON.stringify(generatedEnglishTerms) !== JSON.stringify(expectedEnglishTerms) ||
+  new Set(generatedEnglishTerms.map((term) => term.id)).size !== 1000 ||
+  new Set(generatedEnglishTerms.map((term) => term.term)).size !== 1000 ||
+  new Set(generatedEnglishQuestions.map((question) => question.id)).size !== 3000 ||
   generatedEnglishTerms.some(
     (term) =>
       term.stages.beginner[0].acceptedAnswers.includes(
@@ -579,5 +635,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史800用語・5182問、英単語500語・1500問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史800用語・5182問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

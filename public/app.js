@@ -77,6 +77,8 @@ const elements = {
   termOverview: document.querySelector("#term-overview"),
   termOverviewMain: document.querySelector("#term-overview-main"),
   termOverviewText: document.querySelector("#term-overview-text"),
+  yearMnemonic: document.querySelector("#year-mnemonic"),
+  yearMnemonicText: document.querySelector("#year-mnemonic-text"),
   termImage: document.querySelector("#term-image"),
   termImageLink: document.querySelector("#term-image-link"),
   termImageContent: document.querySelector("#term-image-content"),
@@ -561,7 +563,12 @@ function speechSegmentsFor(target) {
   }
   if (target === "overview") {
     const explanation = getIntegratedExplanationQuestion(term, question);
-    return explanation ? [{ target, text: explanation.answer }] : [];
+    return [
+      ...(explanation ? [{ target, text: explanation.answer }] : []),
+      ...(question.yearMnemonic
+        ? [{ target, text: `年号の語呂合わせ。${question.yearMnemonic}` }]
+        : []),
+    ];
   }
   return [];
 }
@@ -1041,9 +1048,16 @@ function renderQuestion() {
   elements.answerNote.textContent = question.answerNote;
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  const showsYearMnemonic =
+    state.answerVisible && Boolean(question.yearMnemonic);
   const showsTermOverview =
-    state.answerVisible && Boolean(integratedExplanation);
-  elements.termOverviewText.classList.toggle("is-hidden", !showsTermOverview);
+    state.answerVisible && (Boolean(integratedExplanation) || showsYearMnemonic);
+  elements.termOverviewText.classList.toggle(
+    "is-hidden",
+    !state.answerVisible || !integratedExplanation,
+  );
+  elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic);
+  elements.yearMnemonicText.textContent = question.yearMnemonic ?? "";
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
     !speechController.supported || !showsTermOverview,
@@ -1071,12 +1085,18 @@ function renderQuestion() {
     displayedQuestionPrompt,
     question.answer,
     integratedExplanation?.answer,
+    question.yearMnemonic,
   );
+  const fittedAnswerElements = [elements.answerText];
+  if (integratedExplanation) {
+    fittedAnswerElements.push(elements.termOverviewText);
+  }
+  if (showsYearMnemonic) {
+    fittedAnswerElements.push(elements.yearMnemonicText);
+  }
   fitTextInsideCard(
     elements.questionCard,
-    showsTermOverview
-      ? [elements.answerText, elements.termOverviewText]
-      : elements.answerText,
+    fittedAnswerElements,
     state.answerVisible,
   );
 }
@@ -1475,11 +1495,16 @@ window.addEventListener("resize", () => {
   if (state.currentTask && state.answerVisible) {
     const question = currentQuestion();
     const explanation = getIntegratedExplanationQuestion(currentTerm(), question);
+    const targets = [elements.answerText];
+    if (explanation) {
+      targets.push(elements.termOverviewText);
+    }
+    if (question.yearMnemonic) {
+      targets.push(elements.yearMnemonicText);
+    }
     fitTextInsideCard(
       elements.questionCard,
-      explanation
-        ? [elements.answerText, elements.termOverviewText]
-        : elements.answerText,
+      targets,
       true,
     );
   }

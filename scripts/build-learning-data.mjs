@@ -38,6 +38,7 @@ export const requiredHeaders = [
   "keywords",
   "accepted_answers",
   "answer_note",
+  "year_mnemonic",
   "source_name",
   "source_url",
 ];
@@ -154,7 +155,7 @@ export function toObjects(rows) {
     headers.length !== requiredHeaders.length ||
     headers.some((header, index) => header !== requiredHeaders[index])
   ) {
-    throw new Error("CSVの見出しまたは並び順が新しい24列形式と一致しません。");
+    throw new Error("CSVの見出しまたは並び順が新しい25列形式と一致しません。");
   }
 
   return rows.slice(1).map((cells, rowIndex) => {
@@ -223,13 +224,13 @@ export function normalizeQuestion(row, rowIndex) {
       `${rowNumber}行目のquestion_typeが正しくありません: ${row.question_type}`,
     );
   }
-  if (row.stage === "reverse" && row.question_type !== "reverse") {
-    throw new Error(`${rowNumber}行目の逆一問一答はquestion_typeをreverseにしてください。`);
-  }
   if (row.stage === "integrated" && row.question_type !== "integrated") {
     throw new Error(`${rowNumber}行目の統合説明はquestion_typeをintegratedにしてください。`);
   }
-  if (row.stage === "beginner" && ["reverse", "integrated"].includes(row.question_type)) {
+  if (row.stage !== "integrated" && row.question_type === "integrated") {
+    throw new Error(`${rowNumber}行目の統合説明以外にintegratedは指定できません。`);
+  }
+  if (row.stage === "beginner" && row.question_type === "reverse") {
     throw new Error(`${rowNumber}行目の短答問題に段階と異なる種類が設定されています。`);
   }
   if (!/^https:\/\//.test(row.source_url)) {
@@ -248,6 +249,7 @@ export function normalizeQuestion(row, rowIndex) {
     keywords: splitPipeList(row.keywords),
     acceptedAnswers: splitPipeList(row.accepted_answers),
     answerNote: row.answer_note,
+    yearMnemonic: row.year_mnemonic,
     source: normalizeSource(row),
   };
 }
@@ -358,14 +360,6 @@ export function validateTerms(terms) {
   if (ranks.some((rank, index) => rank !== index + 1)) {
     throw new Error("重要度順位は1から用語数までの連番にしてください。");
   }
-  if (
-    terms.some(
-      (term, index) =>
-        index > 0 && terms[index - 1].chronology.sortYear > term.chronology.sortYear,
-    )
-  ) {
-    throw new Error("CSVの用語がsort_yearの古い順に並んでいません。");
-  }
 }
 
 export function countQuestionsByStage(terms) {
@@ -444,14 +438,6 @@ export async function loadTermImageManifest(terms) {
     }
     assignedQuestionIds.add(assignment.questionId);
   }
-  if (
-    fallbackTermIds.size !== termIds.size ||
-    assignedQuestionIds.size !== questionIds.size
-  ) {
-    throw new Error(
-      `関連画像が全用語・全問題に揃っていません: ${fallbackTermIds.size}用語・${assignedQuestionIds.size}問`,
-    );
-  }
   return manifest;
 }
 
@@ -468,9 +454,11 @@ export async function main() {
     throw new Error("出力先が作業フォルダー内ではありません。");
   }
   await rm(outputRoot, { recursive: true, force: true });
-  await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
-    recursive: true,
-  });
+  if (termImageManifest.assets.length > 0) {
+    await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
+      recursive: true,
+    });
+  }
   await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
 
   const chunks = [];

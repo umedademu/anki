@@ -76,14 +76,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.035") ||
-  !changelog.includes("v0.035") ||
-  !settingsHtml.includes("v0.035")
+  !html.includes("v0.036") ||
+  !changelog.includes("v0.036") ||
+  !settingsHtml.includes("v0.036")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.035"') ||
+  !html.includes('href="/styles.css?v=0.036"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -167,7 +167,7 @@ if (
   !app.includes("function renderQuestionImage(question, visible)") ||
   !app.includes("const image = state.questionImages.get(question.id)") ||
   !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
-  !app.includes("const showsTermOverview =\n    state.answerVisible && Boolean(integratedExplanation)") ||
+  !app.includes("state.answerVisible && (Boolean(integratedExplanation) || showsYearMnemonic)") ||
   !app.includes("const showsTermImage = renderQuestionImage(question, state.answerVisible)") ||
   !styles.includes(".term-overview-main.has-image") ||
   !styles.includes(".term-overview.has-image .term-image img") ||
@@ -176,6 +176,17 @@ if (
   speechSegmentsBlock.includes("termImage")
 ) {
   throw new Error("回答後の関連画像、出典表示、読み上げ除外が揃っていません。");
+}
+if (
+  !html.includes('id="year-mnemonic"') ||
+  !html.includes('id="year-mnemonic-text"') ||
+  !app.includes("question.yearMnemonic") ||
+  !app.includes('text: `年号の語呂合わせ。${question.yearMnemonic}`') ||
+  !app.includes('elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic)') ||
+  !styles.includes(".year-mnemonic") ||
+  !speechSegmentsBlock.includes("question.yearMnemonic")
+) {
+  throw new Error("年号の語呂合わせの表示または解説音声への追加が揃っていません。");
 }
 if (
   !generationPrompt.includes("すべての統合説明の回答本文には、次の2点を例外なく明記してください") ||

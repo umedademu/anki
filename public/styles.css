@@ -516,6 +516,29 @@ body.is-studying .page {
   line-height: 1.75;
 }
 
+.year-mnemonic {
+  margin-top: 12px;
+  padding: 12px 14px;
+  color: #654d17;
+  background: #fff8df;
+  border: 1px solid rgb(177 132 30 / 22%);
+  border-radius: 12px;
+}
+
+.year-mnemonic > span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.68rem;
+  font-weight: 850;
+}
+
+#year-mnemonic-text {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 750;
+  line-height: 1.65;
+}
+
 .term-overview-main.has-image {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(190px, 0.7fr);

@@ -88,9 +88,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.040") ||
-  !changelog.includes("v0.040") ||
-  !settingsHtml.includes("v0.040")
+  !html.includes("v0.041") ||
+  !changelog.includes("v0.041") ||
+  !settingsHtml.includes("v0.041")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -125,11 +125,14 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.040"') ||
+  !html.includes('href="/styles.css?v=0.041"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
   throw new Error("Safariの文字自動拡大防止または装飾ファイルの版指定がありません。");
+}
+if (app.includes("をデッキへ追加しました。")) {
+  throw new Error("不要な段階解放通知が残っています。");
 }
 if (
   !generationPrompt.includes("冒頓単于(ぼくとつぜんう)") ||

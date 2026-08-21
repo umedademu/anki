@@ -18,6 +18,42 @@ const jobs = [
   })),
 ];
 const digest = (buffer) => createHash("sha256").update(buffer).digest("hex");
+const delay = (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+let requestQueue = Promise.resolve();
+let nextRequestAt = 0;
+const waitForRequestSlot = async () => {
+  const turn = requestQueue.then(async () => {
+    while (nextRequestAt > Date.now()) {
+      await delay(nextRequestAt - Date.now());
+    }
+    nextRequestAt = Date.now() + 100;
+  });
+  requestQueue = turn.catch(() => {});
+  await turn;
+};
+const fetchForVerification = async (key) => {
+  let lastFailure = "応答なし";
+  for (let attempt = 1; attempt <= 8; attempt += 1) {
+    await waitForRequestSlot();
+    const response = await fetch(`${baseUrl}/${key}?verify=${Date.now()}`, {
+      cache: "no-store",
+      headers: { Origin: productionOrigin },
+    });
+    if (response.ok) return response;
+    lastFailure = `HTTP ${response.status}`;
+    if (response.status !== 429) break;
+    const retryAfterSeconds = Number.parseInt(
+      response.headers.get("retry-after") ?? "",
+      10,
+    );
+    const retryMilliseconds = Number.isFinite(retryAfterSeconds)
+      ? retryAfterSeconds * 1_000
+      : attempt * 1_000;
+    nextRequestAt = Math.max(nextRequestAt, Date.now() + retryMilliseconds);
+  }
+  throw new Error(lastFailure);
+};
 
 let nextJob = 0;
 let completed = 0;
@@ -29,13 +65,7 @@ const worker = async () => {
     const job = jobs[jobIndex];
     try {
       const local = await readFile(job.filePath);
-      const response = await fetch(`${baseUrl}/${job.key}`, {
-        cache: "no-store",
-        headers: { Origin: productionOrigin },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+      const response = await fetchForVerification(job.key);
       if (response.headers.get("access-control-allow-origin") !== productionOrigin) {
         throw new Error("本番URL向けの読み込み許可がありません。");
       }
@@ -53,7 +83,7 @@ const worker = async () => {
   }
 };
 
-await Promise.all(Array.from({ length: 12 }, () => worker()));
+await Promise.all(Array.from({ length: 4 }, () => worker()));
 if (failures.length > 0) {
   throw new AggregateError(failures, `${failures.length}件の照合に失敗しました。`);
 }

@@ -68,6 +68,26 @@ const expectedSpecs = new Map([
       datedPeriodExpressionCount: 392,
     },
   ],
+  [
+    "deck-3",
+    {
+      number: 3,
+      version: "7edfff4529a4",
+      contentVersion: "7edfff4529a4",
+      datasetLabel: "世界史段階別デッキ｜Deck 3｜主要王朝・人物・制度の穴埋め400語",
+      difficultyLabel: "Deck 3｜標準",
+      termCount: 400,
+      questionCount: 2400,
+      questionCounts: { beginner: 1200, reverse: 800, integrated: 400 },
+      mnemonicCount: 1170,
+      distinctMnemonicCount: 390,
+      exactDateQuestionCount: 134,
+      exactDateTermCount: 67,
+      datedPeriodQuestionCount: 780,
+      datedPeriodTermCount: 390,
+      datedPeriodExpressionCount: 390,
+    },
+  ],
 ]);
 
 const expectedEnglishSpecs = new Map([
@@ -100,10 +120,10 @@ const expectedEnglishSpecs = new Map([
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
-  sourceDecks.length !== 2 ||
+  sourceDecks.length !== 3 ||
   sourceDecks.some((deck) => !expectedSpecs.has(deck.id))
 ) {
-  throw new Error("元CSVがDeck 1・Deck 2の2冊構成になっていません。");
+  throw new Error("元CSVがDeck 1〜Deck 3の3冊構成になっていません。");
 }
 
 const catalog = await readJson("index.json");
@@ -126,8 +146,8 @@ if (
   subjectEntry.indexPath !== "subjects/world-history/index.json" ||
   subjectEntry.defaultDeckId !== "deck-1" ||
   !Array.isArray(subjectEntry.decks) ||
-  subjectEntry.decks.length !== 2 ||
-  subjectEntry.decks.map((deck) => deck.id).join(",") !== "deck-1,deck-2"
+  subjectEntry.decks.length !== 3 ||
+  subjectEntry.decks.map((deck) => deck.id).join(",") !== "deck-1,deck-2,deck-3"
 ) {
   throw new Error("開始画面用のDeck一覧が正しくありません。");
 }
@@ -328,16 +348,16 @@ const generatedTerms = generatedDecks.flatMap((deck) => deck.terms);
 const generatedQuestions = generatedDecks.flatMap((deck) => deck.questions);
 const generatedCounts = countQuestionsByStage(generatedTerms);
 if (
-  generatedTerms.length !== 800 ||
-  generatedQuestions.length !== 5182 ||
+  generatedTerms.length !== 1200 ||
+  generatedQuestions.length !== 7582 ||
   JSON.stringify(generatedCounts) !==
-    JSON.stringify({ beginner: 2400, reverse: 1982, integrated: 800 }) ||
+    JSON.stringify({ beginner: 3600, reverse: 2782, integrated: 1200 }) ||
   JSON.stringify(generatedTerms) !== JSON.stringify(expectedTerms) ||
-  subjectEntry.datasetLabel !== "世界史段階別デッキ｜Deck 1〜2" ||
-  subjectEntry.termCount !== 800 ||
-  subjectEntry.questionCount !== 5182
+  subjectEntry.datasetLabel !== "世界史段階別デッキ｜Deck 1〜3" ||
+  subjectEntry.termCount !== 1200 ||
+  subjectEntry.questionCount !== 7582
 ) {
-  throw new Error("Deck 1・Deck 2の総件数または統合索引が一致しません。");
+  throw new Error("Deck 1〜Deck 3の総件数または統合索引が一致しません。");
 }
 
 const { decks: sourceEnglishDecks, terms: expectedEnglishTerms } =
@@ -452,10 +472,10 @@ const expectedTermIdByQuestionId = new Map(
 if (
   JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages) ||
   generatedTermImages.schemaVersion !== 2 ||
-  fallbackTermIds.size !== 800 ||
-  generatedTermImages.termFallbacks.length !== 800 ||
-  assignedQuestionIds.size !== 5182 ||
-  generatedTermImages.assignments.length !== 5182 ||
+  fallbackTermIds.size !== 1200 ||
+  generatedTermImages.termFallbacks.length !== 1200 ||
+  assignedQuestionIds.size !== 7582 ||
+  generatedTermImages.assignments.length !== 7582 ||
   generatedTermImages.assets.some(
     (asset) =>
       !asset.path.endsWith(".webp") ||
@@ -473,7 +493,7 @@ if (
       expectedTermIdByQuestionId.get(assignment.questionId) !== assignment.termId,
   )
 ) {
-  throw new Error("Deck 1・Deck 2の関連画像が全問題へ正しく割り当てられていません。");
+  throw new Error("Deck 1〜Deck 3の関連画像が全問題へ正しく割り当てられていません。");
 }
 
 const normalizeCommonsFileName = (sourcePageUrl) => {
@@ -490,6 +510,12 @@ const normalizeCommonsFileName = (sourcePageUrl) => {
 const termById = new Map(generatedTerms.map((term) => [term.id, term]));
 const fallbackByTermId = new Map(
   generatedTermImages.termFallbacks.map((fallback) => [fallback.termId, fallback]),
+);
+const sourceImageOverrides = JSON.parse(
+  await readFile(
+    path.join(projectRoot, "data", "source", "world-history", "image-overrides.json"),
+    "utf8",
+  ),
 );
 const auditedFallbackMismatches = generatedTerms
   .filter(
@@ -518,11 +544,40 @@ const auditedTargetMismatches = generatedTermImages.assignments.filter((assignme
     normalizeCommonsFileName(`https://commons.wikimedia.org/wiki/File:${expectedFile}`)
   );
 });
-if (auditedFallbackMismatches.length > 0 || auditedTargetMismatches.length > 0) {
+const sourceOverrideMismatches = sourceImageOverrides.filter((override) => {
+  const assetIds = override.target
+    ? generatedTermImages.assignments
+        .filter(
+          (assignment) =>
+            assignment.termId === override.termId && assignment.target === override.target,
+        )
+        .map((assignment) => assignment.assetId)
+    : [fallbackByTermId.get(override.termId)?.assetId];
+  return (
+    assetIds.length === 0 ||
+    assetIds.some((assetId) => {
+      const asset = imageAssetById.get(assetId);
+      return (
+        normalizeCommonsFileName(asset?.sourcePageUrl ?? "") !==
+        normalizeCommonsFileName(
+          `https://commons.wikimedia.org/wiki/File:${override.fileName}`,
+        )
+      );
+    })
+  );
+});
+if (
+  auditedFallbackMismatches.length > 0 ||
+  auditedTargetMismatches.length > 0 ||
+  sourceOverrideMismatches.length > 0
+) {
   throw new Error(
     `監査済み画像が指定した史料と一致しません: ${[
       ...auditedFallbackMismatches.map((term) => term.id),
       ...auditedTargetMismatches.map((assignment) => assignment.questionId),
+      ...sourceOverrideMismatches.map((override) =>
+        override.target ? `${override.termId}:${override.target}` : override.termId,
+      ),
     ].join(", ")}`,
   );
 }
@@ -579,7 +634,7 @@ const correctedPrompts = new Map([
   ],
 ]);
 if (
-  contextRequiredQuestions.length !== 1600 ||
+  contextRequiredQuestions.length !== 2400 ||
   contextRequiredQuestions.some(
     ({ term, question }) => !question.prompt.includes(term),
   ) ||
@@ -616,9 +671,9 @@ const importanceRanks = generatedTerms
   .sort((left, right) => left - right);
 const questionIds = generatedQuestions.map((question) => question.id);
 if (
-  new Set(termIds).size !== 800 ||
-  new Set(termNames).size !== 800 ||
-  new Set(questionIds).size !== 5182 ||
+  new Set(termIds).size !== 1200 ||
+  new Set(termNames).size !== 1200 ||
+  new Set(questionIds).size !== 7582 ||
   importanceRanks.some((rank, index) => rank !== index + 1)
 ) {
   throw new Error("Deck間でID・用語名・重要度順位が重複または欠落しています。");
@@ -635,5 +690,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史800用語・5182問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

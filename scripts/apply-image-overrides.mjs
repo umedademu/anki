@@ -43,11 +43,22 @@ for (const override of overrides) {
     manifest.assets.push(asset);
     assetsBySource.set(asset.sourcePageUrl, asset);
   }
-  const previousAssetId = fallback.assetId;
-  fallback.assetId = asset.id;
-  for (const assignment of manifest.assignments) {
-    if (assignment.termId === override.termId && assignment.assetId === previousAssetId) {
-      assignment.assetId = asset.id;
+  if (override.target) {
+    const targetAssignments = manifest.assignments.filter(
+      (assignment) =>
+        assignment.termId === override.termId && assignment.target === override.target,
+    );
+    if (targetAssignments.length === 0) {
+      throw new Error(`問題別画像の対象がありません: ${override.termId} ${override.target}`);
+    }
+    for (const assignment of targetAssignments) assignment.assetId = asset.id;
+  } else {
+    const previousAssetId = fallback.assetId;
+    fallback.assetId = asset.id;
+    for (const assignment of manifest.assignments) {
+      if (assignment.termId === override.termId && assignment.assetId === previousAssetId) {
+        assignment.assetId = asset.id;
+      }
     }
   }
 }

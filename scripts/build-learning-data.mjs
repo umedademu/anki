@@ -506,6 +506,7 @@ function sourceVersion(sourceText) {
 const stableDatasetVersions = new Map([
   ["world-history:deck-1", "0836119c5d45"],
   ["world-history:deck-2", "8acba0d50165"],
+  ["world-history:deck-3", "7edfff4529a4"],
   ["english-vocabulary:deck-1", "en-6984fb69efaf"],
   ["english-vocabulary:deck-2", "en-abb710688392"],
 ]);

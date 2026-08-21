@@ -76,6 +76,10 @@ export const vocabularySpeechLayoutByStage = {
   integrated: { question: "example-english", answer: "example-japanese" },
 };
 
+export function prepareVocabularyMeaningSpeechText(value) {
+  return String(value ?? "").replace(/[〜～]/g, "");
+}
+
 export function createVocabularySpeechGroups(term) {
   const beginnerQuestion = term?.stages?.beginner?.[0];
   if (!beginnerQuestion) {
@@ -89,14 +93,16 @@ export function createVocabularySpeechGroups(term) {
     text: segment?.text ?? fallbackText ?? "",
     language: segment?.language ?? fallbackLanguage,
   });
+  const meaning = segmentFor(
+    "meaning",
+    answerSegments[0],
+    beginnerQuestion.answer,
+    "ja-JP",
+  );
+  meaning.text = prepareVocabularyMeaningSpeechText(meaning.text);
   return {
     word: segmentFor("word", questionSegments[0], term.term, "en-US"),
-    meaning: segmentFor(
-      "meaning",
-      answerSegments[0],
-      beginnerQuestion.answer,
-      "ja-JP",
-    ),
+    meaning,
     "example-english": segmentFor(
       "example-english",
       exampleSegments.find((segment) =>

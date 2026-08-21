@@ -3,6 +3,7 @@ import {
   createVocabularySpeechGroups,
   createSpeechController,
   prepareSpeechText,
+  prepareVocabularyMeaningSpeechText,
   selectJapaneseVoice,
   selectVoice,
 } from "../public/speech.js";
@@ -45,6 +46,14 @@ for (const [source, expected] of textChecks) {
   }
 }
 
+if (
+  prepareVocabularyMeaningSpeechText("～まで") !== "まで" ||
+  prepareVocabularyMeaningSpeechText("〜から") !== "から" ||
+  prepareVocabularyMeaningSpeechText("どちらも〜ない") !== "どちらもない"
+) {
+  throw new Error("英単語の日本語訳から省略記号の波線を除けませんでした。");
+}
+
 const vocabularyTerm = {
   term: "although",
   stages: {
@@ -73,7 +82,7 @@ const vocabularySpeechGroups = createVocabularySpeechGroups(vocabularyTerm);
 if (
   Object.keys(vocabularySpeechGroups).length !== 4 ||
   vocabularySpeechGroups.word.text !== "although" ||
-  vocabularySpeechGroups.meaning.text !== "〜だけれども" ||
+  vocabularySpeechGroups.meaning.text !== "だけれども" ||
   vocabularySpeechGroups["example-english"].language !== "en-US" ||
   vocabularySpeechGroups["example-japanese"].text !==
     "雨が降っていたが、私たちは散歩に出かけた。"

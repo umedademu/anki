@@ -57,13 +57,13 @@ const cloudProgress = await readFile(
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
 const speechSegmentsBlock = app.match(
-  /function speechSegmentsFor\(target\)[\s\S]*?function speakTarget\(target\)/,
+  /function speechSegmentsFor\(target\)[\s\S]*?function answerSpeechSequence\(\)/,
 )?.[0];
 const automaticAnswerSpeechBlock = app.match(
   /function autoSpeakAnswerAndOverview\(\)[\s\S]*?function setListeningStatus/,
 )?.[0];
 const answerSpeechSequenceBlock = app.match(
-  /function answerSpeechSequence\(\)[\s\S]*?function speakTarget\(target\)/,
+  /function answerSpeechSequence\(\)[\s\S]*?function autoSpeakQuestion\(\)/,
 )?.[0];
 const listeningAnswerSpeechBlock = app.match(
   /function speakListeningAnswer\(runId\)[\s\S]*?function beginListeningQuestion/,
@@ -105,9 +105,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.052") ||
-  !changelog.includes("v0.052") ||
-  !settingsHtml.includes("v0.052")
+  !html.includes("v0.053") ||
+  !changelog.includes("v0.053") ||
+  !settingsHtml.includes("v0.053")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -142,7 +142,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.052"') ||
+  !html.includes('href="/styles.css?v=0.053"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -193,6 +193,10 @@ if (
   !app.includes("createSpeechController") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
+  !app.includes("function toggleSpeechPart(target)") ||
+  !app.includes('icon.textContent = enabled ? "🔊" : "🔇"') ||
+  !html.includes('aria-pressed="true"') ||
+  !html.includes('aria-pressed="false"') ||
   !speechSettings.includes("englishAzureSpeechVoices") ||
   !speechSettings.includes('en-US-JennyNeural') ||
   !speech.includes("segment.language") ||
@@ -287,7 +291,7 @@ if (
   !html.includes('id="year-mnemonic-speech"') ||
   !app.includes("question.yearMnemonic") ||
   !app.includes('if (target === "mnemonic")') ||
-  !app.includes('speakTarget("mnemonic")') ||
+  !app.includes('toggleSpeechPart("mnemonic")') ||
   !app.includes('.split("|")') ||
   !app.includes('.join("。")') ||
   !app.includes('.join("\\n")') ||
@@ -400,8 +404,8 @@ if (
   html.includes('name="study-mode" value="listen-explanation"') ||
   (html.match(/name="study-mode"/g) ?? []).length !== 2 ||
   !html.includes('id="listening-answer-description"') ||
-  !html.includes('id="speech-part-controls"') ||
-  (html.match(/data-speech-part-option/g) ?? []).length !== 4 ||
+  html.includes('id="speech-part-controls"') ||
+  (html.match(/data-speech-part-option/g) ?? []).length !== 0 ||
   !html.includes('id="listening-dock"') ||
   !html.includes('id="listening-toggle"') ||
   !html.includes('id="listening-stop"') ||
@@ -410,9 +414,14 @@ if (
   !app.includes("function speakListeningAnswer(runId)") ||
   app.includes('"listen-explanation"') ||
   !app.includes("createVocabularyAutomaticAnswerSequence") ||
-  !app.includes("function handleSpeechPartChange(event)") ||
+  !app.includes("function toggleSpeechPart(target)") ||
+  app.includes("function handleSpeechPartChange(event)") ||
+  app.includes("function speakTarget(target)") ||
   !app.includes("function queueSpeechPartsSave()") ||
   !app.includes("function currentQuestionSpeechEnabled()") ||
+  !app.includes('button.setAttribute("aria-pressed", String(enabled))') ||
+  !styles.includes(".speech-button.is-enabled") ||
+  styles.includes("body.is-listening .speech-button") ||
   !app.includes("normalizeSpeechParts") ||
   !listeningAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
   !cloudProgress.includes("defaultSpeechParts") ||

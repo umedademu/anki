@@ -89,9 +89,6 @@ const elements = {
   questionAxis: document.querySelector("#question-axis"),
   questionText: document.querySelector("#question-text"),
   questionSpeech: document.querySelector("#question-speech"),
-  speechPartControls: document.querySelector("#speech-part-controls"),
-  speechPartOptions: document.querySelectorAll("[data-speech-part-option]"),
-  speechPartStatus: document.querySelector("#speech-part-status"),
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
   answerSpeech: document.querySelector("#answer-speech"),
@@ -174,6 +171,7 @@ const historyLimit = 200;
 const halfScreenRatingDelay = 400;
 let setupPreferenceSave = Promise.resolve();
 let speechPartsSaveVersion = 0;
+let speechPartNoticeTimer = null;
 let startingStudy = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
@@ -620,51 +618,39 @@ function queueSetupPreferenceSave() {
   return setupPreferenceSave;
 }
 
-function setSpeechPartStatus(message, isError = false) {
-  elements.speechPartStatus.textContent = message;
-  elements.speechPartStatus.classList.toggle("is-error", isError);
-}
-
-function renderSpeechPartControls() {
-  const definitions = currentSpeechPartDefinitions();
-  const settings = currentSpeechPartSettings();
-  elements.speechPartControls.classList.toggle(
-    "is-hidden",
-    !speechController.supported,
-  );
-  [...elements.speechPartOptions].forEach((option, index) => {
-    const definition = definitions[index];
-    option.dataset.speechPart = definition.key;
-    option.checked = settings[definition.key];
-    option.disabled = !speechController.supported;
-    const label = option
-      .closest(".speech-part-choice")
-      ?.querySelector("[data-speech-part-label]");
-    if (label) {
-      label.textContent = definition.label;
-    }
-  });
-}
-
 function queueSpeechPartsSave() {
   const saveVersion = ++speechPartsSaveVersion;
   const speechParts = normalizeSpeechParts(state.speechParts);
-  setSpeechPartStatus("Cloudflareへ保存しています");
   setupPreferenceSave = setupPreferenceSave
     .catch(() => {})
     .then(async () => {
       const saved = await saveCloudSettings({ speechParts });
       if (saveVersion === speechPartsSaveVersion) {
         state.speechParts = normalizeSpeechParts(saved.speechParts);
-        renderSpeechPartControls();
-        setSpeechPartStatus("次回の学習と別端末にも反映しました");
+        updateSpeechButtons();
       }
       return saved;
     });
   return setupPreferenceSave;
 }
 
-function updateSpeechButtons(activeTarget = "") {
+function speechPartKeyForTarget(target) {
+  if (state.subject?.learningType === "vocabulary") {
+    const group = target.startsWith("vocabulary-")
+      ? target.slice("vocabulary-".length)
+      : vocabularySpeechLayout()?.[target];
+    return vocabularySpeechPartKey(group);
+  }
+  return {
+    question: "question",
+    answer: "answer",
+    mnemonic: "mnemonic",
+    overview: "explanation",
+  }[target];
+}
+
+function updateSpeechButtons(activeTarget = speechController.currentTarget) {
+  const settings = currentSpeechPartSettings();
   const controls = [
     [elements.questionSpeech, "question", "問題"],
     [elements.answerSpeech, "answer", "回答"],
@@ -676,16 +662,24 @@ function updateSpeechButtons(activeTarget = "") {
     }),
   ];
   for (const [button, target, label] of controls) {
-    const active = activeTarget === target;
-    button.classList.toggle("is-speaking", active);
+    const partKey = speechPartKeyForTarget(target);
+    const enabled = Boolean(partKey && settings[partKey]);
+    const speaking = enabled && activeTarget === target;
+    button.classList.toggle("is-enabled", enabled);
+    button.classList.toggle("is-speaking", speaking);
+    button.setAttribute("aria-pressed", String(enabled));
     button.setAttribute(
       "aria-label",
-      active ? `${label}の読み上げを止める` : `${label}を読み上げる`,
+      enabled
+        ? `${label}の自動読み上げをOFFにする`
+        : `${label}の自動読み上げをONにする`,
     );
-    button.title = active ? "読み上げを止める" : `${label}を読み上げる`;
+    button.title = enabled
+      ? `${label}の自動読み上げ：ON`
+      : `${label}の自動読み上げ：OFF`;
     const icon = button.querySelector("span");
     if (icon) {
-      icon.textContent = active ? "■" : "🔊";
+      icon.textContent = enabled ? "🔊" : "🔇";
     }
   }
 }
@@ -703,8 +697,7 @@ function renderVocabularySpeechGroups() {
   const showGroups =
     vocabularyMode &&
     state.answerVisible &&
-    speechController.supported &&
-    !isListeningMode();
+    speechController.supported;
   elements.vocabularySpeechGroups.classList.toggle("is-hidden", !showGroups);
   if (vocabularyMode) {
     elements.questionSpeech.classList.toggle("is-hidden", showGroups);
@@ -804,17 +797,6 @@ function answerSpeechSequence() {
     ...(settings.mnemonic ? speechSegmentsFor("mnemonic") : []),
     ...(settings.explanation ? speechSegmentsFor("overview") : []),
   ];
-}
-
-function speakTarget(target) {
-  if (!speechController.supported) {
-    return;
-  }
-  if (speechController.currentTarget === target) {
-    speechController.stop();
-    return;
-  }
-  speechController.speak(speechSegmentsFor(target));
 }
 
 function autoSpeakQuestion() {
@@ -936,17 +918,33 @@ function beginListeningQuestion() {
   }
 }
 
-function handleSpeechPartChange(event) {
-  const option = event.currentTarget;
+function showSpeechPartNotice(message) {
+  if (speechPartNoticeTimer !== null) {
+    window.clearTimeout(speechPartNoticeTimer);
+  }
+  elements.unlockNotice.textContent = message;
+  elements.unlockNotice.classList.remove("is-hidden");
+  speechPartNoticeTimer = window.setTimeout(() => {
+    speechPartNoticeTimer = null;
+    elements.unlockNotice.classList.add("is-hidden");
+  }, 2200);
+}
+
+function toggleSpeechPart(target) {
+  if (!speechController.supported) {
+    return;
+  }
   const subjectKey = speechPartSubjectKey();
-  const partKey = option.dataset.speechPart;
+  const partKey = speechPartKeyForTarget(target);
+  if (!partKey) {
+    return;
+  }
   const nextGroup = {
     ...state.speechParts[subjectKey],
-    [partKey]: option.checked,
+    [partKey]: !state.speechParts[subjectKey][partKey],
   };
   if (!Object.values(nextGroup).some(Boolean)) {
-    option.checked = true;
-    setSpeechPartStatus("読み上げ対象を1つ以上ONにしてください", true);
+    showSpeechPartNotice("読み上げ対象を1つ以上ONにしてください");
     return;
   }
 
@@ -954,7 +952,7 @@ function handleSpeechPartChange(event) {
     ...state.speechParts,
     [subjectKey]: nextGroup,
   };
-  renderSpeechPartControls();
+  updateSpeechButtons();
 
   if (speechController.currentTarget || isListeningMode()) {
     const wasListening = isListeningMode() && !state.listeningPaused;
@@ -974,7 +972,7 @@ function handleSpeechPartChange(event) {
   }
 
   void queueSpeechPartsSave().catch((error) => {
-    setSpeechPartStatus(`保存できませんでした。${error.message}`, true);
+    showSpeechPartNotice(`保存できませんでした。${error.message}`);
   });
 }
 
@@ -1319,8 +1317,7 @@ function configureSetup() {
   ].forEach(
     (button) => button.classList.toggle("is-hidden", !speechController.supported),
   );
-  renderSpeechPartControls();
-  setSpeechPartStatus("変更内容は次回の学習と別端末にも反映されます");
+  updateSpeechButtons();
   updateRatingIntervals();
   updateSetupPreview();
 }
@@ -1357,7 +1354,7 @@ function renderQuestion() {
   elements.questionCard.classList.remove("is-hidden");
   elements.questionCard.classList.toggle("is-vocabulary", vocabularyMode);
   elements.actionDock.classList.remove("is-hidden");
-  renderSpeechPartControls();
+  updateSpeechButtons();
 
   elements.contextCard.classList.toggle(
     "is-beginner-stage",
@@ -1745,7 +1742,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.052｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.053｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1864,9 +1861,6 @@ for (const option of elements.studyModeOptions) {
     updateSetupPreview();
   });
 }
-for (const option of elements.speechPartOptions) {
-  option.addEventListener("change", handleSpeechPartChange);
-}
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
   void queueSetupPreferenceSave().catch((error) => {
@@ -1884,17 +1878,23 @@ elements.changeSubject.addEventListener("click", showSubjectSelection);
 
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
-elements.questionSpeech.addEventListener("click", () => speakTarget("question"));
-elements.answerSpeech.addEventListener("click", () => speakTarget("answer"));
+elements.questionSpeech.addEventListener("click", () =>
+  toggleSpeechPart("question"),
+);
+elements.answerSpeech.addEventListener("click", () =>
+  toggleSpeechPart("answer"),
+);
 elements.yearMnemonicSpeech.addEventListener("click", () =>
-  speakTarget("mnemonic"),
+  toggleSpeechPart("mnemonic"),
 );
 for (const button of elements.vocabularySpeechButtons) {
   button.addEventListener("click", () =>
-    speakTarget(`vocabulary-${button.dataset.vocabularySpeech}`),
+    toggleSpeechPart(`vocabulary-${button.dataset.vocabularySpeech}`),
   );
 }
-elements.overviewSpeech.addEventListener("click", () => speakTarget("overview"));
+elements.overviewSpeech.addEventListener("click", () =>
+  toggleSpeechPart("overview"),
+);
 elements.termImageContent.addEventListener("error", () => {
   elements.termImage.classList.add("is-hidden");
   elements.termOverviewMain.classList.remove("has-image", "image-only");

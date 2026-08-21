@@ -9,7 +9,7 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.052" />
+    <link rel="stylesheet" href="/styles.css?v=0.053" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.052</span>
+        <span class="app-version">v0.053</span>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <div class="subject-name" id="subject-name">科目を選択</div>
@@ -26,13 +26,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.052｜科目別学習</p>
+        <p class="eyebrow">v0.053｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.052｜科目を選ぶ</p>
+        <p class="eyebrow">v0.053｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選ぶと、デッキや学習方法を選ぶ開始画面へ進みます。
@@ -41,7 +41,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.052｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.053｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -156,42 +156,15 @@
               <span id="queue-progress">この回の残り 0問</span>
             </div>
           </div>
-          <div
-            class="speech-part-controls"
-            id="speech-part-controls"
-            aria-label="自動読み上げの対象"
-          >
-            <span class="speech-part-title">自動音声</span>
-            <div class="speech-part-options">
-              <label class="speech-part-choice">
-                <input type="checkbox" data-speech-part-option checked />
-                <span data-speech-part-label>問題</span>
-              </label>
-              <label class="speech-part-choice">
-                <input type="checkbox" data-speech-part-option checked />
-                <span data-speech-part-label>回答</span>
-              </label>
-              <label class="speech-part-choice">
-                <input type="checkbox" data-speech-part-option checked />
-                <span data-speech-part-label>語呂合わせ</span>
-              </label>
-              <label class="speech-part-choice">
-                <input type="checkbox" data-speech-part-option />
-                <span data-speech-part-label>解説</span>
-              </label>
-            </div>
-            <small id="speech-part-status" role="status">
-              変更内容は次回の学習と別端末にも反映されます
-            </small>
-          </div>
           <div class="spoken-block question-spoken-block">
             <h2 id="question-text"></h2>
             <button
               class="speech-button"
               id="question-speech"
               type="button"
-              aria-label="問題を読み上げる"
-              title="問題を読み上げる"
+              aria-label="問題の自動読み上げをOFFにする"
+              aria-pressed="true"
+              title="問題の自動読み上げ：ON"
             >
               <span aria-hidden="true">🔊</span>
             </button>
@@ -202,8 +175,9 @@
               class="speech-button"
               id="answer-speech"
               type="button"
-              aria-label="回答を読み上げる"
-              title="回答を読み上げる"
+              aria-label="回答の自動読み上げをOFFにする"
+              aria-pressed="true"
+              title="回答の自動読み上げ：ON"
             >
               <span aria-hidden="true">🔊</span>
             </button>
@@ -215,12 +189,13 @@
             <div
               class="vocabulary-speech-groups is-hidden"
               id="vocabulary-speech-groups"
-              aria-label="英単語の個別読み上げ"
+              aria-label="英単語の自動読み上げ切替"
             >
               <button
                 class="speech-button vocabulary-speech-button"
                 type="button"
                 data-vocabulary-speech="word"
+                aria-pressed="true"
               >
                 <span aria-hidden="true">🔊</span><small>英語</small>
               </button>
@@ -228,6 +203,7 @@
                 class="speech-button vocabulary-speech-button"
                 type="button"
                 data-vocabulary-speech="meaning"
+                aria-pressed="true"
               >
                 <span aria-hidden="true">🔊</span><small>日本語</small>
               </button>
@@ -235,6 +211,7 @@
                 class="speech-button vocabulary-speech-button"
                 type="button"
                 data-vocabulary-speech="example-english"
+                aria-pressed="false"
               >
                 <span aria-hidden="true">🔊</span><small>例文英語</small>
               </button>
@@ -242,6 +219,7 @@
                 class="speech-button vocabulary-speech-button"
                 type="button"
                 data-vocabulary-speech="example-japanese"
+                aria-pressed="false"
               >
                 <span aria-hidden="true">🔊</span><small>例文日本語</small>
               </button>
@@ -253,8 +231,9 @@
               class="speech-button"
               id="overview-speech"
               type="button"
-              aria-label="解説を読み上げる"
-              title="解説を読み上げる"
+              aria-label="解説の自動読み上げをONにする"
+              aria-pressed="false"
+              title="解説の自動読み上げ：OFF"
             >
               <span aria-hidden="true">🔊</span>
             </button>
@@ -287,8 +266,9 @@
                 class="speech-button"
                 id="year-mnemonic-speech"
                 type="button"
-                aria-label="年号の語呂合わせを読み上げる"
-                title="年号の語呂合わせを読み上げる"
+                aria-label="年号の語呂合わせの自動読み上げをOFFにする"
+                aria-pressed="true"
+                title="年号の語呂合わせの自動読み上げ：ON"
               >
                 <span aria-hidden="true">🔊</span>
               </button>

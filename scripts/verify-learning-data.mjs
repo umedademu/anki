@@ -140,6 +140,68 @@ if (
   throw new Error("逆一問一答段階の詳しい問題種別が保持されていません。");
 }
 
+const contextRequiredQuestions = generatedTerms.flatMap((term) =>
+  term.stages.beginner
+    .filter((question) => question.type !== "identify")
+    .map((question) => ({ term: term.term, question })),
+);
+const anLushanQuestion = generatedQuestions.find(
+  (question) => question.id === "WH-000090-B03",
+);
+const julyMonarchyQuestion = generatedQuestions.find(
+  (question) => question.id === "WH-000259-B03",
+);
+const correctedIdentifyPrompts = new Map([
+  [
+    "WH-000063-B01",
+    "前770年の周の東遷から前221年の秦(しん)による統一まで、春秋時代と戦国時代を合わせた中国の分裂時代は？",
+  ],
+  [
+    "WH-000078-B01",
+    "光武帝(こうぶてい)が漢(かん)を再興し、洛陽(らくよう)を都とした王朝は？",
+  ],
+  [
+    "WH-000083-B01",
+    "北魏(ほくぎ)で始まり、国家が農民へ土地を支給し、原則として死後に返還させた中国の土地制度は？",
+  ],
+  [
+    "WH-000162-B01",
+    "15世紀にエンリケ航海王子の支援で始まり、アフリカ西岸の南下からインド航路開拓へ進んだポルトガルの活動は？",
+  ],
+  [
+    "WH-000215-B01",
+    "西欧化改革を進め、北方戦争中にサンクト＝ペテルブルクを建設したロシア皇帝は？",
+  ],
+  [
+    "WH-000226-B01",
+    "満洲人が建て、明(みん)の滅亡後に中国全土を支配した、中国最後の王朝は？",
+  ],
+  [
+    "WH-000343-B01",
+    "ガンディーがインド独立運動で掲げた、暴力を使わず植民地支配への協力を拒む二つの運動方針は？",
+  ],
+  [
+    "WH-000355-B01",
+    "第二次世界大戦(だいにじせかいたいせん)末に、米・英・ソの首脳がドイツの占領政策と戦後処理を協議した会談は？",
+  ],
+]);
+if (
+  contextRequiredQuestions.length !== 800 ||
+  contextRequiredQuestions.some(
+    ({ term, question }) => !question.prompt.includes(term),
+  ) ||
+  anLushanQuestion?.prompt !== "安史の乱(あんしのらん)を起こした節度使は？" ||
+  julyMonarchyQuestion?.prompt !==
+    "七月革命(しちがつかくめい)によって成立した王政は？" ||
+  [...correctedIdentifyPrompts].some(
+    ([questionId, expectedPrompt]) =>
+      generatedQuestions.find((question) => question.id === questionId)?.prompt !==
+      expectedPrompt,
+  )
+) {
+  throw new Error("短答問題が一問だけで対象を特定できる形になっていません。");
+}
+
 const readingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/;
 if (
   generatedQuestions.some((question) =>

@@ -354,6 +354,20 @@ export function validateTerms(terms) {
   assertUnique(terms, (term) => term.term, "用語名");
   assertUnique(terms, (term) => term.importanceRank, "重要度順位");
 
+  for (const term of terms) {
+    const contextMissingQuestions = term.stages.beginner.filter(
+      (question) =>
+        question.type !== "identify" && !question.prompt.includes(term.term),
+    );
+    if (contextMissingQuestions.length > 0) {
+      throw new Error(
+        `${term.term}の短答問題に対象語がありません: ${contextMissingQuestions
+          .map((question) => question.id)
+          .join(", ")}`,
+      );
+    }
+  }
+
   const ranks = terms
     .map((term) => term.importanceRank)
     .sort((left, right) => left - right);

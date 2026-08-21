@@ -20,6 +20,21 @@ const azureSpeechVoices = new Set([
   ...englishAzureSpeechVoices,
 ]);
 
+const defaultSpeechParts = Object.freeze({
+  history: Object.freeze({
+    question: true,
+    answer: true,
+    mnemonic: true,
+    explanation: false,
+  }),
+  vocabulary: Object.freeze({
+    word: true,
+    meaning: true,
+    exampleEnglish: false,
+    exampleJapanese: false,
+  }),
+});
+
 const defaultSettings = {
   againSeconds: 60,
   hardSeconds: 4 * 60 * 60,
@@ -34,6 +49,7 @@ const defaultSettings = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  speechParts: defaultSpeechParts,
 };
 
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
@@ -117,6 +133,41 @@ function optionalDate(value) {
   return new Date(text).toISOString();
 }
 
+function normalizeSpeechPartGroup(value, defaults) {
+  const source = value && typeof value === "object" ? value : {};
+  const normalized = Object.fromEntries(
+    Object.entries(defaults).map(([key, fallback]) => [
+      key,
+      source[key] == null ? fallback : source[key] === true,
+    ]),
+  );
+  return Object.values(normalized).some(Boolean)
+    ? normalized
+    : { ...defaults };
+}
+
+function normalizeSpeechParts(value) {
+  let source = value;
+  if (typeof source === "string") {
+    try {
+      source = JSON.parse(source);
+    } catch {
+      source = {};
+    }
+  }
+  source = source && typeof source === "object" ? source : {};
+  return {
+    history: normalizeSpeechPartGroup(
+      source.history,
+      defaultSpeechParts.history,
+    ),
+    vocabulary: normalizeSpeechPartGroup(
+      source.vocabulary,
+      defaultSpeechParts.vocabulary,
+    ),
+  };
+}
+
 function normalizeQuestionRecord(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error("学習記録の形式が正しくありません。");
@@ -175,6 +226,7 @@ function normalizeSettings(value) {
     autoSpeechEnabled:
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
     listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
+    speechParts: normalizeSpeechParts(source.speechParts),
   };
 }
 
@@ -330,7 +382,8 @@ async function readState(env, datasetVersion) {
       `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
         speech_source, azure_voice_id, english_azure_voice_id,
         device_voice_id, english_device_voice_id, speech_rate,
-        shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
+        shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+        speech_parts_json, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
   ]);
@@ -371,6 +424,7 @@ async function readState(env, datasetVersion) {
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
+          speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
           updatedAt: settingsRow.updated_at,
         }
       : defaultSettings,
@@ -386,8 +440,9 @@ async function saveSettings(env, patch) {
       profile_id, again_seconds, hard_seconds, good_seconds, easy_seconds,
       speech_source, azure_voice_id, english_azure_voice_id,
       device_voice_id, english_device_voice_id, speech_rate,
-      shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+      speech_parts_json, updated_at
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -402,6 +457,7 @@ async function saveSettings(env, patch) {
       shuffle_enabled = excluded.shuffle_enabled,
       auto_speech_enabled = excluded.auto_speech_enabled,
       listening_pause_seconds = excluded.listening_pause_seconds,
+      speech_parts_json = excluded.speech_parts_json,
       updated_at = excluded.updated_at`,
   )
     .bind(
@@ -418,6 +474,7 @@ async function saveSettings(env, patch) {
       settings.shuffleEnabled ? 1 : 0,
       settings.autoSpeechEnabled ? 1 : 0,
       settings.listeningPauseSeconds,
+      JSON.stringify(settings.speechParts),
       updatedAt,
     )
     .run();
@@ -541,5 +598,6 @@ export {
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
+  normalizeSpeechParts,
   normalizeSpeechPrompt,
 };

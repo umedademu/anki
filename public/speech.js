@@ -116,21 +116,28 @@ export function createVocabularySpeechGroups(term) {
   };
 }
 
-export function createVocabularyListeningAnswerSequence(
+export function createVocabularyAutomaticAnswerSequence(
   term,
   stage,
-  { includeExamples = false } = {},
+  {
+    answer = true,
+    exampleEnglish = false,
+    exampleJapanese = false,
+  } = {},
 ) {
   const layout = vocabularySpeechLayoutByStage[stage];
   if (!layout) {
     return [];
   }
   const groups = createVocabularySpeechGroups(term);
-  const groupNames = includeExamples
-    ? [layout.answer, "example-english", "example-japanese"]
-    : [layout.answer];
+  const supplementalGroups = [
+    ...(exampleEnglish ? ["example-english"] : []),
+    ...(exampleJapanese ? ["example-japanese"] : []),
+  ].filter(
+    (group) => group !== layout.question && group !== layout.answer,
+  );
+  const groupNames = [...(answer ? [layout.answer] : []), ...supplementalGroups];
   return [...new Set(groupNames)]
-    .filter((group) => group !== layout.question)
     .map((group) => groups[group])
     .filter((segment) => segment?.text);
 }

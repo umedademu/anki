@@ -26,6 +26,7 @@ import {
   importCloudProgress,
   loadCloudState,
   normalizeListeningPauseSeconds,
+  normalizeSpeechParts,
   resetCloudProgress,
   requestCloudSpeech,
   saveCloudSettings,
@@ -33,9 +34,8 @@ import {
 } from "./cloud-progress.js";
 import {
   createSpeechController,
-  createVocabularyListeningAnswerSequence,
+  createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
-  vocabularySpeechGroupOrder,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
@@ -67,10 +67,6 @@ const elements = {
   listeningAnswerDescription: document.querySelector(
     "#listening-answer-description",
   ),
-  listeningDetailTitle: document.querySelector("#listening-detail-title"),
-  listeningDetailDescription: document.querySelector(
-    "#listening-detail-description",
-  ),
   setupShuffle: document.querySelector("#setup-shuffle"),
   setupSpeech: document.querySelector("#setup-speech"),
   speechChoice: document.querySelector(".speech-choice"),
@@ -93,6 +89,9 @@ const elements = {
   questionAxis: document.querySelector("#question-axis"),
   questionText: document.querySelector("#question-text"),
   questionSpeech: document.querySelector("#question-speech"),
+  speechPartControls: document.querySelector("#speech-part-controls"),
+  speechPartOptions: document.querySelectorAll("[data-speech-part-option]"),
+  speechPartStatus: document.querySelector("#speech-part-status"),
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
   answerSpeech: document.querySelector("#answer-speech"),
@@ -159,6 +158,7 @@ const state = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  speechParts: normalizeSpeechParts(),
   studyMode: "memorize",
   listeningPaused: false,
   listeningTimer: null,
@@ -173,6 +173,7 @@ const state = {
 const historyLimit = 200;
 const halfScreenRatingDelay = 400;
 let setupPreferenceSave = Promise.resolve();
+let speechPartsSaveVersion = 0;
 let startingStudy = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
@@ -180,12 +181,26 @@ const speechController = createSpeechController({
   onTargetChange: updateSpeechButtons,
 });
 
-const listeningModes = new Set(["listen-answer", "listen-explanation"]);
+const listeningModes = new Set(["listen-answer"]);
 const vocabularySpeechLabels = {
   word: "英語",
   meaning: "日本語",
   "example-english": "例文英語",
   "example-japanese": "例文日本語",
+};
+const speechPartDefinitions = {
+  history: [
+    { key: "question", label: "問題" },
+    { key: "answer", label: "回答" },
+    { key: "mnemonic", label: "語呂合わせ" },
+    { key: "explanation", label: "解説" },
+  ],
+  vocabulary: [
+    { key: "word", label: "英語" },
+    { key: "meaning", label: "日本語" },
+    { key: "exampleEnglish", label: "例文英語" },
+    { key: "exampleJapanese", label: "例文日本語" },
+  ],
 };
 
 function selectedStudyMode() {
@@ -195,15 +210,44 @@ function selectedStudyMode() {
   );
 }
 
-function listeningContentLabel(studyMode = selectedStudyMode()) {
-  if (studyMode !== "listen-explanation") {
-    return state.subject?.learningType === "vocabulary"
-      ? "問題文＋回答"
-      : "問題文＋回答＋語呂合わせ";
-  }
+function speechPartSubjectKey() {
   return state.subject?.learningType === "vocabulary"
-    ? "問題文＋回答＋例文"
-    : "問題文＋回答＋語呂合わせ＋解説";
+    ? "vocabulary"
+    : "history";
+}
+
+function currentSpeechPartDefinitions() {
+  return speechPartDefinitions[speechPartSubjectKey()];
+}
+
+function currentSpeechPartSettings() {
+  return state.speechParts[speechPartSubjectKey()];
+}
+
+function listeningContentLabel() {
+  const settings = currentSpeechPartSettings();
+  return currentSpeechPartDefinitions()
+    .filter(({ key }) => settings[key])
+    .map(({ label }) => label)
+    .join("＋");
+}
+
+function vocabularySpeechPartKey(group) {
+  return {
+    word: "word",
+    meaning: "meaning",
+    "example-english": "exampleEnglish",
+    "example-japanese": "exampleJapanese",
+  }[group];
+}
+
+function currentQuestionSpeechEnabled() {
+  const settings = currentSpeechPartSettings();
+  if (state.subject?.learningType !== "vocabulary") {
+    return settings.question;
+  }
+  const group = vocabularySpeechLayout()?.question;
+  return Boolean(settings[vocabularySpeechPartKey(group)]);
 }
 
 function isListeningMode() {
@@ -384,6 +428,7 @@ async function loadProgressFromCloud() {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.speechParts = normalizeSpeechParts();
     return;
   }
 
@@ -398,6 +443,7 @@ async function loadProgressFromCloud() {
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     cloudState.settings.listeningPauseSeconds,
   );
+  state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
   saveSpeechSettings(cloudState.settings);
 
   const legacyProgress = readLegacyProgress();
@@ -574,6 +620,50 @@ function queueSetupPreferenceSave() {
   return setupPreferenceSave;
 }
 
+function setSpeechPartStatus(message, isError = false) {
+  elements.speechPartStatus.textContent = message;
+  elements.speechPartStatus.classList.toggle("is-error", isError);
+}
+
+function renderSpeechPartControls() {
+  const definitions = currentSpeechPartDefinitions();
+  const settings = currentSpeechPartSettings();
+  elements.speechPartControls.classList.toggle(
+    "is-hidden",
+    !speechController.supported,
+  );
+  [...elements.speechPartOptions].forEach((option, index) => {
+    const definition = definitions[index];
+    option.dataset.speechPart = definition.key;
+    option.checked = settings[definition.key];
+    option.disabled = !speechController.supported;
+    const label = option
+      .closest(".speech-part-choice")
+      ?.querySelector("[data-speech-part-label]");
+    if (label) {
+      label.textContent = definition.label;
+    }
+  });
+}
+
+function queueSpeechPartsSave() {
+  const saveVersion = ++speechPartsSaveVersion;
+  const speechParts = normalizeSpeechParts(state.speechParts);
+  setSpeechPartStatus("Cloudflareへ保存しています");
+  setupPreferenceSave = setupPreferenceSave
+    .catch(() => {})
+    .then(async () => {
+      const saved = await saveCloudSettings({ speechParts });
+      if (saveVersion === speechPartsSaveVersion) {
+        state.speechParts = normalizeSpeechParts(saved.speechParts);
+        renderSpeechPartControls();
+        setSpeechPartStatus("次回の学習と別端末にも反映しました");
+      }
+      return saved;
+    });
+  return setupPreferenceSave;
+}
+
 function updateSpeechButtons(activeTarget = "") {
   const controls = [
     [elements.questionSpeech, "question", "問題"],
@@ -694,19 +784,26 @@ function speechSegmentsFor(target) {
 }
 
 function answerSpeechSequence() {
-  if (state.subject?.learningType !== "vocabulary") {
-    return speechSegmentsFor("answer");
+  const settings = currentSpeechPartSettings();
+  if (state.subject?.learningType === "vocabulary") {
+    const layout = vocabularySpeechLayout();
+    return createVocabularyAutomaticAnswerSequence(
+      currentTerm(),
+      currentQuestion()?.stage,
+      {
+        answer: Boolean(
+          settings[vocabularySpeechPartKey(layout?.answer)],
+        ),
+        exampleEnglish: settings.exampleEnglish,
+        exampleJapanese: settings.exampleJapanese,
+      },
+    );
   }
-  const layout = vocabularySpeechLayout();
-  if (!layout) {
-    return speechSegmentsFor("answer");
-  }
-  const remainingGroups = vocabularySpeechGroupOrder.filter(
-    (group) => group !== layout.question && group !== layout.answer,
-  );
-  return [layout.answer, ...remainingGroups].flatMap((group) =>
-    speechSegmentsFor(`vocabulary-${group}`),
-  );
+  return [
+    ...(settings.answer ? speechSegmentsFor("answer") : []),
+    ...(settings.mnemonic ? speechSegmentsFor("mnemonic") : []),
+    ...(settings.explanation ? speechSegmentsFor("overview") : []),
+  ];
 }
 
 function speakTarget(target) {
@@ -721,7 +818,11 @@ function speakTarget(target) {
 }
 
 function autoSpeakQuestion() {
-  if (state.autoSpeechEnabled && !isListeningMode()) {
+  if (
+    state.autoSpeechEnabled &&
+    !isListeningMode() &&
+    currentQuestionSpeechEnabled()
+  ) {
     speechController.speak(speechSegmentsFor("question"));
   }
 }
@@ -730,11 +831,7 @@ function autoSpeakAnswerAndOverview() {
   if (!state.autoSpeechEnabled || isListeningMode()) {
     return;
   }
-  speechController.speak([
-    ...answerSpeechSequence(),
-    ...speechSegmentsFor("mnemonic"),
-    ...speechSegmentsFor("overview"),
-  ]);
+  speechController.speak(answerSpeechSequence());
 }
 
 function setListeningStatus(message) {
@@ -772,35 +869,12 @@ function speakListeningAnswer(runId) {
   }
   state.answerVisible = true;
   renderQuestion();
-  const vocabularyMode = state.subject?.learningType === "vocabulary";
-  const includesDetails = state.studyMode === "listen-explanation";
-  const includesMnemonic =
-    !vocabularyMode && Boolean(currentQuestion()?.yearMnemonic);
+  const segments = answerSpeechSequence();
   setListeningStatus(
-    includesDetails
-      ? vocabularyMode
-        ? "回答と例文を読み上げています"
-        : includesMnemonic
-          ? "回答、語呂合わせ、解説を読み上げています"
-          : "回答と解説を読み上げています"
-      : includesMnemonic
-        ? "回答と語呂合わせを読み上げています"
-        : "回答を読み上げています",
+    segments.length > 0
+      ? "設定した回答側の内容を読み上げています"
+      : "この問題には回答後の読み上げ対象がありません",
   );
-  const answerSegments = vocabularyMode
-    ? createVocabularyListeningAnswerSequence(
-        currentTerm(),
-        currentQuestion()?.stage,
-        { includeExamples: includesDetails },
-      )
-    : answerSpeechSequence();
-  const segments = [
-    ...answerSegments,
-    ...(!vocabularyMode ? speechSegmentsFor("mnemonic") : []),
-    ...(!vocabularyMode && includesDetails
-      ? speechSegmentsFor("overview")
-      : []),
-  ];
   const started = speechController.speak(segments, {
     onComplete: () => {
       if (runId !== state.listeningRunId) {
@@ -813,7 +887,10 @@ function speakListeningAnswer(runId) {
     },
   });
   if (!started) {
-    advanceListening(runId);
+    state.listeningTimer = window.setTimeout(() => {
+      state.listeningTimer = null;
+      advanceListening(runId);
+    }, 0);
   }
 }
 
@@ -825,8 +902,15 @@ function beginListeningQuestion() {
   const runId = ++state.listeningRunId;
   state.answerVisible = false;
   renderQuestion();
-  setListeningStatus("問題を読み上げています");
-  const started = speechController.speak(speechSegmentsFor("question"), {
+  const questionSegments = currentQuestionSpeechEnabled()
+    ? speechSegmentsFor("question")
+    : [];
+  setListeningStatus(
+    questionSegments.length > 0
+      ? "問題を読み上げています"
+      : "問題の自動音声はOFFです",
+  );
+  const started = speechController.speak(questionSegments, {
     onComplete: () => {
       if (
         runId !== state.listeningRunId ||
@@ -850,6 +934,48 @@ function beginListeningQuestion() {
   if (!started) {
     speakListeningAnswer(runId);
   }
+}
+
+function handleSpeechPartChange(event) {
+  const option = event.currentTarget;
+  const subjectKey = speechPartSubjectKey();
+  const partKey = option.dataset.speechPart;
+  const nextGroup = {
+    ...state.speechParts[subjectKey],
+    [partKey]: option.checked,
+  };
+  if (!Object.values(nextGroup).some(Boolean)) {
+    option.checked = true;
+    setSpeechPartStatus("読み上げ対象を1つ以上ONにしてください", true);
+    return;
+  }
+
+  state.speechParts = {
+    ...state.speechParts,
+    [subjectKey]: nextGroup,
+  };
+  renderSpeechPartControls();
+
+  if (speechController.currentTarget || isListeningMode()) {
+    const wasListening = isListeningMode() && !state.listeningPaused;
+    const answerWasVisible = state.answerVisible;
+    stopListeningSequence();
+    if (wasListening) {
+      const runId = state.listeningRunId;
+      state.listeningTimer = window.setTimeout(() => {
+        state.listeningTimer = null;
+        if (answerWasVisible) {
+          advanceListening(runId);
+        } else {
+          speakListeningAnswer(runId);
+        }
+      }, 0);
+    }
+  }
+
+  void queueSpeechPartsSave().catch((error) => {
+    setSpeechPartStatus(`保存できませんでした。${error.message}`, true);
+  });
 }
 
 function toggleListening() {
@@ -1109,9 +1235,7 @@ function updateSetupPreview() {
         : listening && dueQuestions === 0
           ? "現在、復習時刻を迎えた読み上げ対象の問題はありません。"
           : listening
-            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（${listeningContentLabel(
-                studyMode,
-              )}）`
+            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（読み上げ：${listeningContentLabel()}）`
       : selectedStage
         ? `${terms.length}語・${questions}問（${questionStyleLabel(selectedStage)}）`
         : `${terms.length}語・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
@@ -1175,16 +1299,8 @@ function configureSetup() {
   elements.setupShuffle.checked = state.shuffleEnabled;
   elements.setupSpeech.checked = state.autoSpeechEnabled;
   elements.setupSpeech.disabled = !speechController.supported;
-  const vocabularyMode = state.subject?.learningType === "vocabulary";
-  elements.listeningAnswerDescription.textContent = vocabularyMode
-    ? "問題文＋回答を繰り返し読み上げる"
-    : "問題文＋回答＋語呂合わせを繰り返し読み上げる";
-  elements.listeningDetailTitle.textContent = vocabularyMode
-    ? "聞き流し＋例文"
-    : "聞き流し＋解説";
-  elements.listeningDetailDescription.textContent = vocabularyMode
-    ? "問題文＋回答＋英語例文＋日本語例文を繰り返し読み上げる"
-    : "問題文＋回答＋語呂合わせ＋解説を繰り返し読み上げる";
+  elements.listeningAnswerDescription.textContent =
+    "保存済みの読み上げ対象を繰り返し再生する";
   for (const option of elements.studyModeOptions) {
     option.closest(".study-mode-choice")?.classList.remove("is-hidden");
     if (listeningModes.has(option.value)) {
@@ -1203,6 +1319,8 @@ function configureSetup() {
   ].forEach(
     (button) => button.classList.toggle("is-hidden", !speechController.supported),
   );
+  renderSpeechPartControls();
+  setSpeechPartStatus("変更内容は次回の学習と別端末にも反映されます");
   updateRatingIntervals();
   updateSetupPreview();
 }
@@ -1237,6 +1355,7 @@ function renderQuestion() {
   elements.contextCard.classList.remove("is-hidden");
   elements.questionCard.classList.remove("is-hidden");
   elements.actionDock.classList.remove("is-hidden");
+  renderSpeechPartControls();
 
   elements.contextCard.classList.toggle(
     "is-beginner-stage",
@@ -1602,6 +1721,7 @@ async function activateDeck(deckId) {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.speechParts = normalizeSpeechParts();
     state.cloudReady = false;
     state.cloudError = error.message;
   }
@@ -1624,7 +1744,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.050｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.051｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1742,6 +1862,9 @@ for (const option of elements.studyModeOptions) {
     );
     updateSetupPreview();
   });
+}
+for (const option of elements.speechPartOptions) {
+  option.addEventListener("change", handleSpeechPartChange);
 }
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();

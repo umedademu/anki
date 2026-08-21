@@ -1,5 +1,5 @@
 import {
-  createVocabularyListeningAnswerSequence,
+  createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
   createSpeechController,
   prepareSpeechText,
@@ -81,19 +81,24 @@ if (
   throw new Error("英単語の4種類の読み上げ対象を分離できませんでした。");
 }
 
-const answerOnlySequence = createVocabularyListeningAnswerSequence(
+const answerOnlySequence = createVocabularyAutomaticAnswerSequence(
   vocabularyTerm,
   "beginner",
 );
-const answerAndExamplesSequence = createVocabularyListeningAnswerSequence(
+const answerAndExamplesSequence = createVocabularyAutomaticAnswerSequence(
   vocabularyTerm,
   "beginner",
-  { includeExamples: true },
+  { answer: true, exampleEnglish: true, exampleJapanese: true },
 );
-const integratedSequence = createVocabularyListeningAnswerSequence(
+const integratedSequence = createVocabularyAutomaticAnswerSequence(
   vocabularyTerm,
   "integrated",
-  { includeExamples: true },
+  { answer: true, exampleEnglish: true, exampleJapanese: true },
+);
+const japaneseExampleOnlySequence = createVocabularyAutomaticAnswerSequence(
+  vocabularyTerm,
+  "beginner",
+  { answer: false, exampleJapanese: true },
 );
 if (
   answerOnlySequence.length !== 1 ||
@@ -101,9 +106,11 @@ if (
   answerAndExamplesSequence.map((segment) => segment.target).join("|") !==
     "vocabulary-meaning|vocabulary-example-english|vocabulary-example-japanese" ||
   integratedSequence.length !== 1 ||
-  integratedSequence[0].target !== "vocabulary-example-japanese"
+  integratedSequence[0].target !== "vocabulary-example-japanese" ||
+  japaneseExampleOnlySequence.length !== 1 ||
+  japaneseExampleOnlySequence[0].target !== "vocabulary-example-japanese"
 ) {
-  throw new Error("英単語の通常聞き流しと例文付き聞き流しを分けられませんでした。");
+  throw new Error("英単語の4種類の自動読み上げ対象を個別に選べませんでした。");
 }
 
 const voices = [

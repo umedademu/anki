@@ -45,6 +45,10 @@ const englishSpeechMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0005_english_speech.sql"),
   "utf8",
 );
+const speechPartsMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0006_speech_parts.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -57,6 +61,9 @@ const speechSegmentsBlock = app.match(
 )?.[0];
 const automaticAnswerSpeechBlock = app.match(
   /function autoSpeakAnswerAndOverview\(\)[\s\S]*?function setListeningStatus/,
+)?.[0];
+const answerSpeechSequenceBlock = app.match(
+  /function answerSpeechSequence\(\)[\s\S]*?function speakTarget\(target\)/,
 )?.[0];
 const listeningAnswerSpeechBlock = app.match(
   /function speakListeningAnswer\(runId\)[\s\S]*?function beginListeningQuestion/,
@@ -98,9 +105,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.050") ||
-  !changelog.includes("v0.050") ||
-  !settingsHtml.includes("v0.050")
+  !html.includes("v0.051") ||
+  !changelog.includes("v0.051") ||
+  !settingsHtml.includes("v0.051")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -135,7 +142,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.050"') ||
+  !html.includes('href="/styles.css?v=0.051"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -277,11 +284,12 @@ if (
   !styles.includes(".year-mnemonic") ||
   !styles.includes("white-space: pre-line") ||
   !speechSegmentsBlock.includes("question.yearMnemonic") ||
-  !automaticAnswerSpeechBlock ||
-  automaticAnswerSpeechBlock.indexOf('answerSpeechSequence()') >=
-    automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') ||
-  automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') >=
-    automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("overview")')
+  !automaticAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
+  !answerSpeechSequenceBlock ||
+  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("answer")') >=
+    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic")') ||
+  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic")') >=
+    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("overview")')
 ) {
   throw new Error("年号の語呂合わせの独立表示または回答直後の読み上げが揃っていません。");
 }
@@ -367,38 +375,37 @@ if (
   !sharedSettingsMigration.includes("azure_voice_id") ||
   !sharedSettingsMigration.includes("device_voice_id") ||
   !sharedSettingsMigration.includes("speech_rate") ||
-  !listeningPauseMigration.includes("listening_pause_seconds")
-  || !englishSpeechMigration.includes("english_azure_voice_id")
-  || !englishSpeechMigration.includes("english_device_voice_id")
+  !listeningPauseMigration.includes("listening_pause_seconds") ||
+  !englishSpeechMigration.includes("english_azure_voice_id") ||
+  !englishSpeechMigration.includes("english_device_voice_id") ||
+  !speechPartsMigration.includes("speech_parts_json") ||
+  !worker.includes("speech_parts_json")
 ) {
   throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
 }
 if (
   !html.includes('name="study-mode" value="memorize"') ||
   !html.includes('name="study-mode" value="listen-answer"') ||
-  !html.includes('name="study-mode" value="listen-explanation"') ||
+  html.includes('name="study-mode" value="listen-explanation"') ||
+  (html.match(/name="study-mode"/g) ?? []).length !== 2 ||
   !html.includes('id="listening-answer-description"') ||
-  !html.includes('id="listening-detail-title"') ||
-  !html.includes('id="listening-detail-description"') ||
+  !html.includes('id="speech-part-controls"') ||
+  (html.match(/data-speech-part-option/g) ?? []).length !== 4 ||
   !html.includes('id="listening-dock"') ||
   !html.includes('id="listening-toggle"') ||
   !html.includes('id="listening-stop"') ||
   !settingsHtml.includes('id="listening-pause-seconds"') ||
   !app.includes("function beginListeningQuestion()") ||
   !app.includes("function speakListeningAnswer(runId)") ||
-  !app.includes('state.studyMode === "listen-explanation"') ||
-  !app.includes("createVocabularyListeningAnswerSequence") ||
-  !app.includes("includeExamples: includesDetails") ||
-  !app.includes("!vocabularyMode && includesDetails") ||
-  !app.includes('"問題文＋回答＋語呂合わせ"') ||
-  !app.includes('"問題文＋回答＋語呂合わせ＋解説"') ||
-  !listeningAnswerSpeechBlock ||
-  listeningAnswerSpeechBlock.indexOf("...answerSegments") >=
-    listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') ||
-  listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') >=
-    listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("overview")') ||
-  !app.includes('"聞き流し＋例文"') ||
-  !app.includes('"問題文＋回答＋例文"') ||
+  app.includes('"listen-explanation"') ||
+  !app.includes("createVocabularyAutomaticAnswerSequence") ||
+  !app.includes("function handleSpeechPartChange(event)") ||
+  !app.includes("function queueSpeechPartsSave()") ||
+  !app.includes("function currentQuestionSpeechEnabled()") ||
+  !app.includes("normalizeSpeechParts") ||
+  !listeningAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
+  !cloudProgress.includes("defaultSpeechParts") ||
+  !cloudProgress.includes("normalizeSpeechParts") ||
   app.includes("unavailableForSubject") ||
   !app.includes("createQuestionQueue(") ||
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
@@ -496,5 +503,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・聞き流し・Cloudflare共通設定を確認",
+  "画面構成検証完了: 4段階評価・読み上げ対象切替・Cloudflare共通設定を確認",
 );

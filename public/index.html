@@ -9,7 +9,7 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.050" />
+    <link rel="stylesheet" href="/styles.css?v=0.051" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.050</span>
+        <span class="app-version">v0.051</span>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <div class="subject-name" id="subject-name">科目を選択</div>
@@ -26,13 +26,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.050｜科目別学習</p>
+        <p class="eyebrow">v0.051｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.050｜科目を選ぶ</p>
+        <p class="eyebrow">v0.051｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選ぶと、デッキや学習方法を選ぶ開始画面へ進みます。
@@ -41,7 +41,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.050｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.051｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -63,15 +63,6 @@
                 <strong>聞き流し</strong>
                 <small id="listening-answer-description">
                   問題文＋回答＋語呂合わせを繰り返し読み上げる
-                </small>
-              </span>
-            </label>
-            <label class="study-mode-choice listening-mode-choice">
-              <input type="radio" name="study-mode" value="listen-explanation" />
-              <span>
-                <strong id="listening-detail-title">聞き流し＋解説</strong>
-                <small id="listening-detail-description">
-                  問題文＋回答＋語呂合わせ＋解説を繰り返し読み上げる
                 </small>
               </span>
             </label>
@@ -164,6 +155,34 @@
               <span id="term-progress">完全習得 0 / 0語</span>
               <span id="queue-progress">この回の残り 0問</span>
             </div>
+          </div>
+          <div
+            class="speech-part-controls"
+            id="speech-part-controls"
+            aria-label="自動読み上げの対象"
+          >
+            <span class="speech-part-title">自動音声</span>
+            <div class="speech-part-options">
+              <label class="speech-part-choice">
+                <input type="checkbox" data-speech-part-option checked />
+                <span data-speech-part-label>問題</span>
+              </label>
+              <label class="speech-part-choice">
+                <input type="checkbox" data-speech-part-option checked />
+                <span data-speech-part-label>回答</span>
+              </label>
+              <label class="speech-part-choice">
+                <input type="checkbox" data-speech-part-option checked />
+                <span data-speech-part-label>語呂合わせ</span>
+              </label>
+              <label class="speech-part-choice">
+                <input type="checkbox" data-speech-part-option />
+                <span data-speech-part-label>解説</span>
+              </label>
+            </div>
+            <small id="speech-part-status" role="status">
+              変更内容は次回の学習と別端末にも反映されます
+            </small>
           </div>
           <div class="spoken-block question-spoken-block">
             <h2 id="question-text"></h2>

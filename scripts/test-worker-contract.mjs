@@ -5,10 +5,14 @@ import {
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
+  normalizeSpeechParts as normalizeWorkerSpeechParts,
   normalizeSpeechPrompt,
 } from "../worker/src/index.js";
 import worker from "../worker/src/index.js";
-import { normalizeSharedSettings } from "../public/cloud-progress.js";
+import {
+  normalizeSharedSettings,
+  normalizeSpeechParts as normalizeBrowserSpeechParts,
+} from "../public/cloud-progress.js";
 
 if (normalizeDatasetVersion("d5d13f1099e9") !== "d5d13f1099e9") {
   throw new Error("問題集の版を保存範囲として扱えませんでした。");
@@ -161,6 +165,20 @@ const settings = normalizeSettings({
   shuffleEnabled: true,
   autoSpeechEnabled: false,
   listeningPauseSeconds: 2.5,
+  speechParts: {
+    history: {
+      question: false,
+      answer: true,
+      mnemonic: false,
+      explanation: true,
+    },
+    vocabulary: {
+      word: true,
+      meaning: false,
+      exampleEnglish: true,
+      exampleJapanese: false,
+    },
+  },
 });
 if (
   settings.againSeconds !== 90 ||
@@ -175,7 +193,11 @@ if (
   settings.rate !== 3 ||
   !settings.shuffleEnabled ||
   settings.autoSpeechEnabled ||
-  settings.listeningPauseSeconds !== 2.5
+  settings.listeningPauseSeconds !== 2.5 ||
+  settings.speechParts.history.question ||
+  !settings.speechParts.history.explanation ||
+  settings.speechParts.vocabulary.meaning ||
+  !settings.speechParts.vocabulary.exampleEnglish
 ) {
   throw new Error("Cloudflareへ保存する共通設定を正規化できませんでした。");
 }
@@ -190,9 +212,39 @@ if (
   browserSettings.rate !== 3 ||
   !browserSettings.shuffleEnabled ||
   browserSettings.autoSpeechEnabled ||
-  browserSettings.listeningPauseSeconds !== 2.5
+  browserSettings.listeningPauseSeconds !== 2.5 ||
+  browserSettings.speechParts.history.mnemonic ||
+  browserSettings.speechParts.vocabulary.exampleJapanese
 ) {
   throw new Error("Cloudflareの共通設定をブラウザー側へ反映できませんでした。");
+}
+
+const workerStoredSpeechParts = normalizeWorkerSpeechParts(
+  JSON.stringify(settings.speechParts),
+);
+const browserFallbackSpeechParts = normalizeBrowserSpeechParts({
+  history: {
+    question: false,
+    answer: false,
+    mnemonic: false,
+    explanation: false,
+  },
+  vocabulary: {
+    word: false,
+    meaning: false,
+    exampleEnglish: false,
+    exampleJapanese: false,
+  },
+});
+if (
+  !workerStoredSpeechParts.history.explanation ||
+  !workerStoredSpeechParts.vocabulary.exampleEnglish ||
+  !browserFallbackSpeechParts.history.question ||
+  browserFallbackSpeechParts.history.explanation ||
+  !browserFallbackSpeechParts.vocabulary.word ||
+  browserFallbackSpeechParts.vocabulary.exampleEnglish
+) {
+  throw new Error("読み上げ対象の保存値または最低1項目の初期値が不正です。");
 }
 
 for (const invalid of [

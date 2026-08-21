@@ -11,12 +11,57 @@ import {
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
+export const defaultSpeechParts = Object.freeze({
+  history: Object.freeze({
+    question: true,
+    answer: true,
+    mnemonic: true,
+    explanation: false,
+  }),
+  vocabulary: Object.freeze({
+    word: true,
+    meaning: true,
+    exampleEnglish: false,
+    exampleJapanese: false,
+  }),
+});
+
+function normalizeSpeechPartGroup(value, defaults) {
+  const source = value && typeof value === "object" ? value : {};
+  const normalized = Object.fromEntries(
+    Object.entries(defaults).map(([key, fallback]) => [
+      key,
+      source[key] == null
+        ? fallback
+        : source[key] === true || source[key] === "true",
+    ]),
+  );
+  return Object.values(normalized).some(Boolean)
+    ? normalized
+    : { ...defaults };
+}
+
+export function normalizeSpeechParts(value) {
+  const source = value && typeof value === "object" ? value : {};
+  return {
+    history: normalizeSpeechPartGroup(
+      source.history,
+      defaultSpeechParts.history,
+    ),
+    vocabulary: normalizeSpeechPartGroup(
+      source.vocabulary,
+      defaultSpeechParts.vocabulary,
+    ),
+  };
+}
+
 export const defaultSharedSettings = Object.freeze({
   ...defaultReviewSettings,
   ...defaultSpeechSettings,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  speechParts: defaultSpeechParts,
 });
 
 export function normalizeListeningPauseSeconds(value) {
@@ -38,6 +83,7 @@ export function normalizeSharedSettings(value) {
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       source.listeningPauseSeconds,
     ),
+    speechParts: normalizeSpeechParts(source.speechParts),
   };
 }
 

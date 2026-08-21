@@ -65,6 +65,10 @@ const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
 );
+const englishGenerationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "english-vocabulary-csv-generation.md"),
+  "utf8",
+);
 const cloudflareReplacement = await readFile(
   path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
   "utf8",
@@ -94,9 +98,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.049") ||
-  !changelog.includes("v0.049") ||
-  !settingsHtml.includes("v0.049")
+  !html.includes("v0.050") ||
+  !changelog.includes("v0.050") ||
+  !settingsHtml.includes("v0.050")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -131,7 +135,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.049"') ||
+  !html.includes('href="/styles.css?v=0.050"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -158,6 +162,21 @@ if (
   !generationPrompt.includes("Deck 2は401〜800")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
+}
+if (
+  !englishGenerationPrompt.includes("1英単語につき1行、全10列") ||
+  !englishGenerationPrompt.includes("添付されたすべての既存CSV") ||
+  !englishGenerationPrompt.includes("EN-000501") ||
+  !englishGenerationPrompt.includes(
+    "dataset_label\nterm_id\nimportance_rank\ndifficulty_label\nword\npart_of_speech\nmeaning\naccepted_answers\nexample_sentence\nexample_translation",
+  ) ||
+  !englishGenerationPrompt.includes("Deck 1の500行を新しいCSVへ含めて") ||
+  !englishGenerationPrompt.includes("同一の`meaning`を追加しない") ||
+  !englishGenerationPrompt.includes("`accepted_answers`の先頭へ`meaning`と同じ文字列") ||
+  !englishGenerationPrompt.includes("発音記号、カタカナ発音、音声ファイル名") ||
+  !englishGenerationPrompt.includes("CSV以外の前置き、作業報告、選定理由")
+) {
+  throw new Error("英単語Deck生成用プロンプトの重複防止・三方向出題・CSV規則が不足しています。");
 }
 if (
   !html.includes('id="setup-speech"') ||

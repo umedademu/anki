@@ -14,7 +14,7 @@
 
 ## 提供形態
 
-- 現在のアプリバージョンは`v0.049`とする
+- 現在のアプリバージョンは`v0.050`とする
 - パソコンやスマートフォンのブラウザーで利用するWebアプリ
 - WebアプリはVercelの`https://anki-ume.vercel.app`で公開する
 - 更新情報は`/changelog.html`で公開する
@@ -301,6 +301,7 @@ source_url
 ### 英単語
 
 - 保存場所：`data/source/english-vocabulary/english_vocabulary_deck1_foundation_500.csv`
+- 生成用プロンプト：`docs/prompts/english-vocabulary-csv-generation.md`
 - 文字コード：UTF-8 BOM付き
 - 1英単語を1行として扱い、次の10列を使用する
 
@@ -318,6 +319,10 @@ example_translation
 ```
 
 - `accepted_answers`は複数値を半角パイプで区切る
+- `importance_rank`は全Deck累計の順位とし、`term_id`は同じ順位を6桁ゼロ埋めした`EN-xxxxxx`とする
+- Deck 2以降の生成では作成済みの全Deckを照合し、同じ語、綴り違い、単なる活用形を再収録しない
+- `meaning`は「意味から英語」の問題として既存・新規Deck内で対象語を区別できる表現にする
+- 例文は中心語義と品詞に一致する自然な一文とし、正確で自然な日本語訳を対にする
 - 1行から英語から意味、意味から英語、例文から和訳の3問を生成する
 - 英単語・英語例文には英語、意味・和訳には日本語の読み上げ言語を付ける
 - 発音記号と事前収録音声は必須とせず、Azureの英語音声から生成する

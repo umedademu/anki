@@ -583,6 +583,7 @@ body.is-studying .page {
 }
 
 .year-mnemonic {
+  position: relative;
   margin-top: 12px;
   padding: 12px 14px;
   color: #654d17;
@@ -593,6 +594,7 @@ body.is-studying .page {
 
 .year-mnemonic > span {
   display: block;
+  padding-right: 34px;
   margin-bottom: 4px;
   font-size: 0.68rem;
   font-weight: 850;

@@ -64,6 +64,9 @@ const elements = {
   categoryFilter: document.querySelector("#category-filter"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
   studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
+  listeningAnswerDescription: document.querySelector(
+    "#listening-answer-description",
+  ),
   listeningDetailTitle: document.querySelector("#listening-detail-title"),
   listeningDetailDescription: document.querySelector(
     "#listening-detail-description",
@@ -103,6 +106,7 @@ const elements = {
   termOverviewText: document.querySelector("#term-overview-text"),
   yearMnemonic: document.querySelector("#year-mnemonic"),
   yearMnemonicText: document.querySelector("#year-mnemonic-text"),
+  yearMnemonicSpeech: document.querySelector("#year-mnemonic-speech"),
   termImage: document.querySelector("#term-image"),
   termImageLink: document.querySelector("#term-image-link"),
   termImageContent: document.querySelector("#term-image-content"),
@@ -193,11 +197,13 @@ function selectedStudyMode() {
 
 function listeningContentLabel(studyMode = selectedStudyMode()) {
   if (studyMode !== "listen-explanation") {
-    return "問題文＋回答";
+    return state.subject?.learningType === "vocabulary"
+      ? "問題文＋回答"
+      : "問題文＋回答＋語呂合わせ";
   }
   return state.subject?.learningType === "vocabulary"
     ? "問題文＋回答＋例文"
-    : "問題文＋回答＋解説";
+    : "問題文＋回答＋語呂合わせ＋解説";
 }
 
 function isListeningMode() {
@@ -572,6 +578,7 @@ function updateSpeechButtons(activeTarget = "") {
   const controls = [
     [elements.questionSpeech, "question", "問題"],
     [elements.answerSpeech, "answer", "回答"],
+    [elements.yearMnemonicSpeech, "mnemonic", "年号の語呂合わせ"],
     [elements.overviewSpeech, "overview", "解説"],
     ...Array.from(elements.vocabularySpeechButtons, (button) => {
       const group = button.dataset.vocabularySpeech;
@@ -660,12 +667,8 @@ function speechSegmentsFor(target) {
       },
     ];
   }
-  if (target === "overview") {
-    const explanation = getIntegratedExplanationQuestion(term, question);
+  if (target === "mnemonic") {
     return [
-      ...(explanation
-        ? [{ target, text: explanation.answer, language: "ja-JP" }]
-        : []),
       ...(question.yearMnemonic
         ? [
             {
@@ -680,6 +683,12 @@ function speechSegmentsFor(target) {
           ]
         : []),
     ];
+  }
+  if (target === "overview") {
+    const explanation = getIntegratedExplanationQuestion(term, question);
+    return explanation
+      ? [{ target, text: explanation.answer, language: "ja-JP" }]
+      : [];
   }
   return [];
 }
@@ -723,6 +732,7 @@ function autoSpeakAnswerAndOverview() {
   }
   speechController.speak([
     ...answerSpeechSequence(),
+    ...speechSegmentsFor("mnemonic"),
     ...speechSegmentsFor("overview"),
   ]);
 }
@@ -764,12 +774,18 @@ function speakListeningAnswer(runId) {
   renderQuestion();
   const vocabularyMode = state.subject?.learningType === "vocabulary";
   const includesDetails = state.studyMode === "listen-explanation";
+  const includesMnemonic =
+    !vocabularyMode && Boolean(currentQuestion()?.yearMnemonic);
   setListeningStatus(
     includesDetails
       ? vocabularyMode
         ? "回答と例文を読み上げています"
-        : "回答と解説を読み上げています"
-      : "回答を読み上げています",
+        : includesMnemonic
+          ? "回答、語呂合わせ、解説を読み上げています"
+          : "回答と解説を読み上げています"
+      : includesMnemonic
+        ? "回答と語呂合わせを読み上げています"
+        : "回答を読み上げています",
   );
   const answerSegments = vocabularyMode
     ? createVocabularyListeningAnswerSequence(
@@ -780,6 +796,7 @@ function speakListeningAnswer(runId) {
     : answerSpeechSequence();
   const segments = [
     ...answerSegments,
+    ...(!vocabularyMode ? speechSegmentsFor("mnemonic") : []),
     ...(!vocabularyMode && includesDetails
       ? speechSegmentsFor("overview")
       : []),
@@ -1159,12 +1176,15 @@ function configureSetup() {
   elements.setupSpeech.checked = state.autoSpeechEnabled;
   elements.setupSpeech.disabled = !speechController.supported;
   const vocabularyMode = state.subject?.learningType === "vocabulary";
+  elements.listeningAnswerDescription.textContent = vocabularyMode
+    ? "問題文＋回答を繰り返し読み上げる"
+    : "問題文＋回答＋語呂合わせを繰り返し読み上げる";
   elements.listeningDetailTitle.textContent = vocabularyMode
     ? "聞き流し＋例文"
     : "聞き流し＋解説";
   elements.listeningDetailDescription.textContent = vocabularyMode
     ? "問題文＋回答＋英語例文＋日本語例文を繰り返し読み上げる"
-    : "問題文＋回答＋解説を繰り返し読み上げる";
+    : "問題文＋回答＋語呂合わせ＋解説を繰り返し読み上げる";
   for (const option of elements.studyModeOptions) {
     option.closest(".study-mode-choice")?.classList.remove("is-hidden");
     if (listeningModes.has(option.value)) {
@@ -1175,7 +1195,12 @@ function configureSetup() {
     "is-hidden",
     !speechController.supported || listeningModes.has(selectedStudyMode()),
   );
-  [elements.questionSpeech, elements.answerSpeech, elements.overviewSpeech].forEach(
+  [
+    elements.questionSpeech,
+    elements.answerSpeech,
+    elements.yearMnemonicSpeech,
+    elements.overviewSpeech,
+  ].forEach(
     (button) => button.classList.toggle("is-hidden", !speechController.supported),
   );
   updateRatingIntervals();
@@ -1267,6 +1292,10 @@ function renderQuestion() {
     !state.answerVisible || !integratedExplanation,
   );
   elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic);
+  elements.yearMnemonicSpeech.classList.toggle(
+    "is-hidden",
+    !speechController.supported || !showsYearMnemonic,
+  );
   elements.yearMnemonicText.textContent = (question.yearMnemonic ?? "")
     .split("|")
     .map((mnemonic) => mnemonic.trim())
@@ -1274,7 +1303,7 @@ function renderQuestion() {
     .join("\n");
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
-    !speechController.supported || !showsTermOverview,
+    !speechController.supported || !integratedExplanation,
   );
   renderEmphasizedText(
     elements.termOverviewText,
@@ -1595,7 +1624,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.045｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.046｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1733,6 +1762,9 @@ elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.questionSpeech.addEventListener("click", () => speakTarget("question"));
 elements.answerSpeech.addEventListener("click", () => speakTarget("answer"));
+elements.yearMnemonicSpeech.addEventListener("click", () =>
+  speakTarget("mnemonic"),
+);
 for (const button of elements.vocabularySpeechButtons) {
   button.addEventListener("click", () =>
     speakTarget(`vocabulary-${button.dataset.vocabularySpeech}`),

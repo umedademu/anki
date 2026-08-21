@@ -215,18 +215,20 @@ controller.speak(
       text: "Although it was raining, we went for a walk.",
       language: "en-US",
     },
+    { target: "mnemonic", text: "1492年。意欲に燃えるコロンブス" },
     { target: "overview", text: "鄭氏台湾(ていしたいわん)" },
   ],
   { onComplete: () => completionCount += 1 },
 );
 if (
-  spoken.length !== 3 ||
+  spoken.length !== 4 ||
   spoken[0].text !== "こうきてい" ||
   spoken[1].text !== "Although it was raining, we went for a walk." ||
   spoken[1].lang !== "en-US" ||
   spoken[1].voice !== "English Natural" ||
-  spoken[2].text !== "ていしたいわん" ||
-  [spoken[0], spoken[2]].some(
+  spoken[2].text !== "1492年。意欲に燃えるコロンブス" ||
+  spoken[3].text !== "ていしたいわん" ||
+  [spoken[0], spoken[2], spoken[3]].some(
     (item) =>
       item.lang !== "ja-JP" ||
       item.rate !== 3 ||
@@ -235,7 +237,7 @@ if (
   targetChanges.at(-1) !== "" ||
   completionCount !== 1
 ) {
-  throw new Error("回答と解説を順番に日本語で読み上げられませんでした。");
+  throw new Error("回答、語呂合わせ、解説を順番に読み上げられませんでした。");
 }
 
 const cloudRequests = [];

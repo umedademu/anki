@@ -9,7 +9,7 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.045" />
+    <link rel="stylesheet" href="/styles.css?v=0.046" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.045</span>
+        <span class="app-version">v0.046</span>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <div class="subject-name" id="subject-name">科目を選択</div>
@@ -26,13 +26,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.045｜科目別学習</p>
+        <p class="eyebrow">v0.046｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.045｜科目を選ぶ</p>
+        <p class="eyebrow">v0.046｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選ぶと、デッキや学習方法を選ぶ開始画面へ進みます。
@@ -41,7 +41,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.045｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.046｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -61,7 +61,9 @@
               <input type="radio" name="study-mode" value="listen-answer" />
               <span>
                 <strong>聞き流し</strong>
-                <small>問題文＋回答を繰り返し読み上げる</small>
+                <small id="listening-answer-description">
+                  問題文＋回答＋語呂合わせを繰り返し読み上げる
+                </small>
               </span>
             </label>
             <label class="study-mode-choice listening-mode-choice">
@@ -69,7 +71,7 @@
               <span>
                 <strong id="listening-detail-title">聞き流し＋解説</strong>
                 <small id="listening-detail-description">
-                  問題文＋回答＋解説を繰り返し読み上げる
+                  問題文＋回答＋語呂合わせ＋解説を繰り返し読み上げる
                 </small>
               </span>
             </label>
@@ -262,6 +264,15 @@
             </div>
             <div class="year-mnemonic is-hidden" id="year-mnemonic">
               <span>年号の語呂合わせ</span>
+              <button
+                class="speech-button"
+                id="year-mnemonic-speech"
+                type="button"
+                aria-label="年号の語呂合わせを読み上げる"
+                title="年号の語呂合わせを読み上げる"
+              >
+                <span aria-hidden="true">🔊</span>
+              </button>
               <p id="year-mnemonic-text"></p>
             </div>
             <div class="term-tags is-hidden" id="term-tags" aria-label="分類"></div>

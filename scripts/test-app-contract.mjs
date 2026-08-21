@@ -55,6 +55,12 @@ const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "u
 const speechSegmentsBlock = app.match(
   /function speechSegmentsFor\(target\)[\s\S]*?function speakTarget\(target\)/,
 )?.[0];
+const automaticAnswerSpeechBlock = app.match(
+  /function autoSpeakAnswerAndOverview\(\)[\s\S]*?function setListeningStatus/,
+)?.[0];
+const listeningAnswerSpeechBlock = app.match(
+  /function speakListeningAnswer\(runId\)[\s\S]*?function beginListeningQuestion/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -88,9 +94,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.045") ||
-  !changelog.includes("v0.045") ||
-  !settingsHtml.includes("v0.045")
+  !html.includes("v0.046") ||
+  !changelog.includes("v0.046") ||
+  !settingsHtml.includes("v0.046")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -125,7 +131,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.045"') ||
+  !html.includes('href="/styles.css?v=0.046"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -241,16 +247,24 @@ if (
 if (
   !html.includes('id="year-mnemonic"') ||
   !html.includes('id="year-mnemonic-text"') ||
+  !html.includes('id="year-mnemonic-speech"') ||
   !app.includes("question.yearMnemonic") ||
+  !app.includes('if (target === "mnemonic")') ||
+  !app.includes('speakTarget("mnemonic")') ||
   !app.includes('.split("|")') ||
   !app.includes('.join("。")') ||
   !app.includes('.join("\\n")') ||
   !app.includes('elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic)') ||
   !styles.includes(".year-mnemonic") ||
   !styles.includes("white-space: pre-line") ||
-  !speechSegmentsBlock.includes("question.yearMnemonic")
+  !speechSegmentsBlock.includes("question.yearMnemonic") ||
+  !automaticAnswerSpeechBlock ||
+  automaticAnswerSpeechBlock.indexOf('answerSpeechSequence()') >=
+    automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') ||
+  automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') >=
+    automaticAnswerSpeechBlock.indexOf('speechSegmentsFor("overview")')
 ) {
-  throw new Error("年号の語呂合わせの表示または解説音声への追加が揃っていません。");
+  throw new Error("年号の語呂合わせの独立表示または回答直後の読み上げが揃っていません。");
 }
 if (
   !generationPrompt.includes("すべての統合説明の回答本文には、次の2点を例外なく明記してください") ||
@@ -338,6 +352,7 @@ if (
   !html.includes('name="study-mode" value="memorize"') ||
   !html.includes('name="study-mode" value="listen-answer"') ||
   !html.includes('name="study-mode" value="listen-explanation"') ||
+  !html.includes('id="listening-answer-description"') ||
   !html.includes('id="listening-detail-title"') ||
   !html.includes('id="listening-detail-description"') ||
   !html.includes('id="listening-dock"') ||
@@ -350,6 +365,13 @@ if (
   !app.includes("createVocabularyListeningAnswerSequence") ||
   !app.includes("includeExamples: includesDetails") ||
   !app.includes("!vocabularyMode && includesDetails") ||
+  !app.includes('"問題文＋回答＋語呂合わせ"') ||
+  !app.includes('"問題文＋回答＋語呂合わせ＋解説"') ||
+  !listeningAnswerSpeechBlock ||
+  listeningAnswerSpeechBlock.indexOf("...answerSegments") >=
+    listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') ||
+  listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("mnemonic")') >=
+    listeningAnswerSpeechBlock.indexOf('speechSegmentsFor("overview")') ||
   !app.includes('"聞き流し＋例文"') ||
   !app.includes('"問題文＋回答＋例文"') ||
   app.includes("unavailableForSubject") ||

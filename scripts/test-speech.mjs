@@ -1,4 +1,5 @@
 import {
+  createVocabularySpeechGroups,
   createSpeechController,
   prepareSpeechText,
   selectJapaneseVoice,
@@ -41,6 +42,41 @@ for (const [source, expected] of textChecks) {
   if (actual !== expected) {
     throw new Error(`読み上げ用文章が不正です: ${source} -> ${actual}`);
   }
+}
+
+const vocabularySpeechGroups = createVocabularySpeechGroups({
+  term: "although",
+  stages: {
+    beginner: [
+      {
+        answer: "〜だけれども",
+        speech: {
+          question: [{ text: "although", language: "en-US" }],
+          answer: [
+            { text: "〜だけれども", language: "ja-JP" },
+            {
+              text: "Although it was raining, we went for a walk.",
+              language: "en-US",
+            },
+            {
+              text: "雨が降っていたが、私たちは散歩に出かけた。",
+              language: "ja-JP",
+            },
+          ],
+        },
+      },
+    ],
+  },
+});
+if (
+  Object.keys(vocabularySpeechGroups).length !== 4 ||
+  vocabularySpeechGroups.word.text !== "although" ||
+  vocabularySpeechGroups.meaning.text !== "〜だけれども" ||
+  vocabularySpeechGroups["example-english"].language !== "en-US" ||
+  vocabularySpeechGroups["example-japanese"].text !==
+    "雨が降っていたが、私たちは散歩に出かけた。"
+) {
+  throw new Error("英単語の4種類の読み上げ対象を分離できませんでした。");
 }
 
 const voices = [

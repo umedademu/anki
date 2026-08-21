@@ -63,6 +63,59 @@ export function selectJapaneseVoice(voices, preferredVoiceId = "") {
   return selectVoice(voices, "ja-JP", preferredVoiceId);
 }
 
+export const vocabularySpeechGroupOrder = [
+  "word",
+  "meaning",
+  "example-english",
+  "example-japanese",
+];
+
+export const vocabularySpeechLayoutByStage = {
+  beginner: { question: "word", answer: "meaning" },
+  reverse: { question: "meaning", answer: "word" },
+  integrated: { question: "example-english", answer: "example-japanese" },
+};
+
+export function createVocabularySpeechGroups(term) {
+  const beginnerQuestion = term?.stages?.beginner?.[0];
+  if (!beginnerQuestion) {
+    return {};
+  }
+  const questionSegments = beginnerQuestion.speech?.question ?? [];
+  const answerSegments = beginnerQuestion.speech?.answer ?? [];
+  const exampleSegments = answerSegments.slice(1);
+  const segmentFor = (group, segment, fallbackText, fallbackLanguage) => ({
+    target: `vocabulary-${group}`,
+    text: segment?.text ?? fallbackText ?? "",
+    language: segment?.language ?? fallbackLanguage,
+  });
+  return {
+    word: segmentFor("word", questionSegments[0], term.term, "en-US"),
+    meaning: segmentFor(
+      "meaning",
+      answerSegments[0],
+      beginnerQuestion.answer,
+      "ja-JP",
+    ),
+    "example-english": segmentFor(
+      "example-english",
+      exampleSegments.find((segment) =>
+        String(segment?.language).toLowerCase().startsWith("en"),
+      ),
+      "",
+      "en-US",
+    ),
+    "example-japanese": segmentFor(
+      "example-japanese",
+      exampleSegments.find((segment) =>
+        String(segment?.language).toLowerCase().startsWith("ja"),
+      ),
+      "",
+      "ja-JP",
+    ),
+  };
+}
+
 export function createSpeechController({
   synthesis = globalThis.speechSynthesis,
   Utterance = globalThis.SpeechSynthesisUtterance,

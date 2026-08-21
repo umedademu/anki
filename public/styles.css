@@ -541,6 +541,31 @@ body.is-studying .page {
   white-space: pre-line;
 }
 
+.vocabulary-speech-groups {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 14px;
+}
+
+.vocabulary-speech-groups .vocabulary-speech-button {
+  position: static;
+  display: inline-flex;
+  width: auto;
+  height: 32px;
+  padding: 0 8px;
+  gap: 5px;
+  justify-content: center;
+  border-radius: 9px;
+  font-size: 0.74rem;
+  white-space: nowrap;
+}
+
+.vocabulary-speech-button small {
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
 .term-overview {
   margin: 0 0 16px;
   padding: 18px 20px;
@@ -1155,6 +1180,10 @@ body.is-listening .speech-button {
 
   .speech-setting-actions {
     grid-template-columns: 1fr;
+  }
+
+  .vocabulary-speech-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .context-heading {

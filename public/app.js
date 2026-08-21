@@ -31,7 +31,12 @@ import {
   saveCloudSettings,
   saveCloudQuestion,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js";
+import {
+  createSpeechController,
+  createVocabularySpeechGroups,
+  vocabularySpeechGroupOrder,
+  vocabularySpeechLayoutByStage,
+} from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
 
 const elements = {
@@ -83,6 +88,8 @@ const elements = {
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
   answerSpeech: document.querySelector("#answer-speech"),
+  vocabularySpeechGroups: document.querySelector("#vocabulary-speech-groups"),
+  vocabularySpeechButtons: document.querySelectorAll("[data-vocabulary-speech]"),
   acceptedPanel: document.querySelector("#accepted-panel"),
   acceptedText: document.querySelector("#accepted-text"),
   answerNote: document.querySelector("#answer-note"),
@@ -165,6 +172,12 @@ const speechController = createSpeechController({
 });
 
 const listeningModes = new Set(["listen-answer", "listen-explanation"]);
+const vocabularySpeechLabels = {
+  word: "英語",
+  meaning: "日本語",
+  "example-english": "例文英語",
+  "example-japanese": "例文日本語",
+};
 
 function selectedStudyMode() {
   return (
@@ -546,6 +559,10 @@ function updateSpeechButtons(activeTarget = "") {
     [elements.questionSpeech, "question", "問題"],
     [elements.answerSpeech, "answer", "回答"],
     [elements.overviewSpeech, "overview", "解説"],
+    ...Array.from(elements.vocabularySpeechButtons, (button) => {
+      const group = button.dataset.vocabularySpeech;
+      return [button, `vocabulary-${group}`, vocabularySpeechLabels[group]];
+    }),
   ];
   for (const [button, target, label] of controls) {
     const active = activeTarget === target;
@@ -562,11 +579,52 @@ function updateSpeechButtons(activeTarget = "") {
   }
 }
 
+function vocabularySpeechGroups(term = currentTerm()) {
+  return createVocabularySpeechGroups(term);
+}
+
+function vocabularySpeechLayout(question = currentQuestion()) {
+  return vocabularySpeechLayoutByStage[question?.stage] ?? null;
+}
+
+function renderVocabularySpeechGroups() {
+  const vocabularyMode = state.subject?.learningType === "vocabulary";
+  const showGroups =
+    vocabularyMode &&
+    state.answerVisible &&
+    speechController.supported &&
+    !isListeningMode();
+  elements.vocabularySpeechGroups.classList.toggle("is-hidden", !showGroups);
+  if (vocabularyMode) {
+    elements.questionSpeech.classList.toggle("is-hidden", showGroups);
+    elements.answerSpeech.classList.toggle("is-hidden", showGroups);
+  }
+  const groups = vocabularySpeechGroups();
+  for (const button of elements.vocabularySpeechButtons) {
+    const group = button.dataset.vocabularySpeech;
+    button.disabled = !groups[group]?.text;
+  }
+  if (showGroups) {
+    updateSpeechButtons(speechController.currentTarget);
+  }
+}
+
 function speechSegmentsFor(target) {
   const question = currentQuestion();
   const term = currentTerm();
   if (!question || !term) {
     return [];
+  }
+  if (state.subject?.learningType === "vocabulary") {
+    const groups = vocabularySpeechGroups(term);
+    const layout = vocabularySpeechLayout(question);
+    const group = target.startsWith("vocabulary-")
+      ? target.slice("vocabulary-".length)
+      : layout?.[target];
+    const segment = groups[group];
+    if (segment?.text) {
+      return [{ ...segment, target }];
+    }
   }
   const configuredSegments = question.speech?.[target];
   if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
@@ -608,6 +666,22 @@ function speechSegmentsFor(target) {
   return [];
 }
 
+function answerSpeechSequence() {
+  if (state.subject?.learningType !== "vocabulary") {
+    return speechSegmentsFor("answer");
+  }
+  const layout = vocabularySpeechLayout();
+  if (!layout) {
+    return speechSegmentsFor("answer");
+  }
+  const remainingGroups = vocabularySpeechGroupOrder.filter(
+    (group) => group !== layout.question && group !== layout.answer,
+  );
+  return [layout.answer, ...remainingGroups].flatMap((group) =>
+    speechSegmentsFor(`vocabulary-${group}`),
+  );
+}
+
 function speakTarget(target) {
   if (!speechController.supported) {
     return;
@@ -630,7 +704,7 @@ function autoSpeakAnswerAndOverview() {
     return;
   }
   speechController.speak([
-    ...speechSegmentsFor("answer"),
+    ...answerSpeechSequence(),
     ...speechSegmentsFor("overview"),
   ]);
 }
@@ -677,7 +751,7 @@ function speakListeningAnswer(runId) {
       : "回答を読み上げています",
   );
   const segments = [
-    ...speechSegmentsFor("answer"),
+    ...answerSpeechSequence(),
     ...(includesExplanation ? speechSegmentsFor("overview") : []),
   ];
   const started = speechController.speak(segments, {
@@ -1155,6 +1229,7 @@ function renderQuestion() {
     !state.answerVisible || !question.answerNote,
   );
   elements.answerNote.textContent = question.answerNote;
+  renderVocabularySpeechGroups();
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
   const showsYearMnemonic =
@@ -1490,7 +1565,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.041｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.042｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1628,6 +1703,11 @@ elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.questionSpeech.addEventListener("click", () => speakTarget("question"));
 elements.answerSpeech.addEventListener("click", () => speakTarget("answer"));
+for (const button of elements.vocabularySpeechButtons) {
+  button.addEventListener("click", () =>
+    speakTarget(`vocabulary-${button.dataset.vocabularySpeech}`),
+  );
+}
 elements.overviewSpeech.addEventListener("click", () => speakTarget("overview"));
 elements.termImageContent.addEventListener("error", () => {
   elements.termImage.classList.add("is-hidden");

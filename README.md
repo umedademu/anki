@@ -2,7 +2,7 @@
 
 最初に科目を選び、世界史と英単語を段階的に学ぶWebアプリです。
 
-現在のバージョンは`v0.053`です。Web上の変更履歴は`public/changelog.html`で公開します。
+現在のバージョンは`v0.054`です。Web上の変更履歴は`public/changelog.html`で公開します。
 
 ## 現在の内容
 
@@ -67,7 +67,7 @@ Anki、更新情報、版番号を含むヘッダーは開始前だけに表示�
 
 `data/source/world-history`にはDeckごとの世界史CSV、`data/source/english-vocabulary`にはDeckごとの英単語CSVを配置します。英単語CSVは1語1行の10列形式を使用します。そのあと、次の命令でWeb表示用データを作り直して検査します。
 
-ChatGPTで新しい問題集CSVを作る場合は、世界史では`docs/prompts/world-history-csv-generation.md`、英単語では`docs/prompts/english-vocabulary-csv-generation.md`を依頼文と一緒に渡します。英単語のDeck 2以降を作る場合は、重複確認のために作成済みの全DeckのCSVも添付します。
+ChatGPTで新しい問題集CSVを作る場合は、世界史では`docs/prompts/world-history-csv-generation.md`、日本史では`docs/prompts/japanese-history-csv-generation.md`、英単語では`docs/prompts/english-vocabulary-csv-generation.md`を依頼文と一緒に渡します。段階表と今回作成する語数は依頼文へ直接記載し、Deck 2以降を作る場合は重複確認のために作成済みの全DeckのCSVも添付します。日本史のプロンプトは将来の日本史データ作成用であり、現時点の変換処理と公開データは世界史・英単語に対応しています。
 
 ```powershell
 npm run build:data

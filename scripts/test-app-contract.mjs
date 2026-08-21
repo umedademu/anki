@@ -76,6 +76,10 @@ const englishGenerationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "english-vocabulary-csv-generation.md"),
   "utf8",
 );
+const japaneseHistoryGenerationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "japanese-history-csv-generation.md"),
+  "utf8",
+);
 const cloudflareReplacement = await readFile(
   path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
   "utf8",
@@ -105,9 +109,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.053") ||
-  !changelog.includes("v0.053") ||
-  !settingsHtml.includes("v0.053")
+  !html.includes("v0.054") ||
+  !changelog.includes("v0.054") ||
+  !settingsHtml.includes("v0.054")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -142,7 +146,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.053"') ||
+  !html.includes('href="/styles.css?v=0.054"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -184,6 +188,27 @@ if (
   !englishGenerationPrompt.includes("CSV以外の前置き、作業報告、選定理由")
 ) {
   throw new Error("英単語Deck生成用プロンプトの重複防止・三方向出題・CSV規則が不足しています。");
+}
+if (
+  !japaneseHistoryGenerationPrompt.includes("# 日本史段階別デッキ用CSV生成プロンプト") ||
+  !japaneseHistoryGenerationPrompt.includes("今回指定されたDeckの新しい用語と問題行だけ") ||
+  !japaneseHistoryGenerationPrompt.includes("添付されたすべての作成済みCSV") ||
+  !japaneseHistoryGenerationPrompt.includes("このプロンプトは段階数、最終的な総語数、各Deckの位置づけを固定しません") ||
+  !japaneseHistoryGenerationPrompt.includes("JH-000401〜JH-000800") ||
+  !japaneseHistoryGenerationPrompt.includes("各用語について、原則として3〜7問程度") ||
+  !japaneseHistoryGenerationPrompt.includes("各用語について、**1〜4問**") ||
+  !japaneseHistoryGenerationPrompt.includes("統合説明だけに新しい重要情報を追加しない") ||
+  !japaneseHistoryGenerationPrompt.includes(
+    "dataset_label\nterm_id\nimportance_rank\ndifficulty_label\ncategory\nterm\nreading\naliases\nera\nmacro_region\nregion_detail\ndisplay_period\nsort_year\nquestion_id\nstage\nfocus\nquestion_type\nquestion\nanswer\nkeywords\naccepted_answers\nanswer_note\nyear_mnemonic\nsource_name\nsource_url",
+  ) ||
+  !japaneseHistoryGenerationPrompt.includes("国立公文書館デジタルアーカイブ") ||
+  !japaneseHistoryGenerationPrompt.includes("東京大学史料編纂所") ||
+  !japaneseHistoryGenerationPrompt.includes("墾田永年私財法(こんでんえいねんしざいほう)") ||
+  japaneseHistoryGenerationPrompt.includes("https://www.y-history.net/") ||
+  japaneseHistoryGenerationPrompt.includes("Deck 10") ||
+  japaneseHistoryGenerationPrompt.includes("3,600語")
+) {
+  throw new Error("日本史Deck生成用プロンプトの三段階・小分け作成・出典規則が不足しています。");
 }
 if (
   !html.includes('id="setup-speech"') ||

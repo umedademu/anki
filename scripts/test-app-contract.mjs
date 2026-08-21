@@ -41,6 +41,10 @@ const listeningPauseMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0004_listening_pause.sql"),
   "utf8",
 );
+const englishSpeechMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0005_english_speech.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -76,19 +80,24 @@ if (!html.includes('<script src="/app.js" type="module"></script>')) {
 }
 if (
   !html.includes('id="setup-panel"') ||
+  !html.includes('id="subject-panel"') ||
+  !html.includes('id="subject-options"') ||
+  !html.includes('id="change-subject"') ||
   !html.includes('id="start-study"') ||
   !html.includes('id="deck-filter"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.039") ||
-  !changelog.includes("v0.039") ||
-  !settingsHtml.includes("v0.039")
+  !html.includes("v0.040") ||
+  !changelog.includes("v0.040") ||
+  !settingsHtml.includes("v0.040")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
   !app.includes("function setDeckOptions(decks, selectedDeckId)") ||
+  !app.includes("async function activateSubject(subjectId)") ||
+  !app.includes("function showSubjectSelection()") ||
   !app.includes("async function activateDeck(deckId)") ||
   !app.includes("subjectEntry.defaultDeckId") ||
   !app.includes(
@@ -103,6 +112,8 @@ if (
   !cloudflareReplacement.includes("await waitForVerificationSlot()") ||
   !cloudflareReplacement.includes("while (nextVerificationAt > Date.now())") ||
   !cloudflareReplacement.includes("response.status !== 429") ||
+  !cloudflareReplacement.includes("assetUploadJobs") ||
+  !cloudflareReplacement.includes("remoteAssetKeys") ||
   !cloudflareReplacement.includes("await uploadAndVerify(localDeckIndexJobs") ||
   !cloudflareReplacement.includes("await uploadAndVerify([localManifestJob]") ||
   !cloudflareReplacement.includes("await uploadAndVerify(\n  [localCatalogJob]") ||
@@ -114,7 +125,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.039"') ||
+  !html.includes('href="/styles.css?v=0.040"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -139,6 +150,10 @@ if (
   !app.includes("createSpeechController") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
+  !speechSettings.includes("englishAzureSpeechVoices") ||
+  !speechSettings.includes('en-US-JennyNeural') ||
+  !speech.includes("segment.language") ||
+  !worker.includes("normalizeEnglishAzureSpeechVoice") ||
   !styles.includes(".speech-button")
 ) {
   throw new Error("問題・回答・解説の音声読み上げ操作が揃っていません。");
@@ -146,7 +161,9 @@ if (
 if (
   !settingsHtml.includes('id="speech-source"') ||
   !settingsHtml.includes('id="azure-voice"') ||
+  !settingsHtml.includes('id="english-azure-voice"') ||
   !settingsHtml.includes('id="device-voice"') ||
+  !settingsHtml.includes('id="english-device-voice"') ||
   !settingsHtml.includes('id="speech-rate"') ||
   !settingsHtml.includes('id="speech-rate" type="range" min="0.7" max="3"') ||
   !settingsHtml.includes('id="preview-speech"') ||
@@ -182,7 +199,7 @@ if (
   !html.includes('id="term-tags"') ||
   !app.includes("function renderTermTags(term, question, visible)") ||
   !app.includes("const tags = [\n    term.chronology?.displayPeriod,\n    ...getMacroRegionTags(term),") ||
-  !app.includes("stageLabels[question.stage]") ||
+  !app.includes("questionStyleLabel(question.stage)") ||
   !app.includes("question.focus") ||
   !styles.includes(".term-tags") ||
   !styles.includes("font-size: 0.52rem") ||
@@ -291,6 +308,8 @@ if (
   !sharedSettingsMigration.includes("device_voice_id") ||
   !sharedSettingsMigration.includes("speech_rate") ||
   !listeningPauseMigration.includes("listening_pause_seconds")
+  || !englishSpeechMigration.includes("english_azure_voice_id")
+  || !englishSpeechMigration.includes("english_device_voice_id")
 ) {
   throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
 }

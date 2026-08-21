@@ -2,10 +2,14 @@ import {
   createSpeechController,
   prepareSpeechText,
   selectJapaneseVoice,
+  selectVoice,
 } from "../public/speech.js";
 import {
   azureSpeechVoices,
   defaultAzureSpeechVoiceId,
+  defaultEnglishAzureSpeechVoiceId,
+  englishAzureSpeechVoices,
+  getEnglishVoices,
   getJapaneseVoices,
   getVoiceId,
   loadSpeechSettings,
@@ -43,6 +47,7 @@ const voices = [
   { name: "English", lang: "en-US", voiceURI: "english" },
   { name: "日本語", lang: "ja-JP", voiceURI: "japanese-default", default: true },
   { name: "日本語 高品質", lang: "ja-JP", voiceURI: "japanese-natural" },
+  { name: "English Natural", lang: "en-US", voiceURI: "english-natural" },
 ];
 if (selectJapaneseVoice(voices)?.name !== "日本語") {
   throw new Error("日本語音声を優先して選べませんでした。");
@@ -50,6 +55,8 @@ if (selectJapaneseVoice(voices)?.name !== "日本語") {
 if (
   selectJapaneseVoice(voices, "japanese-natural")?.name !== "日本語 高品質" ||
   getJapaneseVoices({ getVoices: () => voices }).length !== 2 ||
+  getEnglishVoices({ getVoices: () => voices }).length !== 2 ||
+  selectVoice(voices, "en-US", "english-natural")?.name !== "English Natural" ||
   getVoiceId(voices[2]) !== "japanese-natural"
 ) {
   throw new Error("端末内の日本語音声を一覧化・選択できませんでした。");
@@ -64,7 +71,9 @@ const savedSpeechSettings = saveSpeechSettings(
   {
     source: "device",
     azureVoiceId: "ja-JP-KeitaNeural",
+    englishAzureVoiceId: "en-US-GuyNeural",
     voiceId: "japanese-natural",
+    englishVoiceId: "english-natural",
     rate: 0.9,
   },
   fakeStorage,
@@ -72,11 +81,16 @@ const savedSpeechSettings = saveSpeechSettings(
 if (
   loadSpeechSettings(fakeStorage).voiceId !== "japanese-natural" ||
   loadSpeechSettings(fakeStorage).azureVoiceId !== "ja-JP-KeitaNeural" ||
+  loadSpeechSettings(fakeStorage).englishAzureVoiceId !== "en-US-GuyNeural" ||
+  loadSpeechSettings(fakeStorage).englishVoiceId !== "english-natural" ||
   savedSpeechSettings.rate !== 0.9 ||
   normalizeSpeechSettings({ source: "invalid", rate: 9 }).source !== "cloud" ||
   normalizeSpeechSettings({ azureVoiceId: "invalid" }).azureVoiceId !==
     defaultAzureSpeechVoiceId ||
   azureSpeechVoices.length !== 7 ||
+  englishAzureSpeechVoices.length !== 4 ||
+  normalizeSpeechSettings({ englishAzureVoiceId: "invalid" })
+    .englishAzureVoiceId !== defaultEnglishAzureSpeechVoiceId ||
   azureSpeechVoices.filter((voice) => voice.label.includes("男性")).length !== 3 ||
   normalizeSpeechSettings({ rate: 9 }).rate !== 3
 ) {
@@ -121,6 +135,7 @@ const controller = createSpeechController({
   getSettings: () => ({
     source: "device",
     voiceId: "japanese-natural",
+    englishVoiceId: "english-natural",
     rate: 3,
   }),
   onTargetChange: (target) => targetChanges.push(target),
@@ -132,15 +147,23 @@ let completionCount = 0;
 controller.speak(
   [
     { target: "answer", text: "康熙帝(こうきてい)" },
+    {
+      target: "answer",
+      text: "Although it was raining, we went for a walk.",
+      language: "en-US",
+    },
     { target: "overview", text: "鄭氏台湾(ていしたいわん)" },
   ],
   { onComplete: () => completionCount += 1 },
 );
 if (
-  spoken.length !== 2 ||
+  spoken.length !== 3 ||
   spoken[0].text !== "こうきてい" ||
-  spoken[1].text !== "ていしたいわん" ||
-  spoken.some(
+  spoken[1].text !== "Although it was raining, we went for a walk." ||
+  spoken[1].lang !== "en-US" ||
+  spoken[1].voice !== "English Natural" ||
+  spoken[2].text !== "ていしたいわん" ||
+  [spoken[0], spoken[2]].some(
     (item) =>
       item.lang !== "ja-JP" ||
       item.rate !== 3 ||

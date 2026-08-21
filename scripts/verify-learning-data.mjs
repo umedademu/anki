@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
+  loadEnglishDecks,
   loadSourceDecks,
   loadTermImageManifest,
 } from "./build-learning-data.mjs";
@@ -62,10 +63,20 @@ if (
 }
 
 const catalog = await readJson("index.json");
-if (catalog.schemaVersion !== 3 || catalog.subjects.length !== 1) {
-  throw new Error("科目一覧が三段階学習用の形式ではありません。");
+if (
+  catalog.schemaVersion !== 3 ||
+  catalog.subjects.length !== 2 ||
+  catalog.subjects.map((subject) => subject.id).join(",") !==
+    "world-history,english-vocabulary"
+) {
+  throw new Error("世界史と英単語の科目一覧が正しくありません。");
 }
-const subjectEntry = catalog.subjects[0];
+const subjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "world-history",
+);
+const englishSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "english-vocabulary",
+);
 if (
   subjectEntry.id !== "world-history" ||
   subjectEntry.indexPath !== "subjects/world-history/index.json" ||
@@ -169,6 +180,64 @@ if (
   subjectEntry.questionCount !== 5182
 ) {
   throw new Error("Deck 1・Deck 2の総件数または統合索引が一致しません。");
+}
+
+const { decks: sourceEnglishDecks, terms: expectedEnglishTerms } =
+  await loadEnglishDecks();
+if (
+  sourceEnglishDecks.length !== 1 ||
+  !englishSubjectEntry ||
+  englishSubjectEntry.defaultDeckId !== "deck-1" ||
+  englishSubjectEntry.termCount !== 500 ||
+  englishSubjectEntry.questionCount !== 1500 ||
+  englishSubjectEntry.decks.length !== 1
+) {
+  throw new Error("英単語Deck 1の科目一覧が正しくありません。");
+}
+const englishDeckEntry = englishSubjectEntry.decks[0];
+const englishSubject = await readJson(englishDeckEntry.indexPath);
+const englishChunks = await Promise.all(
+  englishSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedEnglishTerms = englishChunks.flatMap((chunk) => chunk.terms);
+const generatedEnglishQuestions = generatedEnglishTerms.flatMap((term) =>
+  Object.values(term.stages).flat(),
+);
+const generatedEnglishCounts = countQuestionsByStage(generatedEnglishTerms);
+if (
+  englishDeckEntry.version !== "en-6984fb69efaf" ||
+  englishSubject.id !== "english-vocabulary" ||
+  englishSubject.learningType !== "vocabulary" ||
+  englishSubject.filterLabels.category !== "品詞" ||
+  englishSubject.stageLabels.beginner !== "英語から意味" ||
+  englishSubject.stageLabels.reverse !== "意味から英語" ||
+  englishSubject.stageLabels.integrated !== "例文から和訳" ||
+  englishSubject.termCount !== 500 ||
+  englishSubject.questionCount !== 1500 ||
+  englishSubject.chunks.length !== 10 ||
+  englishSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  JSON.stringify(generatedEnglishCounts) !==
+    JSON.stringify({ beginner: 500, reverse: 500, integrated: 500 }) ||
+  JSON.stringify(generatedEnglishTerms) !== JSON.stringify(expectedEnglishTerms)
+) {
+  throw new Error("英単語Deck 1の生成内容が元CSVと一致しません。");
+}
+if (
+  new Set(generatedEnglishTerms.map((term) => term.id)).size !== 500 ||
+  new Set(generatedEnglishTerms.map((term) => term.term)).size !== 500 ||
+  new Set(generatedEnglishQuestions.map((question) => question.id)).size !== 1500 ||
+  generatedEnglishTerms.some(
+    (term) =>
+      term.stages.beginner[0].acceptedAnswers.includes(
+        term.stages.beginner[0].answer,
+      ) ||
+      term.stages.reverse[0].hideTermUntilAnswer !== true ||
+      term.stages.beginner[0].speech.question[0].language !== "en-US" ||
+      term.stages.reverse[0].speech.question[0].language !== "ja-JP" ||
+      term.stages.integrated[0].speech.question[0].language !== "en-US",
+  )
+) {
+  throw new Error("英単語の識別番号・別解・読み上げ言語が正しくありません。");
 }
 
 const generatedTermImages = await readJson("term-images.json");
@@ -376,5 +445,5 @@ if (
 }
 
 console.log(
-  `検証完了: Deck 1・2、800用語・5182問（短答2400、逆一問一答1982、統合説明800）・語呂合わせ97問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史800用語・5182問、英単語500語・1500問、語呂合わせ97問・関連画像${generatedTermImages.assets.length}点`,
 );

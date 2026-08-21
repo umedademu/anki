@@ -13,6 +13,8 @@ import {
 import { createSpeechController } from "./speech.js";
 import {
   azureSpeechVoices,
+  englishAzureSpeechVoices,
+  getEnglishVoices,
   getJapaneseVoices,
   getVoiceId,
   loadSpeechSettings,
@@ -36,11 +38,14 @@ const elements = {
   easyUnit: document.querySelector("#easy-unit"),
   speechSource: document.querySelector("#speech-source"),
   azureVoice: document.querySelector("#azure-voice"),
+  englishAzureVoice: document.querySelector("#english-azure-voice"),
   deviceVoice: document.querySelector("#device-voice"),
+  englishDeviceVoice: document.querySelector("#english-device-voice"),
   speechRate: document.querySelector("#speech-rate"),
   speechRateOutput: document.querySelector("#speech-rate-output"),
   listeningPauseSeconds: document.querySelector("#listening-pause-seconds"),
   previewSpeech: document.querySelector("#preview-speech"),
+  previewEnglishSpeech: document.querySelector("#preview-english-speech"),
   saveSpeechSettings: document.querySelector("#save-speech-settings"),
   speechStatus: document.querySelector("#speech-settings-status"),
 };
@@ -60,7 +65,9 @@ function readSpeechForm() {
   return normalizeSpeechSettings({
     source: elements.speechSource.value,
     azureVoiceId: elements.azureVoice.value,
+    englishAzureVoiceId: elements.englishAzureVoice.value,
     voiceId: elements.deviceVoice.value,
+    englishVoiceId: elements.englishDeviceVoice.value,
     rate: Number(elements.speechRate.value),
   });
 }
@@ -102,6 +109,33 @@ function populateDeviceVoices() {
     ? selectedVoiceId
     : "";
   elements.deviceVoice.disabled = voices.length === 0;
+
+  const selectedEnglishVoiceId =
+    elements.englishDeviceVoice.value || speechSettings.englishVoiceId;
+  const englishVoices = getEnglishVoices();
+  elements.englishDeviceVoice.replaceChildren();
+  const englishAutomatic = document.createElement("option");
+  englishAutomatic.value = "";
+  englishAutomatic.textContent = "端末の推奨英語音声";
+  elements.englishDeviceVoice.append(englishAutomatic);
+  for (const voice of englishVoices) {
+    const option = document.createElement("option");
+    option.value = getVoiceId(voice);
+    option.textContent = `${voice.name}（${voice.lang}）${
+      voice.default ? "（端末標準）" : ""
+    }`;
+    elements.englishDeviceVoice.append(option);
+  }
+  const availableEnglishIds = new Set([
+    "",
+    ...englishVoices.map(getVoiceId),
+  ]);
+  elements.englishDeviceVoice.value = availableEnglishIds.has(
+    selectedEnglishVoiceId,
+  )
+    ? selectedEnglishVoiceId
+    : "";
+  elements.englishDeviceVoice.disabled = englishVoices.length === 0;
 }
 
 function populateAzureVoices() {
@@ -112,12 +146,20 @@ function populateAzureVoices() {
     option.textContent = voice.label;
     elements.azureVoice.append(option);
   }
+  elements.englishAzureVoice.replaceChildren();
+  for (const voice of englishAzureSpeechVoices) {
+    const option = document.createElement("option");
+    option.value = voice.id;
+    option.textContent = voice.label;
+    elements.englishAzureVoice.append(option);
+  }
 }
 
 function fillSpeechForm(settings) {
   speechSettings = normalizeSpeechSettings(settings);
   elements.speechSource.value = speechSettings.source;
   elements.azureVoice.value = speechSettings.azureVoiceId;
+  elements.englishAzureVoice.value = speechSettings.englishAzureVoiceId;
   elements.speechRate.value = String(speechSettings.rate);
   elements.listeningPauseSeconds.value = String(
     normalizeListeningPauseSeconds(settings?.listeningPauseSeconds),
@@ -128,6 +170,11 @@ function fillSpeechForm(settings) {
   )
     ? speechSettings.voiceId
     : "";
+  elements.englishDeviceVoice.value = [
+    ...elements.englishDeviceVoice.options,
+  ].some((option) => option.value === speechSettings.englishVoiceId)
+    ? speechSettings.englishVoiceId
+    : "";
   updateSpeechRateOutput();
 }
 
@@ -135,11 +182,15 @@ const previewController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: readSpeechForm,
   onTargetChange(target) {
-    const active = target === "preview";
-    elements.previewSpeech.textContent = active
+    const japaneseActive = target === "preview-japanese";
+    const englishActive = target === "preview-english";
+    elements.previewSpeech.textContent = japaneseActive
       ? "試聴を止める"
-      : "選んだ音声を試す";
-    if (!active && previewStarted) {
+      : "日本語音声を試す";
+    elements.previewEnglishSpeech.textContent = englishActive
+      ? "試聴を止める"
+      : "英語音声を試す";
+    if (!japaneseActive && !englishActive && previewStarted) {
       previewStarted = false;
       if (!cloudFallbackMessage) {
         setSpeechStatus("試聴が完了しました。");
@@ -237,7 +288,7 @@ elements.form.addEventListener("submit", async (event) => {
 
 elements.speechRate.addEventListener("input", updateSpeechRateOutput);
 elements.previewSpeech.addEventListener("click", () => {
-  if (previewController.currentTarget === "preview") {
+  if (previewController.currentTarget === "preview-japanese") {
     previewStarted = false;
     previewController.stop();
     setSpeechStatus("試聴を停止しました。");
@@ -247,11 +298,30 @@ elements.previewSpeech.addEventListener("click", () => {
   setSpeechStatus("選んだ音声を再生しています。");
   previewController.speak([
     {
-      target: "preview",
+      target: "preview-japanese",
       text: "王安石(おうあんせき)の低利融資政策を青苗法(せいびょうほう)という。",
+      language: "ja-JP",
     },
   ]);
-  previewStarted = previewController.currentTarget === "preview";
+  previewStarted = previewController.currentTarget === "preview-japanese";
+});
+elements.previewEnglishSpeech.addEventListener("click", () => {
+  if (previewController.currentTarget === "preview-english") {
+    previewStarted = false;
+    previewController.stop();
+    setSpeechStatus("試聴を停止しました。");
+    return;
+  }
+  cloudFallbackMessage = "";
+  setSpeechStatus("選んだ英語音声を再生しています。");
+  previewController.speak([
+    {
+      target: "preview-english",
+      text: "Although it was raining, we went for a walk.",
+      language: "en-US",
+    },
+  ]);
+  previewStarted = previewController.currentTarget === "preview-english";
 });
 elements.saveSpeechSettings.addEventListener("click", async () => {
   setBusy(true);

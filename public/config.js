@@ -11,5 +11,4 @@ window.ANKI_CONFIG = {
   progressApiBaseUrl: usesLocalData
     ? "http://localhost:8787"
     : cloudflareProgressApiUrl,
-  subjectId: "world-history",
 };

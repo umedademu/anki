@@ -1,0 +1,501 @@
+﻿dataset_label,term_id,importance_rank,difficulty_label,word,part_of_speech,meaning,accepted_answers,example_sentence,example_translation
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000001,1,Deck 1｜基礎確認,although,接続詞,〜だけれども,〜だけれども|〜にもかかわらず|〜ではあるが,"Although it was raining, we went for a walk.",雨が降っていたが、私たちは散歩に出かけた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000002,2,Deck 1｜基礎確認,whether,接続詞,〜かどうか,〜かどうか|〜であろうとなかろうと,I do not know whether he will come.,彼が来るかどうか、私は分からない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000003,3,Deck 1｜基礎確認,unless,接続詞,〜でない限り,〜でない限り|もし〜でなければ,You cannot enter unless you have a ticket.,チケットを持っていなければ入れない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000004,4,Deck 1｜基礎確認,neither,代名詞・限定詞・副詞,どちらも〜ない,どちらも〜ない|どちらの〜もない|〜もまた…ない,Neither answer is correct.,どちらの答えも正しくない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000005,5,Deck 1｜基礎確認,either,代名詞・限定詞・副詞,どちらか一方,どちらか一方|どちらの〜でも|〜もまた…ない,You may choose either option.,どちらの選択肢を選んでもよい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000006,6,Deck 1｜基礎確認,instead,副詞,その代わりに,その代わりに|そうではなく,We stayed home instead.,私たちはその代わりに家にいた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000007,7,Deck 1｜基礎確認,perhaps,副詞,おそらく,おそらく|ひょっとすると,Perhaps she forgot the meeting.,おそらく彼女は会議を忘れたのだろう。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000008,8,Deck 1｜基礎確認,several,限定詞・代名詞,いくつかの,いくつかの|数人の|数個の,Several students asked the same question.,数人の生徒が同じ質問をした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000009,9,Deck 1｜基礎確認,enough,限定詞・代名詞・副詞,十分な,十分な|十分に,We have enough time to finish the work.,私たちには作業を終えるのに十分な時間がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000010,10,Deck 1｜基礎確認,quite,副詞,かなり,かなり|まったく|完全に,The test was quite difficult.,その試験はかなり難しかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000011,11,Deck 1｜基礎確認,toward,前置詞,〜の方へ,〜の方へ|〜に向かって|〜に対して,She walked toward the station.,彼女は駅の方へ歩いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000012,12,Deck 1｜基礎確認,despite,前置詞,〜にもかかわらず,〜にもかかわらず,"Despite the rain, the game continued.",雨にもかかわらず、試合は続いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000013,13,Deck 1｜基礎確認,among,前置詞,〜の間で,〜の間で|〜の中に,The news spread among the students.,その知らせは生徒たちの間に広まった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000014,14,Deck 1｜基礎確認,within,前置詞・副詞,〜以内に,〜以内に|〜の内側に,Please reply within three days.,3日以内に返事をしてください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000015,15,Deck 1｜基礎確認,beyond,前置詞・副詞,〜を越えて,〜を越えて|〜の向こうに|〜の範囲外で,The village lies beyond the mountain.,その村は山の向こうにある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000016,16,Deck 1｜基礎確認,throughout,前置詞・副詞,〜の至る所に,〜の至る所に|〜の間じゅう,It rained throughout the night.,一晩中、雨が降った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000017,17,Deck 1｜基礎確認,against,前置詞,〜に反対して,〜に反対して|〜に対して|〜にもたれて,Many people voted against the plan.,多くの人がその計画に反対票を投じた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000018,18,Deck 1｜基礎確認,except,前置詞・接続詞,〜を除いて,〜を除いて|〜以外は,Everyone came except Tom.,トムを除いて全員が来た。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000019,19,Deck 1｜基礎確認,besides,前置詞・副詞,〜に加えて,〜に加えて|そのうえ,"Besides English, she studies French.",英語に加えて、彼女はフランス語も学んでいる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000020,20,Deck 1｜基礎確認,however,副詞・接続副詞,しかしながら,しかしながら|どんなに〜でも,"The task was difficult; however, we completed it.",その作業は難しかった。しかし、私たちは完了した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000021,21,Deck 1｜基礎確認,therefore,副詞・接続副詞,したがって,したがって|それゆえに,"The road was closed; therefore, we took another route.",道路が閉鎖されていた。したがって、私たちは別の道を通った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000022,22,Deck 1｜基礎確認,otherwise,副詞,さもなければ,さもなければ|それ以外の点では|別のやり方で,"Hurry, otherwise you will miss the train.",急ぎなさい。さもなければ電車に乗り遅れる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000023,23,Deck 1｜基礎確認,moreover,副詞・接続副詞,そのうえ,そのうえ|さらに,"The plan is simple; moreover, it is inexpensive.",その計画は簡単で、そのうえ費用も安い。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000024,24,Deck 1｜基礎確認,meanwhile,副詞,その間に,その間に|一方では,"I prepared dinner; meanwhile, he set the table.",私が夕食を準備する間に、彼は食卓を整えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000025,25,Deck 1｜基礎確認,indeed,副詞,実際に,実際に|確かに|本当に,The result was indeed surprising.,その結果は実際に驚くべきものだった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000026,26,Deck 1｜基礎確認,especially,副詞,特に,特に|とりわけ,"I like fruit, especially oranges.",私は果物が好きで、特にオレンジが好きだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000027,27,Deck 1｜基礎確認,probably,副詞,おそらく,おそらく|たぶん,He will probably arrive by noon.,彼はおそらく正午までに到着する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000028,28,Deck 1｜基礎確認,actually,副詞,実は,実は|実際には,"I thought she was French, but she is actually Canadian.",彼女はフランス人だと思っていたが、実はカナダ人だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000029,29,Deck 1｜基礎確認,nearly,副詞,ほとんど,ほとんど|もう少しで,The work is nearly finished.,その作業はほとんど終わっている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000030,30,Deck 1｜基礎確認,hardly,副詞,ほとんど〜ない,ほとんど〜ない,I could hardly hear his voice.,私は彼の声をほとんど聞き取れなかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000031,31,Deck 1｜基礎確認,rather,副詞,むしろ,むしろ|かなり,I would rather stay home tonight.,今夜はむしろ家にいたい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000032,32,Deck 1｜基礎確認,almost,副詞,ほとんど,ほとんど|もう少しで,I almost missed the bus.,私はもう少しでバスに乗り遅れるところだった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000033,33,Deck 1｜基礎確認,already,副詞,すでに,すでに|もう,She has already finished her homework.,彼女はすでに宿題を終えている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000034,34,Deck 1｜基礎確認,yet,副詞・接続詞,まだ,まだ|もう|しかし,The report is not ready yet.,その報告書はまだ完成していない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000035,35,Deck 1｜基礎確認,still,副詞・形容詞,まだ,まだ|依然として|静止した,He still lives in the same town.,彼は今も同じ町に住んでいる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000036,36,Deck 1｜基礎確認,even,副詞・形容詞,〜さえ,〜さえ|さらに|平らな,Even children can understand this rule.,子どもでさえこの規則を理解できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000037,37,Deck 1｜基礎確認,simply,副詞,単に,単に|簡単に|まったく,The machine is simply too expensive.,その機械は単に高すぎる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000038,38,Deck 1｜基礎確認,mainly,副詞,主に,主に|大部分は,The book is mainly about modern history.,その本は主に近代史について書かれている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000039,39,Deck 1｜基礎確認,recently,副詞,最近,最近|近ごろ,I recently started studying Spanish.,私は最近スペイン語を学び始めた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000040,40,Deck 1｜基礎確認,finally,副詞,ついに,ついに|最後に,We finally reached the top of the mountain.,私たちはついに山頂に到達した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000041,41,Deck 1｜基礎確認,immediately,副詞,すぐに,すぐに|直ちに,Please call me immediately.,すぐに私へ電話してください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000042,42,Deck 1｜基礎確認,gradually,副詞,徐々に,徐々に|次第に,The weather gradually became warmer.,天気は徐々に暖かくなった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000043,43,Deck 1｜基礎確認,eventually,副詞,最終的に,最終的に|結局は,She eventually found a solution.,彼女は最終的に解決策を見つけた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000044,44,Deck 1｜基礎確認,rarely,副詞,めったに〜ない,めったに〜ない,He rarely watches television.,彼はめったにテレビを見ない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000045,45,Deck 1｜基礎確認,usually,副詞,たいてい,たいてい|普段は,I usually get up at six.,私はたいてい6時に起きる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000046,46,Deck 1｜基礎確認,frequently,副詞,頻繁に,頻繁に|しばしば,This word is frequently used in newspapers.,この単語は新聞で頻繁に使われる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000047,47,Deck 1｜基礎確認,generally,副詞,一般に,一般に|たいてい,People generally need enough sleep.,人は一般に十分な睡眠を必要とする。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000048,48,Deck 1｜基礎確認,particularly,副詞,特に,特に|とりわけ,This question is particularly important.,この問題は特に重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000049,49,Deck 1｜基礎確認,exactly,副詞,正確に,正確に|まさに|そのとおり,Tell me exactly what happened.,何が起きたのか正確に教えてください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000050,50,Deck 1｜基礎確認,suddenly,副詞,突然,突然|急に,The lights suddenly went out.,明かりが突然消えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000051,51,Deck 1｜基礎確認,clearly,副詞,明らかに,明らかに|はっきりと,She clearly explained the problem.,彼女はその問題をはっきり説明した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000052,52,Deck 1｜基礎確認,completely,副詞,完全に,完全に|すっかり,The old building was completely destroyed.,その古い建物は完全に破壊された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000053,53,Deck 1｜基礎確認,certainly,副詞,確かに,確かに|きっと,I will certainly keep my promise.,私は必ず約束を守る。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000054,54,Deck 1｜基礎確認,likely,形容詞・副詞,〜しそうな,〜しそうな|ありそうな|おそらく,It is likely to rain this evening.,今晩は雨が降りそうだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000055,55,Deck 1｜基礎確認,unlike,前置詞・形容詞,〜と違って,〜と違って|似ていない,"Unlike his brother, Ken enjoys sports.",兄と違って、ケンはスポーツを楽しむ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000056,56,Deck 1｜基礎確認,according,前置詞相当（according to）,〜によれば,〜によれば|〜に従って,"According to the report, the population is decreasing.",報告によれば、人口は減少している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000057,57,Deck 1｜基礎確認,due,形容詞（due to）,〜が原因で,〜が原因で|期限の|到着予定の,The flight was delayed due to heavy rain.,その便は大雨が原因で遅れた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000058,58,Deck 1｜基礎確認,while,接続詞・名詞,〜する間に,〜する間に|一方で|しばらくの間,She listened to music while she studied.,彼女は勉強している間、音楽を聴いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000059,59,Deck 1｜基礎確認,whereas,接続詞,〜である一方,〜である一方|〜なのに対して,"Tom likes cities, whereas his sister prefers the countryside.",トムは都会が好きだが、一方で妹は田舎を好む。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000060,60,Deck 1｜基礎確認,since,前置詞・接続詞・副詞,〜以来,〜以来|〜なので,I have lived here since 2020.,私は2020年以来ここに住んでいる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000061,61,Deck 1｜基礎確認,whenever,接続詞・副詞,〜するときはいつでも,〜するときはいつでも,Call me whenever you need help.,助けが必要なときはいつでも私に電話してください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000062,62,Deck 1｜基礎確認,wherever,接続詞・副詞,〜する所はどこでも,〜する所はどこでも|どこへ〜しても,You can sit wherever you like.,好きな所ならどこに座ってもよい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000063,63,Deck 1｜基礎確認,though,接続詞・副詞,〜だけれども,〜だけれども|もっとも,"Though he was tired, he kept working.",彼は疲れていたが、働き続けた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000064,64,Deck 1｜基礎確認,once,副詞・接続詞,一度,一度|かつて|いったん〜すると,"Once you understand the rule, the task becomes easy.",いったん規則を理解すれば、その作業は簡単になる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000065,65,Deck 1｜基礎確認,until,前置詞・接続詞,〜まで,〜まで|〜するまで,We waited until the rain stopped.,私たちは雨がやむまで待った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000066,66,Deck 1｜基礎確認,during,前置詞,〜の間に,〜の間に|〜の期間中,No one spoke during the meeting.,会議の間、誰も話さなかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000067,67,Deck 1｜基礎確認,upon,前置詞,〜の上に,〜の上に|〜するとすぐに,"Upon arrival, please check in at the desk.",到着したら、受付で手続きをしてください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000068,68,Deck 1｜基礎確認,as,接続詞・前置詞・副詞,〜として,〜として|〜する時|〜なので|〜のように,She works as a nurse.,彼女は看護師として働いている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000069,69,Deck 1｜基礎確認,accept,動詞,受け入れる,受け入れる|承認する|引き受ける,She accepted the offer.,彼女はその申し出を受け入れた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000070,70,Deck 1｜基礎確認,achieve,動詞,達成する,達成する|成し遂げる,He worked hard to achieve his goal.,彼は目標を達成するために懸命に努力した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000071,71,Deck 1｜基礎確認,admit,動詞,認める,認める|入場を許す|収容する,He admitted that he had made a mistake.,彼は自分が間違いを犯したと認めた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000072,72,Deck 1｜基礎確認,advise,動詞,助言する,助言する|勧める,The doctor advised me to rest.,医師は私に休むよう助言した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000073,73,Deck 1｜基礎確認,affect,動詞,影響を与える,影響を与える|心を動かす,Lack of sleep can affect your health.,睡眠不足は健康に影響を与えることがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000074,74,Deck 1｜基礎確認,afford,動詞,〜する余裕がある,〜する余裕がある|買う余裕がある,We cannot afford to waste time.,私たちには時間を無駄にする余裕がない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000075,75,Deck 1｜基礎確認,allow,動詞,許す,許す|可能にする,This ticket allows you to enter the museum.,このチケットがあれば博物館に入れる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000076,76,Deck 1｜基礎確認,appear,動詞,現れる,現れる|〜のように見える,A rainbow appeared after the rain.,雨の後に虹が現れた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000077,77,Deck 1｜基礎確認,apply,動詞,申し込む,申し込む|当てはまる|適用する|塗る,She applied for a scholarship.,彼女は奨学金に申し込んだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000078,78,Deck 1｜基礎確認,approach,動詞・名詞,近づく,近づく|取り組む|接近|方法,The train is approaching the station.,電車が駅に近づいている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000079,79,Deck 1｜基礎確認,argue,動詞,主張する,主張する|議論する|口論する,The author argues that education should be free.,著者は教育を無償にすべきだと主張している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000080,80,Deck 1｜基礎確認,arrange,動詞,手配する,手配する|整理する|並べる,We arranged a meeting for Friday.,私たちは金曜日に会議を設定した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000081,81,Deck 1｜基礎確認,avoid,動詞,避ける,避ける|回避する,Try to avoid making the same mistake.,同じ間違いをすることを避けなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000082,82,Deck 1｜基礎確認,behave,動詞,振る舞う,振る舞う|行儀よくする,The children behaved well in the museum.,子どもたちは博物館で行儀よく振る舞った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000083,83,Deck 1｜基礎確認,belong,動詞,所属する,所属する|〜のものである,This bag belongs to my sister.,このかばんは私の姉のものだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000084,84,Deck 1｜基礎確認,borrow,動詞,借りる,借りる,May I borrow your dictionary?,あなたの辞書を借りてもよいですか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000085,85,Deck 1｜基礎確認,breathe,動詞,呼吸する,呼吸する|息をする,It was difficult to breathe in the smoke.,煙の中では呼吸するのが難しかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000086,86,Deck 1｜基礎確認,cancel,動詞,取り消す,取り消す|中止する,They canceled the event because of the storm.,彼らは嵐のために行事を中止した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000087,87,Deck 1｜基礎確認,cause,動詞・名詞,引き起こす,引き起こす|原因|大義,The heavy rain caused serious flooding.,大雨が深刻な洪水を引き起こした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000088,88,Deck 1｜基礎確認,challenge,動詞・名詞,挑戦する,挑戦する|異議を唱える|課題|難題,This job will challenge your skills.,この仕事はあなたの技能を試すことになる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000089,89,Deck 1｜基礎確認,claim,動詞・名詞,主張する,主張する|要求する|請求する|主張,He claimed that the report was false.,彼はその報告は誤りだと主張した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000090,90,Deck 1｜基礎確認,compare,動詞,比較する,比較する|たとえる,Compare the two pictures carefully.,2枚の絵を注意深く比較しなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000091,91,Deck 1｜基礎確認,complain,動詞,不平を言う,不平を言う|苦情を述べる,Several customers complained about the service.,数人の客がそのサービスについて苦情を述べた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000092,92,Deck 1｜基礎確認,concern,動詞・名詞,関係する,関係する|心配させる|懸念|関心事,The problem concerns everyone in the community.,その問題は地域の全員に関係している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000093,93,Deck 1｜基礎確認,consider,動詞,よく考える,よく考える|〜と見なす,We should consider all the options.,私たちはすべての選択肢をよく考えるべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000094,94,Deck 1｜基礎確認,contain,動詞,含む,含む|収容する|抑える,This drink contains no sugar.,この飲み物には砂糖が含まれていない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000095,95,Deck 1｜基礎確認,continue,動詞,続ける,続ける|続く,The discussion continued for two hours.,議論は2時間続いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000096,96,Deck 1｜基礎確認,contribute,動詞,貢献する,貢献する|寄付する|一因となる,Exercise contributes to good health.,運動は健康の維持に貢献する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000097,97,Deck 1｜基礎確認,control,動詞・名詞,制御する,制御する|支配する|管理|統制,It is difficult to control the machine.,その機械を制御するのは難しい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000098,98,Deck 1｜基礎確認,create,動詞,創り出す,創り出す|生み出す,The project created many new jobs.,その事業は多くの新しい雇用を生み出した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000099,99,Deck 1｜基礎確認,deal,動詞・名詞,対処する,対処する|扱う|取引する|取引,We must deal with this problem quickly.,私たちはこの問題に早急に対処しなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000100,100,Deck 1｜基礎確認,decrease,動詞・名詞,減少する,減少する|減らす|減少,The number of visitors decreased last year.,訪問者数は昨年減少した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000101,101,Deck 1｜基礎確認,define,動詞,定義する,定義する|明確にする,Can you define this term?,この用語を定義できますか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000102,102,Deck 1｜基礎確認,depend,動詞,〜次第である,〜次第である|依存する,Success depends on careful preparation.,成功は入念な準備にかかっている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000103,103,Deck 1｜基礎確認,describe,動詞,説明する,説明する|描写する,Please describe what you saw.,あなたが見たものを説明してください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000104,104,Deck 1｜基礎確認,destroy,動詞,破壊する,破壊する|滅ぼす,The fire destroyed several houses.,火事が数軒の家を破壊した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000105,105,Deck 1｜基礎確認,determine,動詞,決定する,決定する|突き止める|左右する,Several factors determine the final result.,いくつかの要因が最終結果を左右する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000106,106,Deck 1｜基礎確認,develop,動詞,発達させる,発達させる|発展する|開発する,The company developed a new technology.,その会社は新しい技術を開発した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000107,107,Deck 1｜基礎確認,discover,動詞,発見する,発見する|気づく,Scientists discovered a new species.,科学者たちは新種を発見した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000108,108,Deck 1｜基礎確認,discuss,動詞,話し合う,話し合う|論じる,We discussed the problem in class.,私たちは授業でその問題について話し合った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000109,109,Deck 1｜基礎確認,divide,動詞,分ける,分ける|分割する|割る,Divide the class into four groups.,クラスを4つのグループに分けなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000110,110,Deck 1｜基礎確認,encourage,動詞,励ます,励ます|促す|奨励する,Her teacher encouraged her to continue.,先生は彼女に続けるよう励ました。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000111,111,Deck 1｜基礎確認,establish,動詞,設立する,設立する|確立する|立証する,The organization was established in 1990.,その組織は1990年に設立された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000112,112,Deck 1｜基礎確認,exist,動詞,存在する,存在する|実在する,Many unknown species may still exist.,未知の種が今も多く存在する可能性がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000113,113,Deck 1｜基礎確認,expect,動詞,予期する,予期する|期待する|当然だと思う,We expect the train to arrive on time.,私たちは電車が時間どおりに到着すると予想している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000114,114,Deck 1｜基礎確認,experience,動詞・名詞,経験する,経験する|経験|体験,Many people experienced difficulties during the crisis.,多くの人が危機の間に困難を経験した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000115,115,Deck 1｜基礎確認,explain,動詞,説明する,説明する|理由を述べる,Could you explain this rule to me?,この規則を私に説明してもらえますか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000116,116,Deck 1｜基礎確認,express,動詞,表現する,表現する|述べる|急行便で送る,It is sometimes hard to express feelings in words.,感情を言葉で表現するのは時に難しい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000117,117,Deck 1｜基礎確認,face,動詞・名詞,直面する,直面する|〜の方を向く|顔|表面,We face many environmental problems.,私たちは多くの環境問題に直面している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000118,118,Deck 1｜基礎確認,fail,動詞,失敗する,失敗する|〜できない|不合格になる,The plan failed because of a lack of money.,その計画は資金不足のため失敗した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000119,119,Deck 1｜基礎確認,force,動詞・名詞,強いる,強いる|強制する|力|勢力,The storm forced us to stay indoors.,嵐のため、私たちは屋内にとどまらざるを得なかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000120,120,Deck 1｜基礎確認,gain,動詞・名詞,得る,得る|増す|利益|増加,She gained valuable experience from the job.,彼女はその仕事から貴重な経験を得た。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000121,121,Deck 1｜基礎確認,identify,動詞,特定する,特定する|見分ける|同一視する,The police identified the owner of the car.,警察はその車の所有者を特定した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000122,122,Deck 1｜基礎確認,imagine,動詞,想像する,想像する|思い描く,Imagine living without electricity.,電気なしで暮らすことを想像してみなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000123,123,Deck 1｜基礎確認,improve,動詞,改善する,改善する|上達する,Regular practice will improve your skills.,定期的な練習はあなたの技能を向上させる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000124,124,Deck 1｜基礎確認,include,動詞,含む,含む|含める,The price includes breakfast.,料金には朝食が含まれている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000125,125,Deck 1｜基礎確認,increase,動詞・名詞,増加する,増加する|増やす|増加,The population has increased rapidly.,人口は急速に増加した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000126,126,Deck 1｜基礎確認,indicate,動詞,示す,示す|指し示す|兆候を示す,The data indicate a clear change.,そのデータは明確な変化を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000127,127,Deck 1｜基礎確認,influence,動詞・名詞,影響を与える,影響を与える|影響|影響力,Parents strongly influence their children's behavior.,親は子どもの行動に強い影響を与える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000128,128,Deck 1｜基礎確認,introduce,動詞,紹介する,紹介する|導入する,The school introduced a new learning system.,その学校は新しい学習制度を導入した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000129,129,Deck 1｜基礎確認,involve,動詞,伴う,伴う|関与させる|巻き込む,The job involves working with children.,その仕事は子どもたちと働くことを伴う。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000130,130,Deck 1｜基礎確認,judge,動詞・名詞,判断する,判断する|裁く|審査する|裁判官,Do not judge people by their appearance.,外見で人を判断してはいけない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000131,131,Deck 1｜基礎確認,lack,動詞・名詞,欠いている,欠いている|不足|欠如,The area lacks clean drinking water.,その地域には清潔な飲み水が不足している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000132,132,Deck 1｜基礎確認,lead,動詞・名詞,導く,導く|率いる|〜につながる|先頭,Poor communication can lead to misunderstanding.,不十分な意思疎通は誤解につながることがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000133,133,Deck 1｜基礎確認,limit,動詞・名詞,制限する,制限する|限界|制限,We must limit the use of plastic.,私たちはプラスチックの使用を制限しなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000134,134,Deck 1｜基礎確認,manage,動詞,何とか成し遂げる,何とか成し遂げる|管理する|経営する,She managed to finish the work on time.,彼女は何とか時間どおりに作業を終えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000135,135,Deck 1｜基礎確認,matter,動詞・名詞,重要である,重要である|問題|事柄|物質,What matters most is your effort.,最も重要なのはあなたの努力だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000136,136,Deck 1｜基礎確認,mean,動詞・形容詞,意味する,意味する|意図する|平均の|意地悪な,What does this sentence mean?,この文はどういう意味ですか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000137,137,Deck 1｜基礎確認,mention,動詞・名詞,言及する,言及する|名前を挙げる|言及,She mentioned the problem in her report.,彼女は報告書でその問題に言及した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000138,138,Deck 1｜基礎確認,notice,動詞・名詞,気づく,気づく|掲示|通知,I noticed a small mistake in the document.,私は書類の小さな間違いに気づいた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000139,139,Deck 1｜基礎確認,occur,動詞,起こる,起こる|生じる|思い浮かぶ,The accident occurred early in the morning.,その事故は早朝に起こった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000140,140,Deck 1｜基礎確認,offer,動詞・名詞,提供する,提供する|申し出る|申し出,The university offers many online courses.,その大学は多くのオンライン講座を提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000141,141,Deck 1｜基礎確認,perform,動詞,行う,行う|演じる|機能する,The researchers performed several experiments.,研究者たちはいくつかの実験を行った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000142,142,Deck 1｜基礎確認,permit,動詞・名詞,許可する,許可する|許可証,The rules do not permit smoking here.,規則ではここでの喫煙を許可していない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000143,143,Deck 1｜基礎確認,prefer,動詞,より好む,より好む|〜の方を選ぶ,I prefer tea to coffee.,私はコーヒーより紅茶の方を好む。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000144,144,Deck 1｜基礎確認,prepare,動詞,準備する,準備する|用意する,We are preparing for the exam.,私たちは試験の準備をしている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000145,145,Deck 1｜基礎確認,prevent,動詞,防ぐ,防ぐ|妨げる,Regular exercise can help prevent disease.,定期的な運動は病気の予防に役立つ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000146,146,Deck 1｜基礎確認,produce,動詞・名詞,生産する,生産する|生み出す|農産物,This factory produces electric cars.,この工場は電気自動車を生産している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000147,147,Deck 1｜基礎確認,promise,動詞・名詞,約束する,約束する|約束|見込み,He promised to return the book.,彼はその本を返すと約束した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000148,148,Deck 1｜基礎確認,protect,動詞,守る,守る|保護する,Trees help protect the soil from erosion.,木々は土壌を侵食から守るのに役立つ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000149,149,Deck 1｜基礎確認,prove,動詞,証明する,証明する|〜だと分かる,The evidence proved that he was innocent.,その証拠は彼が無実であることを証明した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000150,150,Deck 1｜基礎確認,provide,動詞,提供する,提供する|供給する,The program provides students with free meals.,その制度は生徒に無料の食事を提供する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000151,151,Deck 1｜基礎確認,realize,動詞,気づく,気づく|理解する|実現する,I realized that I had left my phone at home.,私は携帯電話を家に置いてきたことに気づいた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000152,152,Deck 1｜基礎確認,receive,動詞,受け取る,受け取る|受ける|迎える,She received a letter from her friend.,彼女は友人から手紙を受け取った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000153,153,Deck 1｜基礎確認,recognize,動詞,認識する,認識する|見分ける|認める,I recognized him by his voice.,私は声で彼だと分かった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000154,154,Deck 1｜基礎確認,reduce,動詞,減らす,減らす|縮小する,We need to reduce energy use.,私たちはエネルギー使用量を減らす必要がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000155,155,Deck 1｜基礎確認,refer,動詞,言及する,言及する|参照する|示す,The word refers to a type of plant.,その語はある種類の植物を指す。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000156,156,Deck 1｜基礎確認,refuse,動詞,拒む,拒む|断る,She refused to answer the question.,彼女はその質問に答えることを拒んだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000157,157,Deck 1｜基礎確認,remain,動詞,〜のままである,〜のままである|残る,The cause of the accident remains unknown.,事故の原因は依然として不明だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000158,158,Deck 1｜基礎確認,remove,動詞,取り除く,取り除く|移動させる|解任する,Please remove your shoes before entering.,入る前に靴を脱いでください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000159,159,Deck 1｜基礎確認,replace,動詞,取り替える,取り替える|〜に取って代わる,Computers have replaced many old machines.,コンピューターは多くの古い機械に取って代わった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000160,160,Deck 1｜基礎確認,require,動詞,必要とする,必要とする|要求する,This job requires patience.,この仕事には忍耐が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000161,161,Deck 1｜基礎確認,respond,動詞,返答する,返答する|反応する,He did not respond to my message.,彼は私のメッセージに返答しなかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000162,162,Deck 1｜基礎確認,result,動詞・名詞,結果として生じる,結果として生じる|結果,The mistake resulted in a serious delay.,その間違いは深刻な遅れを招いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000163,163,Deck 1｜基礎確認,reveal,動詞,明らかにする,明らかにする|暴露する,The survey revealed a change in public opinion.,その調査は世論の変化を明らかにした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000164,164,Deck 1｜基礎確認,rise,動詞・名詞,上がる,上がる|昇る|増加する|上昇,Prices continued to rise.,物価は上がり続けた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000165,165,Deck 1｜基礎確認,select,動詞,選ぶ,選ぶ|選択する,The students were selected at random.,生徒たちは無作為に選ばれた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000166,166,Deck 1｜基礎確認,seem,動詞,〜のように見える,〜のように見える|〜と思われる,The idea seems reasonable.,その考えは妥当に思える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000167,167,Deck 1｜基礎確認,solve,動詞,解決する,解決する|解く,We must solve the problem together.,私たちは一緒にその問題を解決しなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000168,168,Deck 1｜基礎確認,suggest,動詞,提案する,提案する|示唆する|暗示する,The evidence suggests that the plan may work.,その証拠は計画がうまくいく可能性を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000169,169,Deck 1｜基礎確認,support,動詞・名詞,支える,支える|支持する|援助する|支持|支援,Many citizens supported the new policy.,多くの市民が新しい政策を支持した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000170,170,Deck 1｜基礎確認,suppose,動詞,〜だと思う,〜だと思う|仮定する,Suppose that the information is correct.,その情報が正しいと仮定しよう。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000171,171,Deck 1｜基礎確認,survive,動詞,生き残る,生き残る|切り抜ける,Few plants can survive in this climate.,この気候で生き残れる植物はほとんどない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000172,172,Deck 1｜基礎確認,tend,動詞,〜する傾向がある,〜する傾向がある|世話をする,People tend to avoid difficult decisions.,人は難しい決断を避ける傾向がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000173,173,Deck 1｜基礎確認,treat,動詞,扱う,扱う|治療する|もてなす,All students should be treated equally.,すべての生徒は平等に扱われるべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000174,174,Deck 1｜基礎確認,trust,動詞・名詞,信頼する,信頼する|信頼|信用,You can trust the information from this source.,この情報源の情報は信頼できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000175,175,Deck 1｜基礎確認,vary,動詞,異なる,異なる|変化する|変える,Prices vary from store to store.,価格は店によって異なる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000176,176,Deck 1｜基礎確認,wonder,動詞・名詞,〜だろうかと思う,〜だろうかと思う|不思議に思う|驚異,I wonder why the meeting was canceled.,なぜ会議が中止されたのだろうと思う。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000177,177,Deck 1｜基礎確認,adjust,動詞,調整する,調整する|適応する,You can adjust the height of the chair.,その椅子の高さは調整できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000178,178,Deck 1｜基礎確認,adopt,動詞,採用する,採用する|養子にする,The city adopted a new environmental policy.,その市は新しい環境政策を採用した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000179,179,Deck 1｜基礎確認,attend,動詞,出席する,出席する|通う|世話をする,More than one hundred people attended the lecture.,100人を超える人々が講演に出席した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000180,180,Deck 1｜基礎確認,attract,動詞,引きつける,引きつける|魅了する,The museum attracts many foreign visitors.,その博物館は多くの外国人観光客を引きつける。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000181,181,Deck 1｜基礎確認,combine,動詞,組み合わせる,組み合わせる|結合する,The method combines theory with practice.,その方法は理論と実践を組み合わせている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000182,182,Deck 1｜基礎確認,communicate,動詞,意思を伝える,意思を伝える|通信する,People communicate in many different ways.,人々は多くの異なる方法で意思を伝える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000183,183,Deck 1｜基礎確認,connect,動詞,つなぐ,つなぐ|関係づける|接続する,The bridge connects the island to the mainland.,その橋は島と本土をつないでいる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000184,184,Deck 1｜基礎確認,deliver,動詞,配達する,配達する|届ける|演説する,The package will be delivered tomorrow.,荷物は明日配達される。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000185,185,Deck 1｜基礎確認,demand,動詞・名詞,要求する,要求する|需要|要求,The workers demanded better conditions.,労働者たちはより良い条件を要求した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000186,186,Deck 1｜基礎確認,deny,動詞,否定する,否定する|拒む,He denied taking the money.,彼はその金を取ったことを否定した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000187,187,Deck 1｜基礎確認,disappear,動詞,姿を消す,姿を消す|消滅する,Many traditional customs are disappearing.,多くの伝統的な慣習が消えつつある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000188,188,Deck 1｜基礎確認,earn,動詞,稼ぐ,稼ぐ|得る|獲得する,She earns enough money to live independently.,彼女は自立して暮らすのに十分な金を稼いでいる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000189,189,Deck 1｜基礎確認,enable,動詞,可能にする,可能にする|〜できるようにする,The internet enables people to share information quickly.,インターネットによって人々は情報を素早く共有できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000190,190,Deck 1｜基礎確認,escape,動詞・名詞,逃げる,逃げる|免れる|脱出,The family escaped from the burning house.,その家族は燃えている家から逃げた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000191,191,Deck 1｜基礎確認,examine,動詞,調べる,調べる|診察する|検討する,The researchers examined the data carefully.,研究者たちはデータを注意深く調べた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000192,192,Deck 1｜基礎確認,exchange,動詞・名詞,交換する,交換する|両替する|交換,The students exchanged ideas after the lecture.,生徒たちは講演後に意見を交換した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000193,193,Deck 1｜基礎確認,expand,動詞,拡大する,拡大する|広げる,The company plans to expand its business abroad.,その会社は海外で事業を拡大する予定だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000194,194,Deck 1｜基礎確認,focus,動詞・名詞,集中する,集中する|焦点を合わせる|焦点,The report focuses on climate change.,その報告書は気候変動に焦点を当てている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000195,195,Deck 1｜基礎確認,form,動詞・名詞,形成する,形成する|結成する|形|形式,Small groups formed around the leaders.,指導者たちの周りに小さな集団が形成された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000196,196,Deck 1｜基礎確認,handle,動詞・名詞,対処する,対処する|扱う|取っ手,She handled the difficult situation calmly.,彼女はその難しい状況に冷静に対処した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000197,197,Deck 1｜基礎確認,ignore,動詞,無視する,無視する|気づかないふりをする,We cannot ignore the warning signs.,私たちは警告の兆候を無視できない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000198,198,Deck 1｜基礎確認,maintain,動詞,維持する,維持する|主張する|整備する,It is important to maintain a healthy balance.,健全なバランスを維持することが重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000199,199,Deck 1｜基礎確認,measure,動詞・名詞,測る,測る|評価する|措置|尺度,The device measures air temperature.,その装置は気温を測る。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000200,200,Deck 1｜基礎確認,obtain,動詞,得る,得る|入手する,You need permission to obtain the data.,そのデータを入手するには許可が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000201,201,Deck 1｜基礎確認,practice,動詞・名詞,練習する,練習する|実践する|練習|慣行,She practices speaking English every day.,彼女は毎日英語を話す練習をしている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000202,202,Deck 1｜基礎確認,reach,動詞・名詞,到達する,到達する|届く|連絡する|範囲,The temperature reached 35 degrees.,気温は35度に達した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000203,203,Deck 1｜基礎確認,record,動詞・名詞,記録する,記録する|録音する|記録,The study recorded changes over ten years.,その研究は10年間の変化を記録した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000204,204,Deck 1｜基礎確認,release,動詞・名詞,放出する,放出する|解放する|発表する|発売,The company released a new product.,その会社は新製品を発売した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000205,205,Deck 1｜基礎確認,represent,動詞,表す,表す|代表する,The red line represents population growth.,赤い線は人口増加を表している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000206,206,Deck 1｜基礎確認,search,動詞・名詞,捜す,捜す|検索する|捜索,They searched the area for the missing child.,彼らは行方不明の子どもを捜してその地域を調べた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000207,207,Deck 1｜基礎確認,serve,動詞,役立つ,役立つ|仕える|提供する|務める,This room serves as a library.,この部屋は図書室として使われている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000208,208,Deck 1｜基礎確認,spread,動詞・名詞,広がる,広がる|広げる|普及|広がり,The disease spread rapidly through the city.,その病気は市内に急速に広がった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000209,209,Deck 1｜基礎確認,suffer,動詞,苦しむ,苦しむ|被る,Many farmers suffered from the drought.,多くの農民が干ばつに苦しんだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000210,210,Deck 1｜基礎確認,supply,動詞・名詞,供給する,供給する|供給|備蓄,The river supplies water to the city.,その川は市に水を供給している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000211,211,Deck 1｜基礎確認,waste,動詞・名詞,無駄にする,無駄にする|廃棄物|浪費,Do not waste your time on meaningless arguments.,無意味な議論に時間を無駄にしてはいけない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000212,212,Deck 1｜基礎確認,ability,名詞,能力,能力|才能,She has the ability to solve complex problems.,彼女には複雑な問題を解決する能力がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000213,213,Deck 1｜基礎確認,action,名詞,行動,行動|措置|作用,Immediate action is necessary.,直ちに行動することが必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000214,214,Deck 1｜基礎確認,advantage,名詞,利点,利点|有利な点|優位,Online learning has several advantages.,オンライン学習にはいくつかの利点がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000215,215,Deck 1｜基礎確認,amount,名詞,量,量|金額,A large amount of water was wasted.,大量の水が無駄になった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000216,216,Deck 1｜基礎確認,area,名詞,地域,地域|区域|分野|面積,This area is famous for agriculture.,この地域は農業で知られている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000217,217,Deck 1｜基礎確認,article,名詞,記事,記事|論文|品物|冠詞,I read an article about climate change.,私は気候変動についての記事を読んだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000218,218,Deck 1｜基礎確認,attention,名詞,注意,注意|注目|関心,The problem requires immediate attention.,その問題には直ちに注意を向ける必要がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000219,219,Deck 1｜基礎確認,attitude,名詞,態度,態度|考え方,Her attitude toward work changed.,彼女の仕事に対する態度が変わった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000220,220,Deck 1｜基礎確認,audience,名詞,聴衆,聴衆|観客|読者,The speaker answered questions from the audience.,講演者は聴衆からの質問に答えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000221,221,Deck 1｜基礎確認,behavior,名詞,行動,行動|振る舞い,Children often copy adult behavior.,子どもはしばしば大人の行動をまねる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000222,222,Deck 1｜基礎確認,chance,名詞,機会,機会|可能性|偶然,There is a good chance of rain tomorrow.,明日は雨が降る可能性が高い。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000223,223,Deck 1｜基礎確認,choice,名詞,選択,選択|選択肢,You have a choice between two plans.,あなたには2つの計画から選ぶ選択肢がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000224,224,Deck 1｜基礎確認,condition,名詞,状態,状態|条件|状況,The patient is in a stable condition.,その患者の状態は安定している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000225,225,Deck 1｜基礎確認,consequence,名詞,結果,結果|重大な影響,Every decision has consequences.,あらゆる決定には結果が伴う。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000226,226,Deck 1｜基礎確認,contact,名詞・動詞,接触,接触|連絡|知り合い|連絡する|接触する,Please keep in contact with us.,私たちと連絡を取り続けてください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000227,227,Deck 1｜基礎確認,culture,名詞,文化,文化|教養|培養,Language is an important part of culture.,言語は文化の重要な一部だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000228,228,Deck 1｜基礎確認,degree,名詞,程度,程度|度|学位,The degree of change was unexpected.,変化の程度は予想外だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000229,229,Deck 1｜基礎確認,development,名詞,発展,発展|開発|成長,Economic development changed the region.,経済発展がその地域を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000230,230,Deck 1｜基礎確認,difference,名詞,違い,違い|差|相違,There is a clear difference between the two methods.,2つの方法には明確な違いがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000231,231,Deck 1｜基礎確認,difficulty,名詞,困難,困難|難しさ,We had difficulty finding the entrance.,私たちは入口を見つけるのに苦労した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000232,232,Deck 1｜基礎確認,direction,名詞,方向,方向|指示|方針,The wind changed direction.,風向きが変わった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000233,233,Deck 1｜基礎確認,effect,名詞,影響,影響|効果|結果,The policy had a positive effect on employment.,その政策は雇用に良い影響を与えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000234,234,Deck 1｜基礎確認,effort,名詞,努力,努力|取り組み,Success requires time and effort.,成功には時間と努力が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000235,235,Deck 1｜基礎確認,environment,名詞,環境,環境|周囲,We must protect the natural environment.,私たちは自然環境を守らなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000236,236,Deck 1｜基礎確認,evidence,名詞,証拠,証拠|根拠,There is little evidence to support the claim.,その主張を裏づける証拠はほとんどない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000237,237,Deck 1｜基礎確認,example,名詞,例,例|手本,This case is a good example of social change.,この事例は社会変化のよい例だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000238,238,Deck 1｜基礎確認,fact,名詞,事実,事実|現実,We must distinguish fact from opinion.,私たちは事実と意見を区別しなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000239,239,Deck 1｜基礎確認,feature,名詞,特徴,特徴|機能|顔立ち,The main feature of the system is its simplicity.,その制度の主な特徴は単純さだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000240,240,Deck 1｜基礎確認,government,名詞,政府,政府|統治,The government announced a new policy.,政府は新しい政策を発表した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000241,241,Deck 1｜基礎確認,growth,名詞,成長,成長|増加|発展,The city experienced rapid population growth.,その都市では人口が急速に増加した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000242,242,Deck 1｜基礎確認,habit,名詞,習慣,習慣|癖,Reading every day is a useful habit.,毎日読むことは役立つ習慣だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000243,243,Deck 1｜基礎確認,harm,名詞・動詞,害,害|損害|害を与える|傷つける,The chemicals may cause harm to wildlife.,その化学物質は野生生物に害を与える可能性がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000244,244,Deck 1｜基礎確認,health,名詞,健康,健康|健康状態,Sleep is essential for good health.,睡眠は健康に不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000245,245,Deck 1｜基礎確認,idea,名詞,考え,考え|発想|概念,She proposed a new idea.,彼女は新しい考えを提案した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000246,246,Deck 1｜基礎確認,individual,名詞・形容詞,個人,個人|個体|個々の|個人の,The rights of each individual must be respected.,一人ひとりの権利は尊重されなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000247,247,Deck 1｜基礎確認,information,名詞,情報,情報|知識,The website provides useful information.,そのウェブサイトは有用な情報を提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000248,248,Deck 1｜基礎確認,knowledge,名詞,知識,知識|理解,Experience gives us practical knowledge.,経験は私たちに実践的な知識を与える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000249,249,Deck 1｜基礎確認,language,名詞,言語,言語|言葉遣い,Language changes over time.,言語は時間とともに変化する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000250,250,Deck 1｜基礎確認,method,名詞,方法,方法|方式,This method is simple and effective.,この方法は単純で効果的だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000251,251,Deck 1｜基礎確認,nature,名詞,自然,自然|性質|本質,The book examines the nature of human memory.,その本は人間の記憶の本質を検討している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000252,252,Deck 1｜基礎確認,opportunity,名詞,機会,機会|好機,The program gives students an opportunity to study abroad.,その制度は生徒に留学する機会を与える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000253,253,Deck 1｜基礎確認,opinion,名詞,意見,意見|見解,People have different opinions about the issue.,その問題について人々は異なる意見を持っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000254,254,Deck 1｜基礎確認,population,名詞,人口,人口|個体群,The country's population is decreasing.,その国の人口は減少している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000255,255,Deck 1｜基礎確認,purpose,名詞,目的,目的|用途|意図,The main purpose of the study is to compare the two systems.,その研究の主な目的は2つの制度を比較することだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000256,256,Deck 1｜基礎確認,quality,名詞,質,質|品質|特質,The quality of the water has improved.,水質が改善した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000257,257,Deck 1｜基礎確認,reason,名詞,理由,理由|理性|根拠,There are several reasons for the change.,その変化にはいくつかの理由がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000258,258,Deck 1｜基礎確認,relationship,名詞,関係,関係|人間関係,The study examines the relationship between diet and health.,その研究は食事と健康の関係を調べている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000259,259,Deck 1｜基礎確認,research,名詞・動詞,研究,研究|調査|研究する|調査する,Recent research supports this theory.,最近の研究はこの理論を支持している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000260,260,Deck 1｜基礎確認,role,名詞,役割,役割|役柄,Education plays an important role in society.,教育は社会で重要な役割を果たす。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000261,261,Deck 1｜基礎確認,society,名詞,社会,社会|協会,Technology has changed modern society.,技術は現代社会を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000262,262,Deck 1｜基礎確認,source,名詞,源,源|情報源|出典,Always check the source of the information.,情報の出典を必ず確認しなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000263,263,Deck 1｜基礎確認,situation,名詞,状況,状況|立場,The situation improved after several weeks.,数週間後に状況は改善した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000264,264,Deck 1｜基礎確認,solution,名詞,解決策,解決策|解答|溶液,We need a practical solution to the problem.,私たちにはその問題への実用的な解決策が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000265,265,Deck 1｜基礎確認,subject,名詞,主題,主題|科目|対象|臣民,History was my favorite subject at school.,歴史は学校で私の好きな科目だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000266,266,Deck 1｜基礎確認,success,名詞,成功,成功|成功したもの,Careful planning was the key to success.,入念な計画が成功の鍵だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000267,267,Deck 1｜基礎確認,technology,名詞,技術,技術|科学技術,New technology has changed the way we work.,新しい技術が私たちの働き方を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000268,268,Deck 1｜基礎確認,value,名詞・動詞,価値,価値|価値観|価格|重んじる|評価する,The experience was of great value to me.,その経験は私にとって非常に価値があった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000269,269,Deck 1｜基礎確認,view,名詞・動詞,見解,見解|眺め|視野|見る|〜と見なす,The two experts expressed different views.,2人の専門家は異なる見解を示した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000270,270,Deck 1｜基礎確認,wealth,名詞,富,富|豊かさ,The country's wealth was unevenly distributed.,その国の富は不均等に分配されていた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000271,271,Deck 1｜基礎確認,access,名詞・動詞,利用できること,利用できること|利用する機会|利用する権利|接近|入口|アクセスする,Many people still lack access to clean water.,今も多くの人が清潔な水を利用できない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000272,272,Deck 1｜基礎確認,account,名詞・動詞,説明,説明|口座|報告|考慮|説明する|占める,The witness gave a detailed account of the accident.,目撃者は事故について詳しい説明をした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000273,273,Deck 1｜基礎確認,achievement,名詞,達成,達成|業績|成果,Winning the award was a major achievement.,その賞を取ったことは大きな成果だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000274,274,Deck 1｜基礎確認,activity,名詞,活動,活動|行動|活発さ,Human activity affects the environment.,人間の活動は環境に影響を与える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000275,275,Deck 1｜基礎確認,advice,名詞,助言,助言|忠告,She gave me useful advice.,彼女は私に役立つ助言をくれた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000276,276,Deck 1｜基礎確認,age,名詞,年齢,年齢|時代,Children develop language skills at an early age.,子どもは幼い年齢で言語能力を発達させる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000277,277,Deck 1｜基礎確認,aim,名詞・動詞,目的,目的|狙い|目指す|狙う,The main aim of the program is to reduce poverty.,その計画の主な目的は貧困を減らすことだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000278,278,Deck 1｜基礎確認,alternative,名詞・形容詞,代わりとなるもの,代わりとなるもの|選択肢|代替の,We need an alternative to fossil fuels.,私たちには化石燃料に代わるものが必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000279,279,Deck 1｜基礎確認,argument,名詞,主張,主張|議論|口論,The author supports her argument with evidence.,著者は証拠によって自分の主張を裏づけている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000280,280,Deck 1｜基礎確認,arrangement,名詞,手配,手配|配置|取り決め,We made arrangements for the trip.,私たちは旅行の手配をした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000281,281,Deck 1｜基礎確認,aspect,名詞,側面,側面|観点,The book covers every aspect of the issue.,その本は問題のあらゆる側面を扱っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000282,282,Deck 1｜基礎確認,balance,名詞・動詞,均衡,均衡|残高|つり合い|均衡を保つ|つり合わせる,It is important to keep a balance between work and rest.,仕事と休息の均衡を保つことが重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000283,283,Deck 1｜基礎確認,basis,名詞,基礎,基礎|根拠|基準,Trust is the basis of a good relationship.,信頼は良い関係の基礎だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000284,284,Deck 1｜基礎確認,benefit,名詞・動詞,利益,利益|恩恵|利点|利益を得る|恩恵を受ける,Exercise has many health benefits.,運動には健康上の多くの利点がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000285,285,Deck 1｜基礎確認,case,名詞,場合,場合|事例|事件|容器,"In this case, a different method is needed.",この場合は別の方法が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000286,286,Deck 1｜基礎確認,character,名詞,性格,性格|登場人物|文字|特徴,The main character changes greatly during the story.,主人公は物語の中で大きく変化する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000287,287,Deck 1｜基礎確認,community,名詞,地域社会,地域社会|共同体,The new library serves the whole community.,新しい図書館は地域社会全体に役立っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000288,288,Deck 1｜基礎確認,competition,名詞,競争,競争|競技会,Competition between companies can lower prices.,企業間の競争は価格を下げることがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000289,289,Deck 1｜基礎確認,conclusion,名詞,結論,結論|終結,The evidence led us to a different conclusion.,その証拠によって私たちは別の結論に至った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000290,290,Deck 1｜基礎確認,connection,名詞,つながり,つながり|関係|接続,There is a close connection between sleep and memory.,睡眠と記憶には密接な関係がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000291,291,Deck 1｜基礎確認,context,名詞,文脈,文脈|状況|背景,The meaning of the word depends on the context.,その語の意味は文脈によって決まる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000292,292,Deck 1｜基礎確認,decision,名詞,決定,決定|決断,She made a difficult decision.,彼女は難しい決断を下した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000293,293,Deck 1｜基礎確認,detail,名詞,詳細,詳細|細部,The report explains the process in detail.,その報告書は過程を詳しく説明している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000294,294,Deck 1｜基礎確認,event,名詞,出来事,出来事|行事|種目,The event changed the course of history.,その出来事は歴史の流れを変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000295,295,Deck 1｜基礎確認,factor,名詞,要因,要因|因数,Cost is an important factor in the decision.,費用はその決定における重要な要因だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000296,296,Deck 1｜基礎確認,goal,名詞,目標,目標|得点,Our goal is to reduce waste by half.,私たちの目標は廃棄物を半分に減らすことだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000297,297,Deck 1｜基礎確認,history,名詞,歴史,歴史|経歴,The region has a long and complex history.,その地域には長く複雑な歴史がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000298,298,Deck 1｜基礎確認,human,名詞・形容詞,人間,人間|人間の,The disease can spread from animals to humans.,その病気は動物から人間へ広がることがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000299,299,Deck 1｜基礎確認,impact,名詞・動詞,影響,影響|衝撃|影響を与える,The internet has had a major impact on education.,インターネットは教育に大きな影響を与えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000300,300,Deck 1｜基礎確認,importance,名詞,重要性,重要性,The report emphasizes the importance of early action.,その報告書は早期の行動の重要性を強調している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000301,301,Deck 1｜基礎確認,improvement,名詞,改善,改善|向上,There has been a clear improvement in air quality.,大気の質に明らかな改善が見られた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000302,302,Deck 1｜基礎確認,industry,名詞,産業,産業|工業|勤勉,Tourism is an important industry in the region.,観光はその地域の重要な産業だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000303,303,Deck 1｜基礎確認,interest,名詞・動詞,関心,関心|興味|利子|利益|興味を持たせる,She has a strong interest in politics.,彼女は政治に強い関心を持っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000304,304,Deck 1｜基礎確認,issue,名詞・動詞,問題,問題|論点|発行|発行する|発表する|支給する,Climate change is a global issue.,気候変動は世界的な問題だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000305,305,Deck 1｜基礎確認,level,名詞,水準,水準|段階|高さ,The level of unemployment has fallen.,失業の水準は低下した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000306,306,Deck 1｜基礎確認,need,名詞,必要,必要|需要,There is an urgent need for more housing.,より多くの住宅が緊急に必要とされている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000307,307,Deck 1｜基礎確認,object,名詞・動詞,物体,物体|対象|目的|反対する|異議を唱える,The museum contains many ancient objects.,その博物館には多くの古代の物品がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000308,308,Deck 1｜基礎確認,option,名詞,選択肢,選択肢|選択権,Working from home is not an option for everyone.,在宅勤務は誰にとっても選べる選択肢ではない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000309,309,Deck 1｜基礎確認,order,名詞・動詞,順序,順序|命令|注文|秩序|命じる|注文する,Put the events in chronological order.,出来事を年代順に並べなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000310,310,Deck 1｜基礎確認,organization,名詞,組織,組織|団体|組織化,The organization provides aid to refugees.,その団体は難民に援助を提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000311,311,Deck 1｜基礎確認,part,名詞,部分,部分|役割|部品,Only part of the report was published.,その報告書の一部だけが公表された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000312,312,Deck 1｜基礎確認,pattern,名詞,型,型|模様|傾向|規則性,The data show a clear pattern.,そのデータには明確な傾向が見られる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000313,313,Deck 1｜基礎確認,period,名詞,期間,期間|時代|授業時間,The economy grew rapidly during this period.,この期間に経済は急速に成長した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000314,314,Deck 1｜基礎確認,point,名詞・動詞,点,点|要点|目的|時点|指し示す|向ける,The main point of the article is clear.,その記事の要点は明確だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000315,315,Deck 1｜基礎確認,policy,名詞,政策,政策|方針,The government changed its energy policy.,政府はエネルギー政策を変更した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000316,316,Deck 1｜基礎確認,possibility,名詞,可能性,可能性|実現可能なこと,We cannot ignore the possibility of failure.,私たちは失敗の可能性を無視できない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000317,317,Deck 1｜基礎確認,position,名詞,位置,位置|立場|地位|職,The two groups have different positions on the issue.,2つの集団はその問題について異なる立場を取っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000318,318,Deck 1｜基礎確認,pressure,名詞,圧力,圧力|重圧|気圧,The government faced pressure to change the law.,政府は法律を変えるよう圧力を受けた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000319,319,Deck 1｜基礎確認,problem,名詞,問題,問題|難題,The city is trying to solve its traffic problems.,その都市は交通問題を解決しようとしている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000320,320,Deck 1｜基礎確認,process,名詞・動詞,過程,過程|手順|方法|処理する,Learning a language is a long process.,言語を学ぶことは長い過程だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000321,321,Deck 1｜基礎確認,product,名詞,製品,製品|産物|結果,The company introduced a new product.,その会社は新製品を導入した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000322,322,Deck 1｜基礎確認,question,名詞・動詞,質問,質問|問題|疑問|質問する|疑問を呈する,The study raises an important question.,その研究は重要な問題を提起している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000323,323,Deck 1｜基礎確認,relation,名詞,関係,関係|関連|親族,The report examines the relation between income and health.,その報告書は所得と健康の関係を調べている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000324,324,Deck 1｜基礎確認,resource,名詞,資源,資源|手段|資料,Water is a limited natural resource.,水は限りある天然資源だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000325,325,Deck 1｜基礎確認,response,名詞,反応,反応|返答|対応,The policy was introduced in response to public concern.,その政策は国民の懸念に応えて導入された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000326,326,Deck 1｜基礎確認,risk,名詞,危険,危険|危険性,Smoking increases the risk of disease.,喫煙は病気の危険性を高める。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000327,327,Deck 1｜基礎確認,rule,名詞,規則,規則|支配|原則,Everyone must follow the same rules.,全員が同じ規則に従わなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000328,328,Deck 1｜基礎確認,service,名詞,サービス,サービス|業務|公共事業,The city provides free bus services for older people.,その市は高齢者に無料のバスサービスを提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000329,329,Deck 1｜基礎確認,state,名詞・動詞,状態,状態|国家|州|述べる|明記する,The building was in a poor state.,その建物はひどい状態だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000330,330,Deck 1｜基礎確認,system,名詞,制度,制度|体系|仕組み,The country introduced a new voting system.,その国は新しい投票制度を導入した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000331,331,Deck 1｜基礎確認,task,名詞,課題,課題|仕事,Completing the task took several hours.,その課題を終えるのに数時間かかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000332,332,Deck 1｜基礎確認,tradition,名詞,伝統,伝統|慣習,The festival is an important local tradition.,その祭りは重要な地域の伝統だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000333,333,Deck 1｜基礎確認,variety,名詞,多様性,多様性|種類|さまざまなもの,The course offers a wide variety of subjects.,その講座では多種多様な科目が提供される。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000334,334,Deck 1｜基礎確認,agreement,名詞,合意,合意|協定|一致,The two countries reached an agreement.,両国は合意に達した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000335,335,Deck 1｜基礎確認,analysis,名詞,分析,分析|解析,The analysis shows a decline in sales.,その分析は売上の減少を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000336,336,Deck 1｜基礎確認,change,名詞・動詞,変化,変化|変更|おつり|変わる|変える,Social change often occurs gradually.,社会変化はしばしば徐々に起こる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000337,337,Deck 1｜基礎確認,communication,名詞,意思疎通,意思疎通|通信|伝達,Good communication prevents misunderstandings.,良好な意思疎通は誤解を防ぐ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000338,338,Deck 1｜基礎確認,comparison,名詞,比較,比較|類似,The chart allows a clear comparison of the two groups.,その図表によって2つの集団を明確に比較できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000339,339,Deck 1｜基礎確認,cost,名詞・動詞,費用,費用|代償|費用がかかる|犠牲にする,The cost of living has increased.,生活費が上昇した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000340,340,Deck 1｜基礎確認,definition,名詞,定義,定義|明確さ,The dictionary gives a simple definition of the term.,その辞書は用語の簡潔な定義を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000341,341,Deck 1｜基礎確認,description,名詞,説明,説明|描写,The witness gave a detailed description of the man.,目撃者はその男性を詳しく説明した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000342,342,Deck 1｜基礎確認,discovery,名詞,発見,発見|発見物,The discovery changed our understanding of history.,その発見は歴史に対する私たちの理解を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000343,343,Deck 1｜基礎確認,discussion,名詞,議論,議論|話し合い,The proposal led to a long discussion.,その提案をめぐって長い議論が行われた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000344,344,Deck 1｜基礎確認,education,名詞,教育,教育|教養,Education can expand people's opportunities.,教育は人々の機会を広げることができる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000345,345,Deck 1｜基礎確認,employment,名詞,雇用,雇用|仕事,The policy created new employment in rural areas.,その政策は農村部に新しい雇用を生み出した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000346,346,Deck 1｜基礎確認,energy,名詞,エネルギー,エネルギー|活力,The country is investing in renewable energy.,その国は再生可能エネルギーに投資している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000347,347,Deck 1｜基礎確認,existence,名詞,存在,存在|生存,Scientists questioned the existence of the species.,科学者たちはその種の存在に疑問を呈した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000348,348,Deck 1｜基礎確認,expectation,名詞,予想,予想|期待,The results were below our expectations.,結果は私たちの予想を下回った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000349,349,Deck 1｜基礎確認,expression,名詞,表現,表現|表情|言い回し,Freedom of expression is a basic right.,表現の自由は基本的な権利だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000350,350,Deck 1｜基礎確認,failure,名詞,失敗,失敗|不履行|故障,The experiment ended in failure.,その実験は失敗に終わった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000351,351,Deck 1｜基礎確認,freedom,名詞,自由,自由|免除,People fought for political freedom.,人々は政治的自由を求めて戦った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000352,352,Deck 1｜基礎確認,future,名詞・形容詞,未来,未来|将来|将来の,We must consider the needs of future generations.,私たちは将来の世代の必要を考慮しなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000353,353,Deck 1｜基礎確認,independence,名詞,独立,独立|自立,The country gained independence in 1960.,その国は1960年に独立を獲得した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000354,354,Deck 1｜基礎確認,introduction,名詞,導入,導入|紹介|序論,The introduction of electricity changed daily life.,電気の導入は日常生活を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000355,355,Deck 1｜基礎確認,judgment,名詞,判断,判断|判決|審判,Good judgment comes from experience.,適切な判断は経験から生まれる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000356,356,Deck 1｜基礎確認,management,名詞,管理,管理|経営|経営陣,Better water management is necessary.,より良い水資源管理が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000357,357,Deck 1｜基礎確認,meaning,名詞,意味,意味|意義,The word has several different meanings.,その単語にはいくつかの異なる意味がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000358,358,Deck 1｜基礎確認,measurement,名詞,測定,測定|寸法|尺度,Accurate measurement is essential in science.,科学では正確な測定が不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000359,359,Deck 1｜基礎確認,memory,名詞,記憶,記憶|思い出|記憶力,Sleep plays an important role in memory.,睡眠は記憶に重要な役割を果たす。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000360,360,Deck 1｜基礎確認,performance,名詞,成果,成果|実績|演技|性能,The team's performance improved greatly.,チームの成績は大きく向上した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000361,361,Deck 1｜基礎確認,permission,名詞,許可,許可|承認,You need permission to use the photograph.,その写真を使うには許可が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000362,362,Deck 1｜基礎確認,preference,名詞,好み,好み|優先,People's food preferences change over time.,人々の食べ物の好みは時間とともに変わる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000363,363,Deck 1｜基礎確認,preparation,名詞,準備,準備|調製,Careful preparation is the key to success.,入念な準備が成功の鍵だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000364,364,Deck 1｜基礎確認,prevention,名詞,予防,予防|防止,Education is important for disease prevention.,教育は病気の予防に重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000365,365,Deck 1｜基礎確認,production,名詞,生産,生産|製作|上演,Food production increased rapidly.,食料生産は急速に増加した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000366,366,Deck 1｜基礎確認,protection,名詞,保護,保護|防御,The law provides protection for workers.,その法律は労働者を保護する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000367,367,Deck 1｜基礎確認,reduction,名詞,減少,減少|削減|割引,The policy led to a reduction in waste.,その政策は廃棄物の削減につながった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000368,368,Deck 1｜基礎確認,reference,名詞,参照,参照|言及|参考文献|推薦状,The report makes no reference to cost.,その報告書は費用にまったく言及していない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000369,369,Deck 1｜基礎確認,refusal,名詞,拒否,拒否|辞退,His refusal to cooperate caused a delay.,彼が協力を拒んだため遅れが生じた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000370,370,Deck 1｜基礎確認,replacement,名詞,代わりのもの,代わりのもの|交換|後任,We need to find a replacement for the old machine.,古い機械の代わりとなるものを見つける必要がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000371,371,Deck 1｜基礎確認,requirement,名詞,必要条件,必要条件|要件|要求,English is a requirement for this course.,英語はこの講座の履修要件だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000372,372,Deck 1｜基礎確認,selection,名詞,選択,選択|選抜|品ぞろえ,The store has a wide selection of books.,その店には幅広い本の品ぞろえがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000373,373,Deck 1｜基礎確認,suggestion,名詞,提案,提案|示唆,Thank you for your helpful suggestion.,役立つ提案をありがとうございます。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000374,374,Deck 1｜基礎確認,survival,名詞,生存,生存|存続,Clean water is essential for human survival.,清潔な水は人間の生存に不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000375,375,Deck 1｜基礎確認,treatment,名詞,扱い,扱い|治療|処理,The patient received immediate treatment.,その患者は直ちに治療を受けた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000376,376,Deck 1｜基礎確認,variation,名詞,変化,変化|差異|変種,There is considerable variation in regional customs.,地域の慣習にはかなりの違いがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000377,377,Deck 1｜基礎確認,available,形容詞,利用できる,利用できる|入手できる|手が空いている,The information is available online.,その情報はオンラインで利用できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000378,378,Deck 1｜基礎確認,aware,形容詞,気づいている,気づいている|知っている,Many people are not aware of the problem.,多くの人はその問題に気づいていない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000379,379,Deck 1｜基礎確認,basic,形容詞,基本的な,基本的な|基礎的な|最低限の,The course teaches basic research skills.,その講座では基本的な研究技能を教える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000380,380,Deck 1｜基礎確認,certain,形容詞・代名詞,確かな,確かな|ある特定の|一定の,I am certain that the information is correct.,その情報が正しいと私は確信している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000381,381,Deck 1｜基礎確認,common,形容詞,一般的な,一般的な|共通の|よくある,This mistake is common among beginners.,この間違いは初心者によく見られる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000382,382,Deck 1｜基礎確認,complete,形容詞・動詞,完全な,完全な|全部そろった|完成させる,We need a complete list of the participants.,私たちには参加者の完全な一覧が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000383,383,Deck 1｜基礎確認,complex,形容詞,複雑な,複雑な|複合的な,The causes of the conflict are complex.,その紛争の原因は複雑だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000384,384,Deck 1｜基礎確認,concerned,形容詞,心配している,心配している|関係している,Parents are concerned about online safety.,親たちはオンライン上の安全を心配している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000385,385,Deck 1｜基礎確認,convenient,形容詞,便利な,便利な|都合のよい,Online banking is convenient for many people.,オンライン銀行は多くの人にとって便利だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000386,386,Deck 1｜基礎確認,correct,形容詞・動詞,正しい,正しい|訂正する,Choose the correct answer.,正しい答えを選びなさい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000387,387,Deck 1｜基礎確認,dangerous,形容詞,危険な,危険な,It is dangerous to drive in heavy snow.,大雪の中で運転するのは危険だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000388,388,Deck 1｜基礎確認,different,形容詞,異なる,異なる|別の|さまざまな,The two countries have different political systems.,その2か国は異なる政治制度を持っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000389,389,Deck 1｜基礎確認,difficult,形容詞,難しい,難しい|困難な,It is difficult to predict the future.,未来を予測するのは難しい。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000390,390,Deck 1｜基礎確認,effective,形容詞,効果的な,効果的な|有効な,The new method proved highly effective.,その新しい方法は非常に効果的だと分かった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000391,391,Deck 1｜基礎確認,entire,形容詞,全体の,全体の|全部の,The entire village was destroyed by the fire.,村全体が火事で破壊された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000392,392,Deck 1｜基礎確認,equal,形容詞・名詞・動詞,等しい,等しい|平等な|同等のもの,All people should have equal opportunities.,すべての人が平等な機会を持つべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000393,393,Deck 1｜基礎確認,essential,形容詞,不可欠な,不可欠な|本質的な,Water is essential for life.,水は生命に不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000394,394,Deck 1｜基礎確認,familiar,形容詞,よく知っている,よく知っている|見慣れた,Are you familiar with this theory?,この理論をよく知っていますか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000395,395,Deck 1｜基礎確認,general,形容詞,一般的な,一般的な|全体的な|概略の,The report gives a general overview of the problem.,その報告書は問題の全体的な概要を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000396,396,Deck 1｜基礎確認,harmful,形容詞,有害な,有害な|害を与える,Air pollution is harmful to human health.,大気汚染は人間の健康に有害だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000397,397,Deck 1｜基礎確認,independent,形容詞,独立した,独立した|自立した|無関係の,The country became independent in the twentieth century.,その国は20世紀に独立した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000398,398,Deck 1｜基礎確認,local,形容詞,地域の,地域の|地元の|局所的な,The project created jobs for local people.,その事業は地元の人々に雇用を生み出した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000399,399,Deck 1｜基礎確認,main,形容詞,主な,主な|主要な,What is the main cause of the problem?,その問題の主な原因は何ですか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000400,400,Deck 1｜基礎確認,major,形容詞・名詞,主要な,主要な|大きな|専攻,Climate change is a major global issue.,気候変動は主要な世界的問題だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000401,401,Deck 1｜基礎確認,necessary,形容詞,必要な,必要な|必然的な,Further research is necessary.,さらなる研究が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000402,402,Deck 1｜基礎確認,normal,形容詞・名詞,普通の,普通の|正常な|標準,The system returned to normal.,その制度は正常な状態に戻った。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000403,403,Deck 1｜基礎確認,obvious,形容詞,明らかな,明らかな|分かりきった,The answer may seem obvious.,その答えは明らかに思えるかもしれない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000404,404,Deck 1｜基礎確認,ordinary,形容詞,普通の,普通の|平凡な,The invention changed the lives of ordinary people.,その発明は普通の人々の生活を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000405,405,Deck 1｜基礎確認,particular,形容詞,特定の,特定の|特別な|好みがうるさい,The rule applies to this particular case.,その規則はこの特定の事例に当てはまる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000406,406,Deck 1｜基礎確認,personal,形容詞,個人の,個人の|私的な|本人の,The survey asks about personal experience.,その調査は個人的な経験について尋ねている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000407,407,Deck 1｜基礎確認,physical,形容詞,身体の,身体の|物理的な|物質的な,Regular exercise improves physical health.,定期的な運動は身体の健康を改善する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000408,408,Deck 1｜基礎確認,possible,形容詞,可能な,可能な|あり得る,We considered every possible solution.,私たちは可能な解決策をすべて検討した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000409,409,Deck 1｜基礎確認,practical,形容詞,実用的な,実用的な|現実的な|実践的な,"We need a practical plan, not just an idea.",単なる考えではなく、実用的な計画が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000410,410,Deck 1｜基礎確認,present,形容詞・名詞・動詞,現在の,現在の|出席して|現在|提示する,The present situation cannot continue.,現在の状況を続けることはできない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000411,411,Deck 1｜基礎確認,private,形容詞,私的な,私的な|民間の|非公開の,The information should remain private.,その情報は非公開のままにすべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000412,412,Deck 1｜基礎確認,public,形容詞・名詞,公の,公の|公共の|国民,The museum is open to the public.,その博物館は一般公開されている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000413,413,Deck 1｜基礎確認,recent,形容詞,最近の,最近の|近ごろの,Recent studies have produced similar results.,最近の研究でも同様の結果が出ている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000414,414,Deck 1｜基礎確認,responsible,形容詞,責任がある,責任がある|担当している|原因である,Who is responsible for this decision?,この決定に責任があるのは誰ですか。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000415,415,Deck 1｜基礎確認,serious,形容詞,深刻な,深刻な|真剣な|重大な,Air pollution is a serious problem.,大気汚染は深刻な問題だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000416,416,Deck 1｜基礎確認,similar,形容詞,似ている,似ている|同様の,The two languages have similar structures.,その2つの言語は似た構造を持っている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000417,417,Deck 1｜基礎確認,simple,形容詞,単純な,単純な|簡単な|質素な,There is no simple solution to the problem.,その問題に単純な解決策はない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000418,418,Deck 1｜基礎確認,social,形容詞,社会の,社会の|社交的な,The policy aims to reduce social inequality.,その政策は社会的不平等を減らすことを目指している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000419,419,Deck 1｜基礎確認,specific,形容詞,具体的な,具体的な|特定の|固有の,Please give a specific example.,具体的な例を挙げてください。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000420,420,Deck 1｜基礎確認,successful,形容詞,成功した,成功した|うまくいった,The campaign was highly successful.,その運動は大きな成功を収めた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000421,421,Deck 1｜基礎確認,traditional,形容詞,伝統的な,伝統的な|従来の,Traditional farming methods are still used.,伝統的な農法が今も使われている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000422,422,Deck 1｜基礎確認,useful,形容詞,役に立つ,役に立つ|有用な,The chart provides useful information.,その図表は有用な情報を示している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000423,423,Deck 1｜基礎確認,various,形容詞,さまざまな,さまざまな|いろいろな,The problem has various causes.,その問題にはさまざまな原因がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000424,424,Deck 1｜基礎確認,willing,形容詞,進んで〜する,進んで〜する|〜する気がある,She is willing to help us.,彼女は進んで私たちを助けてくれる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000425,425,Deck 1｜基礎確認,actual,形容詞,実際の,実際の|現実の,The actual cost was higher than expected.,実際の費用は予想より高かった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000426,426,Deck 1｜基礎確認,additional,形容詞,追加の,追加の|さらなる,Additional information is available online.,追加情報はオンラインで入手できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000427,427,Deck 1｜基礎確認,ancient,形容詞,古代の,古代の|非常に古い,The city contains many ancient buildings.,その都市には多くの古代建築物がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000428,428,Deck 1｜基礎確認,anxious,形容詞,心配して,心配して|切望して,Many students feel anxious before exams.,多くの生徒が試験前に不安を感じる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000429,429,Deck 1｜基礎確認,appropriate,形容詞,適切な,適切な|ふさわしい,We must choose an appropriate method.,私たちは適切な方法を選ばなければならない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000430,430,Deck 1｜基礎確認,average,形容詞・名詞,平均の,平均の|平均|普通の,The average temperature has risen.,平均気温が上昇した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000431,431,Deck 1｜基礎確認,brief,形容詞,短い,短い|簡潔な,The speaker gave a brief explanation.,講演者は簡潔な説明をした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000432,432,Deck 1｜基礎確認,broad,形容詞,幅広い,幅広い|広い|大まかな,The course provides a broad knowledge of history.,その講座では歴史について幅広い知識を得られる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000433,433,Deck 1｜基礎確認,capable,形容詞,能力がある,能力がある|〜できる,The device is capable of measuring small changes.,その装置は小さな変化を測定できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000434,434,Deck 1｜基礎確認,careful,形容詞,注意深い,注意深い|入念な,A careful analysis is required.,入念な分析が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000435,435,Deck 1｜基礎確認,central,形容詞,中心的な,中心的な|中央の,Trust is central to a healthy relationship.,信頼は健全な関係の中心となるものだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000436,436,Deck 1｜基礎確認,confident,形容詞,自信がある,自信がある|確信している,She is confident that the plan will succeed.,彼女は計画が成功すると確信している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000437,437,Deck 1｜基礎確認,cultural,形容詞,文化的な,文化的な|文化の,The region has a rich cultural tradition.,その地域には豊かな文化的伝統がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000438,438,Deck 1｜基礎確認,current,形容詞・名詞,現在の,現在の|流通している|流れ,The current system needs improvement.,現在の制度には改善が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000439,439,Deck 1｜基礎確認,direct,形容詞・動詞,直接の,直接の|まっすぐな|指揮する,There is a direct connection between the two events.,2つの出来事には直接のつながりがある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000440,440,Deck 1｜基礎確認,economic,形容詞,経済の,経済の|経済的な,The country experienced rapid economic growth.,その国は急速な経済成長を経験した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000441,441,Deck 1｜基礎確認,educational,形容詞,教育の,教育の|教育的な,The museum offers educational programs for children.,その博物館は子ども向けの教育プログラムを提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000442,442,Deck 1｜基礎確認,exact,形容詞,正確な,正確な|まさにその,The exact cause remains unknown.,正確な原因は依然として不明だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000443,443,Deck 1｜基礎確認,fair,形容詞,公平な,公平な|かなりの|晴れた,Everyone deserves a fair chance.,誰もが公平な機会を得るに値する。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000444,444,Deck 1｜基礎確認,final,形容詞・名詞,最終の,最終の|最後の|決勝,The final decision will be announced tomorrow.,最終決定は明日発表される。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000445,445,Deck 1｜基礎確認,foreign,形容詞,外国の,外国の|異質な,The country depends heavily on foreign trade.,その国は外国貿易に大きく依存している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000446,446,Deck 1｜基礎確認,formal,形容詞,正式な,正式な|形式的な,The two countries signed a formal agreement.,両国は正式な協定に署名した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000447,447,Deck 1｜基礎確認,frequent,形容詞,頻繁な,頻繁な|しばしば起こる,Frequent practice improves memory.,頻繁な練習は記憶力を向上させる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000448,448,Deck 1｜基礎確認,global,形容詞,世界的な,世界的な|地球全体の,Climate change is a global challenge.,気候変動は世界的な課題だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000449,449,Deck 1｜基礎確認,healthy,形容詞,健康な,健康な|健全な,A balanced diet is essential for a healthy life.,均衡の取れた食事は健康な生活に不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000450,450,Deck 1｜基礎確認,immediate,形容詞,即座の,即座の|すぐ近くの|直接の,The injured person needed immediate help.,負傷者には直ちに助けが必要だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000451,451,Deck 1｜基礎確認,important,形容詞,重要な,重要な|重大な,Education is important for social development.,教育は社会の発展にとって重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000452,452,Deck 1｜基礎確認,impossible,形容詞,不可能な,不可能な|あり得ない,It is impossible to predict every result.,すべての結果を予測することは不可能だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000453,453,Deck 1｜基礎確認,modern,形容詞,現代の,現代の|近代の,Modern technology has changed communication.,現代技術は意思疎通の方法を変えた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000454,454,Deck 1｜基礎確認,natural,形容詞,自然の,自然の|当然の|生まれつきの,The area is rich in natural resources.,その地域は天然資源に恵まれている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000455,455,Deck 1｜基礎確認,negative,形容詞,否定的な,否定的な|負の|陰性の,The policy had several negative effects.,その政策にはいくつかの悪影響があった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000456,456,Deck 1｜基礎確認,political,形容詞,政治の,政治の|政治的な,The event caused major political change.,その出来事は大きな政治変化を引き起こした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000457,457,Deck 1｜基礎確認,popular,形容詞,人気のある,人気のある|大衆の,The idea became popular among young people.,その考えは若者の間で人気になった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000458,458,Deck 1｜基礎確認,positive,形容詞,肯定的な,肯定的な|積極的な|正の,The program produced positive results.,その計画は良い結果を生み出した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000459,459,Deck 1｜基礎確認,regular,形容詞,定期的な,定期的な|規則正しい|通常の,Regular exercise can improve mental health.,定期的な運動は心の健康を改善できる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000460,460,Deck 1｜基礎確認,related,形容詞,関連した,関連した|親族の,The two problems are closely related.,その2つの問題は密接に関連している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000461,461,Deck 1｜基礎確認,rich,形容詞,豊かな,豊かな|金持ちの|豊富な,The region is rich in natural resources.,その地域は天然資源が豊富だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000462,462,Deck 1｜基礎確認,special,形容詞,特別な,特別な|特殊な|専門の,The law gives special protection to children.,その法律は子どもに特別な保護を与える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000463,463,Deck 1｜基礎確認,suitable,形容詞,適した,適した|ふさわしい,This book is suitable for beginners.,この本は初心者に適している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000464,464,Deck 1｜基礎確認,typical,形容詞,典型的な,典型的な|代表的な,This is a typical example of the style.,これはその様式の典型的な例だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000465,465,Deck 1｜基礎確認,active,形容詞,活動的な,活動的な|積極的な|作動中の,Students should take an active part in the discussion.,生徒は議論に積極的に参加すべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000466,466,Deck 1｜基礎確認,environmental,形容詞,環境の,環境の|環境保護の,The project caused serious environmental damage.,その事業は深刻な環境被害を引き起こした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000467,467,Deck 1｜基礎確認,international,形容詞,国際的な,国際的な|国家間の,The problem requires international cooperation.,その問題には国際協力が必要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000468,468,Deck 1｜基礎確認,legal,形容詞,法律の,法律の|合法の,The company faced legal problems.,その会社は法律上の問題に直面した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000469,469,Deck 1｜基礎確認,mental,形容詞,精神の,精神の|知的な,Sleep is important for mental health.,睡眠は心の健康に重要だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000470,470,Deck 1｜基礎確認,official,形容詞・名詞,公式の,公式の|公務上の|役人,The official results were announced today.,公式結果が今日発表された。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000471,471,Deck 1｜基礎確認,primary,形容詞,主要な,主要な|最初の|初等の,The primary cause of the decline was a lack of demand.,減少の主な原因は需要不足だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000472,472,Deck 1｜基礎確認,regional,形容詞,地域の,地域の|地方の,There are large regional differences in income.,所得には大きな地域差がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000473,473,Deck 1｜基礎確認,scientific,形容詞,科学の,科学の|科学的な,The claim is not supported by scientific evidence.,その主張は科学的証拠によって裏づけられていない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000474,474,Deck 1｜基礎確認,separate,形容詞・動詞,別々の,別々の|分離した|分ける,The two issues should be treated as separate problems.,その2つの問題は別々の問題として扱うべきだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000475,475,Deck 1｜基礎確認,significant,形容詞,重要な,重要な|かなりの|意味のある,The study found a significant difference between the groups.,その研究は集団間に大きな違いを発見した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000476,476,Deck 1｜基礎確認,technical,形容詞,技術上の,技術上の|専門的な,The report contains several technical terms.,その報告書にはいくつかの専門用語が含まれている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000477,477,Deck 1｜基礎確認,accurate,形容詞,正確な,正確な|精密な,Accurate information is essential for good decisions.,適切な判断には正確な情報が不可欠だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000478,478,Deck 1｜基礎確認,adequate,形容詞,十分な,十分な|適切な,The village lacks adequate medical services.,その村には十分な医療サービスがない。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000479,479,Deck 1｜基礎確認,advanced,形容詞,高度な,高度な|進んだ|上級の,The hospital uses advanced medical technology.,その病院は高度な医療技術を使用している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000480,480,Deck 1｜基礎確認,apparent,形容詞,明らかな,明らかな|外見上の,The reason for the change was not immediately apparent.,変化の理由はすぐには明らかにならなかった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000481,481,Deck 1｜基礎確認,attractive,形容詞,魅力的な,魅力的な|人を引きつける,The city is an attractive place for young workers.,その都市は若い労働者にとって魅力的な場所だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000482,482,Deck 1｜基礎確認,commercial,形容詞,商業の,商業の|営利的な,The area became an important commercial center.,その地域は重要な商業中心地になった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000483,483,Deck 1｜基礎確認,constant,形容詞・名詞,絶え間ない,絶え間ない|一定の|定数,The machine requires constant attention.,その機械には絶えず注意を向ける必要がある。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000484,484,Deck 1｜基礎確認,domestic,形容詞,国内の,国内の|家庭の|飼いならされた,Domestic demand has increased.,国内需要が増加した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000485,485,Deck 1｜基礎確認,enormous,形容詞,莫大な,莫大な|非常に大きい,The project required an enormous amount of money.,その事業には莫大な金額が必要だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000486,486,Deck 1｜基礎確認,former,形容詞・名詞,以前の,以前の|前者,The former president wrote a book.,その元大統領は本を書いた。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000487,487,Deck 1｜基礎確認,fundamental,形容詞,根本的な,根本的な|基本的な|不可欠な,Trust is fundamental to cooperation.,信頼は協力の根本となる。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000488,488,Deck 1｜基礎確認,medical,形容詞,医療の,医療の|医学の,Many rural areas lack medical facilities.,多くの農村地域には医療施設が不足している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000489,489,Deck 1｜基礎確認,military,形容詞・名詞,軍事の,軍事の|軍隊,The government increased military spending.,政府は軍事支出を増やした。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000490,490,Deck 1｜基礎確認,rare,形容詞,まれな,まれな|珍しい|生焼けの,Such events are extremely rare.,そのような出来事は極めてまれだ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000491,491,Deck 1｜基礎確認,relative,形容詞・名詞,相対的な,相対的な|関連した|親族,The relative importance of each factor has changed.,各要因の相対的な重要性が変化した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000492,492,Deck 1｜基礎確認,standard,形容詞・名詞,標準の,標準の|標準|基準,The product meets international safety standards.,その製品は国際的な安全基準を満たしている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000493,493,Deck 1｜基礎確認,strange,形容詞,奇妙な,奇妙な|見知らぬ,The results seem strange at first.,その結果は初めは奇妙に思える。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000494,494,Deck 1｜基礎確認,valuable,形容詞,価値のある,価値のある|貴重な,The survey provides valuable information.,その調査は貴重な情報を提供している。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000495,495,Deck 1｜基礎確認,widespread,形容詞,広く行き渡った,広く行き渡った|広範囲の,The practice became widespread in the nineteenth century.,その慣行は19世紀に広く普及した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000496,496,Deck 1｜基礎確認,efficient,形容詞,効率的な,効率的な|有能な,The new system is more efficient than the old one.,新しい制度は古い制度より効率的だ。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000497,497,Deck 1｜基礎確認,financial,形容詞,財政上の,財政上の|金融の|金銭上の,The company faced serious financial difficulties.,その会社は深刻な財政難に直面した。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000498,498,Deck 1｜基礎確認,limited,形容詞,限られた,限られた|制限された,We have only limited information about the event.,私たちがその出来事について持つ情報は限られている。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000499,499,Deck 1｜基礎確認,overall,形容詞・副詞・名詞,全体的な,全体的な|全体として|総合,The overall result was positive.,全体的な結果は良好だった。
+英単語段階別デッキ｜Deck 1｜基礎確認500語,EN-000500,500,Deck 1｜基礎確認,relevant,形容詞,関連のある,関連のある|適切な,Please include only relevant information.,関連のある情報だけを含めてください。

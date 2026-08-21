@@ -119,7 +119,11 @@ export function serializeProgress(progress, masteryTarget = 2) {
 }
 
 export function shouldHideTerm(question, answerVisible) {
-  return question?.stage === "beginner" && !answerVisible;
+  const hidesUntilAnswer =
+    typeof question?.hideTermUntilAnswer === "boolean"
+      ? question.hideTermUntilAnswer
+      : question?.stage === "beginner";
+  return hidesUntilAnswer && !answerVisible;
 }
 
 const questionReadingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/g;
@@ -130,7 +134,12 @@ export function getQuestionPromptForDisplay(question, answerVisible) {
 }
 
 export function getIntegratedExplanationQuestion(term, question) {
-  if (!term || !question || question.stage === "integrated") {
+  if (
+    !term ||
+    !question ||
+    question.stage === "integrated" ||
+    term.integratedAsExplanation === false
+  ) {
     return null;
   }
   return term.stages?.integrated?.[0] ?? null;

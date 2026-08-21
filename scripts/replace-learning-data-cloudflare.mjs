@@ -36,7 +36,10 @@ const assertLearningDataKey = (key) => {
   const allowedExactKeys = new Set(["index.json", "term-images.json"]);
   if (
     !allowedExactKeys.has(key) &&
-    !(key.startsWith("subjects/world-history/") && key.endsWith(".json")) &&
+    !(
+      /^subjects\/[a-z0-9-]+\//.test(key) &&
+      key.endsWith(".json")
+    ) &&
     !key.startsWith("term-images/")
   ) {
     throw new Error(`問題集以外の削除候補を検出しました: ${key}`);
@@ -53,18 +56,27 @@ const deckEntriesFor = (subjectEntry) =>
     : [subjectEntry];
 
 const loadDeckIndexes = async (catalog, reader) => {
-  if (catalog.schemaVersion !== 3 || catalog.subjects.length !== 1) {
+  if (
+    catalog.schemaVersion !== 3 ||
+    !Array.isArray(catalog.subjects) ||
+    catalog.subjects.length === 0
+  ) {
     throw new Error("科目一覧の形式が正しくありません。");
   }
-  const subjectEntry = catalog.subjects[0];
-  const deckEntries = deckEntriesFor(subjectEntry);
+  const deckEntries = catalog.subjects.flatMap((subjectEntry) =>
+    deckEntriesFor(subjectEntry).map((deckEntry) => ({
+      subjectEntry,
+      deckEntry,
+    })),
+  );
   const deckIndexes = await Promise.all(
-    deckEntries.map(async (deckEntry) => ({
+    deckEntries.map(async ({ subjectEntry, deckEntry }) => ({
+      subjectEntry,
       entry: deckEntry,
       index: await reader(normalizeKey(deckEntry.indexPath)),
     })),
   );
-  return { subjectEntry, deckEntries, deckIndexes };
+  return { subjectEntries: catalog.subjects, deckEntries, deckIndexes };
 };
 
 const localCatalogPath = path.join(dataRoot, "index.json");
@@ -116,6 +128,10 @@ const [remoteCatalog, remoteManifest] = await Promise.all([
   fetchRemoteJson("term-images.json"),
 ]);
 const remoteDeckData = await loadDeckIndexes(remoteCatalog, fetchRemoteJson);
+const remoteAssetKeys = new Set(
+  remoteManifest.assets.map((asset) => normalizeKey(asset.path)),
+);
+const assetUploadJobs = localAssetJobs.filter((job) => !remoteAssetKeys.has(job.key));
 const remoteKeys = new Set([
   "index.json",
   ...remoteDeckData.deckIndexes.flatMap(({ entry, index }) => [
@@ -151,8 +167,13 @@ console.log(
   `更新対象: 旧${remoteTermCount}語・${remoteQuestionCount}問から、新${localTermCount}語・${localQuestionCount}問`,
 );
 console.log(
-  `Cloudflare操作: 上書き・追加${localJobs.length}件、旧問題集だけの削除${staleKeys.length}件`,
+  `Cloudflare操作: 上書き・追加${localJobs.length - localAssetJobs.length + assetUploadJobs.length}件、旧問題集だけの削除${staleKeys.length}件`,
 );
+if (localAssetJobs.length > assetUploadJobs.length) {
+  console.log(
+    `登録済み画像: ${localAssetJobs.length - assetUploadJobs.length}件は再送しません。`,
+  );
+}
 if (!applyChanges) {
   console.log("予行表示のみです。実行するには--applyを付けてください。");
   process.exit(0);
@@ -297,7 +318,7 @@ const uploadAndVerify = async (jobs, uploadLabel, verifyLabel) => {
 };
 
 // 参照先を先に揃えて照合し、利用者が途中状態の索引を読む時間を作らない。
-const assetAndChunkJobs = [...localAssetJobs, ...localChunkJobs];
+const assetAndChunkJobs = [...assetUploadJobs, ...localChunkJobs];
 if (resumeAfterAssetUpload) {
   console.log("登録済みの画像・分割データの照合から再開します。");
   await verifyJobs(assetAndChunkJobs, "画像・分割データ照合");

@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Anki世界史学習アプリの復習・音声設定" />
+    <meta name="description" content="Anki科目別学習アプリの復習・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.039" />
+    <link rel="stylesheet" href="/styles.css?v=0.040" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.039</span>
+        <span class="app-version">v0.040</span>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,7 +24,7 @@
       <section class="settings-heading">
         <p class="eyebrow">設定</p>
         <h1>復習と音声読み上げ</h1>
-        <p>復習間隔、学習中に使用する日本語音声、聞き流しの回答待ち時間を設定します。</p>
+        <p>復習間隔、日本語・英語の音声、聞き流しの回答待ち時間を設定します。</p>
       </section>
 
       <section class="settings-card">
@@ -44,7 +44,7 @@
       <section class="settings-card speech-settings-card">
         <h2>音声読み上げ</h2>
         <p class="settings-description">
-          自然さを優先するAzure音声と、この端末で利用できる日本語音声を選択できます。選択内容、速度、聞き流しの回答待ち時間はCloudflareへ保存し、端末間で共有します。
+          日本語と英語の音声をそれぞれ選択できます。英単語と英語例文は英語音声、日本語訳と解説は日本語音声で自動的に読み分けます。
         </p>
         <div class="speech-settings-list">
           <label class="speech-setting-row" for="speech-source">
@@ -55,15 +55,23 @@
             </select>
           </label>
           <label class="speech-setting-row" for="azure-voice">
-            <span>Azure音声</span>
+            <span>日本語のAzure音声</span>
             <select id="azure-voice"></select>
           </label>
+          <label class="speech-setting-row" for="english-azure-voice">
+            <span>英語のAzure音声</span>
+            <select id="english-azure-voice"></select>
+          </label>
           <label class="speech-setting-row" for="device-voice">
-            <span>端末音声</span>
+            <span>日本語の端末音声</span>
             <select id="device-voice" aria-describedby="device-voice-note"></select>
           </label>
+          <label class="speech-setting-row" for="english-device-voice">
+            <span>英語の端末音声</span>
+            <select id="english-device-voice" aria-describedby="device-voice-note"></select>
+          </label>
           <p class="settings-description speech-setting-note" id="device-voice-note">
-            共有された端末音声がこの端末にない場合は、この端末の推奨日本語音声を使用します。
+            共有された端末音声がこの端末にない場合は、言語ごとに端末の推奨音声を使用します。
           </p>
           <label class="speech-setting-row" for="speech-rate">
             <span>読み上げ速度 <output id="speech-rate-output">1.00倍</output></span>
@@ -89,7 +97,8 @@
           </p>
         </div>
         <div class="speech-setting-actions">
-          <button class="secondary-button" id="preview-speech" type="button">選んだ音声を試す</button>
+          <button class="secondary-button" id="preview-speech" type="button">日本語音声を試す</button>
+          <button class="secondary-button" id="preview-english-speech" type="button">英語音声を試す</button>
           <button class="primary-button" id="save-speech-settings" type="button">音声設定を保存</button>
         </div>
         <p class="speech-settings-status" id="speech-settings-status" role="status"></p>

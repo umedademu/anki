@@ -9,8 +9,16 @@ const annotatedReadingPattern =
   /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー＝・0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
 const remainingReadingPattern = /\([\p{Script=Hiragana}ー・\s]+\)/gu;
 
-export function prepareSpeechText(value) {
+export function prepareSpeechText(value, language = "ja-JP") {
   let text = String(value ?? "").replaceAll("**", "");
+  if (String(language).toLowerCase().startsWith("en")) {
+    return text
+      .replace(/[\r\n]+/g, ". ")
+      .replace(/[|]/g, ", ")
+      .replace(/[`#_]/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
   const readings = Object.entries(requiredHistoryReadings).sort(
     ([left], [right]) => right.length - left.length,
   );
@@ -30,19 +38,29 @@ export function prepareSpeechText(value) {
     .trim();
 }
 
-export function selectJapaneseVoice(voices, preferredVoiceId = "") {
+export function selectVoice(voices, language, preferredVoiceId = "") {
   const candidates = Array.from(voices ?? []);
+  const languagePrefix = String(language ?? "ja-JP").toLowerCase().split("-")[0];
+  const exactLanguage = String(language ?? "ja-JP").toLowerCase();
   const preferred = candidates.find(
     (voice) =>
-      String(voice.lang).toLowerCase().startsWith("ja") &&
+      String(voice.lang).toLowerCase().startsWith(languagePrefix) &&
       getVoiceId(voice) === preferredVoiceId,
   );
   return (
     preferred ??
-    candidates.find((voice) => String(voice.lang).toLowerCase() === "ja-jp") ??
-    candidates.find((voice) => String(voice.lang).toLowerCase().startsWith("ja")) ??
+    candidates.find(
+      (voice) => String(voice.lang).toLowerCase() === exactLanguage,
+    ) ??
+    candidates.find((voice) =>
+      String(voice.lang).toLowerCase().startsWith(languagePrefix),
+    ) ??
     null
   );
+}
+
+export function selectJapaneseVoice(voices, preferredVoiceId = "") {
+  return selectVoice(voices, "ja-JP", preferredVoiceId);
 }
 
 export function createSpeechController({
@@ -104,7 +122,11 @@ export function createSpeechController({
     const queue = Array.from(segments ?? [])
       .map((segment) => ({
         target: String(segment?.target ?? ""),
-        text: prepareSpeechText(segment?.text),
+        language: String(segment?.language ?? "ja-JP"),
+        text: prepareSpeechText(
+          segment?.text,
+          String(segment?.language ?? "ja-JP"),
+        ),
       }))
       .filter((segment) => segment.target && segment.text);
     if (queue.length === 0) {
@@ -134,11 +156,15 @@ export function createSpeechController({
         return;
       }
       const utterance = new Utterance(segment.text);
-      utterance.lang = "ja-JP";
+      utterance.lang = segment.language;
       utterance.rate = settings.rate;
-      const voice = selectJapaneseVoice(
+      const preferredVoiceId = segment.language.toLowerCase().startsWith("en")
+        ? settings.englishVoiceId
+        : settings.voiceId;
+      const voice = selectVoice(
         synthesis.getVoices?.() ?? [],
-        settings.voiceId,
+        segment.language,
+        preferredVoiceId,
       );
       if (voice) {
         utterance.voice = voice;
@@ -157,7 +183,10 @@ export function createSpeechController({
       try {
         const blob = await requestCloudAudio(
           segment.text,
-          settings.azureVoiceId,
+          segment.language.toLowerCase().startsWith("en")
+            ? settings.englishAzureVoiceId
+            : settings.azureVoiceId,
+          segment.language,
         );
         if (ticket !== generation) {
           return;

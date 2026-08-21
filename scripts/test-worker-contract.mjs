@@ -1,6 +1,7 @@
 import {
   escapeSsml,
   normalizeAzureSpeechVoice,
+  normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
@@ -40,6 +41,12 @@ if (
 ) {
   throw new Error("Azure音声の文章または読み上げ形式を処理できませんでした。");
 }
+if (
+  normalizeEnglishAzureSpeechVoice("en-US-GuyNeural") !== "en-US-GuyNeural" ||
+  normalizeEnglishAzureSpeechVoice("invalid") !== "en-US-JennyNeural"
+) {
+  throw new Error("英語のAzure音声を正規化できませんでした。");
+}
 for (const invalidPrompt of ["", "あ".repeat(2001)]) {
   let failed = false;
   try {
@@ -62,7 +69,11 @@ const speechEnv = {
   AZURE_SPEECH_REGION: "japaneast",
   async AZURE_SPEECH_FETCH(url, options) {
     azureRequestCount += 1;
-    const voice = ["ja-JP-KeitaNeural", "ja-JP-NaokiNeural"].find(
+    const voice = [
+      "ja-JP-KeitaNeural",
+      "ja-JP-NaokiNeural",
+      "en-US-GuyNeural",
+    ].find(
       (candidate) => options.body.includes(`voice name="${candidate}"`),
     );
     requestedAzureVoices.push(voice);
@@ -74,7 +85,8 @@ const speechEnv = {
       options.headers["X-Microsoft-OutputFormat"] !==
         "audio-24khz-48kbitrate-mono-mp3" ||
       !voice ||
-      !options.body.includes("王安石の政策")
+      (!options.body.includes("王安石の政策") &&
+        !options.body.includes("although"))
     ) {
       throw new Error("Azure音声への入力が不正です。");
     }
@@ -93,7 +105,11 @@ const speechEnv = {
     },
   },
 };
-const speechRequest = (voice = "ja-JP-KeitaNeural") =>
+const speechRequest = (
+  voice = "ja-JP-KeitaNeural",
+  text = "王安石の政策",
+  language = "ja-JP",
+) =>
   new Request("https://anki-progress-api.example/v1/speech", {
     method: "POST",
     headers: {
@@ -101,12 +117,16 @@ const speechRequest = (voice = "ja-JP-KeitaNeural") =>
       "Content-Type": "application/json",
       Origin: "https://anki-ume.vercel.app",
     },
-    body: JSON.stringify({ text: "王安石の政策", voice }),
+    body: JSON.stringify({ text, voice, language }),
   });
 const firstSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
 const secondSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
 const alternateSpeechResponse = await worker.fetch(
   speechRequest("ja-JP-NaokiNeural"),
+  speechEnv,
+);
+const englishSpeechResponse = await worker.fetch(
+  speechRequest("en-US-GuyNeural", "although", "en-US"),
   speechEnv,
 );
 if (
@@ -117,10 +137,11 @@ if (
   secondSpeechResponse.headers.get("Access-Control-Allow-Origin") !==
     "https://anki-ume.vercel.app" ||
   alternateSpeechResponse.headers.get("X-Speech-Cache") !== "MISS" ||
-  azureRequestCount !== 2 ||
+  englishSpeechResponse.headers.get("X-Speech-Cache") !== "MISS" ||
+  azureRequestCount !== 3 ||
   requestedAzureVoices.join("|") !==
-    "ja-JP-KeitaNeural|ja-JP-NaokiNeural" ||
-  speechObjects.size !== 2 ||
+    "ja-JP-KeitaNeural|ja-JP-NaokiNeural|en-US-GuyNeural" ||
+  speechObjects.size !== 3 ||
   new Uint8Array(await secondSpeechResponse.arrayBuffer()).join(",") !== "1,2,3"
 ) {
   throw new Error("Azure音声の生成・再利用・読取許可が不正です。");
@@ -133,7 +154,9 @@ const settings = normalizeSettings({
   easySeconds: 259200,
   source: "device",
   azureVoiceId: "ja-JP-NaokiNeural",
+  englishAzureVoiceId: "en-US-GuyNeural",
   voiceId: "device-voice-id",
+  englishVoiceId: "english-device-voice-id",
   rate: 9,
   shuffleEnabled: true,
   autoSpeechEnabled: false,
@@ -146,7 +169,9 @@ if (
   settings.easySeconds !== 259200 ||
   settings.source !== "device" ||
   settings.azureVoiceId !== "ja-JP-NaokiNeural" ||
+  settings.englishAzureVoiceId !== "en-US-GuyNeural" ||
   settings.voiceId !== "device-voice-id" ||
+  settings.englishVoiceId !== "english-device-voice-id" ||
   settings.rate !== 3 ||
   !settings.shuffleEnabled ||
   settings.autoSpeechEnabled ||
@@ -159,7 +184,9 @@ const browserSettings = normalizeSharedSettings(settings);
 if (
   browserSettings.source !== "device" ||
   browserSettings.azureVoiceId !== "ja-JP-NaokiNeural" ||
+  browserSettings.englishAzureVoiceId !== "en-US-GuyNeural" ||
   browserSettings.voiceId !== "device-voice-id" ||
+  browserSettings.englishVoiceId !== "english-device-voice-id" ||
   browserSettings.rate !== 3 ||
   !browserSettings.shuffleEnabled ||
   browserSettings.autoSpeechEnabled ||

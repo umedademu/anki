@@ -19,7 +19,6 @@ import {
   restoreRatingUndoSnapshot,
   shuffleTasks,
   shouldHideTerm,
-  stageLabels,
 } from "./learning-engine.js";
 import {
   deleteCloudQuestion,
@@ -37,14 +36,25 @@ import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
+  subjectPanel: document.querySelector("#subject-panel"),
+  subjectOptions: document.querySelector("#subject-options"),
   setupPanel: document.querySelector("#setup-panel"),
+  setupEyebrow: document.querySelector("#setup-eyebrow"),
+  setupTitle: document.querySelector("#setup-title"),
+  setupDescription: document.querySelector("#setup-description"),
   studyShell: document.querySelector("#study-shell"),
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
   deckFilter: document.querySelector("#deck-filter"),
+  macroRegionField: document.querySelector("#macro-region-field"),
+  macroRegionLabel: document.querySelector("#macro-region-label"),
   macroRegionFilter: document.querySelector("#macro-region-filter"),
+  regionDetailField: document.querySelector("#region-detail-field"),
+  regionDetailLabel: document.querySelector("#region-detail-label"),
   regionDetailFilter: document.querySelector("#region-detail-filter"),
+  categoryField: document.querySelector("#category-field"),
+  categoryLabel: document.querySelector("#category-label"),
   categoryFilter: document.querySelector("#category-filter"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
   studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
@@ -54,6 +64,7 @@ const elements = {
   selectionSummary: document.querySelector("#selection-summary"),
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
+  changeSubject: document.querySelector("#change-subject"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
   contextCard: document.querySelector("#context-card"),
@@ -108,6 +119,9 @@ const elements = {
 };
 
 const state = {
+  catalog: null,
+  subjectEntries: [],
+  activeSubjectId: "",
   deckEntries: [],
   activeDeckId: "",
   deckLoadToken: 0,
@@ -192,7 +206,6 @@ function getConfig() {
   return {
     dataBaseUrl,
     progressApiBaseUrl,
-    subjectId: String(config.subjectId ?? "world-history"),
   };
 }
 
@@ -250,6 +263,7 @@ function showOnly(panel) {
   );
   [
     elements.loadingPanel,
+    elements.subjectPanel,
     elements.setupPanel,
     elements.studyShell,
     elements.errorPanel,
@@ -554,23 +568,40 @@ function speechSegmentsFor(target) {
   if (!question || !term) {
     return [];
   }
+  const configuredSegments = question.speech?.[target];
+  if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
+    return configuredSegments.map((segment) => ({
+      target,
+      text: segment.text,
+      language: segment.language ?? "ja-JP",
+    }));
+  }
   if (target === "question") {
-    return [{ target, text: question.prompt }];
+    return [{ target, text: question.prompt, language: "ja-JP" }];
   }
   if (target === "answer") {
     return [
       {
         target,
         text: [question.answer, question.answerNote].filter(Boolean).join("。"),
+        language: "ja-JP",
       },
     ];
   }
   if (target === "overview") {
     const explanation = getIntegratedExplanationQuestion(term, question);
     return [
-      ...(explanation ? [{ target, text: explanation.answer }] : []),
+      ...(explanation
+        ? [{ target, text: explanation.answer, language: "ja-JP" }]
+        : []),
       ...(question.yearMnemonic
-        ? [{ target, text: `年号の語呂合わせ。${question.yearMnemonic}` }]
+        ? [
+            {
+              target,
+              text: `年号の語呂合わせ。${question.yearMnemonic}`,
+              language: "ja-JP",
+            },
+          ]
         : []),
     ];
   }
@@ -741,7 +772,7 @@ function renderTermTags(term, question, visible) {
     term.geography?.regionDetail,
     term.era,
     term.category,
-    stageLabels[question.stage],
+    questionStyleLabel(question.stage),
     question.focus,
   ]
     .map((value) => String(value ?? "").trim())
@@ -852,12 +883,35 @@ function selectedFilters() {
   };
 }
 
-const questionStyleLabels = {
+const defaultQuestionStyleLabels = {
   "": "三段階すべて",
   beginner: "通常の一問一答",
   reverse: "逆一問一答",
   integrated: "統合説明",
 };
+
+function questionStyleLabel(stage) {
+  const labels = state.subject?.stageLabels ?? defaultQuestionStyleLabels;
+  return labels[stage || "all"] ?? defaultQuestionStyleLabels[stage] ?? stage;
+}
+
+function setQuestionStyleOptions() {
+  const selected = elements.questionStyleFilter.value;
+  elements.questionStyleFilter.replaceChildren(
+    ...[
+      ["", questionStyleLabel("")],
+      ...learningStages.map((stage) => [stage, questionStyleLabel(stage)]),
+    ].map(([value, label]) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      return option;
+    }),
+  );
+  elements.questionStyleFilter.value = ["", ...learningStages].includes(selected)
+    ? selected
+    : "";
+}
 
 function activeStages() {
   return learningStages.includes(state.selectedStage)
@@ -940,8 +994,8 @@ function updateSetupPreview() {
                   : "問題文＋回答"
               }）`
       : selectedStage
-        ? `${terms.length}語・${questions}問（${questionStyleLabels[selectedStage]}）`
-        : `${terms.length}語・${questions}問（開始時は通常の一問一答 ${beginnerQuestions}問）`;
+        ? `${terms.length}語・${questions}問（${questionStyleLabel(selectedStage)}）`
+        : `${terms.length}語・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
     ? "学習記録：Cloudflareに接続済み"
@@ -977,19 +1031,44 @@ function updateRatingIntervals() {
 }
 
 function configureSetup() {
+  const filterLabels = state.subject?.filterLabels ?? {};
+  const fieldMappings = [
+    [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
+    [elements.regionDetailField, elements.regionDetailLabel, filterLabels.regionDetail],
+    [elements.categoryField, elements.categoryLabel, filterLabels.category],
+  ];
+  for (const [field, label, text] of fieldMappings) {
+    field.classList.toggle("is-hidden", !text);
+    if (text) label.textContent = text;
+  }
+  setQuestionStyleOptions();
   const macroRegions = sortedUnique(
     state.allTerms.flatMap((term) => getMacroRegionTags(term)),
   );
   const categories = sortedUnique(state.allTerms.map((term) => term.category));
   setSelectOptions(elements.macroRegionFilter, macroRegions, "すべての大分類");
-  setSelectOptions(elements.categoryFilter, categories, "すべてのカテゴリ");
+  setSelectOptions(
+    elements.categoryFilter,
+    categories,
+    filterLabels.category ? `すべての${filterLabels.category}` : "すべて",
+  );
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
   elements.setupSpeech.checked = state.autoSpeechEnabled;
   elements.setupSpeech.disabled = !speechController.supported;
   for (const option of elements.studyModeOptions) {
+    const unavailableForSubject =
+      state.subject?.learningType === "vocabulary" &&
+      option.value === "listen-explanation";
+    option.closest(".study-mode-choice")?.classList.toggle(
+      "is-hidden",
+      unavailableForSubject,
+    );
+    if (unavailableForSubject && option.checked) {
+      elements.studyModeOptions[0].checked = true;
+    }
     if (listeningModes.has(option.value)) {
-      option.disabled = !speechController.supported;
+      option.disabled = !speechController.supported || unavailableForSubject;
     }
   }
   elements.speechChoice.classList.toggle(
@@ -1039,10 +1118,17 @@ function renderQuestion() {
     question.stage === "beginner",
   );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
-  elements.stageName.textContent = questionStyleLabels[question.stage];
-  elements.termTitle.textContent = hidesTerm ? "通常の一問一答" : term.term;
+  elements.stageName.textContent = questionStyleLabel(question.stage);
+  const vocabularyMode = state.subject?.learningType === "vocabulary";
+  elements.termTitle.textContent = hidesTerm
+    ? vocabularyMode
+      ? questionStyleLabel(question.stage)
+      : "通常の一問一答"
+    : term.term;
   elements.termReading.textContent = hidesTerm
-    ? "問題文とは別の用語欄と読みは、回答を表示するまで表示されません"
+    ? vocabularyMode
+      ? "答えを表示すると単語と品詞を確認できます"
+      : "問題文とは別の用語欄と読みは、回答を表示するまで表示されません"
     : term.reading;
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
@@ -1231,7 +1317,7 @@ async function rateCurrentQuestion(rating) {
       if (stageAfter === "complete") {
         state.unlockMessage = `${term.term}を完全習得しました。`;
       } else {
-        state.unlockMessage = `${term.term}の「${stageLabels[stageAfter]}」をデッキへ追加しました。`;
+        state.unlockMessage = `${term.term}の「${questionStyleLabel(stageAfter)}」をデッキへ追加しました。`;
         state.queue = enqueueUniqueTasks(
           state.queue,
           getTasksForStage(
@@ -1338,7 +1424,7 @@ async function beginStudy() {
   elements.listeningToggle.textContent = "一時停止";
 
   const questionCount = countQuestions(state.terms, activeStages());
-  const selectedStyle = questionStyleLabels[state.selectedStage];
+  const selectedStyle = questionStyleLabel(state.selectedStage);
   elements.completionTitle.textContent = state.selectedStage
     ? `${selectedStyle}：${state.terms.length}語・${questionCount}問を習得しました`
     : `${state.terms.length}語・${questionCount}問を完全習得しました`;
@@ -1405,38 +1491,98 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
+  elements.setupEyebrow.textContent = `v0.040｜${state.subject.title}を学ぶ`;
+  elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
+  elements.setupDescription.textContent =
+    state.subject.learningType === "vocabulary"
+      ? "デッキ、品詞、出題方向を選んで学習できます。すべてを選んだまま始めることもできます。"
+      : "すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。";
   configureSetup();
   if (!state.cloudReady && state.cloudError) {
     elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
   }
 }
 
+function renderSubjectOptions() {
+  elements.subjectOptions.replaceChildren(
+    ...state.subjectEntries.map((subject) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "subject-choice";
+      button.dataset.subjectId = subject.id;
+      const title = document.createElement("strong");
+      title.textContent = subject.title;
+      const description = document.createElement("small");
+      description.textContent = `${subject.description}（${subject.termCount}語・${subject.questionCount}問）`;
+      button.append(title, description);
+      return button;
+    }),
+  );
+}
+
+function showSubjectSelection() {
+  stopListeningSequence();
+  state.currentTask = null;
+  state.queue = [];
+  state.answerVisible = false;
+  elements.subjectName.textContent = "科目を選択";
+  renderSubjectOptions();
+  showOnly(elements.subjectPanel);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function activateSubject(subjectId) {
+  const subjectEntry = state.subjectEntries.find(
+    (subject) => subject.id === subjectId,
+  );
+  if (!subjectEntry) {
+    throw new Error("選択した科目が見つかりません。");
+  }
+  state.activeSubjectId = subjectEntry.id;
+  state.deckEntries =
+    Array.isArray(subjectEntry.decks) && subjectEntry.decks.length > 0
+      ? subjectEntry.decks
+      : [{ ...subjectEntry, id: "deck-1" }];
+  const defaultDeckId = subjectEntry.defaultDeckId ?? state.deckEntries[0].id;
+  setDeckOptions(state.deckEntries, defaultDeckId);
+  await activateDeck(defaultDeckId);
+}
+
 async function start() {
   showOnly(elements.loadingPanel);
   try {
-    const { subjectId } = getConfig();
     const [catalog, questionImages] = await Promise.all([
       fetchJson("index.json"),
       loadQuestionImages(),
     ]);
-    state.questionImages = questionImages;
-    const subjectEntry = catalog.subjects.find((subject) => subject.id === subjectId);
-    if (!subjectEntry) {
-      throw new Error("指定された科目が見つかりません。");
+    if (
+      catalog.schemaVersion !== 3 ||
+      !Array.isArray(catalog.subjects) ||
+      catalog.subjects.length === 0
+    ) {
+      throw new Error("科目一覧の形式が正しくありません。");
     }
-    state.deckEntries =
-      Array.isArray(subjectEntry.decks) && subjectEntry.decks.length > 0
-        ? subjectEntry.decks
-        : [{ ...subjectEntry, id: "deck-1" }];
-    const defaultDeckId = subjectEntry.defaultDeckId ?? state.deckEntries[0].id;
-    setDeckOptions(state.deckEntries, defaultDeckId);
-    await activateDeck(defaultDeckId);
-    showOnly(elements.setupPanel);
+    state.catalog = catalog;
+    state.subjectEntries = catalog.subjects;
+    state.questionImages = questionImages;
+    showSubjectSelection();
   } catch (error) {
     elements.errorMessage.textContent = error.message;
     showOnly(elements.errorPanel);
   }
 }
+
+elements.subjectOptions.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-subject-id]");
+  if (!button) return;
+  showOnly(elements.loadingPanel);
+  void activateSubject(button.dataset.subjectId)
+    .then(() => showOnly(elements.setupPanel))
+    .catch((error) => {
+      elements.errorMessage.textContent = error.message;
+      showOnly(elements.errorPanel);
+    });
+});
 
 elements.deckFilter.addEventListener("change", () => {
   const deckId = elements.deckFilter.value;
@@ -1477,6 +1623,7 @@ elements.setupSpeech.addEventListener("change", () => {
   });
 });
 elements.startStudy.addEventListener("click", () => void beginStudy());
+elements.changeSubject.addEventListener("click", showSubjectSelection);
 
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);

@@ -1,5 +1,6 @@
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
-const azureSpeechVoices = new Set([
+const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
+const japaneseAzureSpeechVoices = new Set([
   defaultAzureSpeechVoice,
   "ja-JP-AoiNeural",
   "ja-JP-MayuNeural",
@@ -7,6 +8,16 @@ const azureSpeechVoices = new Set([
   "ja-JP-KeitaNeural",
   "ja-JP-DaichiNeural",
   "ja-JP-NaokiNeural",
+]);
+const englishAzureSpeechVoices = new Set([
+  defaultEnglishAzureSpeechVoice,
+  "en-US-GuyNeural",
+  "en-GB-SoniaNeural",
+  "en-GB-RyanNeural",
+]);
+const azureSpeechVoices = new Set([
+  ...japaneseAzureSpeechVoices,
+  ...englishAzureSpeechVoices,
 ]);
 
 const defaultSettings = {
@@ -16,7 +27,9 @@ const defaultSettings = {
   easySeconds: 6 * 24 * 60 * 60,
   source: "cloud",
   azureVoiceId: defaultAzureSpeechVoice,
+  englishAzureVoiceId: defaultEnglishAzureSpeechVoice,
   voiceId: "",
+  englishVoiceId: "",
   rate: 1,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
@@ -152,7 +165,11 @@ function normalizeSettings(value) {
     ),
     source: source.source === "device" ? "device" : "cloud",
     azureVoiceId: normalizeAzureSpeechVoice(source.azureVoiceId),
+    englishAzureVoiceId: normalizeEnglishAzureSpeechVoice(
+      source.englishAzureVoiceId,
+    ),
     voiceId: String(source.voiceId ?? "").slice(0, 500),
+    englishVoiceId: String(source.englishVoiceId ?? "").slice(0, 500),
     rate: decimal(source.rate, 1, 0.7, 3),
     shuffleEnabled: source.shuffleEnabled === true,
     autoSpeechEnabled:
@@ -184,7 +201,14 @@ const azureSpeechOutputFormat = "audio-24khz-48kbitrate-mono-mp3";
 
 function normalizeAzureSpeechVoice(value) {
   const voice = String(value ?? "");
-  return azureSpeechVoices.has(voice) ? voice : defaultAzureSpeechVoice;
+  return japaneseAzureSpeechVoices.has(voice) ? voice : defaultAzureSpeechVoice;
+}
+
+function normalizeEnglishAzureSpeechVoice(value) {
+  const voice = String(value ?? "");
+  return englishAzureSpeechVoices.has(voice)
+    ? voice
+    : defaultEnglishAzureSpeechVoice;
 }
 
 async function speechCacheKey(prompt, voice) {
@@ -206,7 +230,7 @@ function escapeSsml(value) {
     .replaceAll("'", "&apos;");
 }
 
-async function generateJapaneseSpeech(env, prompt, voice) {
+async function generateSpeech(env, prompt, voice) {
   const region = String(env.AZURE_SPEECH_REGION ?? "").trim().toLowerCase();
   if (!env.AZURE_SPEECH_KEY || !/^[a-z0-9-]+$/.test(region)) {
     throw new Error("Azure音声の接続設定がありません。");
@@ -222,7 +246,7 @@ async function generateJapaneseSpeech(env, prompt, voice) {
         "X-Microsoft-OutputFormat": azureSpeechOutputFormat,
         "User-Agent": "anki-world-history",
       },
-      body: `<speak version="1.0" xml:lang="ja-JP"><voice name="${voice}">${escapeSsml(prompt)}</voice></speak>`,
+      body: `<speak version="1.0" xml:lang="${voice.slice(0, 5)}"><voice name="${voice}">${escapeSsml(prompt)}</voice></speak>`,
     },
   );
   if (!response.ok) {
@@ -241,7 +265,11 @@ async function handleSpeech(request, env) {
   }
   const body = await request.json();
   const prompt = normalizeSpeechPrompt(body.text);
-  const voice = normalizeAzureSpeechVoice(body.voice);
+  const requestedVoice = String(body.voice ?? "");
+  const requestedLanguage = String(body.language ?? "ja-JP").toLowerCase();
+  const voice = requestedLanguage.startsWith("en")
+    ? normalizeEnglishAzureSpeechVoice(requestedVoice)
+    : normalizeAzureSpeechVoice(requestedVoice);
   const key = await speechCacheKey(prompt, voice);
   const cached = await env.SPEECH_CACHE.get(key);
   if (cached) {
@@ -249,7 +277,7 @@ async function handleSpeech(request, env) {
       headers: audioHeaders(request, env, "HIT"),
     });
   }
-  const audio = await generateJapaneseSpeech(env, prompt, voice);
+  const audio = await generateSpeech(env, prompt, voice);
   await env.SPEECH_CACHE.put(key, audio, {
     httpMetadata: { contentType: "audio/mpeg" },
     customMetadata: {
@@ -300,7 +328,8 @@ async function readState(env, datasetVersion) {
     ).bind(datasetVersion).all(),
     env.DB.prepare(
       `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
-        speech_source, azure_voice_id, device_voice_id, speech_rate,
+        speech_source, azure_voice_id, english_azure_voice_id,
+        device_voice_id, english_device_voice_id, speech_rate,
         shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
@@ -335,7 +364,9 @@ async function readState(env, datasetVersion) {
           easySeconds: settingsRow.easy_seconds,
           source: settingsRow.speech_source,
           azureVoiceId: settingsRow.azure_voice_id,
+          englishAzureVoiceId: settingsRow.english_azure_voice_id,
           voiceId: settingsRow.device_voice_id,
+          englishVoiceId: settingsRow.english_device_voice_id,
           rate: settingsRow.speech_rate,
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
@@ -353,9 +384,10 @@ async function saveSettings(env, patch) {
   await env.DB.prepare(
     `INSERT INTO review_settings (
       profile_id, again_seconds, hard_seconds, good_seconds, easy_seconds,
-      speech_source, azure_voice_id, device_voice_id, speech_rate,
+      speech_source, azure_voice_id, english_azure_voice_id,
+      device_voice_id, english_device_voice_id, speech_rate,
       shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -363,7 +395,9 @@ async function saveSettings(env, patch) {
       easy_seconds = excluded.easy_seconds,
       speech_source = excluded.speech_source,
       azure_voice_id = excluded.azure_voice_id,
+      english_azure_voice_id = excluded.english_azure_voice_id,
       device_voice_id = excluded.device_voice_id,
+      english_device_voice_id = excluded.english_device_voice_id,
       speech_rate = excluded.speech_rate,
       shuffle_enabled = excluded.shuffle_enabled,
       auto_speech_enabled = excluded.auto_speech_enabled,
@@ -377,7 +411,9 @@ async function saveSettings(env, patch) {
       settings.easySeconds,
       settings.source,
       settings.azureVoiceId,
+      settings.englishAzureVoiceId,
       settings.voiceId,
+      settings.englishVoiceId,
       settings.rate,
       settings.shuffleEnabled ? 1 : 0,
       settings.autoSpeechEnabled ? 1 : 0,
@@ -501,6 +537,7 @@ export default {
 export {
   escapeSsml,
   normalizeAzureSpeechVoice,
+  normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,

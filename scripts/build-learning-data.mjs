@@ -6,11 +6,19 @@ import { fileURLToPath } from "node:url";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceDirectory = path.join(projectRoot, "data", "source", "world-history");
+const englishSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "english-vocabulary",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
 const subjectId = "world-history";
 const subjectTitle = "世界史";
+const englishSubjectId = "english-vocabulary";
+const englishSubjectTitle = "英単語";
 const chunkSize = 50;
 const schemaVersion = 3;
 const masteryTarget = 2;
@@ -41,6 +49,19 @@ export const requiredHeaders = [
   "year_mnemonic",
   "source_name",
   "source_url",
+];
+
+export const englishRequiredHeaders = [
+  "dataset_label",
+  "term_id",
+  "importance_rank",
+  "difficulty_label",
+  "word",
+  "part_of_speech",
+  "meaning",
+  "accepted_answers",
+  "example_sentence",
+  "example_translation",
 ];
 
 const termFields = requiredHeaders.slice(0, 13);
@@ -442,6 +463,223 @@ export async function loadSourceDecks() {
   return { decks, terms };
 }
 
+export function toEnglishObjects(rows) {
+  if (rows.length < 2) {
+    throw new Error("英単語CSVに見出し行とデータ行が必要です。");
+  }
+  const headers = rows[0].map((header, index) =>
+    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
+  );
+  if (
+    headers.length !== englishRequiredHeaders.length ||
+    headers.some((header, index) => header !== englishRequiredHeaders[index])
+  ) {
+    throw new Error("英単語CSVの見出しまたは並び順が10列形式と一致しません。");
+  }
+  return rows.slice(1).map((cells, rowIndex) => {
+    if (cells.length !== headers.length) {
+      throw new Error(
+        `${rowIndex + 2}行目の列数が見出しと一致しません（${cells.length}/${headers.length}）。`,
+      );
+    }
+    return Object.fromEntries(
+      headers.map((header, columnIndex) => [header, cells[columnIndex].trim()]),
+    );
+  });
+}
+
+function vocabularyQuestion({
+  id,
+  stage,
+  focus,
+  label,
+  prompt,
+  answer,
+  acceptedAnswers = [],
+  answerNote = "",
+  promptLanguage,
+  answerSpeech,
+  hideTermUntilAnswer = false,
+}) {
+  return {
+    id,
+    stage,
+    focus,
+    type:
+      stage === "beginner"
+        ? "identify"
+        : stage === "reverse"
+          ? "reverse"
+          : "integrated",
+    label,
+    prompt,
+    answer,
+    keywords: [answer],
+    acceptedAnswers,
+    answerNote,
+    yearMnemonic: "",
+    source: { name: "", url: "" },
+    hideTermUntilAnswer,
+    speech: {
+      question: [{ text: prompt, language: promptLanguage }],
+      answer: answerSpeech,
+    },
+  };
+}
+
+export function groupEnglishTerms(rows) {
+  const termIds = new Set();
+  const words = new Set();
+  const ranks = new Set();
+  const terms = rows.map((row, rowIndex) => {
+    const rowNumber = rowIndex + 2;
+    englishRequiredHeaders.forEach((fieldName) =>
+      assertRequiredText(row, fieldName, rowNumber),
+    );
+    if (termIds.has(row.term_id)) {
+      throw new Error(`英単語IDが重複しています: ${row.term_id}`);
+    }
+    if (words.has(row.word)) {
+      throw new Error(`英単語が重複しています: ${row.word}`);
+    }
+    const importanceRank = parseInteger(
+      row.importance_rank,
+      "importance_rank",
+      rowNumber,
+    );
+    if (ranks.has(importanceRank)) {
+      throw new Error(`英単語の重要度順位が重複しています: ${importanceRank}`);
+    }
+    termIds.add(row.term_id);
+    words.add(row.word);
+    ranks.add(importanceRank);
+
+    const acceptedAnswers = splitPipeList(row.accepted_answers).filter(
+      (answer) => answer !== row.meaning,
+    );
+    const detail = [
+      `品詞：${row.part_of_speech}`,
+      `例文：${row.example_sentence}`,
+      `和訳：${row.example_translation}`,
+    ].join("\n");
+    const exampleSpeech = [
+      { text: row.example_sentence, language: "en-US" },
+      { text: row.example_translation, language: "ja-JP" },
+    ];
+
+    return {
+      id: row.term_id,
+      datasetLabel: row.dataset_label,
+      importanceRank,
+      difficultyLabel: row.difficulty_label,
+      category: row.part_of_speech,
+      term: row.word,
+      reading: `品詞：${row.part_of_speech}`,
+      aliases: [],
+      era: "",
+      geography: { macroRegion: "", regionDetail: "" },
+      chronology: { displayPeriod: "", sortYear: importanceRank },
+      integratedAsExplanation: false,
+      stages: {
+        beginner: [
+          vocabularyQuestion({
+            id: `${row.term_id}-B01`,
+            stage: "beginner",
+            focus: "英語から意味",
+            label: "英語から意味",
+            prompt: row.word,
+            answer: row.meaning,
+            acceptedAnswers,
+            answerNote: detail,
+            promptLanguage: "en-US",
+            answerSpeech: [
+              { text: row.meaning, language: "ja-JP" },
+              ...exampleSpeech,
+            ],
+          }),
+        ],
+        reverse: [
+          vocabularyQuestion({
+            id: `${row.term_id}-R01`,
+            stage: "reverse",
+            focus: "意味から英語",
+            label: "意味から英語",
+            prompt: row.meaning,
+            answer: row.word,
+            answerNote: detail,
+            promptLanguage: "ja-JP",
+            answerSpeech: [
+              { text: row.word, language: "en-US" },
+              ...exampleSpeech,
+            ],
+            hideTermUntilAnswer: true,
+          }),
+        ],
+        integrated: [
+          vocabularyQuestion({
+            id: `${row.term_id}-I01`,
+            stage: "integrated",
+            focus: "例文から和訳",
+            label: "例文から和訳",
+            prompt: row.example_sentence,
+            answer: row.example_translation,
+            answerNote: `品詞：${row.part_of_speech}\n単語：${row.word}（${row.meaning}）`,
+            promptLanguage: "en-US",
+            answerSpeech: [
+              { text: row.example_translation, language: "ja-JP" },
+              { text: row.word, language: "en-US" },
+              { text: row.meaning, language: "ja-JP" },
+            ],
+          }),
+        ],
+      },
+      source: { name: "", url: "" },
+    };
+  });
+  validateTerms(terms);
+  return terms;
+}
+
+export async function loadEnglishDecks() {
+  const entries = await readdir(englishSourceDirectory, { withFileTypes: true });
+  const sourcePaths = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
+    .map((entry) => path.join(englishSourceDirectory, entry.name))
+    .sort();
+  if (sourcePaths.length === 0) {
+    throw new Error("英単語の元CSVがありません。");
+  }
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupEnglishTerms(toEnglishObjects(parseCsv(sourceText)));
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(`${path.basename(sourcePath)}のデッキ名が統一されていません。`);
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      return {
+        id: `deck-${number}`,
+        number,
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: `en-${sourceVersion(sourceText)}`,
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "英単語Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validateTerms(terms);
+  return { decks, terms };
+}
+
 async function writeJson(targetPath, value) {
   await mkdir(path.dirname(targetPath), { recursive: true });
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
@@ -522,32 +760,13 @@ export async function loadTermImageManifest(terms) {
   return manifest;
 }
 
-export async function main() {
-  const { decks, terms } = await loadSourceDecks();
-  const termImageManifest = await loadTermImageManifest(terms);
-
-  const version = createHash("sha256")
-    .update(decks.map((deck) => `${deck.sourceFile}\0${deck.version}`).join("\0"))
-    .digest("hex")
-    .slice(0, 12);
-  const relativeOutput = path.relative(projectRoot, outputRoot);
-  if (!relativeOutput || relativeOutput.startsWith("..") || path.isAbsolute(relativeOutput)) {
-    throw new Error("出力先が作業フォルダー内ではありません。");
-  }
-  await rm(outputRoot, { recursive: true, force: true });
-  if (termImageManifest.assets.length > 0) {
-    await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
-      recursive: true,
-    });
-  }
-  await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
-
+async function writeSubjectData(definition, decks) {
   const deckEntries = [];
   for (const deck of decks) {
     const basePath =
       deck.number === 1
-        ? `subjects/${subjectId}`
-        : `subjects/${subjectId}/${deck.id}`;
+        ? `subjects/${definition.id}`
+        : `subjects/${definition.id}/${deck.id}`;
     const chunks = [];
     for (let offset = 0; offset < deck.terms.length; offset += chunkSize) {
       const chunkNumber = chunks.length + 1;
@@ -556,7 +775,7 @@ export async function main() {
       const chunkTerms = deck.terms.slice(offset, offset + chunkSize);
       await writeJson(path.join(outputRoot, relativePath), {
         schemaVersion,
-        subjectId,
+        subjectId: definition.id,
         deckId: deck.id,
         chunkNumber,
         terms: chunkTerms,
@@ -578,13 +797,16 @@ export async function main() {
     const subjectIndexPath = `${basePath}/index.json`;
     await writeJson(path.join(outputRoot, subjectIndexPath), {
       schemaVersion,
-      id: subjectId,
-      title: subjectTitle,
+      id: definition.id,
+      title: definition.title,
+      learningType: definition.learningType,
+      filterLabels: definition.filterLabels,
+      stageLabels: definition.stageLabels,
       deckId: deck.id,
       deckNumber: deck.number,
       datasetLabel: deck.datasetLabel,
       difficultyLabel: deck.difficultyLabel,
-      description: "短答から逆一問一答、統合説明へ進む大学受験世界史データ",
+      description: definition.description,
       version: deck.version,
       sourceFile: deck.sourceFile,
       termCount: deck.terms.length,
@@ -605,31 +827,107 @@ export async function main() {
     });
   }
 
+  const terms = decks.flatMap((deck) => deck.terms);
   const questionCounts = countQuestionsByStage(terms);
-  const questionCount = Object.values(questionCounts).reduce((sum, count) => sum + count, 0);
+  const questionCount = Object.values(questionCounts).reduce(
+    (sum, count) => sum + count,
+    0,
+  );
   const firstDeckNumber = decks[0].number;
   const lastDeckNumber = decks.at(-1).number;
-  const datasetLabel = `世界史段階別デッキ｜Deck ${firstDeckNumber}〜${lastDeckNumber}`;
+  const range =
+    firstDeckNumber === lastDeckNumber
+      ? `Deck ${firstDeckNumber}`
+      : `Deck ${firstDeckNumber}〜${lastDeckNumber}`;
+  return {
+    id: definition.id,
+    title: definition.title,
+    description: definition.description,
+    learningType: definition.learningType,
+    datasetLabel: `${definition.catalogLabel}｜${range}`,
+    termCount: terms.length,
+    questionCount,
+    indexPath: deckEntries[0].indexPath,
+    defaultDeckId: deckEntries[0].id,
+    decks: deckEntries,
+  };
+}
+
+export async function main() {
+  const [worldHistoryData, englishData] = await Promise.all([
+    loadSourceDecks(),
+    loadEnglishDecks(),
+  ]);
+  const termImageManifest = await loadTermImageManifest(worldHistoryData.terms);
+
+  const allDecks = [...worldHistoryData.decks, ...englishData.decks];
+  const version = createHash("sha256")
+    .update(allDecks.map((deck) => `${deck.sourceFile}\0${deck.version}`).join("\0"))
+    .digest("hex")
+    .slice(0, 12);
+  const relativeOutput = path.relative(projectRoot, outputRoot);
+  if (!relativeOutput || relativeOutput.startsWith("..") || path.isAbsolute(relativeOutput)) {
+    throw new Error("出力先が作業フォルダー内ではありません。");
+  }
+  await rm(outputRoot, { recursive: true, force: true });
+  if (termImageManifest.assets.length > 0) {
+    await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
+      recursive: true,
+    });
+  }
+  await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
+
+  const subjects = await Promise.all([
+    writeSubjectData(
+      {
+        id: subjectId,
+        title: subjectTitle,
+        catalogLabel: "世界史段階別デッキ",
+        description: "短答から逆一問一答、統合説明へ進む大学受験世界史",
+        learningType: "history",
+        filterLabels: {
+          macroRegion: "大分類の地域",
+          regionDetail: "小分類の地域",
+          category: "カテゴリ",
+        },
+        stageLabels: {
+          all: "三段階すべて",
+          beginner: "通常の一問一答",
+          reverse: "逆一問一答",
+          integrated: "統合説明",
+        },
+      },
+      worldHistoryData.decks,
+    ),
+    writeSubjectData(
+      {
+        id: englishSubjectId,
+        title: englishSubjectTitle,
+        catalogLabel: "英単語段階別デッキ",
+        description: "英語・意味・例文の三方向から覚える大学受験英単語",
+        learningType: "vocabulary",
+        filterLabels: { category: "品詞" },
+        stageLabels: {
+          all: "三方向すべて",
+          beginner: "英語から意味",
+          reverse: "意味から英語",
+          integrated: "例文から和訳",
+        },
+      },
+      englishData.decks,
+    ),
+  ]);
 
   await writeJson(path.join(outputRoot, "index.json"), {
     schemaVersion,
     version,
-    subjects: [
-      {
-        id: subjectId,
-        title: subjectTitle,
-        datasetLabel,
-        termCount: terms.length,
-        questionCount,
-        indexPath: deckEntries[0].indexPath,
-        defaultDeckId: deckEntries[0].id,
-        decks: deckEntries,
-      },
-    ],
+    subjects,
   });
 
+  const worldCounts = countQuestionsByStage(worldHistoryData.terms);
+  const englishCounts = countQuestionsByStage(englishData.terms);
   console.log(
-    `${decks.length}デッキ・${terms.length}用語・${questionCount}問（短答${questionCounts.beginner}、逆一問一答${questionCounts.reverse}、統合説明${questionCounts.integrated}）を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

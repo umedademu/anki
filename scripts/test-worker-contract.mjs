@@ -137,6 +137,7 @@ const settings = normalizeSettings({
   rate: 1.2,
   shuffleEnabled: true,
   autoSpeechEnabled: false,
+  listeningPauseSeconds: 2.5,
 });
 if (
   settings.againSeconds !== 90 ||
@@ -148,7 +149,8 @@ if (
   settings.voiceId !== "device-voice-id" ||
   settings.rate !== 1.2 ||
   !settings.shuffleEnabled ||
-  settings.autoSpeechEnabled
+  settings.autoSpeechEnabled ||
+  settings.listeningPauseSeconds !== 2.5
 ) {
   throw new Error("Cloudflareへ保存する共通設定を正規化できませんでした。");
 }
@@ -160,7 +162,8 @@ if (
   browserSettings.voiceId !== "device-voice-id" ||
   browserSettings.rate !== 1.2 ||
   !browserSettings.shuffleEnabled ||
-  browserSettings.autoSpeechEnabled
+  browserSettings.autoSpeechEnabled ||
+  browserSettings.listeningPauseSeconds !== 2.5
 ) {
   throw new Error("Cloudflareの共通設定をブラウザー側へ反映できませんでした。");
 }

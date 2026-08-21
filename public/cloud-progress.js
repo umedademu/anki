@@ -16,7 +16,13 @@ export const defaultSharedSettings = Object.freeze({
   ...defaultSpeechSettings,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
+  listeningPauseSeconds: 0,
 });
+
+export function normalizeListeningPauseSeconds(value) {
+  const seconds = Number(value);
+  return Number.isFinite(seconds) ? Math.min(60, Math.max(0, seconds)) : 0;
+}
 
 export function normalizeSharedSettings(value) {
   const source = value && typeof value === "object" ? value : {};
@@ -29,6 +35,9 @@ export function normalizeSharedSettings(value) {
       source.autoSpeechEnabled == null
         ? true
         : source.autoSpeechEnabled === true || source.autoSpeechEnabled === "true",
+    listeningPauseSeconds: normalizeListeningPauseSeconds(
+      source.listeningPauseSeconds,
+    ),
   };
 }
 

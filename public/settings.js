@@ -5,6 +5,7 @@ import {
 import {
   getStoredAccessKey,
   loadCloudState,
+  normalizeListeningPauseSeconds,
   requestCloudSpeech,
   saveCloudSettings,
   storeAccessKey,
@@ -38,6 +39,7 @@ const elements = {
   deviceVoice: document.querySelector("#device-voice"),
   speechRate: document.querySelector("#speech-rate"),
   speechRateOutput: document.querySelector("#speech-rate-output"),
+  listeningPauseSeconds: document.querySelector("#listening-pause-seconds"),
   previewSpeech: document.querySelector("#preview-speech"),
   saveSpeechSettings: document.querySelector("#save-speech-settings"),
   speechStatus: document.querySelector("#speech-settings-status"),
@@ -61,6 +63,15 @@ function readSpeechForm() {
     voiceId: elements.deviceVoice.value,
     rate: Number(elements.speechRate.value),
   });
+}
+
+function readSharedSpeechForm() {
+  return {
+    ...readSpeechForm(),
+    listeningPauseSeconds: normalizeListeningPauseSeconds(
+      elements.listeningPauseSeconds.value,
+    ),
+  };
 }
 
 function setSpeechStatus(message, isError = false) {
@@ -108,6 +119,9 @@ function fillSpeechForm(settings) {
   elements.speechSource.value = speechSettings.source;
   elements.azureVoice.value = speechSettings.azureVoiceId;
   elements.speechRate.value = String(speechSettings.rate);
+  elements.listeningPauseSeconds.value = String(
+    normalizeListeningPauseSeconds(settings?.listeningPauseSeconds),
+  );
   populateDeviceVoices();
   elements.deviceVoice.value = [...elements.deviceVoice.options].some(
     (option) => option.value === speechSettings.voiceId,
@@ -194,7 +208,7 @@ async function connect() {
     const cloudState = await loadCloudState();
     fillForm(cloudState.settings);
     speechSettings = saveSpeechSettings(cloudState.settings);
-    fillSpeechForm(speechSettings);
+    fillSpeechForm(cloudState.settings);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
@@ -242,9 +256,9 @@ elements.previewSpeech.addEventListener("click", () => {
 elements.saveSpeechSettings.addEventListener("click", async () => {
   setBusy(true);
   try {
-    const saved = await saveCloudSettings(readSpeechForm());
+    const saved = await saveCloudSettings(readSharedSpeechForm());
     speechSettings = saveSpeechSettings(saved);
-    fillSpeechForm(speechSettings);
+    fillSpeechForm(saved);
     setSpeechStatus("音声設定をCloudflareへ保存し、端末間で共有しました。");
   } catch (error) {
     setSpeechStatus(error.message, true);

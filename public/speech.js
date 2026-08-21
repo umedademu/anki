@@ -97,7 +97,7 @@ export function createSpeechController({
     setCurrentTarget("");
   }
 
-  function speak(segments) {
+  function speak(segments, { onComplete = () => {} } = {}) {
     if (!supported) {
       return false;
     }
@@ -208,6 +208,7 @@ export function createSpeechController({
       const segment = queue.shift();
       if (!segment) {
         setCurrentTarget("");
+        onComplete();
         return;
       }
 

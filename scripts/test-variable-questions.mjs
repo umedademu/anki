@@ -143,6 +143,9 @@ const afterBeginner = createQuestionQueue(terms, progress, masteryTarget, "", st
 if (!afterBeginner.some((task) => task.questionId === "A-R01")) {
   throw new Error("新しく解放した逆一問一答がデッキへ追加されませんでした。");
 }
+if (afterBeginner.some((task) => task.questionId.startsWith("A-B"))) {
+  throw new Error("簡単を選んだ問題が6日後より前の読み上げ・出題対象に残りました。");
+}
 
 const sixDaysLater = new Date(startAt.getTime() + defaultReviewSettings.easySeconds * 1000);
 const additiveQueue = createQuestionQueue(terms, progress, masteryTarget, "", sixDaysLater);

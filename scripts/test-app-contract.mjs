@@ -37,6 +37,10 @@ const sharedSettingsMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0003_shared_settings.sql"),
   "utf8",
 );
+const listeningPauseMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0004_listening_pause.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -72,14 +76,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.031") ||
-  !changelog.includes("v0.031") ||
-  !settingsHtml.includes("v0.031")
+  !html.includes("v0.032") ||
+  !changelog.includes("v0.032") ||
+  !settingsHtml.includes("v0.032")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.031"') ||
+  !html.includes('href="/styles.css?v=0.032"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -161,7 +165,9 @@ if (
   !app.includes("function renderQuestionImage(question, visible)") ||
   !app.includes("const image = state.questionImages.get(question.id)") ||
   !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
-  !app.includes("const showsTermImage = renderQuestionImage(question, state.answerVisible)") ||
+  !app.match(
+    /const showsTermImage = renderQuestionImage\(\s*question,\s*state\.answerVisible && allowsExplanation,\s*\)/,
+  ) ||
   !styles.includes(".term-overview-main.has-image") ||
   !styles.includes(".term-overview.has-image .term-image img") ||
   !styles.includes("grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr)") ||
@@ -219,7 +225,8 @@ if (
 if (
   !cloudProgress.includes("normalizeSharedSettings") ||
   !cloudProgress.includes('method: "PATCH"') ||
-  !settingsApp.includes("saveCloudSettings(readSpeechForm())") ||
+  !settingsApp.includes("saveCloudSettings(readSharedSpeechForm())") ||
+  !settingsApp.includes("fillSpeechForm(saved)") ||
   !app.includes("queueSetupPreferenceSave") ||
   app.includes("anki-shuffle:") ||
   app.includes("anki-auto-speech:v1") ||
@@ -228,9 +235,29 @@ if (
   !sharedSettingsMigration.includes("speech_source") ||
   !sharedSettingsMigration.includes("azure_voice_id") ||
   !sharedSettingsMigration.includes("device_voice_id") ||
-  !sharedSettingsMigration.includes("speech_rate")
+  !sharedSettingsMigration.includes("speech_rate") ||
+  !listeningPauseMigration.includes("listening_pause_seconds")
 ) {
   throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
+}
+if (
+  !html.includes('name="study-mode" value="memorize"') ||
+  !html.includes('name="study-mode" value="listen-answer"') ||
+  !html.includes('name="study-mode" value="listen-explanation"') ||
+  !html.includes('id="listening-dock"') ||
+  !html.includes('id="listening-toggle"') ||
+  !html.includes('id="listening-stop"') ||
+  !settingsHtml.includes('id="listening-pause-seconds"') ||
+  !app.includes("function beginListeningQuestion()") ||
+  !app.includes("function speakListeningAnswer(runId)") ||
+  !app.includes('state.studyMode === "listen-explanation"') ||
+  !app.includes("createQuestionQueue(") ||
+  !cloudProgress.includes("listeningPauseSeconds: 0") ||
+  !worker.includes("listening_pause_seconds") ||
+  !styles.includes(".study-mode-options") ||
+  !styles.includes(".listening-dock")
+) {
+  throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
 }
 if (
   !app.includes(
@@ -244,7 +271,7 @@ if (
 if (
   !styles.includes(".progress-track {\n    height: 3px;\n    margin: 0;\n    grid-row: 2;") ||
   !styles.includes(".question-card {\n    display: flex;\n    flex-direction: column;\n    min-height: 0;\n    padding: 5px 12px;\n    grid-row: 3;") ||
-  !styles.includes(".action-dock {\n    position: static;\n    min-height: 0;\n    padding: 0;\n    grid-row: 4;")
+  !styles.includes(".action-dock,\n  .listening-dock {\n    position: static;\n    min-height: 0;\n    padding: 0;\n    grid-row: 4;")
 ) {
   throw new Error("横向き画面の問題・操作欄に固定の配置行がありません。");
 }
@@ -320,5 +347,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・Azure音声選択・Cloudflare共通設定を確認",
+  "画面構成検証完了: 4段階評価・聞き流し・Cloudflare共通設定を確認",
 );

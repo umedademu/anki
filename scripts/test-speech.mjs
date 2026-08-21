@@ -128,10 +128,14 @@ const controller = createSpeechController({
 if (!controller.supported) {
   throw new Error("利用可能な読み上げ機能を認識できませんでした。");
 }
-controller.speak([
-  { target: "answer", text: "康熙帝(こうきてい)" },
-  { target: "overview", text: "鄭氏台湾(ていしたいわん)" },
-]);
+let completionCount = 0;
+controller.speak(
+  [
+    { target: "answer", text: "康熙帝(こうきてい)" },
+    { target: "overview", text: "鄭氏台湾(ていしたいわん)" },
+  ],
+  { onComplete: () => completionCount += 1 },
+);
 if (
   spoken.length !== 2 ||
   spoken[0].text !== "こうきてい" ||
@@ -142,7 +146,8 @@ if (
       item.rate !== 0.9 ||
       item.voice !== "日本語 高品質",
   ) ||
-  targetChanges.at(-1) !== ""
+  targetChanges.at(-1) !== "" ||
+  completionCount !== 1
 ) {
   throw new Error("回答と解説を順番に日本語で読み上げられませんでした。");
 }

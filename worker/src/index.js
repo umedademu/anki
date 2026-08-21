@@ -20,6 +20,7 @@ const defaultSettings = {
   rate: 1,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
+  listeningPauseSeconds: 0,
 };
 
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
@@ -156,6 +157,7 @@ function normalizeSettings(value) {
     shuffleEnabled: source.shuffleEnabled === true,
     autoSpeechEnabled:
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
+    listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
   };
 }
 
@@ -299,7 +301,7 @@ async function readState(env, datasetVersion) {
     env.DB.prepare(
       `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
         speech_source, azure_voice_id, device_voice_id, speech_rate,
-        shuffle_enabled, auto_speech_enabled, updated_at
+        shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
   ]);
@@ -337,6 +339,7 @@ async function readState(env, datasetVersion) {
           rate: settingsRow.speech_rate,
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
+          listeningPauseSeconds: settingsRow.listening_pause_seconds,
           updatedAt: settingsRow.updated_at,
         }
       : defaultSettings,
@@ -351,8 +354,8 @@ async function saveSettings(env, patch) {
     `INSERT INTO review_settings (
       profile_id, again_seconds, hard_seconds, good_seconds, easy_seconds,
       speech_source, azure_voice_id, device_voice_id, speech_rate,
-      shuffle_enabled, auto_speech_enabled, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      shuffle_enabled, auto_speech_enabled, listening_pause_seconds, updated_at
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -364,6 +367,7 @@ async function saveSettings(env, patch) {
       speech_rate = excluded.speech_rate,
       shuffle_enabled = excluded.shuffle_enabled,
       auto_speech_enabled = excluded.auto_speech_enabled,
+      listening_pause_seconds = excluded.listening_pause_seconds,
       updated_at = excluded.updated_at`,
   )
     .bind(
@@ -377,6 +381,7 @@ async function saveSettings(env, patch) {
       settings.rate,
       settings.shuffleEnabled ? 1 : 0,
       settings.autoSpeechEnabled ? 1 : 0,
+      settings.listeningPauseSeconds,
       updatedAt,
     )
     .run();

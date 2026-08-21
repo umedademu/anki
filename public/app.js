@@ -26,6 +26,7 @@ import {
   getStoredAccessKey,
   importCloudProgress,
   loadCloudState,
+  normalizeListeningPauseSeconds,
   resetCloudProgress,
   requestCloudSpeech,
   saveCloudSettings,
@@ -45,6 +46,7 @@ const elements = {
   regionDetailFilter: document.querySelector("#region-detail-filter"),
   categoryFilter: document.querySelector("#category-filter"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
+  studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
   setupShuffle: document.querySelector("#setup-shuffle"),
   setupSpeech: document.querySelector("#setup-speech"),
   speechChoice: document.querySelector(".speech-choice"),
@@ -92,6 +94,10 @@ const elements = {
   hardAction: document.querySelector("#hard-action"),
   goodAction: document.querySelector("#good-action"),
   easyAction: document.querySelector("#easy-action"),
+  listeningDock: document.querySelector("#listening-dock"),
+  listeningStatus: document.querySelector("#listening-status"),
+  listeningToggle: document.querySelector("#listening-toggle"),
+  listeningStop: document.querySelector("#listening-stop"),
   completionCard: document.querySelector("#completion-card"),
   completionTitle: document.querySelector("#completion-title"),
   completionMessage: document.querySelector("#completion-message"),
@@ -116,6 +122,11 @@ const state = {
   answerVisible: false,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
+  listeningPauseSeconds: 0,
+  studyMode: "memorize",
+  listeningPaused: false,
+  listeningTimer: null,
+  listeningRunId: 0,
   selectedStage: "",
   answeredThisSession: 0,
   unlockMessage: "",
@@ -132,6 +143,32 @@ const speechController = createSpeechController({
   getSettings: loadSpeechSettings,
   onTargetChange: updateSpeechButtons,
 });
+
+const listeningModes = new Set(["listen-answer", "listen-explanation"]);
+
+function selectedStudyMode() {
+  return (
+    [...elements.studyModeOptions].find((option) => option.checked)?.value ??
+    "memorize"
+  );
+}
+
+function isListeningMode() {
+  return listeningModes.has(state.studyMode);
+}
+
+function clearListeningTimer() {
+  if (state.listeningTimer !== null) {
+    window.clearTimeout(state.listeningTimer);
+    state.listeningTimer = null;
+  }
+}
+
+function stopListeningSequence() {
+  state.listeningRunId += 1;
+  clearListeningTimer();
+  speechController.stop();
+}
 
 function getConfig() {
   const config = window.ANKI_CONFIG ?? {};
@@ -201,6 +238,10 @@ function showOnly(panel) {
     speechController.stop();
   }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
+  document.body.classList.toggle(
+    "is-listening",
+    panel === elements.studyShell && isListeningMode(),
+  );
   [
     elements.loadingPanel,
     elements.setupPanel,
@@ -289,6 +330,7 @@ async function loadProgressFromCloud() {
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
+    state.listeningPauseSeconds = 0;
     return;
   }
 
@@ -300,6 +342,9 @@ async function loadProgressFromCloud() {
   state.reviewSettings = normalizeReviewSettings(cloudState.settings);
   state.shuffleEnabled = cloudState.settings.shuffleEnabled;
   state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
+  state.listeningPauseSeconds = normalizeListeningPauseSeconds(
+    cloudState.settings.listeningPauseSeconds,
+  );
   saveSpeechSettings(cloudState.settings);
 
   const legacyProgress = readLegacyProgress();
@@ -331,11 +376,19 @@ function pushHistory(entry) {
 
 function renderActionControls() {
   const hasQuestion = Boolean(state.currentTask);
+  const listening = isListeningMode();
   const canGoBack = state.history.length > 0;
   const showsRatingActions = hasQuestion && state.answerVisible;
   elements.actionDock.classList.toggle("is-answer-visible", showsRatingActions);
   elements.actionDock.classList.toggle("is-back-only", !hasQuestion);
-  elements.actionDock.classList.toggle("is-hidden", !hasQuestion && !canGoBack);
+  elements.actionDock.classList.toggle(
+    "is-hidden",
+    listening || (!hasQuestion && !canGoBack),
+  );
+  elements.listeningDock.classList.toggle(
+    "is-hidden",
+    !listening || !hasQuestion,
+  );
   elements.backAction.disabled = !canGoBack;
   elements.nextAction.classList.toggle(
     "is-hidden",
@@ -353,7 +406,7 @@ function renderActionControls() {
 }
 
 function revealCurrentAnswer() {
-  if (!state.currentTask || state.answerVisible) {
+  if (isListeningMode() || !state.currentTask || state.answerVisible) {
     return;
   }
   speechController.stop();
@@ -368,7 +421,7 @@ function revealCurrentAnswer() {
 }
 
 async function goBackOneStep() {
-  if (state.saving) {
+  if (isListeningMode() || state.saving) {
     return;
   }
   speechController.stop();
@@ -433,7 +486,7 @@ async function goBackOneStep() {
 }
 
 function performRightSideAction(fromHalfScreen = false) {
-  if (!state.currentTask) {
+  if (isListeningMode() || !state.currentTask) {
     return;
   }
   if (!state.answerVisible) {
@@ -525,19 +578,149 @@ function speakTarget(target) {
 }
 
 function autoSpeakQuestion() {
-  if (state.autoSpeechEnabled) {
+  if (state.autoSpeechEnabled && !isListeningMode()) {
     speechController.speak(speechSegmentsFor("question"));
   }
 }
 
 function autoSpeakAnswerAndOverview() {
-  if (!state.autoSpeechEnabled) {
+  if (!state.autoSpeechEnabled || isListeningMode()) {
     return;
   }
   speechController.speak([
     ...speechSegmentsFor("answer"),
     ...speechSegmentsFor("overview"),
   ]);
+}
+
+function setListeningStatus(message) {
+  elements.listeningStatus.textContent = message;
+}
+
+function advanceListening(runId) {
+  if (
+    runId !== state.listeningRunId ||
+    state.listeningPaused ||
+    !isListeningMode()
+  ) {
+    return;
+  }
+  state.answeredThisSession += 1;
+  state.currentTask = state.queue.shift() ?? null;
+  if (!state.currentTask) {
+    buildQueue();
+    state.currentTask = state.queue.shift() ?? null;
+  }
+  if (!state.currentTask) {
+    renderQuestion();
+    return;
+  }
+  beginListeningQuestion();
+}
+
+function speakListeningAnswer(runId) {
+  if (
+    runId !== state.listeningRunId ||
+    state.listeningPaused ||
+    !isListeningMode()
+  ) {
+    return;
+  }
+  state.answerVisible = true;
+  renderQuestion();
+  const includesExplanation = state.studyMode === "listen-explanation";
+  setListeningStatus(
+    includesExplanation
+      ? "回答と解説を読み上げています"
+      : "回答を読み上げています",
+  );
+  const segments = [
+    ...speechSegmentsFor("answer"),
+    ...(includesExplanation ? speechSegmentsFor("overview") : []),
+  ];
+  const started = speechController.speak(segments, {
+    onComplete: () => {
+      if (runId !== state.listeningRunId) {
+        return;
+      }
+      state.listeningTimer = window.setTimeout(() => {
+        state.listeningTimer = null;
+        advanceListening(runId);
+      }, 0);
+    },
+  });
+  if (!started) {
+    advanceListening(runId);
+  }
+}
+
+function beginListeningQuestion() {
+  if (state.listeningPaused || !isListeningMode() || !state.currentTask) {
+    return;
+  }
+  clearListeningTimer();
+  const runId = ++state.listeningRunId;
+  state.answerVisible = false;
+  renderQuestion();
+  setListeningStatus("問題を読み上げています");
+  const started = speechController.speak(speechSegmentsFor("question"), {
+    onComplete: () => {
+      if (
+        runId !== state.listeningRunId ||
+        state.listeningPaused ||
+        !isListeningMode()
+      ) {
+        return;
+      }
+      const pauseSeconds = state.listeningPauseSeconds;
+      setListeningStatus(
+        pauseSeconds > 0
+          ? `${pauseSeconds}秒後に回答を読み上げます`
+          : "回答を読み上げます",
+      );
+      state.listeningTimer = window.setTimeout(() => {
+        state.listeningTimer = null;
+        speakListeningAnswer(runId);
+      }, pauseSeconds * 1000);
+    },
+  });
+  if (!started) {
+    speakListeningAnswer(runId);
+  }
+}
+
+function toggleListening() {
+  if (!isListeningMode() || !state.currentTask) {
+    return;
+  }
+  if (state.listeningPaused) {
+    state.listeningPaused = false;
+    elements.listeningToggle.textContent = "一時停止";
+    if (state.answerVisible) {
+      const runId = ++state.listeningRunId;
+      speakListeningAnswer(runId);
+    } else {
+      beginListeningQuestion();
+    }
+    return;
+  }
+  state.listeningPaused = true;
+  stopListeningSequence();
+  elements.listeningToggle.textContent = "再開";
+  setListeningStatus("聞き流しを一時停止しています");
+}
+
+function returnToSetup() {
+  stopListeningSequence();
+  state.listeningPaused = false;
+  state.currentTask = null;
+  state.queue = [];
+  state.answerVisible = false;
+  state.answeredThisSession = 0;
+  elements.listeningToggle.textContent = "一時停止";
+  showOnly(elements.setupPanel);
+  updateSetupPreview();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function renderTermTags(term, question, visible) {
@@ -690,18 +873,42 @@ function updateRegionDetailOptions(resetSelection = false) {
 function updateSetupPreview() {
   const terms = filterTermsBySelection(state.allTerms, selectedFilters());
   const selectedStage = elements.questionStyleFilter.value;
+  const studyMode = selectedStudyMode();
+  const listening = listeningModes.has(studyMode);
   const stages = learningStages.includes(selectedStage)
     ? [selectedStage]
     : learningStages;
   const questions = countQuestions(terms, stages);
+  const dueQuestions = createQuestionQueue(
+    terms,
+    state.progress,
+    state.subject.masteryTarget,
+    selectedStage,
+  ).length;
   const beginnerQuestions = terms.reduce(
     (total, term) => total + (term.stages.beginner?.length ?? 0),
     0,
   );
-  elements.startStudy.disabled = terms.length === 0 || !state.cloudReady;
+  elements.startStudy.disabled =
+    terms.length === 0 ||
+    !state.cloudReady ||
+    (listening && (!speechController.supported || dueQuestions === 0));
+  elements.startStudy.textContent = listening
+    ? "聞き流しを開始"
+    : "暗記モードを開始";
   elements.selectionSummary.textContent =
     terms.length === 0
       ? "条件に合う用語がありません。選択を変更してください。"
+      : listening && !speechController.supported
+        ? "この端末では音声読み上げを利用できません。"
+        : listening && dueQuestions === 0
+          ? "現在、復習時刻を迎えた読み上げ対象の問題はありません。"
+          : listening
+            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（${
+                studyMode === "listen-explanation"
+                  ? "問題文＋回答＋解説"
+                  : "問題文＋回答"
+              }）`
       : selectedStage
         ? `${terms.length}語・${questions}問（${questionStyleLabels[selectedStage]}）`
         : `${terms.length}語・${questions}問（開始時は通常の一問一答 ${beginnerQuestions}問）`;
@@ -750,9 +957,14 @@ function configureSetup() {
   elements.setupShuffle.checked = state.shuffleEnabled;
   elements.setupSpeech.checked = state.autoSpeechEnabled;
   elements.setupSpeech.disabled = !speechController.supported;
+  for (const option of elements.studyModeOptions) {
+    if (listeningModes.has(option.value)) {
+      option.disabled = !speechController.supported;
+    }
+  }
   elements.speechChoice.classList.toggle(
     "is-hidden",
-    !speechController.supported,
+    !speechController.supported || listeningModes.has(selectedStudyMode()),
   );
   [elements.questionSpeech, elements.answerSpeech, elements.overviewSpeech].forEach(
     (button) => button.classList.toggle("is-hidden", !speechController.supported),
@@ -804,7 +1016,9 @@ function renderQuestion() {
     : term.reading;
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
-  elements.questionNumber.textContent = `出題 ${state.answeredThisSession + 1}`;
+  elements.questionNumber.textContent = `${
+    isListeningMode() ? "聞き流し" : "出題"
+  } ${state.answeredThisSession + 1}`;
   elements.questionAxis.textContent = question.focus || question.label;
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,
@@ -827,7 +1041,10 @@ function renderQuestion() {
   elements.answerNote.textContent = question.answerNote;
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
-  const showsTermOverview = state.answerVisible && Boolean(integratedExplanation);
+  const allowsExplanation =
+    !isListeningMode() || state.studyMode === "listen-explanation";
+  const showsTermOverview =
+    state.answerVisible && allowsExplanation && Boolean(integratedExplanation);
   elements.termOverviewText.classList.toggle("is-hidden", !showsTermOverview);
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
@@ -837,13 +1054,18 @@ function renderQuestion() {
     elements.termOverviewText,
     integratedExplanation?.answer ?? "",
   );
-  const showsTermImage = renderQuestionImage(question, state.answerVisible);
+  const showsTermImage = renderQuestionImage(
+    question,
+    state.answerVisible && allowsExplanation,
+  );
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
   renderTermTags(term, question, showsSupplement);
 
   renderActionControls();
-  elements.queueProgress.textContent = `この回の残り ${state.queue.length + 1}問`;
+  elements.queueProgress.textContent = isListeningMode()
+    ? `一巡の残り ${state.queue.length + 1}問`
+    : `この回の残り ${state.queue.length + 1}問`;
   elements.unlockNotice.textContent = state.unlockMessage;
   elements.unlockNotice.classList.toggle("is-hidden", !state.unlockMessage);
   state.unlockMessage = "";
@@ -913,7 +1135,13 @@ function buildQueue() {
 async function rateCurrentQuestion(rating) {
   const term = currentTerm();
   const question = currentQuestion();
-  if (!term || !question || !state.answerVisible || state.saving) {
+  if (
+    isListeningMode() ||
+    !term ||
+    !question ||
+    !state.answerVisible ||
+    state.saving
+  ) {
     return;
   }
   speechController.stop();
@@ -1055,6 +1283,7 @@ async function beginStudy() {
     ),
   );
   state.selectedStage = elements.questionStyleFilter.value;
+  state.studyMode = selectedStudyMode();
   state.shuffleEnabled = elements.setupShuffle.checked;
   state.autoSpeechEnabled =
     speechController.supported && elements.setupSpeech.checked;
@@ -1066,15 +1295,22 @@ async function beginStudy() {
   state.unlockMessage = "";
   state.history = [];
   state.answerRevealedAt = 0;
+  state.listeningPaused = false;
+  clearListeningTimer();
+  elements.listeningToggle.textContent = "一時停止";
 
   const questionCount = countQuestions(state.terms, activeStages());
   const selectedStyle = questionStyleLabels[state.selectedStage];
   elements.completionTitle.textContent = state.selectedStage
     ? `${selectedStyle}：${state.terms.length}語・${questionCount}問を習得しました`
     : `${state.terms.length}語・${questionCount}問を完全習得しました`;
-  renderQuestion();
   showOnly(elements.studyShell);
-  autoSpeakQuestion();
+  if (isListeningMode()) {
+    beginListeningQuestion();
+  } else {
+    renderQuestion();
+    autoSpeakQuestion();
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
   startingStudy = false;
 }
@@ -1109,6 +1345,7 @@ async function start() {
       state.reviewSettings = { ...defaultReviewSettings };
       state.shuffleEnabled = false;
       state.autoSpeechEnabled = true;
+      state.listeningPauseSeconds = 0;
       state.cloudReady = false;
       state.cloudError = error.message;
     }
@@ -1119,6 +1356,9 @@ async function start() {
     state.unlockMessage = "";
     state.history = [];
     state.answerRevealedAt = 0;
+    state.studyMode = "memorize";
+    state.listeningPaused = false;
+    clearListeningTimer();
     state.saving = false;
 
     elements.subjectName.textContent = state.subject.title;
@@ -1140,6 +1380,15 @@ elements.macroRegionFilter.addEventListener("change", () => {
 elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
 elements.categoryFilter.addEventListener("change", updateSetupPreview);
 elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
+for (const option of elements.studyModeOptions) {
+  option.addEventListener("change", () => {
+    elements.speechChoice.classList.toggle(
+      "is-hidden",
+      !speechController.supported || listeningModes.has(selectedStudyMode()),
+    );
+    updateSetupPreview();
+  });
+}
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
   void queueSetupPreferenceSave().catch((error) => {
@@ -1167,6 +1416,8 @@ elements.incorrectAction.addEventListener("click", () => rateCurrentQuestion("ag
 elements.hardAction.addEventListener("click", () => rateCurrentQuestion("hard"));
 elements.goodAction.addEventListener("click", () => rateCurrentQuestion("good"));
 elements.easyAction.addEventListener("click", () => rateCurrentQuestion("easy"));
+elements.listeningToggle.addEventListener("click", toggleListening);
+elements.listeningStop.addEventListener("click", returnToSetup);
 
 elements.resetProgress.addEventListener("click", () => {
   if (window.confirm("すべての学習記録を初期化しますか？")) {
@@ -1176,6 +1427,9 @@ elements.resetProgress.addEventListener("click", () => {
 elements.retryButton.addEventListener("click", start);
 
 elements.studyShell.addEventListener("click", (event) => {
+  if (isListeningMode()) {
+    return;
+  }
   const usesHalfScreenNavigation = window.matchMedia(
     "(orientation: landscape) and (max-height: 600px)",
   ).matches;
@@ -1194,6 +1448,13 @@ elements.studyShell.addEventListener("click", (event) => {
 
 window.addEventListener("keydown", (event) => {
   if (event.target.closest("input, textarea, select") || event.repeat) {
+    return;
+  }
+  if (isListeningMode()) {
+    if (state.currentTask && (event.key === " " || event.key === "Enter")) {
+      event.preventDefault();
+      toggleListening();
+    }
     return;
   }
   if (event.key === "ArrowLeft") {
@@ -1230,7 +1491,7 @@ window.addEventListener("resize", () => {
 });
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden) {
+  if (document.hidden && !isListeningMode()) {
     speechController.stop();
   }
 });

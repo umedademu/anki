@@ -1041,10 +1041,8 @@ function renderQuestion() {
   elements.answerNote.textContent = question.answerNote;
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
-  const allowsExplanation =
-    !isListeningMode() || state.studyMode === "listen-explanation";
   const showsTermOverview =
-    state.answerVisible && allowsExplanation && Boolean(integratedExplanation);
+    state.answerVisible && Boolean(integratedExplanation);
   elements.termOverviewText.classList.toggle("is-hidden", !showsTermOverview);
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
@@ -1054,10 +1052,7 @@ function renderQuestion() {
     elements.termOverviewText,
     integratedExplanation?.answer ?? "",
   );
-  const showsTermImage = renderQuestionImage(
-    question,
-    state.answerVisible && allowsExplanation,
-  );
+  const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
   renderTermTags(term, question, showsSupplement);

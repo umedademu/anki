@@ -76,14 +76,14 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.032") ||
-  !changelog.includes("v0.032") ||
-  !settingsHtml.includes("v0.032")
+  !html.includes("v0.033") ||
+  !changelog.includes("v0.033") ||
+  !settingsHtml.includes("v0.033")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.032"') ||
+  !html.includes('href="/styles.css?v=0.033"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -165,9 +165,8 @@ if (
   !app.includes("function renderQuestionImage(question, visible)") ||
   !app.includes("const image = state.questionImages.get(question.id)") ||
   !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
-  !app.match(
-    /const showsTermImage = renderQuestionImage\(\s*question,\s*state\.answerVisible && allowsExplanation,\s*\)/,
-  ) ||
+  !app.includes("const showsTermOverview =\n    state.answerVisible && Boolean(integratedExplanation)") ||
+  !app.includes("const showsTermImage = renderQuestionImage(question, state.answerVisible)") ||
   !styles.includes(".term-overview-main.has-image") ||
   !styles.includes(".term-overview.has-image .term-image img") ||
   !styles.includes("grid-template-columns: minmax(0, 3fr) minmax(240px, 2fr)") ||
@@ -251,6 +250,7 @@ if (
   !app.includes("function beginListeningQuestion()") ||
   !app.includes("function speakListeningAnswer(runId)") ||
   !app.includes('state.studyMode === "listen-explanation"') ||
+  !app.includes("includesExplanation ? speechSegmentsFor(\"overview\") : []") ||
   !app.includes("createQuestionQueue(") ||
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
   !worker.includes("listening_pause_seconds") ||

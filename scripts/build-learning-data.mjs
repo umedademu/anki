@@ -74,19 +74,27 @@ const questionTypeLabels = {
   integrated: "統合説明",
 };
 
-export async function findSourcePath() {
+export async function findSourcePaths() {
   const entries = await readdir(sourceDirectory, { withFileTypes: true });
   const csvFiles = entries
     .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
     .map((entry) => entry.name)
     .sort();
 
-  if (csvFiles.length !== 1) {
+  if (csvFiles.length === 0) {
+    throw new Error("世界史の元CSVがありません。");
+  }
+  return csvFiles.map((fileName) => path.join(sourceDirectory, fileName));
+}
+
+export async function findSourcePath() {
+  const sourcePaths = await findSourcePaths();
+  if (sourcePaths.length !== 1) {
     throw new Error(
-      `世界史の元CSVは1ファイルだけ配置してください（現在${csvFiles.length}ファイル）。`,
+      `世界史の元CSVが複数あります。findSourcePathsを使用してください（現在${sourcePaths.length}ファイル）。`,
     );
   }
-  return path.join(sourceDirectory, csvFiles[0]);
+  return sourcePaths[0];
 }
 
 export function parseCsv(text) {
@@ -353,6 +361,11 @@ export function validateTerms(terms) {
   assertUnique(terms, (term) => term.id, "用語ID");
   assertUnique(terms, (term) => term.term, "用語名");
   assertUnique(terms, (term) => term.importanceRank, "重要度順位");
+  assertUnique(
+    terms.flatMap((term) => Object.values(term.stages).flat()),
+    (question) => question.id,
+    "問題ID",
+  );
 
   for (const term of terms) {
     const contextMissingQuestions = term.stages.beginner.filter(
@@ -383,6 +396,50 @@ export function countQuestionsByStage(terms) {
       terms.reduce((sum, term) => sum + term.stages[stage].length, 0),
     ]),
   );
+}
+
+function sourceVersion(sourceText) {
+  return createHash("sha256").update(sourceText).digest("hex").slice(0, 12);
+}
+
+function deckNumberFromLabel(datasetLabel, sourcePath) {
+  const match = String(datasetLabel).match(/Deck\s*(\d+)/i);
+  if (!match) {
+    throw new Error(`${path.basename(sourcePath)}のデータセット名からDeck番号を判別できません。`);
+  }
+  return Number(match[1]);
+}
+
+export async function loadSourceDecks() {
+  const sourcePaths = await findSourcePaths();
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupTerms(toObjects(parseCsv(sourceText)));
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(`${path.basename(sourcePath)}のデッキ名がファイル内で統一されていません。`);
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      return {
+        id: `deck-${deckNumberFromLabel(datasetLabel, sourcePath)}`,
+        number: deckNumberFromLabel(datasetLabel, sourcePath),
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: sourceVersion(sourceText),
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validateTerms(terms);
+  return { decks, terms };
 }
 
 async function writeJson(targetPath, value) {
@@ -439,6 +496,11 @@ export async function loadTermImageManifest(terms) {
     }
     fallbackTermIds.add(fallback.termId);
   }
+  if (fallbackTermIds.size !== termIds.size) {
+    throw new Error(
+      `用語の基準画像が不足しています（${fallbackTermIds.size}/${termIds.size}）。`,
+    );
+  }
   const assignedQuestionIds = new Set();
   for (const assignment of manifest.assignments) {
     if (
@@ -452,17 +514,22 @@ export async function loadTermImageManifest(terms) {
     }
     assignedQuestionIds.add(assignment.questionId);
   }
+  if (assignedQuestionIds.size !== questionIds.size) {
+    throw new Error(
+      `問題別画像の割り当てが不足しています（${assignedQuestionIds.size}/${questionIds.size}）。`,
+    );
+  }
   return manifest;
 }
 
 export async function main() {
-  const sourcePath = await findSourcePath();
-  const sourceText = await readFile(sourcePath, "utf8");
-  const terms = groupTerms(toObjects(parseCsv(sourceText)));
-  validateTerms(terms);
+  const { decks, terms } = await loadSourceDecks();
   const termImageManifest = await loadTermImageManifest(terms);
 
-  const version = createHash("sha256").update(sourceText).digest("hex").slice(0, 12);
+  const version = createHash("sha256")
+    .update(decks.map((deck) => `${deck.sourceFile}\0${deck.version}`).join("\0"))
+    .digest("hex")
+    .slice(0, 12);
   const relativeOutput = path.relative(projectRoot, outputRoot);
   if (!relativeOutput || relativeOutput.startsWith("..") || path.isAbsolute(relativeOutput)) {
     throw new Error("出力先が作業フォルダー内ではありません。");
@@ -475,45 +542,74 @@ export async function main() {
   }
   await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
 
-  const chunks = [];
-  for (let offset = 0; offset < terms.length; offset += chunkSize) {
-    const chunkNumber = chunks.length + 1;
-    const fileName = `${String(chunkNumber).padStart(4, "0")}.json`;
-    const relativePath = `subjects/${subjectId}/chunks/${fileName}`;
-    const chunkTerms = terms.slice(offset, offset + chunkSize);
-    await writeJson(path.join(outputRoot, relativePath), {
+  const deckEntries = [];
+  for (const deck of decks) {
+    const basePath =
+      deck.number === 1
+        ? `subjects/${subjectId}`
+        : `subjects/${subjectId}/${deck.id}`;
+    const chunks = [];
+    for (let offset = 0; offset < deck.terms.length; offset += chunkSize) {
+      const chunkNumber = chunks.length + 1;
+      const fileName = `${String(chunkNumber).padStart(4, "0")}.json`;
+      const relativePath = `${basePath}/chunks/${fileName}`;
+      const chunkTerms = deck.terms.slice(offset, offset + chunkSize);
+      await writeJson(path.join(outputRoot, relativePath), {
+        schemaVersion,
+        subjectId,
+        deckId: deck.id,
+        chunkNumber,
+        terms: chunkTerms,
+      });
+      chunks.push({
+        number: chunkNumber,
+        path: relativePath,
+        count: chunkTerms.length,
+        firstTerm: chunkTerms[0].term,
+        lastTerm: chunkTerms.at(-1).term,
+      });
+    }
+
+    const questionCounts = countQuestionsByStage(deck.terms);
+    const questionCount = Object.values(questionCounts).reduce(
+      (sum, count) => sum + count,
+      0,
+    );
+    const subjectIndexPath = `${basePath}/index.json`;
+    await writeJson(path.join(outputRoot, subjectIndexPath), {
       schemaVersion,
-      subjectId,
-      chunkNumber,
-      terms: chunkTerms,
+      id: subjectId,
+      title: subjectTitle,
+      deckId: deck.id,
+      deckNumber: deck.number,
+      datasetLabel: deck.datasetLabel,
+      difficultyLabel: deck.difficultyLabel,
+      description: "短答から逆一問一答、統合説明へ進む大学受験世界史データ",
+      version: deck.version,
+      sourceFile: deck.sourceFile,
+      termCount: deck.terms.length,
+      questionCount,
+      questionCounts,
+      masteryTarget,
+      chunks,
     });
-    chunks.push({
-      number: chunkNumber,
-      path: relativePath,
-      count: chunkTerms.length,
-      firstTerm: chunkTerms[0].term,
-      lastTerm: chunkTerms.at(-1).term,
+    deckEntries.push({
+      id: deck.id,
+      number: deck.number,
+      datasetLabel: deck.datasetLabel,
+      difficultyLabel: deck.difficultyLabel,
+      version: deck.version,
+      termCount: deck.terms.length,
+      questionCount,
+      indexPath: subjectIndexPath,
     });
   }
 
   const questionCounts = countQuestionsByStage(terms);
   const questionCount = Object.values(questionCounts).reduce((sum, count) => sum + count, 0);
-  const datasetLabel = terms[0].datasetLabel;
-  const subjectIndexPath = `subjects/${subjectId}/index.json`;
-  await writeJson(path.join(outputRoot, subjectIndexPath), {
-    schemaVersion,
-    id: subjectId,
-    title: subjectTitle,
-    datasetLabel,
-    description: "短答から逆一問一答、統合説明へ進む大学受験世界史データ",
-    version,
-    sourceFile: path.basename(sourcePath),
-    termCount: terms.length,
-    questionCount,
-    questionCounts,
-    masteryTarget,
-    chunks,
-  });
+  const firstDeckNumber = decks[0].number;
+  const lastDeckNumber = decks.at(-1).number;
+  const datasetLabel = `世界史段階別デッキ｜Deck ${firstDeckNumber}〜${lastDeckNumber}`;
 
   await writeJson(path.join(outputRoot, "index.json"), {
     schemaVersion,
@@ -525,13 +621,15 @@ export async function main() {
         datasetLabel,
         termCount: terms.length,
         questionCount,
-        indexPath: subjectIndexPath,
+        indexPath: deckEntries[0].indexPath,
+        defaultDeckId: deckEntries[0].id,
+        decks: deckEntries,
       },
     ],
   });
 
   console.log(
-    `${terms.length}用語・${questionCount}問（短答${questionCounts.beginner}、逆一問一答${questionCounts.reverse}、統合説明${questionCounts.integrated}）を${chunks.length}個に分割しました。`,
+    `${decks.length}デッキ・${terms.length}用語・${questionCount}問（短答${questionCounts.beginner}、逆一問一答${questionCounts.reverse}、統合説明${questionCounts.integrated}）を生成しました。`,
   );
 }
 

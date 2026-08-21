@@ -42,6 +42,7 @@ const elements = {
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
+  deckFilter: document.querySelector("#deck-filter"),
   macroRegionFilter: document.querySelector("#macro-region-filter"),
   regionDetailFilter: document.querySelector("#region-detail-filter"),
   categoryFilter: document.querySelector("#category-filter"),
@@ -107,6 +108,9 @@ const elements = {
 };
 
 const state = {
+  deckEntries: [],
+  activeDeckId: "",
+  deckLoadToken: 0,
   subject: null,
   allTerms: [],
   terms: [],
@@ -821,6 +825,25 @@ function setSelectOptions(select, values, firstLabel) {
   }
 }
 
+function deckDisplayLabel(deck) {
+  const labelParts = String(deck?.datasetLabel ?? "").split("｜");
+  return labelParts.length > 1
+    ? labelParts.slice(1).join("｜")
+    : String(deck?.difficultyLabel ?? deck?.id ?? "デッキ");
+}
+
+function setDeckOptions(decks, selectedDeckId) {
+  elements.deckFilter.replaceChildren(
+    ...decks.map((deck) => {
+      const option = document.createElement("option");
+      option.value = deck.id;
+      option.textContent = deckDisplayLabel(deck);
+      return option;
+    }),
+  );
+  elements.deckFilter.value = selectedDeckId;
+}
+
 function selectedFilters() {
   return {
     macroRegion: elements.macroRegionFilter.value,
@@ -1330,6 +1353,64 @@ async function beginStudy() {
   startingStudy = false;
 }
 
+async function activateDeck(deckId) {
+  const deckEntry = state.deckEntries.find((deck) => deck.id === deckId);
+  if (!deckEntry) {
+    throw new Error("選択したデッキが見つかりません。");
+  }
+  const loadToken = state.deckLoadToken + 1;
+  state.deckLoadToken = loadToken;
+  elements.deckFilter.disabled = true;
+
+  const subject = await fetchJson(deckEntry.indexPath);
+  const chunks = await Promise.all(
+    subject.chunks.map((chunk) => fetchJson(chunk.path)),
+  );
+  if (loadToken !== state.deckLoadToken) return;
+
+  state.activeDeckId = deckEntry.id;
+  state.subject = subject;
+  state.allTerms = chunks.flatMap((chunk) => chunk.terms);
+  state.terms = [];
+  state.termById = new Map();
+  state.questionById = new Map();
+  state.progressKey = `anki-progress:${state.subject.id}:${state.subject.version}:v1`;
+  try {
+    await loadProgressFromCloud();
+  } catch (error) {
+    state.progress = createEmptyProgress();
+    state.reviewSettings = { ...defaultReviewSettings };
+    state.shuffleEnabled = false;
+    state.autoSpeechEnabled = true;
+    state.listeningPauseSeconds = 0;
+    state.cloudReady = false;
+    state.cloudError = error.message;
+  }
+  if (loadToken !== state.deckLoadToken) return;
+
+  state.queue = [];
+  state.currentTask = null;
+  state.answerVisible = false;
+  state.answeredThisSession = 0;
+  state.unlockMessage = "";
+  state.history = [];
+  state.answerRevealedAt = 0;
+  state.studyMode = "memorize";
+  state.listeningPaused = false;
+  clearListeningTimer();
+  state.saving = false;
+  elements.macroRegionFilter.value = "";
+  elements.regionDetailFilter.value = "";
+  elements.categoryFilter.value = "";
+  elements.deckFilter.value = deckEntry.id;
+  elements.deckFilter.disabled = false;
+  elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
+  configureSetup();
+  if (!state.cloudReady && state.cloudError) {
+    elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
+  }
+}
+
 async function start() {
   showOnly(elements.loadingPanel);
   try {
@@ -1343,44 +1424,13 @@ async function start() {
     if (!subjectEntry) {
       throw new Error("指定された科目が見つかりません。");
     }
-
-    state.subject = await fetchJson(subjectEntry.indexPath);
-    const chunks = await Promise.all(
-      state.subject.chunks.map((chunk) => fetchJson(chunk.path)),
-    );
-    state.allTerms = chunks.flatMap((chunk) => chunk.terms);
-    state.terms = [];
-    state.termById = new Map();
-    state.questionById = new Map();
-    state.progressKey = `anki-progress:${state.subject.id}:${state.subject.version}:v1`;
-    try {
-      await loadProgressFromCloud();
-    } catch (error) {
-      state.progress = createEmptyProgress();
-      state.reviewSettings = { ...defaultReviewSettings };
-      state.shuffleEnabled = false;
-      state.autoSpeechEnabled = true;
-      state.listeningPauseSeconds = 0;
-      state.cloudReady = false;
-      state.cloudError = error.message;
-    }
-    state.queue = [];
-    state.currentTask = null;
-    state.answerVisible = false;
-    state.answeredThisSession = 0;
-    state.unlockMessage = "";
-    state.history = [];
-    state.answerRevealedAt = 0;
-    state.studyMode = "memorize";
-    state.listeningPaused = false;
-    clearListeningTimer();
-    state.saving = false;
-
-    elements.subjectName.textContent = state.subject.title;
-    configureSetup();
-    if (!state.cloudReady && state.cloudError) {
-      elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
-    }
+    state.deckEntries =
+      Array.isArray(subjectEntry.decks) && subjectEntry.decks.length > 0
+        ? subjectEntry.decks
+        : [{ ...subjectEntry, id: "deck-1" }];
+    const defaultDeckId = subjectEntry.defaultDeckId ?? state.deckEntries[0].id;
+    setDeckOptions(state.deckEntries, defaultDeckId);
+    await activateDeck(defaultDeckId);
     showOnly(elements.setupPanel);
   } catch (error) {
     elements.errorMessage.textContent = error.message;
@@ -1388,6 +1438,16 @@ async function start() {
   }
 }
 
+elements.deckFilter.addEventListener("change", () => {
+  const deckId = elements.deckFilter.value;
+  showOnly(elements.loadingPanel);
+  void activateDeck(deckId)
+    .then(() => showOnly(elements.setupPanel))
+    .catch((error) => {
+      elements.errorMessage.textContent = error.message;
+      showOnly(elements.errorPanel);
+    });
+});
 elements.macroRegionFilter.addEventListener("change", () => {
   updateRegionDetailOptions(true);
   updateSetupPreview();

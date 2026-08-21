@@ -2,13 +2,7 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import {
-  findSourcePath,
-  groupTerms,
-  parseCsv,
-  toObjects,
-  validateTerms,
-} from "./build-learning-data.mjs";
+import { loadSourceDecks } from "./build-learning-data.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
@@ -117,6 +111,106 @@ const termFileOverrides = new Map([
   ["非同盟運動", "Gedung.Merdeka.jpg"],
   ["EC", "Flag of Europe.svg"],
   ["グローバル化", "Global Container International container.jpg"],
+  ["海の民", "Medinet Habu Ramses III. Tempel Nordostwand Abzeichnung 01.jpg"],
+  [
+    "エーゲ文明",
+    "Map of Aegean Civilization JF Horrabin; Ship Procession fresco 3, Akrotiri, Santorini 1550 B.C.jpg",
+  ],
+  ["宗法", "Western Zhou Ritual Containers.jpg"],
+  [
+    "塩鉄専売",
+    "0025-0220 Brick Relief with Salt-mining Scene Eastern Han Dynasty National Museum of China anagoria.jpg",
+  ],
+  ["士族", "Seven Sages of the Bamboo Grove 2.Nanjing Museum.jpg"],
+  ["ジズヤ", "Jizya document Chokmanovo 1615.jpg"],
+  ["ハラージュ", "Abbasid Caliphate 850AD.png"],
+  [
+    "マワーリー",
+    "Portrait of Abu Muslim (d. 755) from the genealogy (silsilanāma), Cream of Histories (Zübdet-üt Tevarih, 1598).jpg",
+  ],
+  ["フラグ", "Hulagu Khan resting.jpg"],
+  ["デーン朝", "Canute and Ælfgifu cropped (Canute).jpg"],
+  [
+    "カロリング＝ルネサンス",
+    "Evangeliarium - évangéliaire dit de Charlemagne ou de Godescalc - Jésus-Christ - BNF Gallica.jpg",
+  ],
+  ["三圃制", "Three Field System.svg"],
+  ["ローマ教皇", "Pope Leo III – Triclinium Leoninum.jpg"],
+  ["自治都市", "00 73774 Holstentor - Lübeck.jpg"],
+  ["コミューン", "Palazzo Pubblico in Siena.jpg"],
+  ["フランドル", "County of Flanders (topogaphy).png"],
+  ["グラナダ陥落", "La Rendición de Granada - Pradilla.jpg"],
+  ["首長法", "Holbein henry8 full length.jpg"],
+  ["統一法", "Elizabeth I (Armada Portrait).jpg"],
+  ["人身保護法", "Charles II (1675).jpg"],
+  [
+    "啓蒙専制君主",
+    "Portrait of Frederick II (the Great), King of Prussia, by Anton Graff at Sanssouci.jpg",
+  ],
+  ["ベーコン", "Portrait-Francis-Bacon.jpg"],
+  ["重農主義", "Quesnay Portrait.jpg"],
+  ["ミッレト制", "OttomanEmpireIn1683.png"],
+  ["連邦制", "United States Constitution.jpg"],
+  [
+    "旧制度",
+    "Opening of the Estates General at Versailles on 5th May 1789.jpg",
+  ],
+  ["国民議会", "Serment du Jeu de Paume - Jacques-Louis David.jpg"],
+  ["オーウェン", "Portrait of Robert Owen.png"],
+  ["フロンティア", "UnitedStatesExpansion.png"],
+  ["リンカン", "Abraham Lincoln O-77 by Gardner, 1863.jpg"],
+  ["全インド＝ムスリム連盟", "All India Muslim League Dhaka 1906.jpg"],
+  [
+    "中華民国",
+    "1912年1月1日，孙中山就职中华民国临时大总统后与总统府职员合影.jpg",
+  ],
+  ["ブロック経済", "Pacific Area - The Imperial Powers 1939 - Map.svg"],
+  ["コミンフォルム", "Eastern Bloc countries Europe 1948.png"],
+  ["ポーランド「連帯」", "Solidarity August 1980 gate of Gdańsk Shipyard.jpg"],
+  ["青銅器", "HouMuWuDingFullView.jpg"],
+  ["第1回三頭政治", "First Triumvirate of Caesar, Crassius and Pompey.jpg"],
+  ["ヴァルナ制", "Varna-Caste-South-india-srilanka.jpg"],
+  ["マヌ法典", "Manusmriti.jpg"],
+  ["アンコール朝", "Carte Empire-Khmer.png"],
+  ["春秋五覇", "Chinese plain 5c. BC-en.svg"],
+  ["江南開発", "Eastern Jin and Later Qin.png"],
+  ["玄宗", "Tang-xuanzong.jpg"],
+  ["ウイグル", "Map of the Uyghur Khaganate.png"],
+  ["パーニーパットの戦い", "1526-First Battle of Panipat-Ibrahim Lodhi and Babur.jpg"],
+  ["ツァーリ", "Ivan IV of Russia from Titulyarnik (17th c., GIM).jpg"],
+  ["主従関係", "Hommage au Moyen Age - miniature.jpg"],
+  ["封土", "Plan mediaeval manor.jpg"],
+  ["商人ギルド", "Merchant Adventurers' Hall.jpg"],
+  [
+    "ユートピア",
+    "Thomas More Utopia 1516 Libellus vere aureus nec minus salutaris quam festivus. De Optimo reipublicae Statu, deque nova Insula Utopia (Bibliothèque Mazarine).jpg",
+  ],
+  ["ネーデルラント独立戦争", "Geography 017 - Map of Leo Belgicus - 1611.jpg"],
+  ["ステュアート朝", "House of Stuart.png"],
+  ["ポーランド分割", "Partitions of Poland.png"],
+  ["ジロンド派", "Girondins execution.jpg"],
+  ["四国同盟", "Map of the Quadruple Alliance (1815).svg"],
+  ["ドイツ関税同盟", "Zollverein (1834).png"],
+  [
+    "平和共存",
+    "Photographs of President Dwight D. Eisenhower and Russian Premier Nikita Khrushchev Arriving at Camp David - DPLA - 22d2ad716857840dbff172b36bf0b5e4 (page 1).jpg",
+  ],
+  ["バビロン第1王朝", "Code Of Hammurabi.jpg"],
+  ["アラム人", "Neo-hittites et arameens.svg"],
+  [
+    "第2回三頭政治",
+    "M565681 The-Triumvirate-of-Mark-Antony-Marcus-Aemilius-Lepidus-and-Octavian-proclaiming-proscriptions-against-their-political-e.jpg",
+  ],
+  ["コロナトゥス", "Dominus Julius villa mosaic.jpg"],
+  ["冒頓単于", "Map of the Xiongnu, circa 150 BCE.png"],
+  ["六信五行", "Five pillars of Islam.svg"],
+  ["ジハード", "Map of expansion of Caliphate.svg"],
+  ["知恵の館", "Cheshm manuscript.jpg"],
+  ["プランタジネット朝", "Church of Fontevraud Abbey Henry II effigy.jpg"],
+  ["三省六部", "唐代三省六部制思维导图.png"],
+  ["租庸調", "Tang Silver Disc with Characters (9949889713).jpg"],
+  ["両税法", "Tang Dynasty - Jian Zhong Tong Bao.png"],
+  ["一国社会主義", "Stalin before 1929.jpg"],
 ]);
 
 function targetKey(term, target) {
@@ -142,6 +236,18 @@ const targetFileOverrides = new Map([
   [targetKey("インド独立", "パキスタン"), "Partition of India 1947 en.svg"],
   [targetKey("イスラエル建国", "ベン＝グリオン"), "David Ben-Gurion in 1952.jpg"],
   [targetKey("スエズ戦争", "ナセル"), "Official Portrait - Gamal Abdel Nasser.jpg"],
+  [
+    targetKey("クレイステネス", "デーモス"),
+    "Greece (ancient) Attica Demos.svg",
+  ],
+  [targetKey("ワット＝タイラーの乱", "ジョン＝ボール"), "William.Morris.John.Ball.jpg"],
+  [
+    targetKey("ワーテルローの戦い", "ウェリントン"),
+    "Wellington by Thomas Lawrence (1829).jpg",
+  ],
+  [targetKey("アレクサンドル2世", "人民の意志"), "Executive committee.jpg"],
+  [targetKey("イラン革命", "パフレヴィー2世"), "Mohammad Reza Pahlavi in 1973.jpg"],
+  [targetKey("イル＝ハン国", "フラグ"), "Hulagu Khan.jpg"],
 ]);
 
 const excludedTargetKeys = new Set([
@@ -165,6 +271,10 @@ const excludedTargetKeys = new Set([
   targetKey("GATT", "世界貿易機関"),
   targetKey("アジア・アフリカ会議", "インドネシア"),
   targetKey("アフリカの年", "フランス"),
+  targetKey("三省六部", "尚書省"),
+  targetKey("渤海", "大祚栄"),
+  targetKey("ウラービー運動", "ウラービー＝パシャ"),
+  targetKey("北京議定書", "列強十一か国"),
 ]);
 
 function decodeHtml(text) {
@@ -464,16 +574,30 @@ async function downloadAsset(metadata, assetId) {
   } catch {
     // 未取得なら下で保存する。
   }
-  const response = await fetch(metadata.downloadUrl, {
-    headers: apiHeaders,
-    signal: AbortSignal.timeout(60_000),
-  });
-  if (!response.ok || !String(response.headers.get("content-type") ?? "").startsWith("image/")) {
-    throw new Error(`画像を取得できません: ${metadata.downloadUrl}`);
+  const downloadUrl = new URL(metadata.downloadUrl);
+  for (const key of [...downloadUrl.searchParams.keys()]) {
+    if (key.toLowerCase().startsWith("utm_")) downloadUrl.searchParams.delete(key);
   }
-  await mkdir(path.dirname(absolutePath), { recursive: true });
-  await writeFile(absolutePath, Buffer.from(await response.arrayBuffer()));
-  return relativePath;
+  let lastFailure = "応答なし";
+  for (let attempt = 1; attempt <= 6; attempt += 1) {
+    try {
+      const response = await fetch(downloadUrl, {
+        headers: apiHeaders,
+        signal: AbortSignal.timeout(60_000),
+      });
+      const contentType = String(response.headers.get("content-type") ?? "");
+      if (response.ok && contentType.startsWith("image/")) {
+        await mkdir(path.dirname(absolutePath), { recursive: true });
+        await writeFile(absolutePath, Buffer.from(await response.arrayBuffer()));
+        return relativePath;
+      }
+      lastFailure = `${response.status} ${contentType || "content-typeなし"}`;
+    } catch (error) {
+      lastFailure = error instanceof Error ? error.message : String(error);
+    }
+    await delay(attempt * 1_000);
+  }
+  throw new Error(`画像を取得できません: ${downloadUrl}（${lastFailure}）`);
 }
 
 async function mapLimit(values, limit, worker) {
@@ -500,13 +624,12 @@ function questionList(term) {
 
 async function main() {
   const rebuild = process.argv.includes("--rebuild");
-  const sourcePath = await findSourcePath();
-  const terms = groupTerms(toObjects(parseCsv(await readFile(sourcePath, "utf8"))));
-  validateTerms(terms);
+  const { terms } = await loadSourceDecks();
   const previousManifest = JSON.parse(await readFile(manifestPath, "utf8"));
   const assets = [];
   const assetBySource = new Map();
   const fallbackByTerm = new Map();
+  const previousAssignmentByQuestion = new Map();
 
   if (previousManifest.schemaVersion === 1) {
     for (const image of previousManifest.images) {
@@ -532,6 +655,14 @@ async function main() {
     for (const fallback of previousManifest.termFallbacks) {
       if (!rebuild || fallback.assetId.startsWith("LEGACY-")) {
         fallbackByTerm.set(fallback.termId, fallback.assetId);
+      }
+    }
+    if (!rebuild) {
+      const previousAssetIds = new Set(previousManifest.assets.map((asset) => asset.id));
+      for (const assignment of previousManifest.assignments) {
+        if (previousAssetIds.has(assignment.assetId)) {
+          previousAssignmentByQuestion.set(assignment.questionId, assignment);
+        }
       }
     }
   } else {
@@ -586,6 +717,8 @@ async function main() {
   const targetRequests = [];
   for (const term of terms) {
     for (const question of questionList(term)) {
+      const previousAssignment = previousAssignmentByQuestion.get(question.id);
+      if (previousAssignment?.termId === term.id) continue;
       if (!isUsefulAnswerTarget(question)) continue;
       const target = cleanSearchText(question.answer);
       if (normalizedTitle(target) === normalizedTitle(term.term)) continue;
@@ -619,6 +752,11 @@ async function main() {
   for (const term of terms) {
     const fallbackAssetId = fallbackByTerm.get(term.id);
     for (const question of questionList(term)) {
+      const previousAssignment = previousAssignmentByQuestion.get(question.id);
+      if (previousAssignment?.termId === term.id) {
+        assignments.push(previousAssignment);
+        continue;
+      }
       const target = isUsefulAnswerTarget(question)
         ? cleanSearchText(question.answer)
         : term.term;
@@ -653,7 +791,14 @@ async function main() {
   );
 }
 
-export { assetIdForSource, commonsMetadata, downloadAsset };
+export {
+  assetIdForSource,
+  commonsMetadata,
+  downloadAsset,
+  targetFileOverrides,
+  targetKey,
+  termFileOverrides,
+};
 
 if (path.resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url)) {
   await main();

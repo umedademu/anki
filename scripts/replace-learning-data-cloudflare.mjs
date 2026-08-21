@@ -10,6 +10,7 @@ const bucket = "anki-world-history";
 const baseUrl = "https://pub-76ffbe2829114a5cbaa433db45872267.r2.dev";
 const productionOrigin = "https://anki-ume.vercel.app";
 const applyChanges = process.argv.includes("--apply");
+const resumeAfterAssetUpload = process.argv.includes("--resume-after-asset-upload");
 const wranglerPath = path.join(
   projectRoot,
   "node_modules",
@@ -32,14 +33,10 @@ const fetchRemoteJson = async (key) => {
 };
 const normalizeKey = (key) => String(key ?? "").replaceAll("\\", "/");
 const assertLearningDataKey = (key) => {
-  const allowedExactKeys = new Set([
-    "index.json",
-    "term-images.json",
-    "subjects/world-history/index.json",
-  ]);
+  const allowedExactKeys = new Set(["index.json", "term-images.json"]);
   if (
     !allowedExactKeys.has(key) &&
-    !key.startsWith("subjects/world-history/chunks/") &&
+    !(key.startsWith("subjects/world-history/") && key.endsWith(".json")) &&
     !key.startsWith("term-images/")
   ) {
     throw new Error(`問題集以外の削除候補を検出しました: ${key}`);
@@ -50,42 +47,81 @@ const assertLearningDataKey = (key) => {
   return key;
 };
 
+const deckEntriesFor = (subjectEntry) =>
+  Array.isArray(subjectEntry.decks) && subjectEntry.decks.length > 0
+    ? subjectEntry.decks
+    : [subjectEntry];
+
+const loadDeckIndexes = async (catalog, reader) => {
+  if (catalog.schemaVersion !== 3 || catalog.subjects.length !== 1) {
+    throw new Error("科目一覧の形式が正しくありません。");
+  }
+  const subjectEntry = catalog.subjects[0];
+  const deckEntries = deckEntriesFor(subjectEntry);
+  const deckIndexes = await Promise.all(
+    deckEntries.map(async (deckEntry) => ({
+      entry: deckEntry,
+      index: await reader(normalizeKey(deckEntry.indexPath)),
+    })),
+  );
+  return { subjectEntry, deckEntries, deckIndexes };
+};
+
 const localCatalogPath = path.join(dataRoot, "index.json");
 const localCatalog = await readJson(localCatalogPath);
-if (localCatalog.schemaVersion !== 3 || localCatalog.subjects.length !== 1) {
-  throw new Error("手元の科目一覧が正しくありません。先にnpm run build:dataを実行してください。");
-}
-const localSubjectKey = normalizeKey(localCatalog.subjects[0].indexPath);
-const localSubjectPath = path.join(dataRoot, localSubjectKey);
-const localSubject = await readJson(localSubjectPath);
+const localDeckData = await loadDeckIndexes(localCatalog, (key) =>
+  readJson(path.join(dataRoot, key)),
+);
 const localManifestPath = path.join(dataRoot, "term-images.json");
 const localManifest = await readJson(localManifestPath);
 
-const localJobs = [
-  { key: "index.json", filePath: localCatalogPath, cacheControl: "no-cache" },
-  { key: localSubjectKey, filePath: localSubjectPath, cacheControl: "no-cache" },
-  ...localSubject.chunks.map((chunk) => ({
+const localAssetJobs = localManifest.assets.map((asset) => ({
+  key: normalizeKey(asset.path),
+  filePath: path.join(dataRoot, asset.path),
+  cacheControl: "public, max-age=31536000, immutable",
+}));
+const localChunkJobs = localDeckData.deckIndexes.flatMap(({ index }) =>
+  index.chunks.map((chunk) => ({
     key: normalizeKey(chunk.path),
     filePath: path.join(dataRoot, chunk.path),
     cacheControl: "no-cache",
   })),
-  { key: "term-images.json", filePath: localManifestPath, cacheControl: "no-cache" },
-  ...localManifest.assets.map((asset) => ({
-    key: normalizeKey(asset.path),
-    filePath: path.join(dataRoot, asset.path),
-    cacheControl: "public, max-age=31536000, immutable",
-  })),
+);
+const localDeckIndexJobs = localDeckData.deckIndexes.map(({ entry }) => ({
+    key: normalizeKey(entry.indexPath),
+    filePath: path.join(dataRoot, entry.indexPath),
+    cacheControl: "no-cache",
+}));
+const localManifestJob = {
+  key: "term-images.json",
+  filePath: localManifestPath,
+  cacheControl: "no-cache",
+};
+const localCatalogJob = {
+  key: "index.json",
+  filePath: localCatalogPath,
+  cacheControl: "no-cache",
+};
+const localJobs = [
+  ...localAssetJobs,
+  ...localChunkJobs,
+  ...localDeckIndexJobs,
+  localManifestJob,
+  localCatalogJob,
 ];
 localJobs.forEach((job) => assertLearningDataKey(job.key));
 
-const [remoteSubject, remoteManifest] = await Promise.all([
-  fetchRemoteJson("subjects/world-history/index.json"),
+const [remoteCatalog, remoteManifest] = await Promise.all([
+  fetchRemoteJson("index.json"),
   fetchRemoteJson("term-images.json"),
 ]);
+const remoteDeckData = await loadDeckIndexes(remoteCatalog, fetchRemoteJson);
 const remoteKeys = new Set([
   "index.json",
-  "subjects/world-history/index.json",
-  ...remoteSubject.chunks.map((chunk) => normalizeKey(chunk.path)),
+  ...remoteDeckData.deckIndexes.flatMap(({ entry, index }) => [
+    normalizeKey(entry.indexPath),
+    ...index.chunks.map((chunk) => normalizeKey(chunk.path)),
+  ]),
   "term-images.json",
   ...remoteManifest.assets.map((asset) => normalizeKey(asset.path)),
 ]);
@@ -94,9 +130,25 @@ for (const key of remoteKeys) {
 }
 const localKeys = new Set(localJobs.map((job) => job.key));
 const staleKeys = [...remoteKeys].filter((key) => !localKeys.has(key)).sort();
+const localTermCount = localDeckData.deckIndexes.reduce(
+  (sum, deck) => sum + deck.index.termCount,
+  0,
+);
+const localQuestionCount = localDeckData.deckIndexes.reduce(
+  (sum, deck) => sum + deck.index.questionCount,
+  0,
+);
+const remoteTermCount = remoteDeckData.deckIndexes.reduce(
+  (sum, deck) => sum + deck.index.termCount,
+  0,
+);
+const remoteQuestionCount = remoteDeckData.deckIndexes.reduce(
+  (sum, deck) => sum + deck.index.questionCount,
+  0,
+);
 
 console.log(
-  `更新対象: 旧${remoteSubject.termCount}語・${remoteSubject.questionCount}問から、新${localSubject.termCount}語・${localSubject.questionCount}問`,
+  `更新対象: 旧${remoteTermCount}語・${remoteQuestionCount}問から、新${localTermCount}語・${localQuestionCount}問`,
 );
 console.log(
   `Cloudflare操作: 上書き・追加${localJobs.length}件、旧問題集だけの削除${staleKeys.length}件`,
@@ -154,16 +206,6 @@ const runPool = async (items, work, progressLabel) => {
   }
 };
 
-await runPool(
-  staleKeys,
-  (key) =>
-    runWrangler(
-      ["r2", "object", "delete", `${bucket}/${key}`, "--remote"],
-      `${key}の削除`,
-    ),
-  "旧データ削除",
-);
-
 const contentTypeFor = (filePath) => {
   const extension = path.extname(filePath).toLowerCase();
   return {
@@ -175,9 +217,10 @@ const contentTypeFor = (filePath) => {
     ".svg": "image/svg+xml",
   }[extension] ?? "application/octet-stream";
 };
-await runPool(
-  localJobs,
-  (job) =>
+const uploadJobs = (jobs, progressLabel) =>
+  runPool(
+    jobs,
+    (job) =>
     runWrangler(
       [
         "r2",
@@ -195,29 +238,94 @@ await runPool(
       ],
       `${job.key}の登録`,
     ),
-  "新データ登録",
-);
+    progressLabel,
+  );
 
 const digest = (buffer) => createHash("sha256").update(buffer).digest("hex");
-await runPool(
-  localJobs,
-  async (job) => {
-    const local = await readFile(job.filePath);
-    const response = await fetch(`${baseUrl}/${job.key}?verify=${Date.now()}`, {
+const delay = (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+let verificationQueue = Promise.resolve();
+let nextVerificationAt = 0;
+const waitForVerificationSlot = async () => {
+  const turn = verificationQueue.then(async () => {
+    while (nextVerificationAt > Date.now()) {
+      await delay(nextVerificationAt - Date.now());
+    }
+    nextVerificationAt = Date.now() + 100;
+  });
+  verificationQueue = turn.catch(() => {});
+  await turn;
+};
+const fetchForVerification = async (key) => {
+  let lastFailure = "応答なし";
+  for (let attempt = 1; attempt <= 8; attempt += 1) {
+    await waitForVerificationSlot();
+    const response = await fetch(`${baseUrl}/${key}?verify=${Date.now()}`, {
       cache: "no-store",
       headers: { Origin: productionOrigin },
     });
-    if (!response.ok) {
-      throw new Error(`${job.key}を取得できません（${response.status}）。`);
-    }
-    const remote = Buffer.from(await response.arrayBuffer());
-    if (digest(local) !== digest(remote)) {
-      throw new Error(`${job.key}が手元の正本と一致しません。`);
-    }
-  },
-  "登録内容照合",
+    if (response.ok) return response;
+    lastFailure = String(response.status);
+    if (response.status !== 429) break;
+    const retryAfterSeconds = Number.parseInt(
+      response.headers.get("retry-after") ?? "",
+      10,
+    );
+    const retryMilliseconds = Number.isFinite(retryAfterSeconds)
+      ? retryAfterSeconds * 1_000
+      : attempt * 1_000;
+    nextVerificationAt = Math.max(nextVerificationAt, Date.now() + retryMilliseconds);
+  }
+  throw new Error(`${key}を取得できません（${lastFailure}）。`);
+};
+const verifyJobs = (jobs, progressLabel) =>
+  runPool(
+    jobs,
+    async (job) => {
+      const local = await readFile(job.filePath);
+      const response = await fetchForVerification(job.key);
+      const remote = Buffer.from(await response.arrayBuffer());
+      if (digest(local) !== digest(remote)) {
+        throw new Error(`${job.key}が手元の正本と一致しません。`);
+      }
+    },
+    progressLabel,
+  );
+const uploadAndVerify = async (jobs, uploadLabel, verifyLabel) => {
+  await uploadJobs(jobs, uploadLabel);
+  await verifyJobs(jobs, verifyLabel);
+};
+
+// 参照先を先に揃えて照合し、利用者が途中状態の索引を読む時間を作らない。
+const assetAndChunkJobs = [...localAssetJobs, ...localChunkJobs];
+if (resumeAfterAssetUpload) {
+  console.log("登録済みの画像・分割データの照合から再開します。");
+  await verifyJobs(assetAndChunkJobs, "画像・分割データ照合");
+} else {
+  await uploadAndVerify(
+    assetAndChunkJobs,
+    "画像・分割データ登録",
+    "画像・分割データ照合",
+  );
+}
+await uploadAndVerify(localDeckIndexJobs, "Deck索引登録", "Deck索引照合");
+await uploadAndVerify([localManifestJob], "画像一覧登録", "画像一覧照合");
+await uploadAndVerify(
+  [localCatalogJob],
+  "開始画面用索引登録",
+  "開始画面用索引照合",
+);
+
+await runPool(
+  staleKeys,
+  (key) =>
+    runWrangler(
+      ["r2", "object", "delete", `${bucket}/${key}`, "--remote"],
+      `${key}の削除`,
+    ),
+  "旧データ削除",
 );
 
 console.log(
-  `Cloudflare置換完了: ${localSubject.termCount}語・${localSubject.questionCount}問、旧問題画像${staleKeys.length}件を削除`,
+  `Cloudflare置換完了: ${localTermCount}語・${localQuestionCount}問、旧問題集データ${staleKeys.length}件を削除`,
 );

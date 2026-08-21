@@ -55,6 +55,10 @@ const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
 );
+const cloudflareReplacement = await readFile(
+  path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
+  "utf8",
+);
 
 const htmlIds = new Set(
   [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
@@ -73,17 +77,44 @@ if (!html.includes('<script src="/app.js" type="module"></script>')) {
 if (
   !html.includes('id="setup-panel"') ||
   !html.includes('id="start-study"') ||
+  !html.includes('id="deck-filter"') ||
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.038") ||
-  !changelog.includes("v0.038") ||
-  !settingsHtml.includes("v0.038")
+  !html.includes("v0.039") ||
+  !changelog.includes("v0.039") ||
+  !settingsHtml.includes("v0.039")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.038"') ||
+  !app.includes("function setDeckOptions(decks, selectedDeckId)") ||
+  !app.includes("async function activateDeck(deckId)") ||
+  !app.includes("subjectEntry.defaultDeckId") ||
+  !app.includes(
+    "`anki-progress:${state.subject.id}:${state.subject.version}:v1`",
+  ) ||
+  !app.includes('elements.deckFilter.addEventListener("change"')
+) {
+  throw new Error("Deck 1・Deck 2の選択または学習履歴の分離が揃っていません。");
+}
+if (
+  !cloudflareReplacement.includes('process.argv.includes("--resume-after-asset-upload")') ||
+  !cloudflareReplacement.includes("await waitForVerificationSlot()") ||
+  !cloudflareReplacement.includes("while (nextVerificationAt > Date.now())") ||
+  !cloudflareReplacement.includes("response.status !== 429") ||
+  !cloudflareReplacement.includes("await uploadAndVerify(localDeckIndexJobs") ||
+  !cloudflareReplacement.includes("await uploadAndVerify([localManifestJob]") ||
+  !cloudflareReplacement.includes("await uploadAndVerify(\n  [localCatalogJob]") ||
+  cloudflareReplacement.indexOf("await uploadAndVerify(localDeckIndexJobs") >=
+    cloudflareReplacement.indexOf("await uploadAndVerify([localManifestJob]") ||
+  cloudflareReplacement.indexOf("await uploadAndVerify([localManifestJob]") >=
+    cloudflareReplacement.indexOf("await uploadAndVerify(\n  [localCatalogJob]")
+) {
+  throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
+}
+if (
+  !html.includes('href="/styles.css?v=0.039"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -94,7 +125,9 @@ if (
   !generationPrompt.includes("坤輿万国全図(こんよばんこくぜんず)") ||
   !generationPrompt.includes("鄭氏台湾(ていしたいわん)") ||
   !generationPrompt.includes("王安石(おうあんせき)の低利融資政策を何という？") ||
-  !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます")
+  !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます") ||
+  !generationPrompt.includes("段階別デッキシリーズ全体での累計重要度順位") ||
+  !generationPrompt.includes("Deck 2は401〜800")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
 }

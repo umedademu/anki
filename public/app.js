@@ -1350,10 +1350,12 @@ function renderQuestion() {
     renderCompletion();
     return;
   }
+  const vocabularyMode = state.subject?.learningType === "vocabulary";
 
   elements.completionCard.classList.add("is-hidden");
   elements.contextCard.classList.remove("is-hidden");
   elements.questionCard.classList.remove("is-hidden");
+  elements.questionCard.classList.toggle("is-vocabulary", vocabularyMode);
   elements.actionDock.classList.remove("is-hidden");
   renderSpeechPartControls();
 
@@ -1363,7 +1365,6 @@ function renderQuestion() {
   );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.stageName.textContent = questionStyleLabel(question.stage);
-  const vocabularyMode = state.subject?.learningType === "vocabulary";
   elements.termTitle.textContent = hidesTerm
     ? vocabularyMode
       ? questionStyleLabel(question.stage)
@@ -1744,7 +1745,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.051｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.052｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

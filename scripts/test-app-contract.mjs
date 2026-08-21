@@ -105,9 +105,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.051") ||
-  !changelog.includes("v0.051") ||
-  !settingsHtml.includes("v0.051")
+  !html.includes("v0.052") ||
+  !changelog.includes("v0.052") ||
+  !settingsHtml.includes("v0.052")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -142,7 +142,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.051"') ||
+  !html.includes('href="/styles.css?v=0.052"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -237,6 +237,17 @@ if (
   !app.includes("const minimumFontSize = 15")
 ) {
   throw new Error("回答・解説の見出し撤去または横向きの文字サイズ調整が不完全です。");
+}
+if (
+  !app.includes('elements.questionCard.classList.toggle("is-vocabulary", vocabularyMode)') ||
+  !styles.includes(".question-card.is-vocabulary h2") ||
+  !styles.includes("font-size: clamp(1.35rem, 3.4vw, 1.62rem)") ||
+  !styles.includes(".question-card.is-vocabulary #answer-text") ||
+  !styles.includes("font-size: clamp(1.35rem, 3vw, 1.5rem)") ||
+  !styles.includes(".question-card.is-vocabulary .accepted-answer") ||
+  !styles.includes("font-size: clamp(0.95rem, 2vw, 1rem)")
+) {
+  throw new Error("英単語の横向き画面で問題・回答・別解・例文を拡大する指定が不足しています。");
 }
 if (
   !html.includes('id="term-tags"') ||

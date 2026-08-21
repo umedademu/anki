@@ -88,9 +88,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.043") ||
-  !changelog.includes("v0.043") ||
-  !settingsHtml.includes("v0.043")
+  !html.includes("v0.044") ||
+  !changelog.includes("v0.044") ||
+  !settingsHtml.includes("v0.044")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -125,7 +125,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.043"') ||
+  !html.includes('href="/styles.css?v=0.044"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -259,10 +259,12 @@ if (
 }
 if (
   !generationPrompt.includes("year_mnemonic") ||
-  !generationPrompt.includes("`answer`に暗記対象となる西暦または紀元前の特定の年") ||
+  !generationPrompt.includes("単一年、`1789年6月`のような年月") ||
+  !generationPrompt.includes("これらの問題では空欄を禁止") ||
+  !generationPrompt.includes("`integrated`行には、同じ`year_mnemonic`") ||
   !generationPrompt.includes("`reverse`や`integrated`の説明文に含まれる重要年号も対象") ||
   !generationPrompt.includes("問題文に年号が手掛かりとして書かれているだけ") ||
-  !generationPrompt.includes("自然で正確な語呂合わせを作れない場合は、無理に作らず空欄")
+  !generationPrompt.includes("適切な定番がない場合は")
 ) {
   throw new Error("問題集生成用プロンプトの年号語呂合わせ規則が不足しています。");
 }

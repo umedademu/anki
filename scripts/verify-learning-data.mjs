@@ -28,13 +28,16 @@ const expectedSpecs = new Map([
     {
       number: 1,
       version: "0836119c5d45",
+      contentVersion: "38a0118c46ca",
       datasetLabel: "世界史段階別デッキ｜Deck 1｜最重要骨格400語",
       difficultyLabel: "Deck 1｜骨格・基礎",
       termCount: 400,
       questionCount: 2782,
       questionCounts: { beginner: 1200, reverse: 1182, integrated: 400 },
-      mnemonicCount: 71,
-      distinctMnemonicCount: 22,
+      mnemonicCount: 213,
+      distinctMnemonicCount: 70,
+      exactDateQuestionCount: 116,
+      exactDateTermCount: 59,
     },
   ],
   [
@@ -42,13 +45,16 @@ const expectedSpecs = new Map([
     {
       number: 2,
       version: "8acba0d50165",
+      contentVersion: "e0904a4f00d5",
       datasetLabel: "世界史段階別デッキ｜Deck 2｜共通テスト基礎400語",
       difficultyLabel: "Deck 2｜骨格・基礎",
       termCount: 400,
       questionCount: 2400,
       questionCounts: { beginner: 1200, reverse: 800, integrated: 400 },
-      mnemonicCount: 26,
-      distinctMnemonicCount: 6,
+      mnemonicCount: 204,
+      distinctMnemonicCount: 68,
+      exactDateQuestionCount: 133,
+      exactDateTermCount: 69,
     },
   ],
 ]);
@@ -134,6 +140,8 @@ for (const deckEntry of subjectEntry.decks) {
     subject.difficultyLabel !== spec.difficultyLabel ||
     subject.version !== sourceDeck.version ||
     (spec.version && subject.version !== spec.version) ||
+    subject.contentVersion !== sourceDeck.contentVersion ||
+    subject.contentVersion !== spec.contentVersion ||
     subject.sourceFile !== sourceDeck.sourceFile ||
     subject.termCount !== spec.termCount ||
     subject.questionCount !== spec.questionCount ||
@@ -141,6 +149,7 @@ for (const deckEntry of subjectEntry.decks) {
     deckEntry.datasetLabel !== spec.datasetLabel ||
     deckEntry.difficultyLabel !== spec.difficultyLabel ||
     deckEntry.version !== sourceDeck.version ||
+    deckEntry.contentVersion !== sourceDeck.contentVersion ||
     deckEntry.termCount !== spec.termCount ||
     deckEntry.questionCount !== spec.questionCount
   ) {
@@ -162,6 +171,45 @@ for (const deckEntry of subjectEntry.decks) {
     questions.some((question) => typeof question.yearMnemonic !== "string")
   ) {
     throw new Error(`${deckEntry.id}の年号語呂合わせが元CSVどおりではありません。`);
+  }
+
+  const exactDatePattern = /^(?:紀元前|前)?\d{1,4}年(?:\d{1,2}月(?:\d{1,2}日)?)?$/;
+  const exactDateTerms = terms.filter((term) =>
+    Object.values(term.stages)
+      .flat()
+      .some((question) =>
+        exactDatePattern.test(question.answer.replaceAll("**", "").trim()),
+      ),
+  );
+  const exactDateQuestions = exactDateTerms.flatMap((term) =>
+    Object.values(term.stages)
+      .flat()
+      .filter((question) =>
+        exactDatePattern.test(question.answer.replaceAll("**", "").trim()),
+      ),
+  );
+  if (
+    exactDateQuestions.length !== spec.exactDateQuestionCount ||
+    exactDateTerms.length !== spec.exactDateTermCount ||
+    exactDateQuestions.some((question) => !question.yearMnemonic.trim()) ||
+    exactDateTerms.some((term) => {
+      const targetQuestions = Object.values(term.stages)
+        .flat()
+        .filter((question) =>
+          exactDatePattern.test(question.answer.replaceAll("**", "").trim()),
+        );
+      const mnemonics = new Set(
+        targetQuestions.map((question) => question.yearMnemonic),
+      );
+      return (
+        mnemonics.size !== 1 ||
+        term.stages.integrated[0].yearMnemonic !== [...mnemonics][0]
+      );
+    })
+  ) {
+    throw new Error(
+      `${deckEntry.id}の単一年・年月・年月日の語呂合わせが不足または不統一です。`,
+    );
   }
   generatedDecks.push({ entry: deckEntry, subject, terms, questions });
 }
@@ -206,6 +254,9 @@ const generatedEnglishQuestions = generatedEnglishTerms.flatMap((term) =>
 const generatedEnglishCounts = countQuestionsByStage(generatedEnglishTerms);
 if (
   englishDeckEntry.version !== "en-6984fb69efaf" ||
+  englishDeckEntry.contentVersion !== "6984fb69efaf" ||
+  englishSubject.version !== "en-6984fb69efaf" ||
+  englishSubject.contentVersion !== "6984fb69efaf" ||
   englishSubject.id !== "english-vocabulary" ||
   englishSubject.learningType !== "vocabulary" ||
   englishSubject.filterLabels.category !== "品詞" ||
@@ -445,5 +496,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史800用語・5182問、英単語500語・1500問、語呂合わせ97問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史800用語・5182問、英単語500語・1500問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

@@ -49,7 +49,10 @@ function makeRow({ termId, rank, term, sortYear, questionId, stage, question, an
     keywords: "確認語",
     accepted_answers: "",
     answer_note: "",
-    year_mnemonic: questionId === "A-B02" ? "1800年：確認用の語呂合わせ" : "",
+    year_mnemonic:
+      questionId === "A-B02" || questionId === "A-I01"
+        ? "1800年：確認用の語呂合わせ"
+        : "",
     source_name: "確認資料",
     source_url: "https://example.com/source",
   };
@@ -72,7 +75,10 @@ if (requiredHeaders.some((header) => !(header in rows[0]))) {
 const terms = groupTerms(rows);
 validateTerms(terms);
 
-if (terms[0].stages.beginner[1].yearMnemonic !== "1800年：確認用の語呂合わせ") {
+if (
+  terms[0].stages.beginner[1].yearMnemonic !== "1800年：確認用の語呂合わせ" ||
+  terms[0].stages.integrated[0].yearMnemonic !== "1800年：確認用の語呂合わせ"
+) {
   throw new Error("年号の語呂合わせを問題データへ取り込めませんでした。");
 }
 

@@ -400,6 +400,33 @@ export function validateTerms(terms) {
           .join(", ")}`,
       );
     }
+
+    const exactDatePattern = /^(?:紀元前|前)?\d{1,4}年(?:\d{1,2}月(?:\d{1,2}日)?)?$/;
+    const exactDateQuestions = Object.values(term.stages)
+      .flat()
+      .filter((question) =>
+        exactDatePattern.test(question.answer.replaceAll("**", "").trim()),
+      );
+    if (exactDateQuestions.length > 0) {
+      const mnemonics = new Set(
+        exactDateQuestions
+          .map((question) => question.yearMnemonic.trim())
+          .filter(Boolean),
+      );
+      if (
+        exactDateQuestions.some((question) => !question.yearMnemonic.trim()) ||
+        mnemonics.size !== 1
+      ) {
+        throw new Error(
+          `${term.term}の単一年・年月・年月日の問題に、統一した年号語呂合わせがありません。`,
+        );
+      }
+      if (term.stages.integrated[0].yearMnemonic !== [...mnemonics][0]) {
+        throw new Error(
+          `${term.term}の統合説明に、年号問題と同じ語呂合わせがありません。`,
+        );
+      }
+    }
   }
 
   const ranks = terms
@@ -423,6 +450,19 @@ function sourceVersion(sourceText) {
   return createHash("sha256").update(sourceText).digest("hex").slice(0, 12);
 }
 
+const stableDatasetVersions = new Map([
+  ["world-history:deck-1", "0836119c5d45"],
+  ["world-history:deck-2", "8acba0d50165"],
+  ["english-vocabulary:deck-1", "en-6984fb69efaf"],
+]);
+
+function datasetVersion(subjectId, deckId) {
+  return (
+    stableDatasetVersions.get(`${subjectId}:${deckId}`) ??
+    `${subjectId}-${deckId}-v1`
+  );
+}
+
 function deckNumberFromLabel(datasetLabel, sourcePath) {
   const match = String(datasetLabel).match(/Deck\s*(\d+)/i);
   if (!match) {
@@ -443,13 +483,15 @@ export async function loadSourceDecks() {
         throw new Error(`${path.basename(sourcePath)}のデッキ名がファイル内で統一されていません。`);
       }
       const datasetLabel = terms[0].datasetLabel;
+      const id = `deck-${deckNumberFromLabel(datasetLabel, sourcePath)}`;
       return {
-        id: `deck-${deckNumberFromLabel(datasetLabel, sourcePath)}`,
+        id,
         number: deckNumberFromLabel(datasetLabel, sourcePath),
         sourcePath,
         sourceText,
         sourceFile: path.basename(sourcePath),
-        version: sourceVersion(sourceText),
+        version: datasetVersion(subjectId, id),
+        contentVersion: sourceVersion(sourceText),
         datasetLabel,
         difficultyLabel: terms[0].difficultyLabel,
         terms,
@@ -660,13 +702,15 @@ export async function loadEnglishDecks() {
       }
       const datasetLabel = terms[0].datasetLabel;
       const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      const id = `deck-${number}`;
       return {
-        id: `deck-${number}`,
+        id,
         number,
         sourcePath,
         sourceText,
         sourceFile: path.basename(sourcePath),
-        version: `en-${sourceVersion(sourceText)}`,
+        version: datasetVersion(englishSubjectId, id),
+        contentVersion: sourceVersion(sourceText),
         datasetLabel,
         difficultyLabel: terms[0].difficultyLabel,
         terms,
@@ -808,6 +852,7 @@ async function writeSubjectData(definition, decks) {
       difficultyLabel: deck.difficultyLabel,
       description: definition.description,
       version: deck.version,
+      contentVersion: deck.contentVersion,
       sourceFile: deck.sourceFile,
       termCount: deck.terms.length,
       questionCount,
@@ -821,6 +866,7 @@ async function writeSubjectData(definition, decks) {
       datasetLabel: deck.datasetLabel,
       difficultyLabel: deck.difficultyLabel,
       version: deck.version,
+      contentVersion: deck.contentVersion,
       termCount: deck.terms.length,
       questionCount,
       indexPath: subjectIndexPath,
@@ -862,7 +908,11 @@ export async function main() {
 
   const allDecks = [...worldHistoryData.decks, ...englishData.decks];
   const version = createHash("sha256")
-    .update(allDecks.map((deck) => `${deck.sourceFile}\0${deck.version}`).join("\0"))
+    .update(
+      allDecks
+        .map((deck) => `${deck.sourceFile}\0${deck.contentVersion}`)
+        .join("\0"),
+    )
     .digest("hex")
     .slice(0, 12);
   const relativeOutput = path.relative(projectRoot, outputRoot);

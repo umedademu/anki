@@ -134,7 +134,7 @@ const settings = normalizeSettings({
   source: "device",
   azureVoiceId: "ja-JP-NaokiNeural",
   voiceId: "device-voice-id",
-  rate: 1.2,
+  rate: 9,
   shuffleEnabled: true,
   autoSpeechEnabled: false,
   listeningPauseSeconds: 2.5,
@@ -147,7 +147,7 @@ if (
   settings.source !== "device" ||
   settings.azureVoiceId !== "ja-JP-NaokiNeural" ||
   settings.voiceId !== "device-voice-id" ||
-  settings.rate !== 1.2 ||
+  settings.rate !== 3 ||
   !settings.shuffleEnabled ||
   settings.autoSpeechEnabled ||
   settings.listeningPauseSeconds !== 2.5
@@ -160,7 +160,7 @@ if (
   browserSettings.source !== "device" ||
   browserSettings.azureVoiceId !== "ja-JP-NaokiNeural" ||
   browserSettings.voiceId !== "device-voice-id" ||
-  browserSettings.rate !== 1.2 ||
+  browserSettings.rate !== 3 ||
   !browserSettings.shuffleEnabled ||
   browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5

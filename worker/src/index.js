@@ -153,7 +153,7 @@ function normalizeSettings(value) {
     source: source.source === "device" ? "device" : "cloud",
     azureVoiceId: normalizeAzureSpeechVoice(source.azureVoiceId),
     voiceId: String(source.voiceId ?? "").slice(0, 500),
-    rate: decimal(source.rate, 1, 0.7, 1.2),
+    rate: decimal(source.rate, 1, 0.7, 3),
     shuffleEnabled: source.shuffleEnabled === true,
     autoSpeechEnabled:
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,

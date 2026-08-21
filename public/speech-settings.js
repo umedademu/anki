@@ -39,7 +39,7 @@ export function normalizeSpeechSettings(value) {
       ? requestedAzureVoiceId
       : defaultAzureSpeechVoiceId,
     voiceId: String(source.voiceId ?? "").slice(0, 500),
-    rate: Number.isFinite(rate) ? Math.min(1.2, Math.max(0.7, rate)) : 1,
+    rate: Number.isFinite(rate) ? Math.min(3, Math.max(0.7, rate)) : 1,
   };
 }
 

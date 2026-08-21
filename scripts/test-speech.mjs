@@ -78,7 +78,7 @@ if (
     defaultAzureSpeechVoiceId ||
   azureSpeechVoices.length !== 7 ||
   azureSpeechVoices.filter((voice) => voice.label.includes("男性")).length !== 3 ||
-  normalizeSpeechSettings({ rate: 9 }).rate !== 1.2
+  normalizeSpeechSettings({ rate: 9 }).rate !== 3
 ) {
   throw new Error("Azure・端末音声の設定を安全に保存・復元できませんでした。");
 }
@@ -121,7 +121,7 @@ const controller = createSpeechController({
   getSettings: () => ({
     source: "device",
     voiceId: "japanese-natural",
-    rate: 0.9,
+    rate: 3,
   }),
   onTargetChange: (target) => targetChanges.push(target),
 });
@@ -143,7 +143,7 @@ if (
   spoken.some(
     (item) =>
       item.lang !== "ja-JP" ||
-      item.rate !== 0.9 ||
+      item.rate !== 3 ||
       item.voice !== "日本語 高品質",
   ) ||
   targetChanges.at(-1) !== "" ||
@@ -155,6 +155,7 @@ if (
 const cloudRequests = [];
 const cloudTargets = [];
 const revokedUrls = [];
+const playedRates = [];
 class FakeAudio {
   constructor(url) {
     this.url = url;
@@ -164,6 +165,7 @@ class FakeAudio {
   }
 
   async play() {
+    playedRates.push(this.playbackRate);
     queueMicrotask(() => this.onended?.());
   }
 
@@ -183,7 +185,7 @@ const cloudController = createSpeechController({
     source: "cloud",
     azureVoiceId: "ja-JP-KeitaNeural",
     voiceId: "",
-    rate: 1.05,
+    rate: 3,
   }),
   onTargetChange: (target) => cloudTargets.push(target),
 });
@@ -199,6 +201,8 @@ if (
     (request) => request.voice !== "ja-JP-KeitaNeural",
   ) ||
   cloudTargets.at(-1) !== "" ||
+  playedRates.length !== 2 ||
+  playedRates.some((rate) => rate !== 3) ||
   revokedUrls.length !== 2
 ) {
   throw new Error("Azure音声を回答から解説へ順番に再生できませんでした。");

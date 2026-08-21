@@ -116,6 +116,25 @@ export function createVocabularySpeechGroups(term) {
   };
 }
 
+export function createVocabularyListeningAnswerSequence(
+  term,
+  stage,
+  { includeExamples = false } = {},
+) {
+  const layout = vocabularySpeechLayoutByStage[stage];
+  if (!layout) {
+    return [];
+  }
+  const groups = createVocabularySpeechGroups(term);
+  const groupNames = includeExamples
+    ? [layout.answer, "example-english", "example-japanese"]
+    : [layout.answer];
+  return [...new Set(groupNames)]
+    .filter((group) => group !== layout.question)
+    .map((group) => groups[group])
+    .filter((segment) => segment?.text);
+}
+
 export function createSpeechController({
   synthesis = globalThis.speechSynthesis,
   Utterance = globalThis.SpeechSynthesisUtterance,

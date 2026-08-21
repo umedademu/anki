@@ -1,4 +1,5 @@
 import {
+  createVocabularyListeningAnswerSequence,
   createVocabularySpeechGroups,
   createSpeechController,
   prepareSpeechText,
@@ -44,7 +45,7 @@ for (const [source, expected] of textChecks) {
   }
 }
 
-const vocabularySpeechGroups = createVocabularySpeechGroups({
+const vocabularyTerm = {
   term: "although",
   stages: {
     beginner: [
@@ -67,7 +68,8 @@ const vocabularySpeechGroups = createVocabularySpeechGroups({
       },
     ],
   },
-});
+};
+const vocabularySpeechGroups = createVocabularySpeechGroups(vocabularyTerm);
 if (
   Object.keys(vocabularySpeechGroups).length !== 4 ||
   vocabularySpeechGroups.word.text !== "although" ||
@@ -77,6 +79,31 @@ if (
     "雨が降っていたが、私たちは散歩に出かけた。"
 ) {
   throw new Error("英単語の4種類の読み上げ対象を分離できませんでした。");
+}
+
+const answerOnlySequence = createVocabularyListeningAnswerSequence(
+  vocabularyTerm,
+  "beginner",
+);
+const answerAndExamplesSequence = createVocabularyListeningAnswerSequence(
+  vocabularyTerm,
+  "beginner",
+  { includeExamples: true },
+);
+const integratedSequence = createVocabularyListeningAnswerSequence(
+  vocabularyTerm,
+  "integrated",
+  { includeExamples: true },
+);
+if (
+  answerOnlySequence.length !== 1 ||
+  answerOnlySequence[0].target !== "vocabulary-meaning" ||
+  answerAndExamplesSequence.map((segment) => segment.target).join("|") !==
+    "vocabulary-meaning|vocabulary-example-english|vocabulary-example-japanese" ||
+  integratedSequence.length !== 1 ||
+  integratedSequence[0].target !== "vocabulary-example-japanese"
+) {
+  throw new Error("英単語の通常聞き流しと例文付き聞き流しを分けられませんでした。");
 }
 
 const voices = [

@@ -33,6 +33,7 @@ import {
 } from "./cloud-progress.js";
 import {
   createSpeechController,
+  createVocabularyListeningAnswerSequence,
   createVocabularySpeechGroups,
   vocabularySpeechGroupOrder,
   vocabularySpeechLayoutByStage,
@@ -63,6 +64,10 @@ const elements = {
   categoryFilter: document.querySelector("#category-filter"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
   studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
+  listeningDetailTitle: document.querySelector("#listening-detail-title"),
+  listeningDetailDescription: document.querySelector(
+    "#listening-detail-description",
+  ),
   setupShuffle: document.querySelector("#setup-shuffle"),
   setupSpeech: document.querySelector("#setup-speech"),
   speechChoice: document.querySelector(".speech-choice"),
@@ -184,6 +189,15 @@ function selectedStudyMode() {
     [...elements.studyModeOptions].find((option) => option.checked)?.value ??
     "memorize"
   );
+}
+
+function listeningContentLabel(studyMode = selectedStudyMode()) {
+  if (studyMode !== "listen-explanation") {
+    return "問題文＋回答";
+  }
+  return state.subject?.learningType === "vocabulary"
+    ? "問題文＋回答＋例文"
+    : "問題文＋回答＋解説";
 }
 
 function isListeningMode() {
@@ -744,15 +758,27 @@ function speakListeningAnswer(runId) {
   }
   state.answerVisible = true;
   renderQuestion();
-  const includesExplanation = state.studyMode === "listen-explanation";
+  const vocabularyMode = state.subject?.learningType === "vocabulary";
+  const includesDetails = state.studyMode === "listen-explanation";
   setListeningStatus(
-    includesExplanation
-      ? "回答と解説を読み上げています"
+    includesDetails
+      ? vocabularyMode
+        ? "回答と例文を読み上げています"
+        : "回答と解説を読み上げています"
       : "回答を読み上げています",
   );
+  const answerSegments = vocabularyMode
+    ? createVocabularyListeningAnswerSequence(
+        currentTerm(),
+        currentQuestion()?.stage,
+        { includeExamples: includesDetails },
+      )
+    : answerSpeechSequence();
   const segments = [
-    ...answerSpeechSequence(),
-    ...(includesExplanation ? speechSegmentsFor("overview") : []),
+    ...answerSegments,
+    ...(!vocabularyMode && includesDetails
+      ? speechSegmentsFor("overview")
+      : []),
   ];
   const started = speechController.speak(segments, {
     onComplete: () => {
@@ -1062,11 +1088,9 @@ function updateSetupPreview() {
         : listening && dueQuestions === 0
           ? "現在、復習時刻を迎えた読み上げ対象の問題はありません。"
           : listening
-            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（${
-                studyMode === "listen-explanation"
-                  ? "問題文＋回答＋解説"
-                  : "問題文＋回答"
-              }）`
+            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（${listeningContentLabel(
+                studyMode,
+              )}）`
       : selectedStage
         ? `${terms.length}語・${questions}問（${questionStyleLabel(selectedStage)}）`
         : `${terms.length}語・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
@@ -1130,19 +1154,17 @@ function configureSetup() {
   elements.setupShuffle.checked = state.shuffleEnabled;
   elements.setupSpeech.checked = state.autoSpeechEnabled;
   elements.setupSpeech.disabled = !speechController.supported;
+  const vocabularyMode = state.subject?.learningType === "vocabulary";
+  elements.listeningDetailTitle.textContent = vocabularyMode
+    ? "聞き流し＋例文"
+    : "聞き流し＋解説";
+  elements.listeningDetailDescription.textContent = vocabularyMode
+    ? "問題文＋回答＋英語例文＋日本語例文を繰り返し読み上げる"
+    : "問題文＋回答＋解説を繰り返し読み上げる";
   for (const option of elements.studyModeOptions) {
-    const unavailableForSubject =
-      state.subject?.learningType === "vocabulary" &&
-      option.value === "listen-explanation";
-    option.closest(".study-mode-choice")?.classList.toggle(
-      "is-hidden",
-      unavailableForSubject,
-    );
-    if (unavailableForSubject && option.checked) {
-      elements.studyModeOptions[0].checked = true;
-    }
+    option.closest(".study-mode-choice")?.classList.remove("is-hidden");
     if (listeningModes.has(option.value)) {
-      option.disabled = !speechController.supported || unavailableForSubject;
+      option.disabled = !speechController.supported;
     }
   }
   elements.speechChoice.classList.toggle(
@@ -1565,7 +1587,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.042｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.043｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

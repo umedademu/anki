@@ -88,9 +88,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.042") ||
-  !changelog.includes("v0.042") ||
-  !settingsHtml.includes("v0.042")
+  !html.includes("v0.043") ||
+  !changelog.includes("v0.043") ||
+  !settingsHtml.includes("v0.043")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -125,7 +125,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.042"') ||
+  !html.includes('href="/styles.css?v=0.043"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -328,6 +328,8 @@ if (
   !html.includes('name="study-mode" value="memorize"') ||
   !html.includes('name="study-mode" value="listen-answer"') ||
   !html.includes('name="study-mode" value="listen-explanation"') ||
+  !html.includes('id="listening-detail-title"') ||
+  !html.includes('id="listening-detail-description"') ||
   !html.includes('id="listening-dock"') ||
   !html.includes('id="listening-toggle"') ||
   !html.includes('id="listening-stop"') ||
@@ -335,7 +337,12 @@ if (
   !app.includes("function beginListeningQuestion()") ||
   !app.includes("function speakListeningAnswer(runId)") ||
   !app.includes('state.studyMode === "listen-explanation"') ||
-  !app.includes("includesExplanation ? speechSegmentsFor(\"overview\") : []") ||
+  !app.includes("createVocabularyListeningAnswerSequence") ||
+  !app.includes("includeExamples: includesDetails") ||
+  !app.includes("!vocabularyMode && includesDetails") ||
+  !app.includes('"聞き流し＋例文"') ||
+  !app.includes('"問題文＋回答＋例文"') ||
+  app.includes("unavailableForSubject") ||
   !app.includes("createQuestionQueue(") ||
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
   !worker.includes("listening_pause_seconds") ||

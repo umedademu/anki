@@ -83,14 +83,33 @@ if (
 }
 
 const generatedTermImages = await readJson("term-images.json");
+const imageAssetIds = new Set(generatedTermImages.assets.map((asset) => asset.id));
+const assignedQuestionIds = new Set(
+  generatedTermImages.assignments.map((assignment) => assignment.questionId),
+);
 if (
   JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages) ||
   generatedTermImages.schemaVersion !== 2 ||
-  generatedTermImages.assets.length !== 0 ||
-  generatedTermImages.termFallbacks.length !== 0 ||
-  generatedTermImages.assignments.length !== 0
+  generatedTermImages.assets.length !== 456 ||
+  generatedTermImages.termFallbacks.length !== 400 ||
+  generatedTermImages.assignments.length !== 2782 ||
+  assignedQuestionIds.size !== 2782 ||
+  generatedTermImages.assets.some(
+    (asset) =>
+      !asset.path.endsWith(".webp") ||
+      !asset.creator ||
+      !asset.license ||
+      !asset.licenseUrl ||
+      !asset.sourcePageUrl,
+  ) ||
+  generatedTermImages.termFallbacks.some(
+    (fallback) => !imageAssetIds.has(fallback.assetId),
+  ) ||
+  generatedTermImages.assignments.some(
+    (assignment) => !imageAssetIds.has(assignment.assetId),
+  )
 ) {
-  throw new Error("旧問題集の関連画像が残っているか、画像一覧が一致しません。");
+  throw new Error("Deck 1の関連画像一覧・割り当て・出典情報が一致しません。");
 }
 await Promise.all(
   generatedTermImages.assets.map((image) => stat(path.join(dataRoot, image.path))),
@@ -154,5 +173,5 @@ if (new Set(questionIds).size !== questionIds.length) {
 }
 
 console.log(
-  `検証完了: Deck 1・400用語・2782問（短答1200、逆一問一答1182、統合説明400）・語呂合わせ${mnemonicQuestions.length}問・旧画像0点`,
+  `検証完了: Deck 1・400用語・2782問（短答1200、逆一問一答1182、統合説明400）・語呂合わせ${mnemonicQuestions.length}問・関連画像${generatedTermImages.assets.length}点`,
 );

@@ -21,73 +21,150 @@ let apiRequestQueue = Promise.resolve();
 let nextApiRequestAt = 0;
 
 const termQueryOverrides = new Map([
-  ["WH-000022", "古代ギリシア ポリス"],
-  ["WH-000028", "孔子"],
-  ["WH-000037", "ジャイナ教"],
-  ["WH-000039", "十二表法"],
-  ["WH-000042", "法家"],
-  ["WH-000044", "老荘思想"],
-  ["WH-000043", "郡県制 中国"],
-  ["WH-000054", "武帝 漢"],
-  ["WH-000059", "内乱の一世紀 ローマ"],
-  ["WH-000071", "九品官人法"],
-  ["WH-000085", "均田制 中国"],
-  ["WH-000091", "漢字文化圏"],
-  ["WH-000092", "三省六部 唐"],
-  ["WH-000106", "両税法 唐"],
-  ["WH-000109", "クメール王朝"],
-  ["WH-000111", "封建制 ヨーロッパ"],
-  ["WH-000119", "イクター制"],
-  ["WH-000120", "スワヒリ文明"],
-  ["WH-000124", "スルターン"],
-  ["WH-000127", "王安石 新法"],
-  ["WH-000132", "サラーフッディーン"],
-  ["WH-000139", "東南アジア イスラム化"],
-  ["WH-000144", "イギリスの議会"],
-  ["WH-000167", "ミッレト オスマン帝国"],
-  ["WH-000174", "ヴァスコ・ダ・ガマ"],
-  ["WH-000176", "商業革命 大西洋"],
-  ["WH-000182", "フェルディナンド・マゼラン"],
-  ["WH-000191", "主権国家体制 ヨーロッパ"],
-  ["WH-000202", "三角貿易"],
-  ["WH-000210", "立憲君主制"],
-  ["WH-000211", "ジョン・ロック"],
-  ["WH-000213", "イギリス農業革命"],
-  ["WH-000219", "工場制機械工業 産業革命"],
-  ["WH-000220", "ロシア 南下政策 地図"],
-  ["WH-000226", "ナショナリズム"],
-  ["WH-000229", "自由主義"],
-  ["WH-000230", "東方問題 地図"],
-  ["WH-000221", "アメリカ合衆国の独立"],
-  ["WH-000231", "ラテンアメリカ独立戦争"],
-  ["WH-000235", "ウィーン体制 ヨーロッパ"],
-  ["WH-000237", "社会主義"],
-  ["WH-000250", "帝国主義 風刺画"],
-  ["WH-000253", "三国同盟 (1882年)"],
-  ["WH-000257", "中国分割 風刺画"],
-  ["WH-000262", "総力戦 第一次世界大戦"],
-  ["WH-000265", "民族自決 ウィルソン"],
-  ["WH-000266", "ヴェルサイユ体制 地図"],
-  ["WH-000272", "ワシントン会議"],
-  ["WH-000280", "脱植民地化 地図"],
-  ["WH-000282", "冷戦 地図"],
-  ["WH-000287", "北大西洋条約機構"],
-  ["WH-000289", "欧州連合 統合"],
-  ["WH-000292", "中ソ対立 地図"],
-  ["WH-000294", "非同盟運動 地図"],
-  ["WH-000297", "デタント 米ソ"],
-  ["WH-000298", "オイルショック"],
-  ["WH-000299", "東欧革命 1989"],
+  ["ポリス", "古代ギリシア ポリス"],
+  ["孔子", "孔子"],
+  ["十二表法", "十二表法 古代ローマ"],
+  ["法家", "法家 中国"],
+  ["郡県制", "郡県制 中国"],
+  ["武帝", "漢 武帝"],
+  ["九品中正", "九品官人法"],
+  ["均田制", "均田制 中国"],
+  ["封建社会", "封建制 ヨーロッパ"],
+  ["封建制（中国）", "封建制 中国"],
+  ["イクター制", "イクター制"],
+  ["スルタン", "スルターン"],
+  ["新法", "王安石 新法"],
+  ["サラディン", "サラーフッディーン"],
+  ["商業革命", "商業革命 大西洋"],
+  ["マゼラン", "フェルディナンド・マゼラン"],
+  ["主権国家体制", "主権国家体制 ヨーロッパ"],
+  ["大西洋三角貿易", "三角貿易"],
+  ["ロック", "ジョン・ロック"],
+  ["工場制機械工業", "工場制機械工業 産業革命"],
+  ["自由主義", "自由主義"],
+  ["アメリカ独立革命", "アメリカ合衆国の独立"],
+  ["ラテンアメリカ独立", "ラテンアメリカ独立戦争"],
+  ["ウィーン体制", "ウィーン体制 ヨーロッパ"],
+  ["社会主義", "社会主義"],
+  ["帝国主義", "帝国主義 風刺画"],
+  ["三国同盟", "三国同盟 (1882年)"],
+  ["総力戦", "総力戦 第一次世界大戦"],
+  ["民族自決", "民族自決 ウィルソン"],
+  ["ヴェルサイユ条約", "ヴェルサイユ条約"],
+  ["ワシントン体制", "ワシントン会議"],
+  ["冷戦", "冷戦 地図"],
+  ["NATO", "北大西洋条約機構"],
+  ["非同盟運動", "非同盟運動 地図"],
+  ["デタント", "デタント 米ソ"],
+  ["石油危機", "オイルショック"],
+  ["人権宣言", "フランス人権宣言"],
 ]);
 
 const termFileOverrides = new Map([
-  ["WH-000037", "Jain Prateek Chihna.svg"],
-  ["WH-000039", "Twelve Tables Engraving.svg"],
-  ["WH-000044", "Zhang Lu-Laozi Riding an Ox.jpg"],
-  ["WH-000109", "Angkor Wat.jpg"],
-  ["WH-000182", "Ferdinand Magellan.jpg"],
-  ["WH-000225", "Declaration of the Rights of Man and of the Citizen in 1789.jpg"],
-  ["WH-000287", "Flag of NATO.svg"],
+  ["新人", "Cro-Magnon man - steps of forensic facial reconstruction.jpg"],
+  ["ピラミッド", "All Gizah Pyramids.jpg"],
+  ["ヒエログリフ", "Temple of Seti I, Egyptian hieroglyphs, Abydos, Egypt.jpg"],
+  ["十二表法", "Twelve Tables Engraving.svg"],
+  ["封建制（中国）", "Zhou capitales.svg"],
+  ["法家", "Statue Of Han Fei.png"],
+  ["郡県制", "China Qin Dynasty.jpg"],
+  ["高祖", "Liu Bang (Emperor Gaozu of Han).png"],
+  ["叙任権闘争", "Investiturewoodcut.png"],
+  ["身分制議会", "Opening of the Estates General at Versailles on 5th May 1789.jpg"],
+  ["ヒジュラ", "Hejaz622-ar.png"],
+  ["イクター制", "Flag of the Seljuk.png"],
+  ["宋", "Song Dynasty 960 – 1279 (AD).PNG"],
+  ["文治主義", "Song Taizu.jpg"],
+  ["金", "Map of the Jin dynasty (1115–1234).png"],
+  ["マゼラン", "Ferdinand Magellan.jpg"],
+  ["ピサロ", "Portrait of Francisco Pizarro.jpg"],
+  ["価格革命", "Cerro Rico, Potosí, Bolivia.jpg"],
+  ["商業革命", "Atlantic Triangular Trade, 1500-1800s.png"],
+  ["大西洋三角貿易", "Triangular trade en.svg"],
+  ["プランテーション", "Chinese contract laborers on a sugar plantation in 19th century Hawaii.jpg"],
+  ["信仰義認", "Lucas Cranach d.Ä. - Martin Luther, 1528 (Veste Coburg).jpg"],
+  ["主権国家体制", "Westfaelischer Friede in Muenster (Gerard Terborch 1648).jpg"],
+  ["絶対王政", "Louis XIV of France.jpg"],
+  ["啓蒙思想", "Salon de Madame Geoffrin.jpg"],
+  ["囲い込み", "Pre enclosure fields at Garton on the Wolds - geograph.org.uk - 356608.jpg"],
+  ["ワット", "James Watt Thomas Lawrence (1812).jpg"],
+  ["ワシントン", "Gilbert Stuart - George Washington - Google Art Project.jpg"],
+  ["人権宣言", "Declaration of the Rights of Man and of the Citizen in 1789.jpg"],
+  [
+    "自由主義",
+    "La Liberté guidant le peuple - Eugène Delacroix - Musée du Louvre Peintures RF 129 - après restauration 2024.jpg",
+  ],
+  [
+    "国民主義",
+    "La Liberté guidant le peuple - Eugène Delacroix - Musée du Louvre Peintures RF 129 - après restauration 2024.jpg",
+  ],
+  ["鉄血政策", "Bundesarchiv Bild 146-2005-0057, Otto von Bismarck.jpg"],
+  ["帝国主義", "Punch Rhodes Colossus.png"],
+  ["ベルリン会議", "Kongokonferenz.jpg"],
+  [
+    "二月革命",
+    "International Women's Day - February Revolution - Petrograd.jpg",
+  ],
+  ["集団農場", "1930 Jewish kolkhoz AJJDC 05.jpg"],
+  ["国際連合", "Flag of the United Nations.svg"],
+  [
+    "GATT",
+    "In GATT We Trust by Claude Namy (1966), 1.10 m high, 1.85 m wide, acrylic on canvas.jpg",
+  ],
+  ["NATO", "Flag of NATO.svg"],
+  ["ドイツ分断", "East Germany and West Germany. LOC 91685645.jpg"],
+  ["中華人民共和国", "Mao Proclaiming New China.JPG"],
+  ["非同盟運動", "Gedung.Merdeka.jpg"],
+  ["EC", "Flag of Europe.svg"],
+  ["グローバル化", "Global Container International container.jpg"],
+]);
+
+function targetKey(term, target) {
+  return `${term}\t${target}`;
+}
+
+const targetFileOverrides = new Map([
+  [targetKey("ローマ帝国", "道路網"), "Roman Empire 125 general map (Red roads).svg"],
+  [targetKey("隋", "文帝"), "隋文帝 杨坚.jpg"],
+  [targetKey("カール大帝", "ローマ教皇"), "Coronation of Charlemagne by Pope Leo III.jpg"],
+  [targetKey("蒸気機関", "ワット"), "James Watt Thomas Lawrence (1812).jpg"],
+  [
+    targetKey("プラッシーの戦い", "クライヴ"),
+    "Robert Clive, 1st Baron Clive by Nathaniel Dance, (later Sir Nathaniel Dance-Holland, Bt).jpg",
+  ],
+  [targetKey("メキシコ革命", "サパタ"), "Emiliano Zapata.jpg"],
+  [targetKey("奴隷解放宣言", "リンカン"), "Abraham Lincoln head on shoulders photo portrait.jpg"],
+  [targetKey("アメリカ南北戦争", "リンカン"), "Abraham Lincoln head on shoulders photo portrait.jpg"],
+  [
+    targetKey("ベルリン封鎖", "ベルリン大空輸"),
+    "Avro Tudor - The Berlin Airlift 1948 - 1949 HU98417.jpg",
+  ],
+  [targetKey("インド独立", "パキスタン"), "Partition of India 1947 en.svg"],
+  [targetKey("イスラエル建国", "ベン＝グリオン"), "David Ben-Gurion in 1952.jpg"],
+  [targetKey("スエズ戦争", "ナセル"), "Official Portrait - Gamal Abdel Nasser.jpg"],
+]);
+
+const excludedTargetKeys = new Set([
+  targetKey("ヴェルダン条約", "三王国"),
+  targetKey("ルネサンス", "イタリア都市"),
+  targetKey("遼", "契丹人"),
+  targetKey("コロンブス", "スペイン"),
+  targetKey("産業革命", "イギリス"),
+  targetKey("ワシントン", "初代"),
+  targetKey("バスティーユ牢獄襲撃", "パリ"),
+  targetKey("人権宣言", "国民"),
+  targetKey("大陸封鎖令", "イギリス"),
+  targetKey("シモン＝ボリバル", "ボリビア"),
+  targetKey("レーニン", "四月テーゼ"),
+  targetKey("国際連盟", "アメリカ合衆国"),
+  targetKey("ファシズム", "イタリアのムッソリーニ"),
+  targetKey("五・四運動", "北京の学生"),
+  targetKey("バルフォア宣言", "イギリス"),
+  targetKey("独ソ不可侵条約", "ポーランド"),
+  targetKey("真珠湾攻撃", "アメリカ合衆国"),
+  targetKey("GATT", "世界貿易機関"),
+  targetKey("アジア・アフリカ会議", "インドネシア"),
+  targetKey("アフリカの年", "フランス"),
 ]);
 
 function decodeHtml(text) {
@@ -485,13 +562,13 @@ async function main() {
   const termsWithoutFallback = terms.filter((term) => !fallbackByTerm.has(term.id));
   const missingTerms = [];
   await mapLimit(termsWithoutFallback, 2, async (term, index) => {
-    const query = termQueryOverrides.get(term.id) ?? term.term;
+    const query = termQueryOverrides.get(term.term) ?? term.term;
     const context = `${term.era} ${term.geography.regionDetail}`;
     const asset = await resolveAsset(
       query,
       context,
       term.term,
-      termFileOverrides.get(term.id),
+      termFileOverrides.get(term.term),
     );
     if (!asset) {
       missingTerms.push(`${term.id} ${term.term}`);
@@ -512,6 +589,7 @@ async function main() {
       if (!isUsefulAnswerTarget(question)) continue;
       const target = cleanSearchText(question.answer);
       if (normalizedTitle(target) === normalizedTitle(term.term)) continue;
+      if (excludedTargetKeys.has(targetKey(term.term, target))) continue;
       targetRequests.push({
         key: `${term.id}\t${target}`,
         term,
@@ -525,7 +603,12 @@ async function main() {
   const targetAssets = new Map();
   await mapLimit(uniqueTargetRequests, 2, async (request, index) => {
     const context = `${request.term.term} ${request.term.era}`;
-    const asset = await resolveAsset(request.target, context, request.target);
+    const asset = await resolveAsset(
+      request.target,
+      context,
+      request.target,
+      targetFileOverrides.get(targetKey(request.term.term, request.target)),
+    );
     if (asset) targetAssets.set(request.key, asset.id);
     if ((index + 1) % 20 === 0 || index + 1 === uniqueTargetRequests.length) {
       console.log(`問題別画像候補: ${index + 1}/${uniqueTargetRequests.length}`);

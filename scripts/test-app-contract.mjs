@@ -112,9 +112,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.067") ||
-  !changelog.includes("v0.067") ||
-  !settingsHtml.includes("v0.067")
+  !html.includes("v0.068") ||
+  !changelog.includes("v0.068") ||
+  !settingsHtml.includes("v0.068")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -149,11 +149,23 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.067"') ||
+  !html.includes('href="/styles.css?v=0.068"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
   throw new Error("Safariの文字自動拡大防止または装飾ファイルの版指定がありません。");
+}
+if (
+  !html.includes('id="question-amount-field"') ||
+  !html.includes('id="question-amount-filter"') ||
+  !html.includes('value="one-per-term"') ||
+  !app.includes("createTermQuestionQueue") ||
+  !app.includes('state.subject?.learningType !== "vocabulary"') ||
+  !app.includes("!state.selectedStage && !usesOneQuestionPerTerm()") ||
+  !app.includes("!state.currentTask && !usesOneQuestionPerTerm()") ||
+  !app.includes('elements.questionAmountFilter.addEventListener("change"')
+) {
+  throw new Error("英単語以外で利用する1項目1問の開始設定と一周制御が揃っていません。");
 }
 if (app.includes("をデッキへ追加しました。")) {
   throw new Error("不要な段階解放通知が残っています。");
@@ -477,7 +489,7 @@ if (
   !cloudProgress.includes("defaultSpeechParts") ||
   !cloudProgress.includes("normalizeSpeechParts") ||
   app.includes("unavailableForSubject") ||
-  !app.includes("createQuestionQueue(") ||
+  !app.includes("createQuestionQueue") ||
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
   !worker.includes("listening_pause_seconds") ||
   !styles.includes(".study-mode-options") ||

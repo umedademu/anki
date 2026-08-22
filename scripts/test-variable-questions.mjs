@@ -7,6 +7,7 @@ import {
   createEmptyProgress,
   createQuestionQueue,
   createRatingUndoSnapshot,
+  createTermQuestionQueue,
   defaultReviewSettings,
   deserializeProgress,
   enqueueUniqueTasks,
@@ -97,6 +98,96 @@ const progress = createEmptyProgress();
 const firstQueue = createQuestionQueue(terms, progress, masteryTarget, "", startAt);
 if (firstQueue.map((task) => task.questionId).join(",") !== "A-B01,B-B01,A-B02") {
   throw new Error("未学習時に基礎問題を問題番号ごとの用語順で並べられませんでした。");
+}
+
+const firstTermQueue = createTermQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  "",
+  startAt,
+  () => 0,
+);
+if (
+  firstTermQueue.map((task) => task.questionId).join(",") !== "A-B01,B-B01" ||
+  new Set(firstTermQueue.map((task) => task.termId)).size !== firstTermQueue.length
+) {
+  throw new Error("1項目につき復習対象を1問だけ選べませんでした。");
+}
+const randomTermQueue = createTermQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  "",
+  startAt,
+  () => 0.99,
+);
+if (randomTermQueue.find((task) => task.termId === "WH-TEST-001")?.questionId !== "A-B02") {
+  throw new Error("習熟状況が同じ問題から偏りなく1問を選べませんでした。");
+}
+
+const priorityProgress = createEmptyProgress();
+rateQuestion(
+  priorityProgress,
+  "A-B01",
+  "again",
+  masteryTarget,
+  defaultReviewSettings,
+  startAt,
+);
+const afterIncorrectAt = new Date(startAt.getTime() + 61 * 1000);
+const coverageTermQueue = createTermQuestionQueue(
+  terms,
+  priorityProgress,
+  masteryTarget,
+  "beginner",
+  afterIncorrectAt,
+  () => 0,
+);
+if (coverageTermQueue.find((task) => task.termId === "WH-TEST-001")?.questionId !== "A-B02") {
+  throw new Error("同じ苦手度なら未出題の問題を優先できませんでした。");
+}
+rateQuestion(
+  priorityProgress,
+  "A-B02",
+  "easy",
+  masteryTarget,
+  defaultReviewSettings,
+  startAt,
+);
+const weaknessTermQueue = createTermQuestionQueue(
+  terms,
+  priorityProgress,
+  masteryTarget,
+  "beginner",
+  new Date(startAt.getTime() + defaultReviewSettings.easySeconds * 1000),
+  () => 0,
+);
+if (weaknessTermQueue.find((task) => task.termId === "WH-TEST-001")?.questionId !== "A-B01") {
+  throw new Error("復習対象の中から苦手な問題を優先できませんでした。");
+}
+
+const cooledProgress = createEmptyProgress();
+for (const question of terms[0].stages.beginner) {
+  rateQuestion(
+    cooledProgress,
+    question.id,
+    "easy",
+    masteryTarget,
+    defaultReviewSettings,
+    startAt,
+  );
+}
+const cooledTermQueue = createTermQuestionQueue(
+  terms,
+  cooledProgress,
+  masteryTarget,
+  "beginner",
+  new Date(startAt.getTime() + 24 * 60 * 60 * 1000),
+  () => 0,
+);
+if (cooledTermQueue.some((task) => task.termId === "WH-TEST-001")) {
+  throw new Error("すべての問題が復習時刻前の項目を1項目1問から除外できませんでした。");
 }
 
 const directReverse = createQuestionQueue(terms, progress, masteryTarget, "reverse", startAt);

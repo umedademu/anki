@@ -294,6 +294,84 @@ export function createQuestionQueue(
   return tasks;
 }
 
+const questionSelectionRatingOrder = {
+  again: 0,
+  hard: 1,
+  good: 2,
+  easy: 3,
+};
+
+function questionSelectionRank(progress, questionId, masteryTarget) {
+  const record = questionRecord(progress, questionId, masteryTarget);
+  const lastAnsweredAt = Date.parse(record.lastAnsweredAt ?? "");
+  return [
+    Math.min(masteryTarget, record.streak),
+    record.attempts,
+    questionSelectionRatingOrder[record.lastRating] ?? 1,
+    Number.isFinite(lastAnsweredAt) ? lastAnsweredAt : Number.NEGATIVE_INFINITY,
+  ];
+}
+
+function compareQuestionSelectionRanks(left, right) {
+  for (let index = 0; index < left.length; index += 1) {
+    if (left[index] !== right[index]) {
+      return left[index] - right[index];
+    }
+  }
+  return 0;
+}
+
+export function createTermQuestionQueue(
+  terms,
+  progress,
+  masteryTarget,
+  selectedStage = "",
+  now = new Date(),
+  random = Math.random,
+) {
+  const candidatesByTerm = new Map();
+  for (const task of createQuestionQueue(
+    terms,
+    progress,
+    masteryTarget,
+    selectedStage,
+    now,
+  )) {
+    const candidates = candidatesByTerm.get(task.termId) ?? [];
+    candidates.push(task);
+    candidatesByTerm.set(task.termId, candidates);
+  }
+
+  return terms.flatMap((term) => {
+    const candidates = candidatesByTerm.get(term.id) ?? [];
+    let bestRank = null;
+    let bestCandidates = [];
+    for (const task of candidates) {
+      const rank = questionSelectionRank(progress, task.questionId, masteryTarget);
+      const comparison = bestRank
+        ? compareQuestionSelectionRanks(rank, bestRank)
+        : -1;
+      if (comparison < 0) {
+        bestRank = rank;
+        bestCandidates = [task];
+      } else if (comparison === 0) {
+        bestCandidates.push(task);
+      }
+    }
+    if (bestCandidates.length === 0) {
+      return [];
+    }
+    const randomValue = Number(random());
+    const randomIndex = Number.isFinite(randomValue)
+      ? Math.min(
+          bestCandidates.length - 1,
+          Math.max(0, Math.floor(randomValue * bestCandidates.length)),
+        )
+      : 0;
+    return [bestCandidates[randomIndex]];
+  });
+}
+
 export function getTasksForStage(
   term,
   stage,

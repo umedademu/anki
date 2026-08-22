@@ -2,6 +2,7 @@ import {
   createEmptyProgress,
   createQuestionQueue,
   createRatingUndoSnapshot,
+  createTermQuestionQueue,
   defaultReviewSettings,
   deserializeProgress,
   enqueueUniqueTasks,
@@ -66,6 +67,8 @@ const elements = {
   categoryLabel: document.querySelector("#category-label"),
   categoryFilter: document.querySelector("#category-filter"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
+  questionAmountField: document.querySelector("#question-amount-field"),
+  questionAmountFilter: document.querySelector("#question-amount-filter"),
   studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
   listeningAnswerDescription: document.querySelector(
     "#listening-answer-description",
@@ -164,6 +167,7 @@ const state = {
   listeningTimer: null,
   listeningRunId: 0,
   selectedStage: "",
+  questionAmountMode: "all",
   answeredThisSession: 0,
   unlockMessage: "",
   history: [],
@@ -184,6 +188,7 @@ const speechController = createSpeechController({
 });
 
 const listeningModes = new Set(["listen-answer"]);
+const oneQuestionPerTermMode = "one-per-term";
 const vocabularySpeechLabels = {
   word: "英語",
   meaning: "日本語",
@@ -210,6 +215,22 @@ function selectedStudyMode() {
     [...elements.studyModeOptions].find((option) => option.checked)?.value ??
     "memorize"
   );
+}
+
+function supportsOneQuestionPerTerm() {
+  return state.subject?.learningType !== "vocabulary";
+}
+
+function selectedQuestionAmountMode() {
+  return supportsOneQuestionPerTerm() &&
+    elements.questionAmountFilter.value === oneQuestionPerTermMode
+    ? oneQuestionPerTermMode
+    : "all";
+}
+
+function usesOneQuestionPerTerm() {
+  return state.questionAmountMode === oneQuestionPerTermMode &&
+    supportsOneQuestionPerTerm();
 }
 
 function speechPartSubjectKey() {
@@ -1231,11 +1252,16 @@ function updateSetupPreview() {
   const selectedStage = elements.questionStyleFilter.value;
   const studyMode = selectedStudyMode();
   const listening = listeningModes.has(studyMode);
+  const questionAmountMode = selectedQuestionAmountMode();
   const stages = learningStages.includes(selectedStage)
     ? [selectedStage]
     : learningStages;
   const questions = countQuestions(terms, stages);
-  const dueQuestions = createQuestionQueue(
+  const dueQuestions = (
+    questionAmountMode === oneQuestionPerTermMode
+      ? createTermQuestionQueue
+      : createQuestionQueue
+  )(
     terms,
     state.progress,
     state.subject.masteryTarget,
@@ -1260,7 +1286,13 @@ function updateSetupPreview() {
         : listening && dueQuestions === 0
           ? "現在、復習時刻を迎えた読み上げ対象の問題はありません。"
           : listening
-            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（読み上げ：${listeningContentLabel()}）`
+            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（読み上げ：${listeningContentLabel()}${
+                questionAmountMode === oneQuestionPerTermMode
+                  ? "・1項目につき1問"
+                  : ""
+              }）`
+      : questionAmountMode === oneQuestionPerTermMode
+        ? `${terms.length}語・今回${dueQuestions}問（1項目につき1問・最大${terms.length}問）`
       : selectedStage
         ? `${terms.length}語・${questions}問（${questionStyleLabel(selectedStage)}）`
         : `${terms.length}語・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
@@ -1310,6 +1342,10 @@ function configureSetup() {
     if (text) label.textContent = text;
   }
   setQuestionStyleOptions();
+  elements.questionAmountField.classList.toggle(
+    "is-hidden",
+    !supportsOneQuestionPerTerm(),
+  );
   const macroRegions = sortedUnique(
     state.allTerms.flatMap((term) => getMacroRegionTags(term)),
   );
@@ -1495,6 +1531,13 @@ function renderCompletion() {
   elements.contextCard.classList.add("is-hidden");
   elements.questionCard.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
+  if (usesOneQuestionPerTerm() && state.answeredThisSession > 0) {
+    elements.completionTitle.textContent = "1項目1問の一周が完了しました";
+    elements.completionMessage.textContent = `${state.answeredThisSession}項目・${state.answeredThisSession}問を学習しました。続けて始めると、残っている復習対象から次の1問を選びます。`;
+    renderActionControls();
+    updateOverallProgress();
+    return;
+  }
   const nextDueAt = getNextDueAt(
     state.terms,
     state.progress,
@@ -1526,7 +1569,9 @@ function renderCompletion() {
 }
 
 function buildQueue() {
-  const tasks = createQuestionQueue(
+  const tasks = (usesOneQuestionPerTerm()
+    ? createTermQuestionQueue
+    : createQuestionQueue)(
     state.terms,
     state.progress,
     state.subject.masteryTarget,
@@ -1586,7 +1631,7 @@ async function rateCurrentQuestion(rating) {
   state.saving = false;
   pushHistory(snapshot);
 
-  if (!state.selectedStage) {
+  if (!state.selectedStage && !usesOneQuestionPerTerm()) {
     const stageAfter = getTermStage(
       term,
       state.progress,
@@ -1611,7 +1656,7 @@ async function rateCurrentQuestion(rating) {
 
   state.answeredThisSession += 1;
   state.currentTask = state.queue.shift() ?? null;
-  if (!state.currentTask) {
+  if (!state.currentTask && !usesOneQuestionPerTerm()) {
     buildQueue();
     state.currentTask = state.queue.shift() ?? null;
   }
@@ -1685,6 +1730,7 @@ async function beginStudy() {
     ),
   );
   state.selectedStage = elements.questionStyleFilter.value;
+  state.questionAmountMode = selectedQuestionAmountMode();
   state.studyMode = selectedStudyMode();
   state.shuffleEnabled = elements.setupShuffle.checked;
   state.autoSpeechEnabled =
@@ -1774,7 +1820,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.067｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.068｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1884,6 +1930,7 @@ elements.macroRegionFilter.addEventListener("change", () => {
 elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
 elements.categoryFilter.addEventListener("change", updateSetupPreview);
 elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
+elements.questionAmountFilter.addEventListener("change", updateSetupPreview);
 for (const option of elements.studyModeOptions) {
   option.addEventListener("change", () => {
     elements.speechChoice.classList.toggle(

@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   loadBiologyDecks,
+  loadClassicalChineseDecks,
   loadClassicalJapaneseDecks,
   loadEarthScienceDecks,
   loadEnglishDecks,
@@ -203,6 +204,17 @@ const expectedClassicalJapaneseSpec = {
   questionCounts: { beginner: 588, reverse: 0, integrated: 0 },
 };
 
+const expectedClassicalChineseSpec = {
+  number: 1,
+  version: "classical-chinese-deck-1-v1",
+  contentVersion: "e76c5585bdb9",
+  datasetLabel: "漢文_Deck1_最重要句法・語彙_250項目",
+  difficultyLabel: "Deck1_最重要句法・語彙",
+  termCount: 250,
+  questionCount: 500,
+  questionCounts: { beginner: 500, reverse: 0, integrated: 0 },
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
   decks: sourceJapaneseDecks,
@@ -228,6 +240,10 @@ const {
   decks: sourceClassicalJapaneseDecks,
   terms: expectedClassicalJapaneseTerms,
 } = await loadClassicalJapaneseDecks();
+const {
+  decks: sourceClassicalChineseDecks,
+  terms: expectedClassicalChineseTerms,
+} = await loadClassicalChineseDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -239,12 +255,12 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 8 ||
+  catalog.subjects.length !== 9 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese"
+    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese"
 ) {
   throw new Error(
-    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文の科目一覧が正しくありません。",
+    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文の科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(
@@ -270,6 +286,9 @@ const earthScienceSubjectEntry = catalog.subjects.find(
 );
 const classicalJapaneseSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "classical-japanese",
+);
+const classicalChineseSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "classical-chinese",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -1199,6 +1218,143 @@ if (
   throw new Error("古文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");
 }
 
+if (
+  sourceClassicalChineseDecks.length !== 1 ||
+  !classicalChineseSubjectEntry ||
+  classicalChineseSubjectEntry.defaultDeckId !== "deck-1" ||
+  classicalChineseSubjectEntry.termUnitLabel !== "項目" ||
+  classicalChineseSubjectEntry.datasetLabel !== "大学受験漢文（国語）｜Deck 1" ||
+  classicalChineseSubjectEntry.termCount !== expectedClassicalChineseSpec.termCount ||
+  classicalChineseSubjectEntry.questionCount !==
+    expectedClassicalChineseSpec.questionCount ||
+  classicalChineseSubjectEntry.decks.length !== 1
+) {
+  throw new Error("漢文Deck 1の科目一覧が正しくありません。");
+}
+const sourceClassicalChineseDeck = sourceClassicalChineseDecks[0];
+const classicalChineseDeckEntry = classicalChineseSubjectEntry.decks[0];
+const classicalChineseSubject = await readJson(classicalChineseDeckEntry.indexPath);
+const classicalChineseChunks = await Promise.all(
+  classicalChineseSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedClassicalChineseTerms = classicalChineseChunks.flatMap(
+  (chunk) => chunk.terms,
+);
+const generatedClassicalChineseQuestions = generatedClassicalChineseTerms.flatMap(
+  (term) => Object.values(term.stages).flat(),
+);
+const generatedClassicalChineseCounts = countQuestionsByStage(
+  generatedClassicalChineseTerms,
+);
+if (
+  classicalChineseDeckEntry.number !== expectedClassicalChineseSpec.number ||
+  classicalChineseDeckEntry.version !== expectedClassicalChineseSpec.version ||
+  classicalChineseDeckEntry.contentVersion !== expectedClassicalChineseSpec.contentVersion ||
+  classicalChineseDeckEntry.datasetLabel !== expectedClassicalChineseSpec.datasetLabel ||
+  classicalChineseDeckEntry.difficultyLabel !==
+    expectedClassicalChineseSpec.difficultyLabel ||
+  classicalChineseDeckEntry.termCount !== expectedClassicalChineseSpec.termCount ||
+  classicalChineseDeckEntry.questionCount !== expectedClassicalChineseSpec.questionCount ||
+  classicalChineseSubject.schemaVersion !== 3 ||
+  classicalChineseSubject.id !== "classical-chinese" ||
+  classicalChineseSubject.title !== "漢文（国語）" ||
+  classicalChineseSubject.learningType !== "cards" ||
+  classicalChineseSubject.termUnitLabel !== "項目" ||
+  classicalChineseSubject.deckId !== "deck-1" ||
+  classicalChineseSubject.deckNumber !== expectedClassicalChineseSpec.number ||
+  classicalChineseSubject.version !== expectedClassicalChineseSpec.version ||
+  classicalChineseSubject.contentVersion !== expectedClassicalChineseSpec.contentVersion ||
+  classicalChineseSubject.datasetLabel !== expectedClassicalChineseSpec.datasetLabel ||
+  classicalChineseSubject.difficultyLabel !==
+    expectedClassicalChineseSpec.difficultyLabel ||
+  classicalChineseSubject.sourceFile !== sourceClassicalChineseDeck.sourceFile ||
+  classicalChineseSubject.termCount !== expectedClassicalChineseSpec.termCount ||
+  classicalChineseSubject.questionCount !== expectedClassicalChineseSpec.questionCount ||
+  classicalChineseSubject.filterLabels.macroRegion !== "分野" ||
+  classicalChineseSubject.filterLabels.regionDetail !== "単元" ||
+  classicalChineseSubject.filterLabels.category !== "項目種別" ||
+  classicalChineseSubject.stageLabels.beginner !== "暗記カード" ||
+  classicalChineseSubject.availableStages.join(",") !== "beginner" ||
+  classicalChineseSubject.chunks.length !== 5 ||
+  classicalChineseSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  classicalChineseChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "classical-chinese" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedClassicalChineseCounts) !==
+    JSON.stringify(expectedClassicalChineseSpec.questionCounts) ||
+  JSON.stringify(generatedClassicalChineseTerms) !==
+    JSON.stringify(expectedClassicalChineseTerms) ||
+  generatedClassicalChineseQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      !question.label ||
+      !question.explanation ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error("漢文Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+}
+const classicalChineseRanks = generatedClassicalChineseTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const classicalChineseDomainCounts = generatedClassicalChineseTerms.reduce(
+  (counts, term) => ({
+    ...counts,
+    [term.classicalChinese.domain]:
+      (counts[term.classicalChinese.domain] ?? 0) + 1,
+  }),
+  {},
+);
+if (
+  new Set(generatedClassicalChineseTerms.map((term) => term.id)).size !== 250 ||
+  new Set(generatedClassicalChineseTerms.map((term) => term.term)).size !== 250 ||
+  new Set(generatedClassicalChineseQuestions.map((question) => question.id)).size !==
+    500 ||
+  classicalChineseRanks.some((rank, index) => rank !== index + 1) ||
+  generatedClassicalChineseTerms.some((term) => !/^CC-\d{6}$/.test(term.id)) ||
+  generatedClassicalChineseQuestions.some(
+    (question) => !/^CC-\d{6}-C\d{2}$/.test(question.id),
+  ) ||
+  classicalChineseDomainCounts["句法"] !== 136 ||
+  classicalChineseDomainCounts["訓読"] !== 5 ||
+  classicalChineseDomainCounts["再読文字"] !== 9 ||
+  classicalChineseDomainCounts["重要語"] !== 90 ||
+  classicalChineseDomainCounts["置き字"] !== 4 ||
+  classicalChineseDomainCounts["返り点"] !== 6 ||
+  new Set(
+    generatedClassicalChineseTerms.map((term) => term.classicalChinese.unit),
+  ).size !== 98 ||
+  new Set(
+    generatedClassicalChineseTerms.map((term) => term.classicalChinese.itemType),
+  ).size !== 74 ||
+  generatedClassicalChineseTerms.some(
+    (term) =>
+      term.geography.macroRegion !== term.classicalChinese.domain ||
+      term.geography.regionDetail !== term.classicalChinese.unit ||
+      term.category !== term.classicalChinese.itemType ||
+      term.speechReadings[term.term] !== term.reading,
+  ) ||
+  generatedClassicalChineseQuestions.some(
+    (question) =>
+      ["term_from_meaning", "reading", "saidoku", "kakikudashi"].includes(
+        question.type,
+      ) && question.hideTermUntilAnswer !== true,
+  ) ||
+  generatedClassicalChineseQuestions.some(
+    (question) =>
+      ["reading", "saidoku"].includes(question.type) &&
+      (!Array.isArray(question.speech?.question) ||
+        question.speech.question.length !== 1 ||
+        question.speech.question[0].text.includes(question.answer)),
+  )
+) {
+  throw new Error("漢文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -1476,5 +1632,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、漢文${generatedClassicalChineseTerms.length}項目・${generatedClassicalChineseQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

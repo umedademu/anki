@@ -14,7 +14,7 @@
 
 ## 提供形態
 
-- 現在のアプリバージョンは`v0.062`とする
+- 現在のアプリバージョンは`v0.063`とする
 - パソコンやスマートフォンのブラウザーで利用するWebアプリ
 - WebアプリはVercelの`https://anki-ume.vercel.app`で公開する
 - 更新情報は`/changelog.html`で公開する
@@ -367,6 +367,22 @@ example_translation
 - 英単語・英語例文には英語、意味・和訳には日本語の読み上げ言語を付ける
 - 発音記号と事前収録音声は必須とせず、Azureの英語音声から生成する
 
+### 追加科目用の生成プロンプト（Webアプリ未実装）
+
+- 生物基礎：`docs/prompts/biology-basics-csv-generation.md`、25列
+- 地学基礎：`docs/prompts/earth-science-basics-csv-generation.md`、27列
+- 地理：`docs/prompts/geography-csv-generation.md`、29列
+- 政治・経済：`docs/prompts/politics-economics-csv-generation.md`、30列
+- 古文：`docs/prompts/classical-japanese-csv-generation.md`、27列
+- 漢文：`docs/prompts/classical-chinese-csv-generation.md`、29列
+- 6科目とも、勉強全体のうち暗記で対応できる部分だけを、一枚につき一つの知識を短く思い出すカードとして生成する
+- 生物基礎・地学基礎は用語、場所、働き、順序、対応関係、基本式を中心とし、実験考察や初見図表分析を対象外とする
+- 地理は位置、分布、代表例、地域の骨格を中心とし、初見統計分析や変わりやすい最新順位の暗記を対象外とする
+- 政治・経済は用語、制度、権限、手続、法的根拠、経済の基本関係を中心とし、政策論述やニュースの細部当てを対象外とする
+- 古文・漢文は単語、文法、敬語、句法、訓読、古典常識、文学史を中心とし、長文読解や心情考察を対象外とする
+- 各プロンプトは、既存Deckとの重複防止、全Deck累計順位、短答の一意性、出典、著作権、読み上げ時の二重読み防止を検査する
+- 現時点では生成プロンプトだけを準備し、科目選択、CSV変換、公開用データ、Cloudflare上の学習データは追加しない
+
 ## Web表示用データ
 
 - `npm run build:data`でCSVからCloudflare登録用データを生成する
@@ -423,4 +439,4 @@ example_translation
 ## 今後追加する機能（案）
 
 - 学習する科目・単元・時代の選択
-- 日本史や英語などの科目追加
+- 生物基礎・地学基礎・地理・政治経済・古文・漢文の専用CSV形式に対応した科目追加

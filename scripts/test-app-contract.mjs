@@ -112,9 +112,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.062") ||
-  !changelog.includes("v0.062") ||
-  !settingsHtml.includes("v0.062")
+  !html.includes("v0.063") ||
+  !changelog.includes("v0.063") ||
+  !settingsHtml.includes("v0.063")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -149,7 +149,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.062"') ||
+  !html.includes('href="/styles.css?v=0.063"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

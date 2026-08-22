@@ -2,7 +2,7 @@
 
 最初に科目を選び、世界史・日本史・英単語を段階的に学ぶWebアプリです。
 
-現在のバージョンは`v0.062`です。Web上の変更履歴は`public/changelog.html`で公開します。
+現在のバージョンは`v0.063`です。Web上の変更履歴は`public/changelog.html`で公開します。
 
 ## 現在の内容
 
@@ -81,6 +81,17 @@ Anki、更新情報、版番号を含むヘッダーは開始前だけに表示�
 `data/source/world-history`にはDeckごとの世界史CSV、`data/source/japanese-history`にはDeckごとの日本史CSV、`data/source/english-vocabulary`にはDeckごとの英単語CSVを配置します。英単語CSVは1語1行の10列形式を使用します。そのあと、次の命令でWeb表示用データを作り直して検査します。
 
 ChatGPTで新しい問題集CSVを作る場合は、世界史では`docs/prompts/world-history-csv-generation.md`、日本史では`docs/prompts/japanese-history-csv-generation.md`、英単語では`docs/prompts/english-vocabulary-csv-generation.md`を依頼文と一緒に渡します。段階表と今回作成する語数は依頼文へ直接記載し、Deck 2以降を作る場合は重複確認のために作成済みの全DeckのCSVも添付します。世界史と日本史は同じ25列の三段階形式で変換し、英単語は10列形式から三方向の問題を生成します。
+
+今後追加する科目には、科目ごとの暗記に適した列構成を使う次の生成用プロンプトを準備しています。
+
+- 生物基礎：`docs/prompts/biology-basics-csv-generation.md`
+- 地学基礎：`docs/prompts/earth-science-basics-csv-generation.md`
+- 地理：`docs/prompts/geography-csv-generation.md`
+- 政治・経済：`docs/prompts/politics-economics-csv-generation.md`
+- 古文：`docs/prompts/classical-japanese-csv-generation.md`
+- 漢文：`docs/prompts/classical-chinese-csv-generation.md`
+
+この6科目では、勉強全体をアプリ内で再現せず、暗記によって対応できる用語、意味、働き、位置、順序、句法、識別点などだけを短いカードにします。実験考察、初見資料の分析、政策論述、長文読解などは生成対象に含めません。現時点ではプロンプトだけを準備しており、Webアプリの科目選択、変換処理、学習データはまだ追加していません。
 
 世界史・日本史の既存語呂を「語呂合わせマスター」と照合するときは、予行表示後に反映用の命令を実行します。この処理はCloudflare上の現行デッキを読み、同じ年号・同じ出来事だけを元CSVへ反映します。
 

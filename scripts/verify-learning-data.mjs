@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   loadBiologyDecks,
+  loadClassicalJapaneseDecks,
   loadEarthScienceDecks,
   loadEnglishDecks,
   loadGeographyDecks,
@@ -191,6 +192,17 @@ const expectedPoliticsEconomicsSpec = {
   questionCounts: { beginner: 400, reverse: 0, integrated: 0 },
 };
 
+const expectedClassicalJapaneseSpec = {
+  number: 1,
+  version: "classical-japanese-deck-1-v1",
+  contentVersion: "5500ffefdbe8",
+  datasetLabel: "古文_Deck1_最重要単語・文法_300",
+  difficultyLabel: "Deck1_最重要単語・文法",
+  termCount: 300,
+  questionCount: 588,
+  questionCounts: { beginner: 588, reverse: 0, integrated: 0 },
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
   decks: sourceJapaneseDecks,
@@ -212,6 +224,10 @@ const {
   decks: sourceEarthScienceDecks,
   terms: expectedEarthScienceTerms,
 } = await loadEarthScienceDecks();
+const {
+  decks: sourceClassicalJapaneseDecks,
+  terms: expectedClassicalJapaneseTerms,
+} = await loadClassicalJapaneseDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -223,12 +239,12 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 7 ||
+  catalog.subjects.length !== 8 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics"
+    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese"
 ) {
   throw new Error(
-    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎の科目一覧が正しくありません。",
+    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文の科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(
@@ -251,6 +267,9 @@ const biologySubjectEntry = catalog.subjects.find(
 );
 const earthScienceSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "earth-science-basics",
+);
+const classicalJapaneseSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "classical-japanese",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -1050,6 +1069,136 @@ if (
   throw new Error("地学基礎Deck 1のID・重要度順位・単元・尺度が正しくありません。");
 }
 
+if (
+  sourceClassicalJapaneseDecks.length !== 1 ||
+  !classicalJapaneseSubjectEntry ||
+  classicalJapaneseSubjectEntry.defaultDeckId !== "deck-1" ||
+  classicalJapaneseSubjectEntry.termUnitLabel !== "項目" ||
+  classicalJapaneseSubjectEntry.datasetLabel !== "大学受験古文（国語）｜Deck 1" ||
+  classicalJapaneseSubjectEntry.termCount !== expectedClassicalJapaneseSpec.termCount ||
+  classicalJapaneseSubjectEntry.questionCount !==
+    expectedClassicalJapaneseSpec.questionCount ||
+  classicalJapaneseSubjectEntry.decks.length !== 1
+) {
+  throw new Error("古文Deck 1の科目一覧が正しくありません。");
+}
+const sourceClassicalJapaneseDeck = sourceClassicalJapaneseDecks[0];
+const classicalJapaneseDeckEntry = classicalJapaneseSubjectEntry.decks[0];
+const classicalJapaneseSubject = await readJson(
+  classicalJapaneseDeckEntry.indexPath,
+);
+const classicalJapaneseChunks = await Promise.all(
+  classicalJapaneseSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedClassicalJapaneseTerms = classicalJapaneseChunks.flatMap(
+  (chunk) => chunk.terms,
+);
+const generatedClassicalJapaneseQuestions = generatedClassicalJapaneseTerms.flatMap(
+  (term) => Object.values(term.stages).flat(),
+);
+const generatedClassicalJapaneseCounts = countQuestionsByStage(
+  generatedClassicalJapaneseTerms,
+);
+if (
+  classicalJapaneseDeckEntry.number !== expectedClassicalJapaneseSpec.number ||
+  classicalJapaneseDeckEntry.version !== expectedClassicalJapaneseSpec.version ||
+  classicalJapaneseDeckEntry.contentVersion !==
+    expectedClassicalJapaneseSpec.contentVersion ||
+  classicalJapaneseDeckEntry.datasetLabel !==
+    expectedClassicalJapaneseSpec.datasetLabel ||
+  classicalJapaneseDeckEntry.difficultyLabel !==
+    expectedClassicalJapaneseSpec.difficultyLabel ||
+  classicalJapaneseDeckEntry.termCount !== expectedClassicalJapaneseSpec.termCount ||
+  classicalJapaneseDeckEntry.questionCount !==
+    expectedClassicalJapaneseSpec.questionCount ||
+  classicalJapaneseSubject.schemaVersion !== 3 ||
+  classicalJapaneseSubject.id !== "classical-japanese" ||
+  classicalJapaneseSubject.title !== "古文（国語）" ||
+  classicalJapaneseSubject.learningType !== "cards" ||
+  classicalJapaneseSubject.termUnitLabel !== "項目" ||
+  classicalJapaneseSubject.deckId !== "deck-1" ||
+  classicalJapaneseSubject.deckNumber !== expectedClassicalJapaneseSpec.number ||
+  classicalJapaneseSubject.version !== expectedClassicalJapaneseSpec.version ||
+  classicalJapaneseSubject.contentVersion !==
+    expectedClassicalJapaneseSpec.contentVersion ||
+  classicalJapaneseSubject.datasetLabel !==
+    expectedClassicalJapaneseSpec.datasetLabel ||
+  classicalJapaneseSubject.difficultyLabel !==
+    expectedClassicalJapaneseSpec.difficultyLabel ||
+  classicalJapaneseSubject.sourceFile !== sourceClassicalJapaneseDeck.sourceFile ||
+  classicalJapaneseSubject.termCount !== expectedClassicalJapaneseSpec.termCount ||
+  classicalJapaneseSubject.questionCount !==
+    expectedClassicalJapaneseSpec.questionCount ||
+  classicalJapaneseSubject.filterLabels.macroRegion !== "分野" ||
+  classicalJapaneseSubject.filterLabels.regionDetail !== "単元" ||
+  classicalJapaneseSubject.filterLabels.category !== "項目種別" ||
+  classicalJapaneseSubject.stageLabels.beginner !== "暗記カード" ||
+  classicalJapaneseSubject.availableStages.join(",") !== "beginner" ||
+  classicalJapaneseSubject.chunks.length !== 6 ||
+  classicalJapaneseSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  classicalJapaneseChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "classical-japanese" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedClassicalJapaneseCounts) !==
+    JSON.stringify(expectedClassicalJapaneseSpec.questionCounts) ||
+  JSON.stringify(generatedClassicalJapaneseTerms) !==
+    JSON.stringify(expectedClassicalJapaneseTerms) ||
+  generatedClassicalJapaneseQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      !question.label ||
+      !question.explanation ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error("古文Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+}
+const classicalJapaneseRanks = generatedClassicalJapaneseTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const classicalJapaneseDomainCounts = generatedClassicalJapaneseTerms.reduce(
+  (counts, term) => ({
+    ...counts,
+    [term.classicalJapanese.domain]:
+      (counts[term.classicalJapanese.domain] ?? 0) + 1,
+  }),
+  {},
+);
+if (
+  new Set(generatedClassicalJapaneseTerms.map((term) => term.id)).size !== 300 ||
+  new Set(generatedClassicalJapaneseTerms.map((term) => term.term)).size !== 300 ||
+  new Set(generatedClassicalJapaneseQuestions.map((question) => question.id)).size !==
+    588 ||
+  classicalJapaneseRanks.some((rank, index) => rank !== index + 1) ||
+  generatedClassicalJapaneseTerms.some((term) => !/^CJ-\d{6}$/.test(term.id)) ||
+  generatedClassicalJapaneseQuestions.some(
+    (question) => !/^CJ-\d{6}-C\d{2}$/.test(question.id),
+  ) ||
+  classicalJapaneseDomainCounts["語彙"] !== 205 ||
+  classicalJapaneseDomainCounts["文法"] !== 65 ||
+  classicalJapaneseDomainCounts["敬語"] !== 22 ||
+  classicalJapaneseDomainCounts["修辞"] !== 5 ||
+  classicalJapaneseDomainCounts["古典常識"] !== 3 ||
+  new Set(
+    generatedClassicalJapaneseTerms.map(
+      (term) => term.classicalJapanese.unit,
+    ),
+  ).size !== 19 ||
+  generatedClassicalJapaneseTerms.some(
+    (term) =>
+      term.geography.macroRegion !== term.classicalJapanese.domain ||
+      term.geography.regionDetail !== term.classicalJapanese.unit ||
+      term.category !== term.classicalJapanese.itemType ||
+      term.speechReadings[term.term] !== term.reading,
+  )
+) {
+  throw new Error("古文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -1327,5 +1476,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

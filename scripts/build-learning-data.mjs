@@ -42,6 +42,12 @@ const earthScienceSourceDirectory = path.join(
   "source",
   "earth-science-basics",
 );
+const classicalJapaneseSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "classical-japanese",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
@@ -67,6 +73,8 @@ const biologySubjectId = "biology-basics";
 const biologySubjectTitle = "生物基礎";
 const earthScienceSubjectId = "earth-science-basics";
 const earthScienceSubjectTitle = "地学基礎";
+const classicalJapaneseSubjectId = "classical-japanese";
+const classicalJapaneseSubjectTitle = "古文（国語）";
 const chunkSize = 50;
 const schemaVersion = 3;
 const masteryTarget = 2;
@@ -235,6 +243,36 @@ export const earthScienceRequiredHeaders = [
   "reading_map",
 ];
 
+export const classicalJapaneseRequiredHeaders = [
+  "dataset_label",
+  "item_id",
+  "importance_rank",
+  "difficulty_label",
+  "domain",
+  "unit",
+  "item",
+  "reading",
+  "aliases",
+  "item_type",
+  "grammar_info",
+  "card_id",
+  "card_type",
+  "focus",
+  "question",
+  "answer",
+  "accepted_answers",
+  "explanation",
+  "example_text",
+  "example_reading",
+  "example_translation",
+  "confusable_with",
+  "distinction",
+  "memory_aid",
+  "source_name",
+  "source_url",
+  "reading_map",
+];
+
 const termFields = requiredHeaders.slice(0, 13);
 const requiredTermFields = termFields.filter((fieldName) => fieldName !== "aliases");
 const allowedStages = ["beginner", "reverse", "integrated"];
@@ -344,6 +382,33 @@ const earthScienceCardTypes = new Set(
   Object.keys(earthScienceCardTypeLabels),
 );
 const earthScienceTermFields = earthScienceRequiredHeaders.slice(0, 12);
+const classicalJapaneseCardTypeLabels = {
+  meaning: "語義",
+  word_from_meaning: "意味から古語",
+  meaning_in_example: "用例中の語義",
+  part_of_speech: "品詞",
+  conjugation: "活用",
+  connection: "接続",
+  auxiliary_meaning: "助動詞の意味",
+  identification: "識別",
+  honorific_type: "敬語の種類",
+  respect_direction: "敬意の方向",
+  rhetoric: "修辞",
+  classical_culture: "古典常識",
+  literary_history: "文学史",
+};
+const classicalJapaneseCardTypes = new Set(
+  Object.keys(classicalJapaneseCardTypeLabels),
+);
+const classicalJapaneseTermFields = classicalJapaneseRequiredHeaders.slice(0, 11);
+const classicalJapaneseDomains = new Set([
+  "語彙",
+  "文法",
+  "敬語",
+  "修辞",
+  "古典常識",
+  "文学史",
+]);
 
 export async function findSourcePaths() {
   return findHistorySourcePaths(sourceDirectory, "世界史");
@@ -784,6 +849,7 @@ const stableDatasetVersions = new Map([
   ["politics-economics:deck-1", "politics-economics-deck-1-v1"],
   ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
   ["earth-science-basics:deck-1", "earth-science-basics-deck-1-v1"],
+  ["classical-japanese:deck-1", "classical-japanese-deck-1-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -2159,6 +2225,282 @@ export async function loadEarthScienceDecks() {
   return { decks, terms };
 }
 
+export function toClassicalJapaneseObjects(rows) {
+  if (rows.length < 2) {
+    throw new Error("古文CSVに見出し行とデータ行が必要です。");
+  }
+  const headers = rows[0].map((header, index) =>
+    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
+  );
+  if (
+    headers.length !== classicalJapaneseRequiredHeaders.length ||
+    headers.some(
+      (header, index) => header !== classicalJapaneseRequiredHeaders[index],
+    )
+  ) {
+    throw new Error("古文CSVの見出しまたは並び順が27列形式と一致しません。");
+  }
+  return rows.slice(1).map((cells, rowIndex) => {
+    if (cells.length !== headers.length) {
+      throw new Error(
+        `${rowIndex + 2}行目の列数が見出しと一致しません（${cells.length}/${headers.length}）。`,
+      );
+    }
+    const row = Object.fromEntries(
+      headers.map((header, columnIndex) => [header, cells[columnIndex].trim()]),
+    );
+    for (const fieldName of classicalJapaneseRequiredHeaders) {
+      assertRequiredText(row, fieldName, rowIndex + 2);
+    }
+    return row;
+  });
+}
+
+function classicalJapaneseExplanation(row) {
+  return [
+    geographyValue(row.explanation),
+    geographyValue(row.grammar_info)
+      ? `文法情報：${row.grammar_info.replaceAll(";", "／")}`
+      : "",
+    geographyValue(row.confusable_with) && geographyValue(row.distinction)
+      ? `区別：${row.confusable_with}とは、${row.distinction}`
+      : "",
+    geographyValue(row.memory_aid) ? `記憶補助：${row.memory_aid}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function normalizeClassicalJapaneseQuestion(row, rowIndex) {
+  const rowNumber = rowIndex + 2;
+  if (!classicalJapaneseCardTypes.has(row.card_type)) {
+    throw new Error(`${rowNumber}行目のcard_typeが正しくありません: ${row.card_type}`);
+  }
+  const sourceUrls = geographyList(row.source_url);
+  if (sourceUrls.some((url) => !/^https:\/\//.test(url))) {
+    throw new Error(`${rowNumber}行目のsource_urlはhttpsのURLか「なし」にしてください。`);
+  }
+  const exampleText = geographyValue(row.example_text);
+  const exampleReading = geographyValue(row.example_reading);
+  const exampleTranslation = geographyValue(row.example_translation);
+  if (
+    [exampleText, exampleReading, exampleTranslation].filter(Boolean).length !== 0 &&
+    [exampleText, exampleReading, exampleTranslation].filter(Boolean).length !== 3
+  ) {
+    throw new Error(`${rowNumber}行目の用例・用例の読み・現代語訳をすべて記入してください。`);
+  }
+  const acceptedAnswers = geographyList(row.accepted_answers).filter(
+    (answer) => answer !== row.answer,
+  );
+  return {
+    id: row.card_id,
+    stage: "beginner",
+    focus: row.focus,
+    type: row.card_type,
+    label: classicalJapaneseCardTypeLabels[row.card_type],
+    prompt: [row.question, exampleText].filter(Boolean).join("\n"),
+    answer: row.answer,
+    keywords: [...new Set([row.answer, ...acceptedAnswers])],
+    acceptedAnswers,
+    answerNote: exampleTranslation ? `現代語訳：${exampleTranslation}` : "",
+    explanation: classicalJapaneseExplanation(row),
+    yearMnemonic: "",
+    source: { name: row.source_name, url: geographyValue(row.source_url) },
+    hideTermUntilAnswer: row.card_type === "word_from_meaning",
+    ...(exampleReading
+      ? {
+          speech: {
+            question: [
+              { text: row.question, language: "ja-JP" },
+              { text: exampleReading, language: "ja-JP" },
+            ],
+          },
+        }
+      : {}),
+  };
+}
+
+function assertSameClassicalJapaneseTermData(firstRow, row, rowNumber) {
+  for (const fieldName of classicalJapaneseTermFields) {
+    if (row[fieldName] !== firstRow[fieldName]) {
+      throw new Error(
+        `${rowNumber}行目の${fieldName}が同じ古文項目のほかの行と一致しません。`,
+      );
+    }
+  }
+}
+
+export function groupClassicalJapaneseTerms(rows) {
+  const groups = [];
+  const groupById = new Map();
+  const cardIds = new Set();
+  rows.forEach((row, rowIndex) => {
+    if (cardIds.has(row.card_id)) {
+      throw new Error(`古文カードIDが重複しています: ${row.card_id}`);
+    }
+    cardIds.add(row.card_id);
+    let group = groupById.get(row.item_id);
+    if (!group) {
+      group = { firstRow: row, rows: [] };
+      groupById.set(row.item_id, group);
+      groups.push(group);
+    } else {
+      assertSameClassicalJapaneseTermData(group.firstRow, row, rowIndex + 2);
+    }
+    group.rows.push({ row, rowIndex });
+  });
+
+  return groups.map(({ firstRow, rows: itemRows }) => {
+    const questions = itemRows.map(({ row, rowIndex }) =>
+      normalizeClassicalJapaneseQuestion(row, rowIndex),
+    );
+    const expectedCardIds = questions.map(
+      (_, index) => `${firstRow.item_id}-C${String(index + 1).padStart(2, "0")}`,
+    );
+    if (questions.some((question, index) => question.id !== expectedCardIds[index])) {
+      throw new Error(`${firstRow.item}のカードIDがC01からの連番ではありません。`);
+    }
+    const readingMap = {};
+    for (const { row, rowIndex } of itemRows) {
+      for (const [written, reading] of Object.entries(
+        geographyReadingMap(row.reading_map, rowIndex + 2),
+      )) {
+        if (readingMap[written] && readingMap[written] !== reading) {
+          throw new Error(`${rowIndex + 2}行目の${written}の読みが同じ項目内で一致しません。`);
+        }
+        readingMap[written] = reading;
+      }
+    }
+    const importanceRank = parseInteger(
+      firstRow.importance_rank,
+      "importance_rank",
+      itemRows[0].rowIndex + 2,
+    );
+    return {
+      id: firstRow.item_id,
+      datasetLabel: firstRow.dataset_label,
+      importanceRank,
+      difficultyLabel: firstRow.difficulty_label,
+      category: firstRow.item_type,
+      subunit: firstRow.unit,
+      term: firstRow.item,
+      reading: firstRow.reading,
+      aliases: geographyList(firstRow.aliases),
+      prerequisiteIds: [],
+      era: "",
+      geography: {
+        macroRegion: firstRow.domain,
+        regionDetail: firstRow.unit,
+        scale: firstRow.domain,
+        splitMacroRegion: false,
+      },
+      chronology: {
+        displayPeriod: "",
+        sortYear: importanceRank,
+      },
+      referenceYear: "",
+      classicalJapanese: {
+        domain: firstRow.domain,
+        unit: firstRow.unit,
+        itemType: firstRow.item_type,
+        grammarInfo: geographyValue(firstRow.grammar_info),
+      },
+      speechReadings: {
+        [firstRow.item]: firstRow.reading,
+        ...readingMap,
+      },
+      integratedAsExplanation: false,
+      stages: { beginner: questions, reverse: [], integrated: [] },
+      source: {
+        name: firstRow.source_name,
+        url: geographyValue(firstRow.source_url),
+      },
+    };
+  });
+}
+
+export function validateClassicalJapaneseTerms(terms, { rankStart = 1 } = {}) {
+  assertUnique(terms, (term) => term.id, "古文項目ID");
+  assertUnique(terms, (term) => term.term, "古文項目名");
+  assertUnique(terms, (term) => term.importanceRank, "古文重要度順位");
+  assertUnique(
+    terms.flatMap((term) => term.stages.beginner),
+    (question) => question.id,
+    "古文カードID",
+  );
+  const ranks = terms
+    .map((term) => term.importanceRank)
+    .sort((left, right) => left - right);
+  if (ranks.some((rank, index) => rank !== rankStart + index)) {
+    throw new Error(
+      `古文の重要度順位は${rankStart}から${rankStart + terms.length - 1}までの連番にしてください。`,
+    );
+  }
+  for (const term of terms) {
+    const expectedId = `CJ-${String(term.importanceRank).padStart(6, "0")}`;
+    if (term.id !== expectedId) {
+      throw new Error(`${term.term}の項目IDと重要度順位が一致しません。`);
+    }
+    if (
+      term.stages.beginner.length === 0 ||
+      term.stages.beginner.length > 5 ||
+      term.stages.reverse.length !== 0 ||
+      term.stages.integrated.length !== 0
+    ) {
+      throw new Error(`${term.term}の古文カードの枚数または段階分けが正しくありません。`);
+    }
+    if (!classicalJapaneseDomains.has(term.classicalJapanese.domain)) {
+      throw new Error(`${term.term}の分野が正しくありません。`);
+    }
+  }
+}
+
+export async function loadClassicalJapaneseDecks() {
+  const entries = await readdir(classicalJapaneseSourceDirectory, {
+    withFileTypes: true,
+  });
+  const sourcePaths = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
+    .map((entry) => path.join(classicalJapaneseSourceDirectory, entry.name))
+    .sort();
+  if (sourcePaths.length === 0) {
+    throw new Error("古文の元CSVがありません。");
+  }
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupClassicalJapaneseTerms(
+        toClassicalJapaneseObjects(parseCsv(sourceText)),
+      );
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(`${path.basename(sourcePath)}の古文デッキ名が統一されていません。`);
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      const id = `deck-${number}`;
+      return {
+        id,
+        number,
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: datasetVersion(classicalJapaneseSubjectId, id),
+        contentVersion: sourceVersion(sourceText),
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "古文Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validateClassicalJapaneseTerms(terms);
+  return { decks, terms };
+}
+
 async function writeJson(targetPath, value) {
   await mkdir(path.dirname(targetPath), { recursive: true });
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
@@ -2379,6 +2721,7 @@ export async function main() {
     politicsEconomicsData,
     biologyData,
     earthScienceData,
+    classicalJapaneseData,
   ] = await Promise.all([
     loadSourceDecks(),
     loadJapaneseHistoryDecks(),
@@ -2387,6 +2730,7 @@ export async function main() {
     loadPoliticsEconomicsDecks(),
     loadBiologyDecks(),
     loadEarthScienceDecks(),
+    loadClassicalJapaneseDecks(),
   ]);
   const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
@@ -2408,6 +2752,7 @@ export async function main() {
     ...politicsEconomicsData.decks,
     ...biologyData.decks,
     ...earthScienceData.decks,
+    ...classicalJapaneseData.decks,
   ];
   const version = createHash("sha256")
     .update(
@@ -2578,6 +2923,27 @@ export async function main() {
       },
       earthScienceData.decks,
     ),
+    writeSubjectData(
+      {
+        id: classicalJapaneseSubjectId,
+        title: classicalJapaneseSubjectTitle,
+        catalogLabel: "大学受験古文（国語）",
+        description: "古語・文法・敬語・修辞・古典常識の最重要事項を覚える大学受験古文",
+        learningType: "cards",
+        termUnitLabel: "項目",
+        availableStages: ["beginner"],
+        filterLabels: {
+          macroRegion: "分野",
+          regionDetail: "単元",
+          category: "項目種別",
+        },
+        stageLabels: {
+          all: "すべてのカード",
+          beginner: "暗記カード",
+        },
+      },
+      classicalJapaneseData.decks,
+    ),
   ]);
 
   await writeJson(path.join(outputRoot, "index.json"), {
@@ -2595,8 +2961,11 @@ export async function main() {
   );
   const biologyCounts = countQuestionsByStage(biologyData.terms);
   const earthScienceCounts = countQuestionsByStage(earthScienceData.terms);
+  const classicalJapaneseCounts = countQuestionsByStage(
+    classicalJapaneseData.terms,
+  );
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問、古文${classicalJapaneseData.decks.length}デッキ・${classicalJapaneseData.terms.length}項目・${Object.values(classicalJapaneseCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

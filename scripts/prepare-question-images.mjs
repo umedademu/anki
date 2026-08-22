@@ -2,14 +2,29 @@ import { createHash } from "node:crypto";
 import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { loadSourceDecks } from "./build-learning-data.mjs";
+import {
+  loadJapaneseHistoryDecks,
+  loadSourceDecks,
+} from "./build-learning-data.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
-const sourceDirectory = path.join(projectRoot, "data", "source", "world-history");
+const subjectArgumentIndex = process.argv.indexOf("--subject");
+export const imageSubjectId =
+  subjectArgumentIndex >= 0 ? process.argv[subjectArgumentIndex + 1] : "world-history";
+if (!["world-history", "japanese-history"].includes(imageSubjectId)) {
+  throw new Error(`画像を準備できない科目です: ${imageSubjectId}`);
+}
+const sourceDirectory = path.join(projectRoot, "data", "source", imageSubjectId);
 const imageDirectory = path.join(sourceDirectory, "term-images");
 const manifestPath = path.join(sourceDirectory, "term-images.json");
-const userAgent = "anki-world-history/1.0 (https://anki-ume.vercel.app/)";
+export const imageAssetIdPrefix =
+  imageSubjectId === "japanese-history" ? "WMJ" : "WM";
+const loadSubjectDecks =
+  imageSubjectId === "japanese-history"
+    ? loadJapaneseHistoryDecks
+    : loadSourceDecks;
+const userAgent = "anki-history-learning/1.0 (https://anki-ume.vercel.app/)";
 const apiHeaders = { "User-Agent": userAgent };
 let apiRequestQueue = Promise.resolve();
 let nextApiRequestAt = 0;
@@ -614,8 +629,8 @@ async function mapLimit(values, limit, worker) {
   return results;
 }
 
-function assetIdForSource(sourcePageUrl) {
-  return `WM-${createHash("sha256").update(sourcePageUrl).digest("hex").slice(0, 14)}`;
+function assetIdForSource(sourcePageUrl, prefix = imageAssetIdPrefix) {
+  return `${prefix}-${createHash("sha256").update(sourcePageUrl).digest("hex").slice(0, 14)}`;
 }
 
 function questionList(term) {
@@ -624,7 +639,15 @@ function questionList(term) {
 
 async function main() {
   const rebuild = process.argv.includes("--rebuild");
-  const { terms } = await loadSourceDecks();
+  const { terms } = await loadSubjectDecks();
+  const activeTermQueryOverrides =
+    imageSubjectId === "world-history" ? termQueryOverrides : new Map();
+  const activeTermFileOverrides =
+    imageSubjectId === "world-history" ? termFileOverrides : new Map();
+  const activeTargetFileOverrides =
+    imageSubjectId === "world-history" ? targetFileOverrides : new Map();
+  const activeExcludedTargetKeys =
+    imageSubjectId === "world-history" ? excludedTargetKeys : new Set();
   const previousManifest = JSON.parse(await readFile(manifestPath, "utf8"));
   const assets = [];
   const assetBySource = new Map();
@@ -693,13 +716,13 @@ async function main() {
   const termsWithoutFallback = terms.filter((term) => !fallbackByTerm.has(term.id));
   const missingTerms = [];
   await mapLimit(termsWithoutFallback, 2, async (term, index) => {
-    const query = termQueryOverrides.get(term.term) ?? term.term;
+    const query = activeTermQueryOverrides.get(term.term) ?? term.term;
     const context = `${term.era} ${term.geography.regionDetail}`;
     const asset = await resolveAsset(
       query,
       context,
       term.term,
-      termFileOverrides.get(term.term),
+      activeTermFileOverrides.get(term.term),
     );
     if (!asset) {
       missingTerms.push(`${term.id} ${term.term}`);
@@ -722,7 +745,7 @@ async function main() {
       if (!isUsefulAnswerTarget(question)) continue;
       const target = cleanSearchText(question.answer);
       if (normalizedTitle(target) === normalizedTitle(term.term)) continue;
-      if (excludedTargetKeys.has(targetKey(term.term, target))) continue;
+      if (activeExcludedTargetKeys.has(targetKey(term.term, target))) continue;
       targetRequests.push({
         key: `${term.id}\t${target}`,
         term,
@@ -740,7 +763,7 @@ async function main() {
       request.target,
       context,
       request.target,
-      targetFileOverrides.get(targetKey(request.term.term, request.target)),
+      activeTargetFileOverrides.get(targetKey(request.term.term, request.target)),
     );
     if (asset) targetAssets.set(request.key, asset.id);
     if ((index + 1) % 20 === 0 || index + 1 === uniqueTargetRequests.length) {
@@ -795,6 +818,7 @@ export {
   assetIdForSource,
   commonsMetadata,
   downloadAsset,
+  findImage,
   targetFileOverrides,
   targetKey,
   termFileOverrides,

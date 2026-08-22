@@ -12,11 +12,27 @@ const englishSourceDirectory = path.join(
   "source",
   "english-vocabulary",
 );
+const japaneseSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "japanese-history",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
+const japaneseTermImageManifestPath = path.join(
+  japaneseSourceDirectory,
+  "term-images.json",
+);
+const japaneseTermImageSourceDirectory = path.join(
+  japaneseSourceDirectory,
+  "term-images",
+);
 const subjectId = "world-history";
 const subjectTitle = "世界史";
+const japaneseSubjectId = "japanese-history";
+const japaneseSubjectTitle = "日本史";
 const englishSubjectId = "english-vocabulary";
 const englishSubjectTitle = "英単語";
 const chunkSize = 50;
@@ -96,16 +112,24 @@ const questionTypeLabels = {
 };
 
 export async function findSourcePaths() {
-  const entries = await readdir(sourceDirectory, { withFileTypes: true });
+  return findHistorySourcePaths(sourceDirectory, "世界史");
+}
+
+async function findHistorySourcePaths(targetDirectory, subjectLabel) {
+  const entries = await readdir(targetDirectory, { withFileTypes: true });
   const csvFiles = entries
     .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
     .map((entry) => entry.name)
     .sort();
 
   if (csvFiles.length === 0) {
-    throw new Error("世界史の元CSVがありません。");
+    throw new Error(`${subjectLabel}の元CSVがありません。`);
   }
-  return csvFiles.map((fileName) => path.join(sourceDirectory, fileName));
+  return csvFiles.map((fileName) => path.join(targetDirectory, fileName));
+}
+
+export async function findJapaneseHistorySourcePaths() {
+  return findHistorySourcePaths(japaneseSourceDirectory, "日本史");
 }
 
 export async function findSourcePath() {
@@ -408,17 +432,21 @@ export function validateTerms(terms, { rankStart = 1 } = {}) {
         exactDatePattern.test(question.answer.replaceAll("**", "").trim()),
       );
     if (exactDateQuestions.length > 0) {
-      const mnemonics = new Set(
-        exactDateQuestions
-          .map((question) => question.yearMnemonic.trim())
-          .filter(Boolean),
-      );
+      const mnemonicsByAnswer = new Map();
+      for (const question of exactDateQuestions) {
+        const answer = question.answer.replaceAll("**", "").trim();
+        const mnemonics = mnemonicsByAnswer.get(answer) ?? new Set();
+        mnemonics.add(question.yearMnemonic.trim());
+        mnemonicsByAnswer.set(answer, mnemonics);
+      }
       if (
         exactDateQuestions.some((question) => !question.yearMnemonic.trim()) ||
-        mnemonics.size !== 1
+        [...mnemonicsByAnswer.values()].some(
+          (mnemonics) => mnemonics.size !== 1 || mnemonics.has(""),
+        )
       ) {
         throw new Error(
-          `${term.term}の単一年・年月・年月日の問題に、統一した年号語呂合わせがありません。`,
+          `${term.term}の同じ単一年・年月・年月日の問題に、統一した年号語呂合わせがありません。`,
         );
       }
       const integratedMnemonics = new Set(
@@ -427,7 +455,14 @@ export function validateTerms(terms, { rankStart = 1 } = {}) {
           .map((mnemonic) => mnemonic.trim())
           .filter(Boolean),
       );
-      if (![...mnemonics].every((mnemonic) => integratedMnemonics.has(mnemonic))) {
+      if (
+        [...mnemonicsByAnswer.values()].some(
+          (mnemonics) =>
+            !splitPipeList([...mnemonics][0]).every((mnemonic) =>
+              integratedMnemonics.has(mnemonic),
+            ),
+        )
+      ) {
         throw new Error(
           `${term.term}の統合説明に、年号問題と同じ語呂合わせがありません。`,
         );
@@ -507,6 +542,7 @@ const stableDatasetVersions = new Map([
   ["world-history:deck-1", "0836119c5d45"],
   ["world-history:deck-2", "8acba0d50165"],
   ["world-history:deck-3", "7edfff4529a4"],
+  ["japanese-history:deck-1", "jh-455fb6def169"],
   ["english-vocabulary:deck-1", "en-6984fb69efaf"],
   ["english-vocabulary:deck-2", "en-abb710688392"],
 ]);
@@ -527,7 +563,10 @@ function deckNumberFromLabel(datasetLabel, sourcePath) {
 }
 
 export async function loadSourceDecks() {
-  const sourcePaths = await findSourcePaths();
+  return loadHistoryDecks(await findSourcePaths(), subjectId);
+}
+
+async function loadHistoryDecks(sourcePaths, historySubjectId) {
   const decks = await Promise.all(
     sourcePaths.map(async (sourcePath) => {
       const sourceText = await readFile(sourcePath, "utf8");
@@ -545,7 +584,7 @@ export async function loadSourceDecks() {
         sourcePath,
         sourceText,
         sourceFile: path.basename(sourcePath),
-        version: datasetVersion(subjectId, id),
+        version: datasetVersion(historySubjectId, id),
         contentVersion: sourceVersion(sourceText),
         datasetLabel,
         difficultyLabel: terms[0].difficultyLabel,
@@ -558,6 +597,13 @@ export async function loadSourceDecks() {
   const terms = decks.flatMap((deck) => deck.terms);
   validateTerms(terms);
   return { decks, terms };
+}
+
+export async function loadJapaneseHistoryDecks() {
+  return loadHistoryDecks(
+    await findJapaneseHistorySourcePaths(),
+    japaneseSubjectId,
+  );
 }
 
 export function toEnglishObjects(rows) {
@@ -786,8 +832,14 @@ async function writeJson(targetPath, value) {
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
 }
 
-export async function loadTermImageManifest(terms) {
-  const manifest = JSON.parse(await readFile(termImageManifestPath, "utf8"));
+export async function loadTermImageManifest(
+  terms,
+  {
+    manifestPath = termImageManifestPath,
+    imageSourceDirectory = sourceDirectory,
+  } = {},
+) {
+  const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
   if (
     manifest.schemaVersion !== 2 ||
     !Array.isArray(manifest.assets) ||
@@ -822,7 +874,7 @@ export async function loadTermImageManifest(terms) {
     if (!image.path.startsWith("term-images/") || image.path.includes("..")) {
       throw new Error(`関連画像の保存先が不正です: ${image.path}`);
     }
-    await stat(path.join(sourceDirectory, image.path));
+    await stat(path.join(imageSourceDirectory, image.path));
   }
   const fallbackTermIds = new Set();
   for (const fallback of manifest.termFallbacks) {
@@ -859,6 +911,33 @@ export async function loadTermImageManifest(terms) {
     );
   }
   return manifest;
+}
+
+export function mergeTermImageManifests(manifests) {
+  const assetsById = new Map();
+  const termFallbacks = [];
+  const assignments = [];
+  for (const manifest of manifests) {
+    for (const asset of manifest.assets) {
+      const existing = assetsById.get(asset.id);
+      if (existing && JSON.stringify(existing) !== JSON.stringify(asset)) {
+        throw new Error(`関連画像の画像IDが科目間で重複しています: ${asset.id}`);
+      }
+      assetsById.set(asset.id, asset);
+    }
+    termFallbacks.push(...manifest.termFallbacks);
+    assignments.push(...manifest.assignments);
+  }
+  assertUnique(termFallbacks, (fallback) => fallback.termId, "画像の用語ID");
+  assertUnique(assignments, (assignment) => assignment.questionId, "画像の問題ID");
+  return {
+    schemaVersion: 2,
+    assets: [...assetsById.values()].sort((left, right) =>
+      left.id.localeCompare(right.id),
+    ),
+    termFallbacks,
+    assignments,
+  };
 }
 
 async function writeSubjectData(definition, decks) {
@@ -957,13 +1036,28 @@ async function writeSubjectData(definition, decks) {
 }
 
 export async function main() {
-  const [worldHistoryData, englishData] = await Promise.all([
+  const [worldHistoryData, japaneseHistoryData, englishData] = await Promise.all([
     loadSourceDecks(),
+    loadJapaneseHistoryDecks(),
     loadEnglishDecks(),
   ]);
-  const termImageManifest = await loadTermImageManifest(worldHistoryData.terms);
+  const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
+    loadTermImageManifest(worldHistoryData.terms),
+    loadTermImageManifest(japaneseHistoryData.terms, {
+      manifestPath: japaneseTermImageManifestPath,
+      imageSourceDirectory: japaneseSourceDirectory,
+    }),
+  ]);
+  const termImageManifest = mergeTermImageManifests([
+    worldTermImageManifest,
+    japaneseTermImageManifest,
+  ]);
 
-  const allDecks = [...worldHistoryData.decks, ...englishData.decks];
+  const allDecks = [
+    ...worldHistoryData.decks,
+    ...japaneseHistoryData.decks,
+    ...englishData.decks,
+  ];
   const version = createHash("sha256")
     .update(
       allDecks
@@ -981,6 +1075,13 @@ export async function main() {
     await cp(termImageSourceDirectory, path.join(outputRoot, "term-images"), {
       recursive: true,
     });
+    if (japaneseTermImageManifest.assets.length > 0) {
+      await cp(
+        japaneseTermImageSourceDirectory,
+        path.join(outputRoot, "term-images"),
+        { recursive: true },
+      );
+    }
   }
   await writeJson(path.join(outputRoot, "term-images.json"), termImageManifest);
 
@@ -1008,6 +1109,27 @@ export async function main() {
     ),
     writeSubjectData(
       {
+        id: japaneseSubjectId,
+        title: japaneseSubjectTitle,
+        catalogLabel: "日本史段階別デッキ",
+        description: "短答から逆一問一答、統合説明へ進む大学受験日本史",
+        learningType: "history",
+        filterLabels: {
+          macroRegion: "大分類の地域",
+          regionDetail: "小分類の地域",
+          category: "カテゴリ",
+        },
+        stageLabels: {
+          all: "三段階すべて",
+          beginner: "通常の一問一答",
+          reverse: "逆一問一答",
+          integrated: "統合説明",
+        },
+      },
+      japaneseHistoryData.decks,
+    ),
+    writeSubjectData(
+      {
         id: englishSubjectId,
         title: englishSubjectTitle,
         catalogLabel: "英単語段階別デッキ",
@@ -1032,9 +1154,10 @@ export async function main() {
   });
 
   const worldCounts = countQuestionsByStage(worldHistoryData.terms);
+  const japaneseCounts = countQuestionsByStage(japaneseHistoryData.terms);
   const englishCounts = countQuestionsByStage(englishData.terms);
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

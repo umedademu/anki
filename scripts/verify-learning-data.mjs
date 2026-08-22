@@ -5,8 +5,10 @@ import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   loadEnglishDecks,
+  loadJapaneseHistoryDecks,
   loadSourceDecks,
   loadTermImageManifest,
+  mergeTermImageManifests,
 } from "./build-learning-data.mjs";
 import {
   targetFileOverrides,
@@ -117,7 +119,23 @@ const expectedEnglishSpecs = new Map([
   ],
 ]);
 
+const expectedJapaneseSpec = {
+  number: 1,
+  version: "jh-455fb6def169",
+  contentVersion: "455fb6def169",
+  datasetLabel: "日本史段階別デッキ｜Deck 1｜日本史の最重要骨格400語",
+  difficultyLabel: "Deck 1｜骨格・基礎",
+  termCount: 400,
+  questionCount: 2800,
+  questionCounts: { beginner: 1200, reverse: 1200, integrated: 400 },
+  mnemonicCount: 604,
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
+const {
+  decks: sourceJapaneseDecks,
+  terms: expectedJapaneseTerms,
+} = await loadJapaneseHistoryDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -129,17 +147,20 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 2 ||
+  catalog.subjects.length !== 3 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,english-vocabulary"
+    "world-history,japanese-history,english-vocabulary"
 ) {
-  throw new Error("世界史と英単語の科目一覧が正しくありません。");
+  throw new Error("世界史・日本史・英単語の科目一覧が正しくありません。");
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",
 );
 const englishSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "english-vocabulary",
+);
+const japaneseSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "japanese-history",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -360,6 +381,65 @@ if (
   throw new Error("Deck 1〜Deck 3の総件数または統合索引が一致しません。");
 }
 
+if (
+  sourceJapaneseDecks.length !== 1 ||
+  !japaneseSubjectEntry ||
+  japaneseSubjectEntry.defaultDeckId !== "deck-1" ||
+  japaneseSubjectEntry.datasetLabel !== "日本史段階別デッキ｜Deck 1" ||
+  japaneseSubjectEntry.termCount !== expectedJapaneseSpec.termCount ||
+  japaneseSubjectEntry.questionCount !== expectedJapaneseSpec.questionCount ||
+  japaneseSubjectEntry.decks.length !== 1
+) {
+  throw new Error("日本史Deck 1の科目一覧が正しくありません。");
+}
+const sourceJapaneseDeck = sourceJapaneseDecks[0];
+const japaneseDeckEntry = japaneseSubjectEntry.decks[0];
+const japaneseSubject = await readJson(japaneseDeckEntry.indexPath);
+const japaneseChunks = await Promise.all(
+  japaneseSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedJapaneseTerms = japaneseChunks.flatMap((chunk) => chunk.terms);
+const generatedJapaneseQuestions = generatedJapaneseTerms.flatMap((term) =>
+  Object.values(term.stages).flat(),
+);
+const generatedJapaneseCounts = countQuestionsByStage(generatedJapaneseTerms);
+if (
+  japaneseDeckEntry.number !== expectedJapaneseSpec.number ||
+  japaneseDeckEntry.version !== expectedJapaneseSpec.version ||
+  japaneseDeckEntry.contentVersion !== expectedJapaneseSpec.contentVersion ||
+  japaneseDeckEntry.datasetLabel !== expectedJapaneseSpec.datasetLabel ||
+  japaneseDeckEntry.difficultyLabel !== expectedJapaneseSpec.difficultyLabel ||
+  japaneseDeckEntry.termCount !== expectedJapaneseSpec.termCount ||
+  japaneseDeckEntry.questionCount !== expectedJapaneseSpec.questionCount ||
+  japaneseSubject.schemaVersion !== 3 ||
+  japaneseSubject.id !== "japanese-history" ||
+  japaneseSubject.learningType !== "history" ||
+  japaneseSubject.deckId !== "deck-1" ||
+  japaneseSubject.deckNumber !== expectedJapaneseSpec.number ||
+  japaneseSubject.version !== expectedJapaneseSpec.version ||
+  japaneseSubject.contentVersion !== expectedJapaneseSpec.contentVersion ||
+  japaneseSubject.datasetLabel !== expectedJapaneseSpec.datasetLabel ||
+  japaneseSubject.difficultyLabel !== expectedJapaneseSpec.difficultyLabel ||
+  japaneseSubject.sourceFile !== sourceJapaneseDeck.sourceFile ||
+  japaneseSubject.termCount !== expectedJapaneseSpec.termCount ||
+  japaneseSubject.questionCount !== expectedJapaneseSpec.questionCount ||
+  japaneseSubject.chunks.length !== 8 ||
+  japaneseSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  japaneseChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "japanese-history" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedJapaneseCounts) !==
+    JSON.stringify(expectedJapaneseSpec.questionCounts) ||
+  JSON.stringify(generatedJapaneseTerms) !== JSON.stringify(expectedJapaneseTerms) ||
+  generatedJapaneseQuestions.filter((question) => question.yearMnemonic).length !==
+    expectedJapaneseSpec.mnemonicCount
+) {
+  throw new Error("日本史Deck 1の生成内容・語呂合わせ・分割が元CSVと一致しません。");
+}
+
 const { decks: sourceEnglishDecks, terms: expectedEnglishTerms } =
   await loadEnglishDecks();
 const sourceEnglishDeckById = new Map(
@@ -451,7 +531,24 @@ if (
 }
 
 const generatedTermImages = await readJson("term-images.json");
-const expectedTermImages = await loadTermImageManifest(expectedTerms);
+const expectedTermImages = mergeTermImageManifests([
+  await loadTermImageManifest(expectedTerms),
+  await loadTermImageManifest(expectedJapaneseTerms, {
+    manifestPath: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "japanese-history",
+      "term-images.json",
+    ),
+    imageSourceDirectory: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "japanese-history",
+    ),
+  }),
+]);
 const imageAssetIds = new Set(generatedTermImages.assets.map((asset) => asset.id));
 const imageAssetById = new Map(
   generatedTermImages.assets.map((asset) => [asset.id, asset]),
@@ -463,7 +560,7 @@ const assignedQuestionIds = new Set(
   generatedTermImages.assignments.map((assignment) => assignment.questionId),
 );
 const expectedTermIdByQuestionId = new Map(
-  generatedTerms.flatMap((term) =>
+  [...generatedTerms, ...generatedJapaneseTerms].flatMap((term) =>
     Object.values(term.stages)
       .flat()
       .map((question) => [question.id, term.id]),
@@ -472,10 +569,10 @@ const expectedTermIdByQuestionId = new Map(
 if (
   JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages) ||
   generatedTermImages.schemaVersion !== 2 ||
-  fallbackTermIds.size !== 1200 ||
-  generatedTermImages.termFallbacks.length !== 1200 ||
-  assignedQuestionIds.size !== 7582 ||
-  generatedTermImages.assignments.length !== 7582 ||
+  fallbackTermIds.size !== 1600 ||
+  generatedTermImages.termFallbacks.length !== 1600 ||
+  assignedQuestionIds.size !== 10382 ||
+  generatedTermImages.assignments.length !== 10382 ||
   generatedTermImages.assets.some(
     (asset) =>
       !asset.path.endsWith(".webp") ||
@@ -493,7 +590,7 @@ if (
       expectedTermIdByQuestionId.get(assignment.questionId) !== assignment.termId,
   )
 ) {
-  throw new Error("Deck 1〜Deck 3の関連画像が全問題へ正しく割り当てられていません。");
+  throw new Error("世界史と日本史の関連画像が全問題へ正しく割り当てられていません。");
 }
 
 const normalizeCommonsFileName = (sourcePageUrl) => {
@@ -586,10 +683,13 @@ await Promise.all(
 );
 
 const deck1Assignments = generatedTermImages.assignments.filter(
-  (assignment) => Number(assignment.questionId.slice(3, 9)) <= 400,
+  (assignment) =>
+    assignment.questionId.startsWith("WH-") &&
+    Number(assignment.questionId.slice(3, 9)) <= 400,
 );
 const deck1Fallbacks = generatedTermImages.termFallbacks.filter(
-  (fallback) => Number(fallback.termId.slice(3, 9)) <= 400,
+  (fallback) =>
+    fallback.termId.startsWith("WH-") && Number(fallback.termId.slice(3, 9)) <= 400,
 );
 const deck1AssetIds = new Set([
   ...deck1Assignments.map((assignment) => assignment.assetId),
@@ -609,7 +709,7 @@ if (
   throw new Error("既存のDeck 1画像割り当てが変更されています。");
 }
 
-const contextRequiredQuestions = generatedTerms.flatMap((term) =>
+const contextRequiredQuestions = [...generatedTerms, ...generatedJapaneseTerms].flatMap((term) =>
   term.stages.beginner
     .filter((question) => question.type !== "identify")
     .map((question) => ({ term: term.term, question })),
@@ -634,7 +734,7 @@ const correctedPrompts = new Map([
   ],
 ]);
 if (
-  contextRequiredQuestions.length !== 2400 ||
+  contextRequiredQuestions.length !== 3200 ||
   contextRequiredQuestions.some(
     ({ term, question }) => !question.prompt.includes(term),
   ) ||
@@ -649,13 +749,13 @@ if (
 
 const readingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/;
 if (
-  generatedQuestions.some((question) =>
+  [...generatedQuestions, ...generatedJapaneseQuestions].some((question) =>
     readingPattern.test(getQuestionPromptForDisplay(question, false)),
   ) ||
-  generatedQuestions.some(
+  [...generatedQuestions, ...generatedJapaneseQuestions].some(
     (question) => getQuestionPromptForDisplay(question, true) !== question.prompt,
   ) ||
-  generatedQuestions.some((question) =>
+  [...generatedQuestions, ...generatedJapaneseQuestions].some((question) =>
     [...question.keywords, ...question.acceptedAnswers].some((value) =>
       readingPattern.test(value),
     ),
@@ -679,6 +779,23 @@ if (
   throw new Error("Deck間でID・用語名・重要度順位が重複または欠落しています。");
 }
 
+const japaneseTermIds = generatedJapaneseTerms.map((term) => term.id);
+const japaneseTermNames = generatedJapaneseTerms.map((term) => term.term);
+const japaneseImportanceRanks = generatedJapaneseTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const japaneseQuestionIds = generatedJapaneseQuestions.map((question) => question.id);
+if (
+  new Set(japaneseTermIds).size !== 400 ||
+  new Set(japaneseTermNames).size !== 400 ||
+  new Set(japaneseQuestionIds).size !== 2800 ||
+  japaneseImportanceRanks.some((rank, index) => rank !== index + 1) ||
+  japaneseTermIds.some((id) => !/^JH-\d{6}$/.test(id)) ||
+  japaneseQuestionIds.some((id) => !/^JH-\d{6}-(?:B|R|I)\d{2}$/.test(id))
+) {
+  throw new Error("日本史Deck 1のID・用語名・重要度順位が重複または欠落しています。");
+}
+
 const representativeMnemonic = generatedQuestions.find(
   (question) => question.id === "WH-000045-B02",
 );
@@ -690,5 +807,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${generatedQuestions.filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

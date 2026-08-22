@@ -5,11 +5,14 @@ import {
   assetIdForSource,
   commonsMetadata,
   downloadAsset,
+  findImage,
+  imageAssetIdPrefix,
+  imageSubjectId,
 } from "./prepare-question-images.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
-const sourceDirectory = path.join(projectRoot, "data", "source", "world-history");
+const sourceDirectory = path.join(projectRoot, "data", "source", imageSubjectId);
 const manifestPath = path.join(sourceDirectory, "term-images.json");
 const overridePath = path.join(sourceDirectory, "image-overrides.json");
 
@@ -25,11 +28,84 @@ const fallbackByTerm = new Map(
 for (const override of overrides) {
   const fallback = fallbackByTerm.get(override.termId);
   if (!fallback) throw new Error(`存在しない用語IDです: ${override.termId}`);
-  const metadata = await commonsMetadata(override.fileName);
-  if (!metadata) throw new Error(`指定画像を確認できません: ${override.fileName}`);
+  const replacementAssignment = override.useQuestionTargetOf
+    ? manifest.assignments.find(
+        (assignment) =>
+          assignment.termId === override.useQuestionTargetOf.termId &&
+          assignment.target === override.useQuestionTargetOf.target,
+      )
+    : null;
+  const replacementFallback = override.useTermFallbackOf
+    ? fallbackByTerm.get(override.useTermFallbackOf)
+    : null;
+  const replacementAssetId =
+    replacementAssignment?.assetId ?? replacementFallback?.assetId;
+  if (override.useQuestionTargetOf && !replacementAssignment) {
+    throw new Error(
+      `参照する問題別画像がありません: ${override.useQuestionTargetOf.termId} ${override.useQuestionTargetOf.target}`,
+    );
+  }
+  if (override.useTermFallbackOf && !replacementFallback) {
+    throw new Error(`参照する標準画像がありません: ${override.useTermFallbackOf}`);
+  }
+  if (replacementAssetId) {
+    if (override.target) {
+      const targetAssignments = manifest.assignments.filter(
+        (assignment) =>
+          assignment.termId === override.termId && assignment.target === override.target,
+      );
+      if (targetAssignments.length === 0) {
+        throw new Error(`問題別画像の対象がありません: ${override.termId} ${override.target}`);
+      }
+      for (const assignment of targetAssignments) {
+        assignment.assetId = replacementAssetId;
+      }
+    } else {
+      const previousAssetId = fallback.assetId;
+      fallback.assetId = replacementAssetId;
+      for (const assignment of manifest.assignments) {
+        if (
+          assignment.termId === override.termId &&
+          assignment.assetId === previousAssetId
+        ) {
+          assignment.assetId = replacementAssetId;
+        }
+      }
+    }
+    continue;
+  }
+  if (override.useFallback) {
+    if (!override.target) {
+      throw new Error(`標準画像へ戻す問題別対象がありません: ${override.termId}`);
+    }
+    const targetAssignments = manifest.assignments.filter(
+      (assignment) =>
+        assignment.termId === override.termId && assignment.target === override.target,
+    );
+    if (targetAssignments.length === 0) {
+      throw new Error(`問題別画像の対象がありません: ${override.termId} ${override.target}`);
+    }
+    for (const assignment of targetAssignments) assignment.assetId = fallback.assetId;
+    continue;
+  }
+  const metadata = override.fileName
+    ? await commonsMetadata(override.fileName)
+    : await findImage(
+        override.query,
+        override.context ?? "日本史",
+        undefined,
+      );
+  if (!metadata) {
+    throw new Error(
+      `指定画像を確認できません: ${override.fileName ?? override.query}`,
+    );
+  }
+  if (!override.caption) {
+    throw new Error(`画像の説明がありません: ${override.termId}`);
+  }
   let asset = assetsBySource.get(metadata.sourcePageUrl);
   if (!asset) {
-    const id = assetIdForSource(metadata.sourcePageUrl);
+    const id = assetIdForSource(metadata.sourcePageUrl, imageAssetIdPrefix);
     asset = {
       id,
       path: await downloadAsset(metadata, id),

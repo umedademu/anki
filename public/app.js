@@ -148,7 +148,6 @@ const elements = {
   goodAction: document.querySelector("#good-action"),
   easyAction: document.querySelector("#easy-action"),
   listeningDock: document.querySelector("#listening-dock"),
-  listeningStatus: document.querySelector("#listening-status"),
   listeningBack: document.querySelector("#listening-back"),
   listeningToggle: document.querySelector("#listening-toggle"),
   listeningStop: document.querySelector("#listening-stop"),
@@ -1548,10 +1547,6 @@ function autoSpeakAnswerAndOverview() {
   speechController.speak(answerSpeechSequence());
 }
 
-function setListeningStatus(message) {
-  elements.listeningStatus.textContent = message;
-}
-
 async function goBackListeningOneStep() {
   if (!isListeningMode() || state.saving) {
     return;
@@ -1572,7 +1567,6 @@ async function goBackListeningOneStep() {
   elements.listeningToggle.textContent = "再開";
   state.saving = true;
   renderActionControls();
-  setListeningStatus("1手前の状態をCloudflareへ保存しています");
   await studySessionSave.catch(() => {});
 
   try {
@@ -1590,7 +1584,6 @@ async function goBackListeningOneStep() {
         captureActiveSession(),
       );
       setSavedSessionForMode("listen-answer", saved);
-      setListeningStatus("回答を隠した状態へ1手戻りました");
     } else {
       const remainingHistory = [...state.history];
       if (!restoreActiveSession(snapshot.studySession, { updateControls: false })) {
@@ -1609,7 +1602,6 @@ async function goBackListeningOneStep() {
         { sessionDatasetVersion: state.sessionDatasetVersion },
       );
       setSavedSessionForMode("listen-answer", saved.session);
-      setListeningStatus("前の問題の回答表示へ1手戻りました");
     }
   } catch (error) {
     const cloudState = await loadProgressFromCloud().catch(() => null);
@@ -1625,7 +1617,6 @@ async function goBackListeningOneStep() {
       state.history = previousHistory;
     }
     state.unlockMessage = error.message;
-    setListeningStatus("1手前の状態を保存できませんでした");
   } finally {
     state.pendingListeningActivity = null;
     state.listeningPaused = true;
@@ -1654,7 +1645,6 @@ async function advanceListening(runId) {
   renderActionControls();
   elements.listeningToggle.disabled = true;
   elements.listeningStop.disabled = true;
-  setListeningStatus("学習時間と学習記録をCloudflareへ保存しています");
   await studySessionSave.catch(() => {});
   try {
     await queueCurrentStudyTimeSave();
@@ -1668,7 +1658,6 @@ async function advanceListening(runId) {
     elements.listeningToggle.textContent = "再開";
     state.unlockMessage = error.message;
     renderQuestion();
-    setListeningStatus("学習時間を保存できませんでした。再開するともう一度保存します");
     return;
   }
   const undoSnapshot = {
@@ -1711,7 +1700,6 @@ async function advanceListening(runId) {
     elements.listeningToggle.textContent = "再開";
     state.unlockMessage = error.message;
     renderQuestion();
-    setListeningStatus("学習記録を保存できませんでした。再開するともう一度保存します");
     return;
   }
   state.saving = false;
@@ -1752,11 +1740,6 @@ function speakListeningAnswer(runId) {
   renderQuestion();
   const segments = answerSpeechSequence();
   preloadListeningTask(state.queue[0]);
-  setListeningStatus(
-    segments.length > 0
-      ? "設定した回答側の内容を読み上げています"
-      : "この問題には回答後の読み上げ対象がありません",
-  );
   const started = speechController.speak(segments, {
     onComplete: () => {
       if (runId !== state.listeningRunId) {
@@ -1780,11 +1763,6 @@ function beginListeningQuestion() {
   renderQuestion();
   const questionSegments = listeningQuestionSpeechSequence();
   void speechController.preload(answerSpeechSequence());
-  setListeningStatus(
-    questionSegments.length > 0
-      ? "問題を読み上げています"
-      : "問題の自動音声はOFFです",
-  );
   const started = speechController.speak(questionSegments, {
     onComplete: () => {
       if (
@@ -1795,11 +1773,6 @@ function beginListeningQuestion() {
         return;
       }
       const pauseSeconds = state.listeningPauseSeconds;
-      setListeningStatus(
-        pauseSeconds > 0
-          ? `${pauseSeconds}秒後に回答を読み上げます`
-          : "回答を読み上げます",
-      );
       if (pauseSeconds === 0) {
         speakListeningAnswer(runId);
         return;
@@ -1893,7 +1866,6 @@ function toggleListening() {
   state.listeningPaused = true;
   stopListeningSequence();
   elements.listeningToggle.textContent = "再開";
-  setListeningStatus("聞き流しを一時停止しています");
   void queueCurrentStudyTimeSave().catch((error) => {
     state.unlockMessage = error.message;
   });
@@ -3008,7 +2980,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.080｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.081｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

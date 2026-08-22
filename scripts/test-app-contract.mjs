@@ -88,7 +88,7 @@ const speechSegmentsBlock = app.match(
   /function speechSegmentsFor\(target,[\s\S]*?function answerSpeechSequence\(/,
 )?.[0];
 const automaticAnswerSpeechBlock = app.match(
-  /function autoSpeakAnswerAndOverview\(\)[\s\S]*?function setListeningStatus/,
+  /function autoSpeakAnswerAndOverview\(\)[\s\S]*?async function goBackListeningOneStep/,
 )?.[0];
 const answerSpeechSequenceBlock = app.match(
   /function answerSpeechSequence\([\s\S]*?function autoSpeakQuestion\(\)/,
@@ -178,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.080") ||
-  !changelog.includes("v0.080") ||
-  !settingsHtml.includes("v0.080") ||
-  !historyHtml.includes("v0.080")
+  !html.includes("v0.081") ||
+  !changelog.includes("v0.081") ||
+  !settingsHtml.includes("v0.081") ||
+  !historyHtml.includes("v0.081")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -289,7 +289,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.080"') ||
+  !html.includes('href="/styles.css?v=0.081"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -606,6 +606,7 @@ if (
   html.includes('id="speech-part-controls"') ||
   (html.match(/data-speech-part-option/g) ?? []).length !== 0 ||
   !html.includes('id="listening-dock"') ||
+  html.includes('id="listening-status"') ||
   !html.includes('id="listening-toggle"') ||
   !html.includes('id="listening-stop"') ||
   !settingsHtml.includes('id="listening-pause-seconds"') ||
@@ -642,7 +643,12 @@ if (
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
   !worker.includes("listening_pause_seconds") ||
   !styles.includes(".study-mode-options") ||
-  !styles.includes(".listening-dock")
+  !styles.includes(".listening-dock") ||
+  styles.includes(".listening-dock p") ||
+  app.includes("setListeningStatus(") ||
+  !styles.includes("min-height: calc(76px + env(safe-area-inset-bottom))") ||
+  !styles.includes("body.is-listening .page") ||
+  !styles.includes("padding-bottom: max(3px, env(safe-area-inset-bottom))")
 ) {
   throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
 }

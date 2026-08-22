@@ -602,9 +602,18 @@ body.is-studying .page {
   border-radius: 0 16px 16px 0;
 }
 
-#answer-text {
-  margin: 0;
+.answer-line {
+  display: flex;
+  min-width: 0;
   padding-right: 34px;
+  align-items: baseline;
+  gap: clamp(8px, 2vw, 18px);
+}
+
+#answer-text {
+  min-width: 0;
+  margin: 0;
+  flex: 0 1 auto;
   color: #29362e;
   font-size: clamp(1.05rem, 2vw, 1.18rem);
   font-weight: 850;
@@ -616,13 +625,22 @@ body.is-studying .page {
   font-weight: 850;
 }
 
+.accepted-answer {
+  min-width: 0;
+  margin: 0;
+  flex: 0 1 auto;
+}
+
 .accepted-answer,
 .answer-note {
-  margin: 12px 0 0;
   color: #617067;
   font-size: 0.78rem;
   line-height: 1.6;
   white-space: pre-line;
+}
+
+.answer-note {
+  margin: 12px 0 0;
 }
 
 .vocabulary-speech-groups {
@@ -1717,6 +1735,11 @@ body.is-listening .page {
     border-radius: 0 8px 8px 0;
   }
 
+  .answer-line {
+    padding-right: 25px;
+    gap: 7px;
+  }
+
   .speech-button {
     top: 4px;
     right: 5px;
@@ -1730,9 +1753,12 @@ body.is-listening .page {
     right: 0;
   }
 
-  .accepted-answer,
   .answer-note {
     margin-top: 3px;
+  }
+
+  .accepted-answer,
+  .answer-note {
     font-size: 0.55rem;
     line-height: 1.2;
   }
@@ -1799,7 +1825,6 @@ body.is-listening .page {
     line-height: 1.25;
   }
 
-  #answer-text,
   #term-overview-text {
     padding-right: 25px;
   }

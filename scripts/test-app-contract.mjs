@@ -178,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.081") ||
-  !changelog.includes("v0.081") ||
-  !settingsHtml.includes("v0.081") ||
-  !historyHtml.includes("v0.081")
+  !html.includes("v0.082") ||
+  !changelog.includes("v0.082") ||
+  !settingsHtml.includes("v0.082") ||
+  !historyHtml.includes("v0.082")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -289,7 +289,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.081"') ||
+  !html.includes('href="/styles.css?v=0.082"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -421,6 +421,9 @@ if (
 if (
   html.includes('class="answer-label"') ||
   html.includes('class="term-overview-label"') ||
+  !html.includes('<div class="answer-line">') ||
+  !/\.answer-line\s*\{[^}]*display:\s*flex;[^}]*align-items:\s*baseline;/s.test(styles) ||
+  !/\.accepted-answer\s*\{[^}]*margin:\s*0;[^}]*flex:\s*0 1 auto;/s.test(styles) ||
   !styles.includes("[data-content-density=\"dense\"] #answer-text") ||
   !/#answer-text\s*\{[^}]*font-weight:\s*850;/s.test(styles) ||
   !styles.includes("font-size: clamp(0.95rem, 2vw, 1rem)") ||

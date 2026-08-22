@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.076" />
+    <link rel="stylesheet" href="/styles.css?v=0.077" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.076</span>
+        <span class="app-version">v0.077</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,20 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.077</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>学習中の累計時間を、デッキ名・習得数・完全習得数・残り問題数と同じ行に<code>00:00:00</code>形式で追加</li>
+          <li>同じ問題画面では最大30秒で表示と記録の加算を停止し、次の問題へ進んだ時に新しい30秒枠を開始</li>
+          <li>画面非表示中と聞き流しの一時停止中は計測せず、続きからの再開時は累計時間と30秒上限の続きを復元</li>
+          <li>学習時間を午前4時区切りでCloudflareへ保存し、学習記録ページの日別・科目別・デッキ別・学習方法別に時間を追加</li>
+          <li>同じ画面の再送を二重計上せず、一手戻り後も実際に学習した時間は維持</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

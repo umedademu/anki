@@ -38,6 +38,7 @@ import {
   saveCloudStudyAnswer,
   saveCloudSettings,
   saveCloudStudySession,
+  saveCloudStudyTime,
   undoCloudStudyActivity,
 } from "./cloud-progress.js";
 import {
@@ -49,6 +50,11 @@ import {
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
+import {
+  addStudySeconds,
+  formatStudyDuration,
+  maxStudySecondsPerScreen,
+} from "./study-time.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
@@ -97,6 +103,7 @@ const elements = {
   overallProgress: document.querySelector("#overall-progress"),
   termProgress: document.querySelector("#term-progress"),
   queueProgress: document.querySelector("#queue-progress"),
+  studyTime: document.querySelector("#study-time"),
   progressBar: document.querySelector("#progress-bar"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
@@ -188,6 +195,10 @@ const state = {
   selectedStage: "",
   questionAmountMode: "all",
   answeredThisSession: 0,
+  studySeconds: 0,
+  screenStudySeconds: 0,
+  studyTimeEventId: "",
+  studyTimeSavedSeconds: 0,
   unlockMessage: "",
   history: [],
   answerRevealedAt: 0,
@@ -203,6 +214,9 @@ let startingStudy = false;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
 let pendingReviewTimer = null;
+let studyClockTimer = null;
+let studyClockLastTick = 0;
+let studyTimeSave = Promise.resolve();
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -283,6 +297,98 @@ function cloneTask(task) {
   return task ? { ...task } : null;
 }
 
+function createEventId() {
+  return window.crypto?.randomUUID?.() ??
+    `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
+function updateStudyTimeDisplay() {
+  elements.studyTime.textContent = formatStudyDuration(state.studySeconds);
+}
+
+function canCountStudyTime({ includeHidden = false } = {}) {
+  return (
+    state.activeSession &&
+    Boolean(state.currentTask) &&
+    document.body.classList.contains("is-studying") &&
+    (includeHidden || !document.hidden) &&
+    !state.saving &&
+    !(isListeningMode() && state.listeningPaused) &&
+    state.screenStudySeconds < maxStudySecondsPerScreen
+  );
+}
+
+function tickStudyClock(
+  now = window.performance.now(),
+  { includeHidden = false } = {},
+) {
+  if (!canCountStudyTime({ includeHidden })) {
+    studyClockLastTick = now;
+    return;
+  }
+  const elapsedSeconds = Math.floor((now - studyClockLastTick) / 1000);
+  if (elapsedSeconds < 1) return;
+  studyClockLastTick += elapsedSeconds * 1000;
+  const next = addStudySeconds(
+    state.studySeconds,
+    state.screenStudySeconds,
+    elapsedSeconds,
+  );
+  state.studySeconds = next.totalSeconds;
+  state.screenStudySeconds = next.screenSeconds;
+  updateStudyTimeDisplay();
+  if (state.screenStudySeconds >= maxStudySecondsPerScreen) {
+    stopStudyClock({ capture: false });
+    void queueCurrentStudyTimeSave().catch((error) => {
+      state.unlockMessage = error.message;
+    });
+  }
+}
+
+function startStudyClock() {
+  if (studyClockTimer !== null || !state.activeSession || !state.currentTask) {
+    updateStudyTimeDisplay();
+    return;
+  }
+  studyClockLastTick = window.performance.now();
+  studyClockTimer = window.setInterval(() => tickStudyClock(), 250);
+  updateStudyTimeDisplay();
+}
+
+function stopStudyClock({ capture = true, includeHidden = false } = {}) {
+  if (capture && studyClockTimer !== null) {
+    tickStudyClock(window.performance.now(), { includeHidden });
+  }
+  if (studyClockTimer !== null) {
+    window.clearInterval(studyClockTimer);
+    studyClockTimer = null;
+  }
+}
+
+function startNewStudyScreen() {
+  stopStudyClock({ capture: false });
+  state.screenStudySeconds = 0;
+  state.studyTimeSavedSeconds = 0;
+  state.studyTimeEventId = state.activeSession && state.currentTask
+    ? createEventId()
+    : "";
+  updateStudyTimeDisplay();
+  startStudyClock();
+}
+
+function ensureCurrentStudyScreen() {
+  if (!state.activeSession || !state.currentTask) {
+    startNewStudyScreen();
+    return;
+  }
+  if (!state.studyTimeEventId) {
+    startNewStudyScreen();
+    return;
+  }
+  updateStudyTimeDisplay();
+  startStudyClock();
+}
+
 function setStudyTerms(terms) {
   state.terms = terms;
   state.termById = new Map(state.terms.map((term) => [term.id, term]));
@@ -312,19 +418,22 @@ function captureActiveSession() {
     unseenQuestionIds: [...state.unseenQuestionIds],
     retryQuestionIds: [...state.retryQuestionIds],
     answeredCount: state.answeredThisSession,
+    studySeconds: state.studySeconds,
+    screenStudySeconds: state.screenStudySeconds,
+    savedScreenStudySeconds: state.studyTimeSavedSeconds,
+    studyTimeEventId: state.studyTimeEventId,
     answerVisible: state.answerVisible,
     startedAt: state.sessionStartedAt,
   });
 }
 
-function createStudyActivity(questionId) {
+function createStudyActivity(questionId, eventId = createEventId()) {
   const subjectEntry = state.subjectEntries.find(
     (subject) => subject.id === state.activeSubjectId,
   );
   const deckEntry = state.deckEntries.find((deck) => deck.id === state.activeDeckId);
   return {
-    eventId: window.crypto?.randomUUID?.() ??
-      `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`,
+    eventId,
     subjectId: state.activeSubjectId,
     subjectTitle: subjectEntry?.title ?? state.subject?.title ?? state.activeSubjectId,
     deckId: state.activeDeckId,
@@ -332,6 +441,69 @@ function createStudyActivity(questionId) {
     studyMode: state.studyMode,
     questionId,
   };
+}
+
+function captureStudyTimeEntry() {
+  if (
+    !state.currentTask ||
+    !state.studyTimeEventId ||
+    state.screenStudySeconds < 1
+  ) {
+    return null;
+  }
+  return {
+    ...createStudyActivity(
+      state.currentTask.questionId,
+      state.studyTimeEventId,
+    ),
+    studySeconds: state.screenStudySeconds,
+  };
+}
+
+function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
+  const timeEntry = captureStudyTimeEntry();
+  const activeSession = captureActiveSession();
+  if (
+    !timeEntry ||
+    !activeSession ||
+    timeEntry.studySeconds <= state.studyTimeSavedSeconds
+  ) {
+    return studyTimeSave;
+  }
+  const session = normalizeStudySession({
+    ...activeSession,
+    savedScreenStudySeconds: timeEntry.studySeconds,
+  });
+  const eventId = timeEntry.eventId;
+  const savedSeconds = timeEntry.studySeconds;
+  const studyMode = session.studyMode;
+  const datasetVersion = state.subject.version;
+  const saveVersion = ++studySessionSaveVersion;
+  studySessionSave = studySessionSave
+    .catch(() => {})
+    .then(() => saveCloudStudyTime(
+      datasetVersion,
+      timeEntry,
+      session,
+      { keepalive },
+    ))
+    .then((saved) => {
+      if (state.studyTimeEventId === eventId) {
+        state.studyTimeSavedSeconds = Math.max(
+          state.studyTimeSavedSeconds,
+          savedSeconds,
+        );
+      }
+      if (
+        saveVersion === studySessionSaveVersion &&
+        state.subject?.version === datasetVersion
+      ) {
+        setSavedSessionForMode(studyMode, saved.session);
+      }
+      return saved;
+    });
+  studyTimeSave = studySessionSave;
+  return studyTimeSave;
 }
 
 function setupMatchesSession(session, selectedTerms) {
@@ -411,6 +583,10 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.shuffleEnabled = session.shuffleEnabled;
   state.autoSpeechEnabled = session.autoSpeechEnabled;
   state.answeredThisSession = session.answeredCount;
+  state.studySeconds = session.studySeconds;
+  state.screenStudySeconds = session.screenStudySeconds;
+  state.studyTimeEventId = session.studyTimeEventId;
+  state.studyTimeSavedSeconds = session.savedScreenStudySeconds;
   state.answerVisible = session.answerVisible && session.studyMode === "memorize";
   state.sessionStartedAt = session.startedAt ?? new Date().toISOString();
   state.activeSession = true;
@@ -542,6 +718,7 @@ function schedulePendingReview() {
     state.currentTask = state.queue.shift() ?? null;
     if (state.currentTask) {
       state.answerVisible = false;
+      startNewStudyScreen();
       void queueActiveSessionSave().catch((error) => {
         state.unlockMessage = error.message;
       });
@@ -675,6 +852,7 @@ async function loadQuestionImages() {
 function showOnly(panel) {
   if (panel !== elements.studyShell) {
     speechController.stop();
+    stopStudyClock();
   }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
   document.body.classList.toggle(
@@ -690,6 +868,9 @@ function showOnly(panel) {
   ].forEach((candidate) =>
     candidate.classList.toggle("is-hidden", candidate !== panel),
   );
+  if (panel === elements.studyShell) {
+    startStudyClock();
+  }
 }
 
 function renderEmphasizedText(element, text) {
@@ -878,13 +1059,14 @@ async function goBackOneStep() {
     return;
   }
   speechController.stop();
-  const snapshot = state.history.pop();
+  const snapshot = state.history.at(-1);
   if (!snapshot) {
     renderActionControls();
     return;
   }
 
   if (snapshot.type === "reveal") {
+    state.history.pop();
     state.currentTask = snapshot.currentTask
       ? { ...snapshot.currentTask }
       : state.currentTask;
@@ -893,9 +1075,26 @@ async function goBackOneStep() {
       state.unlockMessage = error.message;
     });
   } else if (snapshot.type === "rating") {
+    stopStudyClock();
+    state.saving = true;
+    renderActionControls();
+    await studySessionSave.catch(() => {});
+    try {
+      await queueCurrentStudyTimeSave();
+    } catch (error) {
+      state.unlockMessage = error.message;
+      state.saving = false;
+      startStudyClock();
+      renderQuestion();
+      return;
+    }
+    const forwardStudySeconds = state.studySeconds;
+    state.history.pop();
     const remainingHistory = [...state.history];
     const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
     if (!restored) {
+      state.saving = false;
+      startStudyClock();
       renderActionControls();
       return;
     }
@@ -907,8 +1106,8 @@ async function goBackOneStep() {
       state.unlockMessage = restored.unlockMessage;
     }
     state.history = remainingHistory;
-    state.saving = true;
-    renderActionControls();
+    state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
+    startNewStudyScreen();
     try {
       const saved = await saveCloudStudyAnswer(
         state.subject.version,
@@ -943,6 +1142,7 @@ async function goBackOneStep() {
       state.unlockMessage = error.message;
     } finally {
       state.saving = false;
+      ensureCurrentStudyScreen();
     }
   }
 
@@ -1264,10 +1464,11 @@ async function goBackListeningOneStep() {
     return;
   }
 
-  const forwardSession = captureActiveSession();
+  let forwardSession = captureActiveSession();
   const forwardAnswerVisible = state.answerVisible;
   const previousHistory = [...state.history];
   stopListeningSequence();
+  stopStudyClock();
   state.listeningPaused = true;
   state.pendingListeningActivity = null;
   elements.listeningToggle.textContent = "再開";
@@ -1277,6 +1478,9 @@ async function goBackListeningOneStep() {
   await studySessionSave.catch(() => {});
 
   try {
+    await queueCurrentStudyTimeSave();
+    forwardSession = captureActiveSession();
+    const forwardStudySeconds = state.studySeconds;
     state.history.pop();
     if (snapshot.type === "reveal") {
       state.currentTask = snapshot.currentTask
@@ -1295,8 +1499,10 @@ async function goBackListeningOneStep() {
         throw new Error("前の問題を復元できませんでした。");
       }
       state.history = remainingHistory;
+      state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
       state.answerVisible = true;
       state.listeningPaused = true;
+      startNewStudyScreen();
       const saved = await undoCloudStudyActivity(
         state.subject.version,
         snapshot.studyActivityEventId,
@@ -1346,11 +1552,34 @@ async function advanceListening(runId) {
   const completedTask = state.currentTask;
   const activity = state.pendingListeningActivity ??
     createStudyActivity(completedTask.questionId);
+  stopStudyClock();
+  state.saving = true;
+  renderActionControls();
+  elements.listeningToggle.disabled = true;
+  elements.listeningStop.disabled = true;
+  setListeningStatus("学習時間と学習記録をCloudflareへ保存しています");
+  await studySessionSave.catch(() => {});
+  try {
+    await queueCurrentStudyTimeSave();
+  } catch (error) {
+    state.answerVisible = true;
+    state.listeningPaused = true;
+    stopListeningSequence();
+    state.saving = false;
+    elements.listeningToggle.disabled = false;
+    elements.listeningStop.disabled = false;
+    elements.listeningToggle.textContent = "再開";
+    state.unlockMessage = error.message;
+    renderQuestion();
+    setListeningStatus("学習時間を保存できませんでした。再開するともう一度保存します");
+    return;
+  }
   const undoSnapshot = {
     type: "listening-advance",
     studyActivityEventId: activity.eventId,
     studySession: captureActiveSession(),
   };
+  const historyBefore = [...state.history];
   const previousQueue = state.queue.map(cloneTask);
   const previousUnseenQuestionIds = new Set(state.unseenQuestionIds);
   const previousAnsweredCount = state.answeredThisSession;
@@ -1366,20 +1595,19 @@ async function advanceListening(runId) {
     state.currentTask = state.queue.shift() ?? null;
   }
   state.answerVisible = false;
-  state.saving = true;
-  renderActionControls();
-  elements.listeningToggle.disabled = true;
-  elements.listeningStop.disabled = true;
-  setListeningStatus("学習記録をCloudflareへ保存しています");
+  startNewStudyScreen();
   try {
     await queueActiveStudyActivity(activity);
     state.pendingListeningActivity = null;
     pushHistory(undoSnapshot);
   } catch (error) {
-    state.currentTask = completedTask;
-    state.queue = previousQueue;
-    state.unseenQuestionIds = previousUnseenQuestionIds;
-    state.answeredThisSession = previousAnsweredCount;
+    if (!restoreActiveSession(undoSnapshot.studySession, { updateControls: false })) {
+      state.currentTask = completedTask;
+      state.queue = previousQueue;
+      state.unseenQuestionIds = previousUnseenQuestionIds;
+      state.answeredThisSession = previousAnsweredCount;
+    }
+    state.history = historyBefore;
     state.answerVisible = true;
     state.listeningPaused = true;
     stopListeningSequence();
@@ -1393,6 +1621,7 @@ async function advanceListening(runId) {
     return;
   }
   state.saving = false;
+  startStudyClock();
   elements.listeningToggle.disabled = false;
   elements.listeningStop.disabled = false;
   if (!state.currentTask) {
@@ -1558,6 +1787,7 @@ function toggleListening() {
   if (state.listeningPaused) {
     state.listeningPaused = false;
     elements.listeningToggle.textContent = "一時停止";
+    startStudyClock();
     if (state.answerVisible) {
       const runId = ++state.listeningRunId;
       speakListeningAnswer(runId);
@@ -1566,20 +1796,26 @@ function toggleListening() {
     }
     return;
   }
+  stopStudyClock();
   state.listeningPaused = true;
   stopListeningSequence();
   elements.listeningToggle.textContent = "再開";
   setListeningStatus("聞き流しを一時停止しています");
+  void queueCurrentStudyTimeSave().catch((error) => {
+    state.unlockMessage = error.message;
+  });
 }
 
 async function returnToSetup() {
   stopListeningSequence();
+  stopStudyClock();
   clearPendingReviewTimer();
   state.listeningPaused = false;
   state.pendingListeningActivity = null;
   elements.listeningToggle.textContent = "一時停止";
   if (state.activeSession) {
     try {
+      await queueCurrentStudyTimeSave();
       await queueActiveSessionSave();
     } catch (error) {
       state.unlockMessage = error.message;
@@ -2018,6 +2254,7 @@ function renderQuestion() {
   elements.questionNumber.textContent = `${
     isListeningMode() ? "聞き流し" : "出題"
   } ${state.answeredThisSession + 1}`;
+  updateStudyTimeDisplay();
   elements.questionAxis.textContent = question.focus || question.label;
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,
@@ -2179,9 +2416,19 @@ async function rateCurrentQuestion(rating) {
     return;
   }
   speechController.stop();
+  stopStudyClock();
   state.saving = true;
   renderActionControls();
   await studySessionSave.catch(() => {});
+  try {
+    await queueCurrentStudyTimeSave();
+  } catch (error) {
+    state.unlockMessage = error.message;
+    state.saving = false;
+    startStudyClock();
+    renderQuestion();
+    return;
+  }
 
   const stageBefore = state.selectedStage
     ? null
@@ -2247,6 +2494,7 @@ async function rateCurrentQuestion(rating) {
   ) {
     state.activeSession = false;
   }
+  startNewStudyScreen();
 
   renderActionControls();
   try {
@@ -2264,10 +2512,12 @@ async function rateCurrentQuestion(rating) {
     state.history = historyBefore;
     state.unlockMessage = error.message;
     state.saving = false;
+    ensureCurrentStudyScreen();
     renderQuestion();
     return;
   }
   state.saving = false;
+  startStudyClock();
   pushHistory(snapshot);
   renderQuestion();
   autoSpeakQuestion();
@@ -2298,6 +2548,10 @@ async function resetAllProgress() {
   clearPendingReviewTimer();
   clearLegacyProgress();
   state.answeredThisSession = 0;
+  state.studySeconds = 0;
+  state.screenStudySeconds = 0;
+  state.studyTimeEventId = "";
+  state.studyTimeSavedSeconds = 0;
   state.unlockMessage = "";
   state.queue = [];
   state.currentTask = null;
@@ -2369,6 +2623,10 @@ async function beginStudy() {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answeredThisSession = 0;
+  state.studySeconds = 0;
+  state.screenStudySeconds = 0;
+  state.studyTimeEventId = "";
+  state.studyTimeSavedSeconds = 0;
   state.unlockMessage = "";
   state.history = [];
   state.answerRevealedAt = 0;
@@ -2376,6 +2634,7 @@ async function beginStudy() {
   state.pendingListeningActivity = null;
   state.sessionStartedAt = new Date().toISOString();
   state.activeSession = state.sessionTasks.length > 0;
+  startNewStudyScreen();
   clearListeningTimer();
   elements.listeningToggle.textContent = "一時停止";
 
@@ -2391,6 +2650,7 @@ async function beginStudy() {
       setSavedSessionForMode(studyMode, null);
     }
   } catch (error) {
+    stopStudyClock({ capture: false });
     state.activeSession = false;
     elements.cloudStatus.textContent = `一周を保存できませんでした。${error.message}`;
     startingStudy = false;
@@ -2450,6 +2710,7 @@ async function resumeStudy() {
     );
     state.currentTask = state.queue.shift() ?? null;
   }
+  ensureCurrentStudyScreen();
   state.answerVisible = state.answerVisible && Boolean(state.currentTask);
   state.listeningPaused = false;
   clearListeningTimer();
@@ -2461,6 +2722,7 @@ async function resumeStudy() {
     );
     setSavedSessionForMode(studyMode, saved);
   } catch (error) {
+    stopStudyClock({ capture: false });
     elements.cloudStatus.textContent = `前回の一周を再開できませんでした。${error.message}`;
     startingStudy = false;
     updateSetupPreview();
@@ -2529,6 +2791,10 @@ async function activateDeck(deckId) {
   clearPendingReviewTimer();
   state.answerVisible = false;
   state.answeredThisSession = 0;
+  state.studySeconds = 0;
+  state.screenStudySeconds = 0;
+  state.studyTimeEventId = "";
+  state.studyTimeSavedSeconds = 0;
   state.unlockMessage = "";
   state.history = [];
   state.answerRevealedAt = 0;
@@ -2546,7 +2812,7 @@ async function activateDeck(deckId) {
   const deckName = deckDisplayLabel(deckEntry);
   elements.deckProgressName.textContent = deckName.replaceAll("｜", " ");
   elements.deckProgressName.title = deckName;
-  elements.setupEyebrow.textContent = `v0.076｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.077｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -2844,9 +3110,20 @@ window.addEventListener("resize", () => {
 });
 
 document.addEventListener("visibilitychange", () => {
-  if (document.hidden && !isListeningMode()) {
-    speechController.stop();
+  if (document.hidden) {
+    stopStudyClock({ includeHidden: true });
+    void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
+    if (!isListeningMode()) {
+      speechController.stop();
+    }
+  } else {
+    startStudyClock();
   }
+});
+
+window.addEventListener("pagehide", () => {
+  stopStudyClock({ includeHidden: true });
+  void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
 });
 
 start();

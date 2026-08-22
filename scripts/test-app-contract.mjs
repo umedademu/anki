@@ -73,6 +73,10 @@ const studySessionsByModeMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0010_study_sessions_by_mode.sql"),
   "utf8",
 );
+const studyTimeMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0011_study_time.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -174,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.076") ||
-  !changelog.includes("v0.076") ||
-  !settingsHtml.includes("v0.076") ||
-  !historyHtml.includes("v0.076")
+  !html.includes("v0.077") ||
+  !changelog.includes("v0.077") ||
+  !settingsHtml.includes("v0.077") ||
+  !historyHtml.includes("v0.077")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -188,7 +192,7 @@ if (
   !historyApp.includes("loadCloudStudyHistory") ||
   !historyApp.includes('memorize: "暗記モード"') ||
   !historyApp.includes('"listen-answer": "聞き流し"') ||
-  !app.includes("function createStudyActivity(questionId)") ||
+  !app.includes("function createStudyActivity(questionId") ||
   !app.includes("queueActiveStudyActivity(activity)") ||
   !app.includes("studyActivityEventId") ||
   !cloudProgress.includes('cloudRequest("/v1/study-history")') ||
@@ -200,6 +204,26 @@ if (
   !dailyStudyHistoryMigration.includes("CREATE TABLE IF NOT EXISTS study_activity_events")
 ) {
   throw new Error("午前4時区切りの日別学習記録または表示画面が揃っていません。");
+}
+if (
+  !html.match(
+    /class="progress-summary"[^>]*>[\s\S]*?id="deck-progress-name"[\s\S]*?id="queue-progress"[\s\S]*?id="study-time"/,
+  ) ||
+  !styles.includes(".study-time {") ||
+  !styles.includes("font-variant-numeric: tabular-nums") ||
+  !app.includes('studyTime: document.querySelector("#study-time")') ||
+  !app.includes("maxStudySecondsPerScreen") ||
+  !app.includes("function tickStudyClock") ||
+  !app.includes("state.screenStudySeconds < maxStudySecondsPerScreen") ||
+  !app.includes("queueCurrentStudyTimeSave({ keepalive: true })") ||
+  !cloudProgress.includes("export async function saveCloudStudyTime") ||
+  !worker.includes("studyTimeMatch") ||
+  !worker.includes("SUM(study_seconds) AS study_seconds") ||
+  !studyTimeMigration.includes("CREATE TABLE IF NOT EXISTS study_time_events") ||
+  !studyTimeMigration.includes("study_seconds INTEGER NOT NULL") ||
+  !historyApp.includes("formatStudyDuration")
+) {
+  throw new Error("学習時間の同一行表示、30秒上限、Cloudflare保存が揃っていません。");
 }
 if (
   !html.includes('id="resume-study"') ||
@@ -258,7 +282,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.076"') ||
+  !html.includes('href="/styles.css?v=0.077"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

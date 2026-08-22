@@ -8,6 +8,10 @@ import {
   defaultSpeechSettings,
   normalizeSpeechSettings,
 } from "./speech-settings.js";
+import {
+  maxStudySecondsPerScreen,
+  normalizeStudySeconds,
+} from "./study-time.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
@@ -51,6 +55,7 @@ function normalizeStudyHistoryRow(value) {
     1_000_000_000,
     Math.max(0, Number.parseInt(value.answeredCount, 10) || 0),
   );
+  const studySeconds = normalizeStudySeconds(value.studySeconds);
   if (
     !/^\d{4}-\d{2}-\d{2}$/.test(studyDate) ||
     !subjectId ||
@@ -58,7 +63,7 @@ function normalizeStudyHistoryRow(value) {
     !studyMode ||
     !subjectTitle ||
     !deckTitle ||
-    answeredCount === 0
+    (answeredCount === 0 && studySeconds === 0)
   ) {
     return null;
   }
@@ -70,6 +75,7 @@ function normalizeStudyHistoryRow(value) {
     deckTitle,
     studyMode,
     answeredCount,
+    studySeconds,
     firstOccurredAt: typeof value.firstOccurredAt === "string"
       ? value.firstOccurredAt
       : null,
@@ -173,6 +179,16 @@ export function normalizeStudySession(value) {
       1_000_000_000,
       Math.max(0, Number.parseInt(source.answeredCount, 10) || 0),
     ),
+    studySeconds: normalizeStudySeconds(source.studySeconds),
+    screenStudySeconds: normalizeStudySeconds(
+      source.screenStudySeconds,
+      maxStudySecondsPerScreen,
+    ),
+    savedScreenStudySeconds: normalizeStudySeconds(
+      source.savedScreenStudySeconds,
+      maxStudySecondsPerScreen,
+    ),
+    studyTimeEventId: normalizeStudySessionId(source.studyTimeEventId),
     answerVisible: source.answerVisible === true,
     startedAt: typeof source.startedAt === "string" ? source.startedAt : null,
     updatedAt: typeof source.updatedAt === "string" ? source.updatedAt : null,
@@ -540,6 +556,27 @@ export async function saveCloudStudyActivity(datasetVersion, activity, session) 
   );
   return {
     occurredAt: payload.occurredAt,
+    studyDate: payload.studyDate,
+    session: normalizeStudySession(payload.session),
+  };
+}
+
+export async function saveCloudStudyTime(
+  datasetVersion,
+  timeEntry,
+  session,
+  { keepalive = false } = {},
+) {
+  const payload = await cloudRequest(
+    `/v1/study-time/${encodeURIComponent(timeEntry.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ timeEntry, session }),
+      keepalive,
+    },
+  );
+  return {
+    updatedAt: payload.updatedAt,
     studyDate: payload.studyDate,
     session: normalizeStudySession(payload.session),
   };

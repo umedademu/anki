@@ -305,6 +305,18 @@ export function normalizeStudyActivity(value, datasetVersion, eventId) {
   };
 }
 
+export function normalizeStudyTimeEntry(value, datasetVersion, eventId) {
+  const activity = normalizeStudyActivity(value, datasetVersion, eventId);
+  const studySeconds = integer(value.studySeconds, 0, 1, 30);
+  if (studySeconds === 0) {
+    throw new Error("学習時間は1秒から30秒の範囲で指定してください。");
+  }
+  return {
+    ...activity,
+    studySeconds,
+  };
+}
+
 export function studyDateAtFourJst(value) {
   const occurredAt = value instanceof Date ? value : new Date(value);
   if (!Number.isFinite(occurredAt.getTime())) {
@@ -366,6 +378,7 @@ function normalizeStudySession(value) {
   const validQuestionIds = new Set(tasks.map((task) => task.questionId));
   const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
   const currentTask = normalizeStudySessionTask(source.currentTask);
+  const studyTimeEventId = String(source.studyTimeEventId ?? "");
   return {
     schemaVersion: 1,
     studyMode: setupStudyModes.has(source.studyMode) ? source.studyMode : "memorize",
@@ -405,6 +418,17 @@ function normalizeStudySession(value) {
       validQuestionIds,
     ),
     answeredCount: integer(source.answeredCount, 0),
+    studySeconds: integer(source.studySeconds, 0),
+    screenStudySeconds: integer(source.screenStudySeconds, 0, 0, 30),
+    savedScreenStudySeconds: integer(
+      source.savedScreenStudySeconds,
+      0,
+      0,
+      30,
+    ),
+    studyTimeEventId: studyActivityIdPattern.test(studyTimeEventId)
+      ? studyTimeEventId
+      : "",
     answerVisible: source.answerVisible === true,
     startedAt: source.startedAt == null ? null : optionalDate(source.startedAt),
     updatedAt: source.updatedAt == null ? null : optionalDate(source.updatedAt),
@@ -632,15 +656,69 @@ function studyActivityStatement(env, activity, occurredAt) {
   );
 }
 
+function studyTimeStatement(env, timeEntry, occurredAt) {
+  return env.DB.prepare(
+    `INSERT INTO study_time_events (
+      event_id, occurred_at, study_date, subject_id, subject_title,
+      deck_id, deck_title, dataset_version, study_mode, question_id,
+      study_seconds
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(event_id) DO UPDATE SET
+      study_seconds = MAX(study_time_events.study_seconds, excluded.study_seconds)`,
+  ).bind(
+    timeEntry.eventId,
+    occurredAt,
+    studyDateAtFourJst(occurredAt),
+    timeEntry.subjectId,
+    timeEntry.subjectTitle,
+    timeEntry.deckId,
+    timeEntry.deckTitle,
+    timeEntry.datasetVersion,
+    timeEntry.studyMode,
+    timeEntry.questionId,
+    timeEntry.studySeconds,
+  );
+}
+
 async function readStudyHistory(env) {
   const rows = await env.DB.prepare(
-    `SELECT study_date, subject_id, subject_title, deck_id, deck_title,
-      study_mode, COUNT(*) AS answered_count,
-      MIN(occurred_at) AS first_occurred_at,
-      MAX(occurred_at) AS last_occurred_at
-     FROM study_activity_events
-     GROUP BY study_date, subject_id, subject_title, deck_id, deck_title, study_mode
-     ORDER BY study_date DESC, subject_title, deck_title, study_mode`,
+    `WITH answered AS (
+       SELECT study_date, subject_id, subject_title, deck_id, deck_title,
+         study_mode, COUNT(*) AS answered_count,
+         MIN(occurred_at) AS first_occurred_at,
+         MAX(occurred_at) AS last_occurred_at
+       FROM study_activity_events
+       GROUP BY study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+     ), timed AS (
+       SELECT study_date, subject_id, subject_title, deck_id, deck_title,
+         study_mode, SUM(study_seconds) AS study_seconds,
+         MIN(occurred_at) AS first_occurred_at,
+         MAX(occurred_at) AS last_occurred_at
+       FROM study_time_events
+       GROUP BY study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+     ), history_keys AS (
+       SELECT study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+       FROM answered
+       UNION
+       SELECT study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+       FROM timed
+     )
+     SELECT history_keys.study_date, history_keys.subject_id,
+       history_keys.subject_title, history_keys.deck_id, history_keys.deck_title,
+       history_keys.study_mode,
+       COALESCE(answered.answered_count, 0) AS answered_count,
+       COALESCE(timed.study_seconds, 0) AS study_seconds,
+       COALESCE(answered.first_occurred_at, timed.first_occurred_at) AS first_occurred_at,
+       COALESCE(answered.last_occurred_at, timed.last_occurred_at) AS last_occurred_at
+     FROM history_keys
+     LEFT JOIN answered USING (
+       study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+     )
+     LEFT JOIN timed USING (
+       study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+     )
+     ORDER BY history_keys.study_date DESC, history_keys.subject_title,
+       history_keys.deck_title, history_keys.study_mode`,
   ).all();
   return (rows.results ?? []).map((row) => ({
     studyDate: row.study_date,
@@ -650,6 +728,7 @@ async function readStudyHistory(env) {
     deckTitle: row.deck_title,
     studyMode: row.study_mode,
     answeredCount: Number(row.answered_count) || 0,
+    studySeconds: Number(row.study_seconds) || 0,
     firstOccurredAt: row.first_occurred_at,
     lastOccurredAt: row.last_occurred_at,
   }));
@@ -865,6 +944,46 @@ async function handleRequest(request, env) {
       }
       return json(request, env, { ok: true });
     }
+  }
+
+  const studyTimeMatch = url.pathname.match(/^\/v1\/study-time\/([^/]+)$/);
+  if (studyTimeMatch && request.method === "PUT") {
+    const eventId = decodeURIComponent(studyTimeMatch[1]);
+    const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
+    const body = await request.json();
+    const timeEntry = normalizeStudyTimeEntry(
+      body.timeEntry,
+      datasetVersion,
+      eventId,
+    );
+    const session = normalizeStudySession(body.session);
+    if (session.studyMode !== timeEntry.studyMode) {
+      return json(request, env, { error: "学習時間と一周の学習方法が一致しません。" }, 400);
+    }
+    if (session.currentTask?.questionId !== timeEntry.questionId) {
+      return json(request, env, { error: "学習時間と現在の問題が一致しません。" }, 400);
+    }
+    if (session.studyTimeEventId !== eventId) {
+      return json(request, env, { error: "学習時間の識別情報が一致しません。" }, 400);
+    }
+    if (
+      session.screenStudySeconds !== timeEntry.studySeconds ||
+      session.savedScreenStudySeconds !== timeEntry.studySeconds ||
+      session.studySeconds < timeEntry.studySeconds
+    ) {
+      return json(request, env, { error: "学習時間と一周の秒数が一致しません。" }, 400);
+    }
+    const updatedAt = new Date().toISOString();
+    await env.DB.batch([
+      studyTimeStatement(env, timeEntry, updatedAt),
+      studySessionStatement(env, datasetVersion, session, updatedAt),
+    ]);
+    return json(request, env, {
+      ok: true,
+      updatedAt,
+      studyDate: studyDateAtFourJst(updatedAt),
+      session: { ...session, updatedAt },
+    });
   }
 
   const studyActivityUndoMatch = url.pathname.match(

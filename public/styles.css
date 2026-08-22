@@ -419,6 +419,12 @@ body.is-studying .page {
   white-space: nowrap;
 }
 
+.study-time {
+  color: #2e6a49;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
 .context-card.is-beginner-stage {
   display: none;
 }
@@ -1368,6 +1374,11 @@ body.is-studying .page {
     gap: 2px;
     font-size: 0.42rem;
     letter-spacing: -0.02em;
+  }
+
+  .question-heading .deck-progress-name {
+    min-width: 0;
+    max-width: 20vw;
   }
 
   .action-dock.is-answer-visible .action-buttons {

@@ -2,6 +2,7 @@ import {
   getStoredAccessKey,
   loadCloudStudyHistory,
 } from "./cloud-progress.js";
+import { formatStudyDuration } from "./study-time.js";
 
 const status = document.querySelector("#history-status");
 const historyList = document.querySelector("#history-list");
@@ -28,6 +29,7 @@ function groupHistory(rows) {
       days.set(row.studyDate, {
         studyDate: row.studyDate,
         answeredCount: 0,
+        studySeconds: 0,
         subjects: new Map(),
       });
     }
@@ -37,12 +39,15 @@ function groupHistory(rows) {
       day.subjects.set(subjectKey, {
         title: row.subjectTitle,
         answeredCount: 0,
+        studySeconds: 0,
         rows: [],
       });
     }
     const subject = day.subjects.get(subjectKey);
     day.answeredCount += row.answeredCount;
+    day.studySeconds += row.studySeconds;
     subject.answeredCount += row.answeredCount;
+    subject.studySeconds += row.studySeconds;
     subject.rows.push(row);
   }
   return [...days.values()];
@@ -57,7 +62,7 @@ function createHistoryDay(day) {
   const date = document.createElement("h2");
   date.textContent = formatStudyDate(day.studyDate);
   const total = document.createElement("strong");
-  total.textContent = `合計 ${day.answeredCount.toLocaleString("ja-JP")}問`;
+  total.textContent = `合計 ${day.answeredCount.toLocaleString("ja-JP")}問・${formatStudyDuration(day.studySeconds)}`;
   heading.append(date, total);
   card.append(heading);
 
@@ -65,7 +70,7 @@ function createHistoryDay(day) {
     const section = document.createElement("section");
     section.className = "history-subject";
     const subjectHeading = document.createElement("h3");
-    subjectHeading.textContent = `${subject.title}　${subject.answeredCount.toLocaleString("ja-JP")}問`;
+    subjectHeading.textContent = `${subject.title}　${subject.answeredCount.toLocaleString("ja-JP")}問・${formatStudyDuration(subject.studySeconds)}`;
     const rows = document.createElement("ul");
     rows.className = "history-rows";
     for (const row of subject.rows) {
@@ -79,7 +84,7 @@ function createHistoryDay(day) {
       mode.textContent = modeLabels[row.studyMode];
       details.append(deck, mode);
       const count = document.createElement("strong");
-      count.textContent = `${row.answeredCount.toLocaleString("ja-JP")}問`;
+      count.textContent = `${row.answeredCount.toLocaleString("ja-JP")}問・${formatStudyDuration(row.studySeconds)}`;
       item.append(details, count);
       rows.append(item);
     }

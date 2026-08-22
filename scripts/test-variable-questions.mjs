@@ -270,7 +270,7 @@ if (
   getQuestionAnswerParts(answerWithAlternates).join("|") !==
     "ベルリン会議|コンゴ会議" ||
   getQuestionAnswerDisplayText(answerWithAlternates) !==
-    "ベルリン会議 /コンゴ会議" ||
+    "ベルリン会議 / コンゴ会議" ||
   getQuestionAnswerSpeechText(answerWithAlternates) !==
     "ベルリン会議。コンゴ会議"
 ) {

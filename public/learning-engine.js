@@ -152,7 +152,7 @@ export function getQuestionAnswerParts(question) {
 }
 
 export function getQuestionAnswerDisplayText(question) {
-  return getQuestionAnswerParts(question).join(" /");
+  return getQuestionAnswerParts(question).join(" / ");
 }
 
 export function getQuestionAnswerSpeechText(question) {

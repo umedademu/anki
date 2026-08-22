@@ -6,13 +6,14 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.070" />
+    <link rel="stylesheet" href="/styles.css?v=0.071" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.070</span>
+        <span class="app-version">v0.071</span>
+        <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
     </header>
@@ -23,6 +24,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.071</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>解いた問題数を日ごとに残し、科目・デッキ・暗記モード・聞き流し別に確認できる学習記録ページを追加</li>
+          <li>学習日の切り替わりを日本時間の午前4時とし、午前3時59分までは前日の学習として集計</li>
+          <li>暗記モードは4段階評価の確定時、聞き流しは回答まで読み終えた時を1問としてCloudflareへ保存</li>
+          <li>暗記モードの一手戻りでは日別件数も取り消し、正誤記録の初期化後も日別の学習記録は維持</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

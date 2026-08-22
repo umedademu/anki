@@ -4,16 +4,19 @@ import {
   normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
+  normalizeStudyActivity,
   normalizeStudySession as normalizeWorkerStudySession,
   normalizeSetupPreferences as normalizeWorkerSetupPreferences,
   normalizeSettings,
   normalizeSpeechParts as normalizeWorkerSpeechParts,
   normalizeSpeechPrompt,
+  studyDateAtFourJst,
 } from "../worker/src/index.js";
 import worker from "../worker/src/index.js";
 import {
   normalizeSetupPreferences as normalizeBrowserSetupPreferences,
   normalizeSharedSettings,
+  normalizeStudyHistory,
   normalizeSpeechParts as normalizeBrowserSpeechParts,
   normalizeStudySession as normalizeBrowserStudySession,
 } from "../public/cloud-progress.js";
@@ -82,6 +85,49 @@ for (const session of [
   ) {
     throw new Error("Cloudflareへ保存する一周を正規化できませんでした。");
   }
+}
+
+const studyActivity = normalizeStudyActivity(
+  {
+    subjectId: "world-history",
+    subjectTitle: "世界史",
+    deckId: "deck-2",
+    deckTitle: "Deck 2 共通テスト基礎",
+    studyMode: "listen-answer",
+    questionId: "WH-Q-000001",
+  },
+  "world-history-deck-2-v1",
+  "study-event-1",
+);
+if (
+  studyActivity.subjectTitle !== "世界史" ||
+  studyActivity.deckId !== "deck-2" ||
+  studyActivity.studyMode !== "listen-answer" ||
+  studyActivity.datasetVersion !== "world-history-deck-2-v1" ||
+  studyDateAtFourJst("2026-08-22T18:59:59.999Z") !== "2026-08-22" ||
+  studyDateAtFourJst("2026-08-22T19:00:00.000Z") !== "2026-08-23"
+) {
+  throw new Error("日別学習記録または午前4時の切替を処理できませんでした。");
+}
+
+const browserHistory = normalizeStudyHistory([
+  {
+    studyDate: "2026-08-22",
+    subjectId: "world-history",
+    subjectTitle: "世界史",
+    deckId: "deck-2",
+    deckTitle: "Deck 2 共通テスト基礎",
+    studyMode: "memorize",
+    answeredCount: "12",
+  },
+  { studyDate: "invalid", answeredCount: 3 },
+]);
+if (
+  browserHistory.length !== 1 ||
+  browserHistory[0].answeredCount !== 12 ||
+  browserHistory[0].studyMode !== "memorize"
+) {
+  throw new Error("日別学習記録の読込値を安全に整形できませんでした。");
 }
 
 if (

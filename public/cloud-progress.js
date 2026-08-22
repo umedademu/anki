@@ -39,6 +39,54 @@ const questionAmountModes = new Set(["all", "one-per-term"]);
 const studySessionIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const studySessionTaskLimit = 10_000;
 
+function normalizeStudyHistoryRow(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const studyDate = String(value.studyDate ?? "");
+  const subjectId = normalizeStudySessionId(value.subjectId);
+  const deckId = normalizeStudySessionId(value.deckId);
+  const studyMode = studyModes.has(value.studyMode) ? value.studyMode : "";
+  const subjectTitle = String(value.subjectTitle ?? "").trim().slice(0, 200);
+  const deckTitle = String(value.deckTitle ?? "").trim().slice(0, 200);
+  const answeredCount = Math.min(
+    1_000_000_000,
+    Math.max(0, Number.parseInt(value.answeredCount, 10) || 0),
+  );
+  if (
+    !/^\d{4}-\d{2}-\d{2}$/.test(studyDate) ||
+    !subjectId ||
+    !deckId ||
+    !studyMode ||
+    !subjectTitle ||
+    !deckTitle ||
+    answeredCount === 0
+  ) {
+    return null;
+  }
+  return {
+    studyDate,
+    subjectId,
+    subjectTitle,
+    deckId,
+    deckTitle,
+    studyMode,
+    answeredCount,
+    firstOccurredAt: typeof value.firstOccurredAt === "string"
+      ? value.firstOccurredAt
+      : null,
+    lastOccurredAt: typeof value.lastOccurredAt === "string"
+      ? value.lastOccurredAt
+      : null,
+  };
+}
+
+export function normalizeStudyHistory(value) {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((row) => {
+    const normalized = normalizeStudyHistoryRow(row);
+    return normalized ? [normalized] : [];
+  });
+}
+
 function normalizeStudySessionId(value) {
   const id = String(value ?? "");
   return studySessionIdPattern.test(id) ? id : "";
@@ -365,6 +413,15 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   };
 }
 
+export async function loadCloudStudyHistory() {
+  const payload = await cloudRequest("/v1/study-history");
+  return {
+    cutoffHour: 4,
+    timeZone: "Asia/Tokyo",
+    history: normalizeStudyHistory(payload.history),
+  };
+}
+
 export async function saveCloudQuestion(datasetVersion, questionId, record) {
   return cloudRequest(
     `/v1/progress/${encodeURIComponent(questionId)}?dataset=${encodeURIComponent(datasetVersion)}`,
@@ -424,16 +481,38 @@ export async function saveCloudStudyAnswer(
   questionId,
   record,
   session,
+  historyChange = {},
 ) {
   const payload = await cloudRequest(
     `/v1/study-answer/${encodeURIComponent(questionId)}?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ record, session }),
+      body: JSON.stringify({
+        record,
+        session,
+        activity: historyChange.activity ?? null,
+        deleteActivityId: historyChange.deleteActivityId ?? null,
+      }),
     },
   );
   return {
     updatedAt: payload.updatedAt,
+    session: normalizeStudySession(payload.session),
+  };
+}
+
+export async function saveCloudStudyActivity(datasetVersion, activity, session) {
+  const payload = await cloudRequest(
+    `/v1/study-activity/${encodeURIComponent(activity.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
+    {
+      method: "PUT",
+      keepalive: true,
+      body: JSON.stringify({ activity, session }),
+    },
+  );
+  return {
+    occurredAt: payload.occurredAt,
+    studyDate: payload.studyDate,
     session: normalizeStudySession(payload.session),
   };
 }

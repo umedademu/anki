@@ -17,6 +17,14 @@ const settingsApp = await readFile(
   path.join(projectRoot, "public", "settings.js"),
   "utf8",
 );
+const historyHtml = await readFile(
+  path.join(projectRoot, "public", "history.html"),
+  "utf8",
+);
+const historyApp = await readFile(
+  path.join(projectRoot, "public", "history.js"),
+  "utf8",
+);
 const speech = await readFile(
   path.join(projectRoot, "public", "speech.js"),
   "utf8",
@@ -55,6 +63,10 @@ const setupPreferencesMigration = await readFile(
 );
 const studySessionsMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0008_study_sessions.sql"),
+  "utf8",
+);
+const dailyStudyHistoryMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0009_daily_study_history.sql"),
   "utf8",
 );
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
@@ -120,11 +132,30 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.070") ||
-  !changelog.includes("v0.070") ||
-  !settingsHtml.includes("v0.070")
+  !html.includes("v0.071") ||
+  !changelog.includes("v0.071") ||
+  !settingsHtml.includes("v0.071") ||
+  !historyHtml.includes("v0.071")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !html.includes('href="/history.html"') ||
+  !historyHtml.includes('id="history-list"') ||
+  !historyHtml.includes("午前4時で日付を切替") ||
+  !historyApp.includes("loadCloudStudyHistory") ||
+  !historyApp.includes('memorize: "暗記モード"') ||
+  !historyApp.includes('"listen-answer": "聞き流し"') ||
+  !app.includes("function createStudyActivity(questionId)") ||
+  !app.includes("queueActiveStudyActivity(activity)") ||
+  !app.includes("studyActivityEventId") ||
+  !cloudProgress.includes('cloudRequest("/v1/study-history")') ||
+  !cloudProgress.includes("saveCloudStudyActivity") ||
+  !worker.includes('url.pathname === "/v1/study-history"') ||
+  !worker.includes("studyDateAtFourJst") ||
+  !dailyStudyHistoryMigration.includes("CREATE TABLE IF NOT EXISTS study_activity_events")
+) {
+  throw new Error("午前4時区切りの日別学習記録または表示画面が揃っていません。");
 }
 if (
   !html.includes('id="resume-study"') ||
@@ -174,7 +205,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.070"') ||
+  !html.includes('href="/styles.css?v=0.071"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

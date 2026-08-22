@@ -66,6 +66,7 @@ const defaultSettings = {
 };
 
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
+const studyActivityIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 
 function corsHeaders(request, env) {
   const origin = request.headers.get("Origin");
@@ -263,6 +264,55 @@ function normalizeQuestionRecord(value) {
     nextReviewAt: optionalDate(value.nextReviewAt),
     everMastered: Boolean(value.everMastered),
   };
+}
+
+function normalizeStudyActivityTitle(value, label) {
+  const title = String(value ?? "").trim().slice(0, 200);
+  if (!title) {
+    throw new Error(`${label}が空です。`);
+  }
+  return title;
+}
+
+export function normalizeStudyActivity(value, datasetVersion, eventId) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error("日別学習記録の形式が正しくありません。");
+  }
+  const normalizedEventId = String(eventId ?? "");
+  const subjectId = String(value.subjectId ?? "");
+  const deckId = String(value.deckId ?? "");
+  const questionId = String(value.questionId ?? "");
+  if (
+    !studyActivityIdPattern.test(normalizedEventId) ||
+    !studyActivityIdPattern.test(subjectId) ||
+    !studyActivityIdPattern.test(deckId) ||
+    !studyActivityIdPattern.test(questionId)
+  ) {
+    throw new Error("日別学習記録の識別情報が正しくありません。");
+  }
+  if (!setupStudyModes.has(value.studyMode)) {
+    throw new Error("日別学習記録の学習方法が正しくありません。");
+  }
+  return {
+    eventId: normalizedEventId,
+    subjectId,
+    subjectTitle: normalizeStudyActivityTitle(value.subjectTitle, "科目名"),
+    deckId,
+    deckTitle: normalizeStudyActivityTitle(value.deckTitle, "デッキ名"),
+    datasetVersion: normalizeDatasetVersion(datasetVersion),
+    studyMode: value.studyMode,
+    questionId,
+  };
+}
+
+export function studyDateAtFourJst(value) {
+  const occurredAt = value instanceof Date ? value : new Date(value);
+  if (!Number.isFinite(occurredAt.getTime())) {
+    throw new Error("学習日時の形式が正しくありません。");
+  }
+  return new Date(occurredAt.getTime() + 5 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
 }
 
 function normalizeStudySessionTask(value) {
@@ -560,6 +610,50 @@ function studySessionStatement(env, datasetVersion, session, updatedAt) {
   );
 }
 
+function studyActivityStatement(env, activity, occurredAt) {
+  return env.DB.prepare(
+    `INSERT INTO study_activity_events (
+      event_id, occurred_at, study_date, subject_id, subject_title,
+      deck_id, deck_title, dataset_version, study_mode, question_id
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(event_id) DO NOTHING`,
+  ).bind(
+    activity.eventId,
+    occurredAt,
+    studyDateAtFourJst(occurredAt),
+    activity.subjectId,
+    activity.subjectTitle,
+    activity.deckId,
+    activity.deckTitle,
+    activity.datasetVersion,
+    activity.studyMode,
+    activity.questionId,
+  );
+}
+
+async function readStudyHistory(env) {
+  const rows = await env.DB.prepare(
+    `SELECT study_date, subject_id, subject_title, deck_id, deck_title,
+      study_mode, COUNT(*) AS answered_count,
+      MIN(occurred_at) AS first_occurred_at,
+      MAX(occurred_at) AS last_occurred_at
+     FROM study_activity_events
+     GROUP BY study_date, subject_id, subject_title, deck_id, deck_title, study_mode
+     ORDER BY study_date DESC, subject_title, deck_title, study_mode`,
+  ).all();
+  return (rows.results ?? []).map((row) => ({
+    studyDate: row.study_date,
+    subjectId: row.subject_id,
+    subjectTitle: row.subject_title,
+    deckId: row.deck_id,
+    deckTitle: row.deck_title,
+    studyMode: row.study_mode,
+    answeredCount: Number(row.answered_count) || 0,
+    firstOccurredAt: row.first_occurred_at,
+    lastOccurredAt: row.last_occurred_at,
+  }));
+}
+
 async function readState(env, datasetVersion) {
   const [progressRows, settingsRow, sessionRow] = await Promise.all([
     env.DB.prepare(
@@ -717,6 +811,14 @@ async function handleRequest(request, env) {
     );
   }
 
+  if (url.pathname === "/v1/study-history" && request.method === "GET") {
+    return json(request, env, {
+      cutoffHour: 4,
+      timeZone: "Asia/Tokyo",
+      history: await readStudyHistory(env),
+    });
+  }
+
   if (url.pathname === "/v1/study-session") {
     const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
     if (request.method === "PUT") {
@@ -736,6 +838,27 @@ async function handleRequest(request, env) {
     }
   }
 
+  const studyActivityMatch = url.pathname.match(/^\/v1\/study-activity\/([^/]+)$/);
+  if (studyActivityMatch && request.method === "PUT") {
+    const eventId = decodeURIComponent(studyActivityMatch[1]);
+    const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
+    const body = await request.json();
+    const activity = normalizeStudyActivity(body.activity, datasetVersion, eventId);
+    const session = body.session == null ? null : normalizeStudySession(body.session);
+    const occurredAt = new Date().toISOString();
+    const statements = [studyActivityStatement(env, activity, occurredAt)];
+    if (session) {
+      statements.push(studySessionStatement(env, datasetVersion, session, occurredAt));
+    }
+    await env.DB.batch(statements);
+    return json(request, env, {
+      ok: true,
+      occurredAt,
+      studyDate: studyDateAtFourJst(occurredAt),
+      session: session ? { ...session, updatedAt: occurredAt } : null,
+    });
+  }
+
   const studyAnswerMatch = url.pathname.match(/^\/v1\/study-answer\/([^/]+)$/);
   if (studyAnswerMatch && request.method === "PUT") {
     const questionId = decodeURIComponent(studyAnswerMatch[1]);
@@ -746,6 +869,25 @@ async function handleRequest(request, env) {
     const body = await request.json();
     const record = body.record == null ? null : normalizeQuestionRecord(body.record);
     const session = body.session == null ? null : normalizeStudySession(body.session);
+    const activity = body.activity == null
+      ? null
+      : normalizeStudyActivity(
+          body.activity,
+          datasetVersion,
+          body.activity.eventId,
+        );
+    const deleteActivityId = body.deleteActivityId == null
+      ? null
+      : String(body.deleteActivityId);
+    if (deleteActivityId && !studyActivityIdPattern.test(deleteActivityId)) {
+      return json(request, env, { error: "取り消す日別学習記録が正しくありません。" }, 400);
+    }
+    if (activity && activity.questionId !== questionId) {
+      return json(request, env, { error: "問題と日別学習記録が一致しません。" }, 400);
+    }
+    if (activity && deleteActivityId) {
+      return json(request, env, { error: "日別学習記録の追加と取消は同時に行えません。" }, 400);
+    }
     const updatedAt = new Date().toISOString();
     const statements = [
       record
@@ -759,6 +901,16 @@ async function handleRequest(request, env) {
             datasetVersion,
           ),
     ];
+    if (activity) {
+      statements.push(studyActivityStatement(env, activity, updatedAt));
+    }
+    if (deleteActivityId) {
+      statements.push(
+        env.DB.prepare("DELETE FROM study_activity_events WHERE event_id = ?").bind(
+          deleteActivityId,
+        ),
+      );
+    }
     await env.DB.batch(statements);
     return json(request, env, {
       ok: true,

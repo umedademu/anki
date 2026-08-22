@@ -346,7 +346,12 @@ function tickStudyClock(
 }
 
 function startStudyClock() {
-  if (studyClockTimer !== null || !state.activeSession || !state.currentTask) {
+  if (
+    studyClockTimer !== null ||
+    !state.activeSession ||
+    !state.currentTask ||
+    state.screenStudySeconds >= maxStudySecondsPerScreen
+  ) {
     updateStudyTimeDisplay();
     return;
   }

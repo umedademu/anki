@@ -9,7 +9,7 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.065" />
+    <link rel="stylesheet" href="/styles.css?v=0.066" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" href="/" aria-label="Ankiの最初の画面へ">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.065</span>
+        <span class="app-version">v0.066</span>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <div class="subject-name" id="subject-name">科目を選択</div>
@@ -26,13 +26,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.065｜科目別学習</p>
+        <p class="eyebrow">v0.066｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.065｜科目を選ぶ</p>
+        <p class="eyebrow">v0.066｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選ぶと、デッキや学習方法を選ぶ開始画面へ進みます。
@@ -41,7 +41,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.065｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.066｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -240,13 +240,9 @@
             <div class="term-overview-main" id="term-overview-main">
               <p id="term-overview-text"></p>
               <figure class="term-image is-hidden" id="term-image">
-                <a
-                  id="term-image-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <div class="term-image-frame">
                   <img id="term-image-content" alt="" loading="lazy" decoding="async" />
-                </a>
+                </div>
                 <figcaption>
                   <span id="term-image-caption"></span>
                   <span class="term-image-credit">

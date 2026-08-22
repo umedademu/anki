@@ -338,7 +338,7 @@ body.is-studying .page {
 }
 
 .cloud-status.is-connected {
-  color: #2b6747;
+  color: #6f7d74;
 }
 
 .cloud-status a {
@@ -637,7 +637,7 @@ body.is-studying .page {
   margin: 0;
 }
 
-.term-image > a {
+.term-image-frame {
   display: block;
   overflow: hidden;
   background: #e8ede7;
@@ -1547,7 +1547,7 @@ body.is-studying .page {
     grid-template-rows: minmax(0, 1fr) auto;
   }
 
-  .term-overview.has-image .term-image > a {
+  .term-overview.has-image .term-image-frame {
     display: grid;
     min-height: 0;
     height: 100%;

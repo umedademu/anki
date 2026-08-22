@@ -106,7 +106,6 @@ const elements = {
   yearMnemonicText: document.querySelector("#year-mnemonic-text"),
   yearMnemonicSpeech: document.querySelector("#year-mnemonic-speech"),
   termImage: document.querySelector("#term-image"),
-  termImageLink: document.querySelector("#term-image-link"),
   termImageContent: document.querySelector("#term-image-content"),
   termImageCaption: document.querySelector("#term-image-caption"),
   termImageCreator: document.querySelector("#term-image-creator"),
@@ -1067,14 +1066,12 @@ function renderQuestionImage(question, visible) {
   if (!showsImage) {
     elements.termImageContent.removeAttribute("src");
     elements.termImageContent.alt = "";
-    elements.termImageLink.removeAttribute("href");
     elements.termImageLicense.removeAttribute("href");
     return false;
   }
 
   elements.termImageContent.src = getDataUrl(image.path);
   elements.termImageContent.alt = image.alt;
-  elements.termImageLink.href = image.sourcePageUrl;
   elements.termImageCaption.textContent = image.caption;
   elements.termImageCreator.textContent = image.creator;
   elements.termImageLicense.textContent = image.license;
@@ -1774,7 +1771,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.065｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.066｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

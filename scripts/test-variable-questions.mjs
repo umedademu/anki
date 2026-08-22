@@ -272,7 +272,10 @@ if (
   getQuestionAnswerDisplayText(answerWithAlternates) !==
     "ベルリン会議 / コンゴ会議" ||
   getQuestionAnswerSpeechText(answerWithAlternates) !==
-    "ベルリン会議。コンゴ会議"
+    "ベルリン会議。コンゴ会議" ||
+  getQuestionAnswerSpeechText(answerWithAlternates, {
+    includeAcceptedAnswers: false,
+  }) !== "ベルリン会議"
 ) {
   throw new Error("回答と別解を同じ表示・読み上げ単位へまとめられませんでした。");
 }

@@ -155,8 +155,12 @@ export function getQuestionAnswerDisplayText(question) {
   return getQuestionAnswerParts(question).join(" / ");
 }
 
-export function getQuestionAnswerSpeechText(question) {
-  return getQuestionAnswerParts(question).join("。");
+export function getQuestionAnswerSpeechText(
+  question,
+  { includeAcceptedAnswers = true } = {},
+) {
+  const parts = getQuestionAnswerParts(question);
+  return (includeAcceptedAnswers ? parts : parts.slice(0, 1)).join("。");
 }
 
 export function getIntegratedExplanationQuestion(term, question) {

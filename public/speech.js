@@ -241,27 +241,7 @@ export function createVocabularyAutomaticAnswerSequence(
   );
   const groupNames = [...(answer ? [layout.answer] : []), ...supplementalGroups];
   return [...new Set(groupNames)]
-    .map((group) => {
-      const segment = groups[group];
-      if (!segment || !answer || group !== layout.answer) {
-        return segment;
-      }
-      const currentQuestion = term?.stages?.[stage]?.[0];
-      const acceptedAnswers = Array.isArray(currentQuestion?.acceptedAnswers)
-        ? currentQuestion.acceptedAnswers
-            .map((acceptedAnswer) => String(acceptedAnswer ?? "").trim())
-            .filter(Boolean)
-            .map((acceptedAnswer) =>
-              group === "meaning"
-                ? prepareVocabularyMeaningSpeechText(acceptedAnswer)
-                : acceptedAnswer,
-            )
-        : [];
-      return {
-        ...segment,
-        text: [segment.text, ...acceptedAnswers].filter(Boolean).join("。"),
-      };
-    })
+    .map((group) => groups[group])
     .filter((segment) => segment?.text);
 }
 

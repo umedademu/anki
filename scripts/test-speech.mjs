@@ -202,7 +202,7 @@ const japaneseExampleOnlySequence = createVocabularyAutomaticAnswerSequence(
 if (
   answerOnlySequence.length !== 1 ||
   answerOnlySequence[0].target !== "vocabulary-meaning" ||
-  answerOnlySequence[0].text !== "だけれども。とはいえ。にもかかわらず" ||
+  answerOnlySequence[0].text !== "だけれども" ||
   answerAndExamplesSequence.map((segment) => segment.target).join("|") !==
     "vocabulary-meaning|vocabulary-example-english|vocabulary-example-japanese" ||
   integratedSequence.length !== 1 ||

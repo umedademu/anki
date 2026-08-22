@@ -51,7 +51,6 @@ import {
   createVocabularySpeechGroups,
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
-  prepareVocabularyMeaningSpeechText,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
@@ -1459,29 +1458,17 @@ function speechSegmentsFor(target, task = state.currentTask) {
       : layout?.[target];
     const segment = groups[group];
     if (segment?.text) {
-      const acceptedAnswers =
-        group === layout?.answer
-          ? getQuestionAnswerParts(question)
-              .slice(1)
-              .map((acceptedAnswer) =>
-                group === "meaning"
-                  ? prepareVocabularyMeaningSpeechText(acceptedAnswer)
-                  : acceptedAnswer,
-              )
-          : [];
-      return [
-        {
-          ...segment,
-          target,
-          text: [segment.text, ...acceptedAnswers].filter(Boolean).join("。"),
-        },
-      ];
+      return [{ ...segment, target }];
     }
   }
   const configuredSegments = question.speech?.[target];
   if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
+    const includesAcceptedAnswers =
+      state.subject?.learningType !== "vocabulary";
     const acceptedAnswers =
-      target === "answer" ? getQuestionAnswerParts(question).slice(1) : [];
+      target === "answer" && includesAcceptedAnswers
+        ? getQuestionAnswerParts(question).slice(1)
+        : [];
     return configuredSegments.map((segment, index) => ({
       target,
       text:
@@ -1495,10 +1482,15 @@ function speechSegmentsFor(target, task = state.currentTask) {
     return [{ target, text: question.prompt, language: "ja-JP" }];
   }
   if (target === "answer") {
+    const includesAcceptedAnswers =
+      state.subject?.learningType !== "vocabulary";
     return [
       {
         target,
-        text: [getQuestionAnswerSpeechText(question), question.answerNote]
+        text: [
+          getQuestionAnswerSpeechText(question, { includeAcceptedAnswers }),
+          question.answerNote,
+        ]
           .filter(Boolean)
           .join("。"),
         language: "ja-JP",
@@ -3051,7 +3043,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.091｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.092｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

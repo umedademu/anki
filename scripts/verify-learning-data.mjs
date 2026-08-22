@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   loadBiologyDecks,
+  loadEarthScienceDecks,
   loadEnglishDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
@@ -168,6 +169,17 @@ const expectedBiologySpec = {
   questionCounts: { beginner: 300, reverse: 0, integrated: 0 },
 };
 
+const expectedEarthScienceSpec = {
+  number: 1,
+  version: "earth-science-basics-deck-1-v1",
+  contentVersion: "57a5a5de20e0",
+  datasetLabel: "地学基礎 Deck1 全範囲最重要骨格",
+  difficultyLabel: "Deck1｜全範囲の最重要骨格",
+  termCount: 300,
+  questionCount: 384,
+  questionCounts: { beginner: 384, reverse: 0, integrated: 0 },
+};
+
 const expectedPoliticsEconomicsSpec = {
   number: 1,
   version: "politics-economics-deck-1-v1",
@@ -196,6 +208,10 @@ const {
   decks: sourcePoliticsEconomicsDecks,
   terms: expectedPoliticsEconomicsTerms,
 } = await loadPoliticsEconomicsDecks();
+const {
+  decks: sourceEarthScienceDecks,
+  terms: expectedEarthScienceTerms,
+} = await loadEarthScienceDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -207,12 +223,12 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 6 ||
+  catalog.subjects.length !== 7 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics"
+    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics"
 ) {
   throw new Error(
-    "世界史・日本史・英単語・地理・政治・経済・生物基礎の科目一覧が正しくありません。",
+    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎の科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(
@@ -232,6 +248,9 @@ const politicsEconomicsSubjectEntry = catalog.subjects.find(
 );
 const biologySubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "biology-basics",
+);
+const earthScienceSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "earth-science-basics",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -924,6 +943,113 @@ if (
   throw new Error("生物基礎Deck 1のID・項目名・重要度順位・単元構成が正しくありません。");
 }
 
+if (
+  sourceEarthScienceDecks.length !== 1 ||
+  !earthScienceSubjectEntry ||
+  earthScienceSubjectEntry.defaultDeckId !== "deck-1" ||
+  earthScienceSubjectEntry.termUnitLabel !== "項目" ||
+  earthScienceSubjectEntry.datasetLabel !== "大学受験地学基礎｜Deck 1" ||
+  earthScienceSubjectEntry.termCount !== expectedEarthScienceSpec.termCount ||
+  earthScienceSubjectEntry.questionCount !== expectedEarthScienceSpec.questionCount ||
+  earthScienceSubjectEntry.decks.length !== 1
+) {
+  throw new Error("地学基礎Deck 1の科目一覧が正しくありません。");
+}
+const sourceEarthScienceDeck = sourceEarthScienceDecks[0];
+const earthScienceDeckEntry = earthScienceSubjectEntry.decks[0];
+const earthScienceSubject = await readJson(earthScienceDeckEntry.indexPath);
+const earthScienceChunks = await Promise.all(
+  earthScienceSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedEarthScienceTerms = earthScienceChunks.flatMap(
+  (chunk) => chunk.terms,
+);
+const generatedEarthScienceQuestions = generatedEarthScienceTerms.flatMap(
+  (term) => Object.values(term.stages).flat(),
+);
+const generatedEarthScienceCounts = countQuestionsByStage(
+  generatedEarthScienceTerms,
+);
+if (
+  earthScienceDeckEntry.number !== expectedEarthScienceSpec.number ||
+  earthScienceDeckEntry.version !== expectedEarthScienceSpec.version ||
+  earthScienceDeckEntry.contentVersion !== expectedEarthScienceSpec.contentVersion ||
+  earthScienceDeckEntry.datasetLabel !== expectedEarthScienceSpec.datasetLabel ||
+  earthScienceDeckEntry.difficultyLabel !== expectedEarthScienceSpec.difficultyLabel ||
+  earthScienceDeckEntry.termCount !== expectedEarthScienceSpec.termCount ||
+  earthScienceDeckEntry.questionCount !== expectedEarthScienceSpec.questionCount ||
+  earthScienceSubject.schemaVersion !== 3 ||
+  earthScienceSubject.id !== "earth-science-basics" ||
+  earthScienceSubject.learningType !== "cards" ||
+  earthScienceSubject.termUnitLabel !== "項目" ||
+  earthScienceSubject.deckId !== "deck-1" ||
+  earthScienceSubject.deckNumber !== expectedEarthScienceSpec.number ||
+  earthScienceSubject.version !== expectedEarthScienceSpec.version ||
+  earthScienceSubject.contentVersion !== expectedEarthScienceSpec.contentVersion ||
+  earthScienceSubject.datasetLabel !== expectedEarthScienceSpec.datasetLabel ||
+  earthScienceSubject.difficultyLabel !== expectedEarthScienceSpec.difficultyLabel ||
+  earthScienceSubject.sourceFile !== sourceEarthScienceDeck.sourceFile ||
+  earthScienceSubject.termCount !== expectedEarthScienceSpec.termCount ||
+  earthScienceSubject.questionCount !== expectedEarthScienceSpec.questionCount ||
+  earthScienceSubject.filterLabels.macroRegion !== "大項目" ||
+  earthScienceSubject.filterLabels.regionDetail !== "小項目" ||
+  earthScienceSubject.filterLabels.category !== undefined ||
+  earthScienceSubject.stageLabels.beginner !== "暗記カード" ||
+  earthScienceSubject.availableStages.join(",") !== "beginner" ||
+  earthScienceSubject.chunks.length !== 6 ||
+  earthScienceSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  earthScienceChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "earth-science-basics" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedEarthScienceCounts) !==
+    JSON.stringify(expectedEarthScienceSpec.questionCounts) ||
+  JSON.stringify(generatedEarthScienceTerms) !==
+    JSON.stringify(expectedEarthScienceTerms) ||
+  generatedEarthScienceQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      question.answerNote !== "" ||
+      !question.explanation ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error("地学基礎Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+}
+const earthScienceRanks = generatedEarthScienceTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const earthScienceUnitCounts = Object.fromEntries(
+  ["地球のすがた", "変動する地球"].map((unit) => [
+    unit,
+    generatedEarthScienceTerms.filter((term) => term.category === unit).length,
+  ]),
+);
+if (
+  new Set(generatedEarthScienceTerms.map((term) => term.id)).size !== 300 ||
+  new Set(generatedEarthScienceTerms.map((term) => term.term)).size !== 300 ||
+  new Set(generatedEarthScienceQuestions.map((question) => question.id)).size !== 384 ||
+  earthScienceRanks.some((rank, index) => rank !== index + 1) ||
+  generatedEarthScienceTerms.some((term) => !/^ES-\d{6}$/.test(term.id)) ||
+  generatedEarthScienceQuestions.some(
+    (question) => !/^ES-\d{6}-C\d{2}$/.test(question.id),
+  ) ||
+  earthScienceUnitCounts["地球のすがた"] !== 181 ||
+  earthScienceUnitCounts["変動する地球"] !== 119 ||
+  new Set(generatedEarthScienceTerms.map((term) => term.subunit)).size !== 41 ||
+  generatedEarthScienceTerms.some(
+    (term) =>
+      !term.earthScience?.timeScale ||
+      !term.earthScience?.spatialScale ||
+      term.geography.scale !== term.earthScience.spatialScale,
+  )
+) {
+  throw new Error("地学基礎Deck 1のID・重要度順位・単元・尺度が正しくありません。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -1201,5 +1327,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

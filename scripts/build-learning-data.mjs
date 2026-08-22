@@ -36,6 +36,12 @@ const biologySourceDirectory = path.join(
   "source",
   "biology-basics",
 );
+const earthScienceSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "earth-science-basics",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
@@ -59,6 +65,8 @@ const politicsEconomicsSubjectId = "politics-economics";
 const politicsEconomicsSubjectTitle = "政治・経済";
 const biologySubjectId = "biology-basics";
 const biologySubjectTitle = "生物基礎";
+const earthScienceSubjectId = "earth-science-basics";
+const earthScienceSubjectTitle = "地学基礎";
 const chunkSize = 50;
 const schemaVersion = 3;
 const masteryTarget = 2;
@@ -197,6 +205,36 @@ export const biologyRequiredHeaders = [
   "reading_map",
 ];
 
+export const earthScienceRequiredHeaders = [
+  "dataset_label",
+  "item_id",
+  "importance_rank",
+  "difficulty_label",
+  "unit",
+  "subunit",
+  "item",
+  "reading",
+  "aliases",
+  "prerequisite_ids",
+  "time_scale",
+  "spatial_scale",
+  "card_id",
+  "card_type",
+  "focus",
+  "question",
+  "answer",
+  "accepted_answers",
+  "explanation",
+  "confusable_with",
+  "distinction",
+  "formula",
+  "answer_unit",
+  "memory_aid",
+  "source_name",
+  "source_url",
+  "reading_map",
+];
+
 const termFields = requiredHeaders.slice(0, 13);
 const requiredTermFields = termFields.filter((fieldName) => fieldName !== "aliases");
 const allowedStages = ["beginner", "reverse", "integrated"];
@@ -289,6 +327,23 @@ const biologyCardTypeLabels = {
 };
 const biologyCardTypes = new Set(Object.keys(biologyCardTypeLabels));
 const biologyTermFields = biologyRequiredHeaders.slice(0, 10);
+const earthScienceCardTypeLabels = {
+  identify: "用語",
+  definition: "定義",
+  location: "場所・分布",
+  structure: "構造・構成",
+  sequence: "順序",
+  relation: "原因と結果",
+  comparison: "比較",
+  scale: "尺度",
+  formula: "式",
+  unit: "単位",
+  example: "代表例",
+};
+const earthScienceCardTypes = new Set(
+  Object.keys(earthScienceCardTypeLabels),
+);
+const earthScienceTermFields = earthScienceRequiredHeaders.slice(0, 12);
 
 export async function findSourcePaths() {
   return findHistorySourcePaths(sourceDirectory, "世界史");
@@ -728,6 +783,7 @@ const stableDatasetVersions = new Map([
   ["geography:deck-1", "geography-deck-1-v1"],
   ["politics-economics:deck-1", "politics-economics-deck-1-v1"],
   ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
+  ["earth-science-basics:deck-1", "earth-science-basics-deck-1-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -1827,6 +1883,282 @@ export async function loadBiologyDecks() {
   return { decks, terms };
 }
 
+export function toEarthScienceObjects(rows) {
+  if (rows.length < 2) {
+    throw new Error("地学基礎CSVに見出し行とデータ行が必要です。");
+  }
+  const headers = rows[0].map((header, index) =>
+    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
+  );
+  if (
+    headers.length !== earthScienceRequiredHeaders.length ||
+    headers.some(
+      (header, index) => header !== earthScienceRequiredHeaders[index],
+    )
+  ) {
+    throw new Error("地学基礎CSVの見出しまたは並び順が27列形式と一致しません。");
+  }
+  return rows.slice(1).map((cells, rowIndex) => {
+    if (cells.length !== headers.length) {
+      throw new Error(
+        `${rowIndex + 2}行目の列数が見出しと一致しません（${cells.length}/${headers.length}）。`,
+      );
+    }
+    const row = Object.fromEntries(
+      headers.map((header, columnIndex) => [header, cells[columnIndex].trim()]),
+    );
+    for (const fieldName of earthScienceRequiredHeaders) {
+      assertRequiredText(row, fieldName, rowIndex + 2);
+    }
+    return row;
+  });
+}
+
+function earthScienceExplanation(row) {
+  return [
+    geographyValue(row.explanation),
+    geographyValue(row.confusable_with) && geographyValue(row.distinction)
+      ? `区別：${row.confusable_with}とは、${row.distinction}`
+      : "",
+    geographyValue(row.formula) ? `式：${row.formula}` : "",
+    geographyValue(row.answer_unit) ? `単位：${row.answer_unit}` : "",
+    geographyValue(row.memory_aid) ? `記憶補助：${row.memory_aid}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function normalizeEarthScienceQuestion(row, rowIndex) {
+  const rowNumber = rowIndex + 2;
+  if (!earthScienceCardTypes.has(row.card_type)) {
+    throw new Error(`${rowNumber}行目のcard_typeが正しくありません: ${row.card_type}`);
+  }
+  const sourceUrls = geographyList(row.source_url);
+  if (sourceUrls.length === 0 || sourceUrls.some((url) => !/^https:\/\//.test(url))) {
+    throw new Error(`${rowNumber}行目のsource_urlはhttpsのURLにしてください。`);
+  }
+  const acceptedAnswers = geographyList(row.accepted_answers).filter(
+    (answer) => answer !== row.answer,
+  );
+  return {
+    id: row.card_id,
+    stage: "beginner",
+    focus: row.focus,
+    type: row.card_type,
+    label: earthScienceCardTypeLabels[row.card_type],
+    prompt: row.question,
+    answer: row.answer,
+    keywords: [...new Set([row.answer, ...acceptedAnswers])],
+    acceptedAnswers,
+    answerNote: "",
+    explanation: earthScienceExplanation(row),
+    yearMnemonic: "",
+    source: { name: row.source_name, url: row.source_url },
+    hideTermUntilAnswer: row.card_type === "identify",
+  };
+}
+
+function assertSameEarthScienceTermData(firstRow, row, rowNumber) {
+  for (const fieldName of earthScienceTermFields) {
+    if (row[fieldName] !== firstRow[fieldName]) {
+      throw new Error(
+        `${rowNumber}行目の${fieldName}が同じ地学基礎項目のほかの行と一致しません。`,
+      );
+    }
+  }
+}
+
+export function groupEarthScienceTerms(rows) {
+  const groups = [];
+  const groupById = new Map();
+  const cardIds = new Set();
+  rows.forEach((row, rowIndex) => {
+    if (cardIds.has(row.card_id)) {
+      throw new Error(`地学基礎カードIDが重複しています: ${row.card_id}`);
+    }
+    cardIds.add(row.card_id);
+    let group = groupById.get(row.item_id);
+    if (!group) {
+      group = { firstRow: row, rows: [] };
+      groupById.set(row.item_id, group);
+      groups.push(group);
+    } else {
+      assertSameEarthScienceTermData(group.firstRow, row, rowIndex + 2);
+    }
+    group.rows.push({ row, rowIndex });
+  });
+
+  return groups.map(({ firstRow, rows: itemRows }) => {
+    const questions = itemRows.map(({ row, rowIndex }) =>
+      normalizeEarthScienceQuestion(row, rowIndex),
+    );
+    const expectedCardIds = questions.map(
+      (_, index) => `${firstRow.item_id}-C${String(index + 1).padStart(2, "0")}`,
+    );
+    if (questions.some((question, index) => question.id !== expectedCardIds[index])) {
+      throw new Error(`${firstRow.item}のカードIDがC01からの連番ではありません。`);
+    }
+    const readingMap = {};
+    for (const { row, rowIndex } of itemRows) {
+      for (const [written, reading] of Object.entries(
+        geographyReadingMap(row.reading_map, rowIndex + 2),
+      )) {
+        if (readingMap[written] && readingMap[written] !== reading) {
+          throw new Error(`${rowIndex + 2}行目の${written}の読みが同じ項目内で一致しません。`);
+        }
+        readingMap[written] = reading;
+      }
+    }
+    const importanceRank = parseInteger(
+      firstRow.importance_rank,
+      "importance_rank",
+      itemRows[0].rowIndex + 2,
+    );
+    return {
+      id: firstRow.item_id,
+      datasetLabel: firstRow.dataset_label,
+      importanceRank,
+      difficultyLabel: firstRow.difficulty_label,
+      category: firstRow.unit,
+      subunit: firstRow.subunit,
+      term: firstRow.item,
+      reading: firstRow.reading,
+      aliases: geographyList(firstRow.aliases),
+      prerequisiteIds: geographyList(firstRow.prerequisite_ids),
+      era: "",
+      geography: {
+        macroRegion: firstRow.unit,
+        regionDetail: firstRow.subunit,
+        scale: firstRow.spatial_scale,
+        splitMacroRegion: false,
+      },
+      chronology: {
+        displayPeriod: "",
+        sortYear: importanceRank,
+      },
+      referenceYear: "",
+      earthScience: {
+        timeScale: firstRow.time_scale,
+        spatialScale: firstRow.spatial_scale,
+      },
+      speechReadings: {
+        [firstRow.item]: firstRow.reading,
+        ...readingMap,
+      },
+      integratedAsExplanation: false,
+      stages: { beginner: questions, reverse: [], integrated: [] },
+      source: { name: firstRow.source_name, url: firstRow.source_url },
+    };
+  });
+}
+
+export function validateEarthScienceTerms(terms, { rankStart = 1 } = {}) {
+  assertUnique(terms, (term) => term.id, "地学基礎項目ID");
+  assertUnique(terms, (term) => term.term, "地学基礎項目名");
+  assertUnique(terms, (term) => term.importanceRank, "地学基礎重要度順位");
+  assertUnique(
+    terms.flatMap((term) => term.stages.beginner),
+    (question) => question.id,
+    "地学基礎カードID",
+  );
+  const ranks = terms
+    .map((term) => term.importanceRank)
+    .sort((left, right) => left - right);
+  if (ranks.some((rank, index) => rank !== rankStart + index)) {
+    throw new Error(
+      `地学基礎の重要度順位は${rankStart}から${rankStart + terms.length - 1}までの連番にしてください。`,
+    );
+  }
+  const termIds = new Set(terms.map((term) => term.id));
+  const timeScales = new Set([
+    "秒〜日",
+    "月〜年",
+    "数十〜数千年",
+    "万〜億年",
+    "複数尺度",
+    "該当なし",
+  ]);
+  const spatialScales = new Set([
+    "試料・露頭",
+    "地域",
+    "日本列島",
+    "地球規模",
+    "太陽系",
+    "宇宙",
+    "複数尺度",
+  ]);
+  for (const term of terms) {
+    const expectedId = `ES-${String(term.importanceRank).padStart(6, "0")}`;
+    if (term.id !== expectedId) {
+      throw new Error(`${term.term}の項目IDと重要度順位が一致しません。`);
+    }
+    if (
+      term.stages.beginner.length === 0 ||
+      term.stages.reverse.length !== 0 ||
+      term.stages.integrated.length !== 0
+    ) {
+      throw new Error(`${term.term}の地学基礎カードの段階分けが正しくありません。`);
+    }
+    if (term.prerequisiteIds.some((id) => !termIds.has(id))) {
+      throw new Error(`${term.term}の前提項目IDがDeck内にありません。`);
+    }
+    if (!timeScales.has(term.earthScience.timeScale)) {
+      throw new Error(`${term.term}の時間尺度が正しくありません。`);
+    }
+    if (!spatialScales.has(term.earthScience.spatialScale)) {
+      throw new Error(`${term.term}の空間尺度が正しくありません。`);
+    }
+  }
+}
+
+export async function loadEarthScienceDecks() {
+  const entries = await readdir(earthScienceSourceDirectory, {
+    withFileTypes: true,
+  });
+  const sourcePaths = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
+    .map((entry) => path.join(earthScienceSourceDirectory, entry.name))
+    .sort();
+  if (sourcePaths.length === 0) {
+    throw new Error("地学基礎の元CSVがありません。");
+  }
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupEarthScienceTerms(
+        toEarthScienceObjects(parseCsv(sourceText)),
+      );
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(
+          `${path.basename(sourcePath)}の地学基礎デッキ名が統一されていません。`,
+        );
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      const id = `deck-${number}`;
+      return {
+        id,
+        number,
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: datasetVersion(earthScienceSubjectId, id),
+        contentVersion: sourceVersion(sourceText),
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "地学基礎Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validateEarthScienceTerms(terms);
+  return { decks, terms };
+}
+
 async function writeJson(targetPath, value) {
   await mkdir(path.dirname(targetPath), { recursive: true });
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
@@ -2046,6 +2378,7 @@ export async function main() {
     geographyData,
     politicsEconomicsData,
     biologyData,
+    earthScienceData,
   ] = await Promise.all([
     loadSourceDecks(),
     loadJapaneseHistoryDecks(),
@@ -2053,6 +2386,7 @@ export async function main() {
     loadGeographyDecks(),
     loadPoliticsEconomicsDecks(),
     loadBiologyDecks(),
+    loadEarthScienceDecks(),
   ]);
   const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
@@ -2073,6 +2407,7 @@ export async function main() {
     ...geographyData.decks,
     ...politicsEconomicsData.decks,
     ...biologyData.decks,
+    ...earthScienceData.decks,
   ];
   const version = createHash("sha256")
     .update(
@@ -2223,6 +2558,26 @@ export async function main() {
       },
       biologyData.decks,
     ),
+    writeSubjectData(
+      {
+        id: earthScienceSubjectId,
+        title: earthScienceSubjectTitle,
+        catalogLabel: "大学受験地学基礎",
+        description: "地球・大気・海洋・地質・天体の最重要事項を覚える地学基礎",
+        learningType: "cards",
+        termUnitLabel: "項目",
+        availableStages: ["beginner"],
+        filterLabels: {
+          macroRegion: "大項目",
+          regionDetail: "小項目",
+        },
+        stageLabels: {
+          all: "すべてのカード",
+          beginner: "暗記カード",
+        },
+      },
+      earthScienceData.decks,
+    ),
   ]);
 
   await writeJson(path.join(outputRoot, "index.json"), {
@@ -2239,8 +2594,9 @@ export async function main() {
     politicsEconomicsData.terms,
   );
   const biologyCounts = countQuestionsByStage(biologyData.terms);
+  const earthScienceCounts = countQuestionsByStage(earthScienceData.terms);
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

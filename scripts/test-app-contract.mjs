@@ -128,6 +128,10 @@ const biologyGenerationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "biology-basics-csv-generation.md"),
   "utf8",
 );
+const earthScienceGenerationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "earth-science-basics-csv-generation.md"),
+  "utf8",
+);
 const cloudflareReplacement = await readFile(
   path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
   "utf8",
@@ -189,10 +193,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.092") ||
-  !changelog.includes("v0.092") ||
-  !settingsHtml.includes("v0.092") ||
-  !historyHtml.includes("v0.092")
+  !html.includes("v0.093") ||
+  !changelog.includes("v0.093") ||
+  !settingsHtml.includes("v0.093") ||
+  !historyHtml.includes("v0.093")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -300,7 +304,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.092"') ||
+  !html.includes('href="/styles.css?v=0.093"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -397,6 +401,15 @@ if (
   !biologyGenerationPrompt.includes("reading_map")
 ) {
   throw new Error("生物基礎Deck生成用プロンプトの暗記範囲・25列・読み規則が不足しています。");
+}
+if (
+  !earthScienceGenerationPrompt.includes("# 地学基礎・暗記カードCSV生成プロンプト") ||
+  !earthScienceGenerationPrompt.includes("初見の地図・断面図・柱状図") ||
+  !earthScienceGenerationPrompt.includes("`item_id`は`ES-`") ||
+  !earthScienceGenerationPrompt.includes("CSVの27列") ||
+  !earthScienceGenerationPrompt.includes("reading_map")
+) {
+  throw new Error("地学基礎Deck生成用プロンプトの暗記範囲・27列・読み規則が不足しています。");
 }
 if (
   !html.includes('id="setup-speech"') ||

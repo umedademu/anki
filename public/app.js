@@ -33,6 +33,7 @@ import {
   saveCloudQuestion,
 } from "./cloud-progress.js";
 import {
+  createHistorySpeechReadings,
   createSpeechController,
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
@@ -140,6 +141,7 @@ const state = {
   deckLoadToken: 0,
   subject: null,
   allTerms: [],
+  historySpeechReadings: {},
   terms: [],
   termById: new Map(),
   questionById: new Map(),
@@ -177,6 +179,7 @@ let startingStudy = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
+  getHistoryReadings: () => state.historySpeechReadings,
   onTargetChange: updateSpeechButtons,
 });
 
@@ -1732,6 +1735,10 @@ async function activateDeck(deckId) {
   state.activeDeckId = deckEntry.id;
   state.subject = subject;
   state.allTerms = chunks.flatMap((chunk) => chunk.terms);
+  state.historySpeechReadings =
+    state.subject.learningType === "history"
+      ? createHistorySpeechReadings(state.allTerms)
+      : {};
   state.terms = [];
   state.termById = new Map();
   state.questionById = new Map();
@@ -1767,7 +1774,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.061｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.062｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

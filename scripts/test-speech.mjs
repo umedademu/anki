@@ -1,6 +1,7 @@
 import {
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
+  createHistorySpeechReadings,
   createSpeechController,
   prepareMnemonicSpeechText,
   prepareSpeechText,
@@ -37,6 +38,15 @@ const textChecks = new Map([
     "カエサル暗殺と内戦を経て**オクタウィアヌス**が勝利し、共和政から**元首政(げんしゅせい)**へ移行した。",
     "カエサル暗殺と内戦を経てオクタウィアヌスが勝利し、共和政からげんしゅせいへ移行した。",
   ],
+  ["古代中国・周(しゅう)を主な舞台に", "古代中国・しゅうを主な舞台に"],
+  [
+    "斉・楚・燕・韓・魏・趙・秦(しん)の七国",
+    "斉・楚・燕・韓・魏・趙・しんの七国",
+  ],
+  [
+    "中央集権化・徴兵・殖産興業(しょくさんこうぎょう)を進めた",
+    "中央集権化・徴兵・しょくさんこうぎょうを進めた",
+  ],
   ["1914〜1918年", "1914から1918年"],
 ]);
 
@@ -44,6 +54,33 @@ for (const [source, expected] of textChecks) {
   const actual = prepareSpeechText(source);
   if (actual !== expected) {
     throw new Error(`読み上げ用文章が不正です: ${source} -> ${actual}`);
+  }
+}
+
+const historySpeechReadings = createHistorySpeechReadings([
+  { term: "アフリカの年", reading: "あふりかのとし" },
+  { term: "キリスト教の国教化", reading: "きりすときょうのこっきょうか" },
+  { term: "承久の乱", reading: "じょうきゅうのらん" },
+  { term: "関ヶ原の戦い", reading: "せきがはらのたたかい" },
+]);
+const historyTermTextChecks = new Map([
+  [
+    "「アフリカの年(あふりかのとし)」について、この年に独立した国の多くの旧宗主国は？",
+    "「あふりかのとし」について、この年に独立した国の多くの旧宗主国は？",
+  ],
+  [
+    "**キリスト教の国教化(きりすときょうのこっきょうか)**へ移行した。",
+    "きりすときょうのこっきょうかへ移行した。",
+  ],
+  ["承久の乱(じょうきゅうのらん)", "じょうきゅうのらん"],
+  ["関ヶ原の戦い(せきがはらのたたかい)", "せきがはらのたたかい"],
+  ["中国の黄河(こうが)流域", "中国のこうが流域"],
+]);
+
+for (const [source, expected] of historyTermTextChecks) {
+  const actual = prepareSpeechText(source, "ja-JP", historySpeechReadings);
+  if (actual !== expected) {
+    throw new Error(`用語全体の読み上げ用文章が不正です: ${source} -> ${actual}`);
   }
 }
 

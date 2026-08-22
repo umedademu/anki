@@ -6,10 +6,43 @@ import {
 } from "./speech-settings.js";
 
 const annotatedReadingPattern =
-  /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー＝・0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
+  /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
 const remainingReadingPattern = /\([\p{Script=Hiragana}ー・\s]+\)/gu;
 
-export function prepareSpeechText(value, language = "ja-JP") {
+function readingEntries(additionalReadings = {}) {
+  const entries =
+    additionalReadings instanceof Map
+      ? [...additionalReadings.entries()]
+      : Object.entries(additionalReadings ?? {});
+  const readings = new Map(Object.entries(requiredHistoryReadings));
+  for (const [term, reading] of entries) {
+    const normalizedTerm = String(term ?? "").trim();
+    const normalizedReading = String(reading ?? "").trim();
+    if (normalizedTerm && normalizedReading) {
+      readings.set(normalizedTerm, normalizedReading);
+    }
+  }
+  return [...readings.entries()].sort(
+    ([left], [right]) => right.length - left.length,
+  );
+}
+
+export function createHistorySpeechReadings(terms) {
+  return Object.fromEntries(
+    Array.from(terms ?? [])
+      .map((term) => [
+        String(term?.term ?? "").trim(),
+        String(term?.reading ?? "").trim(),
+      ])
+      .filter(([term, reading]) => term && reading),
+  );
+}
+
+export function prepareSpeechText(
+  value,
+  language = "ja-JP",
+  additionalReadings = {},
+) {
   let text = String(value ?? "").replaceAll("**", "");
   if (String(language).toLowerCase().startsWith("en")) {
     return text
@@ -19,11 +52,8 @@ export function prepareSpeechText(value, language = "ja-JP") {
       .replace(/\s+/g, " ")
       .trim();
   }
-  const readings = Object.entries(requiredHistoryReadings).sort(
-    ([left], [right]) => right.length - left.length,
-  );
 
-  for (const [term, reading] of readings) {
+  for (const [term, reading] of readingEntries(additionalReadings)) {
     text = text.replaceAll(`${term}(${reading})`, reading);
   }
 
@@ -184,6 +214,7 @@ export function createSpeechController({
   revokeObjectUrl = (url) => globalThis.URL.revokeObjectURL(url),
   requestCloudAudio = null,
   getSettings = () => defaultSpeechSettings,
+  getHistoryReadings = () => ({}),
   onTargetChange = () => {},
   onFallback = () => {},
 } = {}) {
@@ -242,6 +273,7 @@ export function createSpeechController({
         text: prepareSpeechText(
           segment?.text,
           String(segment?.language ?? "ja-JP"),
+          getHistoryReadings(),
         ),
       }))
       .filter((segment) => segment.target && segment.text);

@@ -38,6 +38,7 @@ import {
   saveCloudStudyAnswer,
   saveCloudSettings,
   saveCloudStudySession,
+  undoCloudStudyActivity,
 } from "./cloud-progress.js";
 import {
   createHistorySpeechReadings,
@@ -135,6 +136,7 @@ const elements = {
   easyAction: document.querySelector("#easy-action"),
   listeningDock: document.querySelector("#listening-dock"),
   listeningStatus: document.querySelector("#listening-status"),
+  listeningBack: document.querySelector("#listening-back"),
   listeningToggle: document.querySelector("#listening-toggle"),
   listeningStop: document.querySelector("#listening-stop"),
   completionCard: document.querySelector("#completion-card"),
@@ -836,6 +838,7 @@ function renderActionControls() {
     !listening || !hasQuestion,
   );
   elements.backAction.disabled = !canGoBack;
+  elements.listeningBack.disabled = !canGoBack || state.saving;
   elements.nextAction.classList.toggle(
     "is-hidden",
     !hasQuestion || state.answerVisible,
@@ -1251,6 +1254,86 @@ function setListeningStatus(message) {
   elements.listeningStatus.textContent = message;
 }
 
+async function goBackListeningOneStep() {
+  if (!isListeningMode() || state.saving) {
+    return;
+  }
+  const snapshot = state.history.at(-1);
+  if (!snapshot || !["reveal", "listening-advance"].includes(snapshot.type)) {
+    renderActionControls();
+    return;
+  }
+
+  const forwardSession = captureActiveSession();
+  const forwardAnswerVisible = state.answerVisible;
+  const previousHistory = [...state.history];
+  stopListeningSequence();
+  state.listeningPaused = true;
+  state.pendingListeningActivity = null;
+  elements.listeningToggle.textContent = "再開";
+  state.saving = true;
+  renderActionControls();
+  setListeningStatus("1手前の状態をCloudflareへ保存しています");
+  await studySessionSave.catch(() => {});
+
+  try {
+    state.history.pop();
+    if (snapshot.type === "reveal") {
+      state.currentTask = snapshot.currentTask
+        ? { ...snapshot.currentTask }
+        : state.currentTask;
+      state.answerVisible = false;
+      const saved = await saveCloudStudySession(
+        state.subject.version,
+        captureActiveSession(),
+      );
+      setSavedSessionForMode("listen-answer", saved);
+      setListeningStatus("回答を隠した状態へ1手戻りました");
+    } else {
+      const remainingHistory = [...state.history];
+      if (!restoreActiveSession(snapshot.studySession, { updateControls: false })) {
+        throw new Error("前の問題を復元できませんでした。");
+      }
+      state.history = remainingHistory;
+      state.answerVisible = true;
+      state.listeningPaused = true;
+      const saved = await undoCloudStudyActivity(
+        state.subject.version,
+        snapshot.studyActivityEventId,
+        captureActiveSession(),
+      );
+      setSavedSessionForMode("listen-answer", saved.session);
+      setListeningStatus("前の問題の回答表示へ1手戻りました");
+    }
+  } catch (error) {
+    const cloudState = await loadCloudState(
+      state.subject.masteryTarget,
+      state.subject.version,
+    ).catch(() => null);
+    const cloudSession = cloudState?.sessions?.["listen-answer"] ?? null;
+    if (cloudSession && restoreActiveSession(cloudSession, { updateControls: false })) {
+      state.answerVisible = cloudSession.answerVisible;
+      state.history = [];
+    } else if (
+      forwardSession &&
+      restoreActiveSession(forwardSession, { updateControls: false })
+    ) {
+      state.answerVisible = forwardAnswerVisible;
+      state.history = previousHistory;
+    }
+    state.unlockMessage = error.message;
+    setListeningStatus("1手前の状態を保存できませんでした");
+  } finally {
+    state.pendingListeningActivity = null;
+    state.listeningPaused = true;
+    elements.listeningToggle.textContent = "再開";
+    state.saving = false;
+  }
+
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 async function advanceListening(runId) {
   if (
     runId !== state.listeningRunId ||
@@ -1263,6 +1346,11 @@ async function advanceListening(runId) {
   const completedTask = state.currentTask;
   const activity = state.pendingListeningActivity ??
     createStudyActivity(completedTask.questionId);
+  const undoSnapshot = {
+    type: "listening-advance",
+    studyActivityEventId: activity.eventId,
+    studySession: captureActiveSession(),
+  };
   const previousQueue = state.queue.map(cloneTask);
   const previousUnseenQuestionIds = new Set(state.unseenQuestionIds);
   const previousAnsweredCount = state.answeredThisSession;
@@ -1278,12 +1366,15 @@ async function advanceListening(runId) {
     state.currentTask = state.queue.shift() ?? null;
   }
   state.answerVisible = false;
+  state.saving = true;
+  renderActionControls();
   elements.listeningToggle.disabled = true;
   elements.listeningStop.disabled = true;
   setListeningStatus("学習記録をCloudflareへ保存しています");
   try {
     await queueActiveStudyActivity(activity);
     state.pendingListeningActivity = null;
+    pushHistory(undoSnapshot);
   } catch (error) {
     state.currentTask = completedTask;
     state.queue = previousQueue;
@@ -1292,6 +1383,7 @@ async function advanceListening(runId) {
     state.answerVisible = true;
     state.listeningPaused = true;
     stopListeningSequence();
+    state.saving = false;
     elements.listeningToggle.disabled = false;
     elements.listeningStop.disabled = false;
     elements.listeningToggle.textContent = "再開";
@@ -1300,6 +1392,7 @@ async function advanceListening(runId) {
     setListeningStatus("学習記録を保存できませんでした。再開するともう一度保存します");
     return;
   }
+  state.saving = false;
   elements.listeningToggle.disabled = false;
   elements.listeningStop.disabled = false;
   if (!state.currentTask) {
@@ -1320,6 +1413,12 @@ function speakListeningAnswer(runId) {
     !isListeningMode()
   ) {
     return;
+  }
+  if (!state.answerVisible) {
+    pushHistory({
+      type: "reveal",
+      currentTask: { ...state.currentTask },
+    });
   }
   state.answerVisible = true;
   renderQuestion();
@@ -1453,7 +1552,7 @@ function toggleSpeechPart(target) {
 }
 
 function toggleListening() {
-  if (!isListeningMode() || !state.currentTask) {
+  if (!isListeningMode() || !state.currentTask || state.saving) {
     return;
   }
   if (state.listeningPaused) {
@@ -2447,7 +2546,7 @@ async function activateDeck(deckId) {
   const deckName = deckDisplayLabel(deckEntry);
   elements.deckProgressName.textContent = deckName.replaceAll("｜", " ");
   elements.deckProgressName.title = deckName;
-  elements.setupEyebrow.textContent = `v0.074｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.075｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -2627,6 +2726,7 @@ elements.changeSubject.addEventListener("click", showSubjectSelection);
 
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);
+elements.listeningBack.addEventListener("click", () => void goBackListeningOneStep());
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.questionSpeech.addEventListener("click", () =>
   toggleSpeechPart("question"),
@@ -2669,9 +2769,6 @@ elements.resetProgress.addEventListener("click", () => {
 elements.retryButton.addEventListener("click", start);
 
 elements.studyShell.addEventListener("click", (event) => {
-  if (isListeningMode()) {
-    return;
-  }
   const usesHalfScreenNavigation = window.matchMedia(
     "(orientation: landscape) and (max-height: 600px)",
   ).matches;
@@ -2682,8 +2779,12 @@ elements.studyShell.addEventListener("click", (event) => {
     return;
   }
   if (event.clientX < window.innerWidth / 2) {
-    goBackOneStep();
-  } else {
+    if (isListeningMode()) {
+      void goBackListeningOneStep();
+    } else {
+      goBackOneStep();
+    }
+  } else if (!isListeningMode()) {
     performRightSideAction(true);
   }
 });
@@ -2693,7 +2794,10 @@ window.addEventListener("keydown", (event) => {
     return;
   }
   if (isListeningMode()) {
-    if (state.currentTask && (event.key === " " || event.key === "Enter")) {
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      void goBackListeningOneStep();
+    } else if (state.currentTask && (event.key === " " || event.key === "Enter")) {
       event.preventDefault();
       toggleListening();
     }

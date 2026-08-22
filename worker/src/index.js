@@ -867,6 +867,35 @@ async function handleRequest(request, env) {
     }
   }
 
+  const studyActivityUndoMatch = url.pathname.match(
+    /^\/v1\/study-activity\/([^/]+)\/undo$/,
+  );
+  if (studyActivityUndoMatch && request.method === "PUT") {
+    const eventId = decodeURIComponent(studyActivityUndoMatch[1]);
+    const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
+    if (!studyActivityIdPattern.test(eventId)) {
+      return json(request, env, { error: "取り消す日別学習記録が正しくありません。" }, 400);
+    }
+    const body = await request.json();
+    const session = normalizeStudySession(body.session);
+    if (session.studyMode !== "listen-answer") {
+      return json(request, env, { error: "聞き流しの一周ではありません。" }, 400);
+    }
+    const updatedAt = new Date().toISOString();
+    await env.DB.batch([
+      env.DB.prepare(
+        `DELETE FROM study_activity_events
+         WHERE event_id = ? AND dataset_version = ? AND study_mode = 'listen-answer'`,
+      ).bind(eventId, datasetVersion),
+      studySessionStatement(env, datasetVersion, session, updatedAt),
+    ]);
+    return json(request, env, {
+      ok: true,
+      updatedAt,
+      session: { ...session, updatedAt },
+    });
+  }
+
   const studyActivityMatch = url.pathname.match(/^\/v1\/study-activity\/([^/]+)$/);
   if (studyActivityMatch && request.method === "PUT") {
     const eventId = decodeURIComponent(studyActivityMatch[1]);

@@ -545,6 +545,20 @@ export async function saveCloudStudyActivity(datasetVersion, activity, session) 
   };
 }
 
+export async function undoCloudStudyActivity(datasetVersion, eventId, session) {
+  const payload = await cloudRequest(
+    `/v1/study-activity/${encodeURIComponent(eventId)}/undo?dataset=${encodeURIComponent(datasetVersion)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ session }),
+    },
+  );
+  return {
+    updatedAt: payload.updatedAt,
+    session: normalizeStudySession(payload.session),
+  };
+}
+
 export async function saveCloudSettings(settings) {
   const payload = await cloudRequest("/v1/settings", {
     method: "PATCH",

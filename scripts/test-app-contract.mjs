@@ -98,6 +98,9 @@ const listeningQuestionSpeechBlock = app.match(
 const deckProgressStyleBlock = styles.match(
   /\.deck-progress-name\s*\{[^}]*\}/,
 )?.[0];
+const listeningBackBlock = app.match(
+  /async function goBackListeningOneStep\(\)[\s\S]*?async function advanceListening/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -171,10 +174,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.074") ||
-  !changelog.includes("v0.074") ||
-  !settingsHtml.includes("v0.074") ||
-  !historyHtml.includes("v0.074")
+  !html.includes("v0.075") ||
+  !changelog.includes("v0.075") ||
+  !settingsHtml.includes("v0.075") ||
+  !historyHtml.includes("v0.075")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -255,7 +258,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.074"') ||
+  !html.includes('href="/styles.css?v=0.075"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -610,6 +613,26 @@ if (
   !styles.includes(".listening-dock")
 ) {
   throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
+}
+if (
+  !html.includes('id="listening-back"') ||
+  !styles.includes("grid-template-columns: repeat(3, minmax(0, 1fr))") ||
+  !listeningBackBlock ||
+  !listeningBackBlock.includes('["reveal", "listening-advance"]') ||
+  !listeningBackBlock.includes("state.answerVisible = false") ||
+  !listeningBackBlock.includes("restoreActiveSession(snapshot.studySession") ||
+  !listeningBackBlock.includes("undoCloudStudyActivity(") ||
+  !listeningBackBlock.includes("state.listeningPaused = true") ||
+  !app.includes('type: "listening-advance"') ||
+  !app.includes('type: "reveal"') ||
+  !app.includes("void goBackListeningOneStep();") ||
+  !cloudProgress.includes("export async function undoCloudStudyActivity") ||
+  !cloudProgress.includes("/undo?dataset=") ||
+  !worker.includes("studyActivityUndoMatch") ||
+  !worker.includes("DELETE FROM study_activity_events") ||
+  !worker.includes("studyMode !== \"listen-answer\"")
+) {
+  throw new Error("聞き流しを回答表示と問題完了の単位で1手戻す構成が不足しています。");
 }
 if (
   !app.includes(

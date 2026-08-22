@@ -26,6 +26,82 @@ export const defaultSpeechParts = Object.freeze({
   }),
 });
 
+export const defaultSetupPreferences = Object.freeze({
+  schemaVersion: 1,
+  lastSubjectId: "",
+  subjects: Object.freeze({}),
+});
+
+const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
+const studyModes = new Set(["memorize", "listen-answer"]);
+const questionStyles = new Set(["", "beginner", "reverse", "integrated"]);
+const questionAmountModes = new Set(["all", "one-per-term"]);
+
+function normalizeSetupPreferenceId(value) {
+  const id = String(value ?? "");
+  return setupPreferenceIdPattern.test(id) ? id : "";
+}
+
+function normalizeSetupSelection(value) {
+  return String(value ?? "").trim().slice(0, 200);
+}
+
+export function normalizeSetupPreferences(value) {
+  let source = value;
+  if (typeof source === "string") {
+    try {
+      source = JSON.parse(source);
+    } catch {
+      source = {};
+    }
+  }
+  source = source && typeof source === "object" && !Array.isArray(source)
+    ? source
+    : {};
+  const sourceSubjects =
+    source.subjects && typeof source.subjects === "object"
+      ? source.subjects
+      : {};
+  const subjects = {};
+  for (const [rawSubjectId, rawSubject] of Object.entries(sourceSubjects).slice(0, 50)) {
+    const subjectId = normalizeSetupPreferenceId(rawSubjectId);
+    if (!subjectId || !rawSubject || typeof rawSubject !== "object") continue;
+    const rawDecks =
+      rawSubject.decks && typeof rawSubject.decks === "object"
+        ? rawSubject.decks
+        : {};
+    const decks = {};
+    for (const [rawDeckId, rawDeck] of Object.entries(rawDecks).slice(0, 100)) {
+      const deckId = normalizeSetupPreferenceId(rawDeckId);
+      if (!deckId || !rawDeck || typeof rawDeck !== "object") continue;
+      decks[deckId] = {
+        macroRegion: normalizeSetupSelection(rawDeck.macroRegion),
+        regionDetail: normalizeSetupSelection(rawDeck.regionDetail),
+        category: normalizeSetupSelection(rawDeck.category),
+        questionStyle: questionStyles.has(rawDeck.questionStyle)
+          ? rawDeck.questionStyle
+          : "",
+        questionAmountMode: questionAmountModes.has(rawDeck.questionAmountMode)
+          ? rawDeck.questionAmountMode
+          : "all",
+      };
+    }
+    subjects[subjectId] = {
+      lastDeckId: normalizeSetupPreferenceId(rawSubject.lastDeckId),
+      studyMode: studyModes.has(rawSubject.studyMode)
+        ? rawSubject.studyMode
+        : "memorize",
+      decks,
+    };
+  }
+  const lastSubjectId = normalizeSetupPreferenceId(source.lastSubjectId);
+  return {
+    schemaVersion: 1,
+    lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
+    subjects,
+  };
+}
+
 function normalizeSpeechPartGroup(value, defaults) {
   const source = value && typeof value === "object" ? value : {};
   const normalized = Object.fromEntries(
@@ -62,6 +138,7 @@ export const defaultSharedSettings = Object.freeze({
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   speechParts: defaultSpeechParts,
+  setupPreferences: defaultSetupPreferences,
 });
 
 export function normalizeListeningPauseSeconds(value) {
@@ -84,6 +161,7 @@ export function normalizeSharedSettings(value) {
       source.listeningPauseSeconds,
     ),
     speechParts: normalizeSpeechParts(source.speechParts),
+    setupPreferences: normalizeSetupPreferences(source.setupPreferences),
   };
 }
 

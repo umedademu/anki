@@ -49,6 +49,10 @@ const speechPartsMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0006_speech_parts.sql"),
   "utf8",
 );
+const setupPreferencesMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0007_setup_preferences.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -112,9 +116,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.068") ||
-  !changelog.includes("v0.068") ||
-  !settingsHtml.includes("v0.068")
+  !html.includes("v0.069") ||
+  !changelog.includes("v0.069") ||
+  !settingsHtml.includes("v0.069")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -149,7 +153,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.068"') ||
+  !html.includes('href="/styles.css?v=0.069"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -163,7 +167,7 @@ if (
   !app.includes('state.subject?.learningType !== "vocabulary"') ||
   !app.includes("!state.selectedStage && !usesOneQuestionPerTerm()") ||
   !app.includes("!state.currentTask && !usesOneQuestionPerTerm()") ||
-  !app.includes('elements.questionAmountFilter.addEventListener("change"')
+  !app.includes("elements.questionAmountFilter,")
 ) {
   throw new Error("英単語以外で利用する1項目1問の開始設定と一周制御が揃っていません。");
 }
@@ -444,7 +448,15 @@ if (
   !englishSpeechMigration.includes("english_azure_voice_id") ||
   !englishSpeechMigration.includes("english_device_voice_id") ||
   !speechPartsMigration.includes("speech_parts_json") ||
-  !worker.includes("speech_parts_json")
+  !worker.includes("speech_parts_json") ||
+  !setupPreferencesMigration.includes("setup_preferences_json") ||
+  !worker.includes("setup_preferences_json") ||
+  !worker.includes("normalizeSetupPreferences") ||
+  !cloudProgress.includes("normalizeSetupPreferences") ||
+  !app.includes("function captureSetupPreferences()") ||
+  !app.includes("function applySetupPreferences()") ||
+  !app.includes("state.setupPreferences.lastSubjectId") ||
+  !app.includes("queueVisibleSetupPreferenceSave()")
 ) {
   throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
 }
@@ -585,5 +597,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・読み上げ対象切替・Cloudflare共通設定を確認",
+  "画面構成検証完了: 4段階評価・開始前全項目・Cloudflare共通設定を確認",
 );

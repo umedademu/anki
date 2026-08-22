@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.068" />
+    <link rel="stylesheet" href="/styles.css?v=0.069" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.068</span>
+        <span class="app-version">v0.069</span>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
     </header>
@@ -23,6 +23,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.069</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>開始前に選ぶ科目、Deck、学習方法、絞り込み、問題スタイル、出題量、シャッフル、自動読み上げをCloudflareへ保存</li>
+          <li>次回は最後に使った科目とDeckの開始画面を直接開き、前回の条件を自動復元</li>
+          <li>科目別・Deck別に条件を保持し、同じアクセスキーを使う別端末にも反映</li>
+          <li>利用できなくなった選択値だけを初期値へ戻し、問題集と学習履歴は従来どおり維持</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

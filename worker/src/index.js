@@ -35,6 +35,17 @@ const defaultSpeechParts = Object.freeze({
   }),
 });
 
+const defaultSetupPreferences = Object.freeze({
+  schemaVersion: 1,
+  lastSubjectId: "",
+  subjects: Object.freeze({}),
+});
+
+const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
+const setupStudyModes = new Set(["memorize", "listen-answer"]);
+const setupQuestionStyles = new Set(["", "beginner", "reverse", "integrated"]);
+const setupQuestionAmountModes = new Set(["all", "one-per-term"]);
+
 const defaultSettings = {
   againSeconds: 60,
   hardSeconds: 4 * 60 * 60,
@@ -50,6 +61,7 @@ const defaultSettings = {
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   speechParts: defaultSpeechParts,
+  setupPreferences: defaultSetupPreferences,
 };
 
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
@@ -168,6 +180,71 @@ function normalizeSpeechParts(value) {
   };
 }
 
+function normalizeSetupPreferenceId(value) {
+  const id = String(value ?? "");
+  return setupPreferenceIdPattern.test(id) ? id : "";
+}
+
+function normalizeSetupSelection(value) {
+  return String(value ?? "").trim().slice(0, 200);
+}
+
+function normalizeSetupPreferences(value) {
+  let source = value;
+  if (typeof source === "string") {
+    try {
+      source = JSON.parse(source);
+    } catch {
+      source = {};
+    }
+  }
+  source = source && typeof source === "object" && !Array.isArray(source)
+    ? source
+    : {};
+  const sourceSubjects =
+    source.subjects && typeof source.subjects === "object"
+      ? source.subjects
+      : {};
+  const subjects = {};
+  for (const [rawSubjectId, rawSubject] of Object.entries(sourceSubjects).slice(0, 50)) {
+    const subjectId = normalizeSetupPreferenceId(rawSubjectId);
+    if (!subjectId || !rawSubject || typeof rawSubject !== "object") continue;
+    const rawDecks =
+      rawSubject.decks && typeof rawSubject.decks === "object"
+        ? rawSubject.decks
+        : {};
+    const decks = {};
+    for (const [rawDeckId, rawDeck] of Object.entries(rawDecks).slice(0, 100)) {
+      const deckId = normalizeSetupPreferenceId(rawDeckId);
+      if (!deckId || !rawDeck || typeof rawDeck !== "object") continue;
+      decks[deckId] = {
+        macroRegion: normalizeSetupSelection(rawDeck.macroRegion),
+        regionDetail: normalizeSetupSelection(rawDeck.regionDetail),
+        category: normalizeSetupSelection(rawDeck.category),
+        questionStyle: setupQuestionStyles.has(rawDeck.questionStyle)
+          ? rawDeck.questionStyle
+          : "",
+        questionAmountMode: setupQuestionAmountModes.has(rawDeck.questionAmountMode)
+          ? rawDeck.questionAmountMode
+          : "all",
+      };
+    }
+    subjects[subjectId] = {
+      lastDeckId: normalizeSetupPreferenceId(rawSubject.lastDeckId),
+      studyMode: setupStudyModes.has(rawSubject.studyMode)
+        ? rawSubject.studyMode
+        : "memorize",
+      decks,
+    };
+  }
+  const lastSubjectId = normalizeSetupPreferenceId(source.lastSubjectId);
+  return {
+    schemaVersion: 1,
+    lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
+    subjects,
+  };
+}
+
 function normalizeQuestionRecord(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) {
     throw new Error("学習記録の形式が正しくありません。");
@@ -227,6 +304,7 @@ function normalizeSettings(value) {
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
     listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
     speechParts: normalizeSpeechParts(source.speechParts),
+    setupPreferences: normalizeSetupPreferences(source.setupPreferences),
   };
 }
 
@@ -383,7 +461,7 @@ async function readState(env, datasetVersion) {
         speech_source, azure_voice_id, english_azure_voice_id,
         device_voice_id, english_device_voice_id, speech_rate,
         shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
-        speech_parts_json, updated_at
+        speech_parts_json, setup_preferences_json, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
   ]);
@@ -425,6 +503,9 @@ async function readState(env, datasetVersion) {
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
           speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
+          setupPreferences: normalizeSetupPreferences(
+            settingsRow.setup_preferences_json,
+          ),
           updatedAt: settingsRow.updated_at,
         }
       : defaultSettings,
@@ -441,8 +522,8 @@ async function saveSettings(env, patch) {
       speech_source, azure_voice_id, english_azure_voice_id,
       device_voice_id, english_device_voice_id, speech_rate,
       shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
-      speech_parts_json, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      speech_parts_json, setup_preferences_json, updated_at
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -458,6 +539,7 @@ async function saveSettings(env, patch) {
       auto_speech_enabled = excluded.auto_speech_enabled,
       listening_pause_seconds = excluded.listening_pause_seconds,
       speech_parts_json = excluded.speech_parts_json,
+      setup_preferences_json = excluded.setup_preferences_json,
       updated_at = excluded.updated_at`,
   )
     .bind(
@@ -475,6 +557,7 @@ async function saveSettings(env, patch) {
       settings.autoSpeechEnabled ? 1 : 0,
       settings.listeningPauseSeconds,
       JSON.stringify(settings.speechParts),
+      JSON.stringify(settings.setupPreferences),
       updatedAt,
     )
     .run();
@@ -598,6 +681,7 @@ export {
   normalizeDatasetVersion,
   normalizeQuestionRecord,
   normalizeSettings,
+  normalizeSetupPreferences,
   normalizeSpeechParts,
   normalizeSpeechPrompt,
 };

@@ -4,12 +4,14 @@ import {
   normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
+  normalizeSetupPreferences as normalizeWorkerSetupPreferences,
   normalizeSettings,
   normalizeSpeechParts as normalizeWorkerSpeechParts,
   normalizeSpeechPrompt,
 } from "../worker/src/index.js";
 import worker from "../worker/src/index.js";
 import {
+  normalizeSetupPreferences as normalizeBrowserSetupPreferences,
   normalizeSharedSettings,
   normalizeSpeechParts as normalizeBrowserSpeechParts,
 } from "../public/cloud-progress.js";
@@ -179,6 +181,28 @@ const settings = normalizeSettings({
       exampleJapanese: false,
     },
   },
+  setupPreferences: {
+    schemaVersion: 1,
+    lastSubjectId: "world-history",
+    subjects: {
+      "world-history": {
+        lastDeckId: "deck-2",
+        studyMode: "listen-answer",
+        decks: {
+          "deck-2": {
+            macroRegion: "アジア",
+            regionDetail: "東アジア",
+            category: "政治",
+            questionStyle: "reverse",
+            questionAmountMode: "one-per-term",
+          },
+        },
+      },
+      "不正な科目ID": {
+        lastDeckId: "deck-9",
+      },
+    },
+  },
 });
 if (
   settings.againSeconds !== 90 ||
@@ -197,7 +221,13 @@ if (
   settings.speechParts.history.question ||
   !settings.speechParts.history.explanation ||
   settings.speechParts.vocabulary.meaning ||
-  !settings.speechParts.vocabulary.exampleEnglish
+  !settings.speechParts.vocabulary.exampleEnglish ||
+  settings.setupPreferences.lastSubjectId !== "world-history" ||
+  settings.setupPreferences.subjects["world-history"].lastDeckId !== "deck-2" ||
+  settings.setupPreferences.subjects["world-history"].studyMode !== "listen-answer" ||
+  settings.setupPreferences.subjects["world-history"].decks["deck-2"].questionAmountMode !==
+    "one-per-term" ||
+  "不正な科目ID" in settings.setupPreferences.subjects
 ) {
   throw new Error("Cloudflareへ保存する共通設定を正規化できませんでした。");
 }
@@ -214,9 +244,42 @@ if (
   browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5 ||
   browserSettings.speechParts.history.mnemonic ||
-  browserSettings.speechParts.vocabulary.exampleJapanese
+  browserSettings.speechParts.vocabulary.exampleJapanese ||
+  browserSettings.setupPreferences.subjects["world-history"].decks["deck-2"]
+    .regionDetail !== "東アジア"
 ) {
   throw new Error("Cloudflareの共通設定をブラウザー側へ反映できませんでした。");
+}
+
+const invalidSetupPreferences = {
+  lastSubjectId: "world-history",
+  subjects: {
+    "world-history": {
+      lastDeckId: "deck-2",
+      studyMode: "unknown",
+      decks: {
+        "deck-2": {
+          macroRegion: "x".repeat(300),
+          questionStyle: "unknown",
+          questionAmountMode: "unknown",
+        },
+      },
+    },
+  },
+};
+for (const normalized of [
+  normalizeWorkerSetupPreferences(JSON.stringify(invalidSetupPreferences)),
+  normalizeBrowserSetupPreferences(invalidSetupPreferences),
+]) {
+  const deck = normalized.subjects["world-history"].decks["deck-2"];
+  if (
+    normalized.subjects["world-history"].studyMode !== "memorize" ||
+    deck.macroRegion.length !== 200 ||
+    deck.questionStyle !== "" ||
+    deck.questionAmountMode !== "all"
+  ) {
+    throw new Error("開始前の保存値を安全な範囲へ補正できませんでした。");
+  }
 }
 
 const workerStoredSpeechParts = normalizeWorkerSpeechParts(
@@ -263,5 +326,5 @@ for (const invalid of [
 }
 
 console.log(
-  "Cloudflare窓口検証完了: 学習記録・共通設定・Azure音声生成を確認",
+  "Cloudflare窓口検証完了: 学習記録・開始設定・Azure音声生成を確認",
 );

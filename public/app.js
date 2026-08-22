@@ -28,6 +28,7 @@ import {
   importCloudProgress,
   loadCloudState,
   normalizeListeningPauseSeconds,
+  normalizeSetupPreferences,
   normalizeSpeechParts,
   resetCloudProgress,
   requestCloudSpeech,
@@ -162,6 +163,7 @@ const state = {
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   speechParts: normalizeSpeechParts(),
+  setupPreferences: normalizeSetupPreferences(),
   studyMode: "memorize",
   listeningPaused: false,
   listeningTimer: null,
@@ -177,6 +179,7 @@ const state = {
 const historyLimit = 200;
 const halfScreenRatingDelay = 400;
 let setupPreferenceSave = Promise.resolve();
+let setupPreferenceSaveVersion = 0;
 let speechPartsSaveVersion = 0;
 let speechPartNoticeTimer = null;
 let startingStudy = false;
@@ -452,6 +455,7 @@ async function loadProgressFromCloud() {
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
     state.speechParts = normalizeSpeechParts();
+    state.setupPreferences = normalizeSetupPreferences();
     return;
   }
 
@@ -467,6 +471,9 @@ async function loadProgressFromCloud() {
     cloudState.settings.listeningPauseSeconds,
   );
   state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
+  state.setupPreferences = normalizeSetupPreferences(
+    cloudState.settings.setupPreferences,
+  );
   saveSpeechSettings(cloudState.settings);
 
   const legacyProgress = readLegacyProgress();
@@ -625,22 +632,71 @@ function performRightSideAction(fromHalfScreen = false) {
 }
 
 function queueSetupPreferenceSave() {
+  const saveVersion = ++setupPreferenceSaveVersion;
   state.shuffleEnabled = elements.setupShuffle.checked;
   state.autoSpeechEnabled = elements.setupSpeech.checked;
+  state.setupPreferences = captureSetupPreferences();
   const patch = {
     shuffleEnabled: state.shuffleEnabled,
     autoSpeechEnabled: state.autoSpeechEnabled,
+    setupPreferences: state.setupPreferences,
   };
   setupPreferenceSave = setupPreferenceSave
     .catch(() => {})
     .then(async () => {
       const saved = await saveCloudSettings(patch);
-      state.shuffleEnabled = saved.shuffleEnabled;
-      state.autoSpeechEnabled = saved.autoSpeechEnabled;
-      elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
+      if (saveVersion === setupPreferenceSaveVersion) {
+        state.shuffleEnabled = saved.shuffleEnabled;
+        state.autoSpeechEnabled = saved.autoSpeechEnabled;
+        state.setupPreferences = normalizeSetupPreferences(
+          saved.setupPreferences,
+        );
+        elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
+      }
       return saved;
     });
   return setupPreferenceSave;
+}
+
+function captureSetupPreferences() {
+  const current = normalizeSetupPreferences(state.setupPreferences);
+  if (!state.activeSubjectId || !state.activeDeckId) return current;
+  const currentSubject = current.subjects[state.activeSubjectId] ?? {
+    lastDeckId: "",
+    studyMode: "memorize",
+    decks: {},
+  };
+  const studyMode =
+    !speechController.supported &&
+    listeningModes.has(currentSubject.studyMode)
+      ? currentSubject.studyMode
+      : selectedStudyMode();
+  return normalizeSetupPreferences({
+    ...current,
+    lastSubjectId: state.activeSubjectId,
+    subjects: {
+      ...current.subjects,
+      [state.activeSubjectId]: {
+        ...currentSubject,
+        lastDeckId: state.activeDeckId,
+        studyMode,
+        decks: {
+          ...currentSubject.decks,
+          [state.activeDeckId]: {
+            ...selectedFilters(),
+            questionStyle: elements.questionStyleFilter.value,
+            questionAmountMode: selectedQuestionAmountMode(),
+          },
+        },
+      },
+    },
+  });
+}
+
+function queueVisibleSetupPreferenceSave() {
+  void queueSetupPreferenceSave().catch((error) => {
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
+  });
 }
 
 function queueSpeechPartsSave() {
@@ -1206,6 +1262,36 @@ function setQuestionStyleOptions() {
     : "";
 }
 
+function setAvailableSelectValue(select, value) {
+  select.value = [...select.options].some((option) => option.value === value)
+    ? value
+    : "";
+}
+
+function applySetupPreferences() {
+  const preferences = normalizeSetupPreferences(state.setupPreferences);
+  const subject = preferences.subjects[state.activeSubjectId];
+  const deck = subject?.decks?.[state.activeDeckId] ?? {};
+  setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
+  updateRegionDetailOptions();
+  setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
+  setAvailableSelectValue(elements.categoryFilter, deck.category ?? "");
+  setAvailableSelectValue(elements.questionStyleFilter, deck.questionStyle ?? "");
+  elements.questionAmountFilter.value =
+    supportsOneQuestionPerTerm() &&
+    deck.questionAmountMode === oneQuestionPerTermMode
+      ? oneQuestionPerTermMode
+      : "all";
+  const savedMode = subject?.studyMode ?? "memorize";
+  const restoredMode =
+    listeningModes.has(savedMode) && !speechController.supported
+      ? "memorize"
+      : savedMode;
+  for (const option of elements.studyModeOptions) {
+    option.checked = option.value === restoredMode;
+  }
+}
+
 function activeStages() {
   return learningStages.includes(state.selectedStage)
     ? [state.selectedStage]
@@ -1368,6 +1454,7 @@ function configureSetup() {
       option.disabled = !speechController.supported;
     }
   }
+  applySetupPreferences();
   elements.speechChoice.classList.toggle(
     "is-hidden",
     !speechController.supported || listeningModes.has(selectedStudyMode()),
@@ -1798,6 +1885,7 @@ async function activateDeck(deckId) {
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
     state.speechParts = normalizeSpeechParts();
+    state.setupPreferences = normalizeSetupPreferences();
     state.cloudReady = false;
     state.cloudError = error.message;
   }
@@ -1820,7 +1908,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.068｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.069｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1873,8 +1961,12 @@ async function activateSubject(subjectId) {
       ? subjectEntry.decks
       : [{ ...subjectEntry, id: "deck-1" }];
   const defaultDeckId = subjectEntry.defaultDeckId ?? state.deckEntries[0].id;
-  setDeckOptions(state.deckEntries, defaultDeckId);
-  await activateDeck(defaultDeckId);
+  const savedDeckId = state.setupPreferences.subjects[subjectEntry.id]?.lastDeckId;
+  const selectedDeckId = state.deckEntries.some((deck) => deck.id === savedDeckId)
+    ? savedDeckId
+    : defaultDeckId;
+  setDeckOptions(state.deckEntries, selectedDeckId);
+  await activateDeck(selectedDeckId);
 }
 
 async function start() {
@@ -1894,6 +1986,29 @@ async function start() {
     state.catalog = catalog;
     state.subjectEntries = catalog.subjects;
     state.questionImages = questionImages;
+    if (getStoredAccessKey()) {
+      try {
+        const cloudState = await loadCloudState();
+        state.shuffleEnabled = cloudState.settings.shuffleEnabled;
+        state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
+        state.listeningPauseSeconds = normalizeListeningPauseSeconds(
+          cloudState.settings.listeningPauseSeconds,
+        );
+        state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
+        state.setupPreferences = normalizeSetupPreferences(
+          cloudState.settings.setupPreferences,
+        );
+        saveSpeechSettings(cloudState.settings);
+        const savedSubjectId = state.setupPreferences.lastSubjectId;
+        if (state.subjectEntries.some((subject) => subject.id === savedSubjectId)) {
+          await activateSubject(savedSubjectId);
+          showOnly(elements.setupPanel);
+          return;
+        }
+      } catch {
+        state.setupPreferences = normalizeSetupPreferences();
+      }
+    }
     showSubjectSelection();
   } catch (error) {
     elements.errorMessage.textContent = error.message;
@@ -1905,8 +2020,13 @@ elements.subjectOptions.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-subject-id]");
   if (!button) return;
   showOnly(elements.loadingPanel);
-  void activateSubject(button.dataset.subjectId)
-    .then(() => showOnly(elements.setupPanel))
+  void setupPreferenceSave
+    .catch(() => {})
+    .then(() => activateSubject(button.dataset.subjectId))
+    .then(() => {
+      showOnly(elements.setupPanel);
+      queueVisibleSetupPreferenceSave();
+    })
     .catch((error) => {
       elements.errorMessage.textContent = error.message;
       showOnly(elements.errorPanel);
@@ -1916,8 +2036,13 @@ elements.subjectOptions.addEventListener("click", (event) => {
 elements.deckFilter.addEventListener("change", () => {
   const deckId = elements.deckFilter.value;
   showOnly(elements.loadingPanel);
-  void activateDeck(deckId)
-    .then(() => showOnly(elements.setupPanel))
+  void setupPreferenceSave
+    .catch(() => {})
+    .then(() => activateDeck(deckId))
+    .then(() => {
+      showOnly(elements.setupPanel);
+      queueVisibleSetupPreferenceSave();
+    })
     .catch((error) => {
       elements.errorMessage.textContent = error.message;
       showOnly(elements.errorPanel);
@@ -1926,11 +2051,19 @@ elements.deckFilter.addEventListener("change", () => {
 elements.macroRegionFilter.addEventListener("change", () => {
   updateRegionDetailOptions(true);
   updateSetupPreview();
+  queueVisibleSetupPreferenceSave();
 });
-elements.regionDetailFilter.addEventListener("change", updateSetupPreview);
-elements.categoryFilter.addEventListener("change", updateSetupPreview);
-elements.questionStyleFilter.addEventListener("change", updateSetupPreview);
-elements.questionAmountFilter.addEventListener("change", updateSetupPreview);
+for (const control of [
+  elements.regionDetailFilter,
+  elements.categoryFilter,
+  elements.questionStyleFilter,
+  elements.questionAmountFilter,
+]) {
+  control.addEventListener("change", () => {
+    updateSetupPreview();
+    queueVisibleSetupPreferenceSave();
+  });
+}
 for (const option of elements.studyModeOptions) {
   option.addEventListener("change", () => {
     elements.speechChoice.classList.toggle(
@@ -1938,19 +2071,16 @@ for (const option of elements.studyModeOptions) {
       !speechController.supported || listeningModes.has(selectedStudyMode()),
     );
     updateSetupPreview();
+    queueVisibleSetupPreferenceSave();
   });
 }
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
-  void queueSetupPreferenceSave().catch((error) => {
-    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
-  });
+  queueVisibleSetupPreferenceSave();
 });
 elements.setupSpeech.addEventListener("change", () => {
   state.autoSpeechEnabled = elements.setupSpeech.checked;
-  void queueSetupPreferenceSave().catch((error) => {
-    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
-  });
+  queueVisibleSetupPreferenceSave();
 });
 elements.startStudy.addEventListener("click", () => void beginStudy());
 elements.changeSubject.addEventListener("click", showSubjectSelection);

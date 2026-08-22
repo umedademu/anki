@@ -63,6 +63,7 @@ import {
 } from "./deck-selection.js";
 
 const elements = {
+  homeLink: document.querySelector("#home-link"),
   loadingPanel: document.querySelector("#loading-panel"),
   subjectPanel: document.querySelector("#subject-panel"),
   subjectOptions: document.querySelector("#subject-options"),
@@ -1891,6 +1892,24 @@ async function returnToSetup() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+async function returnToSubjectSelection() {
+  stopListeningSequence();
+  stopStudyClock();
+  clearPendingReviewTimer();
+  state.listeningPaused = false;
+  state.pendingListeningActivity = null;
+  elements.listeningToggle.textContent = "一時停止";
+  if (state.activeSession) {
+    try {
+      await queueCurrentStudyTimeSave();
+      await queueActiveSessionSave();
+    } catch (error) {
+      state.unlockMessage = error.message;
+    }
+  }
+  showSubjectSelection();
+}
+
 function renderTermTags(term, question, visible) {
   const tags = [
     term.chronology?.displayPeriod,
@@ -2988,7 +3007,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.083｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.084｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -3019,6 +3038,7 @@ function renderSubjectOptions() {
 
 function showSubjectSelection() {
   stopListeningSequence();
+  state.activeSession = false;
   state.currentTask = null;
   state.queue = [];
   state.answerVisible = false;
@@ -3084,12 +3104,6 @@ async function start() {
           cloudState.settings.setupPreferences,
         );
         saveSpeechSettings(cloudState.settings);
-        const savedSubjectId = state.setupPreferences.lastSubjectId;
-        if (state.subjectEntries.some((subject) => subject.id === savedSubjectId)) {
-          await activateSubject(savedSubjectId);
-          showOnly(elements.setupPanel);
-          return;
-        }
       } catch {
         state.setupPreferences = normalizeSetupPreferences();
       }
@@ -3176,7 +3190,13 @@ elements.setupSpeech.addEventListener("change", () => {
 });
 elements.startStudy.addEventListener("click", () => void beginStudy());
 elements.resumeStudy.addEventListener("click", () => void resumeStudy());
-elements.changeSubject.addEventListener("click", showSubjectSelection);
+elements.homeLink.addEventListener("click", (event) => {
+  event.preventDefault();
+  void returnToSubjectSelection();
+});
+elements.changeSubject.addEventListener("click", () => {
+  void returnToSubjectSelection();
+});
 
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);

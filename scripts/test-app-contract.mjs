@@ -105,6 +105,9 @@ const deckProgressStyleBlock = styles.match(
 const listeningBackBlock = app.match(
   /async function goBackListeningOneStep\(\)[\s\S]*?async function advanceListening/,
 )?.[0];
+const startBlock = app.match(
+  /async function start\(\)[\s\S]*?\n}\n\nelements\.subjectOptions/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -178,10 +181,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.083") ||
-  !changelog.includes("v0.083") ||
-  !settingsHtml.includes("v0.083") ||
-  !historyHtml.includes("v0.083")
+  !html.includes("v0.084") ||
+  !changelog.includes("v0.084") ||
+  !settingsHtml.includes("v0.084") ||
+  !historyHtml.includes("v0.084")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -289,7 +292,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.083"') ||
+  !html.includes('href="/styles.css?v=0.084"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -605,10 +608,22 @@ if (
   !cloudProgress.includes("normalizeSetupPreferences") ||
   !app.includes("function captureSetupPreferences()") ||
   !app.includes("function applySetupPreferences()") ||
-  !app.includes("state.setupPreferences.lastSubjectId") ||
   !app.includes("queueVisibleSetupPreferenceSave()")
 ) {
   throw new Error("設定画面と開始前の選択をCloudflareで共有する構成が揃っていません。");
+}
+if (
+  !html.includes('id="home-link" href="/" aria-label="科目選択へ戻る"') ||
+  !app.includes("async function returnToSubjectSelection()") ||
+  !app.includes('elements.homeLink.addEventListener("click"') ||
+  !app.includes("event.preventDefault()") ||
+  !app.includes("state.activeSession = false") ||
+  !startBlock ||
+  !startBlock.includes("showSubjectSelection()") ||
+  startBlock.includes("activateSubject(") ||
+  !app.includes("await queueActiveSessionSave()")
+) {
+  throw new Error("起動時とAnkiロゴから科目選択へ戻る処理が揃っていません。");
 }
 if (
   !html.includes('name="study-mode" value="memorize"') ||

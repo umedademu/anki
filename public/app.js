@@ -88,6 +88,7 @@ const elements = {
   changeSubject: document.querySelector("#change-subject"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
+  deckProgressName: document.querySelector("#deck-progress-name"),
   contextCard: document.querySelector("#context-card"),
   stageName: document.querySelector("#stage-name"),
   termTitle: document.querySelector("#term-title"),
@@ -2443,7 +2444,10 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.073｜${state.subject.title}を学ぶ`;
+  const deckName = deckDisplayLabel(deckEntry);
+  elements.deckProgressName.textContent = deckName.replaceAll("｜", " ");
+  elements.deckProgressName.title = deckName;
+  elements.setupEyebrow.textContent = `v0.074｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

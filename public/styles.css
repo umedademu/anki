@@ -410,6 +410,15 @@ body.is-studying .page {
   white-space: nowrap;
 }
 
+.deck-progress-name {
+  min-width: 4.5em;
+  max-width: min(30vw, 240px);
+  overflow: hidden;
+  color: #2e6a49;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .context-card.is-beginner-stage {
   display: none;
 }

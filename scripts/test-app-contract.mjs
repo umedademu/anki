@@ -95,6 +95,9 @@ const listeningAnswerSpeechBlock = app.match(
 const listeningQuestionSpeechBlock = app.match(
   /function beginListeningQuestion\(\)[\s\S]*?function showSpeechPartNotice/,
 )?.[0];
+const deckProgressStyleBlock = styles.match(
+  /\.deck-progress-name\s*\{[^}]*\}/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -168,10 +171,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.073") ||
-  !changelog.includes("v0.073") ||
-  !settingsHtml.includes("v0.073") ||
-  !historyHtml.includes("v0.073")
+  !html.includes("v0.074") ||
+  !changelog.includes("v0.074") ||
+  !settingsHtml.includes("v0.074") ||
+  !historyHtml.includes("v0.074")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -252,7 +255,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.073"') ||
+  !html.includes('href="/styles.css?v=0.074"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -637,6 +640,21 @@ if (
   html.indexOf('id="reset-progress"') > html.indexOf('id="study-shell"')
 ) {
   throw new Error("進捗または記録初期化の表示位置が正しくありません。");
+}
+if (
+  !html.match(
+    /class="progress-summary"[^>]*>[\s\S]*?id="deck-progress-name"[\s\S]*?id="overall-progress"[\s\S]*?id="queue-progress"/,
+  ) ||
+  !app.includes('deckProgressName: document.querySelector("#deck-progress-name")') ||
+  !app.includes('elements.deckProgressName.textContent = deckName.replaceAll("｜", " ")') ||
+  !app.includes("elements.deckProgressName.title = deckName") ||
+  !deckProgressStyleBlock ||
+  !deckProgressStyleBlock.includes("text-overflow: ellipsis") ||
+  !deckProgressStyleBlock.includes("white-space: nowrap") ||
+  deckProgressStyleBlock.includes("font-size") ||
+  !/\.progress-summary\s*\{[^}]*flex-wrap:\s*nowrap;/s.test(styles)
+) {
+  throw new Error("デッキ名を進捗と同じ一行・同じ文字サイズで表示する構成が不足しています。");
 }
 if (
   styles.includes(

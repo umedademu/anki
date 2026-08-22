@@ -545,6 +545,7 @@ const stableDatasetVersions = new Map([
   ["japanese-history:deck-1", "jh-455fb6def169"],
   ["english-vocabulary:deck-1", "en-6984fb69efaf"],
   ["english-vocabulary:deck-2", "en-abb710688392"],
+  ["english-vocabulary:deck-3", "en-6397b7943e25"],
 ]);
 
 function datasetVersion(subjectId, deckId) {

@@ -48,6 +48,7 @@ if (
 
 const studySessionInput = {
   studyMode: "memorize",
+  deckIds: ["deck-1", "deck-2", "deck-1", "不正なデッキ"],
   selectedStage: "beginner",
   questionAmountMode: "one-per-term",
   shuffleEnabled: true,
@@ -82,6 +83,7 @@ for (const session of [
 ]) {
   if (
     session.studyMode !== "memorize" ||
+    session.deckIds.join(",") !== "deck-1,deck-2" ||
     session.tasks.length !== 2 ||
     session.queue.length !== 1 ||
     session.currentTask.questionId !== "WH-Q-000001" ||
@@ -337,6 +339,7 @@ const settings = normalizeSettings({
     subjects: {
       "world-history": {
         lastDeckId: "deck-2",
+        selectedDeckIds: ["deck-2", "deck-3", "deck-2", "不正なデッキ"],
         studyMode: "listen-answer",
         decks: {
           "deck-2": {
@@ -374,6 +377,8 @@ if (
   !settings.speechParts.vocabulary.exampleEnglish ||
   settings.setupPreferences.lastSubjectId !== "world-history" ||
   settings.setupPreferences.subjects["world-history"].lastDeckId !== "deck-2" ||
+  settings.setupPreferences.subjects["world-history"].selectedDeckIds.join(",") !==
+    "deck-2,deck-3" ||
   settings.setupPreferences.subjects["world-history"].studyMode !== "listen-answer" ||
   settings.setupPreferences.subjects["world-history"].decks["deck-2"].questionAmountMode !==
     "one-per-term" ||
@@ -395,6 +400,7 @@ if (
   browserSettings.listeningPauseSeconds !== 2.5 ||
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||
+  browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
   browserSettings.setupPreferences.subjects["world-history"].decks["deck-2"]
     .regionDetail !== "東アジア"
 ) {
@@ -424,6 +430,7 @@ for (const normalized of [
   const deck = normalized.subjects["world-history"].decks["deck-2"];
   if (
     normalized.subjects["world-history"].studyMode !== "memorize" ||
+    normalized.subjects["world-history"].selectedDeckIds[0] !== "deck-2" ||
     deck.macroRegion.length !== 200 ||
     deck.questionStyle !== "" ||
     deck.questionAmountMode !== "all"

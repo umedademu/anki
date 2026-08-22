@@ -178,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.077") ||
-  !changelog.includes("v0.077") ||
-  !settingsHtml.includes("v0.077") ||
-  !historyHtml.includes("v0.077")
+  !html.includes("v0.078") ||
+  !changelog.includes("v0.078") ||
+  !settingsHtml.includes("v0.078") ||
+  !historyHtml.includes("v0.078")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -236,7 +236,7 @@ if (
   !app.includes("saveCloudStudyAnswer") ||
   !app.includes("saveCloudStudySession") ||
   !app.includes("savedSessionForMode(studyMode)") ||
-  !app.includes("deleteCloudStudySession(state.subject.version, studyMode)") ||
+  !app.includes("deleteCloudStudySession(state.sessionDatasetVersion, studyMode)") ||
   app.includes("savedSession: null") ||
   !cloudProgress.includes("normalizeStudySessions") ||
   !cloudProgress.includes("&mode=${encodeURIComponent(studyMode)}") ||
@@ -252,17 +252,24 @@ if (
   throw new Error("暗記・聞き流し別の一周保存、再開、期限到来時の再出題が揃っていません。");
 }
 if (
-  !app.includes("function setDeckOptions(decks, selectedDeckId)") ||
+  !html.includes("デッキ（複数選択可）") ||
+  !styles.includes(".deck-filter-choice:has(input:checked)") ||
+  !app.includes("function setDeckOptions(decks, selectedDeckIds)") ||
+  !app.includes("function selectedDeckIds()") ||
+  !app.includes("async function activateDecks(deckIds)") ||
+  !app.includes("createSessionDatasetVersion") ||
+  !app.includes("datasetVersionForQuestion") ||
+  !app.includes("state.allTerms = loaded.flatMap") ||
+  !app.includes("state.shuffleEnabled ? shuffleTasks(tasks) : tasks") ||
   !app.includes("async function activateSubject(subjectId)") ||
   !app.includes("function showSubjectSelection()") ||
-  !app.includes("async function activateDeck(deckId)") ||
   !app.includes("subjectEntry.defaultDeckId") ||
-  !app.includes(
-    "`anki-progress:${state.subject.id}:${state.subject.version}:v1`",
-  ) ||
+  !app.includes("sessionDatasetVersion: state.sessionDatasetVersion") ||
+  !cloudProgress.includes("sessionDatasetVersion") ||
+  !worker.includes("body.sessionDatasetVersion ?? datasetVersion") ||
   !app.includes('elements.deckFilter.addEventListener("change"')
 ) {
-  throw new Error("複数Deckの選択または学習履歴の分離が揃っていません。");
+  throw new Error("複数デッキの選択・混合出題・デッキ別の進捗保存が揃っていません。");
 }
 if (
   !cloudflareReplacement.includes('process.argv.includes("--resume-after-asset-upload")') ||
@@ -282,7 +289,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.077"') ||
+  !html.includes('href="/styles.css?v=0.078"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -693,8 +700,8 @@ if (
     /class="progress-summary"[^>]*>[\s\S]*?id="deck-progress-name"[\s\S]*?id="overall-progress"[\s\S]*?id="queue-progress"/,
   ) ||
   !app.includes('deckProgressName: document.querySelector("#deck-progress-name")') ||
-  !app.includes('elements.deckProgressName.textContent = deckName.replaceAll("｜", " ")') ||
-  !app.includes("elements.deckProgressName.title = deckName") ||
+  !app.includes('elements.deckProgressName.textContent = currentDeckName.replaceAll("｜", " ")') ||
+  !app.includes("elements.deckProgressName.title = currentDeckName") ||
   !deckProgressStyleBlock ||
   !deckProgressStyleBlock.includes("text-overflow: ellipsis") ||
   !deckProgressStyleBlock.includes("white-space: nowrap") ||

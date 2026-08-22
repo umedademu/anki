@@ -146,6 +146,11 @@ export function normalizeStudySession(value) {
   return {
     schemaVersion: 1,
     studyMode: studyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    deckIds: [...new Set(
+      (Array.isArray(source.deckIds) ? source.deckIds : [])
+        .map(normalizeStudySessionId)
+        .filter(Boolean),
+    )].slice(0, 100),
     selectedStage: questionStyles.has(source.selectedStage) ? source.selectedStage : "",
     questionAmountMode: questionAmountModes.has(source.questionAmountMode)
       ? source.questionAmountMode
@@ -264,8 +269,19 @@ export function normalizeSetupPreferences(value) {
           : "all",
       };
     }
+    const lastDeckId = normalizeSetupPreferenceId(rawSubject.lastDeckId);
+    const selectedDeckIds = [...new Set(
+      (Array.isArray(rawSubject.selectedDeckIds)
+        ? rawSubject.selectedDeckIds
+        : lastDeckId
+          ? [lastDeckId]
+          : [])
+        .map(normalizeSetupPreferenceId)
+        .filter(Boolean),
+    )].slice(0, 100);
     subjects[subjectId] = {
-      lastDeckId: normalizeSetupPreferenceId(rawSubject.lastDeckId),
+      lastDeckId,
+      selectedDeckIds,
       studyMode: studyModes.has(rawSubject.studyMode)
         ? rawSubject.studyMode
         : "memorize",
@@ -537,6 +553,8 @@ export async function saveCloudStudyAnswer(
         studyMode: historyChange.studyMode ?? session?.studyMode ?? null,
         activity: historyChange.activity ?? null,
         deleteActivityId: historyChange.deleteActivityId ?? null,
+        sessionDatasetVersion:
+          historyChange.sessionDatasetVersion ?? datasetVersion,
       }),
     },
   );
@@ -546,12 +564,17 @@ export async function saveCloudStudyAnswer(
   };
 }
 
-export async function saveCloudStudyActivity(datasetVersion, activity, session) {
+export async function saveCloudStudyActivity(
+  datasetVersion,
+  activity,
+  session,
+  { sessionDatasetVersion = datasetVersion } = {},
+) {
   const payload = await cloudRequest(
     `/v1/study-activity/${encodeURIComponent(activity.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ activity, session }),
+      body: JSON.stringify({ activity, session, sessionDatasetVersion }),
     },
   );
   return {
@@ -565,13 +588,13 @@ export async function saveCloudStudyTime(
   datasetVersion,
   timeEntry,
   session,
-  { keepalive = false } = {},
+  { keepalive = false, sessionDatasetVersion = datasetVersion } = {},
 ) {
   const payload = await cloudRequest(
     `/v1/study-time/${encodeURIComponent(timeEntry.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ timeEntry, session }),
+      body: JSON.stringify({ timeEntry, session, sessionDatasetVersion }),
       keepalive,
     },
   );
@@ -582,12 +605,17 @@ export async function saveCloudStudyTime(
   };
 }
 
-export async function undoCloudStudyActivity(datasetVersion, eventId, session) {
+export async function undoCloudStudyActivity(
+  datasetVersion,
+  eventId,
+  session,
+  { sessionDatasetVersion = datasetVersion } = {},
+) {
   const payload = await cloudRequest(
     `/v1/study-activity/${encodeURIComponent(eventId)}/undo?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ session }),
+      body: JSON.stringify({ session, sessionDatasetVersion }),
     },
   );
   return {

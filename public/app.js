@@ -55,6 +55,11 @@ import {
   formatStudyDuration,
   maxStudySecondsPerScreen,
 } from "./study-time.js";
+import {
+  createSessionDatasetVersion,
+  mergeDeckProgress,
+  normalizeDeckSelection,
+} from "./deck-selection.js";
 
 const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
@@ -159,6 +164,11 @@ const state = {
   activeSubjectId: "",
   deckEntries: [],
   activeDeckId: "",
+  activeDeckIds: [],
+  loadedDecks: new Map(),
+  questionDeckById: new Map(),
+  termDeckById: new Map(),
+  sessionDatasetVersion: "",
   deckLoadToken: 0,
   subject: null,
   allTerms: [],
@@ -168,7 +178,6 @@ const state = {
   questionById: new Map(),
   questionImages: new Map(),
   progress: createEmptyProgress(),
-  progressKey: "",
   reviewSettings: { ...defaultReviewSettings },
   cloudReady: false,
   cloudError: "",
@@ -297,6 +306,20 @@ function cloneTask(task) {
   return task ? { ...task } : null;
 }
 
+function selectedDeckIds() {
+  return [...elements.deckFilter.querySelectorAll('input[type="checkbox"]:checked')]
+    .map((input) => input.value)
+    .filter((deckId) => state.deckEntries.some((deck) => deck.id === deckId));
+}
+
+function deckForQuestion(questionId) {
+  return state.questionDeckById.get(questionId) ?? null;
+}
+
+function datasetVersionForQuestion(questionId) {
+  return deckForQuestion(questionId)?.subject.version ?? state.sessionDatasetVersion;
+}
+
 function createEventId() {
   return window.crypto?.randomUUID?.() ??
     `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
@@ -411,6 +434,7 @@ function captureActiveSession() {
   return normalizeStudySession({
     schemaVersion: 1,
     studyMode: state.studyMode,
+    deckIds: state.activeDeckIds,
     selectedStage: state.selectedStage,
     questionAmountMode: state.questionAmountMode,
     shuffleEnabled: state.shuffleEnabled,
@@ -436,12 +460,14 @@ function createStudyActivity(questionId, eventId = createEventId()) {
   const subjectEntry = state.subjectEntries.find(
     (subject) => subject.id === state.activeSubjectId,
   );
-  const deckEntry = state.deckEntries.find((deck) => deck.id === state.activeDeckId);
+  const deck = deckForQuestion(questionId);
+  const deckEntry = deck?.entry ??
+    state.deckEntries.find((item) => item.id === state.activeDeckId);
   return {
     eventId,
     subjectId: state.activeSubjectId,
     subjectTitle: subjectEntry?.title ?? state.subject?.title ?? state.activeSubjectId,
-    deckId: state.activeDeckId,
+    deckId: deckEntry?.id ?? state.activeDeckId,
     deckTitle: deckDisplayLabel(deckEntry),
     studyMode: state.studyMode,
     questionId,
@@ -482,7 +508,8 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
   const eventId = timeEntry.eventId;
   const savedSeconds = timeEntry.studySeconds;
   const studyMode = session.studyMode;
-  const datasetVersion = state.subject.version;
+  const datasetVersion = datasetVersionForQuestion(timeEntry.questionId);
+  const sessionDatasetVersion = state.sessionDatasetVersion;
   const saveVersion = ++studySessionSaveVersion;
   studySessionSave = studySessionSave
     .catch(() => {})
@@ -490,7 +517,7 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
       datasetVersion,
       timeEntry,
       session,
-      { keepalive },
+      { keepalive, sessionDatasetVersion },
     ))
     .then((saved) => {
       if (state.studyTimeEventId === eventId) {
@@ -501,7 +528,7 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
       }
       if (
         saveVersion === studySessionSaveVersion &&
-        state.subject?.version === datasetVersion
+        state.sessionDatasetVersion === sessionDatasetVersion
       ) {
         setSavedSessionForMode(studyMode, saved.session);
       }
@@ -514,8 +541,15 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
 function setupMatchesSession(session, selectedTerms) {
   const filters = selectedFilters();
   const selectedTermIds = new Set(selectedTerms.map((term) => term.id));
+  const sessionDeckIds = session?.deckIds?.length
+    ? session.deckIds
+    : state.activeDeckIds.length === 1
+      ? state.activeDeckIds
+      : [];
   return (
     session &&
+    sessionDeckIds.length === state.activeDeckIds.length &&
+    sessionDeckIds.every((deckId) => state.activeDeckIds.includes(deckId)) &&
     session.studyMode === selectedStudyMode() &&
     session.selectedStage === elements.questionStyleFilter.value &&
     session.questionAmountMode === selectedQuestionAmountMode() &&
@@ -545,6 +579,17 @@ function setSetupControlsFromSession(session) {
 function restoreActiveSession(value, { updateControls = true } = {}) {
   const session = normalizeStudySession(value);
   if (!session) return false;
+  const sessionDeckIds = session.deckIds.length
+    ? session.deckIds
+    : state.activeDeckIds.length === 1
+      ? state.activeDeckIds
+      : [];
+  if (
+    sessionDeckIds.length !== state.activeDeckIds.length ||
+    !sessionDeckIds.every((deckId) => state.activeDeckIds.includes(deckId))
+  ) {
+    return false;
+  }
   const termIds = new Set(session.termIds);
   const terms = state.allTerms.filter((term) => termIds.has(term.id));
   if (terms.length === 0) return false;
@@ -607,12 +652,16 @@ function queueActiveSessionSave() {
   const session = captureActiveSession();
   if (!session) return Promise.resolve(null);
   const studyMode = session.studyMode;
+  const sessionDatasetVersion = state.sessionDatasetVersion;
   const saveVersion = ++studySessionSaveVersion;
   studySessionSave = studySessionSave
     .catch(() => {})
     .then(async () => {
-      const saved = await saveCloudStudySession(state.subject.version, session);
-      if (saveVersion === studySessionSaveVersion) {
+      const saved = await saveCloudStudySession(sessionDatasetVersion, session);
+      if (
+        saveVersion === studySessionSaveVersion &&
+        state.sessionDatasetVersion === sessionDatasetVersion
+      ) {
         setSavedSessionForMode(studyMode, saved);
       }
       return saved;
@@ -623,7 +672,8 @@ function queueActiveSessionSave() {
 function queueActiveStudyActivity(activity) {
   const session = captureActiveSession();
   const studyMode = state.studyMode;
-  const datasetVersion = state.subject.version;
+  const datasetVersion = datasetVersionForQuestion(activity.questionId);
+  const sessionDatasetVersion = state.sessionDatasetVersion;
   const saveVersion = ++studySessionSaveVersion;
   studySessionSave = studySessionSave
     .catch(() => {})
@@ -632,8 +682,12 @@ function queueActiveStudyActivity(activity) {
         datasetVersion,
         activity,
         session,
+        { sessionDatasetVersion },
       );
-      if (saveVersion === studySessionSaveVersion) {
+      if (
+        saveVersion === studySessionSaveVersion &&
+        state.sessionDatasetVersion === sessionDatasetVersion
+      ) {
         setSavedSessionForMode(studyMode, saved.session);
       }
       return saved.session;
@@ -931,18 +985,22 @@ function fitTextInsideCard(card, textElements, shouldFit = true) {
   });
 }
 
-function readLegacyProgress() {
+function legacyProgressKey(deck) {
+  return `anki-progress:${deck.subject.id}:${deck.subject.version}:v1`;
+}
+
+function readLegacyProgress(deck) {
   try {
-    const saved = window.localStorage.getItem(state.progressKey);
+    const saved = window.localStorage.getItem(legacyProgressKey(deck));
     return deserializeProgress(saved, state.subject.masteryTarget);
   } catch {
     return createEmptyProgress();
   }
 }
 
-function clearLegacyProgress() {
+function clearLegacyProgress(deck) {
   try {
-    window.localStorage.removeItem(state.progressKey);
+    window.localStorage.removeItem(legacyProgressKey(deck));
   } catch {
     // 旧記録を消せない環境でもCloudflare上の記録を優先する。
   }
@@ -963,42 +1021,59 @@ async function loadProgressFromCloud() {
     return;
   }
 
-  const cloudState = await loadCloudState(
-    state.subject.masteryTarget,
-    state.subject.version,
-  );
-  state.progress = cloudState.progress;
-  state.savedSessions = cloudState.sessions;
-  state.reviewSettings = normalizeReviewSettings(cloudState.settings);
-  state.shuffleEnabled = cloudState.settings.shuffleEnabled;
-  state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
-  state.listeningPauseSeconds = normalizeListeningPauseSeconds(
-    cloudState.settings.listeningPauseSeconds,
-  );
-  state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
-  state.setupPreferences = normalizeSetupPreferences(
-    cloudState.settings.setupPreferences,
-  );
-  saveSpeechSettings(cloudState.settings);
-
-  const legacyProgress = readLegacyProgress();
-  const missingLegacyQuestions = Object.fromEntries(
-    Object.entries(legacyProgress.questions).filter(
-      ([questionId]) => !(questionId in state.progress.questions),
+  const loadedDecks = state.activeDeckIds.map((deckId) => state.loadedDecks.get(deckId));
+  const deckCloudStates = await Promise.all(
+    loadedDecks.map((deck) =>
+      loadCloudState(state.subject.masteryTarget, deck.subject.version),
     ),
   );
-  if (Object.keys(missingLegacyQuestions).length > 0) {
-    await importCloudProgress(state.subject.version, {
-      questions: missingLegacyQuestions,
-      updatedAt: legacyProgress.updatedAt,
-    });
-    state.progress.questions = {
-      ...missingLegacyQuestions,
-      ...state.progress.questions,
-    };
+  const sessionCloudState =
+    loadedDecks.length === 1 &&
+    loadedDecks[0].subject.version === state.sessionDatasetVersion
+      ? deckCloudStates[0]
+      : await loadCloudState(
+          state.subject.masteryTarget,
+          state.sessionDatasetVersion,
+        );
+  state.progress = mergeDeckProgress(deckCloudStates);
+  state.savedSessions = sessionCloudState.sessions;
+  state.reviewSettings = normalizeReviewSettings(sessionCloudState.settings);
+  state.shuffleEnabled = sessionCloudState.settings.shuffleEnabled;
+  state.autoSpeechEnabled = sessionCloudState.settings.autoSpeechEnabled;
+  state.listeningPauseSeconds = normalizeListeningPauseSeconds(
+    sessionCloudState.settings.listeningPauseSeconds,
+  );
+  state.speechParts = normalizeSpeechParts(sessionCloudState.settings.speechParts);
+  state.setupPreferences = normalizeSetupPreferences(
+    sessionCloudState.settings.setupPreferences,
+  );
+  saveSpeechSettings(sessionCloudState.settings);
+
+  for (const deck of loadedDecks) {
+    const legacyProgress = readLegacyProgress(deck);
+    const missingLegacyQuestions = Object.fromEntries(
+      Object.entries(legacyProgress.questions).filter(
+        ([questionId]) => !(questionId in state.progress.questions),
+      ),
+    );
+    if (Object.keys(missingLegacyQuestions).length > 0) {
+      await importCloudProgress(deck.subject.version, {
+        questions: missingLegacyQuestions,
+        updatedAt: legacyProgress.updatedAt,
+      });
+      state.progress.questions = {
+        ...missingLegacyQuestions,
+        ...state.progress.questions,
+      };
+    }
+    clearLegacyProgress(deck);
   }
-  clearLegacyProgress();
   state.cloudReady = true;
+  return {
+    progress: state.progress,
+    sessions: state.savedSessions,
+    settings: sessionCloudState.settings,
+  };
 }
 
 function pushHistory(entry) {
@@ -1115,24 +1190,20 @@ async function goBackOneStep() {
     startNewStudyScreen();
     try {
       const saved = await saveCloudStudyAnswer(
-        state.subject.version,
+        datasetVersionForQuestion(snapshot.questionId),
         snapshot.questionId,
         snapshot.previousQuestionRecord,
         captureActiveSession(),
         {
           studyMode: "memorize",
           deleteActivityId: snapshot.studyActivityEventId,
+          sessionDatasetVersion: state.sessionDatasetVersion,
         },
       );
       setSavedSessionForMode("memorize", saved.session);
     } catch (error) {
-      const cloudState = await loadCloudState(
-        state.subject.masteryTarget,
-        state.subject.version,
-      ).catch(() => null);
+      const cloudState = await loadProgressFromCloud().catch(() => null);
       if (cloudState) {
-        state.progress = cloudState.progress;
-        state.reviewSettings = cloudState.settings;
         if (!restoreActiveSession(cloudState.sessions.memorize, { updateControls: false })) {
           state.activeSession = false;
           setSavedSessionForMode("memorize", null);
@@ -1202,9 +1273,10 @@ function queueSetupPreferenceSave() {
 
 function captureSetupPreferences() {
   const current = normalizeSetupPreferences(state.setupPreferences);
-  if (!state.activeSubjectId || !state.activeDeckId) return current;
+  if (!state.activeSubjectId || state.activeDeckIds.length === 0) return current;
   const currentSubject = current.subjects[state.activeSubjectId] ?? {
     lastDeckId: "",
+    selectedDeckIds: [],
     studyMode: "memorize",
     decks: {},
   };
@@ -1220,16 +1292,20 @@ function captureSetupPreferences() {
       ...current.subjects,
       [state.activeSubjectId]: {
         ...currentSubject,
-        lastDeckId: state.activeDeckId,
+        lastDeckId: state.activeDeckIds[0],
+        selectedDeckIds: state.activeDeckIds,
         studyMode,
-        decks: {
-          ...currentSubject.decks,
-          [state.activeDeckId]: {
-            ...selectedFilters(),
-            questionStyle: elements.questionStyleFilter.value,
-            questionAmountMode: selectedQuestionAmountMode(),
-          },
-        },
+        decks: Object.fromEntries([
+          ...Object.entries(currentSubject.decks),
+          ...state.activeDeckIds.map((deckId) => [
+            deckId,
+            {
+              ...selectedFilters(),
+              questionStyle: elements.questionStyleFilter.value,
+              questionAmountMode: selectedQuestionAmountMode(),
+            },
+          ]),
+        ]),
       },
     },
   });
@@ -1493,7 +1569,7 @@ async function goBackListeningOneStep() {
         : state.currentTask;
       state.answerVisible = false;
       const saved = await saveCloudStudySession(
-        state.subject.version,
+        state.sessionDatasetVersion,
         captureActiveSession(),
       );
       setSavedSessionForMode("listen-answer", saved);
@@ -1509,18 +1585,17 @@ async function goBackListeningOneStep() {
       state.listeningPaused = true;
       startNewStudyScreen();
       const saved = await undoCloudStudyActivity(
-        state.subject.version,
+        snapshot.studyActivityDatasetVersion ??
+          datasetVersionForQuestion(snapshot.studySession?.currentTask?.questionId),
         snapshot.studyActivityEventId,
         captureActiveSession(),
+        { sessionDatasetVersion: state.sessionDatasetVersion },
       );
       setSavedSessionForMode("listen-answer", saved.session);
       setListeningStatus("前の問題の回答表示へ1手戻りました");
     }
   } catch (error) {
-    const cloudState = await loadCloudState(
-      state.subject.masteryTarget,
-      state.subject.version,
-    ).catch(() => null);
+    const cloudState = await loadProgressFromCloud().catch(() => null);
     const cloudSession = cloudState?.sessions?.["listen-answer"] ?? null;
     if (cloudSession && restoreActiveSession(cloudSession, { updateControls: false })) {
       state.answerVisible = cloudSession.answerVisible;
@@ -1582,6 +1657,7 @@ async function advanceListening(runId) {
   const undoSnapshot = {
     type: "listening-advance",
     studyActivityEventId: activity.eventId,
+    studyActivityDatasetVersion: datasetVersionForQuestion(activity.questionId),
     studySession: captureActiveSession(),
   };
   const historyBefore = [...state.history];
@@ -1935,16 +2011,23 @@ function deckDisplayLabel(deck) {
     : String(deck?.difficultyLabel ?? deck?.id ?? "デッキ");
 }
 
-function setDeckOptions(decks, selectedDeckId) {
+function setDeckOptions(decks, selectedDeckIds) {
+  const selected = new Set(selectedDeckIds);
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
-      const option = document.createElement("option");
-      option.value = deck.id;
-      option.textContent = deckDisplayLabel(deck);
-      return option;
+      const label = document.createElement("label");
+      label.className = "deck-filter-choice";
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.name = "deck-filter";
+      input.value = deck.id;
+      input.checked = selected.has(deck.id);
+      const text = document.createElement("span");
+      text.textContent = deckDisplayLabel(deck).replaceAll("｜", " ");
+      label.append(input, text);
+      return label;
     }),
   );
-  elements.deckFilter.value = selectedDeckId;
 }
 
 function selectedFilters() {
@@ -1994,7 +2077,7 @@ function setAvailableSelectValue(select, value) {
 function applySetupPreferences() {
   const preferences = normalizeSetupPreferences(state.setupPreferences);
   const subject = preferences.subjects[state.activeSubjectId];
-  const deck = subject?.decks?.[state.activeDeckId] ?? {};
+  const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
   setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
@@ -2230,6 +2313,12 @@ function renderQuestion() {
     return;
   }
   const vocabularyMode = state.subject?.learningType === "vocabulary";
+  const currentDeckEntry = deckForQuestion(question.id)?.entry;
+  if (currentDeckEntry) {
+    const currentDeckName = deckDisplayLabel(currentDeckEntry);
+    elements.deckProgressName.textContent = currentDeckName.replaceAll("｜", " ");
+    elements.deckProgressName.title = currentDeckName;
+  }
 
   elements.completionCard.classList.add("is-hidden");
   elements.contextCard.classList.remove("is-hidden");
@@ -2504,11 +2593,15 @@ async function rateCurrentQuestion(rating) {
   renderActionControls();
   try {
     const saved = await saveCloudStudyAnswer(
-      state.subject.version,
+      datasetVersionForQuestion(question.id),
       question.id,
       state.progress.questions[question.id],
       captureActiveSession(),
-      { studyMode: "memorize", activity },
+      {
+        studyMode: "memorize",
+        activity,
+        sessionDatasetVersion: state.sessionDatasetVersion,
+      },
     );
     setSavedSessionForMode("memorize", saved.session);
   } catch (error) {
@@ -2536,7 +2629,15 @@ async function resetAllProgress() {
   state.saving = true;
   elements.resetProgress.disabled = true;
   try {
-    await resetCloudProgress(state.subject.version);
+    const datasetVersions = new Set([
+      state.sessionDatasetVersion,
+      ...state.activeDeckIds.map(
+        (deckId) => state.loadedDecks.get(deckId)?.subject.version,
+      ),
+    ]);
+    await Promise.all(
+      [...datasetVersions].filter(Boolean).map(resetCloudProgress),
+    );
   } catch (error) {
     elements.selectionSummary.textContent = error.message;
     state.saving = false;
@@ -2551,7 +2652,10 @@ async function resetAllProgress() {
   state.retryQuestionIds = new Set();
   state.sessionStartedAt = null;
   clearPendingReviewTimer();
-  clearLegacyProgress();
+  state.activeDeckIds.forEach((deckId) => {
+    const deck = state.loadedDecks.get(deckId);
+    if (deck) clearLegacyProgress(deck);
+  });
   state.answeredThisSession = 0;
   state.studySeconds = 0;
   state.screenStudySeconds = 0;
@@ -2646,12 +2750,12 @@ async function beginStudy() {
   try {
     if (state.activeSession) {
       const saved = await saveCloudStudySession(
-        state.subject.version,
+        state.sessionDatasetVersion,
         captureActiveSession(),
       );
       setSavedSessionForMode(studyMode, saved);
     } else {
-      await deleteCloudStudySession(state.subject.version, studyMode);
+      await deleteCloudStudySession(state.sessionDatasetVersion, studyMode);
       setSavedSessionForMode(studyMode, null);
     }
   } catch (error) {
@@ -2689,7 +2793,7 @@ async function resumeStudy() {
   clearPendingReviewTimer();
   speechController.stop();
   if (!restoreActiveSession(savedSession)) {
-    await deleteCloudStudySession(state.subject.version, studyMode).catch(() => {});
+    await deleteCloudStudySession(state.sessionDatasetVersion, studyMode).catch(() => {});
     setSavedSessionForMode(studyMode, null);
     state.activeSession = false;
     elements.cloudStatus.textContent = "前回の一周を復元できなかったため、はじめから開始してください。";
@@ -2722,7 +2826,7 @@ async function resumeStudy() {
   elements.listeningToggle.textContent = "一時停止";
   try {
     const saved = await saveCloudStudySession(
-      state.subject.version,
+      state.sessionDatasetVersion,
       captureActiveSession(),
     );
     setSavedSessionForMode(studyMode, saved);
@@ -2744,24 +2848,81 @@ async function resumeStudy() {
   startingStudy = false;
 }
 
-async function activateDeck(deckId) {
-  const deckEntry = state.deckEntries.find((deck) => deck.id === deckId);
-  if (!deckEntry) {
-    throw new Error("選択したデッキが見つかりません。");
+async function activateDecks(deckIds) {
+  const selected = new Set(deckIds);
+  const deckEntries = state.deckEntries.filter((deck) => selected.has(deck.id));
+  if (deckEntries.length === 0) {
+    throw new Error("学習するデッキを1つ以上選択してください。");
   }
   const loadToken = state.deckLoadToken + 1;
   state.deckLoadToken = loadToken;
-  elements.deckFilter.disabled = true;
+  const deckInputs = [...elements.deckFilter.querySelectorAll("input")];
+  deckInputs.forEach((input) => {
+    input.disabled = true;
+  });
 
-  const subject = await fetchJson(deckEntry.indexPath);
-  const chunks = await Promise.all(
-    subject.chunks.map((chunk) => fetchJson(chunk.path)),
+  const loaded = await Promise.all(
+    deckEntries.map(async (entry) => {
+      const subject = await fetchJson(entry.indexPath);
+      const chunks = await Promise.all(
+        subject.chunks.map((chunk) => fetchJson(chunk.path)),
+      );
+      return { entry, subject, terms: chunks.flatMap((chunk) => chunk.terms) };
+    }),
   );
   if (loadToken !== state.deckLoadToken) return;
 
-  state.activeDeckId = deckEntry.id;
-  state.subject = subject;
-  state.allTerms = chunks.flatMap((chunk) => chunk.terms);
+  const firstSubject = loaded[0].subject;
+  if (
+    loaded.some(
+      (deck) =>
+        deck.subject.id !== firstSubject.id ||
+        deck.subject.learningType !== firstSubject.learningType ||
+        deck.subject.masteryTarget !== firstSubject.masteryTarget,
+    )
+  ) {
+    throw new Error("学習方式の異なるデッキは同時に選択できません。");
+  }
+  const questionDeckById = new Map();
+  const termDeckById = new Map();
+  for (const deck of loaded) {
+    for (const term of deck.terms) {
+      if (termDeckById.has(term.id)) {
+        throw new Error(`複数デッキで用語番号が重複しています（${term.id}）。`);
+      }
+      termDeckById.set(term.id, deck);
+      for (const stage of learningStages) {
+        for (const question of term.stages[stage] ?? []) {
+          if (questionDeckById.has(question.id)) {
+            throw new Error(`複数デッキで問題番号が重複しています（${question.id}）。`);
+          }
+          questionDeckById.set(question.id, deck);
+        }
+      }
+    }
+  }
+  state.activeDeckIds = deckEntries.map((deck) => deck.id);
+  state.activeDeckId = state.activeDeckIds[0];
+  state.loadedDecks = new Map(loaded.map((deck) => [deck.entry.id, deck]));
+  state.questionDeckById = questionDeckById;
+  state.termDeckById = termDeckById;
+  state.sessionDatasetVersion = createSessionDatasetVersion(
+    state.activeSubjectId,
+    state.activeDeckIds,
+    new Map(
+      loaded.map((deck) => [deck.entry.id, deck.subject.version]),
+    ),
+  );
+  state.subject = {
+    ...firstSubject,
+    version: state.sessionDatasetVersion,
+    termCount: loaded.reduce((total, deck) => total + deck.terms.length, 0),
+    questionCount: loaded.reduce(
+      (total, deck) => total + countQuestions(deck.terms),
+      0,
+    ),
+  };
+  state.allTerms = loaded.flatMap((deck) => deck.terms);
   state.historySpeechReadings =
     state.subject.learningType === "history"
       ? createHistorySpeechReadings(state.allTerms)
@@ -2769,7 +2930,6 @@ async function activateDeck(deckId) {
   state.terms = [];
   state.termById = new Map();
   state.questionById = new Map();
-  state.progressKey = `anki-progress:${state.subject.id}:${state.subject.version}:v1`;
   try {
     await loadProgressFromCloud();
   } catch (error) {
@@ -2811,18 +2971,23 @@ async function activateDeck(deckId) {
   elements.macroRegionFilter.value = "";
   elements.regionDetailFilter.value = "";
   elements.categoryFilter.value = "";
-  elements.deckFilter.value = deckEntry.id;
-  elements.deckFilter.disabled = false;
-  elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  const deckName = deckDisplayLabel(deckEntry);
-  elements.deckProgressName.textContent = deckName.replaceAll("｜", " ");
-  elements.deckProgressName.title = deckName;
-  elements.setupEyebrow.textContent = `v0.077｜${state.subject.title}を学ぶ`;
+  deckInputs.forEach((input) => {
+    input.checked = state.activeDeckIds.includes(input.value);
+    input.disabled = false;
+  });
+  const deckNames = deckEntries.map(deckDisplayLabel);
+  const shortDeckNames = deckNames.map((name) => name.split("｜")[0]);
+  elements.subjectName.textContent = `${state.subject.title}｜${
+    deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
+  }`;
+  elements.deckProgressName.textContent = shortDeckNames.join("・");
+  elements.deckProgressName.title = deckNames.join("／");
+  elements.setupEyebrow.textContent = `v0.078｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
-      ? "デッキ、品詞、出題方向を選んで学習できます。すべてを選んだまま始めることもできます。"
-      : "すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。";
+      ? "複数のデッキ、品詞、出題方向を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
+      : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
   configureSetup();
   if (!state.cloudReady && state.cloudError) {
     elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
@@ -2870,12 +3035,17 @@ async function activateSubject(subjectId) {
       ? subjectEntry.decks
       : [{ ...subjectEntry, id: "deck-1" }];
   const defaultDeckId = subjectEntry.defaultDeckId ?? state.deckEntries[0].id;
-  const savedDeckId = state.setupPreferences.subjects[subjectEntry.id]?.lastDeckId;
-  const selectedDeckId = state.deckEntries.some((deck) => deck.id === savedDeckId)
-    ? savedDeckId
-    : defaultDeckId;
-  setDeckOptions(state.deckEntries, selectedDeckId);
-  await activateDeck(selectedDeckId);
+  const savedSubject = state.setupPreferences.subjects[subjectEntry.id];
+  const requestedDeckIds = savedSubject?.selectedDeckIds?.length
+    ? savedSubject.selectedDeckIds
+    : [savedSubject?.lastDeckId];
+  const selectedDeckIds = normalizeDeckSelection(
+    state.deckEntries.map((deck) => deck.id),
+    requestedDeckIds,
+    defaultDeckId,
+  );
+  setDeckOptions(state.deckEntries, selectedDeckIds);
+  await activateDecks(selectedDeckIds);
 }
 
 async function start() {
@@ -2943,11 +3113,18 @@ elements.subjectOptions.addEventListener("click", (event) => {
 });
 
 elements.deckFilter.addEventListener("change", () => {
-  const deckId = elements.deckFilter.value;
+  const deckIds = selectedDeckIds();
+  if (deckIds.length === 0) {
+    const fallback = state.activeDeckIds[0] ?? state.deckEntries[0]?.id;
+    const input = elements.deckFilter.querySelector(`input[value="${fallback}"]`);
+    if (input) input.checked = true;
+    elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
+    return;
+  }
   showOnly(elements.loadingPanel);
   void setupPreferenceSave
     .catch(() => {})
-    .then(() => activateDeck(deckId))
+    .then(() => activateDecks(deckIds))
     .then(() => {
       showOnly(elements.setupPanel);
       queueVisibleSetupPreferenceSave();

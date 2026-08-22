@@ -231,8 +231,19 @@ function normalizeSetupPreferences(value) {
           : "all",
       };
     }
+    const lastDeckId = normalizeSetupPreferenceId(rawSubject.lastDeckId);
+    const selectedDeckIds = [...new Set(
+      (Array.isArray(rawSubject.selectedDeckIds)
+        ? rawSubject.selectedDeckIds
+        : lastDeckId
+          ? [lastDeckId]
+          : [])
+        .map(normalizeSetupPreferenceId)
+        .filter(Boolean),
+    )].slice(0, 100);
     subjects[subjectId] = {
-      lastDeckId: normalizeSetupPreferenceId(rawSubject.lastDeckId),
+      lastDeckId,
+      selectedDeckIds,
       studyMode: setupStudyModes.has(rawSubject.studyMode)
         ? rawSubject.studyMode
         : "memorize",
@@ -382,6 +393,11 @@ function normalizeStudySession(value) {
   return {
     schemaVersion: 1,
     studyMode: setupStudyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    deckIds: [...new Set(
+      (Array.isArray(source.deckIds) ? source.deckIds : [])
+        .map(normalizeSetupPreferenceId)
+        .filter(Boolean),
+    )].slice(0, 100),
     selectedStage: setupQuestionStyles.has(source.selectedStage)
       ? source.selectedStage
       : "",
@@ -957,6 +973,9 @@ async function handleRequest(request, env) {
       eventId,
     );
     const session = normalizeStudySession(body.session);
+    const sessionDatasetVersion = normalizeDatasetVersion(
+      body.sessionDatasetVersion ?? datasetVersion,
+    );
     if (session.studyMode !== timeEntry.studyMode) {
       return json(request, env, { error: "学習時間と一周の学習方法が一致しません。" }, 400);
     }
@@ -976,7 +995,7 @@ async function handleRequest(request, env) {
     const updatedAt = new Date().toISOString();
     await env.DB.batch([
       studyTimeStatement(env, timeEntry, updatedAt),
-      studySessionStatement(env, datasetVersion, session, updatedAt),
+      studySessionStatement(env, sessionDatasetVersion, session, updatedAt),
     ]);
     return json(request, env, {
       ok: true,
@@ -997,6 +1016,9 @@ async function handleRequest(request, env) {
     }
     const body = await request.json();
     const session = normalizeStudySession(body.session);
+    const sessionDatasetVersion = normalizeDatasetVersion(
+      body.sessionDatasetVersion ?? datasetVersion,
+    );
     if (session.studyMode !== "listen-answer") {
       return json(request, env, { error: "聞き流しの一周ではありません。" }, 400);
     }
@@ -1006,7 +1028,7 @@ async function handleRequest(request, env) {
         `DELETE FROM study_activity_events
          WHERE event_id = ? AND dataset_version = ? AND study_mode = 'listen-answer'`,
       ).bind(eventId, datasetVersion),
-      studySessionStatement(env, datasetVersion, session, updatedAt),
+      studySessionStatement(env, sessionDatasetVersion, session, updatedAt),
     ]);
     return json(request, env, {
       ok: true,
@@ -1022,10 +1044,15 @@ async function handleRequest(request, env) {
     const body = await request.json();
     const activity = normalizeStudyActivity(body.activity, datasetVersion, eventId);
     const session = body.session == null ? null : normalizeStudySession(body.session);
+    const sessionDatasetVersion = normalizeDatasetVersion(
+      body.sessionDatasetVersion ?? datasetVersion,
+    );
     const occurredAt = new Date().toISOString();
     const statements = [studyActivityStatement(env, activity, occurredAt)];
     if (session) {
-      statements.push(studySessionStatement(env, datasetVersion, session, occurredAt));
+      statements.push(
+        studySessionStatement(env, sessionDatasetVersion, session, occurredAt),
+      );
     }
     await env.DB.batch(statements);
     return json(request, env, {
@@ -1046,6 +1073,9 @@ async function handleRequest(request, env) {
     const body = await request.json();
     const record = body.record == null ? null : normalizeQuestionRecord(body.record);
     const session = body.session == null ? null : normalizeStudySession(body.session);
+    const sessionDatasetVersion = normalizeDatasetVersion(
+      body.sessionDatasetVersion ?? datasetVersion,
+    );
     const activity = body.activity == null
       ? null
       : normalizeStudyActivity(
@@ -1083,12 +1113,12 @@ async function handleRequest(request, env) {
             "DELETE FROM question_progress WHERE dataset_version = ? AND question_id = ?",
           ).bind(datasetVersion, questionId),
       session
-        ? studySessionStatement(env, datasetVersion, session, updatedAt)
+        ? studySessionStatement(env, sessionDatasetVersion, session, updatedAt)
         : env.DB.prepare(
             `DELETE FROM study_sessions_by_mode
              WHERE dataset_version = ? AND study_mode = ?`,
           ).bind(
-            datasetVersion,
+            sessionDatasetVersion,
             studyMode,
           ),
     ];

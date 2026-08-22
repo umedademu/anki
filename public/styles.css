@@ -268,10 +268,63 @@ body.is-studying .page {
 }
 
 .setup-field > span,
+.setup-field > legend,
 .shuffle-choice strong {
   color: #2b5039;
   font-size: 0.78rem;
   font-weight: 900;
+}
+
+.deck-picker-field {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.deck-filter-options {
+  display: flex;
+  min-height: 50px;
+  padding: 7px;
+  align-items: stretch;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid rgb(34 80 53 / 18%);
+  border-radius: 13px;
+}
+
+.deck-filter-choice {
+  display: flex;
+  min-width: 0;
+  padding: 7px 10px;
+  align-items: center;
+  flex: 1 1 0;
+  gap: 7px;
+  color: #526359;
+  background: #f4f7f2;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+.deck-filter-choice:has(input:checked) {
+  color: #245f3f;
+  background: #e5f1e8;
+  box-shadow: inset 0 0 0 1px rgb(43 103 71 / 22%);
+}
+
+.deck-filter-choice input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  flex: 0 0 auto;
+  accent-color: #2b6747;
+}
+
+.deck-filter-choice span {
+  min-width: 0;
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1.25;
 }
 
 .setup-field select {

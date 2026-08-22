@@ -25,6 +25,8 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 - 画像一覧に同じ内容識別名がある登録済み画像は再送せず、新規画像と問題集データだけを更新する
 - 公開URLからの照合は取得間隔を空けて回数制限時に再試行し、画像・分割データの登録後に照合だけが中断した場合は`--resume-after-asset-upload`で照合段階から再開する
 - 同じバケツの`speech-cache`とD1の学習履歴は削除対象に含めない
+- 既存の世界史・日本史語呂を「語呂合わせマスター」と照合するときは、`npm run sync:mnemonics:goroawase-master`でCloudflare上の現行デッキを読み、年号と出来事が一致する対象だけを確認する
+- 照合結果の元CSVへの反映は`npm run sync:mnemonics:goroawase-master:apply`で行い、その後に通常の生成・検査・Cloudflare置換を行う
 - `npm run preview:data:cloudflare`で件数を確認してから、`npm run replace:data:cloudflare`で置換する
 
 ## 音声読み上げ

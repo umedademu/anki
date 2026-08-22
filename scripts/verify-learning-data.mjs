@@ -35,7 +35,7 @@ const expectedSpecs = new Map([
     {
       number: 1,
       version: "0836119c5d45",
-      contentVersion: "6dd2eeeb145e",
+      contentVersion: "dd61908ed780",
       datasetLabel: "世界史段階別デッキ｜Deck 1｜最重要骨格400語",
       difficultyLabel: "Deck 1｜骨格・基礎",
       termCount: 400,
@@ -55,7 +55,7 @@ const expectedSpecs = new Map([
     {
       number: 2,
       version: "8acba0d50165",
-      contentVersion: "09e02e2de6d3",
+      contentVersion: "c8e7d9746b85",
       datasetLabel: "世界史段階別デッキ｜Deck 2｜共通テスト基礎400語",
       difficultyLabel: "Deck 2｜骨格・基礎",
       termCount: 400,
@@ -75,7 +75,7 @@ const expectedSpecs = new Map([
     {
       number: 3,
       version: "7edfff4529a4",
-      contentVersion: "7edfff4529a4",
+      contentVersion: "dec8a5fc810e",
       datasetLabel: "世界史段階別デッキ｜Deck 3｜主要王朝・人物・制度の穴埋め400語",
       difficultyLabel: "Deck 3｜標準",
       termCount: 400,
@@ -134,7 +134,7 @@ const expectedEnglishSpecs = new Map([
 const expectedJapaneseSpec = {
   number: 1,
   version: "jh-455fb6def169",
-  contentVersion: "455fb6def169",
+  contentVersion: "f11b35eb6bac",
   datasetLabel: "日本史段階別デッキ｜Deck 1｜日本史の最重要骨格400語",
   difficultyLabel: "Deck 1｜骨格・基礎",
   termCount: 400,

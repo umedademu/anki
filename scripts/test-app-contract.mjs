@@ -112,9 +112,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.060") ||
-  !changelog.includes("v0.060") ||
-  !settingsHtml.includes("v0.060")
+  !html.includes("v0.061") ||
+  !changelog.includes("v0.061") ||
+  !settingsHtml.includes("v0.061")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -149,7 +149,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.060"') ||
+  !html.includes('href="/styles.css?v=0.061"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -173,7 +173,9 @@ if (
   !generationPrompt.includes("王安石(おうあんせき)の低利融資政策を何という？") ||
   !generationPrompt.includes("問題文の読み仮名は回答表示時だけWebアプリに表示されます") ||
   !generationPrompt.includes("段階別デッキシリーズ全体での累計重要度順位") ||
-  !generationPrompt.includes("Deck 2は401〜800")
+  !generationPrompt.includes("Deck 2は401〜800") ||
+  !generationPrompt.includes("https://goroawase-master.com/") ||
+  !generationPrompt.includes("同じ年号・同じ出来事")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
 }
@@ -207,6 +209,8 @@ if (
   !japaneseHistoryGenerationPrompt.includes("国立公文書館デジタルアーカイブ") ||
   !japaneseHistoryGenerationPrompt.includes("東京大学史料編纂所") ||
   !japaneseHistoryGenerationPrompt.includes("墾田永年私財法(こんでんえいねんしざいほう)") ||
+  !japaneseHistoryGenerationPrompt.includes("https://goroawase-master.com/") ||
+  !japaneseHistoryGenerationPrompt.includes("同じ年号・同じ出来事") ||
   japaneseHistoryGenerationPrompt.includes("https://www.y-history.net/") ||
   japaneseHistoryGenerationPrompt.includes("Deck 10") ||
   japaneseHistoryGenerationPrompt.includes("3,600語")
@@ -221,6 +225,8 @@ if (
   !app.includes("createSpeechController") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
+  !app.includes("prepareMnemonicSpeechText(question.yearMnemonic)") ||
+  !speech.includes("export function prepareMnemonicSpeechText") ||
   !app.includes("function toggleSpeechPart(target)") ||
   !app.includes('icon.textContent = enabled ? "🔊" : "🔇"') ||
   !html.includes('aria-pressed="true"') ||

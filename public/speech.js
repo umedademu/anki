@@ -38,6 +38,34 @@ export function prepareSpeechText(value, language = "ja-JP") {
     .trim();
 }
 
+export function prepareMnemonicSpeechText(value) {
+  return String(value ?? "")
+    .split("|")
+    .map((mnemonic) =>
+      mnemonic
+        .replaceAll("**", "")
+        .split(/[\r\n]+/u)
+        .map((line) => line.trim())
+        .filter((line) => line && line !== "年号の語呂合わせ")
+        .join(""),
+    )
+    .map((mnemonic) =>
+      mnemonic
+        .replace(/^年号の語呂合わせ\s*[。:：]?\s*/u, "")
+        .replace(/^\s*(?=[^:：\r\n]*\d)[^:：\r\n]+[：:]\s*/u, "")
+        .replace(
+          /[（(]\s*(?=[^）)]*[0-9０-９])(?:紀元前|前|BC)?[0-9０-９年月日世紀千年紀頃代・.\-−〜～/~]+\s*[）)]/giu,
+          "",
+        )
+        .replace(/[「」『』“”"]/gu, "")
+        .replace(/[、，,\s]+/gu, "")
+        .replace(/^[。:：]+|[。:：]+$/gu, "")
+        .trim(),
+    )
+    .filter(Boolean)
+    .join("。");
+}
+
 export function selectVoice(voices, language, preferredVoiceId = "") {
   const candidates = Array.from(voices ?? []);
   const languagePrefix = String(language ?? "ja-JP").toLowerCase().split("-")[0];

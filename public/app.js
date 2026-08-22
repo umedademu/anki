@@ -36,6 +36,7 @@ import {
   createSpeechController,
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
+  prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
@@ -756,11 +757,7 @@ function speechSegmentsFor(target, task = state.currentTask) {
         ? [
             {
               target,
-              text: `年号の語呂合わせ。${question.yearMnemonic
-                .split("|")
-                .map((mnemonic) => mnemonic.trim())
-                .filter(Boolean)
-                .join("。")}`,
+              text: prepareMnemonicSpeechText(question.yearMnemonic),
               language: "ja-JP",
             },
           ]
@@ -1770,7 +1767,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.060｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.061｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

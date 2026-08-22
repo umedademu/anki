@@ -2,6 +2,7 @@ import {
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
   createSpeechController,
+  prepareMnemonicSpeechText,
   prepareSpeechText,
   prepareVocabularyMeaningSpeechText,
   selectJapaneseVoice,
@@ -43,6 +44,28 @@ for (const [source, expected] of textChecks) {
   const actual = prepareSpeechText(source);
   if (actual !== expected) {
     throw new Error(`読み上げ用文章が不正です: ${source} -> ${actual}`);
+  }
+}
+
+const mnemonicSpeechChecks = new Map([
+  [
+    "**年号の語呂合わせ**\n**1600年：「ヒーロー丸々」（1600）関ヶ原の戦い**",
+    "ヒーロー丸々関ヶ原の戦い",
+  ],
+  [
+    "前27年〜後14年在位：「担う」（前27）から「いよ」（14年）までのアウグストゥス",
+    "担うからいよまでのアウグストゥス",
+  ],
+  [
+    "794年：「鳴くよ」（794）ウグイス、平安京|894年：「白紙」（894）にしよう、遣唐使",
+    "鳴くよウグイス平安京。白紙にしよう遣唐使",
+  ],
+]);
+
+for (const [source, expected] of mnemonicSpeechChecks) {
+  const actual = prepareMnemonicSpeechText(source);
+  if (actual !== expected) {
+    throw new Error(`語呂合わせの読み上げ用文章が不正です: ${source} -> ${actual}`);
   }
 }
 

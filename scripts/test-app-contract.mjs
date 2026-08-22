@@ -178,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.079") ||
-  !changelog.includes("v0.079") ||
-  !settingsHtml.includes("v0.079") ||
-  !historyHtml.includes("v0.079")
+  !html.includes("v0.080") ||
+  !changelog.includes("v0.080") ||
+  !settingsHtml.includes("v0.080") ||
+  !historyHtml.includes("v0.080")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -289,7 +289,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.079"') ||
+  !html.includes('href="/styles.css?v=0.080"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -479,15 +479,16 @@ if (
   !html.includes('id="year-mnemonic"') ||
   !html.includes('id="year-mnemonic-text"') ||
   !html.includes('id="year-mnemonic-speech"') ||
+  html.includes("<span>年号の語呂合わせ</span>") ||
   !app.includes("getQuestionYearMnemonic") ||
+  !app.includes("prepareMnemonicDisplayText") ||
   !app.includes('if (target === "mnemonic")') ||
   !app.includes('toggleSpeechPart("mnemonic")') ||
-  !app.includes('.split("|")') ||
   !app.includes('.join("。")') ||
-  !app.includes('.join("\\n")') ||
   !app.includes('elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic)') ||
   !styles.includes(".year-mnemonic") ||
-  !styles.includes("white-space: pre-line") ||
+  !styles.includes("white-space: nowrap") ||
+  !styles.includes("overflow-x: auto") ||
   !speechSegmentsBlock.includes("getQuestionYearMnemonic(term, question)") ||
   !automaticAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
   !answerSpeechSequenceBlock ||

@@ -46,6 +46,7 @@ import {
   createSpeechController,
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
+  prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
@@ -2397,11 +2398,9 @@ function renderQuestion() {
     "is-hidden",
     !speechController.supported || !showsYearMnemonic,
   );
-  elements.yearMnemonicText.textContent = yearMnemonic
-    .split("|")
-    .map((mnemonic) => mnemonic.trim())
-    .filter(Boolean)
-    .join("\n");
+  elements.yearMnemonicText.textContent = prepareMnemonicDisplayText(
+    yearMnemonic,
+  );
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
     !speechController.supported || !integratedExplanation,
@@ -3009,7 +3008,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.079｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.080｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

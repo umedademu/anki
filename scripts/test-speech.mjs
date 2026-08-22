@@ -3,6 +3,7 @@ import {
   createVocabularySpeechGroups,
   createHistorySpeechReadings,
   createSpeechController,
+  prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   prepareSpeechText,
   prepareVocabularyMeaningSpeechText,
@@ -109,6 +110,28 @@ for (const [source, expected] of mnemonicSpeechChecks) {
   const actual = prepareMnemonicSpeechText(source);
   if (actual !== expected) {
     throw new Error(`語呂合わせの読み上げ用文章が不正です: ${source} -> ${actual}`);
+  }
+}
+
+const mnemonicDisplayChecks = new Map([
+  [
+    "1917年：行く、いいな（1917）ロシア革命",
+    "行く、いいな（1917）ロシア革命",
+  ],
+  [
+    "794年：「鳴くよ」（794）ウグイス、平安京|894年：「白紙」（894）にしよう、遣唐使",
+    "鳴くよ（794）ウグイス、平安京 ／ 白紙（894）にしよう、遣唐使",
+  ],
+  [
+    "**年号の語呂合わせ**\n**1600年：「ヒーロー丸々」（1600）関ヶ原の戦い**",
+    "ヒーロー丸々（1600）関ヶ原の戦い",
+  ],
+]);
+
+for (const [source, expected] of mnemonicDisplayChecks) {
+  const actual = prepareMnemonicDisplayText(source);
+  if (actual !== expected) {
+    throw new Error(`語呂合わせの表示用文章が不正です: ${source} -> ${actual}`);
   }
 }
 

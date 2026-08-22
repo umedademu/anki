@@ -668,28 +668,32 @@ body.is-studying .page {
 
 .year-mnemonic {
   position: relative;
-  margin-top: 12px;
-  padding: 12px 14px;
+  margin-top: 8px;
+  padding: 9px 48px 9px 12px;
   color: #654d17;
   background: #fff8df;
   border: 1px solid rgb(177 132 30 / 22%);
   border-radius: 12px;
 }
 
-.year-mnemonic > span {
-  display: block;
-  padding-right: 34px;
-  margin-bottom: 4px;
-  font-size: 0.68rem;
-  font-weight: 850;
+.year-mnemonic > .speech-button {
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
 }
 
 #year-mnemonic-text {
   margin: 0;
+  overflow-x: auto;
   font-size: 0.9rem;
   font-weight: 750;
-  line-height: 1.65;
-  white-space: pre-line;
+  line-height: 1.45;
+  scrollbar-width: none;
+  white-space: nowrap;
+}
+
+#year-mnemonic-text::-webkit-scrollbar {
+  display: none;
 }
 
 .term-overview-main.has-image {

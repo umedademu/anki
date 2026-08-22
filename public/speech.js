@@ -109,6 +109,29 @@ export function prepareMnemonicSpeechText(value) {
     .join("。");
 }
 
+export function prepareMnemonicDisplayText(value) {
+  return String(value ?? "")
+    .split("|")
+    .map((mnemonic) =>
+      mnemonic
+        .replaceAll("**", "")
+        .split(/[\r\n]+/u)
+        .map((line) => line.trim())
+        .filter((line) => line && line !== "年号の語呂合わせ")
+        .join(""),
+    )
+    .map((mnemonic) =>
+      mnemonic
+        .replace(/^年号の語呂合わせ\s*[。:：]?\s*/u, "")
+        .replace(/^\s*(?=[^:：\r\n]*\d)[^:：\r\n]+[：:]\s*/u, "")
+        .replace(/[「」『』“”"]/gu, "")
+        .replace(/\s+/gu, " ")
+        .trim(),
+    )
+    .filter(Boolean)
+    .join(" ／ ");
+}
+
 export function selectVoice(voices, language, preferredVoiceId = "") {
   const candidates = Array.from(voices ?? []);
   const languagePrefix = String(language ?? "ja-JP").toLowerCase().split("-")[0];

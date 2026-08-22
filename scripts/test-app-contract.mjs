@@ -193,10 +193,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.093") ||
-  !changelog.includes("v0.093") ||
-  !settingsHtml.includes("v0.093") ||
-  !historyHtml.includes("v0.093")
+  !html.includes("v0.094") ||
+  !changelog.includes("v0.094") ||
+  !settingsHtml.includes("v0.094") ||
+  !historyHtml.includes("v0.094")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -304,7 +304,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.093"') ||
+  !html.includes('href="/styles.css?v=0.094"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -669,6 +669,16 @@ if (
   !app.includes("await queueActiveSessionSave()")
 ) {
   throw new Error("起動時とAnkiロゴから科目選択へ戻る処理が揃っていません。");
+}
+if (
+  !speechSegmentsBlock ||
+  !speechSegmentsBlock.includes("const includeAcceptedAnswers =") ||
+  speechSegmentsBlock.includes("includesAcceptedAnswers") ||
+  !speechSegmentsBlock.includes(
+    "getQuestionAnswerSpeechText(question, { includeAcceptedAnswers })",
+  )
+) {
+  throw new Error("回答音声の別解設定に宣言と異なる指定名が含まれています。");
 }
 if (
   !html.includes('name="study-mode" value="memorize"') ||

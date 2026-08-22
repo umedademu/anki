@@ -1463,10 +1463,10 @@ function speechSegmentsFor(target, task = state.currentTask) {
   }
   const configuredSegments = question.speech?.[target];
   if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
-    const includesAcceptedAnswers =
+    const includeAcceptedAnswers =
       state.subject?.learningType !== "vocabulary";
     const acceptedAnswers =
-      target === "answer" && includesAcceptedAnswers
+      target === "answer" && includeAcceptedAnswers
         ? getQuestionAnswerParts(question).slice(1)
         : [];
     return configuredSegments.map((segment, index) => ({
@@ -1482,7 +1482,7 @@ function speechSegmentsFor(target, task = state.currentTask) {
     return [{ target, text: question.prompt, language: "ja-JP" }];
   }
   if (target === "answer") {
-    const includesAcceptedAnswers =
+    const includeAcceptedAnswers =
       state.subject?.learningType !== "vocabulary";
     return [
       {
@@ -3043,7 +3043,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.093｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.094｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

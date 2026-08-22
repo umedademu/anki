@@ -4,6 +4,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
+  loadBiologyDecks,
   loadEnglishDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
@@ -155,6 +156,17 @@ const expectedGeographySpec = {
   questionCounts: { beginner: 400, reverse: 0, integrated: 0 },
 };
 
+const expectedBiologySpec = {
+  number: 1,
+  version: "biology-basics-deck-1-v1",
+  contentVersion: "a56fb069ec50",
+  datasetLabel: "生物基礎_Deck1_最重要骨格",
+  difficultyLabel: "Deck1・最重要骨格",
+  termCount: 300,
+  questionCount: 300,
+  questionCounts: { beginner: 300, reverse: 0, integrated: 0 },
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
   decks: sourceJapaneseDecks,
@@ -164,6 +176,10 @@ const {
   decks: sourceGeographyDecks,
   terms: expectedGeographyTerms,
 } = await loadGeographyDecks();
+const {
+  decks: sourceBiologyDecks,
+  terms: expectedBiologyTerms,
+} = await loadBiologyDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -175,11 +191,11 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 4 ||
+  catalog.subjects.length !== 5 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography"
+    "world-history,japanese-history,english-vocabulary,geography,biology-basics"
 ) {
-  throw new Error("世界史・日本史・英単語・地理の科目一覧が正しくありません。");
+  throw new Error("世界史・日本史・英単語・地理・生物基礎の科目一覧が正しくありません。");
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",
@@ -192,6 +208,9 @@ const japaneseSubjectEntry = catalog.subjects.find(
 );
 const geographySubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "geography",
+);
+const biologySubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "biology-basics",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -646,6 +665,99 @@ if (
   throw new Error("地理Deck 1のID・項目名・重要度順位が重複または欠落しています。");
 }
 
+if (
+  sourceBiologyDecks.length !== 1 ||
+  !biologySubjectEntry ||
+  biologySubjectEntry.defaultDeckId !== "deck-1" ||
+  biologySubjectEntry.termUnitLabel !== "項目" ||
+  biologySubjectEntry.datasetLabel !== "大学受験生物基礎｜Deck 1" ||
+  biologySubjectEntry.termCount !== expectedBiologySpec.termCount ||
+  biologySubjectEntry.questionCount !== expectedBiologySpec.questionCount ||
+  biologySubjectEntry.decks.length !== 1
+) {
+  throw new Error("生物基礎Deck 1の科目一覧が正しくありません。");
+}
+const sourceBiologyDeck = sourceBiologyDecks[0];
+const biologyDeckEntry = biologySubjectEntry.decks[0];
+const biologySubject = await readJson(biologyDeckEntry.indexPath);
+const biologyChunks = await Promise.all(
+  biologySubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedBiologyTerms = biologyChunks.flatMap((chunk) => chunk.terms);
+const generatedBiologyQuestions = generatedBiologyTerms.flatMap((term) =>
+  Object.values(term.stages).flat(),
+);
+const generatedBiologyCounts = countQuestionsByStage(generatedBiologyTerms);
+if (
+  biologyDeckEntry.number !== expectedBiologySpec.number ||
+  biologyDeckEntry.version !== expectedBiologySpec.version ||
+  biologyDeckEntry.contentVersion !== expectedBiologySpec.contentVersion ||
+  biologyDeckEntry.datasetLabel !== expectedBiologySpec.datasetLabel ||
+  biologyDeckEntry.difficultyLabel !== expectedBiologySpec.difficultyLabel ||
+  biologyDeckEntry.termCount !== expectedBiologySpec.termCount ||
+  biologyDeckEntry.questionCount !== expectedBiologySpec.questionCount ||
+  biologySubject.schemaVersion !== 3 ||
+  biologySubject.id !== "biology-basics" ||
+  biologySubject.learningType !== "cards" ||
+  biologySubject.termUnitLabel !== "項目" ||
+  biologySubject.deckId !== "deck-1" ||
+  biologySubject.deckNumber !== expectedBiologySpec.number ||
+  biologySubject.version !== expectedBiologySpec.version ||
+  biologySubject.contentVersion !== expectedBiologySpec.contentVersion ||
+  biologySubject.datasetLabel !== expectedBiologySpec.datasetLabel ||
+  biologySubject.difficultyLabel !== expectedBiologySpec.difficultyLabel ||
+  biologySubject.sourceFile !== sourceBiologyDeck.sourceFile ||
+  biologySubject.termCount !== expectedBiologySpec.termCount ||
+  biologySubject.questionCount !== expectedBiologySpec.questionCount ||
+  biologySubject.filterLabels.macroRegion !== "大項目" ||
+  biologySubject.filterLabels.regionDetail !== "小項目" ||
+  biologySubject.filterLabels.category !== undefined ||
+  biologySubject.stageLabels.beginner !== "暗記カード" ||
+  biologySubject.availableStages.join(",") !== "beginner" ||
+  biologySubject.chunks.length !== 6 ||
+  biologySubject.chunks.some((chunk) => chunk.count !== 50) ||
+  biologyChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "biology-basics" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedBiologyCounts) !==
+    JSON.stringify(expectedBiologySpec.questionCounts) ||
+  JSON.stringify(generatedBiologyTerms) !== JSON.stringify(expectedBiologyTerms) ||
+  generatedBiologyQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error("生物基礎Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+}
+const biologyRanks = generatedBiologyTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const biologyUnitCounts = Object.fromEntries(
+  ["生物の特徴", "ヒトの体の調節", "生物の多様性と生態系"].map((unit) => [
+    unit,
+    generatedBiologyTerms.filter((term) => term.category === unit).length,
+  ]),
+);
+if (
+  new Set(generatedBiologyTerms.map((term) => term.id)).size !== 300 ||
+  new Set(generatedBiologyTerms.map((term) => term.term)).size !== 300 ||
+  new Set(generatedBiologyQuestions.map((question) => question.id)).size !== 300 ||
+  biologyRanks.some((rank, index) => rank !== index + 1) ||
+  generatedBiologyTerms.some((term) => !/^BB-\d{6}$/.test(term.id)) ||
+  generatedBiologyQuestions.some(
+    (question) => !/^BB-\d{6}-C\d{2}$/.test(question.id),
+  ) ||
+  Object.values(biologyUnitCounts).some((count) => count !== 100) ||
+  new Set(generatedBiologyTerms.map((term) => term.subunit)).size !== 9
+) {
+  throw new Error("生物基礎Deck 1のID・項目名・重要度順位・単元構成が正しくありません。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -923,5 +1035,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

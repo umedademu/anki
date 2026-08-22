@@ -124,6 +124,10 @@ const geographyGenerationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "geography-csv-generation.md"),
   "utf8",
 );
+const biologyGenerationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "biology-basics-csv-generation.md"),
+  "utf8",
+);
 const cloudflareReplacement = await readFile(
   path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
   "utf8",
@@ -185,10 +189,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.085") ||
-  !changelog.includes("v0.085") ||
-  !settingsHtml.includes("v0.085") ||
-  !historyHtml.includes("v0.085")
+  !html.includes("v0.086") ||
+  !changelog.includes("v0.086") ||
+  !settingsHtml.includes("v0.086") ||
+  !historyHtml.includes("v0.086")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -296,7 +300,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.085"') ||
+  !html.includes('href="/styles.css?v=0.086"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -384,6 +388,15 @@ if (
   !geographyGenerationPrompt.includes("reading_map")
 ) {
   throw new Error("地理Deck生成用プロンプトの暗記範囲・29列・読み規則が不足しています。");
+}
+if (
+  !biologyGenerationPrompt.includes("# 生物基礎・暗記カードCSV生成プロンプト") ||
+  !biologyGenerationPrompt.includes("実験考察") ||
+  !biologyGenerationPrompt.includes("`item_id`は`BB-`") ||
+  !biologyGenerationPrompt.includes("CSVの25列") ||
+  !biologyGenerationPrompt.includes("reading_map")
+) {
+  throw new Error("生物基礎Deck生成用プロンプトの暗記範囲・25列・読み規則が不足しています。");
 }
 if (
   !html.includes('id="setup-speech"') ||

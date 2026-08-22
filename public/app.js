@@ -2137,11 +2137,12 @@ function countQuestions(terms, stages = learningStages) {
 
 function updateRegionDetailOptions(resetSelection = false) {
   const macroRegion = elements.macroRegionFilter.value;
+  const filterLabels = state.subject?.filterLabels ?? {};
   if (!macroRegion) {
     setSelectOptions(
       elements.regionDetailFilter,
       [],
-      "大分類を選ぶと選択できます",
+      `${filterLabels.macroRegion ?? "大分類"}を選ぶと選択できます`,
     );
     elements.regionDetailFilter.disabled = true;
     return;
@@ -2154,7 +2155,11 @@ function updateRegionDetailOptions(resetSelection = false) {
   if (resetSelection) {
     elements.regionDetailFilter.value = "";
   }
-  setSelectOptions(elements.regionDetailFilter, details, "すべての小分類");
+  setSelectOptions(
+    elements.regionDetailFilter,
+    details,
+    `すべての${filterLabels.regionDetail ?? "小分類"}`,
+  );
   elements.regionDetailFilter.disabled = false;
 }
 
@@ -2270,7 +2275,11 @@ function configureSetup() {
     state.allTerms.flatMap((term) => getMacroRegionTags(term)),
   );
   const categories = sortedUnique(state.allTerms.map((term) => term.category));
-  setSelectOptions(elements.macroRegionFilter, macroRegions, "すべての大分類");
+  setSelectOptions(
+    elements.macroRegionFilter,
+    macroRegions,
+    `すべての${filterLabels.macroRegion ?? "大分類"}`,
+  );
   setSelectOptions(
     elements.categoryFilter,
     categories,
@@ -3023,14 +3032,17 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.085｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.086｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
+  const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
+    .filter(Boolean)
+    .join("、");
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
       ? "複数のデッキ、品詞、出題方向を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
       : state.subject.learningType === "cards"
-        ? "複数のデッキ、単元、尺度、地域を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
-      : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
+        ? `複数のデッキ${cardFilterLabels ? `、${cardFilterLabels}` : ""}を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。`
+        : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
   configureSetup();
   if (!state.cloudReady && state.cloudError) {
     elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;

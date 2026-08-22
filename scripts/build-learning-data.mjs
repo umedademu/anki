@@ -24,6 +24,12 @@ const geographySourceDirectory = path.join(
   "source",
   "geography",
 );
+const biologySourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "biology-basics",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
@@ -43,6 +49,8 @@ const englishSubjectId = "english-vocabulary";
 const englishSubjectTitle = "英単語";
 const geographySubjectId = "geography";
 const geographySubjectTitle = "地理";
+const biologySubjectId = "biology-basics";
+const biologySubjectTitle = "生物基礎";
 const chunkSize = 50;
 const schemaVersion = 3;
 const masteryTarget = 2;
@@ -120,6 +128,34 @@ export const geographyRequiredHeaders = [
   "reading_map",
 ];
 
+export const biologyRequiredHeaders = [
+  "dataset_label",
+  "item_id",
+  "importance_rank",
+  "difficulty_label",
+  "unit",
+  "subunit",
+  "item",
+  "reading",
+  "aliases",
+  "prerequisite_ids",
+  "card_id",
+  "card_type",
+  "focus",
+  "question",
+  "answer",
+  "accepted_answers",
+  "explanation",
+  "confusable_with",
+  "distinction",
+  "formula",
+  "answer_unit",
+  "memory_aid",
+  "source_name",
+  "source_url",
+  "reading_map",
+];
+
 const termFields = requiredHeaders.slice(0, 13);
 const requiredTermFields = termFields.filter((fieldName) => fieldName !== "aliases");
 const allowedStages = ["beginner", "reverse", "integrated"];
@@ -166,6 +202,20 @@ const geographyCardTypeLabels = {
 };
 const geographyCardTypes = new Set(Object.keys(geographyCardTypeLabels));
 const geographyTermFields = geographyRequiredHeaders.slice(0, 14);
+const biologyCardTypeLabels = {
+  identify: "用語",
+  definition: "定義",
+  location: "場所",
+  function: "働き",
+  component: "構成要素",
+  sequence: "順序",
+  relation: "対応関係",
+  comparison: "比較",
+  formula: "式",
+  number: "数値",
+};
+const biologyCardTypes = new Set(Object.keys(biologyCardTypeLabels));
+const biologyTermFields = biologyRequiredHeaders.slice(0, 10);
 
 export async function findSourcePaths() {
   return findHistorySourcePaths(sourceDirectory, "世界史");
@@ -603,6 +653,7 @@ const stableDatasetVersions = new Map([
   ["english-vocabulary:deck-2", "en-abb710688392"],
   ["english-vocabulary:deck-3", "en-6397b7943e25"],
   ["geography:deck-1", "geography-deck-1-v1"],
+  ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -1157,6 +1208,244 @@ export async function loadGeographyDecks() {
   return { decks, terms };
 }
 
+export function toBiologyObjects(rows) {
+  if (rows.length < 2) {
+    throw new Error("生物基礎CSVに見出し行とデータ行が必要です。");
+  }
+  const headers = rows[0].map((header, index) =>
+    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
+  );
+  if (
+    headers.length !== biologyRequiredHeaders.length ||
+    headers.some((header, index) => header !== biologyRequiredHeaders[index])
+  ) {
+    throw new Error("生物基礎CSVの見出しまたは並び順が25列形式と一致しません。");
+  }
+  return rows.slice(1).map((cells, rowIndex) => {
+    if (cells.length !== headers.length) {
+      throw new Error(
+        `${rowIndex + 2}行目の列数が見出しと一致しません（${cells.length}/${headers.length}）。`,
+      );
+    }
+    const row = Object.fromEntries(
+      headers.map((header, columnIndex) => [header, cells[columnIndex].trim()]),
+    );
+    for (const fieldName of biologyRequiredHeaders) {
+      assertRequiredText(row, fieldName, rowIndex + 2);
+    }
+    return row;
+  });
+}
+
+function biologyAnswerNote(row) {
+  return [
+    geographyValue(row.explanation),
+    geographyValue(row.confusable_with) && geographyValue(row.distinction)
+      ? `区別：${row.confusable_with}とは、${row.distinction}`
+      : "",
+    geographyValue(row.formula) ? `式：${row.formula}` : "",
+    geographyValue(row.answer_unit) ? `単位：${row.answer_unit}` : "",
+    geographyValue(row.memory_aid) ? `記憶補助：${row.memory_aid}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function normalizeBiologyQuestion(row, rowIndex) {
+  const rowNumber = rowIndex + 2;
+  if (!biologyCardTypes.has(row.card_type)) {
+    throw new Error(`${rowNumber}行目のcard_typeが正しくありません: ${row.card_type}`);
+  }
+  const sourceUrls = geographyList(row.source_url);
+  if (sourceUrls.length === 0 || sourceUrls.some((url) => !/^https:\/\//.test(url))) {
+    throw new Error(`${rowNumber}行目のsource_urlはhttpsのURLにしてください。`);
+  }
+  const acceptedAnswers = geographyList(row.accepted_answers).filter(
+    (answer) => answer !== row.answer,
+  );
+  return {
+    id: row.card_id,
+    stage: "beginner",
+    focus: row.focus,
+    type: row.card_type,
+    label: biologyCardTypeLabels[row.card_type],
+    prompt: row.question,
+    answer: row.answer,
+    keywords: [...new Set([row.answer, ...acceptedAnswers])],
+    acceptedAnswers,
+    answerNote: biologyAnswerNote(row),
+    yearMnemonic: "",
+    source: { name: row.source_name, url: row.source_url },
+    hideTermUntilAnswer: row.card_type === "identify",
+  };
+}
+
+function assertSameBiologyTermData(firstRow, row, rowNumber) {
+  for (const fieldName of biologyTermFields) {
+    if (row[fieldName] !== firstRow[fieldName]) {
+      throw new Error(
+        `${rowNumber}行目の${fieldName}が同じ生物基礎項目のほかの行と一致しません。`,
+      );
+    }
+  }
+}
+
+export function groupBiologyTerms(rows) {
+  const groups = [];
+  const groupById = new Map();
+  const cardIds = new Set();
+  rows.forEach((row, rowIndex) => {
+    if (cardIds.has(row.card_id)) {
+      throw new Error(`生物基礎カードIDが重複しています: ${row.card_id}`);
+    }
+    cardIds.add(row.card_id);
+    let group = groupById.get(row.item_id);
+    if (!group) {
+      group = { firstRow: row, rows: [] };
+      groupById.set(row.item_id, group);
+      groups.push(group);
+    } else {
+      assertSameBiologyTermData(group.firstRow, row, rowIndex + 2);
+    }
+    group.rows.push({ row, rowIndex });
+  });
+
+  return groups.map(({ firstRow, rows: itemRows }) => {
+    const questions = itemRows.map(({ row, rowIndex }) =>
+      normalizeBiologyQuestion(row, rowIndex),
+    );
+    const expectedCardIds = questions.map(
+      (_, index) => `${firstRow.item_id}-C${String(index + 1).padStart(2, "0")}`,
+    );
+    if (questions.some((question, index) => question.id !== expectedCardIds[index])) {
+      throw new Error(`${firstRow.item}のカードIDがC01からの連番ではありません。`);
+    }
+    const readingMap = {};
+    for (const { row, rowIndex } of itemRows) {
+      for (const [written, reading] of Object.entries(
+        geographyReadingMap(row.reading_map, rowIndex + 2),
+      )) {
+        if (readingMap[written] && readingMap[written] !== reading) {
+          throw new Error(`${rowIndex + 2}行目の${written}の読みが同じ項目内で一致しません。`);
+        }
+        readingMap[written] = reading;
+      }
+    }
+    const importanceRank = parseInteger(
+      firstRow.importance_rank,
+      "importance_rank",
+      itemRows[0].rowIndex + 2,
+    );
+    return {
+      id: firstRow.item_id,
+      datasetLabel: firstRow.dataset_label,
+      importanceRank,
+      difficultyLabel: firstRow.difficulty_label,
+      category: firstRow.unit,
+      subunit: firstRow.subunit,
+      term: firstRow.item,
+      reading: firstRow.reading,
+      aliases: geographyList(firstRow.aliases),
+      prerequisiteIds: geographyList(firstRow.prerequisite_ids),
+      era: "",
+      geography: {
+        macroRegion: firstRow.unit,
+        regionDetail: firstRow.subunit,
+        scale: firstRow.unit,
+        splitMacroRegion: false,
+      },
+      chronology: {
+        displayPeriod: "",
+        sortYear: importanceRank,
+      },
+      referenceYear: "",
+      speechReadings: {
+        [firstRow.item]: firstRow.reading,
+        ...readingMap,
+      },
+      integratedAsExplanation: false,
+      stages: { beginner: questions, reverse: [], integrated: [] },
+      source: { name: firstRow.source_name, url: firstRow.source_url },
+    };
+  });
+}
+
+export function validateBiologyTerms(terms, { rankStart = 1 } = {}) {
+  assertUnique(terms, (term) => term.id, "生物基礎項目ID");
+  assertUnique(terms, (term) => term.term, "生物基礎項目名");
+  assertUnique(terms, (term) => term.importanceRank, "生物基礎重要度順位");
+  assertUnique(
+    terms.flatMap((term) => term.stages.beginner),
+    (question) => question.id,
+    "生物基礎カードID",
+  );
+  const ranks = terms
+    .map((term) => term.importanceRank)
+    .sort((left, right) => left - right);
+  if (ranks.some((rank, index) => rank !== rankStart + index)) {
+    throw new Error(
+      `生物基礎の重要度順位は${rankStart}から${rankStart + terms.length - 1}までの連番にしてください。`,
+    );
+  }
+  for (const term of terms) {
+    const expectedId = `BB-${String(term.importanceRank).padStart(6, "0")}`;
+    if (term.id !== expectedId) {
+      throw new Error(`${term.term}の項目IDと重要度順位が一致しません。`);
+    }
+    if (
+      term.stages.beginner.length === 0 ||
+      term.stages.reverse.length !== 0 ||
+      term.stages.integrated.length !== 0
+    ) {
+      throw new Error(`${term.term}の生物基礎カードの段階分けが正しくありません。`);
+    }
+  }
+}
+
+export async function loadBiologyDecks() {
+  const entries = await readdir(biologySourceDirectory, { withFileTypes: true });
+  const sourcePaths = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
+    .map((entry) => path.join(biologySourceDirectory, entry.name))
+    .sort();
+  if (sourcePaths.length === 0) {
+    throw new Error("生物基礎の元CSVがありません。");
+  }
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupBiologyTerms(toBiologyObjects(parseCsv(sourceText)));
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(
+          `${path.basename(sourcePath)}の生物基礎デッキ名が統一されていません。`,
+        );
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      const id = `deck-${number}`;
+      return {
+        id,
+        number,
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: datasetVersion(biologySubjectId, id),
+        contentVersion: sourceVersion(sourceText),
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "生物基礎Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validateBiologyTerms(terms);
+  return { decks, terms };
+}
+
 async function writeJson(targetPath, value) {
   await mkdir(path.dirname(targetPath), { recursive: true });
   await writeFile(targetPath, `${JSON.stringify(value)}\n`, "utf8");
@@ -1369,13 +1658,19 @@ async function writeSubjectData(definition, decks) {
 }
 
 export async function main() {
-  const [worldHistoryData, japaneseHistoryData, englishData, geographyData] =
-    await Promise.all([
-      loadSourceDecks(),
-      loadJapaneseHistoryDecks(),
-      loadEnglishDecks(),
-      loadGeographyDecks(),
-    ]);
+  const [
+    worldHistoryData,
+    japaneseHistoryData,
+    englishData,
+    geographyData,
+    biologyData,
+  ] = await Promise.all([
+    loadSourceDecks(),
+    loadJapaneseHistoryDecks(),
+    loadEnglishDecks(),
+    loadGeographyDecks(),
+    loadBiologyDecks(),
+  ]);
   const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
     loadTermImageManifest(japaneseHistoryData.terms, {
@@ -1393,6 +1688,7 @@ export async function main() {
     ...japaneseHistoryData.decks,
     ...englishData.decks,
     ...geographyData.decks,
+    ...biologyData.decks,
   ];
   const version = createHash("sha256")
     .update(
@@ -1502,6 +1798,26 @@ export async function main() {
       },
       geographyData.decks,
     ),
+    writeSubjectData(
+      {
+        id: biologySubjectId,
+        title: biologySubjectTitle,
+        catalogLabel: "大学受験生物基礎",
+        description: "細胞・遺伝子・体内環境・免疫・生態系の最重要事項を覚える生物基礎",
+        learningType: "cards",
+        termUnitLabel: "項目",
+        availableStages: ["beginner"],
+        filterLabels: {
+          macroRegion: "大項目",
+          regionDetail: "小項目",
+        },
+        stageLabels: {
+          all: "すべてのカード",
+          beginner: "暗記カード",
+        },
+      },
+      biologyData.decks,
+    ),
   ]);
 
   await writeJson(path.join(outputRoot, "index.json"), {
@@ -1514,8 +1830,9 @@ export async function main() {
   const japaneseCounts = countQuestionsByStage(japaneseHistoryData.terms);
   const englishCounts = countQuestionsByStage(englishData.terms);
   const geographyCounts = countQuestionsByStage(geographyData.terms);
+  const biologyCounts = countQuestionsByStage(biologyData.terms);
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

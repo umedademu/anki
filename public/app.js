@@ -239,12 +239,12 @@ function vocabularySpeechPartKey(group) {
   }[group];
 }
 
-function currentQuestionSpeechEnabled() {
+function currentQuestionSpeechEnabled(question = currentQuestion()) {
   const settings = currentSpeechPartSettings();
   if (state.subject?.learningType !== "vocabulary") {
     return settings.question;
   }
-  const group = vocabularySpeechLayout()?.question;
+  const group = vocabularySpeechLayout(question)?.question;
   return Boolean(settings[vocabularySpeechPartKey(group)]);
 }
 
@@ -713,9 +713,9 @@ function renderVocabularySpeechGroups() {
   }
 }
 
-function speechSegmentsFor(target) {
-  const question = currentQuestion();
-  const term = currentTerm();
+function speechSegmentsFor(target, task = state.currentTask) {
+  const question = questionForTask(task);
+  const term = termForTask(task);
   if (!question || !term) {
     return [];
   }
@@ -776,13 +776,15 @@ function speechSegmentsFor(target) {
   return [];
 }
 
-function answerSpeechSequence() {
+function answerSpeechSequence(task = state.currentTask) {
+  const question = questionForTask(task);
+  const term = termForTask(task);
   const settings = currentSpeechPartSettings();
   if (state.subject?.learningType === "vocabulary") {
-    const layout = vocabularySpeechLayout();
+    const layout = vocabularySpeechLayout(question);
     return createVocabularyAutomaticAnswerSequence(
-      currentTerm(),
-      currentQuestion()?.stage,
+      term,
+      question?.stage,
       {
         answer: Boolean(
           settings[vocabularySpeechPartKey(layout?.answer)],
@@ -793,10 +795,27 @@ function answerSpeechSequence() {
     );
   }
   return [
-    ...(settings.answer ? speechSegmentsFor("answer") : []),
-    ...(settings.mnemonic ? speechSegmentsFor("mnemonic") : []),
-    ...(settings.explanation ? speechSegmentsFor("overview") : []),
+    ...(settings.answer ? speechSegmentsFor("answer", task) : []),
+    ...(settings.mnemonic ? speechSegmentsFor("mnemonic", task) : []),
+    ...(settings.explanation ? speechSegmentsFor("overview", task) : []),
   ];
+}
+
+function listeningQuestionSpeechSequence(task = state.currentTask) {
+  const question = questionForTask(task);
+  return currentQuestionSpeechEnabled(question)
+    ? speechSegmentsFor("question", task)
+    : [];
+}
+
+function preloadListeningTask(task) {
+  if (!task) {
+    return;
+  }
+  void speechController.preload([
+    ...listeningQuestionSpeechSequence(task),
+    ...answerSpeechSequence(task),
+  ]);
 }
 
 function autoSpeakQuestion() {
@@ -852,6 +871,10 @@ function speakListeningAnswer(runId) {
   state.answerVisible = true;
   renderQuestion();
   const segments = answerSpeechSequence();
+  if (state.queue.length === 0) {
+    buildQueue();
+  }
+  preloadListeningTask(state.queue[0]);
   setListeningStatus(
     segments.length > 0
       ? "設定した回答側の内容を読み上げています"
@@ -862,17 +885,11 @@ function speakListeningAnswer(runId) {
       if (runId !== state.listeningRunId) {
         return;
       }
-      state.listeningTimer = window.setTimeout(() => {
-        state.listeningTimer = null;
-        advanceListening(runId);
-      }, 0);
+      advanceListening(runId);
     },
   });
   if (!started) {
-    state.listeningTimer = window.setTimeout(() => {
-      state.listeningTimer = null;
-      advanceListening(runId);
-    }, 0);
+    advanceListening(runId);
   }
 }
 
@@ -884,9 +901,8 @@ function beginListeningQuestion() {
   const runId = ++state.listeningRunId;
   state.answerVisible = false;
   renderQuestion();
-  const questionSegments = currentQuestionSpeechEnabled()
-    ? speechSegmentsFor("question")
-    : [];
+  const questionSegments = listeningQuestionSpeechSequence();
+  void speechController.preload(answerSpeechSequence());
   setListeningStatus(
     questionSegments.length > 0
       ? "問題を読み上げています"
@@ -907,6 +923,10 @@ function beginListeningQuestion() {
           ? `${pauseSeconds}秒後に回答を読み上げます`
           : "回答を読み上げます",
       );
+      if (pauseSeconds === 0) {
+        speakListeningAnswer(runId);
+        return;
+      }
       state.listeningTimer = window.setTimeout(() => {
         state.listeningTimer = null;
         speakListeningAnswer(runId);
@@ -1062,18 +1082,26 @@ function renderQuestionImage(question, visible) {
   return true;
 }
 
-function currentQuestion() {
-  if (!state.currentTask) {
+function questionForTask(task) {
+  if (!task) {
     return null;
   }
-  return state.questionById.get(state.currentTask.questionId) ?? null;
+  return state.questionById.get(task.questionId) ?? null;
+}
+
+function termForTask(task) {
+  if (!task) {
+    return null;
+  }
+  return state.termById.get(task.termId) ?? null;
+}
+
+function currentQuestion() {
+  return questionForTask(state.currentTask);
 }
 
 function currentTerm() {
-  if (!state.currentTask) {
-    return null;
-  }
-  return state.termById.get(state.currentTask.termId) ?? null;
+  return termForTask(state.currentTask);
 }
 
 function sortedUnique(values) {
@@ -1742,7 +1770,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.059｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.060｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

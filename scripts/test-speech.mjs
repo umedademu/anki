@@ -312,6 +312,63 @@ if (
   throw new Error("Azure音声を回答から解説へ順番に再生できませんでした。");
 }
 
+const preloadRequests = [];
+const preloadResolvers = [];
+const preloadPlayers = [];
+class PreloadAudio {
+  constructor(url) {
+    this.url = url;
+    this.playbackRate = 1;
+    this.onended = null;
+    this.onerror = null;
+    preloadPlayers.push(this);
+  }
+
+  async play() {}
+
+  pause() {}
+}
+const preloadController = createSpeechController({
+  synthesis,
+  Utterance: FakeUtterance,
+  AudioPlayer: PreloadAudio,
+  createObjectUrl: () => `blob:preload-${preloadPlayers.length}`,
+  revokeObjectUrl: () => {},
+  requestCloudAudio: (text) => {
+    preloadRequests.push(text);
+    return new Promise((resolve) => preloadResolvers.push(resolve));
+  },
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    rate: 3,
+  }),
+});
+const preloadSegments = [
+  { target: "question", text: "問題" },
+  { target: "answer", text: "回答" },
+];
+const preloadResult = preloadController.preload(preloadSegments);
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (preloadRequests.join("|") !== "問題|回答") {
+  throw new Error("次の音声パーツを並行して先読みできませんでした。");
+}
+for (const resolve of preloadResolvers) {
+  resolve({ type: "audio/mpeg", size: 100 });
+}
+await preloadResult;
+preloadController.speak(preloadSegments);
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (preloadRequests.length !== 2 || preloadPlayers.length !== 1) {
+  throw new Error("先読みした音声を再取得せずに再生できませんでした。");
+}
+preloadPlayers[0].onended();
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (preloadPlayers.length !== 2) {
+  throw new Error("先読みした別パーツを待ち時間なく続けて再生できませんでした。");
+}
+preloadPlayers[1].onended();
+
 const fallbackSpokenBefore = spoken.length;
 const fallbackMessages = [];
 const fallbackController = createSpeechController({
@@ -340,7 +397,7 @@ if (
   throw new Error("Cloudflare失敗時に選択した端末音声へ切り替えられませんでした。");
 }
 controller.stop();
-if (controller.currentTarget !== "" || synthesis.cancelCount < 2) {
+if (controller.currentTarget !== "" || synthesis.cancelCount < 1) {
   throw new Error("読み上げを停止できませんでした。");
 }
 

@@ -176,15 +176,17 @@ export function createSpeechController({
   let currentTarget = "";
   let activeAudio = null;
   let activeAudioUrl = "";
+  const cloudAudioCache = new Map();
+  const cloudAudioCacheLimit = 12;
 
   function setCurrentTarget(target) {
     currentTarget = target;
     onTargetChange(target);
   }
 
-  function stop() {
+  function resetPlayback(cancelDevice = true) {
     generation += 1;
-    if (deviceSupported) {
+    if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
     if (activeAudio) {
@@ -200,11 +202,12 @@ export function createSpeechController({
     setCurrentTarget("");
   }
 
-  function speak(segments, { onComplete = () => {} } = {}) {
-    if (!supported) {
-      return false;
-    }
-    const queue = Array.from(segments ?? [])
+  function stop() {
+    resetPlayback();
+  }
+
+  function normalizedSegments(segments) {
+    return Array.from(segments ?? [])
       .map((segment) => ({
         target: String(segment?.target ?? ""),
         language: String(segment?.language ?? "ja-JP"),
@@ -214,13 +217,67 @@ export function createSpeechController({
         ),
       }))
       .filter((segment) => segment.target && segment.text);
+  }
+
+  function cloudVoiceFor(segment, settings) {
+    return segment.language.toLowerCase().startsWith("en")
+      ? settings.englishAzureVoiceId
+      : settings.azureVoiceId;
+  }
+
+  function loadCloudAudio(segment, settings) {
+    const voice = cloudVoiceFor(segment, settings);
+    const cacheKey = JSON.stringify([segment.text, voice, segment.language]);
+    const cached = cloudAudioCache.get(cacheKey);
+    if (cached) {
+      cloudAudioCache.delete(cacheKey);
+      cloudAudioCache.set(cacheKey, cached);
+      return cached;
+    }
+
+    const request = Promise.resolve()
+      .then(() => requestCloudAudio(segment.text, voice, segment.language))
+      .catch((error) => {
+        if (cloudAudioCache.get(cacheKey) === request) {
+          cloudAudioCache.delete(cacheKey);
+        }
+        throw error;
+      });
+    cloudAudioCache.set(cacheKey, request);
+    while (cloudAudioCache.size > cloudAudioCacheLimit) {
+      cloudAudioCache.delete(cloudAudioCache.keys().next().value);
+    }
+    return request;
+  }
+
+  function preload(segments) {
+    if (!cloudSupported) {
+      return Promise.resolve([]);
+    }
+    const settings = normalizeSpeechSettings(getSettings());
+    if (settings.source !== "cloud") {
+      return Promise.resolve([]);
+    }
+    return Promise.allSettled(
+      normalizedSegments(segments).map((segment) =>
+        loadCloudAudio(segment, settings),
+      ),
+    );
+  }
+
+  function speak(segments, { onComplete = () => {} } = {}) {
+    if (!supported) {
+      return false;
+    }
+    const queue = normalizedSegments(segments);
     if (queue.length === 0) {
       stop();
       return false;
     }
 
-    stop();
+    resetPlayback(Boolean(currentTarget));
     const ticket = ++generation;
+    void preload(queue);
 
     function finishCloudAudio(audio, audioUrl) {
       if (activeAudio === audio) {
@@ -266,13 +323,7 @@ export function createSpeechController({
         return;
       }
       try {
-        const blob = await requestCloudAudio(
-          segment.text,
-          segment.language.toLowerCase().startsWith("en")
-            ? settings.englishAzureVoiceId
-            : settings.azureVoiceId,
-          segment.language,
-        );
+        const blob = await loadCloudAudio(segment, settings);
         if (ticket !== generation) {
           return;
         }
@@ -346,6 +397,7 @@ export function createSpeechController({
     get currentTarget() {
       return currentTarget;
     },
+    preload,
     speak,
     stop,
   };

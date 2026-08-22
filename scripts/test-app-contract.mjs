@@ -57,16 +57,19 @@ const cloudProgress = await readFile(
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
 const speechSegmentsBlock = app.match(
-  /function speechSegmentsFor\(target\)[\s\S]*?function answerSpeechSequence\(\)/,
+  /function speechSegmentsFor\(target,[\s\S]*?function answerSpeechSequence\(/,
 )?.[0];
 const automaticAnswerSpeechBlock = app.match(
   /function autoSpeakAnswerAndOverview\(\)[\s\S]*?function setListeningStatus/,
 )?.[0];
 const answerSpeechSequenceBlock = app.match(
-  /function answerSpeechSequence\(\)[\s\S]*?function autoSpeakQuestion\(\)/,
+  /function answerSpeechSequence\([\s\S]*?function autoSpeakQuestion\(\)/,
 )?.[0];
 const listeningAnswerSpeechBlock = app.match(
   /function speakListeningAnswer\(runId\)[\s\S]*?function beginListeningQuestion/,
+)?.[0];
+const listeningQuestionSpeechBlock = app.match(
+  /function beginListeningQuestion\(\)[\s\S]*?function showSpeechPartNotice/,
 )?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
@@ -109,9 +112,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.059") ||
-  !changelog.includes("v0.059") ||
-  !settingsHtml.includes("v0.059")
+  !html.includes("v0.060") ||
+  !changelog.includes("v0.060") ||
+  !settingsHtml.includes("v0.060")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -146,7 +149,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.059"') ||
+  !html.includes('href="/styles.css?v=0.060"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -326,10 +329,10 @@ if (
   !speechSegmentsBlock.includes("question.yearMnemonic") ||
   !automaticAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
   !answerSpeechSequenceBlock ||
-  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("answer")') >=
-    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic")') ||
-  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic")') >=
-    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("overview")')
+  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("answer"') >=
+    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic"') ||
+  answerSpeechSequenceBlock.indexOf('speechSegmentsFor("mnemonic"') >=
+    answerSpeechSequenceBlock.indexOf('speechSegmentsFor("overview"')
 ) {
   throw new Error("年号の語呂合わせの独立表示または回答直後の読み上げが揃っていません。");
 }
@@ -443,12 +446,20 @@ if (
   app.includes("function handleSpeechPartChange(event)") ||
   app.includes("function speakTarget(target)") ||
   !app.includes("function queueSpeechPartsSave()") ||
-  !app.includes("function currentQuestionSpeechEnabled()") ||
+  !app.includes("function currentQuestionSpeechEnabled(") ||
   !app.includes('button.setAttribute("aria-pressed", String(enabled))') ||
   !styles.includes(".speech-button.is-enabled") ||
   styles.includes("body.is-listening .speech-button") ||
   !app.includes("normalizeSpeechParts") ||
   !listeningAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
+  !listeningAnswerSpeechBlock?.includes("preloadListeningTask(state.queue[0])") ||
+  listeningAnswerSpeechBlock?.includes("window.setTimeout") ||
+  !listeningQuestionSpeechBlock?.includes(
+    "speechController.preload(answerSpeechSequence())",
+  ) ||
+  !listeningQuestionSpeechBlock?.includes("if (pauseSeconds === 0)") ||
+  !speech.includes("function preload(segments)") ||
+  !speech.includes("const cloudAudioCacheLimit = 12") ||
   !cloudProgress.includes("defaultSpeechParts") ||
   !cloudProgress.includes("normalizeSpeechParts") ||
   app.includes("unavailableForSubject") ||

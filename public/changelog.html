@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.059" />
+    <link rel="stylesheet" href="/styles.css?v=0.060" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.059</span>
+        <span class="app-version">v0.060</span>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
     </header>
@@ -23,6 +23,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.060</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>聞き流しの回答待ち時間が0秒の場合、待機処理を通さず直ちに次の音声へ進むよう改善</li>
+          <li>自然音声は再生中に回答側の各パーツと次の問題を先読みし、通信待ちによる間を短縮</li>
+          <li>問題・回答・語呂合わせ・解説・英単語の各音声は、結合せず独立したパーツのまま維持</li>
+          <li>先読み済み音声の再利用、パーツ順、停止動作の自動検査を追加</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

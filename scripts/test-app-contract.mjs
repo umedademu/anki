@@ -189,10 +189,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.088") ||
-  !changelog.includes("v0.088") ||
-  !settingsHtml.includes("v0.088") ||
-  !historyHtml.includes("v0.088")
+  !html.includes("v0.089") ||
+  !changelog.includes("v0.089") ||
+  !settingsHtml.includes("v0.089") ||
+  !historyHtml.includes("v0.089")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -300,7 +300,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.088"') ||
+  !html.includes('href="/styles.css?v=0.089"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -454,8 +454,11 @@ if (
   html.includes('class="answer-label"') ||
   html.includes('class="term-overview-label"') ||
   !html.includes('<div class="answer-line">') ||
-  !/\.answer-line\s*\{[^}]*display:\s*flex;[^}]*align-items:\s*baseline;/s.test(styles) ||
-  !/\.accepted-answer\s*\{[^}]*margin:\s*0;[^}]*flex:\s*0 1 auto;/s.test(styles) ||
+  html.includes("別解：") ||
+  html.includes('id="accepted-panel"') ||
+  styles.includes(".accepted-answer") ||
+  !app.includes("getQuestionAnswerDisplayText") ||
+  !app.includes("getQuestionAnswerSpeechText") ||
   !styles.includes("[data-content-density=\"dense\"] #answer-text") ||
   !/#answer-text\s*\{[^}]*font-weight:\s*850;/s.test(styles) ||
   !styles.includes("font-size: clamp(0.95rem, 2vw, 1rem)") ||
@@ -469,10 +472,10 @@ if (
   !styles.includes("font-size: clamp(1.35rem, 3.4vw, 1.62rem)") ||
   !styles.includes(".question-card.is-vocabulary #answer-text") ||
   !styles.includes("font-size: clamp(1.35rem, 3vw, 1.5rem)") ||
-  !styles.includes(".question-card.is-vocabulary .accepted-answer") ||
+  !styles.includes(".question-card.is-vocabulary .answer-note") ||
   !styles.includes("font-size: clamp(0.95rem, 2vw, 1rem)")
 ) {
-  throw new Error("英単語の横向き画面で問題・回答・別解・例文を拡大する指定が不足しています。");
+  throw new Error("英単語の横向き画面で問題・回答・例文を拡大する指定が不足しています。");
 }
 if (
   !html.includes('id="term-tags"') ||

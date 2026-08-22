@@ -149,6 +149,7 @@ const vocabularyTerm = {
     beginner: [
       {
         answer: "〜だけれども",
+        acceptedAnswers: ["とはいえ", "にもかかわらず"],
         speech: {
           question: [{ text: "although", language: "en-US" }],
           answer: [
@@ -201,6 +202,7 @@ const japaneseExampleOnlySequence = createVocabularyAutomaticAnswerSequence(
 if (
   answerOnlySequence.length !== 1 ||
   answerOnlySequence[0].target !== "vocabulary-meaning" ||
+  answerOnlySequence[0].text !== "だけれども。とはいえ。にもかかわらず" ||
   answerAndExamplesSequence.map((segment) => segment.target).join("|") !==
     "vocabulary-meaning|vocabulary-example-english|vocabulary-example-japanese" ||
   integratedSequence.length !== 1 ||

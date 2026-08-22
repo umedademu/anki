@@ -16,6 +16,9 @@ import {
   getMacroRegionTags,
   getNextDueAt,
   getOverallMastery,
+  getQuestionAnswerDisplayText,
+  getQuestionAnswerParts,
+  getQuestionAnswerSpeechText,
   getQuestionExplanation,
   getQuestionPromptForDisplay,
   getQuestionYearMnemonic,
@@ -257,6 +260,21 @@ if (
   getQuestionPromptForDisplay(questionWithReading, true) !== questionWithReading.prompt
 ) {
   throw new Error("回答表示時だけ問題文の読み仮名を表示できませんでした。");
+}
+
+const answerWithAlternates = {
+  answer: "ベルリン会議",
+  acceptedAnswers: ["コンゴ会議", "ベルリン会議", ""],
+};
+if (
+  getQuestionAnswerParts(answerWithAlternates).join("|") !==
+    "ベルリン会議|コンゴ会議" ||
+  getQuestionAnswerDisplayText(answerWithAlternates) !==
+    "ベルリン会議 /コンゴ会議" ||
+  getQuestionAnswerSpeechText(answerWithAlternates) !==
+    "ベルリン会議。コンゴ会議"
+) {
+  throw new Error("回答と別解を同じ表示・読み上げ単位へまとめられませんでした。");
 }
 
 if (

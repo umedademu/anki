@@ -10,6 +10,9 @@ import {
   getMacroRegionTags,
   getNextDueAt,
   getOverallMastery,
+  getQuestionAnswerDisplayText,
+  getQuestionAnswerParts,
+  getQuestionAnswerSpeechText,
   getQuestionPromptForDisplay,
   getQuestionExplanation,
   getQuestionYearMnemonic,
@@ -48,6 +51,7 @@ import {
   createVocabularySpeechGroups,
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
+  prepareVocabularyMeaningSpeechText,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
@@ -122,8 +126,6 @@ const elements = {
   answerSpeech: document.querySelector("#answer-speech"),
   vocabularySpeechGroups: document.querySelector("#vocabulary-speech-groups"),
   vocabularySpeechButtons: document.querySelectorAll("[data-vocabulary-speech]"),
-  acceptedPanel: document.querySelector("#accepted-panel"),
-  acceptedText: document.querySelector("#accepted-text"),
   answerNote: document.querySelector("#answer-note"),
   termOverview: document.querySelector("#term-overview"),
   termOverviewMain: document.querySelector("#term-overview-main"),
@@ -1457,14 +1459,35 @@ function speechSegmentsFor(target, task = state.currentTask) {
       : layout?.[target];
     const segment = groups[group];
     if (segment?.text) {
-      return [{ ...segment, target }];
+      const acceptedAnswers =
+        group === layout?.answer
+          ? getQuestionAnswerParts(question)
+              .slice(1)
+              .map((acceptedAnswer) =>
+                group === "meaning"
+                  ? prepareVocabularyMeaningSpeechText(acceptedAnswer)
+                  : acceptedAnswer,
+              )
+          : [];
+      return [
+        {
+          ...segment,
+          target,
+          text: [segment.text, ...acceptedAnswers].filter(Boolean).join("。"),
+        },
+      ];
     }
   }
   const configuredSegments = question.speech?.[target];
   if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
-    return configuredSegments.map((segment) => ({
+    const acceptedAnswers =
+      target === "answer" ? getQuestionAnswerParts(question).slice(1) : [];
+    return configuredSegments.map((segment, index) => ({
       target,
-      text: segment.text,
+      text:
+        index === 0
+          ? [segment.text, ...acceptedAnswers].filter(Boolean).join("。")
+          : segment.text,
       language: segment.language ?? "ja-JP",
     }));
   }
@@ -1475,7 +1498,9 @@ function speechSegmentsFor(target, task = state.currentTask) {
     return [
       {
         target,
-        text: [question.answer, question.answerNote].filter(Boolean).join("。"),
+        text: [getQuestionAnswerSpeechText(question), question.answerNote]
+          .filter(Boolean)
+          .join("。"),
         language: "ja-JP",
       },
     ];
@@ -2391,15 +2416,9 @@ function renderQuestion() {
     state.answerVisible,
   );
   elements.questionText.textContent = displayedQuestionPrompt;
-  renderEmphasizedText(elements.answerText, question.answer);
+  const answerDisplayText = getQuestionAnswerDisplayText(question);
+  renderEmphasizedText(elements.answerText, answerDisplayText);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
-
-  const acceptedText = question.acceptedAnswers.join("・");
-  elements.acceptedPanel.classList.toggle(
-    "is-hidden",
-    !state.answerVisible || acceptedText.length === 0,
-  );
-  elements.acceptedText.textContent = acceptedText;
   elements.answerNote.classList.toggle(
     "is-hidden",
     !state.answerVisible || !question.answerNote,
@@ -2450,7 +2469,7 @@ function renderQuestion() {
   setContentDensity(
     elements.questionCard,
     displayedQuestionPrompt,
-    question.answer,
+    answerDisplayText,
     explanation,
     yearMnemonic,
   );
@@ -3032,7 +3051,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.088｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.089｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

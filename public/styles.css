@@ -611,17 +611,13 @@ body.is-studying .page {
 }
 
 .answer-line {
-  display: flex;
   min-width: 0;
   padding-right: 34px;
-  align-items: baseline;
-  gap: clamp(8px, 2vw, 18px);
 }
 
 #answer-text {
   min-width: 0;
   margin: 0;
-  flex: 0 1 auto;
   color: #29362e;
   font-size: clamp(1.05rem, 2vw, 1.18rem);
   font-weight: 850;
@@ -633,13 +629,6 @@ body.is-studying .page {
   font-weight: 850;
 }
 
-.accepted-answer {
-  min-width: 0;
-  margin: 0;
-  flex: 0 1 auto;
-}
-
-.accepted-answer,
 .answer-note {
   color: #617067;
   font-size: 0.78rem;
@@ -1745,7 +1734,6 @@ body.is-listening .page {
 
   .answer-line {
     padding-right: 25px;
-    gap: 7px;
   }
 
   .speech-button {
@@ -1765,7 +1753,6 @@ body.is-listening .page {
     margin-top: 3px;
   }
 
-  .accepted-answer,
   .answer-note {
     font-size: 0.55rem;
     line-height: 1.2;
@@ -1849,7 +1836,6 @@ body.is-listening .page {
     line-height: 1.25;
   }
 
-  .question-card.is-vocabulary .accepted-answer,
   .question-card.is-vocabulary .answer-note {
     font-size: clamp(0.95rem, 2vw, 1rem);
     line-height: 1.3;

@@ -133,6 +133,32 @@ export function getQuestionPromptForDisplay(question, answerVisible) {
   return answerVisible ? prompt : prompt.replace(questionReadingPattern, "");
 }
 
+export function getQuestionAnswerParts(question) {
+  const primaryAnswer = String(question?.answer ?? "").trim();
+  const seen = new Set(primaryAnswer ? [primaryAnswer] : []);
+  const acceptedAnswers = Array.isArray(question?.acceptedAnswers)
+    ? question.acceptedAnswers
+    : [];
+  const parts = primaryAnswer ? [primaryAnswer] : [];
+  for (const acceptedAnswer of acceptedAnswers) {
+    const normalizedAnswer = String(acceptedAnswer ?? "").trim();
+    if (!normalizedAnswer || seen.has(normalizedAnswer)) {
+      continue;
+    }
+    seen.add(normalizedAnswer);
+    parts.push(normalizedAnswer);
+  }
+  return parts;
+}
+
+export function getQuestionAnswerDisplayText(question) {
+  return getQuestionAnswerParts(question).join(" /");
+}
+
+export function getQuestionAnswerSpeechText(question) {
+  return getQuestionAnswerParts(question).join("。");
+}
+
 export function getIntegratedExplanationQuestion(term, question) {
   if (
     !term ||

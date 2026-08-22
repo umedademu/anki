@@ -24,6 +24,12 @@ const geographySourceDirectory = path.join(
   "source",
   "geography",
 );
+const politicsEconomicsSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "politics-economics",
+);
 const biologySourceDirectory = path.join(
   projectRoot,
   "data",
@@ -49,6 +55,8 @@ const englishSubjectId = "english-vocabulary";
 const englishSubjectTitle = "英単語";
 const geographySubjectId = "geography";
 const geographySubjectTitle = "地理";
+const politicsEconomicsSubjectId = "politics-economics";
+const politicsEconomicsSubjectTitle = "政治・経済";
 const biologySubjectId = "biology-basics";
 const biologySubjectTitle = "生物基礎";
 const chunkSize = 50;
@@ -111,6 +119,39 @@ export const geographyRequiredHeaders = [
   "scale",
   "region",
   "reference_year",
+  "card_id",
+  "card_type",
+  "focus",
+  "question",
+  "answer",
+  "accepted_answers",
+  "explanation",
+  "confusable_with",
+  "distinction",
+  "formula",
+  "answer_unit",
+  "memory_aid",
+  "source_name",
+  "source_url",
+  "reading_map",
+];
+
+export const politicsEconomicsRequiredHeaders = [
+  "dataset_label",
+  "item_id",
+  "importance_rank",
+  "difficulty_label",
+  "curriculum_scope",
+  "domain",
+  "unit",
+  "subunit",
+  "item",
+  "reading",
+  "aliases",
+  "prerequisite_ids",
+  "time_sensitivity",
+  "reference_date",
+  "legal_basis",
   "card_id",
   "card_type",
   "focus",
@@ -202,6 +243,38 @@ const geographyCardTypeLabels = {
 };
 const geographyCardTypes = new Set(Object.keys(geographyCardTypeLabels));
 const geographyTermFields = geographyRequiredHeaders.slice(0, 14);
+const politicsEconomicsCardTypeLabels = {
+  identify: "用語",
+  definition: "定義",
+  institution: "機関",
+  authority: "権限",
+  legal_basis: "法的根拠",
+  procedure: "手続",
+  relation: "対応関係",
+  comparison: "比較",
+  history: "成立と背景",
+  formula: "式",
+  unit: "単位",
+};
+const politicsEconomicsCardTypes = new Set(
+  Object.keys(politicsEconomicsCardTypeLabels),
+);
+const politicsEconomicsTermFields = politicsEconomicsRequiredHeaders.slice(0, 15);
+const politicsEconomicsCurriculumScopes = new Set(["公共", "政治・経済", "両方"]);
+const politicsEconomicsDomains = new Set([
+  "政治",
+  "法",
+  "経済",
+  "国際政治",
+  "国際経済",
+  "複合",
+]);
+const politicsEconomicsTimeSensitivities = new Set([
+  "stable",
+  "law_as_of_date",
+  "system_as_of_date",
+  "statistics_as_of_date",
+]);
 const biologyCardTypeLabels = {
   identify: "用語",
   definition: "定義",
@@ -653,6 +726,7 @@ const stableDatasetVersions = new Map([
   ["english-vocabulary:deck-2", "en-abb710688392"],
   ["english-vocabulary:deck-3", "en-6397b7943e25"],
   ["geography:deck-1", "geography-deck-1-v1"],
+  ["politics-economics:deck-1", "politics-economics-deck-1-v1"],
   ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
 ]);
 
@@ -1209,6 +1283,311 @@ export async function loadGeographyDecks() {
   return { decks, terms };
 }
 
+export function toPoliticsEconomicsObjects(rows) {
+  if (rows.length < 2) {
+    throw new Error("政治・経済CSVに見出し行とデータ行が必要です。");
+  }
+  const headers = rows[0].map((header, index) =>
+    index === 0 ? header.replace(/^\uFEFF/, "").trim() : header.trim(),
+  );
+  if (
+    headers.length !== politicsEconomicsRequiredHeaders.length ||
+    headers.some(
+      (header, index) => header !== politicsEconomicsRequiredHeaders[index],
+    )
+  ) {
+    throw new Error("政治・経済CSVの見出しまたは並び順が30列形式と一致しません。");
+  }
+  return rows.slice(1).map((cells, rowIndex) => {
+    if (cells.length !== headers.length) {
+      throw new Error(
+        `${rowIndex + 2}行目の列数が見出しと一致しません（${cells.length}/${headers.length}）。`,
+      );
+    }
+    const row = Object.fromEntries(
+      headers.map((header, columnIndex) => [header, cells[columnIndex].trim()]),
+    );
+    for (const fieldName of politicsEconomicsRequiredHeaders) {
+      assertRequiredText(row, fieldName, rowIndex + 2);
+    }
+    return row;
+  });
+}
+
+function politicsEconomicsExplanation(row) {
+  return [
+    geographyValue(row.explanation),
+    geographyValue(row.confusable_with) && geographyValue(row.distinction)
+      ? `区別：${row.confusable_with}とは、${row.distinction}`
+      : "",
+    geographyValue(row.legal_basis) ? `根拠：${row.legal_basis}` : "",
+    row.time_sensitivity !== "stable" && geographyValue(row.reference_date)
+      ? `基準日：${row.reference_date}`
+      : "",
+    geographyValue(row.formula) ? `式：${row.formula}` : "",
+    geographyValue(row.answer_unit) ? `単位：${row.answer_unit}` : "",
+    geographyValue(row.memory_aid) ? `記憶補助：${row.memory_aid}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}
+
+function politicsEconomicsReferenceDateLabels(referenceDate) {
+  const normalized = String(referenceDate ?? "").trim();
+  const isoDate = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return isoDate
+    ? [
+        normalized,
+        `${isoDate[1]}年${Number(isoDate[2])}月${Number(isoDate[3])}日`,
+      ]
+    : [normalized];
+}
+
+function normalizePoliticsEconomicsQuestion(row, rowIndex) {
+  const rowNumber = rowIndex + 2;
+  if (!politicsEconomicsCardTypes.has(row.card_type)) {
+    throw new Error(`${rowNumber}行目のcard_typeが正しくありません: ${row.card_type}`);
+  }
+  if (!politicsEconomicsCurriculumScopes.has(row.curriculum_scope)) {
+    throw new Error(
+      `${rowNumber}行目のcurriculum_scopeが正しくありません: ${row.curriculum_scope}`,
+    );
+  }
+  if (!politicsEconomicsDomains.has(row.domain)) {
+    throw new Error(`${rowNumber}行目のdomainが正しくありません: ${row.domain}`);
+  }
+  if (!politicsEconomicsTimeSensitivities.has(row.time_sensitivity)) {
+    throw new Error(
+      `${rowNumber}行目のtime_sensitivityが正しくありません: ${row.time_sensitivity}`,
+    );
+  }
+  if (row.time_sensitivity === "stable" && row.reference_date !== "該当なし") {
+    throw new Error(`${rowNumber}行目の安定知識のreference_dateは「該当なし」にしてください。`);
+  }
+  if (
+    row.time_sensitivity !== "stable" &&
+    (!/^(\d{4}-\d{2}-\d{2}|\d{4}年(?:度)?)$/.test(row.reference_date) ||
+      !politicsEconomicsReferenceDateLabels(row.reference_date).some((label) =>
+        row.question.includes(label),
+      ))
+  ) {
+    throw new Error(
+      `${rowNumber}行目の変わり得る知識はreference_dateを設定し、問題文にも含めてください。`,
+    );
+  }
+  const sourceUrls = geographyList(row.source_url);
+  if (sourceUrls.length === 0 || sourceUrls.some((url) => !/^https:\/\//.test(url))) {
+    throw new Error(`${rowNumber}行目のsource_urlはhttpsのURLにしてください。`);
+  }
+  const answerChoices = geographyList(row.accepted_answers);
+  if (answerChoices[0] !== row.answer) {
+    throw new Error(`${rowNumber}行目のaccepted_answersはanswerを先頭にしてください。`);
+  }
+  const acceptedAnswers = answerChoices.slice(1);
+  return {
+    id: row.card_id,
+    stage: "beginner",
+    focus: row.focus,
+    type: row.card_type,
+    label: politicsEconomicsCardTypeLabels[row.card_type],
+    prompt: row.question,
+    answer: row.answer,
+    keywords: [...new Set(answerChoices)],
+    acceptedAnswers,
+    answerNote: "",
+    explanation: politicsEconomicsExplanation(row),
+    yearMnemonic: "",
+    source: { name: row.source_name, url: row.source_url },
+    hideTermUntilAnswer: row.card_type === "identify",
+  };
+}
+
+function assertSamePoliticsEconomicsTermData(firstRow, row, rowNumber) {
+  for (const fieldName of politicsEconomicsTermFields) {
+    if (row[fieldName] !== firstRow[fieldName]) {
+      throw new Error(
+        `${rowNumber}行目の${fieldName}が同じ政治・経済項目のほかの行と一致しません。`,
+      );
+    }
+  }
+}
+
+export function groupPoliticsEconomicsTerms(rows) {
+  const groups = [];
+  const groupById = new Map();
+  const cardIds = new Set();
+  rows.forEach((row, rowIndex) => {
+    if (cardIds.has(row.card_id)) {
+      throw new Error(`政治・経済カードIDが重複しています: ${row.card_id}`);
+    }
+    cardIds.add(row.card_id);
+    let group = groupById.get(row.item_id);
+    if (!group) {
+      group = { firstRow: row, rows: [] };
+      groupById.set(row.item_id, group);
+      groups.push(group);
+    } else {
+      assertSamePoliticsEconomicsTermData(group.firstRow, row, rowIndex + 2);
+    }
+    group.rows.push({ row, rowIndex });
+  });
+
+  return groups.map(({ firstRow, rows: itemRows }) => {
+    const questions = itemRows.map(({ row, rowIndex }) =>
+      normalizePoliticsEconomicsQuestion(row, rowIndex),
+    );
+    const expectedCardIds = questions.map(
+      (_, index) => `${firstRow.item_id}-C${String(index + 1).padStart(2, "0")}`,
+    );
+    if (questions.some((question, index) => question.id !== expectedCardIds[index])) {
+      throw new Error(`${firstRow.item}のカードIDがC01からの連番ではありません。`);
+    }
+    const readingMap = {};
+    for (const { row, rowIndex } of itemRows) {
+      for (const [written, reading] of Object.entries(
+        geographyReadingMap(row.reading_map, rowIndex + 2),
+      )) {
+        if (readingMap[written] && readingMap[written] !== reading) {
+          throw new Error(`${rowIndex + 2}行目の${written}の読みが同じ項目内で一致しません。`);
+        }
+        readingMap[written] = reading;
+      }
+    }
+    const importanceRank = parseInteger(
+      firstRow.importance_rank,
+      "importance_rank",
+      itemRows[0].rowIndex + 2,
+    );
+    return {
+      id: firstRow.item_id,
+      datasetLabel: firstRow.dataset_label,
+      importanceRank,
+      difficultyLabel: firstRow.difficulty_label,
+      category: firstRow.unit,
+      subunit: firstRow.subunit,
+      term: firstRow.item,
+      reading: firstRow.reading,
+      aliases: geographyList(firstRow.aliases),
+      prerequisiteIds: geographyList(firstRow.prerequisite_ids),
+      era: firstRow.curriculum_scope,
+      geography: {
+        macroRegion: firstRow.domain,
+        regionDetail: firstRow.subunit,
+        scale: firstRow.domain,
+        splitMacroRegion: false,
+      },
+      chronology: {
+        displayPeriod: geographyValue(firstRow.reference_date),
+        sortYear: importanceRank,
+      },
+      referenceYear: geographyValue(firstRow.reference_date),
+      politicsEconomics: {
+        curriculumScope: firstRow.curriculum_scope,
+        domain: firstRow.domain,
+        timeSensitivity: firstRow.time_sensitivity,
+        referenceDate: geographyValue(firstRow.reference_date),
+        legalBasis: geographyValue(firstRow.legal_basis),
+      },
+      speechReadings: {
+        [firstRow.item]: firstRow.reading,
+        ...readingMap,
+      },
+      integratedAsExplanation: false,
+      stages: { beginner: questions, reverse: [], integrated: [] },
+      source: { name: firstRow.source_name, url: firstRow.source_url },
+    };
+  });
+}
+
+export function validatePoliticsEconomicsTerms(terms, { rankStart = 1 } = {}) {
+  assertUnique(terms, (term) => term.id, "政治・経済項目ID");
+  assertUnique(terms, (term) => term.term, "政治・経済項目名");
+  assertUnique(terms, (term) => term.importanceRank, "政治・経済重要度順位");
+  assertUnique(
+    terms.flatMap((term) => term.stages.beginner),
+    (question) => question.id,
+    "政治・経済カードID",
+  );
+  const ranks = terms
+    .map((term) => term.importanceRank)
+    .sort((left, right) => left - right);
+  if (ranks.some((rank, index) => rank !== rankStart + index)) {
+    throw new Error(
+      `政治・経済の重要度順位は${rankStart}から${rankStart + terms.length - 1}までの連番にしてください。`,
+    );
+  }
+  const termIds = new Set(terms.map((term) => term.id));
+  for (const term of terms) {
+    const expectedId = `PE-${String(term.importanceRank).padStart(6, "0")}`;
+    if (term.id !== expectedId) {
+      throw new Error(`${term.term}の項目IDと重要度順位が一致しません。`);
+    }
+    if (
+      term.stages.beginner.length === 0 ||
+      term.stages.reverse.length !== 0 ||
+      term.stages.integrated.length !== 0
+    ) {
+      throw new Error(`${term.term}の政治・経済カードの段階分けが正しくありません。`);
+    }
+    if (
+      term.prerequisiteIds.some(
+        (prerequisiteId) =>
+          prerequisiteId === term.id || !termIds.has(prerequisiteId),
+      )
+    ) {
+      throw new Error(`${term.term}の前提項目IDが存在しないか、自分自身を参照しています。`);
+    }
+  }
+}
+
+export async function loadPoliticsEconomicsDecks() {
+  const entries = await readdir(politicsEconomicsSourceDirectory, {
+    withFileTypes: true,
+  });
+  const sourcePaths = entries
+    .filter((entry) => entry.isFile() && entry.name.toLowerCase().endsWith(".csv"))
+    .map((entry) => path.join(politicsEconomicsSourceDirectory, entry.name))
+    .sort();
+  if (sourcePaths.length === 0) {
+    throw new Error("政治・経済の元CSVがありません。");
+  }
+  const decks = await Promise.all(
+    sourcePaths.map(async (sourcePath) => {
+      const sourceText = await readFile(sourcePath, "utf8");
+      const terms = groupPoliticsEconomicsTerms(
+        toPoliticsEconomicsObjects(parseCsv(sourceText)),
+      );
+      const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+      const difficultyLabels = new Set(terms.map((term) => term.difficultyLabel));
+      if (datasetLabels.size !== 1 || difficultyLabels.size !== 1) {
+        throw new Error(
+          `${path.basename(sourcePath)}の政治・経済デッキ名が統一されていません。`,
+        );
+      }
+      const datasetLabel = terms[0].datasetLabel;
+      const number = deckNumberFromLabel(datasetLabel, sourcePath);
+      const id = `deck-${number}`;
+      return {
+        id,
+        number,
+        sourcePath,
+        sourceText,
+        sourceFile: path.basename(sourcePath),
+        version: datasetVersion(politicsEconomicsSubjectId, id),
+        contentVersion: sourceVersion(sourceText),
+        datasetLabel,
+        difficultyLabel: terms[0].difficultyLabel,
+        terms,
+      };
+    }),
+  );
+  decks.sort((left, right) => left.number - right.number);
+  assertUnique(decks, (deck) => deck.id, "政治・経済Deck番号");
+  const terms = decks.flatMap((deck) => deck.terms);
+  validatePoliticsEconomicsTerms(terms);
+  return { decks, terms };
+}
+
 export function toBiologyObjects(rows) {
   if (rows.length < 2) {
     throw new Error("生物基礎CSVに見出し行とデータ行が必要です。");
@@ -1665,12 +2044,14 @@ export async function main() {
     japaneseHistoryData,
     englishData,
     geographyData,
+    politicsEconomicsData,
     biologyData,
   ] = await Promise.all([
     loadSourceDecks(),
     loadJapaneseHistoryDecks(),
     loadEnglishDecks(),
     loadGeographyDecks(),
+    loadPoliticsEconomicsDecks(),
     loadBiologyDecks(),
   ]);
   const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
@@ -1690,6 +2071,7 @@ export async function main() {
     ...japaneseHistoryData.decks,
     ...englishData.decks,
     ...geographyData.decks,
+    ...politicsEconomicsData.decks,
     ...biologyData.decks,
   ];
   const version = createHash("sha256")
@@ -1802,6 +2184,27 @@ export async function main() {
     ),
     writeSubjectData(
       {
+        id: politicsEconomicsSubjectId,
+        title: politicsEconomicsSubjectTitle,
+        catalogLabel: "大学受験政治・経済",
+        description: "公共・政治・法・経済・国際分野の最重要事項を覚える大学受験政治・経済",
+        learningType: "cards",
+        termUnitLabel: "項目",
+        availableStages: ["beginner"],
+        filterLabels: {
+          macroRegion: "領域",
+          regionDetail: "小分類",
+          category: "大分類",
+        },
+        stageLabels: {
+          all: "すべてのカード",
+          beginner: "暗記カード",
+        },
+      },
+      politicsEconomicsData.decks,
+    ),
+    writeSubjectData(
+      {
         id: biologySubjectId,
         title: biologySubjectTitle,
         catalogLabel: "大学受験生物基礎",
@@ -1832,9 +2235,12 @@ export async function main() {
   const japaneseCounts = countQuestionsByStage(japaneseHistoryData.terms);
   const englishCounts = countQuestionsByStage(englishData.terms);
   const geographyCounts = countQuestionsByStage(geographyData.terms);
+  const politicsEconomicsCounts = countQuestionsByStage(
+    politicsEconomicsData.terms,
+  );
   const biologyCounts = countQuestionsByStage(biologyData.terms);
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
   );
 }
 

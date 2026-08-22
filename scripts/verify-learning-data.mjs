@@ -8,6 +8,7 @@ import {
   loadEnglishDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
+  loadPoliticsEconomicsDecks,
   loadSourceDecks,
   loadTermImageManifest,
   mergeTermImageManifests,
@@ -167,6 +168,17 @@ const expectedBiologySpec = {
   questionCounts: { beginner: 300, reverse: 0, integrated: 0 },
 };
 
+const expectedPoliticsEconomicsSpec = {
+  number: 1,
+  version: "politics-economics-deck-1-v1",
+  contentVersion: "55bf24b7fc9d",
+  datasetLabel: "政治・経済 Deck 1 公共・政治・経済の骨格",
+  difficultyLabel: "Deck 1・骨格",
+  termCount: 400,
+  questionCount: 400,
+  questionCounts: { beginner: 400, reverse: 0, integrated: 0 },
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
   decks: sourceJapaneseDecks,
@@ -180,6 +192,10 @@ const {
   decks: sourceBiologyDecks,
   terms: expectedBiologyTerms,
 } = await loadBiologyDecks();
+const {
+  decks: sourcePoliticsEconomicsDecks,
+  terms: expectedPoliticsEconomicsTerms,
+} = await loadPoliticsEconomicsDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -191,11 +207,13 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 5 ||
+  catalog.subjects.length !== 6 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,biology-basics"
+    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics"
 ) {
-  throw new Error("世界史・日本史・英単語・地理・生物基礎の科目一覧が正しくありません。");
+  throw new Error(
+    "世界史・日本史・英単語・地理・政治・経済・生物基礎の科目一覧が正しくありません。",
+  );
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",
@@ -208,6 +226,9 @@ const japaneseSubjectEntry = catalog.subjects.find(
 );
 const geographySubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "geography",
+);
+const politicsEconomicsSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "politics-economics",
 );
 const biologySubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "biology-basics",
@@ -668,6 +689,147 @@ if (
 }
 
 if (
+  sourcePoliticsEconomicsDecks.length !== 1 ||
+  !politicsEconomicsSubjectEntry ||
+  politicsEconomicsSubjectEntry.defaultDeckId !== "deck-1" ||
+  politicsEconomicsSubjectEntry.termUnitLabel !== "項目" ||
+  politicsEconomicsSubjectEntry.datasetLabel !== "大学受験政治・経済｜Deck 1" ||
+  politicsEconomicsSubjectEntry.termCount !==
+    expectedPoliticsEconomicsSpec.termCount ||
+  politicsEconomicsSubjectEntry.questionCount !==
+    expectedPoliticsEconomicsSpec.questionCount ||
+  politicsEconomicsSubjectEntry.decks.length !== 1
+) {
+  throw new Error("政治・経済Deck 1の科目一覧が正しくありません。");
+}
+const sourcePoliticsEconomicsDeck = sourcePoliticsEconomicsDecks[0];
+const politicsEconomicsDeckEntry = politicsEconomicsSubjectEntry.decks[0];
+const politicsEconomicsSubject = await readJson(
+  politicsEconomicsDeckEntry.indexPath,
+);
+const politicsEconomicsChunks = await Promise.all(
+  politicsEconomicsSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedPoliticsEconomicsTerms = politicsEconomicsChunks.flatMap(
+  (chunk) => chunk.terms,
+);
+const generatedPoliticsEconomicsQuestions = generatedPoliticsEconomicsTerms.flatMap(
+  (term) => Object.values(term.stages).flat(),
+);
+const generatedPoliticsEconomicsCounts = countQuestionsByStage(
+  generatedPoliticsEconomicsTerms,
+);
+if (
+  politicsEconomicsDeckEntry.number !== expectedPoliticsEconomicsSpec.number ||
+  politicsEconomicsDeckEntry.version !== expectedPoliticsEconomicsSpec.version ||
+  politicsEconomicsDeckEntry.contentVersion !==
+    expectedPoliticsEconomicsSpec.contentVersion ||
+  politicsEconomicsDeckEntry.datasetLabel !==
+    expectedPoliticsEconomicsSpec.datasetLabel ||
+  politicsEconomicsDeckEntry.difficultyLabel !==
+    expectedPoliticsEconomicsSpec.difficultyLabel ||
+  politicsEconomicsDeckEntry.termCount !==
+    expectedPoliticsEconomicsSpec.termCount ||
+  politicsEconomicsDeckEntry.questionCount !==
+    expectedPoliticsEconomicsSpec.questionCount ||
+  politicsEconomicsSubject.schemaVersion !== 3 ||
+  politicsEconomicsSubject.id !== "politics-economics" ||
+  politicsEconomicsSubject.learningType !== "cards" ||
+  politicsEconomicsSubject.termUnitLabel !== "項目" ||
+  politicsEconomicsSubject.deckId !== "deck-1" ||
+  politicsEconomicsSubject.deckNumber !== expectedPoliticsEconomicsSpec.number ||
+  politicsEconomicsSubject.version !== expectedPoliticsEconomicsSpec.version ||
+  politicsEconomicsSubject.contentVersion !==
+    expectedPoliticsEconomicsSpec.contentVersion ||
+  politicsEconomicsSubject.datasetLabel !==
+    expectedPoliticsEconomicsSpec.datasetLabel ||
+  politicsEconomicsSubject.difficultyLabel !==
+    expectedPoliticsEconomicsSpec.difficultyLabel ||
+  politicsEconomicsSubject.sourceFile !== sourcePoliticsEconomicsDeck.sourceFile ||
+  politicsEconomicsSubject.termCount !== expectedPoliticsEconomicsSpec.termCount ||
+  politicsEconomicsSubject.questionCount !==
+    expectedPoliticsEconomicsSpec.questionCount ||
+  politicsEconomicsSubject.filterLabels.macroRegion !== "領域" ||
+  politicsEconomicsSubject.filterLabels.regionDetail !== "小分類" ||
+  politicsEconomicsSubject.filterLabels.category !== "大分類" ||
+  politicsEconomicsSubject.stageLabels.beginner !== "暗記カード" ||
+  politicsEconomicsSubject.availableStages.join(",") !== "beginner" ||
+  politicsEconomicsSubject.chunks.length !== 8 ||
+  politicsEconomicsSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  politicsEconomicsChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "politics-economics" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedPoliticsEconomicsCounts) !==
+    JSON.stringify(expectedPoliticsEconomicsSpec.questionCounts) ||
+  JSON.stringify(generatedPoliticsEconomicsTerms) !==
+    JSON.stringify(expectedPoliticsEconomicsTerms) ||
+  generatedPoliticsEconomicsQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      question.answerNote !== "" ||
+      !question.explanation ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error(
+    "政治・経済Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。",
+  );
+}
+const politicsEconomicsRanks = generatedPoliticsEconomicsTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+const politicsEconomicsTimeSensitivityCounts = Object.fromEntries(
+  ["stable", "law_as_of_date", "system_as_of_date"].map((timeSensitivity) => [
+    timeSensitivity,
+    generatedPoliticsEconomicsTerms.filter(
+      (term) => term.politicsEconomics.timeSensitivity === timeSensitivity,
+    ).length,
+  ]),
+);
+if (
+  new Set(generatedPoliticsEconomicsTerms.map((term) => term.id)).size !== 400 ||
+  new Set(generatedPoliticsEconomicsTerms.map((term) => term.term)).size !== 400 ||
+  new Set(generatedPoliticsEconomicsQuestions.map((question) => question.id))
+    .size !== 400 ||
+  politicsEconomicsRanks.some((rank, index) => rank !== index + 1) ||
+  generatedPoliticsEconomicsTerms.some((term) => !/^PE-\d{6}$/.test(term.id)) ||
+  generatedPoliticsEconomicsQuestions.some(
+    (question) => !/^PE-\d{6}-C\d{2}$/.test(question.id),
+  ) ||
+  new Set(
+    generatedPoliticsEconomicsTerms.map(
+      (term) => term.politicsEconomics.curriculumScope,
+    ),
+  ).size !== 3 ||
+  new Set(
+    generatedPoliticsEconomicsTerms.map((term) => term.politicsEconomics.domain),
+  ).size !== 6 ||
+  politicsEconomicsTimeSensitivityCounts.stable !== 371 ||
+  politicsEconomicsTimeSensitivityCounts.law_as_of_date !== 26 ||
+  politicsEconomicsTimeSensitivityCounts.system_as_of_date !== 3 ||
+  generatedPoliticsEconomicsTerms.some(
+    (term) =>
+      term.politicsEconomics.timeSensitivity === "stable"
+        ? term.chronology.displayPeriod !== ""
+        : !term.chronology.displayPeriod ||
+          !term.stages.beginner[0].explanation.includes("基準日："),
+  ) ||
+  generatedPoliticsEconomicsTerms.some(
+    (term) =>
+      term.politicsEconomics.legalBasis &&
+      !term.stages.beginner[0].explanation.includes("根拠："),
+  )
+) {
+  throw new Error(
+    "政治・経済Deck 1のID・重要度順位・領域・基準日・法的根拠が正しくありません。",
+  );
+}
+
+if (
   sourceBiologyDecks.length !== 1 ||
   !biologySubjectEntry ||
   biologySubjectEntry.defaultDeckId !== "deck-1" ||
@@ -1039,5 +1201,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

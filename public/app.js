@@ -293,6 +293,19 @@ function supportsOneQuestionPerTerm() {
   return state.subject?.learningType !== "vocabulary";
 }
 
+function termUnitLabel(subject = state.subject) {
+  return String(subject?.termUnitLabel ?? "語");
+}
+
+function availableQuestionStages() {
+  const configured = Array.isArray(state.subject?.availableStages)
+    ? state.subject.availableStages.filter((stage) =>
+        learningStages.includes(stage),
+      )
+    : [];
+  return configured.length > 0 ? configured : learningStages;
+}
+
 function selectedQuestionAmountMode() {
   return supportsOneQuestionPerTerm() &&
     elements.questionAmountFilter.value === oneQuestionPerTermMode
@@ -1917,6 +1930,7 @@ function renderTermTags(term, question, visible) {
     term.geography?.regionDetail,
     term.era,
     term.category,
+    term.subunit,
     questionStyleLabel(question.stage),
     question.focus,
   ]
@@ -2055,10 +2069,11 @@ function questionStyleLabel(stage) {
 
 function setQuestionStyleOptions() {
   const selected = elements.questionStyleFilter.value;
+  const availableStages = availableQuestionStages();
   elements.questionStyleFilter.replaceChildren(
     ...[
       ["", questionStyleLabel("")],
-      ...learningStages.map((stage) => [stage, questionStyleLabel(stage)]),
+      ...availableStages.map((stage) => [stage, questionStyleLabel(stage)]),
     ].map(([value, label]) => {
       const option = document.createElement("option");
       option.value = value;
@@ -2066,7 +2081,7 @@ function setQuestionStyleOptions() {
       return option;
     }),
   );
-  elements.questionStyleFilter.value = ["", ...learningStages].includes(selected)
+  elements.questionStyleFilter.value = ["", ...availableStages].includes(selected)
     ? selected
     : "";
 }
@@ -2102,9 +2117,10 @@ function applySetupPreferences() {
 }
 
 function activeStages() {
-  return learningStages.includes(state.selectedStage)
+  const availableStages = availableQuestionStages();
+  return availableStages.includes(state.selectedStage)
     ? [state.selectedStage]
-    : learningStages;
+    : availableStages;
 }
 
 function countQuestions(terms, stages = learningStages) {
@@ -2150,7 +2166,7 @@ function updateSetupPreview() {
   const questionAmountMode = selectedQuestionAmountMode();
   const stages = learningStages.includes(selectedStage)
     ? [selectedStage]
-    : learningStages;
+    : availableQuestionStages();
   const questions = countQuestions(terms, stages);
   const dueQuestions = (
     questionAmountMode === oneQuestionPerTermMode
@@ -2184,22 +2200,22 @@ function updateSetupPreview() {
       : "暗記モードを開始";
   elements.selectionSummary.textContent =
     terms.length === 0
-      ? "条件に合う用語がありません。選択を変更してください。"
+      ? `条件に合う${termUnitLabel()}がありません。選択を変更してください。`
       : listening && !speechController.supported
         ? "この端末では音声読み上げを利用できません。"
         : listening && dueQuestions === 0
           ? "現在、復習時刻を迎えた読み上げ対象の問題はありません。"
           : listening
-            ? `${terms.length}語・読み上げ対象 ${dueQuestions}問（読み上げ：${listeningContentLabel()}${
+            ? `${terms.length}${termUnitLabel()}・読み上げ対象 ${dueQuestions}問（読み上げ：${listeningContentLabel()}${
                 questionAmountMode === oneQuestionPerTermMode
                   ? "・1項目につき1問"
                   : ""
               }）`
       : questionAmountMode === oneQuestionPerTermMode
-        ? `${terms.length}語・今回${dueQuestions}問（1項目につき1問・最大${terms.length}問）`
+        ? `${terms.length}${termUnitLabel()}・今回${dueQuestions}問（1項目につき1問・最大${terms.length}問）`
       : selectedStage
-        ? `${terms.length}語・${questions}問（${questionStyleLabel(selectedStage)}）`
-        : `${terms.length}語・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
+        ? `${terms.length}${termUnitLabel()}・${questions}問（${questionStyleLabel(selectedStage)}）`
+        : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
     ? "学習記録：Cloudflareに接続済み"
@@ -2303,8 +2319,8 @@ function updateOverallProgress() {
       : (mastery.masteredQuestions / mastery.totalQuestions) * 100;
   elements.overallProgress.textContent = `習得 ${mastery.masteredQuestions} / ${mastery.totalQuestions}問`;
   elements.termProgress.textContent = state.selectedStage
-    ? `このスタイル習得 ${mastery.masteredTerms} / ${mastery.totalTerms}語`
-    : `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}語`;
+    ? `このスタイル習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`
+    : `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`;
   elements.progressBar.style.width = `${percent}%`;
 }
 
@@ -2344,7 +2360,7 @@ function renderQuestion() {
   elements.termTitle.textContent = hidesTerm
     ? vocabularyMode
       ? ""
-      : "通常の一問一答"
+      : questionStyleLabel(question.stage)
     : term.term;
   elements.termReading.textContent = hidesTerm
     ? vocabularyMode
@@ -2455,7 +2471,7 @@ function renderCompletion() {
     elements.queueProgress.textContent = "一巡の残り 0問";
     elements.completionEyebrow.textContent = "一巡完了";
     elements.completionTitle.textContent = `聞き流しを${state.sessionTasks.length}問完了しました`;
-    elements.completionMessage.textContent = `今回選んだ${state.terms.length}語・${state.sessionTasks.length}問を一通り聞き終えました。学習時間は${formatStudyDuration(state.studySeconds)}です。`;
+    elements.completionMessage.textContent = `今回選んだ${state.terms.length}${termUnitLabel()}・${state.sessionTasks.length}問を一通り聞き終えました。学習時間は${formatStudyDuration(state.studySeconds)}です。`;
     renderActionControls();
     updateOverallProgress();
     return;
@@ -2790,8 +2806,8 @@ async function beginStudy() {
   const questionCount = countQuestions(state.terms, activeStages());
   const selectedStyle = questionStyleLabel(state.selectedStage);
   elements.completionTitle.textContent = state.selectedStage
-    ? `${selectedStyle}：${state.terms.length}語・${questionCount}問を習得しました`
-    : `${state.terms.length}語・${questionCount}問を完全習得しました`;
+    ? `${selectedStyle}：${state.terms.length}${termUnitLabel()}・${questionCount}問を習得しました`
+    : `${state.terms.length}${termUnitLabel()}・${questionCount}問を完全習得しました`;
   showOnly(elements.studyShell);
   if (isListeningMode()) {
     beginListeningQuestion();
@@ -2949,7 +2965,7 @@ async function activateDecks(deckIds) {
   };
   state.allTerms = loaded.flatMap((deck) => deck.terms);
   state.historySpeechReadings =
-    state.subject.learningType === "history"
+    state.subject.learningType !== "vocabulary"
       ? createHistorySpeechReadings(state.allTerms)
       : {};
   state.terms = [];
@@ -3007,11 +3023,13 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.084｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.085｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
       ? "複数のデッキ、品詞、出題方向を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
+      : state.subject.learningType === "cards"
+        ? "複数のデッキ、単元、尺度、地域を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
       : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
   configureSetup();
   if (!state.cloudReady && state.cloudError) {
@@ -3029,7 +3047,7 @@ function renderSubjectOptions() {
       const title = document.createElement("strong");
       title.textContent = subject.title;
       const description = document.createElement("small");
-      description.textContent = `${subject.description}（${subject.termCount}語・${subject.questionCount}問）`;
+      description.textContent = `${subject.description}（${subject.termCount}${termUnitLabel(subject)}・${subject.questionCount}問）`;
       button.append(title, description);
       return button;
     }),

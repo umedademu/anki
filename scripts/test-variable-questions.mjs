@@ -91,10 +91,57 @@ if (
 ) {
   throw new Error("地域・小地域・カテゴリを組み合わせて絞り込めませんでした。");
 }
+if (
+  getMacroRegionTags({
+    geography: {
+      macroRegion: "都市・生活圏",
+      splitMacroRegion: false,
+    },
+  }).join(",") !== "都市・生活圏"
+) {
+  throw new Error("地理の尺度名を一つの選択肢として扱えませんでした。");
+}
 
 const masteryTarget = 2;
 const startAt = new Date("2026-08-21T00:00:00.000Z");
 const progress = createEmptyProgress();
+const singleStageTerm = {
+  id: "GE-TEST-001",
+  stages: {
+    beginner: [{ id: "GE-TEST-001-C01", stage: "beginner" }],
+    reverse: [],
+    integrated: [],
+  },
+};
+const singleStageProgress = createEmptyProgress();
+if (
+  getTermStage(singleStageTerm, singleStageProgress, masteryTarget) !== "beginner" ||
+  getOverallMastery(
+    [singleStageTerm],
+    singleStageProgress,
+    masteryTarget,
+  ).masteredTerms !== 0
+) {
+  throw new Error("一段階だけの暗記カードを未習得として開始できませんでした。");
+}
+rateQuestion(
+  singleStageProgress,
+  "GE-TEST-001-C01",
+  "easy",
+  masteryTarget,
+  defaultReviewSettings,
+  startAt,
+);
+if (
+  getTermStage(singleStageTerm, singleStageProgress, masteryTarget) !== "complete" ||
+  getOverallMastery(
+    [singleStageTerm],
+    singleStageProgress,
+    masteryTarget,
+  ).masteredTerms !== 1
+) {
+  throw new Error("一段階だけの暗記カードを習得完了にできませんでした。");
+}
 const firstQueue = createQuestionQueue(terms, progress, masteryTarget, "", startAt);
 if (firstQueue.map((task) => task.questionId).join(",") !== "A-B01,B-B01,A-B02") {
   throw new Error("未学習時に基礎問題を問題番号ごとの用語順で並べられませんでした。");

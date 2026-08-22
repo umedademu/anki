@@ -155,8 +155,10 @@ export function getQuestionYearMnemonic(term, question) {
 }
 
 export function getMacroRegionTags(term) {
-  return String(term?.geography?.macroRegion ?? "")
-    .split("・")
+  const macroRegion = String(term?.geography?.macroRegion ?? "");
+  return (term?.geography?.splitMacroRegion === false
+    ? [macroRegion]
+    : macroRegion.split("・"))
     .map((value) => value.trim())
     .filter(Boolean);
 }
@@ -216,16 +218,26 @@ export function isStageUnlocked(term, stage, progress, masteryTarget) {
 }
 
 export function getTermStage(term, progress, masteryTarget) {
-  if (isStageMastered(term, "integrated", progress, masteryTarget)) {
+  const stagesWithQuestions = learningStages.filter(
+    (stage) => (term?.stages?.[stage]?.length ?? 0) > 0,
+  );
+  if (
+    stagesWithQuestions.length > 0 &&
+    stagesWithQuestions.every((stage) =>
+      isStageMastered(term, stage, progress, masteryTarget),
+    )
+  ) {
     return "complete";
   }
-  if (isStageUnlocked(term, "integrated", progress, masteryTarget)) {
-    return "integrated";
+  for (const stage of stagesWithQuestions) {
+    if (
+      isStageUnlocked(term, stage, progress, masteryTarget) &&
+      !isStageMastered(term, stage, progress, masteryTarget)
+    ) {
+      return stage;
+    }
   }
-  if (isStageUnlocked(term, "reverse", progress, masteryTarget)) {
-    return "reverse";
-  }
-  return "beginner";
+  return stagesWithQuestions[0] ?? "complete";
 }
 
 export function getTermMastery(term, progress, masteryTarget) {
@@ -250,7 +262,11 @@ export function getOverallMastery(
     isQuestionMastered(progress, question.id, masteryTarget),
   ).length;
   const masteredTerms = terms.filter((term) =>
-    stages.every((stage) => isStageMastered(term, stage, progress, masteryTarget)),
+    stages.every(
+      (stage) =>
+        (term.stages[stage]?.length ?? 0) === 0 ||
+        isStageMastered(term, stage, progress, masteryTarget),
+    ),
   ).length;
   return {
     masteredQuestions,

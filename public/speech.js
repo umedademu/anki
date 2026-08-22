@@ -41,9 +41,12 @@ function readingEntries(additionalReadings = {}) {
 export function createHistorySpeechReadings(terms) {
   return Object.fromEntries(
     Array.from(terms ?? [])
-      .map((term) => [
-        String(term?.term ?? "").trim(),
-        String(term?.reading ?? "").trim(),
+      .flatMap((term) => [
+        [
+          String(term?.term ?? "").trim(),
+          String(term?.reading ?? "").trim(),
+        ],
+        ...Object.entries(term?.speechReadings ?? {}),
       ])
       .filter(([term, reading]) => term && reading),
   );

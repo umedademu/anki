@@ -120,6 +120,10 @@ const japaneseHistoryGenerationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "japanese-history-csv-generation.md"),
   "utf8",
 );
+const geographyGenerationPrompt = await readFile(
+  path.join(projectRoot, "docs", "prompts", "geography-csv-generation.md"),
+  "utf8",
+);
 const cloudflareReplacement = await readFile(
   path.join(projectRoot, "scripts", "replace-learning-data-cloudflare.mjs"),
   "utf8",
@@ -181,10 +185,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.084") ||
-  !changelog.includes("v0.084") ||
-  !settingsHtml.includes("v0.084") ||
-  !historyHtml.includes("v0.084")
+  !html.includes("v0.085") ||
+  !changelog.includes("v0.085") ||
+  !settingsHtml.includes("v0.085") ||
+  !historyHtml.includes("v0.085")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -292,7 +296,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.084"') ||
+  !html.includes('href="/styles.css?v=0.085"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -371,6 +375,15 @@ if (
   japaneseHistoryGenerationPrompt.includes("3,600語")
 ) {
   throw new Error("日本史Deck生成用プロンプトの三段階・小分け作成・出典規則が不足しています。");
+}
+if (
+  !geographyGenerationPrompt.includes("# 地理・暗記カードCSV生成プロンプト") ||
+  !geographyGenerationPrompt.includes("初見の地図・統計の分析") ||
+  !geographyGenerationPrompt.includes("`item_id`は`GE-`") ||
+  !geographyGenerationPrompt.includes("CSVの29列") ||
+  !geographyGenerationPrompt.includes("reading_map")
+) {
+  throw new Error("地理Deck生成用プロンプトの暗記範囲・29列・読み規則が不足しています。");
 }
 if (
   !html.includes('id="setup-speech"') ||

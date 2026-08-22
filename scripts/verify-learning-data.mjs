@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import {
   countQuestionsByStage,
   loadEnglishDecks,
+  loadGeographyDecks,
   loadJapaneseHistoryDecks,
   loadSourceDecks,
   loadTermImageManifest,
@@ -143,11 +144,26 @@ const expectedJapaneseSpec = {
   mnemonicCount: 604,
 };
 
+const expectedGeographySpec = {
+  number: 1,
+  version: "geography-deck-1-v1",
+  contentVersion: "56a1cc5bd8d2",
+  datasetLabel: "大学受験地理_Deck1_全範囲の骨格",
+  difficultyLabel: "Deck 1｜全範囲の骨格",
+  termCount: 400,
+  questionCount: 400,
+  questionCounts: { beginner: 400, reverse: 0, integrated: 0 },
+};
+
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
   decks: sourceJapaneseDecks,
   terms: expectedJapaneseTerms,
 } = await loadJapaneseHistoryDecks();
+const {
+  decks: sourceGeographyDecks,
+  terms: expectedGeographyTerms,
+} = await loadGeographyDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -159,11 +175,11 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 3 ||
+  catalog.subjects.length !== 4 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary"
+    "world-history,japanese-history,english-vocabulary,geography"
 ) {
-  throw new Error("世界史・日本史・英単語の科目一覧が正しくありません。");
+  throw new Error("世界史・日本史・英単語・地理の科目一覧が正しくありません。");
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",
@@ -173,6 +189,9 @@ const englishSubjectEntry = catalog.subjects.find(
 );
 const japaneseSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "japanese-history",
+);
+const geographySubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "geography",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -542,6 +561,91 @@ if (
   throw new Error("英単語の識別番号・別解・読み上げ言語が正しくありません。");
 }
 
+if (
+  sourceGeographyDecks.length !== 1 ||
+  !geographySubjectEntry ||
+  geographySubjectEntry.defaultDeckId !== "deck-1" ||
+  geographySubjectEntry.termUnitLabel !== "項目" ||
+  geographySubjectEntry.datasetLabel !== "大学受験地理｜Deck 1" ||
+  geographySubjectEntry.termCount !== expectedGeographySpec.termCount ||
+  geographySubjectEntry.questionCount !== expectedGeographySpec.questionCount ||
+  geographySubjectEntry.decks.length !== 1
+) {
+  throw new Error("地理Deck 1の科目一覧が正しくありません。");
+}
+const sourceGeographyDeck = sourceGeographyDecks[0];
+const geographyDeckEntry = geographySubjectEntry.decks[0];
+const geographySubject = await readJson(geographyDeckEntry.indexPath);
+const geographyChunks = await Promise.all(
+  geographySubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedGeographyTerms = geographyChunks.flatMap((chunk) => chunk.terms);
+const generatedGeographyQuestions = generatedGeographyTerms.flatMap((term) =>
+  Object.values(term.stages).flat(),
+);
+const generatedGeographyCounts = countQuestionsByStage(generatedGeographyTerms);
+if (
+  geographyDeckEntry.number !== expectedGeographySpec.number ||
+  geographyDeckEntry.version !== expectedGeographySpec.version ||
+  geographyDeckEntry.contentVersion !== expectedGeographySpec.contentVersion ||
+  geographyDeckEntry.datasetLabel !== expectedGeographySpec.datasetLabel ||
+  geographyDeckEntry.difficultyLabel !== expectedGeographySpec.difficultyLabel ||
+  geographyDeckEntry.termCount !== expectedGeographySpec.termCount ||
+  geographyDeckEntry.questionCount !== expectedGeographySpec.questionCount ||
+  geographySubject.schemaVersion !== 3 ||
+  geographySubject.id !== "geography" ||
+  geographySubject.learningType !== "cards" ||
+  geographySubject.termUnitLabel !== "項目" ||
+  geographySubject.deckId !== "deck-1" ||
+  geographySubject.deckNumber !== expectedGeographySpec.number ||
+  geographySubject.version !== expectedGeographySpec.version ||
+  geographySubject.contentVersion !== expectedGeographySpec.contentVersion ||
+  geographySubject.datasetLabel !== expectedGeographySpec.datasetLabel ||
+  geographySubject.difficultyLabel !== expectedGeographySpec.difficultyLabel ||
+  geographySubject.sourceFile !== sourceGeographyDeck.sourceFile ||
+  geographySubject.termCount !== expectedGeographySpec.termCount ||
+  geographySubject.questionCount !== expectedGeographySpec.questionCount ||
+  geographySubject.filterLabels.macroRegion !== "尺度" ||
+  geographySubject.filterLabels.regionDetail !== "地域" ||
+  geographySubject.filterLabels.category !== "単元" ||
+  geographySubject.stageLabels.beginner !== "暗記カード" ||
+  geographySubject.availableStages.join(",") !== "beginner" ||
+  geographySubject.chunks.length !== 8 ||
+  geographySubject.chunks.some((chunk) => chunk.count !== 50) ||
+  geographyChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "geography" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  JSON.stringify(generatedGeographyCounts) !==
+    JSON.stringify(expectedGeographySpec.questionCounts) ||
+  JSON.stringify(generatedGeographyTerms) !== JSON.stringify(expectedGeographyTerms) ||
+  generatedGeographyQuestions.some(
+    (question) =>
+      question.stage !== "beginner" ||
+      question.yearMnemonic !== "" ||
+      question.acceptedAnswers.includes(question.answer),
+  )
+) {
+  throw new Error("地理Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+}
+const geographyRanks = generatedGeographyTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+if (
+  new Set(generatedGeographyTerms.map((term) => term.id)).size !== 400 ||
+  new Set(generatedGeographyTerms.map((term) => term.term)).size !== 400 ||
+  new Set(generatedGeographyQuestions.map((question) => question.id)).size !== 400 ||
+  geographyRanks.some((rank, index) => rank !== index + 1) ||
+  generatedGeographyTerms.some((term) => !/^GE-\d{6}$/.test(term.id)) ||
+  generatedGeographyQuestions.some(
+    (question) => !/^GE-\d{6}-C\d{2}$/.test(question.id),
+  )
+) {
+  throw new Error("地理Deck 1のID・項目名・重要度順位が重複または欠落しています。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -819,5 +923,5 @@ if (
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

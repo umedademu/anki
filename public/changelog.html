@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.063" />
+    <link rel="stylesheet" href="/styles.css?v=0.064" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.063</span>
+        <span class="app-version">v0.064</span>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
     </header>
@@ -23,6 +23,20 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.064</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>追加6科目の生成プロンプトから、具体的な単元・分野・地域・配分の固定指定を削除</li>
+          <li>対象範囲を必須入力から外し、項目数と順位などがそろっていれば確認質問を行わない構成へ変更</li>
+          <li>追加依頼に指定がある場合だけ従い、指定がなければ大学受験での重要度からChatGPTが収録内容を判断</li>
+          <li>科目専用の列構成、暗記カード形式、品質検査、出典・読みの規則は維持</li>
+          <li>Webアプリの科目追加やCloudflare上の学習データは未変更</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

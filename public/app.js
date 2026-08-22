@@ -11,6 +11,7 @@ import {
   getNextDueAt,
   getOverallMastery,
   getQuestionPromptForDisplay,
+  getQuestionYearMnemonic,
   getTasksForStage,
   getTermStage,
   learningStages,
@@ -722,6 +723,7 @@ function speechSegmentsFor(target, task = state.currentTask) {
   if (!question || !term) {
     return [];
   }
+  const yearMnemonic = getQuestionYearMnemonic(term, question);
   if (state.subject?.learningType === "vocabulary") {
     const groups = vocabularySpeechGroups(term);
     const layout = vocabularySpeechLayout(question);
@@ -755,11 +757,11 @@ function speechSegmentsFor(target, task = state.currentTask) {
   }
   if (target === "mnemonic") {
     return [
-      ...(question.yearMnemonic
+      ...(yearMnemonic
         ? [
             {
               target,
-              text: prepareMnemonicSpeechText(question.yearMnemonic),
+              text: prepareMnemonicSpeechText(yearMnemonic),
               language: "ja-JP",
             },
           ]
@@ -1425,8 +1427,9 @@ function renderQuestion() {
   renderVocabularySpeechGroups();
 
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  const yearMnemonic = getQuestionYearMnemonic(term, question);
   const showsYearMnemonic =
-    state.answerVisible && Boolean(question.yearMnemonic);
+    state.answerVisible && Boolean(yearMnemonic);
   const showsTermOverview =
     state.answerVisible && (Boolean(integratedExplanation) || showsYearMnemonic);
   elements.termOverviewText.classList.toggle(
@@ -1438,7 +1441,7 @@ function renderQuestion() {
     "is-hidden",
     !speechController.supported || !showsYearMnemonic,
   );
-  elements.yearMnemonicText.textContent = (question.yearMnemonic ?? "")
+  elements.yearMnemonicText.textContent = yearMnemonic
     .split("|")
     .map((mnemonic) => mnemonic.trim())
     .filter(Boolean)
@@ -1470,7 +1473,7 @@ function renderQuestion() {
     displayedQuestionPrompt,
     question.answer,
     integratedExplanation?.answer,
-    question.yearMnemonic,
+    yearMnemonic,
   );
   const fittedAnswerElements = [elements.answerText];
   if (integratedExplanation) {
@@ -1771,7 +1774,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.066｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.067｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -1995,12 +1998,14 @@ window.addEventListener("keydown", (event) => {
 window.addEventListener("resize", () => {
   if (state.currentTask && state.answerVisible) {
     const question = currentQuestion();
-    const explanation = getIntegratedExplanationQuestion(currentTerm(), question);
+    const term = currentTerm();
+    const explanation = getIntegratedExplanationQuestion(term, question);
+    const yearMnemonic = getQuestionYearMnemonic(term, question);
     const targets = [elements.answerText];
     if (explanation) {
       targets.push(elements.termOverviewText);
     }
-    if (question.yearMnemonic) {
+    if (yearMnemonic) {
       targets.push(elements.yearMnemonicText);
     }
     fitTextInsideCard(

@@ -16,6 +16,7 @@ import {
   getNextDueAt,
   getOverallMastery,
   getQuestionPromptForDisplay,
+  getQuestionYearMnemonic,
   getTermStage,
   isQuestionDue,
   isQuestionMastered,
@@ -124,6 +125,25 @@ if (
   getIntegratedExplanationQuestion(terms[0], terms[0].stages.integrated[0]) !== null
 ) {
   throw new Error("統合説明以外の回答へ解説を対応付けられませんでした。");
+}
+
+const termMnemonic = "1800年：開始年の確認用語呂合わせ|1850年：終了年の確認用語呂合わせ";
+const questionMnemonic = "1815年：問題専用の確認用語呂合わせ";
+if (
+  getQuestionYearMnemonic(terms[0], terms[0].stages.beginner[0]) !== termMnemonic ||
+  getQuestionYearMnemonic(terms[0], terms[0].stages.beginner[1]) !== termMnemonic ||
+  getQuestionYearMnemonic(terms[0], terms[0].stages.integrated[0]) !== termMnemonic ||
+  getQuestionYearMnemonic(terms[1], terms[1].stages.beginner[0]) !== "" ||
+  getQuestionYearMnemonic(
+    terms[0],
+    { ...terms[0].stages.beginner[0], yearMnemonic: questionMnemonic },
+  ) !== questionMnemonic ||
+  getQuestionYearMnemonic(
+    { ...terms[0], integratedAsExplanation: false },
+    terms[0].stages.beginner[0],
+  ) !== ""
+) {
+  throw new Error("同じ用語の統合説明にある年号語呂を各問題へ対応付けられませんでした。");
 }
 
 const intervalChecks = [

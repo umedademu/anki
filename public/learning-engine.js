@@ -145,6 +145,15 @@ export function getIntegratedExplanationQuestion(term, question) {
   return term.stages?.integrated?.[0] ?? null;
 }
 
+export function getQuestionYearMnemonic(term, question) {
+  const questionMnemonic = String(question?.yearMnemonic ?? "").trim();
+  if (questionMnemonic) {
+    return questionMnemonic;
+  }
+  const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  return String(integratedExplanation?.yearMnemonic ?? "").trim();
+}
+
 export function getMacroRegionTags(term) {
   return String(term?.geography?.macroRegion ?? "")
     .split("・")

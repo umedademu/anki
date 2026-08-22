@@ -112,9 +112,9 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.066") ||
-  !changelog.includes("v0.066") ||
-  !settingsHtml.includes("v0.066")
+  !html.includes("v0.067") ||
+  !changelog.includes("v0.067") ||
+  !settingsHtml.includes("v0.067")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -149,7 +149,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.066"') ||
+  !html.includes('href="/styles.css?v=0.067"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -225,7 +225,7 @@ if (
   !app.includes("createSpeechController") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
-  !app.includes("prepareMnemonicSpeechText(question.yearMnemonic)") ||
+  !app.includes("prepareMnemonicSpeechText(yearMnemonic)") ||
   !speech.includes("export function prepareMnemonicSpeechText") ||
   !app.includes("function toggleSpeechPart(target)") ||
   !app.includes('icon.textContent = enabled ? "🔊" : "🔇"') ||
@@ -327,7 +327,7 @@ if (
   !html.includes('id="year-mnemonic"') ||
   !html.includes('id="year-mnemonic-text"') ||
   !html.includes('id="year-mnemonic-speech"') ||
-  !app.includes("question.yearMnemonic") ||
+  !app.includes("getQuestionYearMnemonic") ||
   !app.includes('if (target === "mnemonic")') ||
   !app.includes('toggleSpeechPart("mnemonic")') ||
   !app.includes('.split("|")') ||
@@ -336,7 +336,7 @@ if (
   !app.includes('elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic)') ||
   !styles.includes(".year-mnemonic") ||
   !styles.includes("white-space: pre-line") ||
-  !speechSegmentsBlock.includes("question.yearMnemonic") ||
+  !speechSegmentsBlock.includes("getQuestionYearMnemonic(term, question)") ||
   !automaticAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
   !answerSpeechSequenceBlock ||
   answerSpeechSequenceBlock.indexOf('speechSegmentsFor("answer"') >=

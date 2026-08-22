@@ -2451,11 +2451,11 @@ function renderQuestion() {
     elements.questionCard,
     displayedQuestionPrompt,
     question.answer,
-    integratedExplanation?.answer,
+    explanation,
     yearMnemonic,
   );
   const fittedAnswerElements = [elements.answerText];
-  if (integratedExplanation) {
+  if (explanation) {
     fittedAnswerElements.push(elements.termOverviewText);
   }
   if (showsYearMnemonic) {
@@ -3032,7 +3032,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.087｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.088｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3334,7 +3334,7 @@ window.addEventListener("resize", () => {
   if (state.currentTask && state.answerVisible) {
     const question = currentQuestion();
     const term = currentTerm();
-    const explanation = getIntegratedExplanationQuestion(term, question);
+    const explanation = getQuestionExplanation(term, question);
     const yearMnemonic = getQuestionYearMnemonic(term, question);
     const targets = [elements.answerText];
     if (explanation) {

@@ -170,7 +170,7 @@ const state = {
   retryQuestionIds: new Set(),
   sessionStartedAt: null,
   activeSession: false,
-  savedSession: null,
+  savedSessions: createEmptySavedSessions(),
   answerVisible: false,
   shuffleEnabled: false,
   autoSpeechEnabled: true,
@@ -235,6 +235,22 @@ function selectedStudyMode() {
     [...elements.studyModeOptions].find((option) => option.checked)?.value ??
     "memorize"
   );
+}
+
+function createEmptySavedSessions() {
+  return { memorize: null, "listen-answer": null };
+}
+
+function savedSessionForMode(studyMode = selectedStudyMode()) {
+  return state.savedSessions?.[studyMode] ?? null;
+}
+
+function setSavedSessionForMode(studyMode, session) {
+  state.savedSessions = {
+    ...state.savedSessions,
+    [studyMode]: session,
+  };
+  return session;
 }
 
 function supportsOneQuestionPerTerm() {
@@ -395,7 +411,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.answerVisible = session.answerVisible && session.studyMode === "memorize";
   state.sessionStartedAt = session.startedAt ?? new Date().toISOString();
   state.activeSession = true;
-  state.savedSession = session;
+  setSavedSessionForMode(session.studyMode, session);
   state.history = [];
   state.pendingListeningActivity = null;
   state.answerRevealedAt = 0;
@@ -406,13 +422,14 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
 function queueActiveSessionSave() {
   const session = captureActiveSession();
   if (!session) return Promise.resolve(null);
+  const studyMode = session.studyMode;
   const saveVersion = ++studySessionSaveVersion;
   studySessionSave = studySessionSave
     .catch(() => {})
     .then(async () => {
       const saved = await saveCloudStudySession(state.subject.version, session);
       if (saveVersion === studySessionSaveVersion) {
-        state.savedSession = saved;
+        setSavedSessionForMode(studyMode, saved);
       }
       return saved;
     });
@@ -421,6 +438,7 @@ function queueActiveSessionSave() {
 
 function queueActiveStudyActivity(activity) {
   const session = captureActiveSession();
+  const studyMode = state.studyMode;
   const datasetVersion = state.subject.version;
   const saveVersion = ++studySessionSaveVersion;
   studySessionSave = studySessionSave
@@ -432,7 +450,7 @@ function queueActiveStudyActivity(activity) {
         session,
       );
       if (saveVersion === studySessionSaveVersion) {
-        state.savedSession = saved.session;
+        setSavedSessionForMode(studyMode, saved.session);
       }
       return saved.session;
     });
@@ -746,7 +764,7 @@ async function loadProgressFromCloud() {
   state.cloudError = "";
   if (!getStoredAccessKey()) {
     state.progress = createEmptyProgress();
-    state.savedSession = null;
+    state.savedSessions = createEmptySavedSessions();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
@@ -761,7 +779,7 @@ async function loadProgressFromCloud() {
     state.subject.version,
   );
   state.progress = cloudState.progress;
-  state.savedSession = cloudState.session;
+  state.savedSessions = cloudState.sessions;
   state.reviewSettings = normalizeReviewSettings(cloudState.settings);
   state.shuffleEnabled = cloudState.settings.shuffleEnabled;
   state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
@@ -893,9 +911,12 @@ async function goBackOneStep() {
         snapshot.questionId,
         snapshot.previousQuestionRecord,
         captureActiveSession(),
-        { deleteActivityId: snapshot.studyActivityEventId },
+        {
+          studyMode: "memorize",
+          deleteActivityId: snapshot.studyActivityEventId,
+        },
       );
-      state.savedSession = saved.session;
+      setSavedSessionForMode("memorize", saved.session);
     } catch (error) {
       const cloudState = await loadCloudState(
         state.subject.masteryTarget,
@@ -904,9 +925,9 @@ async function goBackOneStep() {
       if (cloudState) {
         state.progress = cloudState.progress;
         state.reviewSettings = cloudState.settings;
-        if (!restoreActiveSession(cloudState.session, { updateControls: false })) {
+        if (!restoreActiveSession(cloudState.sessions.memorize, { updateControls: false })) {
           state.activeSession = false;
-          state.savedSession = null;
+          setSavedSessionForMode("memorize", null);
           state.queue = [];
           state.currentTask = null;
           state.answerVisible = false;
@@ -1459,7 +1480,7 @@ async function returnToSetup() {
   elements.listeningToggle.textContent = "一時停止";
   if (state.activeSession) {
     try {
-      state.savedSession = await queueActiveSessionSave();
+      await queueActiveSessionSave();
     } catch (error) {
       state.unlockMessage = error.message;
     }
@@ -1718,8 +1739,9 @@ function updateSetupPreview() {
     (total, term) => total + (term.stages.beginner?.length ?? 0),
     0,
   );
-  const hasSavedSession = Boolean(state.savedSession);
-  const restartsSavedSession = setupMatchesSession(state.savedSession, terms);
+  const savedSession = savedSessionForMode(studyMode);
+  const hasSavedSession = Boolean(savedSession);
+  const restartsSavedSession = setupMatchesSession(savedSession, terms);
   elements.resumeStudy.classList.toggle("is-hidden", !hasSavedSession);
   elements.resumeStudy.disabled = !state.cloudReady || !hasSavedSession;
   elements.startStudy.disabled =
@@ -2133,9 +2155,9 @@ async function rateCurrentQuestion(rating) {
       question.id,
       state.progress.questions[question.id],
       captureActiveSession(),
-      { activity },
+      { studyMode: "memorize", activity },
     );
-    state.savedSession = saved.session;
+    setSavedSessionForMode("memorize", saved.session);
   } catch (error) {
     restoreRatingUndoSnapshot(state.progress, snapshot);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
@@ -2167,7 +2189,7 @@ async function resetAllProgress() {
     return;
   }
   state.progress = createEmptyProgress();
-  state.savedSession = null;
+  state.savedSessions = createEmptySavedSessions();
   state.activeSession = false;
   state.sessionTasks = [];
   state.unseenQuestionIds = new Set();
@@ -2200,8 +2222,10 @@ async function beginStudy() {
     updateSetupPreview();
     return;
   }
+  const studyMode = selectedStudyMode();
+  const savedSession = savedSessionForMode(studyMode);
   if (
-    state.savedSession &&
+    savedSession &&
     !window.confirm(
       "前回の一周を終了し、現在の条件ではじめから学習しますか？\n問題ごとの正誤記録と復習日時は消えません。",
     )
@@ -2223,15 +2247,15 @@ async function beginStudy() {
   setStudyTerms(selectedTerms);
   state.selectedStage = elements.questionStyleFilter.value;
   state.questionAmountMode = selectedQuestionAmountMode();
-  state.studyMode = selectedStudyMode();
+  state.studyMode = studyMode;
   state.shuffleEnabled = elements.setupShuffle.checked;
   state.autoSpeechEnabled =
     speechController.supported && elements.setupSpeech.checked;
   speechController.stop();
   clearPendingReviewTimer();
-  if (setupMatchesSession(state.savedSession, selectedTerms)) {
+  if (setupMatchesSession(savedSession, selectedTerms)) {
     const validQuestionIds = new Set(state.questionById.keys());
-    state.queue = state.savedSession.tasks
+    state.queue = savedSession.tasks
       .filter((task) => validQuestionIds.has(task.questionId))
       .map(cloneTask);
   } else {
@@ -2257,13 +2281,14 @@ async function beginStudy() {
 
   try {
     if (state.activeSession) {
-      state.savedSession = await saveCloudStudySession(
+      const saved = await saveCloudStudySession(
         state.subject.version,
         captureActiveSession(),
       );
+      setSavedSessionForMode(studyMode, saved);
     } else {
-      await deleteCloudStudySession(state.subject.version);
-      state.savedSession = null;
+      await deleteCloudStudySession(state.subject.version, studyMode);
+      setSavedSessionForMode(studyMode, null);
     }
   } catch (error) {
     state.activeSession = false;
@@ -2290,15 +2315,17 @@ async function beginStudy() {
 }
 
 async function resumeStudy() {
-  if (startingStudy || !state.savedSession || !state.cloudReady) return;
+  const studyMode = selectedStudyMode();
+  const savedSession = savedSessionForMode(studyMode);
+  if (startingStudy || !savedSession || !state.cloudReady) return;
   startingStudy = true;
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
   clearPendingReviewTimer();
   speechController.stop();
-  if (!restoreActiveSession(state.savedSession)) {
-    await deleteCloudStudySession(state.subject.version).catch(() => {});
-    state.savedSession = null;
+  if (!restoreActiveSession(savedSession)) {
+    await deleteCloudStudySession(state.subject.version, studyMode).catch(() => {});
+    setSavedSessionForMode(studyMode, null);
     state.activeSession = false;
     elements.cloudStatus.textContent = "前回の一周を復元できなかったため、はじめから開始してください。";
     startingStudy = false;
@@ -2328,10 +2355,11 @@ async function resumeStudy() {
   clearListeningTimer();
   elements.listeningToggle.textContent = "一時停止";
   try {
-    state.savedSession = await saveCloudStudySession(
+    const saved = await saveCloudStudySession(
       state.subject.version,
       captureActiveSession(),
     );
+    setSavedSessionForMode(studyMode, saved);
   } catch (error) {
     elements.cloudStatus.textContent = `前回の一周を再開できませんでした。${error.message}`;
     startingStudy = false;
@@ -2379,7 +2407,7 @@ async function activateDeck(deckId) {
     await loadProgressFromCloud();
   } catch (error) {
     state.progress = createEmptyProgress();
-    state.savedSession = null;
+    state.savedSessions = createEmptySavedSessions();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
@@ -2415,7 +2443,7 @@ async function activateDeck(deckId) {
   elements.deckFilter.value = deckEntry.id;
   elements.deckFilter.disabled = false;
   elements.subjectName.textContent = `${state.subject.title}｜${deckDisplayLabel(deckEntry).split("｜")[0]}`;
-  elements.setupEyebrow.textContent = `v0.072｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.073｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

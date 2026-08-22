@@ -69,6 +69,10 @@ const dailyStudyHistoryMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0009_daily_study_history.sql"),
   "utf8",
 );
+const studySessionsByModeMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0010_study_sessions_by_mode.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -164,10 +168,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.072") ||
-  !changelog.includes("v0.072") ||
-  !settingsHtml.includes("v0.072") ||
-  !historyHtml.includes("v0.072")
+  !html.includes("v0.073") ||
+  !changelog.includes("v0.073") ||
+  !settingsHtml.includes("v0.073") ||
+  !historyHtml.includes("v0.073")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -201,12 +205,21 @@ if (
   !app.includes("function schedulePendingReview") ||
   !app.includes("saveCloudStudyAnswer") ||
   !app.includes("saveCloudStudySession") ||
-  !cloudProgress.includes('`/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`') ||
+  !app.includes("savedSessionForMode(studyMode)") ||
+  !app.includes("deleteCloudStudySession(state.subject.version, studyMode)") ||
+  app.includes("savedSession: null") ||
+  !cloudProgress.includes("normalizeStudySessions") ||
+  !cloudProgress.includes("&mode=${encodeURIComponent(studyMode)}") ||
   !worker.includes('url.pathname === "/v1/study-session"') ||
   !worker.includes("studyAnswerMatch") ||
-  !studySessionsMigration.includes("CREATE TABLE IF NOT EXISTS study_sessions")
+  !studySessionsMigration.includes("CREATE TABLE IF NOT EXISTS study_sessions") ||
+  !studySessionsByModeMigration.includes("CREATE TABLE IF NOT EXISTS study_sessions_by_mode") ||
+  !studySessionsByModeMigration.includes("PRIMARY KEY (dataset_version, study_mode)") ||
+  !studySessionsByModeMigration.includes("json_extract(session_json, '$.studyMode')") ||
+  studySessionsByModeMigration.includes("DROP TABLE study_sessions") ||
+  !worker.includes("ON CONFLICT(dataset_version, study_mode)")
 ) {
-  throw new Error("暗記・聞き流しの一周保存、再開、期限到来時の再出題が揃っていません。");
+  throw new Error("暗記・聞き流し別の一周保存、再開、期限到来時の再出題が揃っていません。");
 }
 if (
   !app.includes("function setDeckOptions(decks, selectedDeckId)") ||
@@ -239,7 +252,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.072"') ||
+  !html.includes('href="/styles.css?v=0.073"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

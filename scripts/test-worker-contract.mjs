@@ -19,6 +19,7 @@ import {
   normalizeStudyHistory,
   normalizeSpeechParts as normalizeBrowserSpeechParts,
   normalizeStudySession as normalizeBrowserStudySession,
+  normalizeStudySessions,
 } from "../public/cloud-progress.js";
 
 if (normalizeDatasetVersion("d5d13f1099e9") !== "d5d13f1099e9") {
@@ -85,6 +86,32 @@ for (const session of [
   ) {
     throw new Error("Cloudflareへ保存する一周を正規化できませんでした。");
   }
+}
+
+const listeningSessionInput = {
+  ...studySessionInput,
+  studyMode: "listen-answer",
+  answeredCount: 5,
+  answerVisible: false,
+};
+const separateStudySessions = normalizeStudySessions({
+  memorize: studySessionInput,
+  "listen-answer": listeningSessionInput,
+});
+if (
+  separateStudySessions.memorize?.answeredCount !== 12 ||
+  separateStudySessions["listen-answer"]?.answeredCount !== 5 ||
+  separateStudySessions.memorize.studyMode !== "memorize" ||
+  separateStudySessions["listen-answer"].studyMode !== "listen-answer"
+) {
+  throw new Error("暗記と聞き流しの一周を別々に読み込めませんでした。");
+}
+const legacyStudySessions = normalizeStudySessions(null, listeningSessionInput);
+if (
+  legacyStudySessions.memorize !== null ||
+  legacyStudySessions["listen-answer"]?.answeredCount !== 5
+) {
+  throw new Error("従来の一周を記録済みの学習モードへ引き継げませんでした。");
 }
 
 const studyActivity = normalizeStudyActivity(

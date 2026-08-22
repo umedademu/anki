@@ -179,6 +179,26 @@ export function normalizeStudySession(value) {
   };
 }
 
+export function normalizeStudySessions(value, legacySession = null) {
+  const sessions = { memorize: null, "listen-answer": null };
+  if (value && typeof value === "object" && !Array.isArray(value)) {
+    for (const studyMode of studyModes) {
+      const session = normalizeStudySession(value[studyMode]);
+      if (session?.studyMode === studyMode) {
+        sessions[studyMode] = session;
+      }
+    }
+  }
+  const normalizedLegacySession = normalizeStudySession(legacySession);
+  if (
+    normalizedLegacySession &&
+    !sessions[normalizedLegacySession.studyMode]
+  ) {
+    sessions[normalizedLegacySession.studyMode] = normalizedLegacySession;
+  }
+  return sessions;
+}
+
 function normalizeSetupPreferenceId(value) {
   const id = String(value ?? "");
   return setupPreferenceIdPattern.test(id) ? id : "";
@@ -416,6 +436,7 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   return {
     progress: normalizeProgress(payload.progress ?? createEmptyProgress(), masteryTarget),
     settings: normalizeSharedSettings(payload.settings),
+    sessions: normalizeStudySessions(payload.sessions, payload.session),
     session: normalizeStudySession(payload.session),
   };
 }
@@ -476,9 +497,9 @@ export async function saveCloudStudySession(datasetVersion, session) {
   return normalizeStudySession(payload.session);
 }
 
-export async function deleteCloudStudySession(datasetVersion) {
+export async function deleteCloudStudySession(datasetVersion, studyMode) {
   return cloudRequest(
-    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
+    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}&mode=${encodeURIComponent(studyMode)}`,
     { method: "DELETE" },
   );
 }
@@ -497,6 +518,7 @@ export async function saveCloudStudyAnswer(
       body: JSON.stringify({
         record,
         session,
+        studyMode: historyChange.studyMode ?? session?.studyMode ?? null,
         activity: historyChange.activity ?? null,
         deleteActivityId: historyChange.deleteActivityId ?? null,
       }),

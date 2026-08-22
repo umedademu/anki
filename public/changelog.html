@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.097" />
+    <link rel="stylesheet" href="/styles.css?v=0.098" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.097</span>
+        <span class="app-version">v0.098</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.098</h2>
+          <time datetime="2026-08-23">2026年8月23日</time>
+        </div>
+        <ul>
+          <li>地理・地学基礎・生物基礎・政治・経済などで、暗記モードの次問音声が再生されないことがある不具合を修正</li>
+          <li>問題音声の開始前にCloudflareへの学習記録保存を待っていた処理順を改め、次問表示と音声開始を先に実行</li>
+          <li>保存中の回答・一手戻し操作を無効にし、保存失敗時は音声と画面を安全に直前の状態へ戻すよう調整</li>
+          <li>対象4科目の問題文について、Cloudflareから正常な音声データが返ることを確認</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

@@ -108,6 +108,15 @@ const listeningBackBlock = app.match(
 const startBlock = app.match(
   /async function start\(\)[\s\S]*?\n}\n\nelements\.subjectOptions/,
 )?.[0];
+const rateCurrentQuestionBlock = app.match(
+  /async function rateCurrentQuestion\(rating\)[\s\S]*?async function resetAllProgress/,
+)?.[0];
+const beginStudyBlock = app.match(
+  /async function beginStudy\(\)[\s\S]*?async function resumeStudy/,
+)?.[0];
+const resumeStudyBlock = app.match(
+  /async function resumeStudy\(\)[\s\S]*?async function activateDecks/,
+)?.[0];
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -193,10 +202,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.097") ||
-  !changelog.includes("v0.097") ||
-  !settingsHtml.includes("v0.097") ||
-  !historyHtml.includes("v0.097")
+  !html.includes("v0.098") ||
+  !changelog.includes("v0.098") ||
+  !settingsHtml.includes("v0.098") ||
+  !historyHtml.includes("v0.098")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -304,7 +313,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.097"') ||
+  !html.includes('href="/styles.css?v=0.098"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -681,6 +690,26 @@ if (
   )
 ) {
   throw new Error("回答音声の別解設定に宣言と異なる指定名が含まれています。");
+}
+if (
+  !rateCurrentQuestionBlock ||
+  !beginStudyBlock ||
+  !resumeStudyBlock ||
+  rateCurrentQuestionBlock.indexOf("autoSpeakQuestion();") >=
+    rateCurrentQuestionBlock.indexOf("await saveCloudStudyAnswer(") ||
+  rateCurrentQuestionBlock.indexOf("autoSpeakQuestion();") >=
+    rateCurrentQuestionBlock.indexOf("await pendingStudySessionSave") ||
+  rateCurrentQuestionBlock.indexOf("autoSpeakQuestion();") >=
+    rateCurrentQuestionBlock.indexOf("await pendingStudyTimeSave") ||
+  beginStudyBlock.indexOf("autoSpeakQuestion();") >=
+    beginStudyBlock.indexOf("await saveCloudStudySession(") ||
+  resumeStudyBlock.indexOf("autoSpeakQuestion();") >=
+    resumeStudyBlock.indexOf("await saveCloudStudySession(") ||
+  !app.includes("elements.nextAction.disabled = state.saving") ||
+  !app.includes("elements.backAction.disabled = !canGoBack || state.saving") ||
+  !app.includes("state.answerVisible ||\n    state.saving")
+) {
+  throw new Error("暗記モードの次問音声をCloudflare保存より先に開始する処理が揃っていません。");
 }
 if (
   !html.includes('name="study-mode" value="memorize"') ||

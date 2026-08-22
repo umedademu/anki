@@ -1128,12 +1128,13 @@ function renderActionControls() {
     "is-hidden",
     !listening || !hasQuestion,
   );
-  elements.backAction.disabled = !canGoBack;
+  elements.backAction.disabled = !canGoBack || state.saving;
   elements.listeningBack.disabled = !canGoBack || state.saving;
   elements.nextAction.classList.toggle(
     "is-hidden",
     !hasQuestion || state.answerVisible,
   );
+  elements.nextAction.disabled = state.saving;
   elements.ratingButtons.classList.toggle("is-hidden", !showsRatingActions);
   [
     elements.incorrectAction,
@@ -1146,7 +1147,12 @@ function renderActionControls() {
 }
 
 function revealCurrentAnswer() {
-  if (isListeningMode() || !state.currentTask || state.answerVisible) {
+  if (
+    isListeningMode() ||
+    !state.currentTask ||
+    state.answerVisible ||
+    state.saving
+  ) {
     return;
   }
   speechController.stop();
@@ -2564,16 +2570,8 @@ async function rateCurrentQuestion(rating) {
   stopStudyClock();
   state.saving = true;
   renderActionControls();
-  await studySessionSave.catch(() => {});
-  try {
-    await queueCurrentStudyTimeSave();
-  } catch (error) {
-    state.unlockMessage = error.message;
-    state.saving = false;
-    startStudyClock();
-    renderQuestion();
-    return;
-  }
+  const pendingStudySessionSave = studySessionSave.catch(() => {});
+  const pendingStudyTimeSave = queueCurrentStudyTimeSave();
 
   const stageBefore = state.selectedStage
     ? null
@@ -2641,8 +2639,12 @@ async function rateCurrentQuestion(rating) {
   }
   startNewStudyScreen();
 
-  renderActionControls();
+  renderQuestion();
+  autoSpeakQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
   try {
+    await pendingStudySessionSave;
+    await pendingStudyTimeSave;
     const saved = await saveCloudStudyAnswer(
       datasetVersionForQuestion(question.id),
       question.id,
@@ -2656,6 +2658,7 @@ async function rateCurrentQuestion(rating) {
     );
     setSavedSessionForMode("memorize", saved.session);
   } catch (error) {
+    speechController.stop();
     restoreRatingUndoSnapshot(state.progress, snapshot);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
     state.history = historyBefore;
@@ -2668,9 +2671,7 @@ async function rateCurrentQuestion(rating) {
   state.saving = false;
   startStudyClock();
   pushHistory(snapshot);
-  renderQuestion();
-  autoSpeakQuestion();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  renderActionControls();
 }
 
 async function resetAllProgress() {
@@ -2797,6 +2798,14 @@ async function beginStudy() {
   startNewStudyScreen();
   clearListeningTimer();
   elements.listeningToggle.textContent = "一時停止";
+  const startsMemorizeScreenBeforeSave = !isListeningMode();
+  if (startsMemorizeScreenBeforeSave) {
+    state.saving = true;
+    showOnly(elements.studyShell);
+    renderQuestion();
+    autoSpeakQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   try {
     if (state.activeSession) {
@@ -2810,10 +2819,13 @@ async function beginStudy() {
       setSavedSessionForMode(studyMode, null);
     }
   } catch (error) {
+    speechController.stop();
     stopStudyClock({ capture: false });
     state.activeSession = false;
+    state.saving = false;
     elements.cloudStatus.textContent = `一周を保存できませんでした。${error.message}`;
     startingStudy = false;
+    showOnly(elements.setupPanel);
     updateSetupPreview();
     return;
   }
@@ -2823,14 +2835,16 @@ async function beginStudy() {
   elements.completionTitle.textContent = state.selectedStage
     ? `${selectedStyle}：${state.terms.length}${termUnitLabel()}・${questionCount}問を習得しました`
     : `${state.terms.length}${termUnitLabel()}・${questionCount}問を完全習得しました`;
-  showOnly(elements.studyShell);
-  if (isListeningMode()) {
+  if (!startsMemorizeScreenBeforeSave) {
+    showOnly(elements.studyShell);
     beginListeningQuestion();
   } else {
-    renderQuestion();
-    autoSpeakQuestion();
+    state.saving = false;
+    renderActionControls();
   }
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (!startsMemorizeScreenBeforeSave) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   startingStudy = false;
 }
 
@@ -2880,6 +2894,14 @@ async function resumeStudy() {
   state.listeningPaused = false;
   clearListeningTimer();
   elements.listeningToggle.textContent = "一時停止";
+  const resumesMemorizeScreenBeforeSave = !isListeningMode();
+  if (resumesMemorizeScreenBeforeSave) {
+    state.saving = true;
+    showOnly(elements.studyShell);
+    renderQuestion();
+    autoSpeakQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   try {
     const saved = await saveCloudStudySession(
       state.sessionDatasetVersion,
@@ -2887,20 +2909,25 @@ async function resumeStudy() {
     );
     setSavedSessionForMode(studyMode, saved);
   } catch (error) {
+    speechController.stop();
     stopStudyClock({ capture: false });
+    state.saving = false;
     elements.cloudStatus.textContent = `前回の一周を再開できませんでした。${error.message}`;
     startingStudy = false;
+    showOnly(elements.setupPanel);
     updateSetupPreview();
     return;
   }
-  showOnly(elements.studyShell);
-  if (isListeningMode()) {
+  if (!resumesMemorizeScreenBeforeSave) {
+    showOnly(elements.studyShell);
     beginListeningQuestion();
   } else {
-    renderQuestion();
-    autoSpeakQuestion();
+    state.saving = false;
+    renderActionControls();
   }
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  if (!resumesMemorizeScreenBeforeSave) {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
   startingStudy = false;
 }
 
@@ -3038,7 +3065,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.097｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.098｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

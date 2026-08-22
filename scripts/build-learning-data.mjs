@@ -996,7 +996,7 @@ export function toGeographyObjects(rows) {
   });
 }
 
-function geographyAnswerNote(row) {
+function geographyExplanation(row) {
   return [
     geographyValue(row.explanation),
     geographyValue(row.confusable_with) && geographyValue(row.distinction)
@@ -1032,7 +1032,8 @@ function normalizeGeographyQuestion(row, rowIndex) {
     answer: row.answer,
     keywords: [...new Set([row.answer, ...acceptedAnswers])],
     acceptedAnswers,
-    answerNote: geographyAnswerNote(row),
+    answerNote: "",
+    explanation: geographyExplanation(row),
     yearMnemonic: "",
     source: { name: row.source_name, url: row.source_url },
     hideTermUntilAnswer: row.card_type === "identify",
@@ -1237,7 +1238,7 @@ export function toBiologyObjects(rows) {
   });
 }
 
-function biologyAnswerNote(row) {
+function biologyExplanation(row) {
   return [
     geographyValue(row.explanation),
     geographyValue(row.confusable_with) && geographyValue(row.distinction)
@@ -1273,7 +1274,8 @@ function normalizeBiologyQuestion(row, rowIndex) {
     answer: row.answer,
     keywords: [...new Set([row.answer, ...acceptedAnswers])],
     acceptedAnswers,
-    answerNote: biologyAnswerNote(row),
+    answerNote: "",
+    explanation: biologyExplanation(row),
     yearMnemonic: "",
     source: { name: row.source_name, url: row.source_url },
     hideTermUntilAnswer: row.card_type === "identify",

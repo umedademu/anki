@@ -644,6 +644,8 @@ if (
     (question) =>
       question.stage !== "beginner" ||
       question.yearMnemonic !== "" ||
+      question.answerNote !== "" ||
+      !question.explanation ||
       question.acceptedAnswers.includes(question.answer),
   )
 ) {
@@ -729,6 +731,8 @@ if (
     (question) =>
       question.stage !== "beginner" ||
       question.yearMnemonic !== "" ||
+      question.answerNote !== "" ||
+      !question.explanation ||
       question.acceptedAnswers.includes(question.answer),
   )
 ) {

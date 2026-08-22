@@ -7,11 +7,11 @@ import {
   deserializeProgress,
   enqueueUniqueTasks,
   filterTermsBySelection,
-  getIntegratedExplanationQuestion,
   getMacroRegionTags,
   getNextDueAt,
   getOverallMastery,
   getQuestionPromptForDisplay,
+  getQuestionExplanation,
   getQuestionYearMnemonic,
   getTasksForStage,
   getTermStage,
@@ -1494,9 +1494,9 @@ function speechSegmentsFor(target, task = state.currentTask) {
     ];
   }
   if (target === "overview") {
-    const explanation = getIntegratedExplanationQuestion(term, question);
+    const explanation = getQuestionExplanation(term, question);
     return explanation
-      ? [{ target, text: explanation.answer, language: "ja-JP" }]
+      ? [{ target, text: explanation, language: "ja-JP" }]
       : [];
   }
   return [];
@@ -2407,15 +2407,15 @@ function renderQuestion() {
   elements.answerNote.textContent = question.answerNote;
   renderVocabularySpeechGroups();
 
-  const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  const explanation = getQuestionExplanation(term, question);
   const yearMnemonic = getQuestionYearMnemonic(term, question);
   const showsYearMnemonic =
     state.answerVisible && Boolean(yearMnemonic);
   const showsTermOverview =
-    state.answerVisible && (Boolean(integratedExplanation) || showsYearMnemonic);
+    state.answerVisible && (Boolean(explanation) || showsYearMnemonic);
   elements.termOverviewText.classList.toggle(
     "is-hidden",
-    !state.answerVisible || !integratedExplanation,
+    !state.answerVisible || !explanation,
   );
   elements.yearMnemonic.classList.toggle("is-hidden", !showsYearMnemonic);
   elements.yearMnemonicSpeech.classList.toggle(
@@ -2427,11 +2427,11 @@ function renderQuestion() {
   );
   elements.overviewSpeech.classList.toggle(
     "is-hidden",
-    !speechController.supported || !integratedExplanation,
+    !speechController.supported || !explanation,
   );
   renderEmphasizedText(
     elements.termOverviewText,
-    integratedExplanation?.answer ?? "",
+    explanation,
   );
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
@@ -3032,7 +3032,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.086｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.087｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

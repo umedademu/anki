@@ -16,6 +16,7 @@ import {
   getMacroRegionTags,
   getNextDueAt,
   getOverallMastery,
+  getQuestionExplanation,
   getQuestionPromptForDisplay,
   getQuestionYearMnemonic,
   getTermStage,
@@ -263,6 +264,16 @@ if (
   getIntegratedExplanationQuestion(terms[0], terms[0].stages.integrated[0]) !== null
 ) {
   throw new Error("統合説明以外の回答へ解説を対応付けられませんでした。");
+}
+if (
+  getQuestionExplanation(terms[0], terms[0].stages.beginner[0]) !==
+    terms[0].stages.integrated[0].answer ||
+  getQuestionExplanation(
+    { ...terms[0], integratedAsExplanation: false },
+    { ...terms[0].stages.beginner[0], explanation: "カード専用の解説" },
+  ) !== "カード専用の解説"
+) {
+  throw new Error("世界史の統合説明と暗記カード専用の解説を同じ解説枠へ分けて表示できませんでした。");
 }
 
 const termMnemonic = "1800年：開始年の確認用語呂合わせ|1850年：終了年の確認用語呂合わせ";

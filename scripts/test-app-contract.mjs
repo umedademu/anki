@@ -189,10 +189,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.086") ||
-  !changelog.includes("v0.086") ||
-  !settingsHtml.includes("v0.086") ||
-  !historyHtml.includes("v0.086")
+  !html.includes("v0.087") ||
+  !changelog.includes("v0.087") ||
+  !settingsHtml.includes("v0.087") ||
+  !historyHtml.includes("v0.087")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -300,7 +300,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.086"') ||
+  !html.includes('href="/styles.css?v=0.087"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -404,6 +404,7 @@ if (
   !html.includes('id="answer-speech"') ||
   !html.includes('id="overview-speech"') ||
   !app.includes("createSpeechController") ||
+  !app.includes("getQuestionExplanation") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
   !app.includes("prepareMnemonicSpeechText(yearMnemonic)") ||
@@ -507,7 +508,7 @@ if (
   app.includes("elements.termImageLink") ||
   app.includes("image.sourcePageUrl") ||
   !app.includes('elements.termOverview.classList.toggle("has-image", showsImage)') ||
-  !app.includes("state.answerVisible && (Boolean(integratedExplanation) || showsYearMnemonic)") ||
+  !app.includes("state.answerVisible && (Boolean(explanation) || showsYearMnemonic)") ||
   !app.includes("const showsTermImage = renderQuestionImage(question, state.answerVisible)") ||
   !styles.includes(".term-overview-main.has-image") ||
   !styles.includes(".term-overview.has-image .term-image img") ||

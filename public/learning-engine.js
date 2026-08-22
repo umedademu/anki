@@ -145,6 +145,15 @@ export function getIntegratedExplanationQuestion(term, question) {
   return term.stages?.integrated?.[0] ?? null;
 }
 
+export function getQuestionExplanation(term, question) {
+  const directExplanation = String(question?.explanation ?? "").trim();
+  if (directExplanation) {
+    return directExplanation;
+  }
+  const integratedExplanation = getIntegratedExplanationQuestion(term, question);
+  return String(integratedExplanation?.answer ?? "").trim();
+}
+
 export function getQuestionYearMnemonic(term, question) {
   const questionMnemonic = String(question?.yearMnemonic ?? "").trim();
   if (questionMnemonic) {

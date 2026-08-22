@@ -2316,10 +2316,15 @@ function renderQuestion() {
     question.stage === "beginner",
   );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
-  elements.stageName.textContent = questionStyleLabel(question.stage);
+  elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
+  elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm);
+  elements.stageName.classList.toggle("is-hidden", vocabularyMode);
+  elements.stageName.textContent = vocabularyMode
+    ? ""
+    : questionStyleLabel(question.stage);
   elements.termTitle.textContent = hidesTerm
     ? vocabularyMode
-      ? questionStyleLabel(question.stage)
+      ? ""
       : "通常の一問一答"
     : term.term;
   elements.termReading.textContent = hidesTerm
@@ -2333,7 +2338,10 @@ function renderQuestion() {
     isListeningMode() ? "聞き流し" : "出題"
   } ${state.answeredThisSession + 1}`;
   updateStudyTimeDisplay();
-  elements.questionAxis.textContent = question.focus || question.label;
+  elements.questionAxis.classList.toggle("is-hidden", vocabularyMode);
+  elements.questionAxis.textContent = vocabularyMode
+    ? ""
+    : question.focus || question.label;
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,
     state.answerVisible,
@@ -2980,7 +2988,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.082｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.083｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

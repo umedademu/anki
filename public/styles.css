@@ -421,6 +421,14 @@ body.is-studying .page {
   gap: 16px;
 }
 
+.context-card.is-vocabulary .context-heading {
+  display: none;
+}
+
+.context-card.is-vocabulary h1 {
+  margin-top: 0;
+}
+
 .stage-name {
   margin: 0;
   color: #2e6a49;

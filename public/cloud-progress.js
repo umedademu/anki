@@ -36,6 +36,100 @@ const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const studyModes = new Set(["memorize", "listen-answer"]);
 const questionStyles = new Set(["", "beginner", "reverse", "integrated"]);
 const questionAmountModes = new Set(["all", "one-per-term"]);
+const studySessionIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
+const studySessionTaskLimit = 10_000;
+
+function normalizeStudySessionId(value) {
+  const id = String(value ?? "");
+  return studySessionIdPattern.test(id) ? id : "";
+}
+
+function normalizeStudySessionTask(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const termId = normalizeStudySessionId(value.termId);
+  const questionId = normalizeStudySessionId(value.questionId);
+  const stage = questionStyles.has(value.stage) && value.stage ? value.stage : "";
+  return termId && questionId && stage ? { termId, questionId, stage } : null;
+}
+
+function normalizeStudySessionTasks(value) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  return value.slice(0, studySessionTaskLimit).flatMap((item) => {
+    const task = normalizeStudySessionTask(item);
+    if (!task || seen.has(task.questionId)) return [];
+    seen.add(task.questionId);
+    return [task];
+  });
+}
+
+function normalizeStudySessionQuestionIds(value, validQuestionIds) {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(value.map(normalizeStudySessionId).filter((id) => validQuestionIds.has(id)))];
+}
+
+export function normalizeStudySession(value) {
+  let source = value;
+  if (typeof source === "string") {
+    try {
+      source = JSON.parse(source);
+    } catch {
+      return null;
+    }
+  }
+  if (!source || typeof source !== "object" || Array.isArray(source)) return null;
+  const tasks = normalizeStudySessionTasks(source.tasks);
+  if (tasks.length === 0) return null;
+  const validQuestionIds = new Set(tasks.map((task) => task.questionId));
+  const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
+  const queue = normalizeStudySessionTasks(source.queue).filter((task) =>
+    validQuestionIds.has(task.questionId),
+  );
+  const currentTask = normalizeStudySessionTask(source.currentTask);
+  const normalizedCurrentTask = currentTask && validQuestionIds.has(currentTask.questionId)
+    ? taskByQuestionId.get(currentTask.questionId)
+    : null;
+  return {
+    schemaVersion: 1,
+    studyMode: studyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    selectedStage: questionStyles.has(source.selectedStage) ? source.selectedStage : "",
+    questionAmountMode: questionAmountModes.has(source.questionAmountMode)
+      ? source.questionAmountMode
+      : "all",
+    shuffleEnabled: source.shuffleEnabled === true,
+    autoSpeechEnabled: source.autoSpeechEnabled == null
+      ? true
+      : source.autoSpeechEnabled === true,
+    filters: {
+      macroRegion: normalizeSetupSelection(source.filters?.macroRegion),
+      regionDetail: normalizeSetupSelection(source.filters?.regionDetail),
+      category: normalizeSetupSelection(source.filters?.category),
+    },
+    termIds: [...new Set(
+      (Array.isArray(source.termIds) ? source.termIds : [])
+        .map(normalizeStudySessionId)
+        .filter(Boolean),
+    )].slice(0, studySessionTaskLimit),
+    tasks,
+    queue,
+    currentTask: normalizedCurrentTask,
+    unseenQuestionIds: normalizeStudySessionQuestionIds(
+      source.unseenQuestionIds,
+      validQuestionIds,
+    ),
+    retryQuestionIds: normalizeStudySessionQuestionIds(
+      source.retryQuestionIds,
+      validQuestionIds,
+    ),
+    answeredCount: Math.min(
+      1_000_000_000,
+      Math.max(0, Number.parseInt(source.answeredCount, 10) || 0),
+    ),
+    answerVisible: source.answerVisible === true,
+    startedAt: typeof source.startedAt === "string" ? source.startedAt : null,
+    updatedAt: typeof source.updatedAt === "string" ? source.updatedAt : null,
+  };
+}
 
 function normalizeSetupPreferenceId(value) {
   const id = String(value ?? "");
@@ -267,6 +361,7 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   return {
     progress: normalizeProgress(payload.progress ?? createEmptyProgress(), masteryTarget),
     settings: normalizeSharedSettings(payload.settings),
+    session: normalizeStudySession(payload.session),
   };
 }
 
@@ -304,6 +399,43 @@ export async function resetCloudProgress(datasetVersion) {
   return cloudRequest(`/v1/progress?dataset=${encodeURIComponent(datasetVersion)}`, {
     method: "DELETE",
   });
+}
+
+export async function saveCloudStudySession(datasetVersion, session) {
+  const payload = await cloudRequest(
+    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify(session),
+    },
+  );
+  return normalizeStudySession(payload.session);
+}
+
+export async function deleteCloudStudySession(datasetVersion) {
+  return cloudRequest(
+    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
+    { method: "DELETE" },
+  );
+}
+
+export async function saveCloudStudyAnswer(
+  datasetVersion,
+  questionId,
+  record,
+  session,
+) {
+  const payload = await cloudRequest(
+    `/v1/study-answer/${encodeURIComponent(questionId)}?dataset=${encodeURIComponent(datasetVersion)}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ record, session }),
+    },
+  );
+  return {
+    updatedAt: payload.updatedAt,
+    session: normalizeStudySession(payload.session),
+  };
 }
 
 export async function saveCloudSettings(settings) {

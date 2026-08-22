@@ -45,6 +45,7 @@ const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const setupStudyModes = new Set(["memorize", "listen-answer"]);
 const setupQuestionStyles = new Set(["", "beginner", "reverse", "integrated"]);
 const setupQuestionAmountModes = new Set(["all", "one-per-term"]);
+const studySessionTaskLimit = 10_000;
 
 const defaultSettings = {
   againSeconds: 60,
@@ -264,6 +265,102 @@ function normalizeQuestionRecord(value) {
   };
 }
 
+function normalizeStudySessionTask(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+  const termId = normalizeSetupPreferenceId(value.termId);
+  const questionId = normalizeSetupPreferenceId(value.questionId);
+  const stage = setupQuestionStyles.has(value.stage) && value.stage
+    ? value.stage
+    : "";
+  return termId && questionId && stage ? { termId, questionId, stage } : null;
+}
+
+function normalizeStudySessionTasks(value) {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set();
+  return value.slice(0, studySessionTaskLimit).flatMap((item) => {
+    const task = normalizeStudySessionTask(item);
+    if (!task || seen.has(task.questionId)) return [];
+    seen.add(task.questionId);
+    return [task];
+  });
+}
+
+function normalizeStudySessionQuestionIds(value, validQuestionIds) {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(
+    value
+      .map(normalizeSetupPreferenceId)
+      .filter((questionId) => validQuestionIds.has(questionId)),
+  )];
+}
+
+function normalizeStudySession(value) {
+  let source = value;
+  if (typeof source === "string") {
+    try {
+      source = JSON.parse(source);
+    } catch {
+      throw new Error("一周の保存内容が正しくありません。");
+    }
+  }
+  if (!source || typeof source !== "object" || Array.isArray(source)) {
+    throw new Error("一周の保存内容が正しくありません。");
+  }
+  const tasks = normalizeStudySessionTasks(source.tasks);
+  if (tasks.length === 0) {
+    throw new Error("一周の出題内容が空です。");
+  }
+  const validQuestionIds = new Set(tasks.map((task) => task.questionId));
+  const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
+  const currentTask = normalizeStudySessionTask(source.currentTask);
+  return {
+    schemaVersion: 1,
+    studyMode: setupStudyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    selectedStage: setupQuestionStyles.has(source.selectedStage)
+      ? source.selectedStage
+      : "",
+    questionAmountMode: setupQuestionAmountModes.has(source.questionAmountMode)
+      ? source.questionAmountMode
+      : "all",
+    shuffleEnabled: source.shuffleEnabled === true,
+    autoSpeechEnabled: source.autoSpeechEnabled == null
+      ? true
+      : source.autoSpeechEnabled === true,
+    filters: {
+      macroRegion: normalizeSetupSelection(source.filters?.macroRegion),
+      regionDetail: normalizeSetupSelection(source.filters?.regionDetail),
+      category: normalizeSetupSelection(source.filters?.category),
+    },
+    termIds: [...new Set(
+      (Array.isArray(source.termIds) ? source.termIds : [])
+        .map(normalizeSetupPreferenceId)
+        .filter(Boolean),
+    )].slice(0, studySessionTaskLimit),
+    tasks,
+    queue: normalizeStudySessionTasks(source.queue).filter((task) =>
+      validQuestionIds.has(task.questionId),
+    ),
+    currentTask: currentTask && validQuestionIds.has(currentTask.questionId)
+      ? taskByQuestionId.get(currentTask.questionId)
+      : null,
+    unseenQuestionIds: normalizeStudySessionQuestionIds(
+      source.unseenQuestionIds,
+      validQuestionIds,
+    ),
+    retryQuestionIds: normalizeStudySessionQuestionIds(
+      source.retryQuestionIds,
+      validQuestionIds,
+    ),
+    answeredCount: integer(source.answeredCount, 0),
+    answerVisible: source.answerVisible === true,
+    startedAt: source.startedAt == null ? null : optionalDate(source.startedAt),
+    updatedAt: source.updatedAt == null ? null : optionalDate(source.updatedAt),
+  };
+}
+
 function normalizeSettings(value) {
   const source = value && typeof value === "object" ? value : {};
   return {
@@ -449,8 +546,22 @@ function progressStatement(env, datasetVersion, questionId, record, updatedAt) {
   );
 }
 
+function studySessionStatement(env, datasetVersion, session, updatedAt) {
+  return env.DB.prepare(
+    `INSERT INTO study_sessions (dataset_version, session_json, updated_at)
+     VALUES (?, ?, ?)
+     ON CONFLICT(dataset_version) DO UPDATE SET
+       session_json = excluded.session_json,
+       updated_at = excluded.updated_at`,
+  ).bind(
+    datasetVersion,
+    JSON.stringify({ ...session, updatedAt }),
+    updatedAt,
+  );
+}
+
 async function readState(env, datasetVersion) {
-  const [progressRows, settingsRow] = await Promise.all([
+  const [progressRows, settingsRow, sessionRow] = await Promise.all([
     env.DB.prepare(
       `SELECT question_id, streak, attempts, remembered_count, last_rating,
         last_answered_at, next_review_at, ever_mastered, updated_at
@@ -464,6 +575,9 @@ async function readState(env, datasetVersion) {
         speech_parts_json, setup_preferences_json, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
+    env.DB.prepare(
+      "SELECT session_json, updated_at FROM study_sessions WHERE dataset_version = ?",
+    ).bind(datasetVersion).first(),
   ]);
   let newestUpdate = null;
   const questions = Object.fromEntries(
@@ -509,6 +623,12 @@ async function readState(env, datasetVersion) {
           updatedAt: settingsRow.updated_at,
         }
       : defaultSettings,
+    session: sessionRow
+      ? normalizeStudySession({
+          ...JSON.parse(sessionRow.session_json),
+          updatedAt: sessionRow.updated_at,
+        })
+      : null,
   };
 }
 
@@ -589,8 +709,62 @@ async function handleRequest(request, env) {
       env,
       datasetVersion
         ? await readState(env, normalizeDatasetVersion(datasetVersion))
-        : { progress: { questions: {}, updatedAt: null }, settings: (await readState(env, "__settings_only__")).settings },
+        : {
+            progress: { questions: {}, updatedAt: null },
+            settings: (await readState(env, "__settings_only__")).settings,
+            session: null,
+          },
     );
+  }
+
+  if (url.pathname === "/v1/study-session") {
+    const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
+    if (request.method === "PUT") {
+      const session = normalizeStudySession(await request.json());
+      const updatedAt = new Date().toISOString();
+      await studySessionStatement(env, datasetVersion, session, updatedAt).run();
+      return json(request, env, {
+        ok: true,
+        session: { ...session, updatedAt },
+      });
+    }
+    if (request.method === "DELETE") {
+      await env.DB.prepare("DELETE FROM study_sessions WHERE dataset_version = ?")
+        .bind(datasetVersion)
+        .run();
+      return json(request, env, { ok: true });
+    }
+  }
+
+  const studyAnswerMatch = url.pathname.match(/^\/v1\/study-answer\/([^/]+)$/);
+  if (studyAnswerMatch && request.method === "PUT") {
+    const questionId = decodeURIComponent(studyAnswerMatch[1]);
+    const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
+    if (!/^[A-Za-z0-9_-]{1,100}$/.test(questionId)) {
+      return json(request, env, { error: "問題番号が正しくありません。" }, 400);
+    }
+    const body = await request.json();
+    const record = body.record == null ? null : normalizeQuestionRecord(body.record);
+    const session = body.session == null ? null : normalizeStudySession(body.session);
+    const updatedAt = new Date().toISOString();
+    const statements = [
+      record
+        ? progressStatement(env, datasetVersion, questionId, record, updatedAt)
+        : env.DB.prepare(
+            "DELETE FROM question_progress WHERE dataset_version = ? AND question_id = ?",
+          ).bind(datasetVersion, questionId),
+      session
+        ? studySessionStatement(env, datasetVersion, session, updatedAt)
+        : env.DB.prepare("DELETE FROM study_sessions WHERE dataset_version = ?").bind(
+            datasetVersion,
+          ),
+    ];
+    await env.DB.batch(statements);
+    return json(request, env, {
+      ok: true,
+      updatedAt,
+      session: session ? { ...session, updatedAt } : null,
+    });
   }
 
   const questionMatch = url.pathname.match(/^\/v1\/progress\/([^/]+)$/);
@@ -643,9 +817,14 @@ async function handleRequest(request, env) {
 
   if (url.pathname === "/v1/progress" && request.method === "DELETE") {
     const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
-    await env.DB.prepare("DELETE FROM question_progress WHERE dataset_version = ?")
-      .bind(datasetVersion)
-      .run();
+    await env.DB.batch([
+      env.DB.prepare("DELETE FROM question_progress WHERE dataset_version = ?").bind(
+        datasetVersion,
+      ),
+      env.DB.prepare("DELETE FROM study_sessions WHERE dataset_version = ?").bind(
+        datasetVersion,
+      ),
+    ]);
     return json(request, env, { ok: true });
   }
 
@@ -680,6 +859,7 @@ export {
   normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
+  normalizeStudySession,
   normalizeSettings,
   normalizeSetupPreferences,
   normalizeSpeechParts,

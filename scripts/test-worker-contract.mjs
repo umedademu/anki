@@ -4,6 +4,7 @@ import {
   normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
   normalizeQuestionRecord,
+  normalizeStudySession as normalizeWorkerStudySession,
   normalizeSetupPreferences as normalizeWorkerSetupPreferences,
   normalizeSettings,
   normalizeSpeechParts as normalizeWorkerSpeechParts,
@@ -14,6 +15,7 @@ import {
   normalizeSetupPreferences as normalizeBrowserSetupPreferences,
   normalizeSharedSettings,
   normalizeSpeechParts as normalizeBrowserSpeechParts,
+  normalizeStudySession as normalizeBrowserStudySession,
 } from "../public/cloud-progress.js";
 
 if (normalizeDatasetVersion("d5d13f1099e9") !== "d5d13f1099e9") {
@@ -37,6 +39,49 @@ if (
   !record.everMastered
 ) {
   throw new Error("Cloudflareへ保存する問題記録を正規化できませんでした。");
+}
+
+const studySessionInput = {
+  studyMode: "memorize",
+  selectedStage: "beginner",
+  questionAmountMode: "one-per-term",
+  shuffleEnabled: true,
+  autoSpeechEnabled: false,
+  filters: { macroRegion: "アジア", regionDetail: "東アジア", category: "政治" },
+  termIds: ["WH-000001", "WH-000002"],
+  tasks: [
+    { termId: "WH-000001", questionId: "WH-Q-000001", stage: "beginner" },
+    { termId: "WH-000002", questionId: "WH-Q-000002", stage: "beginner" },
+  ],
+  queue: [
+    { termId: "WH-000002", questionId: "WH-Q-000002", stage: "beginner" },
+  ],
+  currentTask: {
+    termId: "WH-000001",
+    questionId: "WH-Q-000001",
+    stage: "beginner",
+  },
+  unseenQuestionIds: ["WH-Q-000001", "WH-Q-000002"],
+  retryQuestionIds: ["WH-Q-000001"],
+  answeredCount: 12,
+  answerVisible: true,
+  startedAt: "2026-08-22T00:00:00.000Z",
+};
+for (const session of [
+  normalizeWorkerStudySession(studySessionInput),
+  normalizeBrowserStudySession(studySessionInput),
+]) {
+  if (
+    session.studyMode !== "memorize" ||
+    session.tasks.length !== 2 ||
+    session.queue.length !== 1 ||
+    session.currentTask.questionId !== "WH-Q-000001" ||
+    session.retryQuestionIds[0] !== "WH-Q-000001" ||
+    session.answeredCount !== 12 ||
+    !session.answerVisible
+  ) {
+    throw new Error("Cloudflareへ保存する一周を正規化できませんでした。");
+  }
 }
 
 if (

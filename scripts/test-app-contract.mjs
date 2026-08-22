@@ -53,6 +53,10 @@ const setupPreferencesMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0007_setup_preferences.sql"),
   "utf8",
 );
+const studySessionsMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0008_study_sessions.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -116,11 +120,28 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.069") ||
-  !changelog.includes("v0.069") ||
-  !settingsHtml.includes("v0.069")
+  !html.includes("v0.070") ||
+  !changelog.includes("v0.070") ||
+  !settingsHtml.includes("v0.070")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !html.includes('id="resume-study"') ||
+  !html.includes("前回の続きから") ||
+  !html.includes('id="study-stop"') ||
+  !html.includes('id="completion-return"') ||
+  !app.includes("async function resumeStudy()") ||
+  !app.includes("function enqueueDueSessionTasks") ||
+  !app.includes("function schedulePendingReview") ||
+  !app.includes("saveCloudStudyAnswer") ||
+  !app.includes("saveCloudStudySession") ||
+  !cloudProgress.includes('`/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`') ||
+  !worker.includes('url.pathname === "/v1/study-session"') ||
+  !worker.includes("studyAnswerMatch") ||
+  !studySessionsMigration.includes("CREATE TABLE IF NOT EXISTS study_sessions")
+) {
+  throw new Error("暗記・聞き流しの一周保存、再開、期限到来時の再出題が揃っていません。");
 }
 if (
   !app.includes("function setDeckOptions(decks, selectedDeckId)") ||
@@ -153,7 +174,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.069"') ||
+  !html.includes('href="/styles.css?v=0.070"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -166,7 +187,7 @@ if (
   !app.includes("createTermQuestionQueue") ||
   !app.includes('state.subject?.learningType !== "vocabulary"') ||
   !app.includes("!state.selectedStage && !usesOneQuestionPerTerm()") ||
-  !app.includes("!state.currentTask && !usesOneQuestionPerTerm()") ||
+  !app.includes('if (rating === "again")') ||
   !app.includes("elements.questionAmountFilter,")
 ) {
   throw new Error("英単語以外で利用する1項目1問の開始設定と一周制御が揃っていません。");

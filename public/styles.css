@@ -353,6 +353,10 @@ body.is-studying .page {
   gap: 10px;
 }
 
+.setup-actions .is-hidden + .setup-start {
+  grid-column: 1 / -1;
+}
+
 .context-card {
   padding: clamp(22px, 4vw, 34px);
 }
@@ -751,17 +755,21 @@ body.is-studying .page {
   width: min(100%, 680px);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(120px, 0.7fr) 1fr 1fr;
   gap: 12px;
 }
 
 .action-dock.is-answer-visible .action-buttons {
-  grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
+  grid-template-columns: minmax(120px, 150px) minmax(120px, 150px) minmax(0, 1fr);
 }
 
 .action-dock.is-back-only .action-buttons {
   grid-template-columns: minmax(0, 340px);
   justify-content: center;
+}
+
+.action-dock.is-back-only .study-stop {
+  display: none;
 }
 
 .rating-buttons {
@@ -908,6 +916,11 @@ body.is-studying .page {
 .error-panel p {
   color: #68746d;
   line-height: 1.7;
+}
+
+.completion-return {
+  max-width: 320px;
+  margin: 24px auto 0;
 }
 
 .error-panel .secondary-button {
@@ -1642,6 +1655,7 @@ body.is-studying .page {
     height: 0;
   }
 
+  .study-stop,
   .back-action,
   .next-action,
   .action-dock.is-answer-visible .back-action {

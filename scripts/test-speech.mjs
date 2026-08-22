@@ -47,6 +47,8 @@ const textChecks = new Map([
     "中央集権化・徴兵・殖産興業(しょくさんこうぎょう)を進めた",
     "中央集権化・徴兵・しょくさんこうぎょうを進めた",
   ],
+  ["この戦いで勝利した人物は？", "このたたかいで勝利した人物は？"],
+  ["戦い方を変えた", "たたかい方を変えた"],
   ["1914〜1918年", "1914から1918年"],
 ]);
 
@@ -55,6 +57,10 @@ for (const [source, expected] of textChecks) {
   if (actual !== expected) {
     throw new Error(`読み上げ用文章が不正です: ${source} -> ${actual}`);
   }
+}
+
+if (prepareSpeechText("battle", "en-US") !== "battle") {
+  throw new Error("日本語の発音補正が英語の読み上げに混ざっています。");
 }
 
 const historySpeechReadings = createHistorySpeechReadings([
@@ -356,18 +362,19 @@ const cloudController = createSpeechController({
 cloudController.speak([
   { target: "answer", text: "康熙帝(こうきてい)" },
   { target: "overview", text: "鄭氏台湾(ていしたいわん)" },
+  { target: "question", text: "この戦いで勝利した人物は？" },
 ]);
 await new Promise((resolve) => setTimeout(resolve, 0));
 if (
   cloudRequests.map((request) => request.text).join("|") !==
-    "こうきてい|ていしたいわん" ||
+    "こうきてい|ていしたいわん|このたたかいで勝利した人物は？" ||
   cloudRequests.some(
     (request) => request.voice !== "ja-JP-KeitaNeural",
   ) ||
   cloudTargets.at(-1) !== "" ||
-  playedRates.length !== 2 ||
+  playedRates.length !== 3 ||
   playedRates.some((rate) => rate !== 3) ||
-  revokedUrls.length !== 2
+  revokedUrls.length !== 3
 ) {
   throw new Error("Azure音声を回答から解説へ順番に再生できませんでした。");
 }

@@ -2546,7 +2546,7 @@ async function activateDeck(deckId) {
   const deckName = deckDisplayLabel(deckEntry);
   elements.deckProgressName.textContent = deckName.replaceAll("｜", " ");
   elements.deckProgressName.title = deckName;
-  elements.setupEyebrow.textContent = `v0.075｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.076｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"

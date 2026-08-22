@@ -8,6 +8,17 @@ import {
 const annotatedReadingPattern =
   /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
 const remainingReadingPattern = /\([\p{Script=Hiragana}ー・\s]+\)/gu;
+const fixedJapaneseSpeechReadings = Object.freeze({
+  "戦い": "たたかい",
+});
+
+function applyFixedJapaneseSpeechReadings(value) {
+  let text = value;
+  for (const [written, reading] of Object.entries(fixedJapaneseSpeechReadings)) {
+    text = text.replaceAll(written, reading);
+  }
+  return text;
+}
 
 function readingEntries(additionalReadings = {}) {
   const entries =
@@ -57,9 +68,11 @@ export function prepareSpeechText(
     text = text.replaceAll(`${term}(${reading})`, reading);
   }
 
-  return text
-    .replace(annotatedReadingPattern, (_, __, reading) => reading)
-    .replace(remainingReadingPattern, "")
+  return applyFixedJapaneseSpeechReadings(
+    text
+      .replace(annotatedReadingPattern, (_, __, reading) => reading)
+      .replace(remainingReadingPattern, ""),
+  )
     .replace(/[\r\n]+/g, "。")
     .replace(/[|]/g, "、")
     .replace(/〜/g, "から")

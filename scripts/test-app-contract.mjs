@@ -178,10 +178,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.078") ||
-  !changelog.includes("v0.078") ||
-  !settingsHtml.includes("v0.078") ||
-  !historyHtml.includes("v0.078")
+  !html.includes("v0.079") ||
+  !changelog.includes("v0.079") ||
+  !settingsHtml.includes("v0.079") ||
+  !historyHtml.includes("v0.079")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -193,7 +193,7 @@ if (
   !historyApp.includes('memorize: "暗記モード"') ||
   !historyApp.includes('"listen-answer": "聞き流し"') ||
   !app.includes("function createStudyActivity(questionId") ||
-  !app.includes("queueActiveStudyActivity(activity)") ||
+  !app.includes("queueActiveStudyActivity(activity,") ||
   !app.includes("studyActivityEventId") ||
   !cloudProgress.includes('cloudRequest("/v1/study-history")') ||
   !cloudProgress.includes("saveCloudStudyActivity") ||
@@ -289,7 +289,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.078"') ||
+  !html.includes('href="/styles.css?v=0.079"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -647,6 +647,7 @@ if (
 }
 if (
   !html.includes('id="listening-back"') ||
+  html.includes('id="completion-back"') ||
   !styles.includes("grid-template-columns: repeat(3, minmax(0, 1fr))") ||
   !listeningBackBlock ||
   !listeningBackBlock.includes('["reveal", "listening-advance"]') ||
@@ -656,10 +657,20 @@ if (
   !listeningBackBlock.includes("state.listeningPaused = true") ||
   !app.includes('type: "listening-advance"') ||
   !app.includes('type: "reveal"') ||
+  !app.includes("function isCompletedListeningSession(session)") ||
+  !app.includes('setSavedSessionForMode("listen-answer", null)') ||
+  !app.includes("completeSession: roundComplete") ||
+  !app.includes('elements.completionEyebrow.textContent = "一巡完了"') ||
+  app.includes("state.queue = state.sessionTasks.map(cloneTask)") ||
+  !app.includes("usesListeningResultHalfScreenBack") ||
+  !app.includes('window.matchMedia("(pointer: coarse)").matches') ||
   !app.includes("void goBackListeningOneStep();") ||
   !cloudProgress.includes("export async function undoCloudStudyActivity") ||
+  !cloudProgress.includes("completeSession = false") ||
   !cloudProgress.includes("/undo?dataset=") ||
   !worker.includes("studyActivityUndoMatch") ||
+  !worker.includes("body.completeSession === true") ||
+  !worker.includes('activity.studyMode !== "listen-answer"') ||
   !worker.includes("DELETE FROM study_activity_events") ||
   !worker.includes("studyMode !== \"listen-answer\"")
 ) {

@@ -568,13 +568,21 @@ export async function saveCloudStudyActivity(
   datasetVersion,
   activity,
   session,
-  { sessionDatasetVersion = datasetVersion } = {},
+  {
+    sessionDatasetVersion = datasetVersion,
+    completeSession = false,
+  } = {},
 ) {
   const payload = await cloudRequest(
     `/v1/study-activity/${encodeURIComponent(activity.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ activity, session, sessionDatasetVersion }),
+      body: JSON.stringify({
+        activity,
+        session,
+        sessionDatasetVersion,
+        completeSession,
+      }),
     },
   );
   return {

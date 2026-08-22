@@ -1047,9 +1047,20 @@ async function handleRequest(request, env) {
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const completeSession = body.completeSession === true;
+    if (completeSession && activity.studyMode !== "listen-answer") {
+      return json(request, env, { error: "聞き流し以外の一周は完了できません。" }, 400);
+    }
     const occurredAt = new Date().toISOString();
     const statements = [studyActivityStatement(env, activity, occurredAt)];
-    if (session) {
+    if (completeSession) {
+      statements.push(
+        env.DB.prepare(
+          `DELETE FROM study_sessions_by_mode
+           WHERE dataset_version = ? AND study_mode = ?`,
+        ).bind(sessionDatasetVersion, activity.studyMode),
+      );
+    } else if (session) {
       statements.push(
         studySessionStatement(env, sessionDatasetVersion, session, occurredAt),
       );
@@ -1059,7 +1070,9 @@ async function handleRequest(request, env) {
       ok: true,
       occurredAt,
       studyDate: studyDateAtFourJst(occurredAt),
-      session: session ? { ...session, updatedAt: occurredAt } : null,
+      session: !completeSession && session
+        ? { ...session, updatedAt: occurredAt }
+        : null,
     });
   }
 

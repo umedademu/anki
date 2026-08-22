@@ -152,6 +152,7 @@ const elements = {
   listeningToggle: document.querySelector("#listening-toggle"),
   listeningStop: document.querySelector("#listening-stop"),
   completionCard: document.querySelector("#completion-card"),
+  completionEyebrow: document.querySelector("#completion-eyebrow"),
   completionTitle: document.querySelector("#completion-title"),
   completionMessage: document.querySelector("#completion-message"),
   completionReturn: document.querySelector("#completion-return"),
@@ -269,6 +270,14 @@ function createEmptySavedSessions() {
 
 function savedSessionForMode(studyMode = selectedStudyMode()) {
   return state.savedSessions?.[studyMode] ?? null;
+}
+
+function isCompletedListeningSession(session) {
+  return Boolean(
+    session?.studyMode === "listen-answer" &&
+    session.tasks.length > 0 &&
+    session.answeredCount >= session.tasks.length
+  );
 }
 
 function setSavedSessionForMode(studyMode, session) {
@@ -669,7 +678,7 @@ function queueActiveSessionSave() {
   return studySessionSave;
 }
 
-function queueActiveStudyActivity(activity) {
+function queueActiveStudyActivity(activity, { completeSession = false } = {}) {
   const session = captureActiveSession();
   const studyMode = state.studyMode;
   const datasetVersion = datasetVersionForQuestion(activity.questionId);
@@ -682,7 +691,7 @@ function queueActiveStudyActivity(activity) {
         datasetVersion,
         activity,
         session,
-        { sessionDatasetVersion },
+        { sessionDatasetVersion, completeSession },
       );
       if (
         saveVersion === studySessionSaveVersion &&
@@ -1037,6 +1046,13 @@ async function loadProgressFromCloud() {
         );
   state.progress = mergeDeckProgress(deckCloudStates);
   state.savedSessions = sessionCloudState.sessions;
+  if (isCompletedListeningSession(state.savedSessions["listen-answer"])) {
+    await deleteCloudStudySession(
+      state.sessionDatasetVersion,
+      "listen-answer",
+    );
+    setSavedSessionForMode("listen-answer", null);
+  }
   state.reviewSettings = normalizeReviewSettings(sessionCloudState.settings);
   state.shuffleEnabled = sessionCloudState.settings.shuffleEnabled;
   state.autoSpeechEnabled = sessionCloudState.settings.autoSpeechEnabled;
@@ -1668,17 +1684,13 @@ async function advanceListening(runId) {
   state.unseenQuestionIds.delete(completedTask.questionId);
   state.answeredThisSession += 1;
   state.currentTask = state.queue.shift() ?? null;
-  if (!state.currentTask) {
-    state.queue = state.sessionTasks.map(cloneTask);
-    state.unseenQuestionIds = new Set(
-      state.sessionTasks.map((task) => task.questionId),
-    );
-    state.currentTask = state.queue.shift() ?? null;
-  }
+  const roundComplete = !state.currentTask;
   state.answerVisible = false;
   startNewStudyScreen();
   try {
-    await queueActiveStudyActivity(activity);
+    await queueActiveStudyActivity(activity, {
+      completeSession: roundComplete,
+    });
     state.pendingListeningActivity = null;
     pushHistory(undoSnapshot);
   } catch (error) {
@@ -1702,13 +1714,18 @@ async function advanceListening(runId) {
     return;
   }
   state.saving = false;
-  startStudyClock();
   elements.listeningToggle.disabled = false;
   elements.listeningStop.disabled = false;
-  if (!state.currentTask) {
+  if (roundComplete) {
+    stopListeningSequence();
+    state.activeSession = false;
+    state.listeningPaused = true;
+    setSavedSessionForMode("listen-answer", null);
+    startNewStudyScreen();
     renderQuestion();
     return;
   }
+  startStudyClock();
   if (runId !== state.listeningRunId || state.listeningPaused) {
     renderQuestion();
     return;
@@ -1733,12 +1750,6 @@ function speakListeningAnswer(runId) {
   state.answerVisible = true;
   renderQuestion();
   const segments = answerSpeechSequence();
-  if (state.queue.length === 0) {
-    state.queue = state.sessionTasks.map(cloneTask);
-    state.unseenQuestionIds = new Set(
-      state.sessionTasks.map((task) => task.questionId),
-    );
-  }
   preloadListeningTask(state.queue[0]);
   setListeningStatus(
     segments.length > 0
@@ -2440,7 +2451,18 @@ function renderCompletion() {
   elements.contextCard.classList.add("is-hidden");
   elements.questionCard.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
+  const listening = isListeningMode();
   elements.completionReturn.classList.remove("is-hidden");
+  if (listening) {
+    elements.queueProgress.textContent = "一巡の残り 0問";
+    elements.completionEyebrow.textContent = "一巡完了";
+    elements.completionTitle.textContent = `聞き流しを${state.sessionTasks.length}問完了しました`;
+    elements.completionMessage.textContent = `今回選んだ${state.terms.length}語・${state.sessionTasks.length}問を一通り聞き終えました。学習時間は${formatStudyDuration(state.studySeconds)}です。`;
+    renderActionControls();
+    updateOverallProgress();
+    return;
+  }
+  elements.completionEyebrow.textContent = "全段階完了";
   if (state.activeSession && state.retryQuestionIds.size > 0) {
     const nextReviewAt = nextPendingRetryAt();
     elements.completionTitle.textContent = "不正解だった問題の再出題を待っています";
@@ -2813,11 +2835,16 @@ async function resumeStudy() {
     state.currentTask = state.queue.shift() ?? null;
   }
   if (isListeningMode() && !state.currentTask) {
-    state.queue = state.sessionTasks.map(cloneTask);
-    state.unseenQuestionIds = new Set(
-      state.sessionTasks.map((task) => task.questionId),
-    );
-    state.currentTask = state.queue.shift() ?? null;
+    await deleteCloudStudySession(
+      state.sessionDatasetVersion,
+      "listen-answer",
+    ).catch(() => {});
+    setSavedSessionForMode("listen-answer", null);
+    state.activeSession = false;
+    elements.cloudStatus.textContent = "前回の聞き流しは一巡を完了しています。はじめから開始してください。";
+    startingStudy = false;
+    updateSetupPreview();
+    return;
   }
   ensureCurrentStudyScreen();
   state.answerVisible = state.answerVisible && Boolean(state.currentTask);
@@ -2982,7 +3009,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.078｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.079｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   elements.setupDescription.textContent =
     state.subject.learningType === "vocabulary"
@@ -3217,11 +3244,15 @@ elements.resetProgress.addEventListener("click", () => {
 elements.retryButton.addEventListener("click", start);
 
 elements.studyShell.addEventListener("click", (event) => {
-  const usesHalfScreenNavigation = window.matchMedia(
+  const usesStudyHalfScreenNavigation = window.matchMedia(
     "(orientation: landscape) and (max-height: 600px)",
   ).matches;
+  const usesListeningResultHalfScreenBack =
+    isListeningMode() &&
+    !state.currentTask &&
+    window.matchMedia("(pointer: coarse)").matches;
   if (
-    !usesHalfScreenNavigation ||
+    (!usesStudyHalfScreenNavigation && !usesListeningResultHalfScreenBack) ||
     event.target.closest("button, a, input, select, textarea, label")
   ) {
     return;

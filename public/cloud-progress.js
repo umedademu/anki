@@ -348,15 +348,22 @@ async function cloudRequest(path, options = {}) {
   if (!accessKey) {
     throw new Error("設定ページでCloudflareのアクセスキーを登録してください。");
   }
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
-    ...options,
-    cache: "no-store",
-    headers: {
-      Authorization: `Bearer ${accessKey}`,
-      "Content-Type": "application/json",
-      ...(options.headers ?? {}),
-    },
-  });
+  let response;
+  try {
+    response = await fetch(`${getApiBaseUrl()}${path}`, {
+      ...options,
+      cache: "no-store",
+      headers: {
+        Authorization: `Bearer ${accessKey}`,
+        "Content-Type": "application/json",
+        ...(options.headers ?? {}),
+      },
+    });
+  } catch {
+    throw new Error(
+      "Cloudflareへ接続できませんでした。通信状態を確認して、もう一度お試しください。",
+    );
+  }
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
     if (response.status === 401) {
@@ -506,7 +513,6 @@ export async function saveCloudStudyActivity(datasetVersion, activity, session) 
     `/v1/study-activity/${encodeURIComponent(activity.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      keepalive: true,
       body: JSON.stringify({ activity, session }),
     },
   );

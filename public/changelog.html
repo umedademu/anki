@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.071" />
+    <link rel="stylesheet" href="/styles.css?v=0.072" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.071</span>
+        <span class="app-version">v0.072</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,18 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.072</h2>
+          <time datetime="2026-08-22">2026年8月22日</time>
+        </div>
+        <ul>
+          <li>聞き流しで400問など大きな一周を選んだ時、1問目の回答後に学習記録を送信できず停止する問題を修正</li>
+          <li>送信量に上限がある終了時向けの通信指定を外し、従来と同じ通常のCloudflare通信で現在位置と日別件数を保存</li>
+          <li>通信できなかった場合の英語表示を、日本語の案内へ変更</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

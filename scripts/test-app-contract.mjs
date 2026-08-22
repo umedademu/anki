@@ -108,6 +108,38 @@ const cloudflareReplacement = await readFile(
   "utf8",
 );
 
+const largeListeningTasks = Array.from({ length: 400 }, (_, index) => ({
+  termId: `WH-D1-T-${String(index + 1).padStart(6, "0")}`,
+  questionId: `WH-D1-Q-${String(index + 1).padStart(6, "0")}`,
+  stage: "beginner",
+}));
+const largeListeningSaveBytes = Buffer.byteLength(
+  JSON.stringify({
+    activity: {
+      eventId: "large-listening-test",
+      subjectId: "world-history",
+      subjectTitle: "世界史",
+      deckId: "deck-1",
+      deckTitle: "Deck 1 最重要骨格",
+      studyMode: "listen-answer",
+      questionId: largeListeningTasks[0].questionId,
+    },
+    session: {
+      studyMode: "listen-answer",
+      termIds: largeListeningTasks.map((task) => task.termId),
+      tasks: largeListeningTasks,
+      queue: largeListeningTasks.slice(1),
+      currentTask: largeListeningTasks[0],
+      unseenQuestionIds: largeListeningTasks.map((task) => task.questionId),
+      retryQuestionIds: [],
+    },
+  }),
+  "utf8",
+);
+if (largeListeningSaveBytes <= 64 * 1024) {
+  throw new Error("400問の聞き流し保存が終了時向け通信の上限を超える試験条件になっていません。");
+}
+
 const htmlIds = new Set(
   [...html.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]),
 );
@@ -132,10 +164,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.071") ||
-  !changelog.includes("v0.071") ||
-  !settingsHtml.includes("v0.071") ||
-  !historyHtml.includes("v0.071")
+  !html.includes("v0.072") ||
+  !changelog.includes("v0.072") ||
+  !settingsHtml.includes("v0.072") ||
+  !historyHtml.includes("v0.072")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -151,6 +183,8 @@ if (
   !app.includes("studyActivityEventId") ||
   !cloudProgress.includes('cloudRequest("/v1/study-history")') ||
   !cloudProgress.includes("saveCloudStudyActivity") ||
+  cloudProgress.includes("keepalive: true") ||
+  !cloudProgress.includes("Cloudflareへ接続できませんでした。通信状態を確認して、もう一度お試しください。") ||
   !worker.includes('url.pathname === "/v1/study-history"') ||
   !worker.includes("studyDateAtFourJst") ||
   !dailyStudyHistoryMigration.includes("CREATE TABLE IF NOT EXISTS study_activity_events")
@@ -205,7 +239,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.071"') ||
+  !html.includes('href="/styles.css?v=0.072"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

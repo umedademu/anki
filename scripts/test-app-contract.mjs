@@ -193,10 +193,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.096") ||
-  !changelog.includes("v0.096") ||
-  !settingsHtml.includes("v0.096") ||
-  !historyHtml.includes("v0.096")
+  !html.includes("v0.097") ||
+  !changelog.includes("v0.097") ||
+  !settingsHtml.includes("v0.097") ||
+  !historyHtml.includes("v0.097")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -304,7 +304,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.096"') ||
+  !html.includes('href="/styles.css?v=0.097"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -508,11 +508,13 @@ if (
   !app.includes('elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode)') ||
   !app.includes('elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm)') ||
   !app.includes('elements.stageName.classList.toggle("is-hidden", vocabularyMode)') ||
-  !app.includes('elements.questionAxis.classList.toggle("is-hidden", vocabularyMode)') ||
+  html.includes('id="question-axis"') ||
+  app.includes("questionAxis") ||
+  styles.includes(".axis-badge") ||
   !styles.includes(".context-card.is-vocabulary .context-heading") ||
   app.includes("? questionStyleLabel(question.stage)\n      : \"通常の一問一答\"")
 ) {
-  throw new Error("英単語の学習画面に出題形式を強調しない表示が揃っていません。");
+  throw new Error("全科目の学習画面から問題種別表示を除く構成が揃っていません。");
 }
 if (
   !html.includes('id="term-image"') ||

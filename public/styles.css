@@ -585,15 +585,6 @@ body.is-studying .page {
   font-weight: 700;
 }
 
-.axis-badge {
-  padding: 5px 9px;
-  color: #245a3e;
-  background: #e2eee5;
-  border-radius: 999px;
-  font-size: 0.7rem;
-  font-weight: 800;
-}
-
 .question-card h2 {
   margin: 18px 0 26px;
   color: #202b24;
@@ -1434,11 +1425,6 @@ body.is-listening .page {
     font-size: 0.56rem;
   }
 
-  .axis-badge {
-    padding: 3px 5px;
-    font-size: 0.5rem;
-  }
-
   .question-heading .progress-summary {
     gap: 2px;
     font-size: 0.42rem;
@@ -1711,11 +1697,6 @@ body.is-listening .page {
 
   .question-number {
     font-size: 0.56rem;
-  }
-
-  .axis-badge {
-    padding: 2px 6px;
-    font-size: 0.54rem;
   }
 
   .question-card h2 {

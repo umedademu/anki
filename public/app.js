@@ -117,7 +117,6 @@ const elements = {
   progressBar: document.querySelector("#progress-bar"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
-  questionAxis: document.querySelector("#question-axis"),
   questionText: document.querySelector("#question-text"),
   questionSpeech: document.querySelector("#question-speech"),
   answerPanel: document.querySelector("#answer-panel"),
@@ -2399,10 +2398,6 @@ function renderQuestion() {
     isListeningMode() ? "聞き流し" : "出題"
   } ${state.answeredThisSession + 1}`;
   updateStudyTimeDisplay();
-  elements.questionAxis.classList.toggle("is-hidden", vocabularyMode);
-  elements.questionAxis.textContent = vocabularyMode
-    ? ""
-    : question.focus || question.label;
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,
     state.answerVisible,
@@ -3043,7 +3038,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.096｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.097｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

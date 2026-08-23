@@ -1781,11 +1781,17 @@ function speakListeningAnswer(runId) {
       if (runId !== state.listeningRunId) {
         return;
       }
-      void advanceListening(runId);
+      state.listeningTimer = window.setTimeout(() => {
+        state.listeningTimer = null;
+        void advanceListening(runId);
+      }, 0);
     },
   });
   if (!started) {
-    void advanceListening(runId);
+    state.listeningTimer = window.setTimeout(() => {
+      state.listeningTimer = null;
+      void advanceListening(runId);
+    }, 0);
   }
 }
 
@@ -1809,10 +1815,6 @@ function beginListeningQuestion() {
         return;
       }
       const pauseSeconds = state.listeningPauseSeconds;
-      if (pauseSeconds === 0) {
-        speakListeningAnswer(runId);
-        return;
-      }
       state.listeningTimer = window.setTimeout(() => {
         state.listeningTimer = null;
         speakListeningAnswer(runId);
@@ -3065,7 +3067,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.099｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.100｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

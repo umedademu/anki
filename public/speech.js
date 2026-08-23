@@ -378,7 +378,7 @@ export function createSpeechController({
       return false;
     }
 
-    resetPlayback(Boolean(currentTarget));
+    resetPlayback();
     const ticket = ++generation;
     void preload(queue);
 

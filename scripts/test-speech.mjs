@@ -386,6 +386,42 @@ if (guardedSpoken.join("|") !== "問題前半|問題後半|回答") {
   throw new Error("音声の終了処理後に次のパーツと回答の読み上げを継続できませんでした。");
 }
 
+const resetRequiredSpoken = [];
+let canStartResetRequiredSpeech = true;
+const resetRequiredSynthesis = {
+  cancel() {
+    canStartResetRequiredSpeech = true;
+  },
+  getVoices() {
+    return [];
+  },
+  speak(utterance) {
+    if (!canStartResetRequiredSpeech) {
+      return;
+    }
+    canStartResetRequiredSpeech = false;
+    resetRequiredSpoken.push(utterance.text);
+    utterance.onend();
+  },
+};
+const resetRequiredController = createSpeechController({
+  synthesis: resetRequiredSynthesis,
+  Utterance: FakeUtterance,
+  getSettings: () => ({ source: "device", rate: 1 }),
+});
+resetRequiredController.speak(
+  [{ target: "question", text: "問題" }],
+  {
+    onComplete: () => {
+      resetRequiredController.speak([{ target: "answer", text: "回答" }]);
+    },
+  },
+);
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (resetRequiredSpoken.join("|") !== "問題|回答") {
+  throw new Error("次の音声前に端末の読み上げ機能を初期化できませんでした。");
+}
+
 const cloudRequests = [];
 const cloudTargets = [];
 const revokedUrls = [];

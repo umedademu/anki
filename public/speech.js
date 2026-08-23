@@ -276,6 +276,10 @@ export function createSpeechController({
   let activeAudioUrl = "";
   const cloudAudioCache = new Map();
   const cloudAudioCacheLimit = 12;
+  const scheduleContinuation =
+    typeof globalThis.queueMicrotask === "function"
+      ? (callback) => globalThis.queueMicrotask(callback)
+      : (callback) => Promise.resolve().then(callback);
 
   function setCurrentTarget(target) {
     currentTarget = target;
@@ -378,6 +382,14 @@ export function createSpeechController({
     const ticket = ++generation;
     void preload(queue);
 
+    function continueAfterPlayback(callback) {
+      scheduleContinuation(() => {
+        if (ticket === generation) {
+          callback();
+        }
+      });
+    }
+
     function finishCloudAudio(audio, audioUrl) {
       if (activeAudio === audio) {
         activeAudio = null;
@@ -410,8 +422,16 @@ export function createSpeechController({
       if (voice) {
         utterance.voice = voice;
       }
-      utterance.onend = done;
-      utterance.onerror = done;
+      let finished = false;
+      const finish = () => {
+        if (finished) {
+          return;
+        }
+        finished = true;
+        continueAfterPlayback(done);
+      };
+      utterance.onend = finish;
+      utterance.onerror = finish;
       synthesis.speak(utterance);
     }
 
@@ -438,7 +458,7 @@ export function createSpeechController({
           }
           finished = true;
           finishCloudAudio(audio, audioUrl);
-          done();
+          continueAfterPlayback(done);
         };
         const fallback = (error) => {
           if (finished) {
@@ -447,7 +467,7 @@ export function createSpeechController({
           finished = true;
           finishCloudAudio(audio, audioUrl);
           onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
-          speakWithDevice(segment, settings, done);
+          continueAfterPlayback(() => speakWithDevice(segment, settings, done));
         };
         audio.onended = finish;
         audio.onerror = fallback;

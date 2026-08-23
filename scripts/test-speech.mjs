@@ -327,6 +327,7 @@ controller.speak(
   ],
   { onComplete: () => completionCount += 1 },
 );
+await new Promise((resolve) => setTimeout(resolve, 0));
 if (
   spoken.length !== 4 ||
   spoken[0].text !== "こうきてい" ||
@@ -345,6 +346,44 @@ if (
   completionCount !== 1
 ) {
   throw new Error("回答、語呂合わせ、解説を順番に読み上げられませんでした。");
+}
+
+const guardedSpoken = [];
+let dispatchingSpeechEnd = false;
+const guardedSynthesis = {
+  cancel() {},
+  getVoices() {
+    return [];
+  },
+  speak(utterance) {
+    if (dispatchingSpeechEnd) {
+      return;
+    }
+    guardedSpoken.push(utterance.text);
+    dispatchingSpeechEnd = true;
+    utterance.onend();
+    dispatchingSpeechEnd = false;
+  },
+};
+const guardedController = createSpeechController({
+  synthesis: guardedSynthesis,
+  Utterance: FakeUtterance,
+  getSettings: () => ({ source: "device", rate: 1 }),
+});
+guardedController.speak(
+  [
+    { target: "question", text: "問題前半" },
+    { target: "question", text: "問題後半" },
+  ],
+  {
+    onComplete: () => {
+      guardedController.speak([{ target: "answer", text: "回答" }]);
+    },
+  },
+);
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (guardedSpoken.join("|") !== "問題前半|問題後半|回答") {
+  throw new Error("音声の終了処理後に次のパーツと回答の読み上げを継続できませんでした。");
 }
 
 const cloudRequests = [];

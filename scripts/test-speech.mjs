@@ -422,6 +422,124 @@ if (resetRequiredSpoken.join("|") !== "問題|回答") {
   throw new Error("次の音声前に端末の読み上げ機能を初期化できませんでした。");
 }
 
+const delayedStartSpoken = [];
+let delayedStartAttempts = 0;
+const delayedStartSynthesis = {
+  cancel() {},
+  resume() {},
+  getVoices() {
+    return [];
+  },
+  speak(utterance) {
+    delayedStartAttempts += 1;
+    if (delayedStartAttempts === 1) {
+      return;
+    }
+    delayedStartSpoken.push(utterance.text);
+    utterance.onstart();
+    utterance.onend();
+  },
+};
+let delayedStartCompletions = 0;
+const delayedStartController = createSpeechController({
+  synthesis: delayedStartSynthesis,
+  Utterance: FakeUtterance,
+  deviceStartTimeoutMs: 1,
+  getSettings: () => ({ source: "device", rate: 1 }),
+});
+delayedStartController.speak(
+  [{ target: "answer", text: "一秒待機後の回答" }],
+  { onComplete: () => delayedStartCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 20));
+if (
+  delayedStartAttempts !== 2 ||
+  delayedStartSpoken.join("|") !== "一秒待機後の回答" ||
+  delayedStartCompletions !== 1
+) {
+  throw new Error("待機後に始まらない端末音声を自動で再試行できませんでした。");
+}
+
+let neverStartAttempts = 0;
+let neverStartCompletions = 0;
+const neverStartController = createSpeechController({
+  synthesis: {
+    cancel() {},
+    resume() {},
+    getVoices() {
+      return [];
+    },
+    speak() {
+      neverStartAttempts += 1;
+    },
+  },
+  Utterance: FakeUtterance,
+  deviceStartTimeoutMs: 1,
+  getSettings: () => ({ source: "device", rate: 1 }),
+});
+neverStartController.speak(
+  [{ target: "answer", text: "開始できない回答" }],
+  { onComplete: () => neverStartCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 20));
+if (neverStartAttempts !== 2 || neverStartCompletions !== 1) {
+  throw new Error("端末音声の再試行失敗後に無期限の停止を防げませんでした。");
+}
+
+const hangingCloudFallbackSpoken = [];
+let hangingCloudCompletions = 0;
+class HangingCloudAudio {
+  constructor() {
+    this.playbackRate = 1;
+    this.onplaying = null;
+    this.onended = null;
+    this.onerror = null;
+  }
+
+  async play() {
+    await new Promise(() => {});
+  }
+
+  pause() {}
+}
+const hangingCloudController = createSpeechController({
+  synthesis: {
+    cancel() {},
+    resume() {},
+    getVoices() {
+      return [];
+    },
+    speak(utterance) {
+      hangingCloudFallbackSpoken.push(utterance.text);
+      utterance.onstart();
+      utterance.onend();
+    },
+  },
+  Utterance: FakeUtterance,
+  AudioPlayer: HangingCloudAudio,
+  createObjectUrl: () => "blob:hanging-cloud",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+  cloudStartTimeoutMs: 1,
+  deviceStartTimeoutMs: 1,
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    rate: 1,
+  }),
+});
+hangingCloudController.speak(
+  [{ target: "answer", text: "自然音声が始まらない回答" }],
+  { onComplete: () => hangingCloudCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 20));
+if (
+  hangingCloudFallbackSpoken.join("|") !== "自然音声が始まらない回答" ||
+  hangingCloudCompletions !== 1
+) {
+  throw new Error("始まらない自然音声から端末音声へ自動切替できませんでした。");
+}
+
 const cloudRequests = [];
 const cloudTargets = [];
 const revokedUrls = [];

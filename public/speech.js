@@ -256,6 +256,8 @@ export function createSpeechController({
   getHistoryReadings = () => ({}),
   onTargetChange = () => {},
   onFallback = () => {},
+  deviceStartTimeoutMs = 1500,
+  cloudStartTimeoutMs = 3000,
 } = {}) {
   const deviceSupported = Boolean(
     synthesis &&
@@ -399,11 +401,12 @@ export function createSpeechController({
       }
       audio.onended = null;
       audio.onerror = null;
+      audio.onplaying = null;
       audio.pause?.();
       revokeObjectUrl(audioUrl);
     }
 
-    function speakWithDevice(segment, settings, done) {
+    function speakWithDevice(segment, settings, done, retryCount = 0) {
       if (!deviceSupported || ticket !== generation) {
         done();
         return;
@@ -423,16 +426,69 @@ export function createSpeechController({
         utterance.voice = voice;
       }
       let finished = false;
+      let startTimer = null;
+      const clearStartTimer = () => {
+        if (startTimer !== null) {
+          globalThis.clearTimeout(startTimer);
+          startTimer = null;
+        }
+      };
+      const markStarted = () => {
+        clearStartTimer();
+      };
       const finish = () => {
         if (finished) {
           return;
         }
+        markStarted();
         finished = true;
         continueAfterPlayback(done);
       };
+      const retryOrContinue = () => {
+        if (finished || ticket !== generation) {
+          return;
+        }
+        finished = true;
+        clearStartTimer();
+        utterance.onstart = null;
+        utterance.onboundary = null;
+        utterance.onend = null;
+        utterance.onerror = null;
+        synthesis.cancel();
+        if (retryCount < 1) {
+          globalThis.setTimeout(() => {
+            if (ticket === generation) {
+              speakWithDevice(segment, settings, done, retryCount + 1);
+            }
+          }, 0);
+          return;
+        }
+        continueAfterPlayback(done);
+      };
+      const handleStartTimeout = () => {
+        if (synthesis.speaking === true) {
+          markStarted();
+          return;
+        }
+        retryOrContinue();
+      };
+      utterance.onstart = markStarted;
+      utterance.onboundary = markStarted;
       utterance.onend = finish;
-      utterance.onerror = finish;
-      synthesis.speak(utterance);
+      utterance.onerror = retryOrContinue;
+      const startTimeoutMs = Number(deviceStartTimeoutMs);
+      if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
+        startTimer = globalThis.setTimeout(
+          handleStartTimeout,
+          startTimeoutMs,
+        );
+      }
+      try {
+        synthesis.resume?.();
+        synthesis.speak(utterance);
+      } catch {
+        retryOrContinue();
+      }
     }
 
     async function speakWithCloud(segment, settings, done) {
@@ -452,11 +508,19 @@ export function createSpeechController({
         activeAudioUrl = audioUrl;
         audio.playbackRate = settings.rate;
         let finished = false;
+        let startTimer = null;
+        const clearStartTimer = () => {
+          if (startTimer !== null) {
+            globalThis.clearTimeout(startTimer);
+            startTimer = null;
+          }
+        };
         const finish = () => {
           if (finished) {
             return;
           }
           finished = true;
+          clearStartTimer();
           finishCloudAudio(audio, audioUrl);
           continueAfterPlayback(done);
         };
@@ -465,14 +529,23 @@ export function createSpeechController({
             return;
           }
           finished = true;
+          clearStartTimer();
           finishCloudAudio(audio, audioUrl);
           onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
           continueAfterPlayback(() => speakWithDevice(segment, settings, done));
         };
+        audio.onplaying = clearStartTimer;
         audio.onended = finish;
         audio.onerror = fallback;
+        const startTimeoutMs = Number(cloudStartTimeoutMs);
+        if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
+          startTimer = globalThis.setTimeout(() => {
+            fallback(new Error("自然音声の再生を開始できませんでした。"));
+          }, startTimeoutMs);
+        }
         try {
           await audio.play();
+          clearStartTimer();
         } catch (error) {
           fallback(error);
         }

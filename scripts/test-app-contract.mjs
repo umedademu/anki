@@ -202,10 +202,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.100") ||
-  !changelog.includes("v0.100") ||
-  !settingsHtml.includes("v0.100") ||
-  !historyHtml.includes("v0.100")
+  !html.includes("v0.101") ||
+  !changelog.includes("v0.101") ||
+  !settingsHtml.includes("v0.101") ||
+  !historyHtml.includes("v0.101")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -313,7 +313,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.100"') ||
+  !html.includes('href="/styles.css?v=0.101"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -749,6 +749,12 @@ if (
   !speech.includes("const cloudAudioCacheLimit = 12") ||
   !speech.includes("resetPlayback();") ||
   speech.includes("resetPlayback(Boolean(currentTarget))") ||
+  !speech.includes("deviceStartTimeoutMs = 1500") ||
+  !speech.includes("cloudStartTimeoutMs = 3000") ||
+  !speech.includes("utterance.onstart = markStarted") ||
+  !speech.includes("utterance.onboundary = markStarted") ||
+  !speech.includes("synthesis.resume?.()") ||
+  !speech.includes("retryCount < 1") ||
   !speech.includes("export function createHistorySpeechReadings(terms)") ||
   !speech.includes("getHistoryReadings = () => ({})") ||
   !app.includes("createHistorySpeechReadings(state.allTerms)") ||

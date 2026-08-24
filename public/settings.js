@@ -6,6 +6,7 @@ import {
   getStoredAccessKey,
   loadCloudState,
   normalizeListeningPauseSeconds,
+  normalizeListeningQuestionIntervalSeconds,
   requestCloudSpeech,
   saveCloudSettings,
   saveCloudStudyRoutine,
@@ -61,6 +62,9 @@ const elements = {
   speechRate: document.querySelector("#speech-rate"),
   speechRateOutput: document.querySelector("#speech-rate-output"),
   listeningPauseSeconds: document.querySelector("#listening-pause-seconds"),
+  listeningQuestionIntervalSeconds: document.querySelector(
+    "#listening-question-interval-seconds",
+  ),
   previewSpeech: document.querySelector("#preview-speech"),
   previewEnglishSpeech: document.querySelector("#preview-english-speech"),
   saveSpeechSettings: document.querySelector("#save-speech-settings"),
@@ -97,6 +101,9 @@ function readSharedSpeechForm() {
     ...readSpeechForm(),
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       elements.listeningPauseSeconds.value,
+    ),
+    listeningQuestionIntervalSeconds: normalizeListeningQuestionIntervalSeconds(
+      elements.listeningQuestionIntervalSeconds.value,
     ),
   };
 }
@@ -202,6 +209,11 @@ function fillSpeechForm(settings) {
   elements.speechRate.value = String(speechSettings.rate);
   elements.listeningPauseSeconds.value = String(
     normalizeListeningPauseSeconds(settings?.listeningPauseSeconds),
+  );
+  elements.listeningQuestionIntervalSeconds.value = String(
+    normalizeListeningQuestionIntervalSeconds(
+      settings?.listeningQuestionIntervalSeconds,
+    ),
   );
   populateDeviceVoices();
   elements.deviceVoice.value = [...elements.deviceVoice.options].some(

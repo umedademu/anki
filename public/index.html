@@ -9,7 +9,7 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.113" />
+    <link rel="stylesheet" href="/styles.css?v=0.114" />
     <script src="/config.js" defer></script>
     <script src="/app.js" type="module"></script>
   </head>
@@ -17,7 +17,7 @@
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.113</span>
+        <span class="app-version">v0.114</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
@@ -27,13 +27,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.113｜科目別学習</p>
+        <p class="eyebrow">v0.114｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.113｜科目を選ぶ</p>
+        <p class="eyebrow">v0.114｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選ぶと、デッキや学習方法を選ぶ開始画面へ進みます。
@@ -61,7 +61,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.113｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.114｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -163,6 +163,170 @@
       </section>
 
       <section class="study-shell is-hidden" id="study-shell">
+        <button
+          class="study-menu-trigger"
+          id="study-menu-trigger"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="study-menu-layer"
+          aria-expanded="false"
+        >
+          <span aria-hidden="true"></span>
+          メニュー
+        </button>
+        <div class="study-menu-layer is-hidden" id="study-menu-layer">
+          <button
+            class="study-menu-backdrop"
+            id="study-menu-backdrop"
+            type="button"
+            aria-label="学習メニューを閉じる"
+            tabindex="-1"
+          ></button>
+          <section
+            class="study-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="study-menu-title"
+          >
+            <div class="study-menu-heading">
+              <div>
+                <p class="eyebrow">学習中の操作</p>
+                <h2 id="study-menu-title">メニュー</h2>
+              </div>
+              <button
+                class="study-menu-close"
+                id="study-menu-close"
+                type="button"
+                aria-label="学習メニューを閉じる"
+              >
+                ×
+              </button>
+            </div>
+
+            <nav class="study-menu-navigation" aria-label="学習画面から移動">
+              <button class="secondary-button" id="study-menu-setup" type="button">
+                開始画面に戻る
+              </button>
+              <button class="secondary-button" id="study-menu-home" type="button">
+                トップに戻る
+              </button>
+            </nav>
+
+            <form id="study-menu-settings">
+              <div class="study-menu-settings-grid">
+                <section class="study-menu-setting-group">
+                  <h3>読み上げ</h3>
+                  <label class="study-menu-setting-row" for="study-menu-speech-rate">
+                    <span>
+                      読み上げ速度
+                      <output id="study-menu-speech-rate-output">1.00倍</output>
+                    </span>
+                    <input
+                      id="study-menu-speech-rate"
+                      type="range"
+                      min="0.7"
+                      max="3"
+                      step="0.05"
+                      value="1"
+                    />
+                  </label>
+                  <label
+                    class="study-menu-setting-row"
+                    for="study-menu-question-interval-seconds"
+                  >
+                    <span>聞き流しで次の問題まで</span>
+                    <span class="seconds-input">
+                      <input
+                        id="study-menu-question-interval-seconds"
+                        type="number"
+                        min="0"
+                        max="60"
+                        step="0.5"
+                        value="0"
+                        inputmode="decimal"
+                      />
+                      <span>秒</span>
+                    </span>
+                  </label>
+                </section>
+
+                <section class="study-menu-setting-group">
+                  <h3>次の復習まで</h3>
+                  <div class="study-menu-interval-list">
+                    <label class="study-menu-interval rating-incorrect-row">
+                      <strong>× 不正解</strong>
+                      <input
+                        id="study-menu-again-value"
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                      />
+                      <select id="study-menu-again-unit" aria-label="不正解の時間単位">
+                        <option value="1">秒</option>
+                        <option value="60">分</option>
+                        <option value="3600">時間</option>
+                        <option value="86400">日</option>
+                      </select>
+                    </label>
+                    <label class="study-menu-interval rating-hard-row">
+                      <strong>△ 難しい</strong>
+                      <input
+                        id="study-menu-hard-value"
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                      />
+                      <select id="study-menu-hard-unit" aria-label="難しいの時間単位">
+                        <option value="1">秒</option>
+                        <option value="60">分</option>
+                        <option value="3600">時間</option>
+                        <option value="86400">日</option>
+                      </select>
+                    </label>
+                    <label class="study-menu-interval rating-good-row">
+                      <strong>○ 正解</strong>
+                      <input
+                        id="study-menu-good-value"
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                      />
+                      <select id="study-menu-good-unit" aria-label="正解の時間単位">
+                        <option value="1">秒</option>
+                        <option value="60">分</option>
+                        <option value="3600">時間</option>
+                        <option value="86400">日</option>
+                      </select>
+                    </label>
+                    <label class="study-menu-interval rating-easy-row">
+                      <strong>◎ 簡単</strong>
+                      <input
+                        id="study-menu-easy-value"
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                      />
+                      <select id="study-menu-easy-unit" aria-label="簡単の時間単位">
+                        <option value="1">秒</option>
+                        <option value="60">分</option>
+                        <option value="3600">時間</option>
+                        <option value="86400">日</option>
+                      </select>
+                    </label>
+                  </div>
+                </section>
+              </div>
+              <button class="primary-button study-menu-save" id="study-menu-save" type="submit">
+                設定を保存
+              </button>
+              <p class="study-menu-status" id="study-menu-status" role="status"></p>
+            </form>
+          </section>
+        </div>
         <p class="unlock-notice is-hidden" id="unlock-notice" role="status"></p>
         <div
           class="listening-playback-feedback is-hidden"

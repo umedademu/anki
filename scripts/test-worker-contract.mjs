@@ -319,6 +319,7 @@ const settings = normalizeSettings({
   shuffleEnabled: true,
   autoSpeechEnabled: false,
   listeningPauseSeconds: 2.5,
+  listeningQuestionIntervalSeconds: 1.5,
   studyTimeLimitSeconds: 90,
   speechParts: {
     history: {
@@ -372,6 +373,7 @@ if (
   !settings.shuffleEnabled ||
   settings.autoSpeechEnabled ||
   settings.listeningPauseSeconds !== 2.5 ||
+  settings.listeningQuestionIntervalSeconds !== 1.5 ||
   settings.studyTimeLimitSeconds !== 90 ||
   settings.speechParts.history.question ||
   !settings.speechParts.history.explanation ||
@@ -400,6 +402,7 @@ if (
   !browserSettings.shuffleEnabled ||
   browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5 ||
+  browserSettings.listeningQuestionIntervalSeconds !== 1.5 ||
   browserSettings.studyTimeLimitSeconds !== 90 ||
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||

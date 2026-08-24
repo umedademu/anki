@@ -81,6 +81,15 @@ const studyTimeLimitMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0012_study_time_limit.sql"),
   "utf8",
 );
+const listeningQuestionIntervalMigration = await readFile(
+  path.join(
+    projectRoot,
+    "worker",
+    "migrations",
+    "0013_listening_question_interval.sql",
+  ),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const ratingSound = await readFile(
   path.join(projectRoot, "public", "rating-sound.js"),
@@ -228,10 +237,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.113") ||
-  !changelog.includes("v0.113") ||
-  !settingsHtml.includes("v0.113") ||
-  !historyHtml.includes("v0.113")
+  !html.includes("v0.114") ||
+  !changelog.includes("v0.114") ||
+  !settingsHtml.includes("v0.114") ||
+  !historyHtml.includes("v0.114")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -383,7 +392,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.113"') ||
+  !html.includes('href="/styles.css?v=0.114"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -762,6 +771,28 @@ if (
   throw new Error("起動時とAnkiロゴから科目選択へ戻る処理が揃っていません。");
 }
 if (
+  !html.includes('id="study-menu-trigger"') ||
+  !html.includes('id="study-menu-layer"') ||
+  !html.includes('id="study-menu-setup"') ||
+  !html.includes('id="study-menu-home"') ||
+  !html.includes('id="study-menu-speech-rate"') ||
+  !html.includes('id="study-menu-question-interval-seconds"') ||
+  !html.includes('id="study-menu-again-value"') ||
+  !html.includes('id="study-menu-hard-value"') ||
+  !html.includes('id="study-menu-good-value"') ||
+  !html.includes('id="study-menu-easy-value"') ||
+  !app.includes("function openStudyMenu()") ||
+  !app.includes("function closeStudyMenu(") ||
+  !app.includes("async function saveStudyMenuSettings()") ||
+  !app.includes("saveCloudSettings(readStudyMenuSettings())") ||
+  !app.includes("state.reviewSettings = normalizeReviewSettings(saved)") ||
+  !styles.includes(".study-menu-trigger {") ||
+  !styles.includes(".study-menu-layer {") ||
+  !styles.includes("width: min(46vw, 330px)")
+) {
+  throw new Error("学習中メニューの移動・音声・復習間隔の操作が揃っていません。");
+}
+if (
   !speechSegmentsBlock ||
   !speechSegmentsBlock.includes("const includeAcceptedAnswers =") ||
   speechSegmentsBlock.includes("includesAcceptedAnswers") ||
@@ -806,6 +837,7 @@ if (
   html.includes('id="listening-toggle"') ||
   html.includes('id="listening-stop"') ||
   !settingsHtml.includes('id="listening-pause-seconds"') ||
+  !settingsHtml.includes('id="listening-question-interval-seconds"') ||
   !app.includes("function beginListeningQuestion()") ||
   !app.includes("function speakListeningAnswer(runId)") ||
   app.includes('"listen-explanation"') ||
@@ -846,7 +878,13 @@ if (
   app.includes("unavailableForSubject") ||
   !app.includes("createQuestionQueue") ||
   !cloudProgress.includes("listeningPauseSeconds: 0") ||
+  !cloudProgress.includes("listeningQuestionIntervalSeconds: 0") ||
+  !app.includes("state.listeningQuestionIntervalSeconds * 1000") ||
   !worker.includes("listening_pause_seconds") ||
+  !worker.includes("listening_question_interval_seconds") ||
+  !listeningQuestionIntervalMigration.includes(
+    "listening_question_interval_seconds",
+  ) ||
   !styles.includes(".study-mode-options") ||
   !styles.includes(".listening-dock") ||
   !styles.includes(".listening-playback-feedback") ||

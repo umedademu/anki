@@ -32,6 +32,7 @@ import {
   importCloudProgress,
   loadCloudState,
   normalizeListeningPauseSeconds,
+  normalizeListeningQuestionIntervalSeconds,
   normalizeSetupPreferences,
   normalizeSpeechParts,
   normalizeStudySession,
@@ -54,7 +55,11 @@ import {
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
-import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
+import {
+  loadSpeechSettings,
+  normalizeSpeechSettings,
+  saveSpeechSettings,
+} from "./speech-settings.js";
 import {
   addStudySeconds,
   defaultStudyTimeLimitSeconds,
@@ -96,6 +101,30 @@ const elements = {
   routineSetupTitle: document.querySelector("#routine-setup-title"),
   routineSetupProgress: document.querySelector("#routine-setup-progress"),
   studyShell: document.querySelector("#study-shell"),
+  studyMenuTrigger: document.querySelector("#study-menu-trigger"),
+  studyMenuLayer: document.querySelector("#study-menu-layer"),
+  studyMenuBackdrop: document.querySelector("#study-menu-backdrop"),
+  studyMenuClose: document.querySelector("#study-menu-close"),
+  studyMenuSetup: document.querySelector("#study-menu-setup"),
+  studyMenuHome: document.querySelector("#study-menu-home"),
+  studyMenuSettings: document.querySelector("#study-menu-settings"),
+  studyMenuSave: document.querySelector("#study-menu-save"),
+  studyMenuStatus: document.querySelector("#study-menu-status"),
+  studyMenuSpeechRate: document.querySelector("#study-menu-speech-rate"),
+  studyMenuSpeechRateOutput: document.querySelector(
+    "#study-menu-speech-rate-output",
+  ),
+  studyMenuQuestionIntervalSeconds: document.querySelector(
+    "#study-menu-question-interval-seconds",
+  ),
+  studyMenuAgainValue: document.querySelector("#study-menu-again-value"),
+  studyMenuAgainUnit: document.querySelector("#study-menu-again-unit"),
+  studyMenuHardValue: document.querySelector("#study-menu-hard-value"),
+  studyMenuHardUnit: document.querySelector("#study-menu-hard-unit"),
+  studyMenuGoodValue: document.querySelector("#study-menu-good-value"),
+  studyMenuGoodUnit: document.querySelector("#study-menu-good-unit"),
+  studyMenuEasyValue: document.querySelector("#study-menu-easy-value"),
+  studyMenuEasyUnit: document.querySelector("#study-menu-easy-unit"),
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
@@ -221,6 +250,7 @@ const state = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  listeningQuestionIntervalSeconds: 0,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: normalizeSpeechParts(),
   setupPreferences: normalizeSetupPreferences(),
@@ -244,6 +274,8 @@ const state = {
   unlockMessage: "",
   history: [],
   answerRevealedAt: 0,
+  studyMenuOpen: false,
+  resumeListeningAfterMenu: false,
 };
 
 const historyLimit = 200;
@@ -262,6 +294,7 @@ let studyClockLastTick = 0;
 let studyTimeSave = Promise.resolve();
 let listeningTouchStart = null;
 let suppressNextListeningClick = false;
+let studyMenuLastFocused = null;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -272,6 +305,12 @@ const ratingSoundPlayer = createRatingSoundPlayer();
 
 const listeningModes = new Set(["listen-answer"]);
 const oneQuestionPerTermMode = "one-per-term";
+const studyMenuReviewFields = {
+  againSeconds: [elements.studyMenuAgainValue, elements.studyMenuAgainUnit],
+  hardSeconds: [elements.studyMenuHardValue, elements.studyMenuHardUnit],
+  goodSeconds: [elements.studyMenuGoodValue, elements.studyMenuGoodUnit],
+  easySeconds: [elements.studyMenuEasyValue, elements.studyMenuEasyUnit],
+};
 const vocabularySpeechLabels = {
   word: "英語",
   meaning: "日本語",
@@ -1167,6 +1206,142 @@ function showListeningPlaybackFeedback(feedback) {
   }, 1000);
 }
 
+function chooseStudyMenuIntervalUnit(seconds) {
+  if (seconds % 86400 === 0) return 86400;
+  if (seconds % 3600 === 0) return 3600;
+  if (seconds % 60 === 0) return 60;
+  return 1;
+}
+
+function updateStudyMenuSpeechRateOutput() {
+  elements.studyMenuSpeechRateOutput.value =
+    `${Number(elements.studyMenuSpeechRate.value).toFixed(2)}倍`;
+}
+
+function fillStudyMenuSettings(settings = {}) {
+  const reviewSettings = normalizeReviewSettings({
+    ...state.reviewSettings,
+    ...settings,
+  });
+  const speechSettings = normalizeSpeechSettings({
+    ...loadSpeechSettings(),
+    ...settings,
+  });
+  elements.studyMenuSpeechRate.value = String(speechSettings.rate);
+  elements.studyMenuQuestionIntervalSeconds.value = String(
+    normalizeListeningQuestionIntervalSeconds(
+      settings.listeningQuestionIntervalSeconds ??
+        state.listeningQuestionIntervalSeconds,
+    ),
+  );
+  for (const [key, [valueInput, unitSelect]] of Object.entries(
+    studyMenuReviewFields,
+  )) {
+    const unit = chooseStudyMenuIntervalUnit(reviewSettings[key]);
+    unitSelect.value = String(unit);
+    valueInput.value = String(reviewSettings[key] / unit);
+  }
+  updateStudyMenuSpeechRateOutput();
+}
+
+function readStudyMenuSettings() {
+  const reviewSettings = normalizeReviewSettings(
+    Object.fromEntries(
+      Object.entries(studyMenuReviewFields).map(
+        ([key, [valueInput, unitSelect]]) => [
+          key,
+          Number(valueInput.value) * Number(unitSelect.value),
+        ],
+      ),
+    ),
+  );
+  const speechSettings = normalizeSpeechSettings({
+    ...loadSpeechSettings(),
+    rate: Number(elements.studyMenuSpeechRate.value),
+  });
+  return {
+    ...reviewSettings,
+    ...speechSettings,
+    listeningQuestionIntervalSeconds:
+      normalizeListeningQuestionIntervalSeconds(
+        elements.studyMenuQuestionIntervalSeconds.value,
+      ),
+  };
+}
+
+function setStudyMenuStatus(message, isError = false) {
+  elements.studyMenuStatus.textContent = message;
+  elements.studyMenuStatus.classList.toggle("is-error", isError);
+}
+
+function openStudyMenu() {
+  if (
+    state.studyMenuOpen ||
+    state.saving ||
+    !document.body.classList.contains("is-studying")
+  ) {
+    return;
+  }
+  state.studyMenuOpen = true;
+  state.resumeListeningAfterMenu =
+    isListeningMode() && Boolean(state.currentTask) && !state.listeningPaused;
+  studyMenuLastFocused = document.activeElement;
+  if (isListeningMode()) {
+    state.listeningPaused = true;
+    stopListeningSequence();
+  } else {
+    speechController.stop();
+  }
+  stopStudyClock();
+  fillStudyMenuSettings();
+  setStudyMenuStatus("");
+  elements.studyMenuLayer.classList.remove("is-hidden");
+  elements.studyMenuTrigger.setAttribute("aria-expanded", "true");
+  document.body.classList.add("is-study-menu-open");
+  window.requestAnimationFrame(() => elements.studyMenuClose.focus());
+}
+
+function closeStudyMenu({ resumeStudy = true } = {}) {
+  if (!state.studyMenuOpen) return;
+  const resumesListening = state.resumeListeningAfterMenu;
+  state.studyMenuOpen = false;
+  state.resumeListeningAfterMenu = false;
+  elements.studyMenuLayer.classList.add("is-hidden");
+  elements.studyMenuTrigger.setAttribute("aria-expanded", "false");
+  document.body.classList.remove("is-study-menu-open");
+  if (resumeStudy && document.body.classList.contains("is-studying")) {
+    startStudyClock();
+    if (resumesListening) {
+      toggleListening();
+    }
+  }
+  if (resumeStudy && studyMenuLastFocused instanceof HTMLElement) {
+    studyMenuLastFocused.focus();
+  }
+  studyMenuLastFocused = null;
+}
+
+async function saveStudyMenuSettings() {
+  elements.studyMenuSave.disabled = true;
+  setStudyMenuStatus("Cloudflareへ保存しています。");
+  try {
+    const saved = await saveCloudSettings(readStudyMenuSettings());
+    state.reviewSettings = normalizeReviewSettings(saved);
+    state.listeningQuestionIntervalSeconds =
+      normalizeListeningQuestionIntervalSeconds(
+        saved.listeningQuestionIntervalSeconds,
+      );
+    saveSpeechSettings(saved);
+    fillStudyMenuSettings(saved);
+    updateRatingIntervals();
+    setStudyMenuStatus("設定をCloudflareへ保存し、この学習から反映しました。");
+  } catch (error) {
+    setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
+  } finally {
+    elements.studyMenuSave.disabled = false;
+  }
+}
+
 function getConfig() {
   const config = window.ANKI_CONFIG ?? {};
   const dataBaseUrl = String(config.dataBaseUrl ?? "").replace(/\/$/, "");
@@ -1230,6 +1405,9 @@ async function loadQuestionImages() {
 }
 
 function showOnly(panel) {
+  if (panel !== elements.studyShell && state.studyMenuOpen) {
+    closeStudyMenu({ resumeStudy: false });
+  }
   if (panel !== elements.studyShell) {
     speechController.stop();
     stopStudyClock();
@@ -1338,6 +1516,7 @@ async function loadProgressFromCloud() {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.listeningQuestionIntervalSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     syncRoutinePreferences(normalizeSetupPreferences());
@@ -1374,6 +1553,10 @@ async function loadProgressFromCloud() {
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     sessionCloudState.settings.listeningPauseSeconds,
   );
+  state.listeningQuestionIntervalSeconds =
+    normalizeListeningQuestionIntervalSeconds(
+      sessionCloudState.settings.listeningQuestionIntervalSeconds,
+    );
   state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
     sessionCloudState.settings.studyTimeLimitSeconds,
   );
@@ -1445,6 +1628,7 @@ function renderActionControls() {
   elements.ratingActions.forEach((button) => {
     button.disabled = state.saving;
   });
+  elements.studyMenuTrigger.disabled = state.saving;
 }
 
 function revealCurrentAnswer() {
@@ -2143,14 +2327,14 @@ function speakListeningAnswer(runId) {
       state.listeningTimer = window.setTimeout(() => {
         state.listeningTimer = null;
         void advanceListening(runId);
-      }, 0);
+      }, state.listeningQuestionIntervalSeconds * 1000);
     },
   });
   if (!started) {
     state.listeningTimer = window.setTimeout(() => {
       state.listeningTimer = null;
       void advanceListening(runId);
-    }, 0);
+    }, state.listeningQuestionIntervalSeconds * 1000);
   }
 }
 
@@ -3086,7 +3270,17 @@ async function rateListeningQuestion(rating) {
     showListeningPlaybackFeedback("play");
   }
   startStudyClock();
-  beginListeningQuestion();
+  const nextQuestionRunId = ++state.listeningRunId;
+  state.listeningTimer = window.setTimeout(() => {
+    state.listeningTimer = null;
+    if (
+      nextQuestionRunId === state.listeningRunId &&
+      !state.listeningPaused &&
+      isListeningMode()
+    ) {
+      beginListeningQuestion();
+    }
+  }, state.listeningQuestionIntervalSeconds * 1000);
 }
 
 async function rateCurrentQuestion(rating) {
@@ -3547,6 +3741,7 @@ async function activateDecks(deckIds) {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.listeningQuestionIntervalSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     syncRoutinePreferences(normalizeSetupPreferences());
@@ -3591,7 +3786,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.113｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.114｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3692,6 +3887,10 @@ async function start() {
         state.listeningPauseSeconds = normalizeListeningPauseSeconds(
           cloudState.settings.listeningPauseSeconds,
         );
+        state.listeningQuestionIntervalSeconds =
+          normalizeListeningQuestionIntervalSeconds(
+            cloudState.settings.listeningQuestionIntervalSeconds,
+          );
         state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
           cloudState.settings.studyTimeLimitSeconds,
         );
@@ -3806,6 +4005,25 @@ elements.changeSubject.addEventListener("click", () => {
   void returnToSubjectSelection();
 });
 
+elements.studyMenuTrigger.addEventListener("click", openStudyMenu);
+elements.studyMenuClose.addEventListener("click", () => closeStudyMenu());
+elements.studyMenuBackdrop.addEventListener("click", () => closeStudyMenu());
+elements.studyMenuSetup.addEventListener("click", () => {
+  closeStudyMenu({ resumeStudy: false });
+  void returnToSetup();
+});
+elements.studyMenuHome.addEventListener("click", () => {
+  closeStudyMenu({ resumeStudy: false });
+  void returnToSubjectSelection();
+});
+elements.studyMenuSpeechRate.addEventListener(
+  "input",
+  updateStudyMenuSpeechRateOutput,
+);
+elements.studyMenuSettings.addEventListener("submit", (event) => {
+  event.preventDefault();
+  void saveStudyMenuSettings();
+});
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
@@ -3945,6 +4163,13 @@ elements.studyShell.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (state.studyMenuOpen) {
+    if (event.key === "Escape") {
+      event.preventDefault();
+      closeStudyMenu();
+    }
+    return;
+  }
   if (
     event.target.closest("button, a, input, textarea, select") ||
     event.repeat

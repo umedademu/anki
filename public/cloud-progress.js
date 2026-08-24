@@ -342,12 +342,18 @@ export const defaultSharedSettings = Object.freeze({
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  listeningQuestionIntervalSeconds: 0,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
 });
 
 export function normalizeListeningPauseSeconds(value) {
+  const seconds = Number(value);
+  return Number.isFinite(seconds) ? Math.min(60, Math.max(0, seconds)) : 0;
+}
+
+export function normalizeListeningQuestionIntervalSeconds(value) {
   const seconds = Number(value);
   return Number.isFinite(seconds) ? Math.min(60, Math.max(0, seconds)) : 0;
 }
@@ -365,6 +371,9 @@ export function normalizeSharedSettings(value) {
         : source.autoSpeechEnabled === true || source.autoSpeechEnabled === "true",
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       source.listeningPauseSeconds,
+    ),
+    listeningQuestionIntervalSeconds: normalizeListeningQuestionIntervalSeconds(
+      source.listeningQuestionIntervalSeconds,
     ),
     studyTimeLimitSeconds: normalizeStudyTimeLimitSeconds(
       source.studyTimeLimitSeconds,

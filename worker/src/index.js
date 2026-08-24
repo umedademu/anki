@@ -71,6 +71,7 @@ const defaultSettings = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  listeningQuestionIntervalSeconds: 0,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
@@ -513,6 +514,12 @@ function normalizeSettings(value) {
     autoSpeechEnabled:
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
     listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
+    listeningQuestionIntervalSeconds: decimal(
+      source.listeningQuestionIntervalSeconds,
+      0,
+      0,
+      60,
+    ),
     studyTimeLimitSeconds: integer(
       source.studyTimeLimitSeconds,
       defaultStudyTimeLimitSeconds,
@@ -806,6 +813,7 @@ async function readState(env, datasetVersion) {
         speech_source, azure_voice_id, english_azure_voice_id,
         device_voice_id, english_device_voice_id, speech_rate,
         shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+        listening_question_interval_seconds,
         study_time_limit_seconds,
         speech_parts_json, setup_preferences_json, updated_at
        FROM review_settings WHERE profile_id = 1`,
@@ -865,6 +873,8 @@ async function readState(env, datasetVersion) {
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
+          listeningQuestionIntervalSeconds:
+            settingsRow.listening_question_interval_seconds,
           studyTimeLimitSeconds: settingsRow.study_time_limit_seconds,
           speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
           setupPreferences: normalizeSetupPreferences(
@@ -888,9 +898,10 @@ async function saveSettings(env, patch) {
       speech_source, azure_voice_id, english_azure_voice_id,
       device_voice_id, english_device_voice_id, speech_rate,
       shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+      listening_question_interval_seconds,
       study_time_limit_seconds,
       speech_parts_json, setup_preferences_json, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -905,6 +916,7 @@ async function saveSettings(env, patch) {
       shuffle_enabled = excluded.shuffle_enabled,
       auto_speech_enabled = excluded.auto_speech_enabled,
       listening_pause_seconds = excluded.listening_pause_seconds,
+      listening_question_interval_seconds = excluded.listening_question_interval_seconds,
       study_time_limit_seconds = excluded.study_time_limit_seconds,
       speech_parts_json = excluded.speech_parts_json,
       setup_preferences_json = excluded.setup_preferences_json,
@@ -924,6 +936,7 @@ async function saveSettings(env, patch) {
       settings.shuffleEnabled ? 1 : 0,
       settings.autoSpeechEnabled ? 1 : 0,
       settings.listeningPauseSeconds,
+      settings.listeningQuestionIntervalSeconds,
       settings.studyTimeLimitSeconds,
       JSON.stringify(settings.speechParts),
       JSON.stringify(settings.setupPreferences),

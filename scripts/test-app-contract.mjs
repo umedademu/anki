@@ -99,6 +99,12 @@ const listeningAnswerSpeechBlock = app.match(
 const listeningQuestionSpeechBlock = app.match(
   /function beginListeningQuestion\(\)[\s\S]*?function showSpeechPartNotice/,
 )?.[0];
+const listeningPlaybackFeedbackBlock = app.match(
+  /function hideListeningPlaybackFeedback\(\)[\s\S]*?function getConfig/,
+)?.[0];
+const toggleListeningBlock = app.match(
+  /function toggleListening\(\)[\s\S]*?async function returnToSetup/,
+)?.[0];
 const deckProgressStyleBlock = styles.match(
   /\.deck-progress-name\s*\{[^}]*\}/,
 )?.[0];
@@ -211,10 +217,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.106") ||
-  !changelog.includes("v0.106") ||
-  !settingsHtml.includes("v0.106") ||
-  !historyHtml.includes("v0.106")
+  !html.includes("v0.107") ||
+  !changelog.includes("v0.107") ||
+  !settingsHtml.includes("v0.107") ||
+  !historyHtml.includes("v0.107")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -322,7 +328,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.106"') ||
+  !html.includes('href="/styles.css?v=0.107"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -732,6 +738,7 @@ if (
   html.includes('id="speech-part-controls"') ||
   (html.match(/data-speech-part-option/g) ?? []).length !== 0 ||
   !html.includes('id="listening-dock"') ||
+  !html.includes('id="listening-playback-feedback"') ||
   html.includes('id="listening-status"') ||
   html.includes('id="listening-back"') ||
   html.includes('id="listening-toggle"') ||
@@ -780,6 +787,7 @@ if (
   !worker.includes("listening_pause_seconds") ||
   !styles.includes(".study-mode-options") ||
   !styles.includes(".listening-dock") ||
+  !styles.includes(".listening-playback-feedback") ||
   styles.includes(".listening-dock p") ||
   app.includes("setListeningStatus(") ||
   !styles.includes("min-height: calc(76px + env(safe-area-inset-bottom))") ||
@@ -787,6 +795,19 @@ if (
   !styles.includes("padding-bottom: max(3px, env(safe-area-inset-bottom))")
 ) {
   throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
+}
+if (
+  !listeningPlaybackFeedbackBlock ||
+  !toggleListeningBlock ||
+  !listeningPlaybackFeedbackBlock.includes('textContent = isPlayFeedback ? "▶" : "Ⅱ"') ||
+  !listeningPlaybackFeedbackBlock.includes("}, 1000);") ||
+  !toggleListeningBlock.includes('showListeningPlaybackFeedback("play")') ||
+  !toggleListeningBlock.includes('showListeningPlaybackFeedback("pause")') ||
+  !styles.includes("background: rgb(25 31 27 / 48%)") ||
+  !styles.includes("top: 50%") ||
+  !styles.includes("left: 50%")
+) {
+  throw new Error("聞き流しの一時停止・再開を示す中央の一時表示が揃っていません。");
 }
 if (
   html.includes('id="completion-back"') ||

@@ -152,6 +152,9 @@ const elements = {
   completionMessage: document.querySelector("#completion-message"),
   completionReturn: document.querySelector("#completion-return"),
   unlockNotice: document.querySelector("#unlock-notice"),
+  listeningPlaybackFeedback: document.querySelector(
+    "#listening-playback-feedback",
+  ),
 };
 
 const state = {
@@ -215,6 +218,7 @@ let setupPreferenceSave = Promise.resolve();
 let setupPreferenceSaveVersion = 0;
 let speechPartsSaveVersion = 0;
 let speechPartNoticeTimer = null;
+let listeningPlaybackFeedbackTimer = null;
 let startingStudy = false;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
@@ -865,6 +869,34 @@ function stopListeningSequence() {
   speechController.stop();
 }
 
+function hideListeningPlaybackFeedback() {
+  if (listeningPlaybackFeedbackTimer !== null) {
+    window.clearTimeout(listeningPlaybackFeedbackTimer);
+    listeningPlaybackFeedbackTimer = null;
+  }
+  elements.listeningPlaybackFeedback.classList.add("is-hidden");
+}
+
+function showListeningPlaybackFeedback(feedback) {
+  if (listeningPlaybackFeedbackTimer !== null) {
+    window.clearTimeout(listeningPlaybackFeedbackTimer);
+  }
+  const isPlayFeedback = feedback === "play";
+  elements.listeningPlaybackFeedback.dataset.feedback = isPlayFeedback
+    ? "play"
+    : "pause";
+  elements.listeningPlaybackFeedback.textContent = isPlayFeedback ? "▶" : "Ⅱ";
+  elements.listeningPlaybackFeedback.setAttribute(
+    "aria-label",
+    isPlayFeedback ? "再生" : "一時停止",
+  );
+  elements.listeningPlaybackFeedback.classList.remove("is-hidden");
+  listeningPlaybackFeedbackTimer = window.setTimeout(() => {
+    listeningPlaybackFeedbackTimer = null;
+    elements.listeningPlaybackFeedback.classList.add("is-hidden");
+  }, 1000);
+}
+
 function getConfig() {
   const config = window.ANKI_CONFIG ?? {};
   const dataBaseUrl = String(config.dataBaseUrl ?? "").replace(/\/$/, "");
@@ -931,6 +963,7 @@ function showOnly(panel) {
   if (panel !== elements.studyShell) {
     speechController.stop();
     stopStudyClock();
+    hideListeningPlaybackFeedback();
   }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
   document.body.classList.toggle(
@@ -1905,6 +1938,7 @@ function toggleListening() {
   }
   if (state.listeningPaused) {
     state.listeningPaused = false;
+    showListeningPlaybackFeedback("play");
     startStudyClock();
     if (state.answerVisible) {
       const runId = ++state.listeningRunId;
@@ -1917,6 +1951,7 @@ function toggleListening() {
   stopStudyClock();
   state.listeningPaused = true;
   stopListeningSequence();
+  showListeningPlaybackFeedback("pause");
   void queueCurrentStudyTimeSave().catch((error) => {
     state.unlockMessage = error.message;
   });
@@ -3167,7 +3202,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.106｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.107｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

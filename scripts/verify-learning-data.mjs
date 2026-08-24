@@ -228,6 +228,22 @@ const expectedClassicalJapaneseSpecs = new Map([
       unitCount: 10,
     },
   ],
+  [
+    "deck-3",
+    {
+      number: 3,
+      version: "classical-japanese-word-deck-3-v1",
+      contentVersion: "fd9992fed403",
+      datasetLabel: "古文単語_単語Deck3_難関大・東大向け_300",
+      difficultyLabel: "単語Deck3_難関大・東大向け",
+      termCount: 300,
+      questionCount: 300,
+      questionCounts: { beginner: 300, reverse: 0, integrated: 0 },
+      sourceRowCount: 446,
+      rankStart: 601,
+      unitCount: 9,
+    },
+  ],
 ]);
 
 const expectedClassicalChineseSpec = {
@@ -1128,18 +1144,18 @@ const expectedClassicalJapaneseQuestionCount = [
   ...expectedClassicalJapaneseSpecs.values(),
 ].reduce((sum, spec) => sum + spec.questionCount, 0);
 if (
-  sourceClassicalJapaneseDecks.length !== 2 ||
+  sourceClassicalJapaneseDecks.length !== 3 ||
   !classicalJapaneseSubjectEntry ||
   classicalJapaneseSubjectEntry.defaultDeckId !== "deck-1" ||
   classicalJapaneseSubjectEntry.termUnitLabel !== "単語" ||
   classicalJapaneseSubjectEntry.datasetLabel !==
-    "大学受験古文（国語）｜Deck 1〜2" ||
+    "大学受験古文（国語）｜Deck 1〜3" ||
   classicalJapaneseSubjectEntry.termCount !== expectedClassicalJapaneseTermCount ||
   classicalJapaneseSubjectEntry.questionCount !==
     expectedClassicalJapaneseQuestionCount ||
-  classicalJapaneseSubjectEntry.decks.length !== 2
+  classicalJapaneseSubjectEntry.decks.length !== 3
 ) {
-  throw new Error("古文単語Deck 1〜2の科目一覧が正しくありません。");
+  throw new Error("古文単語Deck 1〜3の科目一覧が正しくありません。");
 }
 
 const generatedClassicalJapaneseTerms = [];
@@ -1301,9 +1317,9 @@ if (
   new Set(generatedClassicalJapaneseQuestions.map((question) => question.id))
     .size !== expectedClassicalJapaneseQuestionCount ||
   classicalJapaneseRanks.some((rank, index) => rank !== index + 1) ||
-  sourceClassicalJapaneseRows.length !== 1070
+  sourceClassicalJapaneseRows.length !== 1516
 ) {
-  throw new Error("古文単語Deck 1〜2の重複または通算順位が正しくありません。");
+  throw new Error("古文単語Deck 1〜3の重複または通算順位が正しくありません。");
 }
 
 if (

@@ -82,6 +82,10 @@ const studyTimeLimitMigration = await readFile(
   "utf8",
 );
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
+const ratingSound = await readFile(
+  path.join(projectRoot, "public", "rating-sound.js"),
+  "utf8",
+);
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
   "utf8",
@@ -224,12 +228,23 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.110") ||
-  !changelog.includes("v0.110") ||
-  !settingsHtml.includes("v0.110") ||
-  !historyHtml.includes("v0.110")
+  !html.includes("v0.111") ||
+  !changelog.includes("v0.111") ||
+  !settingsHtml.includes("v0.111") ||
+  !historyHtml.includes("v0.111")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js"') ||
+  !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
+  !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
+  !ratingSound.includes("again: Object.freeze") ||
+  !ratingSound.includes("hard: Object.freeze") ||
+  !ratingSound.includes("good: Object.freeze") ||
+  !ratingSound.includes("easy: Object.freeze")
+) {
+  throw new Error("4段階評価ごとの効果音と、暗記・聞き流しへの接続が揃っていません。");
 }
 if (
   !html.includes('id="routine-dashboard"') ||
@@ -362,7 +377,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.110"') ||
+  !html.includes('href="/styles.css?v=0.111"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

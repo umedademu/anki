@@ -74,6 +74,7 @@ import {
   recordStudyRoutineQuestion,
   studyRoutineTotals,
 } from "./study-routine.js";
+import { createRatingSoundPlayer } from "./rating-sound.js";
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
@@ -262,6 +263,7 @@ const speechController = createSpeechController({
   getHistoryReadings: () => state.historySpeechReadings,
   onTargetChange: updateSpeechButtons,
 });
+const ratingSoundPlayer = createRatingSoundPlayer();
 
 const listeningModes = new Set(["listen-answer"]);
 const oneQuestionPerTermMode = "one-per-term";
@@ -2965,6 +2967,7 @@ async function rateListeningQuestion(rating) {
   }
   const resumesFromPause = state.listeningPaused;
   stopListeningSequence();
+  ratingSoundPlayer.play(rating);
   stopStudyClock();
   state.saving = true;
   renderActionControls();
@@ -3079,6 +3082,7 @@ async function rateCurrentQuestion(rating) {
     return;
   }
   speechController.stop();
+  ratingSoundPlayer.play(rating);
   stopStudyClock();
   state.saving = true;
   renderActionControls();
@@ -3561,7 +3565,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.110｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.111｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

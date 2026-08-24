@@ -7,6 +7,7 @@ import {
   loadEarthScienceDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
+  loadPoliticsEconomicsDecks,
   loadSourceDecks,
 } from "./build-learning-data.mjs";
 
@@ -20,6 +21,7 @@ if (
     "world-history",
     "japanese-history",
     "geography",
+    "politics-economics",
     "biology-basics",
     "earth-science-basics",
   ].includes(imageSubjectId)
@@ -34,21 +36,25 @@ export const imageAssetIdPrefix =
     ? "WMJ"
     : imageSubjectId === "geography"
       ? "WMG"
-      : imageSubjectId === "biology-basics"
-        ? "WMB"
-        : imageSubjectId === "earth-science-basics"
-          ? "WME"
-          : "WM";
+      : imageSubjectId === "politics-economics"
+        ? "WMP"
+        : imageSubjectId === "biology-basics"
+          ? "WMB"
+          : imageSubjectId === "earth-science-basics"
+            ? "WME"
+            : "WM";
 const loadSubjectDecks =
   imageSubjectId === "japanese-history"
     ? loadJapaneseHistoryDecks
     : imageSubjectId === "geography"
       ? loadGeographyDecks
-      : imageSubjectId === "biology-basics"
-        ? loadBiologyDecks
-        : imageSubjectId === "earth-science-basics"
-          ? loadEarthScienceDecks
-          : loadSourceDecks;
+      : imageSubjectId === "politics-economics"
+        ? loadPoliticsEconomicsDecks
+        : imageSubjectId === "biology-basics"
+          ? loadBiologyDecks
+          : imageSubjectId === "earth-science-basics"
+            ? loadEarthScienceDecks
+            : loadSourceDecks;
 const userAgent = "anki-history-learning/1.0 (https://anki-ume.vercel.app/)";
 const apiHeaders = { "User-Agent": userAgent };
 let apiRequestQueue = Promise.resolve();
@@ -667,6 +673,7 @@ async function main() {
   const { terms: allTerms } = await loadSubjectDecks();
   const usesSelectedTerms = [
     "geography",
+    "politics-economics",
     "biology-basics",
     "earth-science-basics",
   ].includes(

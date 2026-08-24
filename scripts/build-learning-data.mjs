@@ -34,6 +34,10 @@ const politicsEconomicsSourceDirectory = path.join(
   "source",
   "politics-economics",
 );
+const politicsEconomicsTermImageManifestPath = path.join(
+  politicsEconomicsSourceDirectory,
+  "term-images.json",
+);
 const biologySourceDirectory = path.join(
   projectRoot,
   "data",
@@ -3168,6 +3172,7 @@ export async function main() {
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    politicsEconomicsTermImageManifest,
     biologyTermImageManifest,
     earthScienceTermImageManifest,
   ] = await Promise.all([
@@ -3179,6 +3184,11 @@ export async function main() {
     loadTermImageManifest(geographyData.terms, {
       manifestPath: geographyTermImageManifestPath,
       imageSourceDirectory: geographySourceDirectory,
+      requireComplete: false,
+    }),
+    loadTermImageManifest(politicsEconomicsData.terms, {
+      manifestPath: politicsEconomicsTermImageManifestPath,
+      imageSourceDirectory: politicsEconomicsSourceDirectory,
       requireComplete: false,
     }),
     loadTermImageManifest(biologyData.terms, {
@@ -3196,6 +3206,7 @@ export async function main() {
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    politicsEconomicsTermImageManifest,
     biologyTermImageManifest,
     earthScienceTermImageManifest,
   ]);
@@ -3238,6 +3249,13 @@ export async function main() {
     if (geographyTermImageManifest.assets.length > 0) {
       await cp(
         path.join(geographySourceDirectory, "term-images"),
+        path.join(outputRoot, "term-images"),
+        { recursive: true },
+      );
+    }
+    if (politicsEconomicsTermImageManifest.assets.length > 0) {
+      await cp(
+        path.join(politicsEconomicsSourceDirectory, "term-images"),
         path.join(outputRoot, "term-images"),
         { recursive: true },
       );

@@ -1389,6 +1389,22 @@ const expectedTermImages = mergeTermImageManifests([
     ),
     requireComplete: false,
   }),
+  await loadTermImageManifest(expectedPoliticsEconomicsTerms, {
+    manifestPath: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "politics-economics",
+      "term-images.json",
+    ),
+    imageSourceDirectory: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "politics-economics",
+    ),
+    requireComplete: false,
+  }),
   await loadTermImageManifest(expectedBiologyTerms, {
     manifestPath: path.join(
       projectRoot,
@@ -1437,6 +1453,7 @@ const expectedTermIdByQuestionId = new Map(
     ...generatedTerms,
     ...generatedJapaneseTerms,
     ...generatedGeographyTerms,
+    ...generatedPoliticsEconomicsTerms,
     ...generatedBiologyTerms,
     ...generatedEarthScienceTerms,
   ].flatMap((term) =>
@@ -1470,7 +1487,7 @@ if (
   )
 ) {
   throw new Error(
-    "世界史・日本史・地理・地学基礎・生物基礎の関連画像が正しく割り当てられていません。",
+    "世界史・日本史・地理・政治・経済・地学基礎・生物基礎の関連画像が正しく割り当てられていません。",
   );
 }
 
@@ -1499,6 +1516,53 @@ if (
   )
 ) {
   throw new Error("地理の厳選画像が38項目へ用語単位で割り当てられていません。");
+}
+
+const politicsEconomicsImageOverrides = JSON.parse(
+  await readFile(
+    path.join(
+      projectRoot,
+      "data",
+      "source",
+      "politics-economics",
+      "image-overrides.json",
+    ),
+    "utf8",
+  ),
+);
+const politicsEconomicsImageTermIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("PE-"))
+    .map((fallback) => fallback.termId),
+);
+const politicsEconomicsImageAssignments = generatedTermImages.assignments.filter(
+  (assignment) => assignment.termId.startsWith("PE-"),
+);
+const politicsEconomicsImageAssetIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("PE-"))
+    .map((fallback) => fallback.assetId),
+);
+const politicsEconomicsTermById = new Map(
+  generatedPoliticsEconomicsTerms.map((term) => [term.id, term]),
+);
+if (
+  politicsEconomicsImageOverrides.length !== 51 ||
+  politicsEconomicsImageTermIds.size !== politicsEconomicsImageOverrides.length ||
+  politicsEconomicsImageAssignments.length !== politicsEconomicsImageOverrides.length ||
+  politicsEconomicsImageAssetIds.size !== 47 ||
+  politicsEconomicsImageOverrides.some(
+    (override) =>
+      !politicsEconomicsImageTermIds.has(override.termId) || !override.fileName,
+  ) ||
+  politicsEconomicsImageAssignments.some(
+    (assignment) =>
+      assignment.target !== politicsEconomicsTermById.get(assignment.termId)?.term,
+  )
+) {
+  throw new Error(
+    "政治・経済の厳選画像47点が51項目へ回答文ではなく用語単位で割り当てられていません。",
+  );
 }
 
 const earthScienceImageOverrides = JSON.parse(
@@ -1641,6 +1705,17 @@ const geographySourceOverrideMismatches = geographyImageOverrides.filter((overri
     )
   );
 });
+const politicsEconomicsSourceOverrideMismatches =
+  politicsEconomicsImageOverrides.filter((override) => {
+    const assetId = fallbackByTermId.get(override.termId)?.assetId;
+    const asset = imageAssetById.get(assetId);
+    return (
+      normalizeCommonsFileName(asset?.sourcePageUrl ?? "") !==
+      normalizeCommonsFileName(
+        `https://commons.wikimedia.org/wiki/File:${override.fileName}`,
+      )
+    );
+  });
 const earthScienceSourceOverrideMismatches = earthScienceImageOverrides.filter(
   (override) => {
     const assetId = fallbackByTermId.get(override.termId)?.assetId;
@@ -1717,6 +1792,7 @@ if (
   auditedTargetMismatches.length > 0 ||
   sourceOverrideMismatches.length > 0 ||
   geographySourceOverrideMismatches.length > 0 ||
+  politicsEconomicsSourceOverrideMismatches.length > 0 ||
   earthScienceSourceOverrideMismatches.length > 0 ||
   biologySourceOverrideMismatches.length > 0
 ) {
@@ -1728,6 +1804,9 @@ if (
         override.target ? `${override.termId}:${override.target}` : override.termId,
       ),
       ...geographySourceOverrideMismatches.map((override) => override.termId),
+      ...politicsEconomicsSourceOverrideMismatches.map(
+        (override) => override.termId,
+      ),
       ...earthScienceSourceOverrideMismatches.map((override) => override.termId),
       ...biologySourceOverrideMismatches.map((override) => override.termId),
     ].join(", ")}`,

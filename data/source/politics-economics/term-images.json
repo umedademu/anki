@@ -1,0 +1,989 @@
+{
+  "schemaVersion": 2,
+  "assets": [
+    {
+      "id": "WMP-0153dc278391de",
+      "path": "term-images/optimized/WMP-0153dc278391de.webp",
+      "alt": "需要曲線・供給曲線と均衡点",
+      "caption": "需要曲線・供給曲線と均衡点",
+      "creator": "Dallas.Epperson",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Simple_supply_and_demand.svg"
+    },
+    {
+      "id": "WMP-02429ee700e353",
+      "path": "term-images/optimized/WMP-02429ee700e353.webp",
+      "alt": "債券の証券見本",
+      "caption": "債券の証券見本",
+      "creator": "Unknown author Unknown author",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sample_of_Unregistered_Bond_Certificates_Exchangeable_to_Gold_Bank_Notes_(100_Yen).jpg"
+    },
+    {
+      "id": "WMP-0680780ec5ba25",
+      "path": "term-images/optimized/WMP-0680780ec5ba25.webp",
+      "alt": "株式の株券見本",
+      "caption": "株式の株券見本",
+      "creator": "南満洲鉄道株式会社 The South Manchuria Railway Co., Ltd.",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stock_Certificate_of_The_South_Manchuria_Railway.jpg"
+    },
+    {
+      "id": "WMP-08c83db5302a48",
+      "path": "term-images/optimized/WMP-08c83db5302a48.webp",
+      "alt": "国際司法裁判所が置かれる平和宮",
+      "caption": "国際司法裁判所が置かれる平和宮",
+      "creator": "International Court of Justice ; originally uploaded by Yeu Ninje at en.wikipedia .",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:International_Court_of_Justice_HQ_2006.jpg"
+    },
+    {
+      "id": "WMP-0feef1b34c4569",
+      "path": "term-images/optimized/WMP-0feef1b34c4569.webp",
+      "alt": "フランス人権宣言の文書",
+      "caption": "フランス人権宣言の文書",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Declaration_of_the_Rights_of_Man_and_of_the_Citizen_in_1789.jpg"
+    },
+    {
+      "id": "WMP-183b9c0ccfc9cf",
+      "path": "term-images/optimized/WMP-183b9c0ccfc9cf.webp",
+      "alt": "財・サービスと所得の循環",
+      "caption": "財・サービスと所得の循環",
+      "creator": "Irconomics",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Circular_flow_of_goods_income.png"
+    },
+    {
+      "id": "WMP-1e37f069d2fbe8",
+      "path": "term-images/optimized/WMP-1e37f069d2fbe8.webp",
+      "alt": "日本国憲法の原本",
+      "caption": "日本国憲法の原本",
+      "creator": "Japanese government",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nihon_Kenpo02.jpg"
+    },
+    {
+      "id": "WMP-2042463534b62e",
+      "path": "term-images/optimized/WMP-2042463534b62e.webp",
+      "alt": "国際労働機関の旗",
+      "caption": "国際労働機関の旗",
+      "creator": "Denelson83",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_ILO.svg"
+    },
+    {
+      "id": "WMP-2486efeee78793",
+      "path": "term-images/optimized/WMP-2486efeee78793.webp",
+      "alt": "ブレトン・ウッズ会議の舞台となったホテル",
+      "caption": "ブレトン・ウッズ会議の舞台となったホテル",
+      "creator": "Sven Klippel",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mount_Washington_Hotel_2003.JPG"
+    },
+    {
+      "id": "WMP-26e02a23c61ae5",
+      "path": "term-images/optimized/WMP-26e02a23c61ae5.webp",
+      "alt": "比較優位を示す生産量の比較",
+      "caption": "比較優位を示す生産量の比較",
+      "creator": "Cmglee",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ricardo_example_of_comparative_advantage.svg"
+    },
+    {
+      "id": "WMP-277b5df6b2104f",
+      "path": "term-images/optimized/WMP-277b5df6b2104f.webp",
+      "alt": "国連安全保障理事会の議場",
+      "caption": "国連安全保障理事会の議場",
+      "creator": "Jdforrester",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:United_Nations_Headquarters_-_Security_Council_chamber,_straight-on_view.jpg"
+    },
+    {
+      "id": "WMP-286cd482223bd0",
+      "path": "term-images/optimized/WMP-286cd482223bd0.webp",
+      "alt": "トマス・ホッブズ",
+      "caption": "トマス・ホッブズ",
+      "creator": "John Michael Wright",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Hobbes_(portrait).jpg"
+    },
+    {
+      "id": "WMP-35686117314502",
+      "path": "term-images/optimized/WMP-35686117314502.webp",
+      "alt": "ジェレミー・ベンサム",
+      "caption": "ジェレミー・ベンサム",
+      "creator": "Henry William Pickersgill",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Jeremy_Bentham_by_Henry_William_Pickersgill.jpg"
+    },
+    {
+      "id": "WMP-3e7c23bf0bc9db",
+      "path": "term-images/optimized/WMP-3e7c23bf0bc9db.webp",
+      "alt": "欧州連合の加盟地域",
+      "caption": "欧州連合の加盟地域",
+      "creator": "S. Solberg J. , Kolja21 , Masterdeis / derivative work: Kolja21",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:EU_on_a_globe.svg"
+    },
+    {
+      "id": "WMP-42bdc444fa8f60",
+      "path": "term-images/optimized/WMP-42bdc444fa8f60.webp",
+      "alt": "世界銀行の本部",
+      "caption": "世界銀行の本部",
+      "creator": "Shiny Things",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:World_Bank_building_at_Washington.jpg"
+    },
+    {
+      "id": "WMP-49e2b58e095a02",
+      "path": "term-images/optimized/WMP-49e2b58e095a02.webp",
+      "alt": "アメリカ独立宣言の文書",
+      "caption": "アメリカ独立宣言の文書",
+      "creator": "original: w:Second Continental Congress ; reproduction: William Stone",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:United_States_Declaration_of_Independence.jpg"
+    },
+    {
+      "id": "WMP-4fc664893fd2ce",
+      "path": "term-images/optimized/WMP-4fc664893fd2ce.webp",
+      "alt": "ジャン＝ジャック・ルソー",
+      "caption": "ジャン＝ジャック・ルソー",
+      "creator": "Maurice Quentin de La Tour",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Maurice_Quentin_de_La_Tour_-_Portrait_of_Jean-Jacques_Rousseau_-_WGA12360.jpg"
+    },
+    {
+      "id": "WMP-51a3935bc60f58",
+      "path": "term-images/optimized/WMP-51a3935bc60f58.webp",
+      "alt": "ジョン・スチュアート・ミル",
+      "caption": "ジョン・スチュアート・ミル",
+      "creator": "John Watkins",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:John_Stuart_Mill_by_John_Watkins,_1865.jpg"
+    },
+    {
+      "id": "WMP-55d90b1ed2973f",
+      "path": "term-images/optimized/WMP-55d90b1ed2973f.webp",
+      "alt": "独占市場の価格と生産量",
+      "caption": "独占市場の価格と生産量",
+      "creator": "Cretog8",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Monopoly_pricing_example_01.svg"
+    },
+    {
+      "id": "WMP-62b4931819c2ab",
+      "path": "term-images/optimized/WMP-62b4931819c2ab.webp",
+      "alt": "投票箱へ投票する様子",
+      "caption": "投票箱へ投票する様子",
+      "creator": "Rama",
+      "license": "CC BY-SA 2.0 fr",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/fr/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Election_MG_3455.JPG"
+    },
+    {
+      "id": "WMP-6a2947b2f92d00",
+      "path": "term-images/optimized/WMP-6a2947b2f92d00.webp",
+      "alt": "大日本帝国憲法の原本",
+      "caption": "大日本帝国憲法の原本",
+      "creator": "Meiji Emperor",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Meiji_Kenpo03.jpg"
+    },
+    {
+      "id": "WMP-6ce35d5a15d591",
+      "path": "term-images/optimized/WMP-6ce35d5a15d591.webp",
+      "alt": "最高裁判所の庁舎",
+      "caption": "最高裁判所の庁舎",
+      "creator": "Big Ben in Japan from Kawasaki, Japan",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Supreme_Court_of_Japan_(10357245203).jpg"
+    },
+    {
+      "id": "WMP-6f6eff8c2cd21a",
+      "path": "term-images/optimized/WMP-6f6eff8c2cd21a.webp",
+      "alt": "日本銀行本店",
+      "caption": "日本銀行本店",
+      "creator": "Syced",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bank_of_Japan_building_(51698).jpg"
+    },
+    {
+      "id": "WMP-74cefab582a95e",
+      "path": "term-images/optimized/WMP-74cefab582a95e.webp",
+      "alt": "需要の価格弾力性を表す曲線",
+      "caption": "需要の価格弾力性を表す曲線",
+      "creator": "Supply-and-demand.svg : Paweł Zdziarski ( User:faxe ), User:Astarot derivative work: Jarry1250 ( talk )",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Price_elasticity_of_demand.svg"
+    },
+    {
+      "id": "WMP-81d111e7217c03",
+      "path": "term-images/optimized/WMP-81d111e7217c03.webp",
+      "alt": "モンテスキュー",
+      "caption": "モンテスキュー",
+      "creator": "After Jacques-Antoine Dassier",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Montesquieu_1.png"
+    },
+    {
+      "id": "WMP-8c6ea46329e110",
+      "path": "term-images/optimized/WMP-8c6ea46329e110.webp",
+      "alt": "ジョン・ロック",
+      "caption": "ジョン・ロック",
+      "creator": "Godfrey Kneller",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:JohnLocke.png"
+    },
+    {
+      "id": "WMP-9014efb53983b0",
+      "path": "term-images/optimized/WMP-9014efb53983b0.webp",
+      "alt": "イギリス権利章典の文書",
+      "caption": "イギリス権利章典の文書",
+      "creator": "National Archives and Records Administration. Office of the Federal Register. 4/1/1985",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bill_of_Rights_-_DPLA_-_a65f6d0b6210c18d17c596908ebcf270_(page_1).jpg"
+    },
+    {
+      "id": "WMP-96f87b8b20059d",
+      "path": "term-images/optimized/WMP-96f87b8b20059d.webp",
+      "alt": "国際連合総会の議場",
+      "caption": "国際連合総会の議場",
+      "creator": "Basil D Soufi",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:United_Nations_General_Assembly_Hall_(3).jpg"
+    },
+    {
+      "id": "WMP-a2df57d9eafdd6",
+      "path": "term-images/optimized/WMP-a2df57d9eafdd6.webp",
+      "alt": "プラザ合意前後のドル・円相場",
+      "caption": "プラザ合意前後のドル・円相場",
+      "creator": "Monaneko ( talk )",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:USD-JPY_(Plaza_Accord).svg"
+    },
+    {
+      "id": "WMP-a9480945d86377",
+      "path": "term-images/optimized/WMP-a9480945d86377.webp",
+      "alt": "価格の上限と超過需要の関係",
+      "caption": "価格の上限と超過需要の関係",
+      "creator": "en:User:Wdflake",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Basic_price_ceiling.svg"
+    },
+    {
+      "id": "WMP-b184ec5ec59a98",
+      "path": "term-images/optimized/WMP-b184ec5ec59a98.webp",
+      "alt": "負の外部効果がある市場のグラフ",
+      "caption": "負の外部効果がある市場のグラフ",
+      "creator": "JessCZ",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Negative_Production_Externality_Graph.png"
+    },
+    {
+      "id": "WMP-b41c974d2a7a6d",
+      "path": "term-images/optimized/WMP-b41c974d2a7a6d.webp",
+      "alt": "東南アジア諸国連合の本部",
+      "caption": "東南アジア諸国連合の本部",
+      "creator": "Gunawan Kartapranata",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:ASEAN_HQ_1.jpg"
+    },
+    {
+      "id": "WMP-babc406e566560",
+      "path": "term-images/optimized/WMP-babc406e566560.webp",
+      "alt": "価格の下限と超過供給の関係",
+      "caption": "価格の下限と超過供給の関係",
+      "creator": "Kbolino ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Surplus_from_Price_Floor.svg"
+    },
+    {
+      "id": "WMP-c6f3df7ae8f874",
+      "path": "term-images/optimized/WMP-c6f3df7ae8f874.webp",
+      "alt": "世界人権宣言を手にするエレノア・ルーズベルト",
+      "caption": "世界人権宣言を手にするエレノア・ルーズベルト",
+      "creator": "FDR Presidential Library & Museum",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Eleanor_Roosevelt_UDHR.jpg"
+    },
+    {
+      "id": "WMP-cc1d0044bad3f8",
+      "path": "term-images/optimized/WMP-cc1d0044bad3f8.webp",
+      "alt": "国際連合の旗",
+      "caption": "国際連合の旗",
+      "creator": "See File history below for details. Denelson83 , Zscout370 ve Madden",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_the_United_Nations.svg"
+    },
+    {
+      "id": "WMP-cd15e7af7dccdb",
+      "path": "term-images/optimized/WMP-cd15e7af7dccdb.webp",
+      "alt": "景気循環の四つの局面",
+      "caption": "景気循環の四つの局面",
+      "creator": "Sugarless ( talk · contribs )",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%99%AF%E6%B0%97%E5%BE%AA%E7%92%B0.png"
+    },
+    {
+      "id": "WMP-cd6feca988c0f8",
+      "path": "term-images/optimized/WMP-cd6feca988c0f8.webp",
+      "alt": "世界貿易機関の会合",
+      "caption": "世界貿易機関の会合",
+      "creator": "World Trade Organization from Switzerland",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fourth_Global_Review_of_Aid_for_Trade_1691_(9237986689).jpg"
+    },
+    {
+      "id": "WMP-cf3659cccdd511",
+      "path": "term-images/optimized/WMP-cf3659cccdd511.webp",
+      "alt": "北大西洋条約機構の旗",
+      "caption": "北大西洋条約機構の旗",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Flag_of_NATO.svg"
+    },
+    {
+      "id": "WMP-da06f096e8123a",
+      "path": "term-images/optimized/WMP-da06f096e8123a.webp",
+      "alt": "国会議事堂",
+      "caption": "国会議事堂",
+      "creator": "Wiiii",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Diet_of_Japan_Kokkai_2009.jpg"
+    },
+    {
+      "id": "WMP-dd1b5d95b9ca13",
+      "path": "term-images/optimized/WMP-dd1b5d95b9ca13.webp",
+      "alt": "日本の三権分立と相互の抑制",
+      "caption": "日本の三権分立と相互の抑制",
+      "creator": "Asanagi",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Separation_of_powers_in_Japan_2023-05-21.svg"
+    },
+    {
+      "id": "WMP-de6b558f6173ff",
+      "path": "term-images/optimized/WMP-de6b558f6173ff.webp",
+      "alt": "日本の紙幣と硬貨",
+      "caption": "日本の紙幣と硬貨",
+      "creator": "Bank of Japan",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:New_Japan_Notes_and_Coins_(Screenshot).png"
+    },
+    {
+      "id": "WMP-dea04c0d92d73a",
+      "path": "term-images/optimized/WMP-dea04c0d92d73a.webp",
+      "alt": "国際通貨基金の本部",
+      "caption": "国際通貨基金の本部",
+      "creator": "International Monetary Fund",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:IMF_building_HR.jpg"
+    },
+    {
+      "id": "WMP-e862b5d963dafe",
+      "path": "term-images/optimized/WMP-e862b5d963dafe.webp",
+      "alt": "日本の少子高齢化を示す人口ピラミッド",
+      "caption": "日本の少子高齢化を示す人口ピラミッド",
+      "creator": "CIA Factbook",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan_population_pyramid_(2018).jpg"
+    },
+    {
+      "id": "WMP-ebe743ebc3ecd0",
+      "path": "term-images/optimized/WMP-ebe743ebc3ecd0.webp",
+      "alt": "ストックとフローの関係",
+      "caption": "ストックとフローの関係",
+      "creator": "Magic5ball at English Wikipedia",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stocks_and_Flows.svg"
+    },
+    {
+      "id": "WMP-ecb852c2827860",
+      "path": "term-images/optimized/WMP-ecb852c2827860.webp",
+      "alt": "国連平和維持活動の青いヘルメット",
+      "caption": "国連平和維持活動の青いヘルメット",
+      "creator": "Daniel Košinár",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Blue_helmet.JPG"
+    },
+    {
+      "id": "WMP-f9d0ae31b2f89a",
+      "path": "term-images/optimized/WMP-f9d0ae31b2f89a.webp",
+      "alt": "正の外部効果がある市場のグラフ",
+      "caption": "正の外部効果がある市場のグラフ",
+      "creator": "Miraliu",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Positive_consumption_externality_graph.png"
+    },
+    {
+      "id": "WMP-fd3e40860695d3",
+      "path": "term-images/optimized/WMP-fd3e40860695d3.webp",
+      "alt": "外国為替市場の需要と供給",
+      "caption": "外国為替市場の需要と供給",
+      "creator": "User:Kwj2772",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:FX_diagram_in_the_asset_market_approach.svg"
+    }
+  ],
+  "termFallbacks": [
+    {
+      "termId": "PE-000028",
+      "assetId": "WMP-dd1b5d95b9ca13"
+    },
+    {
+      "termId": "PE-000032",
+      "assetId": "WMP-286cd482223bd0"
+    },
+    {
+      "termId": "PE-000033",
+      "assetId": "WMP-8c6ea46329e110"
+    },
+    {
+      "termId": "PE-000034",
+      "assetId": "WMP-4fc664893fd2ce"
+    },
+    {
+      "termId": "PE-000035",
+      "assetId": "WMP-81d111e7217c03"
+    },
+    {
+      "termId": "PE-000036",
+      "assetId": "WMP-35686117314502"
+    },
+    {
+      "termId": "PE-000037",
+      "assetId": "WMP-51a3935bc60f58"
+    },
+    {
+      "termId": "PE-000042",
+      "assetId": "WMP-9014efb53983b0"
+    },
+    {
+      "termId": "PE-000043",
+      "assetId": "WMP-49e2b58e095a02"
+    },
+    {
+      "termId": "PE-000044",
+      "assetId": "WMP-0feef1b34c4569"
+    },
+    {
+      "termId": "PE-000045",
+      "assetId": "WMP-c6f3df7ae8f874"
+    },
+    {
+      "termId": "PE-000046",
+      "assetId": "WMP-6a2947b2f92d00"
+    },
+    {
+      "termId": "PE-000047",
+      "assetId": "WMP-1e37f069d2fbe8"
+    },
+    {
+      "termId": "PE-000106",
+      "assetId": "WMP-6ce35d5a15d591"
+    },
+    {
+      "termId": "PE-000112",
+      "assetId": "WMP-da06f096e8123a"
+    },
+    {
+      "termId": "PE-000179",
+      "assetId": "WMP-62b4931819c2ab"
+    },
+    {
+      "termId": "PE-000208",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "termId": "PE-000209",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "termId": "PE-000212",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "termId": "PE-000214",
+      "assetId": "WMP-a9480945d86377"
+    },
+    {
+      "termId": "PE-000215",
+      "assetId": "WMP-babc406e566560"
+    },
+    {
+      "termId": "PE-000217",
+      "assetId": "WMP-74cefab582a95e"
+    },
+    {
+      "termId": "PE-000223",
+      "assetId": "WMP-f9d0ae31b2f89a"
+    },
+    {
+      "termId": "PE-000224",
+      "assetId": "WMP-b184ec5ec59a98"
+    },
+    {
+      "termId": "PE-000231",
+      "assetId": "WMP-55d90b1ed2973f"
+    },
+    {
+      "termId": "PE-000246",
+      "assetId": "WMP-183b9c0ccfc9cf"
+    },
+    {
+      "termId": "PE-000250",
+      "assetId": "WMP-183b9c0ccfc9cf"
+    },
+    {
+      "termId": "PE-000260",
+      "assetId": "WMP-ebe743ebc3ecd0"
+    },
+    {
+      "termId": "PE-000261",
+      "assetId": "WMP-ebe743ebc3ecd0"
+    },
+    {
+      "termId": "PE-000263",
+      "assetId": "WMP-cd15e7af7dccdb"
+    },
+    {
+      "termId": "PE-000279",
+      "assetId": "WMP-de6b558f6173ff"
+    },
+    {
+      "termId": "PE-000286",
+      "assetId": "WMP-6f6eff8c2cd21a"
+    },
+    {
+      "termId": "PE-000301",
+      "assetId": "WMP-02429ee700e353"
+    },
+    {
+      "termId": "PE-000302",
+      "assetId": "WMP-0680780ec5ba25"
+    },
+    {
+      "termId": "PE-000333",
+      "assetId": "WMP-e862b5d963dafe"
+    },
+    {
+      "termId": "PE-000346",
+      "assetId": "WMP-cc1d0044bad3f8"
+    },
+    {
+      "termId": "PE-000348",
+      "assetId": "WMP-96f87b8b20059d"
+    },
+    {
+      "termId": "PE-000349",
+      "assetId": "WMP-277b5df6b2104f"
+    },
+    {
+      "termId": "PE-000353",
+      "assetId": "WMP-08c83db5302a48"
+    },
+    {
+      "termId": "PE-000357",
+      "assetId": "WMP-ecb852c2827860"
+    },
+    {
+      "termId": "PE-000367",
+      "assetId": "WMP-cf3659cccdd511"
+    },
+    {
+      "termId": "PE-000368",
+      "assetId": "WMP-3e7c23bf0bc9db"
+    },
+    {
+      "termId": "PE-000369",
+      "assetId": "WMP-b41c974d2a7a6d"
+    },
+    {
+      "termId": "PE-000370",
+      "assetId": "WMP-2042463534b62e"
+    },
+    {
+      "termId": "PE-000374",
+      "assetId": "WMP-dea04c0d92d73a"
+    },
+    {
+      "termId": "PE-000375",
+      "assetId": "WMP-42bdc444fa8f60"
+    },
+    {
+      "termId": "PE-000382",
+      "assetId": "WMP-fd3e40860695d3"
+    },
+    {
+      "termId": "PE-000387",
+      "assetId": "WMP-2486efeee78793"
+    },
+    {
+      "termId": "PE-000389",
+      "assetId": "WMP-a2df57d9eafdd6"
+    },
+    {
+      "termId": "PE-000391",
+      "assetId": "WMP-cd6feca988c0f8"
+    },
+    {
+      "termId": "PE-000400",
+      "assetId": "WMP-26e02a23c61ae5"
+    }
+  ],
+  "assignments": [
+    {
+      "questionId": "PE-000028-C01",
+      "termId": "PE-000028",
+      "target": "権力分立",
+      "assetId": "WMP-dd1b5d95b9ca13"
+    },
+    {
+      "questionId": "PE-000032-C01",
+      "termId": "PE-000032",
+      "target": "ホッブズ",
+      "assetId": "WMP-286cd482223bd0"
+    },
+    {
+      "questionId": "PE-000033-C01",
+      "termId": "PE-000033",
+      "target": "ロック",
+      "assetId": "WMP-8c6ea46329e110"
+    },
+    {
+      "questionId": "PE-000034-C01",
+      "termId": "PE-000034",
+      "target": "ルソー",
+      "assetId": "WMP-4fc664893fd2ce"
+    },
+    {
+      "questionId": "PE-000035-C01",
+      "termId": "PE-000035",
+      "target": "モンテスキュー",
+      "assetId": "WMP-81d111e7217c03"
+    },
+    {
+      "questionId": "PE-000036-C01",
+      "termId": "PE-000036",
+      "target": "ベンサム",
+      "assetId": "WMP-35686117314502"
+    },
+    {
+      "questionId": "PE-000037-C01",
+      "termId": "PE-000037",
+      "target": "J.S.ミル",
+      "assetId": "WMP-51a3935bc60f58"
+    },
+    {
+      "questionId": "PE-000042-C01",
+      "termId": "PE-000042",
+      "target": "イギリス権利章典",
+      "assetId": "WMP-9014efb53983b0"
+    },
+    {
+      "questionId": "PE-000043-C01",
+      "termId": "PE-000043",
+      "target": "アメリカ独立宣言",
+      "assetId": "WMP-49e2b58e095a02"
+    },
+    {
+      "questionId": "PE-000044-C01",
+      "termId": "PE-000044",
+      "target": "フランス人権宣言",
+      "assetId": "WMP-0feef1b34c4569"
+    },
+    {
+      "questionId": "PE-000045-C01",
+      "termId": "PE-000045",
+      "target": "世界人権宣言",
+      "assetId": "WMP-c6f3df7ae8f874"
+    },
+    {
+      "questionId": "PE-000046-C01",
+      "termId": "PE-000046",
+      "target": "大日本帝国憲法",
+      "assetId": "WMP-6a2947b2f92d00"
+    },
+    {
+      "questionId": "PE-000047-C01",
+      "termId": "PE-000047",
+      "target": "日本国憲法",
+      "assetId": "WMP-1e37f069d2fbe8"
+    },
+    {
+      "questionId": "PE-000106-C01",
+      "termId": "PE-000106",
+      "target": "最高裁判所",
+      "assetId": "WMP-6ce35d5a15d591"
+    },
+    {
+      "questionId": "PE-000112-C01",
+      "termId": "PE-000112",
+      "target": "国会",
+      "assetId": "WMP-da06f096e8123a"
+    },
+    {
+      "questionId": "PE-000179-C01",
+      "termId": "PE-000179",
+      "target": "選挙の四原則",
+      "assetId": "WMP-62b4931819c2ab"
+    },
+    {
+      "questionId": "PE-000208-C01",
+      "termId": "PE-000208",
+      "target": "需要曲線",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "questionId": "PE-000209-C01",
+      "termId": "PE-000209",
+      "target": "供給曲線",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "questionId": "PE-000212-C01",
+      "termId": "PE-000212",
+      "target": "均衡価格",
+      "assetId": "WMP-0153dc278391de"
+    },
+    {
+      "questionId": "PE-000214-C01",
+      "termId": "PE-000214",
+      "target": "超過需要",
+      "assetId": "WMP-a9480945d86377"
+    },
+    {
+      "questionId": "PE-000215-C01",
+      "termId": "PE-000215",
+      "target": "超過供給",
+      "assetId": "WMP-babc406e566560"
+    },
+    {
+      "questionId": "PE-000217-C01",
+      "termId": "PE-000217",
+      "target": "需要の価格弾力性",
+      "assetId": "WMP-74cefab582a95e"
+    },
+    {
+      "questionId": "PE-000223-C01",
+      "termId": "PE-000223",
+      "target": "外部経済",
+      "assetId": "WMP-f9d0ae31b2f89a"
+    },
+    {
+      "questionId": "PE-000224-C01",
+      "termId": "PE-000224",
+      "target": "外部不経済",
+      "assetId": "WMP-b184ec5ec59a98"
+    },
+    {
+      "questionId": "PE-000231-C01",
+      "termId": "PE-000231",
+      "target": "独占",
+      "assetId": "WMP-55d90b1ed2973f"
+    },
+    {
+      "questionId": "PE-000246-C01",
+      "termId": "PE-000246",
+      "target": "国内総生産",
+      "assetId": "WMP-183b9c0ccfc9cf"
+    },
+    {
+      "questionId": "PE-000250-C01",
+      "termId": "PE-000250",
+      "target": "三面等価の原則",
+      "assetId": "WMP-183b9c0ccfc9cf"
+    },
+    {
+      "questionId": "PE-000260-C01",
+      "termId": "PE-000260",
+      "target": "ストック",
+      "assetId": "WMP-ebe743ebc3ecd0"
+    },
+    {
+      "questionId": "PE-000261-C01",
+      "termId": "PE-000261",
+      "target": "フロー",
+      "assetId": "WMP-ebe743ebc3ecd0"
+    },
+    {
+      "questionId": "PE-000263-C01",
+      "termId": "PE-000263",
+      "target": "景気循環",
+      "assetId": "WMP-cd15e7af7dccdb"
+    },
+    {
+      "questionId": "PE-000279-C01",
+      "termId": "PE-000279",
+      "target": "貨幣",
+      "assetId": "WMP-de6b558f6173ff"
+    },
+    {
+      "questionId": "PE-000286-C01",
+      "termId": "PE-000286",
+      "target": "日本銀行",
+      "assetId": "WMP-6f6eff8c2cd21a"
+    },
+    {
+      "questionId": "PE-000301-C01",
+      "termId": "PE-000301",
+      "target": "債券",
+      "assetId": "WMP-02429ee700e353"
+    },
+    {
+      "questionId": "PE-000302-C01",
+      "termId": "PE-000302",
+      "target": "株式",
+      "assetId": "WMP-0680780ec5ba25"
+    },
+    {
+      "questionId": "PE-000333-C01",
+      "termId": "PE-000333",
+      "target": "少子高齢化",
+      "assetId": "WMP-e862b5d963dafe"
+    },
+    {
+      "questionId": "PE-000346-C01",
+      "termId": "PE-000346",
+      "target": "国際連合",
+      "assetId": "WMP-cc1d0044bad3f8"
+    },
+    {
+      "questionId": "PE-000348-C01",
+      "termId": "PE-000348",
+      "target": "国連総会",
+      "assetId": "WMP-96f87b8b20059d"
+    },
+    {
+      "questionId": "PE-000349-C01",
+      "termId": "PE-000349",
+      "target": "国連安全保障理事会",
+      "assetId": "WMP-277b5df6b2104f"
+    },
+    {
+      "questionId": "PE-000353-C01",
+      "termId": "PE-000353",
+      "target": "国際司法裁判所",
+      "assetId": "WMP-08c83db5302a48"
+    },
+    {
+      "questionId": "PE-000357-C01",
+      "termId": "PE-000357",
+      "target": "国連平和維持活動",
+      "assetId": "WMP-ecb852c2827860"
+    },
+    {
+      "questionId": "PE-000367-C01",
+      "termId": "PE-000367",
+      "target": "北大西洋条約機構",
+      "assetId": "WMP-cf3659cccdd511"
+    },
+    {
+      "questionId": "PE-000368-C01",
+      "termId": "PE-000368",
+      "target": "欧州連合",
+      "assetId": "WMP-3e7c23bf0bc9db"
+    },
+    {
+      "questionId": "PE-000369-C01",
+      "termId": "PE-000369",
+      "target": "東南アジア諸国連合",
+      "assetId": "WMP-b41c974d2a7a6d"
+    },
+    {
+      "questionId": "PE-000370-C01",
+      "termId": "PE-000370",
+      "target": "国際労働機関",
+      "assetId": "WMP-2042463534b62e"
+    },
+    {
+      "questionId": "PE-000374-C01",
+      "termId": "PE-000374",
+      "target": "国際通貨基金",
+      "assetId": "WMP-dea04c0d92d73a"
+    },
+    {
+      "questionId": "PE-000375-C01",
+      "termId": "PE-000375",
+      "target": "国際復興開発銀行",
+      "assetId": "WMP-42bdc444fa8f60"
+    },
+    {
+      "questionId": "PE-000382-C01",
+      "termId": "PE-000382",
+      "target": "外国為替相場",
+      "assetId": "WMP-fd3e40860695d3"
+    },
+    {
+      "questionId": "PE-000387-C01",
+      "termId": "PE-000387",
+      "target": "ブレトン・ウッズ体制",
+      "assetId": "WMP-2486efeee78793"
+    },
+    {
+      "questionId": "PE-000389-C01",
+      "termId": "PE-000389",
+      "target": "プラザ合意",
+      "assetId": "WMP-a2df57d9eafdd6"
+    },
+    {
+      "questionId": "PE-000391-C01",
+      "termId": "PE-000391",
+      "target": "世界貿易機関",
+      "assetId": "WMP-cd6feca988c0f8"
+    },
+    {
+      "questionId": "PE-000400-C01",
+      "termId": "PE-000400",
+      "target": "比較優位",
+      "assetId": "WMP-26e02a23c61ae5"
+    }
+  ]
+}

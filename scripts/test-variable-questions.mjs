@@ -264,6 +264,7 @@ if (
 }
 
 const answerWithAlternates = {
+  type: "identify",
   answer: "ベルリン会議",
   acceptedAnswers: ["コンゴ会議", "ベルリン会議", ""],
 };
@@ -272,16 +273,70 @@ if (
     "ベルリン会議|コンゴ会議" ||
   getQuestionAnswerDisplayText(answerWithAlternates) !==
     "ベルリン会議 / コンゴ会議" ||
-  getQuestionAnswerSpeechText(answerWithAlternates) !==
-    "ベルリン会議。コンゴ会議" ||
+  getQuestionAnswerSpeechText(answerWithAlternates) !== "ベルリン会議" ||
   getQuestionAnswerSpeechText(answerWithAlternates, {
-    preferFullName: true,
+    term: { term: "ベルリン会議", aliases: ["コンゴ会議"] },
   }) !== "ベルリン会議。コンゴ会議" ||
   getQuestionAnswerSpeechText(answerWithAlternates, {
     includeAcceptedAnswers: false,
   }) !== "ベルリン会議"
 ) {
-  throw new Error("回答と別解を同じ表示・読み上げ単位へまとめられませんでした。");
+  throw new Error("表示用の別解と意味のある音声用別名を分けられませんでした。");
+}
+
+const seasonalWindAnswer = {
+  type: "identify",
+  answer: "季節風",
+  acceptedAnswers: ["モンスーン"],
+};
+if (
+  getQuestionAnswerSpeechText(seasonalWindAnswer, {
+    term: { term: "季節風", aliases: ["モンスーン"] },
+  }) !== "季節風。モンスーン"
+) {
+  throw new Error("明確に異なる正式な別名を回答に続けて読めませんでした。");
+}
+
+const spellingVariationAnswer = {
+  type: "identify",
+  answer: "攪乱",
+  acceptedAnswers: ["撹乱"],
+};
+if (
+  getQuestionAnswerSpeechText(spellingVariationAnswer, {
+    term: { term: "攪乱", aliases: ["撹乱"] },
+  }) !== "攪乱"
+) {
+  throw new Error("ほぼ同じ表記の別解を音声から除外できませんでした。");
+}
+
+const exampleAnswer = {
+  type: "content",
+  answer: "綿",
+  acceptedAnswers: ["菜種", "藍", "茶"],
+};
+if (
+  getQuestionAnswerSpeechText(exampleAnswer, {
+    term: { term: "商品作物", aliases: [] },
+  }) !== "綿"
+) {
+  throw new Error("代表例のほかの正答を続けて読み上げています。");
+}
+
+const multipleAliasesAnswer = {
+  type: "identify",
+  answer: "赤道低圧帯",
+  acceptedAnswers: ["熱帯収束帯", "ITCZ"],
+};
+if (
+  getQuestionAnswerSpeechText(multipleAliasesAnswer, {
+    term: {
+      term: "赤道低圧帯",
+      aliases: ["熱帯収束帯", "ITCZ"],
+    },
+  }) !== "赤道低圧帯。熱帯収束帯"
+) {
+  throw new Error("音声用の別名を一つまでに絞れませんでした。");
 }
 
 const answerWithFullName = {
@@ -297,8 +352,7 @@ if (
   getQuestionAnswerSpeechText(answerWithFullName, {
     preferFullName: true,
   }) !== "ミハイルゴルバチョフ" ||
-  getQuestionAnswerSpeechText(answerWithFullName) !==
-    "ゴルバチョフ。ミハイル＝ゴルバチョフ"
+  getQuestionAnswerSpeechText(answerWithFullName) !== "ゴルバチョフ"
 ) {
   throw new Error("人物の表示を保ったままフルネームだけを読み上げられませんでした。");
 }

@@ -158,7 +158,7 @@ export function getQuestionAnswerDisplayText(question) {
 const personNameSeparatorPattern = /[=＝・･\s]/u;
 const spokenPersonNameSeparatorPattern = /[=＝・･]/gu;
 
-function normalizePersonName(value) {
+function normalizeAnswerText(value) {
   return String(value ?? "")
     .replace(questionReadingPattern, "")
     .replaceAll("**", "")
@@ -167,15 +167,121 @@ function normalizePersonName(value) {
     .toLocaleLowerCase();
 }
 
+function editDistance(left, right) {
+  const leftCharacters = Array.from(left);
+  const rightCharacters = Array.from(right);
+  const distances = Array.from(
+    { length: rightCharacters.length + 1 },
+    (_, index) => index,
+  );
+  for (let leftIndex = 0; leftIndex < leftCharacters.length; leftIndex += 1) {
+    let previous = distances[0];
+    distances[0] = leftIndex + 1;
+    for (
+      let rightIndex = 0;
+      rightIndex < rightCharacters.length;
+      rightIndex += 1
+    ) {
+      const saved = distances[rightIndex + 1];
+      distances[rightIndex + 1] = Math.min(
+        distances[rightIndex + 1] + 1,
+        distances[rightIndex] + 1,
+        previous +
+          (leftCharacters[leftIndex] === rightCharacters[rightIndex] ? 0 : 1),
+      );
+      previous = saved;
+    }
+  }
+  return distances[rightCharacters.length];
+}
+
+function longestSharedSequenceLength(left, right) {
+  const leftCharacters = Array.from(left);
+  const rightCharacters = Array.from(right);
+  const lengths = Array(rightCharacters.length + 1).fill(0);
+  for (const leftCharacter of leftCharacters) {
+    let previous = 0;
+    for (
+      let rightIndex = 0;
+      rightIndex < rightCharacters.length;
+      rightIndex += 1
+    ) {
+      const saved = lengths[rightIndex + 1];
+      lengths[rightIndex + 1] =
+        leftCharacter === rightCharacters[rightIndex]
+          ? previous + 1
+          : Math.max(lengths[rightIndex + 1], lengths[rightIndex]);
+      previous = saved;
+    }
+  }
+  return lengths[rightCharacters.length];
+}
+
+function isClearlyDistinctAlternative(primaryAnswer, acceptedAnswer) {
+  const primary = normalizeAnswerText(primaryAnswer);
+  const accepted = normalizeAnswerText(acceptedAnswer);
+  if (
+    !primary ||
+    !accepted ||
+    primary === accepted ||
+    primary.includes(accepted) ||
+    accepted.includes(primary)
+  ) {
+    return false;
+  }
+  const primaryCharacters = Array.from(primary);
+  const acceptedCharacters = Array.from(accepted);
+  if (
+    [...primaryCharacters].sort().join("") ===
+    [...acceptedCharacters].sort().join("")
+  ) {
+    return false;
+  }
+  if (editDistance(primary, accepted) <= 1) {
+    return false;
+  }
+  const longestLength = Math.max(
+    primaryCharacters.length,
+    acceptedCharacters.length,
+  );
+  return (
+    longestSharedSequenceLength(primary, accepted) / longestLength < 0.72
+  );
+}
+
+function meaningfulAlternative(parts, term, question) {
+  const primaryAnswer = parts[0] ?? "";
+  if (
+    !term ||
+    question?.type !== "identify" ||
+    normalizeAnswerText(primaryAnswer) !== normalizeAnswerText(term.term)
+  ) {
+    return "";
+  }
+  const termAliases = Array.isArray(term.aliases) ? term.aliases : [];
+  const officialAliases = new Set(
+    termAliases.map((alias) => normalizeAnswerText(alias)).filter(Boolean),
+  );
+  return (
+    parts
+      .slice(1)
+      .find(
+        (answer) =>
+          officialAliases.has(normalizeAnswerText(answer)) &&
+          isClearlyDistinctAlternative(primaryAnswer, answer),
+      ) ?? ""
+  );
+}
+
 function preferredFullName(parts) {
-  const primaryName = normalizePersonName(parts[0]);
+  const primaryName = normalizeAnswerText(parts[0]);
   if (!primaryName) {
     return "";
   }
   return (
     parts
       .slice(1)
-      .map((answer) => ({ answer, normalized: normalizePersonName(answer) }))
+      .map((answer) => ({ answer, normalized: normalizeAnswerText(answer) }))
       .filter(
         ({ answer, normalized }) =>
           normalized.length > primaryName.length &&
@@ -189,7 +295,7 @@ function preferredFullName(parts) {
 
 export function getQuestionAnswerSpeechParts(
   question,
-  { includeAcceptedAnswers = true, preferFullName = false } = {},
+  { includeAcceptedAnswers = true, preferFullName = false, term = null } = {},
 ) {
   const parts = getQuestionAnswerParts(question);
   if (!includeAcceptedAnswers) {
@@ -201,16 +307,22 @@ export function getQuestionAnswerSpeechParts(
       return [fullName.replace(spokenPersonNameSeparatorPattern, "")];
     }
   }
-  return parts;
+  const alternative = meaningfulAlternative(parts, term, question);
+  return [parts[0], alternative].filter(Boolean);
 }
 
 export function getQuestionAnswerSpeechText(
   question,
-  { includeAcceptedAnswers = true, preferFullName = false } = {},
+  {
+    includeAcceptedAnswers = true,
+    preferFullName = false,
+    term = null,
+  } = {},
 ) {
   return getQuestionAnswerSpeechParts(question, {
     includeAcceptedAnswers,
     preferFullName,
+    term,
   }).join("。");
 }
 

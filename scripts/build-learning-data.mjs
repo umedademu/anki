@@ -934,7 +934,7 @@ const stableDatasetVersions = new Map([
   ["politics-economics:deck-1", "politics-economics-deck-1-v1"],
   ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
   ["earth-science-basics:deck-1", "earth-science-basics-deck-1-v1"],
-  ["classical-japanese:deck-1", "classical-japanese-deck-1-v1"],
+  ["classical-japanese:deck-1", "classical-japanese-word-deck-1-v1"],
   ["classical-chinese:deck-1", "classical-chinese-deck-1-v1"],
 ]);
 
@@ -2343,6 +2343,78 @@ function classicalJapaneseExplanation(row) {
     .join("\n");
 }
 
+function uniqueClassicalJapaneseValues(values) {
+  return [...new Set(values.map((value) => geographyValue(value)).filter(Boolean))];
+}
+
+function aggregateClassicalJapaneseMeaningQuestion(itemRows, normalizedQuestions) {
+  const firstRow = itemRows[0].row;
+  const expectedPrompt = `古語「${firstRow.item}」の意味は何か。`;
+  if (itemRows.some(({ row }) => row.question !== expectedPrompt)) {
+    throw new Error(
+      `${firstRow.item}の語義問題は、語義数を示さない「${expectedPrompt}」に統一してください。`,
+    );
+  }
+  if (
+    itemRows.some(({ row }) =>
+      [row.example_text, row.example_reading, row.example_translation].some(
+        (value) => geographyValue(value),
+      ),
+    )
+  ) {
+    throw new Error(`${firstRow.item}の一語一問の語義問題には用例を付けないでください。`);
+  }
+  const explanations = uniqueClassicalJapaneseValues(
+    itemRows.map(({ row }) => row.explanation),
+  );
+  const grammarInfo = uniqueClassicalJapaneseValues(
+    itemRows.map(({ row }) => row.grammar_info),
+  ).map((value) => `文法情報：${value.replaceAll(";", "／")}`);
+  const distinctions = uniqueClassicalJapaneseValues(
+    itemRows.map(({ row }) => {
+      const confusableWith = geographyValue(row.confusable_with);
+      const distinction = geographyValue(row.distinction);
+      return confusableWith && distinction
+        ? `区別：${confusableWith}とは、${distinction}`
+        : "";
+    }),
+  );
+  const memoryAids = uniqueClassicalJapaneseValues(
+    itemRows.map(({ row }) => row.memory_aid),
+  ).map((value) => `記憶補助：${value}`);
+  const answers = uniqueClassicalJapaneseValues(
+    itemRows.map(({ row }) => row.answer),
+  );
+  const keywords = [
+    ...new Set(normalizedQuestions.flatMap((question) => question.keywords)),
+  ];
+
+  return {
+    id: normalizedQuestions[0].id,
+    stage: "beginner",
+    focus: "主要語義",
+    type: "meaning",
+    label: classicalJapaneseCardTypeLabels.meaning,
+    prompt: expectedPrompt,
+    answer: answers.join("／"),
+    keywords,
+    acceptedAnswers: [],
+    answerNote: "",
+    explanation: [
+      ...explanations,
+      ...grammarInfo,
+      ...distinctions,
+      ...memoryAids,
+    ].join("\n"),
+    yearMnemonic: "",
+    source: {
+      name: firstRow.source_name,
+      url: geographyValue(firstRow.source_url),
+    },
+    hideTermUntilAnswer: false,
+  };
+}
+
 function normalizeClassicalJapaneseQuestion(row, rowIndex) {
   const rowNumber = rowIndex + 2;
   if (!classicalJapaneseCardTypes.has(row.card_type)) {
@@ -2423,15 +2495,30 @@ export function groupClassicalJapaneseTerms(rows) {
   });
 
   return groups.map(({ firstRow, rows: itemRows }) => {
-    const questions = itemRows.map(({ row, rowIndex }) =>
+    const normalizedQuestions = itemRows.map(({ row, rowIndex }) =>
       normalizeClassicalJapaneseQuestion(row, rowIndex),
     );
-    const expectedCardIds = questions.map(
+    const expectedCardIds = normalizedQuestions.map(
       (_, index) => `${firstRow.item_id}-C${String(index + 1).padStart(2, "0")}`,
     );
-    if (questions.some((question, index) => question.id !== expectedCardIds[index])) {
+    if (
+      normalizedQuestions.some(
+        (question, index) => question.id !== expectedCardIds[index],
+      )
+    ) {
       throw new Error(`${firstRow.item}のカードIDがC01からの連番ではありません。`);
     }
+    const aggregatesMeanings =
+      firstRow.domain === "語彙" &&
+      itemRows.every(({ row }) => row.card_type === "meaning");
+    const questions = aggregatesMeanings
+      ? [
+          aggregateClassicalJapaneseMeaningQuestion(
+            itemRows,
+            normalizedQuestions,
+          ),
+        ]
+      : normalizedQuestions;
     const readingMap = {};
     for (const { row, rowIndex } of itemRows) {
       for (const [written, reading] of Object.entries(
@@ -3408,9 +3495,9 @@ export async function main() {
         id: classicalJapaneseSubjectId,
         title: classicalJapaneseSubjectTitle,
         catalogLabel: "大学受験古文（国語）",
-        description: "古語・文法・敬語・修辞・古典常識の最重要事項を覚える大学受験古文",
+        description: "最重要古文単語300語を、複数の語義も一問にまとめて覚える大学受験古文",
         learningType: "cards",
-        termUnitLabel: "項目",
+        termUnitLabel: "単語",
         availableStages: ["beginner"],
         filterLabels: {
           macroRegion: "分野",

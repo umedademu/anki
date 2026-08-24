@@ -155,12 +155,63 @@ export function getQuestionAnswerDisplayText(question) {
   return getQuestionAnswerParts(question).join(" / ");
 }
 
-export function getQuestionAnswerSpeechText(
+const personNameSeparatorPattern = /[=＝・･\s]/u;
+const spokenPersonNameSeparatorPattern = /[=＝・･]/gu;
+
+function normalizePersonName(value) {
+  return String(value ?? "")
+    .replace(questionReadingPattern, "")
+    .replaceAll("**", "")
+    .normalize("NFKC")
+    .replace(/[\p{P}\p{S}\s]/gu, "")
+    .toLocaleLowerCase();
+}
+
+function preferredFullName(parts) {
+  const primaryName = normalizePersonName(parts[0]);
+  if (!primaryName) {
+    return "";
+  }
+  return (
+    parts
+      .slice(1)
+      .map((answer) => ({ answer, normalized: normalizePersonName(answer) }))
+      .filter(
+        ({ answer, normalized }) =>
+          normalized.length > primaryName.length &&
+          (normalized.includes(primaryName) ||
+            personNameSeparatorPattern.test(answer)),
+      )
+      .sort((left, right) => right.normalized.length - left.normalized.length)[0]
+      ?.answer ?? ""
+  );
+}
+
+export function getQuestionAnswerSpeechParts(
   question,
-  { includeAcceptedAnswers = true } = {},
+  { includeAcceptedAnswers = true, preferFullName = false } = {},
 ) {
   const parts = getQuestionAnswerParts(question);
-  return (includeAcceptedAnswers ? parts : parts.slice(0, 1)).join("。");
+  if (!includeAcceptedAnswers) {
+    return parts.slice(0, 1);
+  }
+  if (preferFullName) {
+    const fullName = preferredFullName(parts);
+    if (fullName) {
+      return [fullName.replace(spokenPersonNameSeparatorPattern, "")];
+    }
+  }
+  return parts;
+}
+
+export function getQuestionAnswerSpeechText(
+  question,
+  { includeAcceptedAnswers = true, preferFullName = false } = {},
+) {
+  return getQuestionAnswerSpeechParts(question, {
+    includeAcceptedAnswers,
+    preferFullName,
+  }).join("。");
 }
 
 export function getIntegratedExplanationQuestion(term, question) {

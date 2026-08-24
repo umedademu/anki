@@ -237,10 +237,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.117") ||
-  !changelog.includes("v0.117") ||
-  !settingsHtml.includes("v0.117") ||
-  !historyHtml.includes("v0.117")
+  !html.includes("v0.118") ||
+  !changelog.includes("v0.118") ||
+  !settingsHtml.includes("v0.118") ||
+  !historyHtml.includes("v0.118")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -392,7 +392,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.117"') ||
+  !html.includes('href="/styles.css?v=0.118"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -797,8 +797,10 @@ if (
   !speechSegmentsBlock.includes("const includeAcceptedAnswers =") ||
   speechSegmentsBlock.includes("includesAcceptedAnswers") ||
   !speechSegmentsBlock.includes(
-    "getQuestionAnswerSpeechText(question, { includeAcceptedAnswers })",
-  )
+    "getQuestionAnswerSpeechParts(question, {",
+  ) ||
+  !speechSegmentsBlock.includes("preferFullName") ||
+  !app.includes("function shouldPreferHistoryFullName(term, question)")
 ) {
   throw new Error("回答音声の別解設定に宣言と異なる指定名が含まれています。");
 }

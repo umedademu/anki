@@ -12,6 +12,7 @@ import {
   getOverallMastery,
   getQuestionAnswerDisplayText,
   getQuestionAnswerParts,
+  getQuestionAnswerSpeechParts,
   getQuestionAnswerSpeechText,
   getQuestionPromptForDisplay,
   getQuestionExplanation,
@@ -1935,6 +1936,14 @@ function renderVocabularySpeechGroups() {
   }
 }
 
+function shouldPreferHistoryFullName(term, question) {
+  return (
+    state.subject?.learningType === "history" &&
+    (question?.type === "person" ||
+      (term?.category === "人物" && question?.type === "identify"))
+  );
+}
+
 function speechSegmentsFor(target, task = state.currentTask) {
   const question = questionForTask(task);
   const term = termForTask(task);
@@ -1953,19 +1962,34 @@ function speechSegmentsFor(target, task = state.currentTask) {
       return [{ ...segment, target }];
     }
   }
+  const includeAcceptedAnswers =
+    state.subject?.learningType !== "vocabulary";
+  const preferFullName =
+    target === "answer" && shouldPreferHistoryFullName(term, question);
+  const answerSpeechParts =
+    target === "answer"
+      ? getQuestionAnswerSpeechParts(question, {
+          includeAcceptedAnswers,
+          preferFullName,
+        })
+      : [];
   const configuredSegments = question.speech?.[target];
   if (Array.isArray(configuredSegments) && configuredSegments.length > 0) {
-    const includeAcceptedAnswers =
-      state.subject?.learningType !== "vocabulary";
-    const acceptedAnswers =
-      target === "answer" && includeAcceptedAnswers
-        ? getQuestionAnswerParts(question).slice(1)
-        : [];
+    const primaryAnswer = getQuestionAnswerParts(question)[0] ?? "";
+    const replacePrimaryAnswer =
+      target === "answer" &&
+      answerSpeechParts.length === 1 &&
+      answerSpeechParts[0] !== primaryAnswer;
     return configuredSegments.map((segment, index) => ({
       target,
       text:
         index === 0
-          ? [segment.text, ...acceptedAnswers].filter(Boolean).join("。")
+          ? [
+              replacePrimaryAnswer ? answerSpeechParts[0] : segment.text,
+              ...(replacePrimaryAnswer ? [] : answerSpeechParts.slice(1)),
+            ]
+              .filter(Boolean)
+              .join("。")
           : segment.text,
       language: segment.language ?? "ja-JP",
     }));
@@ -1974,13 +1998,14 @@ function speechSegmentsFor(target, task = state.currentTask) {
     return [{ target, text: question.prompt, language: "ja-JP" }];
   }
   if (target === "answer") {
-    const includeAcceptedAnswers =
-      state.subject?.learningType !== "vocabulary";
     return [
       {
         target,
         text: [
-          getQuestionAnswerSpeechText(question, { includeAcceptedAnswers }),
+          getQuestionAnswerSpeechText(question, {
+            includeAcceptedAnswers,
+            preferFullName,
+          }),
           question.answerNote,
         ]
           .filter(Boolean)
@@ -3786,7 +3811,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.117｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.118｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

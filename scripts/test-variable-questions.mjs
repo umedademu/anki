@@ -18,6 +18,7 @@ import {
   getOverallMastery,
   getQuestionAnswerDisplayText,
   getQuestionAnswerParts,
+  getQuestionAnswerSpeechParts,
   getQuestionAnswerSpeechText,
   getQuestionExplanation,
   getQuestionPromptForDisplay,
@@ -274,10 +275,44 @@ if (
   getQuestionAnswerSpeechText(answerWithAlternates) !==
     "ベルリン会議。コンゴ会議" ||
   getQuestionAnswerSpeechText(answerWithAlternates, {
+    preferFullName: true,
+  }) !== "ベルリン会議。コンゴ会議" ||
+  getQuestionAnswerSpeechText(answerWithAlternates, {
     includeAcceptedAnswers: false,
   }) !== "ベルリン会議"
 ) {
   throw new Error("回答と別解を同じ表示・読み上げ単位へまとめられませんでした。");
+}
+
+const answerWithFullName = {
+  answer: "ゴルバチョフ",
+  acceptedAnswers: ["ミハイル＝ゴルバチョフ"],
+};
+if (
+  getQuestionAnswerDisplayText(answerWithFullName) !==
+    "ゴルバチョフ / ミハイル＝ゴルバチョフ" ||
+  getQuestionAnswerSpeechParts(answerWithFullName, {
+    preferFullName: true,
+  }).join("|") !== "ミハイルゴルバチョフ" ||
+  getQuestionAnswerSpeechText(answerWithFullName, {
+    preferFullName: true,
+  }) !== "ミハイルゴルバチョフ" ||
+  getQuestionAnswerSpeechText(answerWithFullName) !==
+    "ゴルバチョフ。ミハイル＝ゴルバチョフ"
+) {
+  throw new Error("人物の表示を保ったままフルネームだけを読み上げられませんでした。");
+}
+
+const answerWithDifferentFullName = {
+  answer: "釈迦",
+  acceptedAnswers: ["ゴータマ＝シッダールタ", "ブッダ"],
+};
+if (
+  getQuestionAnswerSpeechText(answerWithDifferentFullName, {
+    preferFullName: true,
+  }) !== "ゴータマシッダールタ"
+) {
+  throw new Error("短い呼称を含まないフルネームを優先できませんでした。");
 }
 
 if (

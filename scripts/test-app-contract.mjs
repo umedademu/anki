@@ -217,10 +217,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.107") ||
-  !changelog.includes("v0.107") ||
-  !settingsHtml.includes("v0.107") ||
-  !historyHtml.includes("v0.107")
+  !html.includes("v0.108") ||
+  !changelog.includes("v0.108") ||
+  !settingsHtml.includes("v0.108") ||
+  !historyHtml.includes("v0.108")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -328,7 +328,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.107"') ||
+  !html.includes('href="/styles.css?v=0.108"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -854,6 +854,12 @@ if (
   !rateListeningQuestionBlock.includes("activity,") ||
   !rateListeningQuestionBlock.includes('setSavedSessionForMode("listen-answer", saved.session)') ||
   !rateListeningQuestionBlock.includes("restoreRatingUndoSnapshot(state.progress, snapshot)") ||
+  !rateListeningQuestionBlock.includes("const resumesFromPause = state.listeningPaused") ||
+  !rateListeningQuestionBlock.includes("state.listeningPaused = false") ||
+  !rateListeningQuestionBlock.includes("if (resumesFromPause)") ||
+  !rateListeningQuestionBlock.includes('showListeningPlaybackFeedback("play")') ||
+  rateListeningQuestionBlock.indexOf("state.listeningPaused = false") >=
+    rateListeningQuestionBlock.indexOf("beginListeningQuestion();") ||
   rateListeningQuestionBlock.includes("queueActiveStudyActivity(") ||
   !advanceListeningBlock.includes("queueActiveStudyActivity(activity,") ||
   advanceListeningBlock.includes("applyQuestionRating(") ||

@@ -173,6 +173,11 @@ const elements = {
   completionTitle: document.querySelector("#completion-title"),
   completionMessage: document.querySelector("#completion-message"),
   completionReturn: document.querySelector("#completion-return"),
+  completionHome: document.querySelector("#completion-home"),
+  routineResultSummary: document.querySelector("#routine-result-summary"),
+  routineResultQuestions: document.querySelector("#routine-result-questions"),
+  routineResultTime: document.querySelector("#routine-result-time"),
+  routineResultTotal: document.querySelector("#routine-result-total"),
   unlockNotice: document.querySelector("#unlock-notice"),
   listeningPlaybackFeedback: document.querySelector(
     "#listening-playback-feedback",
@@ -495,7 +500,7 @@ function restoreRoutineRun(run) {
   });
 }
 
-function recordActiveRoutineQuestion(questionId) {
+function recordActiveRoutineQuestion(questionId, studySeconds = 0) {
   const item = activeRoutineItem();
   if (!item) return null;
   const change = recordStudyRoutineQuestion(
@@ -503,8 +508,9 @@ function recordActiveRoutineQuestion(questionId) {
     state.activeSubjectId,
     datasetVersionForQuestion(questionId),
     questionId,
+    studySeconds,
   );
-  if (!change.counted) return change;
+  if (!change.changed) return change;
   restoreRoutineRun(change.run);
   return change;
 }
@@ -521,19 +527,28 @@ function showRoutineStepCompletion(change) {
   elements.listeningDock.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
   elements.completionReturn.classList.remove("is-hidden");
+  elements.routineResultSummary.classList.remove("is-hidden");
   elements.completionEyebrow.textContent = "メニューの1項目を完了";
   elements.completionTitle.textContent =
     `${routineSubjectTitle(change.completedItem.subjectId)}を${change.completedItem.questionTarget}問進めました`;
+  const totals = studyRoutineTotals(change.run);
+  elements.routineResultQuestions.textContent =
+    `${change.completedItem.completedCount}問`;
+  elements.routineResultTime.textContent =
+    formatStudyDuration(change.completedItem.studySeconds);
+  elements.routineResultTotal.textContent =
+    `${totals.completed} / ${totals.target}問`;
   if (change.nextItem) {
     elements.completionMessage.textContent =
       `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
     elements.completionReturn.textContent = "次の学習内容を選ぶ";
+    elements.completionHome.classList.remove("is-hidden");
   } else {
-    const totals = studyRoutineTotals(change.run);
     elements.completionEyebrow.textContent = "毎日のメニュー完了";
     elements.completionMessage.textContent =
       `${change.run.items.length}項目・${totals.target}問をすべて進めました。`;
     elements.completionReturn.textContent = "科目選択へ戻る";
+    elements.completionHome.classList.add("is-hidden");
   }
 }
 
@@ -2042,14 +2057,17 @@ async function advanceListening(runId) {
   state.unseenQuestionIds.delete(completedTask.questionId);
   state.answeredThisSession += 1;
   state.currentTask = state.queue.shift() ?? null;
-  const routineChange = recordActiveRoutineQuestion(completedTask.questionId);
+  const routineChange = recordActiveRoutineQuestion(
+    completedTask.questionId,
+    state.screenStudySeconds,
+  );
   const roundComplete = !state.currentTask;
   state.answerVisible = false;
   startNewStudyScreen();
   try {
     await queueActiveStudyActivity(activity, {
       completeSession: roundComplete,
-      routineRun: routineChange?.counted ? state.routineRun : undefined,
+      routineRun: routineChange?.changed ? state.routineRun : undefined,
     });
     state.pendingListeningActivity = null;
     pushHistory(undoSnapshot);
@@ -2844,6 +2862,8 @@ function renderCompletion() {
   elements.completionCard.classList.remove("is-hidden");
   const listening = isListeningMode();
   elements.completionReturn.classList.remove("is-hidden");
+  elements.completionHome.classList.add("is-hidden");
+  elements.routineResultSummary.classList.add("is-hidden");
   const routineItem = activeRoutineItem();
   if (routineItem && routineRemainingCount(routineItem) > 0) {
     state.routineCompletionAction = "reselect";
@@ -3000,7 +3020,10 @@ async function rateListeningQuestion(rating) {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answerRevealedAt = 0;
-  const routineChange = recordActiveRoutineQuestion(question.id);
+  const routineChange = recordActiveRoutineQuestion(
+    question.id,
+    state.screenStudySeconds,
+  );
   const roundComplete = !state.currentTask;
   if (roundComplete) {
     state.activeSession = false;
@@ -3024,7 +3047,7 @@ async function rateListeningQuestion(rating) {
         studyMode: "listen-answer",
         activity,
         sessionDatasetVersion: state.sessionDatasetVersion,
-        routineRun: routineChange?.counted ? state.routineRun : undefined,
+        routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("listen-answer", saved.session);
@@ -3127,7 +3150,10 @@ async function rateCurrentQuestion(rating) {
   ) {
     state.activeSession = false;
   }
-  const routineChange = recordActiveRoutineQuestion(question.id);
+  const routineChange = recordActiveRoutineQuestion(
+    question.id,
+    state.screenStudySeconds,
+  );
   startNewStudyScreen();
 
   if (!routineChange?.completedItem) {
@@ -3147,7 +3173,7 @@ async function rateCurrentQuestion(rating) {
         studyMode: "memorize",
         activity,
         sessionDatasetVersion: state.sessionDatasetVersion,
-        routineRun: routineChange?.counted ? state.routineRun : undefined,
+        routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("memorize", saved.session);
@@ -3565,7 +3591,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.111｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.112｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3822,6 +3848,9 @@ elements.completionReturn.addEventListener("click", () => {
     return;
   }
   void returnToSetup();
+});
+elements.completionHome.addEventListener("click", () => {
+  void returnToSubjectSelection();
 });
 
 elements.resetProgress.addEventListener("click", () => {

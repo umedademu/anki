@@ -3,6 +3,7 @@ const routineQuestionKeyPattern = /^[A-Za-z0-9_-]{1,100}::[A-Za-z0-9_-]{1,100}$/
 const routineItemLimit = 100;
 const routineQuestionTargetLimit = 10_000;
 const routineCountedQuestionLimit = 20_000;
+const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 
 const defaultSubjects = [
   "world-history",
@@ -91,6 +92,13 @@ function normalizeStudyDate(value) {
   return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
 }
 
+function normalizeRoutineStudySeconds(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(routineStudySecondsLimit, Math.max(0, parsed))
+    : 0;
+}
+
 export function normalizeStudyRoutineRun(value) {
   let source = value;
   if (typeof source === "string") {
@@ -115,6 +123,9 @@ export function normalizeStudyRoutineRun(value) {
         0,
         Number.parseInt(source.items?.[index]?.completedCount, 10) || 0,
       ),
+    ),
+    studySeconds: normalizeRoutineStudySeconds(
+      source.items?.[index]?.studySeconds,
     ),
   }));
   if (!id || !studyDate || items.length === 0) return null;
@@ -150,6 +161,7 @@ export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()
   const items = normalizeStudyRoutinePlan(plan).map((item) => ({
     ...item,
     completedCount: 0,
+    studySeconds: 0,
   }));
   return normalizeStudyRoutineRun({
     schemaVersion: 1,
@@ -169,14 +181,15 @@ export function currentStudyRoutineItem(run) {
 export function studyRoutineTotals(run) {
   const normalized = normalizeStudyRoutineRun(run);
   if (!normalized) {
-    return { completed: 0, target: 0 };
+    return { completed: 0, target: 0, studySeconds: 0 };
   }
   return normalized.items.reduce(
     (totals, item) => ({
       completed: totals.completed + item.completedCount,
       target: totals.target + item.questionTarget,
+      studySeconds: totals.studySeconds + item.studySeconds,
     }),
-    { completed: 0, target: 0 },
+    { completed: 0, target: 0, studySeconds: 0 },
   );
 }
 
@@ -193,6 +206,7 @@ export function recordStudyRoutineQuestion(
   subjectId,
   datasetVersion,
   questionId,
+  studySeconds = 0,
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -203,17 +217,29 @@ export function recordStudyRoutineQuestion(
     item.subjectId !== normalizeRoutineId(subjectId) ||
     !routineQuestionKeyPattern.test(key)
   ) {
-    return { run: normalized, counted: false, completedItem: null, nextItem: item };
+    return {
+      run: normalized,
+      changed: false,
+      counted: false,
+      completedItem: null,
+      nextItem: item,
+    };
   }
-  if (normalized.countedQuestionKeys.includes(key)) {
-    return { run: normalized, counted: false, completedItem: null, nextItem: item };
-  }
+  const counted = !normalized.countedQuestionKeys.includes(key);
+  const addedStudySeconds = normalizeRoutineStudySeconds(studySeconds);
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
-      ? { ...candidate, completedCount: candidate.completedCount + 1 }
+      ? {
+          ...candidate,
+          completedCount: candidate.completedCount + (counted ? 1 : 0),
+          studySeconds: Math.min(
+            routineStudySecondsLimit,
+            candidate.studySeconds + addedStudySeconds,
+          ),
+        }
       : { ...candidate },
   );
-  const completedItem = items[normalized.currentIndex].completedCount >=
+  const completedItem = counted && items[normalized.currentIndex].completedCount >=
       items[normalized.currentIndex].questionTarget
     ? items[normalized.currentIndex]
     : null;
@@ -224,13 +250,16 @@ export function recordStudyRoutineQuestion(
     ...normalized,
     currentIndex,
     items,
-    countedQuestionKeys: [...normalized.countedQuestionKeys, key].slice(
-      -routineCountedQuestionLimit,
-    ),
+    countedQuestionKeys: counted
+      ? [...normalized.countedQuestionKeys, key].slice(
+          -routineCountedQuestionLimit,
+        )
+      : normalized.countedQuestionKeys,
   };
   return {
     run: next,
-    counted: true,
+    changed: counted || addedStudySeconds > 0,
+    counted,
     completedItem,
     nextItem: next.items[next.currentIndex] ?? null,
   };

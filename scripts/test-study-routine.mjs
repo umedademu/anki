@@ -66,9 +66,15 @@ let change = recordStudyRoutineQuestion(
   "world-history",
   "world-deck-1",
   "question-1",
+  12,
 );
 run = change.run;
-if (!change.counted || run.items[0].completedCount !== 1) {
+if (
+  !change.changed ||
+  !change.counted ||
+  run.items[0].completedCount !== 1 ||
+  run.items[0].studySeconds !== 12
+) {
   throw new Error("最初に進めた問題をメニューへ加算できませんでした。");
 }
 
@@ -77,9 +83,16 @@ change = recordStudyRoutineQuestion(
   "world-history",
   "world-deck-1",
   "question-1",
+  3,
 );
-if (change.counted || change.run.items[0].completedCount !== 1) {
-  throw new Error("同じ問題の再出題がメニューへ重複加算されました。");
+run = change.run;
+if (
+  !change.changed ||
+  change.counted ||
+  run.items[0].completedCount !== 1 ||
+  run.items[0].studySeconds !== 15
+) {
+  throw new Error("同じ問題の再出題件数または学習時間を正しく集計できませんでした。");
 }
 
 for (let index = 2; index <= 100; index += 1) {
@@ -94,6 +107,7 @@ for (let index = 2; index <= 100; index += 1) {
 if (
   !change.completedItem ||
   change.completedItem.subjectId !== "world-history" ||
+  change.completedItem.studySeconds !== 15 ||
   currentStudyRoutineItem(run)?.subjectId !== "english-vocabulary" ||
   run.currentIndex !== 1
 ) {
@@ -106,9 +120,10 @@ if (
   continued.currentIndex !== 1 ||
   continued.items[0].completedCount !== 100 ||
   studyRoutineTotals(continued).target !== 2200 ||
+  studyRoutineTotals(continued).studySeconds !== 15 ||
   !normalizeStudyRoutineRun(JSON.stringify(continued))
 ) {
   throw new Error("午前4時後に前回の続きへ引き継げませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 初期22項目・重複除外・次科目・翌日継続を確認");
+console.log("毎日のメニュー検証完了: 初期22項目・重複除外・学習時間・次科目・翌日継続を確認");

@@ -24,6 +24,10 @@ const geographySourceDirectory = path.join(
   "source",
   "geography",
 );
+const geographyTermImageManifestPath = path.join(
+  geographySourceDirectory,
+  "term-images.json",
+);
 const politicsEconomicsSourceDirectory = path.join(
   projectRoot,
   "data",
@@ -2911,6 +2915,7 @@ export async function loadTermImageManifest(
   {
     manifestPath = termImageManifestPath,
     imageSourceDirectory = sourceDirectory,
+    requireComplete = true,
   } = {},
 ) {
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
@@ -2925,6 +2930,13 @@ export async function loadTermImageManifest(
   const termIds = new Set(terms.map((term) => term.id));
   const questionIds = new Set(
     terms.flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)),
+  );
+  const termIdByQuestionId = new Map(
+    terms.flatMap((term) =>
+      Object.values(term.stages)
+        .flat()
+        .map((question) => [question.id, term.id]),
+    ),
   );
   const assetIds = new Set();
   for (const image of manifest.assets) {
@@ -2961,17 +2973,24 @@ export async function loadTermImageManifest(
     }
     fallbackTermIds.add(fallback.termId);
   }
-  if (fallbackTermIds.size !== termIds.size) {
+  if (requireComplete && fallbackTermIds.size !== termIds.size) {
     throw new Error(
       `用語の基準画像が不足しています（${fallbackTermIds.size}/${termIds.size}）。`,
     );
   }
+  const expectedQuestionIds = new Set(
+    [...termIdByQuestionId]
+      .filter(([, termId]) => fallbackTermIds.has(termId))
+      .map(([questionId]) => questionId),
+  );
   const assignedQuestionIds = new Set();
   for (const assignment of manifest.assignments) {
     if (
       !questionIds.has(assignment.questionId) ||
       assignedQuestionIds.has(assignment.questionId) ||
       !termIds.has(assignment.termId) ||
+      termIdByQuestionId.get(assignment.questionId) !== assignment.termId ||
+      !fallbackTermIds.has(assignment.termId) ||
       !assetIds.has(assignment.assetId) ||
       !String(assignment.target ?? "").trim()
     ) {
@@ -2979,9 +2998,12 @@ export async function loadTermImageManifest(
     }
     assignedQuestionIds.add(assignment.questionId);
   }
-  if (assignedQuestionIds.size !== questionIds.size) {
+  if (
+    assignedQuestionIds.size !== expectedQuestionIds.size ||
+    [...expectedQuestionIds].some((questionId) => !assignedQuestionIds.has(questionId))
+  ) {
     throw new Error(
-      `問題別画像の割り当てが不足しています（${assignedQuestionIds.size}/${questionIds.size}）。`,
+      `問題別画像の割り当てが不足しています（${assignedQuestionIds.size}/${expectedQuestionIds.size}）。`,
     );
   }
   return manifest;
@@ -3134,16 +3156,26 @@ export async function main() {
     loadClassicalJapaneseDecks(),
     loadClassicalChineseDecks(),
   ]);
-  const [worldTermImageManifest, japaneseTermImageManifest] = await Promise.all([
+  const [
+    worldTermImageManifest,
+    japaneseTermImageManifest,
+    geographyTermImageManifest,
+  ] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
     loadTermImageManifest(japaneseHistoryData.terms, {
       manifestPath: japaneseTermImageManifestPath,
       imageSourceDirectory: japaneseSourceDirectory,
     }),
+    loadTermImageManifest(geographyData.terms, {
+      manifestPath: geographyTermImageManifestPath,
+      imageSourceDirectory: geographySourceDirectory,
+      requireComplete: false,
+    }),
   ]);
   const termImageManifest = mergeTermImageManifests([
     worldTermImageManifest,
     japaneseTermImageManifest,
+    geographyTermImageManifest,
   ]);
 
   const allDecks = [
@@ -3177,6 +3209,13 @@ export async function main() {
     if (japaneseTermImageManifest.assets.length > 0) {
       await cp(
         japaneseTermImageSourceDirectory,
+        path.join(outputRoot, "term-images"),
+        { recursive: true },
+      );
+    }
+    if (geographyTermImageManifest.assets.length > 0) {
+      await cp(
+        path.join(geographySourceDirectory, "term-images"),
         path.join(outputRoot, "term-images"),
         { recursive: true },
       );

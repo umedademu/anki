@@ -1,0 +1,749 @@
+{
+  "schemaVersion": 2,
+  "assets": [
+    {
+      "id": "WMG-01b65f30525ac6",
+      "path": "term-images/optimized/WMG-01b65f30525ac6.webp",
+      "alt": "堡礁のでき方",
+      "caption": "堡礁のでき方",
+      "creator": "Atoll_forming-i18.png : Susan Mayfield and Sara Boore, modified by Eurico Zimbres derivative work: Geronimo20 ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Atoll_forming-Barrier_reef.png"
+    },
+    {
+      "id": "WMG-0d22ca34ef6701",
+      "path": "term-images/optimized/WMG-0d22ca34ef6701.webp",
+      "alt": "アメリカ合衆国のサンベルト",
+      "caption": "アメリカ合衆国のサンベルト",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Map_of_USA_highlighting_Sun_Belt.png"
+    },
+    {
+      "id": "WMG-13de36775cabb6",
+      "path": "term-images/optimized/WMG-13de36775cabb6.webp",
+      "alt": "世界のプレート分布",
+      "caption": "世界のプレート分布",
+      "creator": "M.Bitton",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tectonic_plates_(2022).svg"
+    },
+    {
+      "id": "WMG-172dee7540db59",
+      "path": "term-images/optimized/WMG-172dee7540db59.webp",
+      "alt": "メコンデルタの位置",
+      "caption": "メコンデルタの位置",
+      "creator": "Gobbler",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Delta_Mekong_mappa.png"
+    },
+    {
+      "id": "WMG-226ef5342ba02f",
+      "path": "term-images/optimized/WMG-226ef5342ba02f.webp",
+      "alt": "氷河の侵食でできるフィヨルド",
+      "caption": "氷河の侵食でできるフィヨルド",
+      "creator": "Ulamm",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fjord_genesis.png"
+    },
+    {
+      "id": "WMG-25803158f9f143",
+      "path": "term-images/optimized/WMG-25803158f9f143.webp",
+      "alt": "裾礁のでき方",
+      "caption": "裾礁のでき方",
+      "creator": "Atoll_forming-i18.png : Susan Mayfield and Sara Boore, modified by Eurico Zimbres derivative work: Geronimo20 ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Atoll_forming-Fringing_reef.png"
+    },
+    {
+      "id": "WMG-2949df205bcd78",
+      "path": "term-images/optimized/WMG-2949df205bcd78.webp",
+      "alt": "人口ピラミッドの例",
+      "caption": "人口ピラミッドの例",
+      "creator": "Dnfls",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Population_Pyramid.png"
+    },
+    {
+      "id": "WMG-29f7548c10bab2",
+      "path": "term-images/optimized/WMG-29f7548c10bab2.webp",
+      "alt": "タイで行われている焼畑農業",
+      "caption": "タイで行われている焼畑農業",
+      "creator": "mattmangum",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:An_example_of_slash_and_burn_agriculture_practice_Thailand.jpg"
+    },
+    {
+      "id": "WMG-2bda318d744b68",
+      "path": "term-images/optimized/WMG-2bda318d744b68.webp",
+      "alt": "V字谷とU字谷の断面比較",
+      "caption": "V字谷とU字谷の断面比較",
+      "creator": "Geof",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Talprofil3.png"
+    },
+    {
+      "id": "WMG-31415d97567867",
+      "path": "term-images/optimized/WMG-31415d97567867.webp",
+      "alt": "ケスタの地形断面",
+      "caption": "ケスタの地形断面",
+      "creator": "DraftSaturn15",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cuesta_schematic.svg"
+    },
+    {
+      "id": "WMG-38d357b5682c7f",
+      "path": "term-images/optimized/WMG-38d357b5682c7f.webp",
+      "alt": "エルニーニョ現象時の海洋と大気",
+      "caption": "エルニーニョ現象時の海洋と大気",
+      "creator": "Wesley.harwell",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:El_Ni%C3%B1o_Diagram.jpg"
+    },
+    {
+      "id": "WMG-4a0626a04ae804",
+      "path": "term-images/optimized/WMG-4a0626a04ae804.webp",
+      "alt": "カルスト地形の模式図",
+      "caption": "カルスト地形の模式図",
+      "creator": "JYB Devot",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bloc-diag-karst-mod.jpg"
+    },
+    {
+      "id": "WMG-4c9965d3699784",
+      "path": "term-images/optimized/WMG-4c9965d3699784.webp",
+      "alt": "圏谷・U字谷・モレーンを含む氷河地形",
+      "caption": "圏谷・U字谷・モレーンを含む氷河地形",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Glacial_landscape_LMB.png"
+    },
+    {
+      "id": "WMG-4d75af4833034f",
+      "path": "term-images/optimized/WMG-4d75af4833034f.webp",
+      "alt": "アフリカのサヘル地域",
+      "caption": "アフリカのサヘル地域",
+      "creator": "Sahel Map-Africa rough.png : T L Miles ( talk · contribs ) Africa location map without rivers.svg : Sting ( talk · contribs ) derivative work: Rowanwindwhistler ( talk )",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sahel_Map-Africa_rough.svg"
+    },
+    {
+      "id": "WMG-503d2086d85b43",
+      "path": "term-images/optimized/WMG-503d2086d85b43.webp",
+      "alt": "モルワイデ図法の世界地図",
+      "caption": "モルワイデ図法の世界地図",
+      "creator": "Strebe",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mollweide_projection_SW.jpg"
+    },
+    {
+      "id": "WMG-51e792bc8bccc8",
+      "path": "term-images/optimized/WMG-51e792bc8bccc8.webp",
+      "alt": "蛇行河川から三日月湖ができる過程",
+      "caption": "蛇行河川から三日月湖ができる過程",
+      "creator": "Meandro.png : User:Maksim derivative work: Gregors ( talk ) 17:17, 15 March 2011 (UTC)",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Meander_Oxbow_development.svg"
+    },
+    {
+      "id": "WMG-56851e68a97f69",
+      "path": "term-images/optimized/WMG-56851e68a97f69.webp",
+      "alt": "スエズ運河の衛星画像",
+      "caption": "スエズ運河の衛星画像",
+      "creator": "Axelspace Corporation",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Suez_Canal,_Egypt_(satellite_view).jpg"
+    },
+    {
+      "id": "WMG-58f006963fb3bd",
+      "path": "term-images/optimized/WMG-58f006963fb3bd.webp",
+      "alt": "珠江デルタの位置",
+      "caption": "珠江デルタの位置",
+      "creator": "Croquant",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pearl_River_Delta_Area.png"
+    },
+    {
+      "id": "WMG-66335970621a48",
+      "path": "term-images/optimized/WMG-66335970621a48.webp",
+      "alt": "乾燥地域のワジ",
+      "caption": "乾燥地域のワジ",
+      "creator": "Peter Chisholm",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wadi_rum_desert.jpg"
+    },
+    {
+      "id": "WMG-766622d229619d",
+      "path": "term-images/optimized/WMG-766622d229619d.webp",
+      "alt": "正距方位図法の世界地図",
+      "caption": "正距方位図法の世界地図",
+      "creator": "Strebe",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Azimuthal_equidistant_projection_SW.jpg"
+    },
+    {
+      "id": "WMG-7765e2b836d5d9",
+      "path": "term-images/optimized/WMG-7765e2b836d5d9.webp",
+      "alt": "長江デルタの位置",
+      "caption": "長江デルタの位置",
+      "creator": "Amongit",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yangtze_River_Delta_map.png"
+    },
+    {
+      "id": "WMG-8ccb112642267a",
+      "path": "term-images/optimized/WMG-8ccb112642267a.webp",
+      "alt": "環礁のでき方",
+      "caption": "環礁のでき方",
+      "creator": "Atoll_forming-i18.png : Susan Mayfield and Sara Boore, modified by Eurico Zimbres derivative work: Geronimo20 ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Atoll_forming-Atoll.png"
+    },
+    {
+      "id": "WMG-90ab7789f8ee69",
+      "path": "term-images/optimized/WMG-90ab7789f8ee69.webp",
+      "alt": "アマゾン川流域の範囲",
+      "caption": "アマゾン川流域の範囲",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Amazon_river_basin.png"
+    },
+    {
+      "id": "WMG-9e2f2c63e54b72",
+      "path": "term-images/optimized/WMG-9e2f2c63e54b72.webp",
+      "alt": "メルカトル図法の世界地図",
+      "caption": "メルカトル図法の世界地図",
+      "creator": "Strebe",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mercator_projection_SW.jpg"
+    },
+    {
+      "id": "WMG-a6aa8abc92cc53",
+      "path": "term-images/optimized/WMG-a6aa8abc92cc53.webp",
+      "alt": "ケッペン＝ガイガーの世界気候区分図",
+      "caption": "ケッペン＝ガイガーの世界気候区分図",
+      "creator": "Beck, H.E., Zimmermann, N. E., McVicar, T. R., Vergopolan, N., Berg, A., & Wood, E. F.",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:K%C3%B6ppen-Geiger_Climate_Classification_Map_(1980%E2%80%932016)_no_borders.png"
+    },
+    {
+      "id": "WMG-b218a14481b9b2",
+      "path": "term-images/optimized/WMG-b218a14481b9b2.webp",
+      "alt": "環太平洋造山帯（環太平洋火山帯）",
+      "caption": "環太平洋造山帯（環太平洋火山帯）",
+      "creator": "Gringer ( talk ) 23:52, 10 February 2009 (UTC)",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pacific_Ring_of_Fire.svg"
+    },
+    {
+      "id": "WMG-c0c5238ace9c02",
+      "path": "term-images/optimized/WMG-c0c5238ace9c02.webp",
+      "alt": "カルスト地形に見られるドリーネ",
+      "caption": "カルスト地形に見られるドリーネ",
+      "creator": "JYB Devot",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Grande_doline_Plateau_de_Saint_Barnabe_35-36mod.jpg"
+    },
+    {
+      "id": "WMG-cc0a4fc3c201e8",
+      "path": "term-images/optimized/WMG-cc0a4fc3c201e8.webp",
+      "alt": "扇状地のでき方",
+      "caption": "扇状地のでき方",
+      "creator": "Antonov",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Alluvial_fan_scheme.PNG"
+    },
+    {
+      "id": "WMG-d1c5d492be40d0",
+      "path": "term-images/optimized/WMG-d1c5d492be40d0.webp",
+      "alt": "代表的な三角州の形",
+      "caption": "代表的な三角州の形",
+      "creator": "Antonov",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Delta_types.png"
+    },
+    {
+      "id": "WMG-d46391cc054376",
+      "path": "term-images/optimized/WMG-d46391cc054376.webp",
+      "alt": "南アメリカのパンパ地域",
+      "caption": "南アメリカのパンパ地域",
+      "creator": "GumSkyloard",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Map_for_the_Pampas_region.svg"
+    },
+    {
+      "id": "WMG-de46a7ba5719d6",
+      "path": "term-images/optimized/WMG-de46a7ba5719d6.webp",
+      "alt": "インド・ガンジス平原の範囲",
+      "caption": "インド・ガンジス平原の範囲",
+      "creator": "Jeroen",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Indo-Gangetic_Plain.en.png"
+    },
+    {
+      "id": "WMG-e4b511793f1f3a",
+      "path": "term-images/optimized/WMG-e4b511793f1f3a.webp",
+      "alt": "地球規模の大気大循環",
+      "caption": "地球規模の大気大循環",
+      "creator": "Kaidor",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Earth_Global_Circulation_-_en.svg"
+    },
+    {
+      "id": "WMG-ed79e85cff6705",
+      "path": "term-images/optimized/WMG-ed79e85cff6705.webp",
+      "alt": "アメリカ合衆国のコーンベルト",
+      "caption": "アメリカ合衆国のコーンベルト",
+      "creator": "Benc at English Wikipedia",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Map_of_USA_highlighting_Corn_Belt.png"
+    },
+    {
+      "id": "WMG-edb389c6f2ceae",
+      "path": "term-images/optimized/WMG-edb389c6f2ceae.webp",
+      "alt": "地球の内部構造",
+      "caption": "地球の内部構造",
+      "creator": "IsadoraofIbiza",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Earth_Internal_Structure.svg"
+    },
+    {
+      "id": "WMG-f2dcb2e28a1b03",
+      "path": "term-images/optimized/WMG-f2dcb2e28a1b03.webp",
+      "alt": "パナマ運河の経路と高低差",
+      "caption": "パナマ運河の経路と高低差",
+      "creator": "Thoroe",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Panama_Canal_Map_EN.svg"
+    },
+    {
+      "id": "WMG-f41468f963d813",
+      "path": "term-images/optimized/WMG-f41468f963d813.webp",
+      "alt": "河岸段丘の断面",
+      "caption": "河岸段丘の断面",
+      "creator": "Sushant savla",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:A_series_of_paired_river_terraces_plainsvg.svg"
+    }
+  ],
+  "termFallbacks": [
+    {
+      "termId": "GE-000017",
+      "assetId": "WMG-9e2f2c63e54b72"
+    },
+    {
+      "termId": "GE-000018",
+      "assetId": "WMG-766622d229619d"
+    },
+    {
+      "termId": "GE-000019",
+      "assetId": "WMG-503d2086d85b43"
+    },
+    {
+      "termId": "GE-000036",
+      "assetId": "WMG-edb389c6f2ceae"
+    },
+    {
+      "termId": "GE-000040",
+      "assetId": "WMG-13de36775cabb6"
+    },
+    {
+      "termId": "GE-000055",
+      "assetId": "WMG-b218a14481b9b2"
+    },
+    {
+      "termId": "GE-000072",
+      "assetId": "WMG-2bda318d744b68"
+    },
+    {
+      "termId": "GE-000073",
+      "assetId": "WMG-cc0a4fc3c201e8"
+    },
+    {
+      "termId": "GE-000077",
+      "assetId": "WMG-d1c5d492be40d0"
+    },
+    {
+      "termId": "GE-000078",
+      "assetId": "WMG-f41468f963d813"
+    },
+    {
+      "termId": "GE-000079",
+      "assetId": "WMG-51e792bc8bccc8"
+    },
+    {
+      "termId": "GE-000083",
+      "assetId": "WMG-4a0626a04ae804"
+    },
+    {
+      "termId": "GE-000084",
+      "assetId": "WMG-c0c5238ace9c02"
+    },
+    {
+      "termId": "GE-000090",
+      "assetId": "WMG-226ef5342ba02f"
+    },
+    {
+      "termId": "GE-000094",
+      "assetId": "WMG-25803158f9f143"
+    },
+    {
+      "termId": "GE-000095",
+      "assetId": "WMG-01b65f30525ac6"
+    },
+    {
+      "termId": "GE-000096",
+      "assetId": "WMG-8ccb112642267a"
+    },
+    {
+      "termId": "GE-000098",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "termId": "GE-000099",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "termId": "GE-000100",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "termId": "GE-000101",
+      "assetId": "WMG-66335970621a48"
+    },
+    {
+      "termId": "GE-000105",
+      "assetId": "WMG-31415d97567867"
+    },
+    {
+      "termId": "GE-000120",
+      "assetId": "WMG-e4b511793f1f3a"
+    },
+    {
+      "termId": "GE-000138",
+      "assetId": "WMG-38d357b5682c7f"
+    },
+    {
+      "termId": "GE-000140",
+      "assetId": "WMG-a6aa8abc92cc53"
+    },
+    {
+      "termId": "GE-000209",
+      "assetId": "WMG-2949df205bcd78"
+    },
+    {
+      "termId": "GE-000257",
+      "assetId": "WMG-29f7548c10bab2"
+    },
+    {
+      "termId": "GE-000343",
+      "assetId": "WMG-56851e68a97f69"
+    },
+    {
+      "termId": "GE-000344",
+      "assetId": "WMG-f2dcb2e28a1b03"
+    },
+    {
+      "termId": "GE-000378",
+      "assetId": "WMG-7765e2b836d5d9"
+    },
+    {
+      "termId": "GE-000379",
+      "assetId": "WMG-58f006963fb3bd"
+    },
+    {
+      "termId": "GE-000381",
+      "assetId": "WMG-172dee7540db59"
+    },
+    {
+      "termId": "GE-000383",
+      "assetId": "WMG-de46a7ba5719d6"
+    },
+    {
+      "termId": "GE-000385",
+      "assetId": "WMG-4d75af4833034f"
+    },
+    {
+      "termId": "GE-000393",
+      "assetId": "WMG-ed79e85cff6705"
+    },
+    {
+      "termId": "GE-000394",
+      "assetId": "WMG-0d22ca34ef6701"
+    },
+    {
+      "termId": "GE-000396",
+      "assetId": "WMG-90ab7789f8ee69"
+    },
+    {
+      "termId": "GE-000398",
+      "assetId": "WMG-d46391cc054376"
+    }
+  ],
+  "assignments": [
+    {
+      "questionId": "GE-000017-C01",
+      "termId": "GE-000017",
+      "target": "メルカトル図法",
+      "assetId": "WMG-9e2f2c63e54b72"
+    },
+    {
+      "questionId": "GE-000018-C01",
+      "termId": "GE-000018",
+      "target": "正距方位図法",
+      "assetId": "WMG-766622d229619d"
+    },
+    {
+      "questionId": "GE-000019-C01",
+      "termId": "GE-000019",
+      "target": "モルワイデ図法",
+      "assetId": "WMG-503d2086d85b43"
+    },
+    {
+      "questionId": "GE-000036-C01",
+      "termId": "GE-000036",
+      "target": "地球の内部構造",
+      "assetId": "WMG-edb389c6f2ceae"
+    },
+    {
+      "questionId": "GE-000040-C01",
+      "termId": "GE-000040",
+      "target": "プレートテクトニクス",
+      "assetId": "WMG-13de36775cabb6"
+    },
+    {
+      "questionId": "GE-000055-C01",
+      "termId": "GE-000055",
+      "target": "環太平洋造山帯",
+      "assetId": "WMG-b218a14481b9b2"
+    },
+    {
+      "questionId": "GE-000072-C01",
+      "termId": "GE-000072",
+      "target": "V字谷",
+      "assetId": "WMG-2bda318d744b68"
+    },
+    {
+      "questionId": "GE-000073-C01",
+      "termId": "GE-000073",
+      "target": "扇状地",
+      "assetId": "WMG-cc0a4fc3c201e8"
+    },
+    {
+      "questionId": "GE-000077-C01",
+      "termId": "GE-000077",
+      "target": "三角州",
+      "assetId": "WMG-d1c5d492be40d0"
+    },
+    {
+      "questionId": "GE-000078-C01",
+      "termId": "GE-000078",
+      "target": "河岸段丘",
+      "assetId": "WMG-f41468f963d813"
+    },
+    {
+      "questionId": "GE-000079-C01",
+      "termId": "GE-000079",
+      "target": "三日月湖",
+      "assetId": "WMG-51e792bc8bccc8"
+    },
+    {
+      "questionId": "GE-000083-C01",
+      "termId": "GE-000083",
+      "target": "カルスト地形",
+      "assetId": "WMG-4a0626a04ae804"
+    },
+    {
+      "questionId": "GE-000084-C01",
+      "termId": "GE-000084",
+      "target": "ドリーネ",
+      "assetId": "WMG-c0c5238ace9c02"
+    },
+    {
+      "questionId": "GE-000090-C01",
+      "termId": "GE-000090",
+      "target": "フィヨルド",
+      "assetId": "WMG-226ef5342ba02f"
+    },
+    {
+      "questionId": "GE-000094-C01",
+      "termId": "GE-000094",
+      "target": "裾礁",
+      "assetId": "WMG-25803158f9f143"
+    },
+    {
+      "questionId": "GE-000095-C01",
+      "termId": "GE-000095",
+      "target": "堡礁",
+      "assetId": "WMG-01b65f30525ac6"
+    },
+    {
+      "questionId": "GE-000096-C01",
+      "termId": "GE-000096",
+      "target": "環礁",
+      "assetId": "WMG-8ccb112642267a"
+    },
+    {
+      "questionId": "GE-000098-C01",
+      "termId": "GE-000098",
+      "target": "圏谷",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "questionId": "GE-000099-C01",
+      "termId": "GE-000099",
+      "target": "U字谷",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "questionId": "GE-000100-C01",
+      "termId": "GE-000100",
+      "target": "モレーン",
+      "assetId": "WMG-4c9965d3699784"
+    },
+    {
+      "questionId": "GE-000101-C01",
+      "termId": "GE-000101",
+      "target": "ワジ",
+      "assetId": "WMG-66335970621a48"
+    },
+    {
+      "questionId": "GE-000105-C01",
+      "termId": "GE-000105",
+      "target": "ケスタ",
+      "assetId": "WMG-31415d97567867"
+    },
+    {
+      "questionId": "GE-000120-C01",
+      "termId": "GE-000120",
+      "target": "大気大循環",
+      "assetId": "WMG-e4b511793f1f3a"
+    },
+    {
+      "questionId": "GE-000138-C01",
+      "termId": "GE-000138",
+      "target": "エルニーニョ現象",
+      "assetId": "WMG-38d357b5682c7f"
+    },
+    {
+      "questionId": "GE-000140-C01",
+      "termId": "GE-000140",
+      "target": "ケッペンの気候区分",
+      "assetId": "WMG-a6aa8abc92cc53"
+    },
+    {
+      "questionId": "GE-000209-C01",
+      "termId": "GE-000209",
+      "target": "人口ピラミッド",
+      "assetId": "WMG-2949df205bcd78"
+    },
+    {
+      "questionId": "GE-000257-C01",
+      "termId": "GE-000257",
+      "target": "焼畑農業",
+      "assetId": "WMG-29f7548c10bab2"
+    },
+    {
+      "questionId": "GE-000343-C01",
+      "termId": "GE-000343",
+      "target": "スエズ運河",
+      "assetId": "WMG-56851e68a97f69"
+    },
+    {
+      "questionId": "GE-000344-C01",
+      "termId": "GE-000344",
+      "target": "パナマ運河",
+      "assetId": "WMG-f2dcb2e28a1b03"
+    },
+    {
+      "questionId": "GE-000378-C01",
+      "termId": "GE-000378",
+      "target": "長江デルタ",
+      "assetId": "WMG-7765e2b836d5d9"
+    },
+    {
+      "questionId": "GE-000379-C01",
+      "termId": "GE-000379",
+      "target": "珠江デルタ",
+      "assetId": "WMG-58f006963fb3bd"
+    },
+    {
+      "questionId": "GE-000381-C01",
+      "termId": "GE-000381",
+      "target": "メコンデルタ",
+      "assetId": "WMG-172dee7540db59"
+    },
+    {
+      "questionId": "GE-000383-C01",
+      "termId": "GE-000383",
+      "target": "インド・ガンジス平原",
+      "assetId": "WMG-de46a7ba5719d6"
+    },
+    {
+      "questionId": "GE-000385-C01",
+      "termId": "GE-000385",
+      "target": "サヘル",
+      "assetId": "WMG-4d75af4833034f"
+    },
+    {
+      "questionId": "GE-000393-C01",
+      "termId": "GE-000393",
+      "target": "コーンベルト",
+      "assetId": "WMG-ed79e85cff6705"
+    },
+    {
+      "questionId": "GE-000394-C01",
+      "termId": "GE-000394",
+      "target": "サンベルト",
+      "assetId": "WMG-0d22ca34ef6701"
+    },
+    {
+      "questionId": "GE-000396-C01",
+      "termId": "GE-000396",
+      "target": "アマゾン川流域",
+      "assetId": "WMG-90ab7789f8ee69"
+    },
+    {
+      "questionId": "GE-000398-C01",
+      "termId": "GE-000398",
+      "target": "パンパ",
+      "assetId": "WMG-d46391cc054376"
+    }
+  ]
+}

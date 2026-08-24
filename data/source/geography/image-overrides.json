@@ -1,0 +1,192 @@
+[
+  {
+    "termId": "GE-000017",
+    "caption": "メルカトル図法の世界地図",
+    "fileName": "Mercator projection SW.jpg"
+  },
+  {
+    "termId": "GE-000018",
+    "caption": "正距方位図法の世界地図",
+    "fileName": "Azimuthal equidistant projection SW.jpg"
+  },
+  {
+    "termId": "GE-000019",
+    "caption": "モルワイデ図法の世界地図",
+    "fileName": "Mollweide projection SW.jpg"
+  },
+  {
+    "termId": "GE-000036",
+    "caption": "地球の内部構造",
+    "fileName": "Earth Internal Structure.svg"
+  },
+  {
+    "termId": "GE-000040",
+    "caption": "世界のプレート分布",
+    "fileName": "Tectonic plates (2022).svg"
+  },
+  {
+    "termId": "GE-000055",
+    "caption": "環太平洋造山帯（環太平洋火山帯）",
+    "fileName": "Pacific Ring of Fire.svg"
+  },
+  {
+    "termId": "GE-000072",
+    "caption": "V字谷とU字谷の断面比較",
+    "fileName": "Talprofil3.png"
+  },
+  {
+    "termId": "GE-000073",
+    "caption": "扇状地のでき方",
+    "fileName": "Alluvial fan scheme.PNG"
+  },
+  {
+    "termId": "GE-000077",
+    "caption": "代表的な三角州の形",
+    "fileName": "Delta types.png"
+  },
+  {
+    "termId": "GE-000078",
+    "caption": "河岸段丘の断面",
+    "fileName": "A series of paired river terraces plainsvg.svg"
+  },
+  {
+    "termId": "GE-000079",
+    "caption": "蛇行河川から三日月湖ができる過程",
+    "fileName": "Meander Oxbow development.svg"
+  },
+  {
+    "termId": "GE-000083",
+    "caption": "カルスト地形の模式図",
+    "fileName": "Bloc-diag-karst-mod.jpg"
+  },
+  {
+    "termId": "GE-000084",
+    "caption": "カルスト地形に見られるドリーネ",
+    "fileName": "Grande doline Plateau de Saint Barnabe 35-36mod.jpg"
+  },
+  {
+    "termId": "GE-000090",
+    "caption": "氷河の侵食でできるフィヨルド",
+    "fileName": "Fjord genesis.png"
+  },
+  {
+    "termId": "GE-000094",
+    "caption": "裾礁のでき方",
+    "fileName": "Atoll forming-Fringing reef.png"
+  },
+  {
+    "termId": "GE-000095",
+    "caption": "堡礁のでき方",
+    "fileName": "Atoll forming-Barrier reef.png"
+  },
+  {
+    "termId": "GE-000096",
+    "caption": "環礁のでき方",
+    "fileName": "Atoll forming-Atoll.png"
+  },
+  {
+    "termId": "GE-000098",
+    "caption": "圏谷・U字谷・モレーンを含む氷河地形",
+    "fileName": "Glacial landscape LMB.png"
+  },
+  {
+    "termId": "GE-000099",
+    "caption": "圏谷・U字谷・モレーンを含む氷河地形",
+    "fileName": "Glacial landscape LMB.png"
+  },
+  {
+    "termId": "GE-000100",
+    "caption": "圏谷・U字谷・モレーンを含む氷河地形",
+    "fileName": "Glacial landscape LMB.png"
+  },
+  {
+    "termId": "GE-000101",
+    "caption": "乾燥地域のワジ",
+    "fileName": "Wadi rum desert.jpg"
+  },
+  {
+    "termId": "GE-000105",
+    "caption": "ケスタの地形断面",
+    "fileName": "Cuesta schematic.svg"
+  },
+  {
+    "termId": "GE-000120",
+    "caption": "地球規模の大気大循環",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "GE-000138",
+    "caption": "エルニーニョ現象時の海洋と大気",
+    "fileName": "El Niño Diagram.jpg"
+  },
+  {
+    "termId": "GE-000140",
+    "caption": "ケッペン＝ガイガーの世界気候区分図",
+    "fileName": "Köppen-Geiger Climate Classification Map (1980–2016) no borders.png"
+  },
+  {
+    "termId": "GE-000209",
+    "caption": "人口ピラミッドの例",
+    "fileName": "Population Pyramid.png"
+  },
+  {
+    "termId": "GE-000257",
+    "caption": "タイで行われている焼畑農業",
+    "fileName": "An example of slash and burn agriculture practice Thailand.jpg"
+  },
+  {
+    "termId": "GE-000343",
+    "caption": "スエズ運河の衛星画像",
+    "fileName": "Suez Canal, Egypt (satellite view).jpg"
+  },
+  {
+    "termId": "GE-000344",
+    "caption": "パナマ運河の経路と高低差",
+    "fileName": "Panama Canal Map EN.svg"
+  },
+  {
+    "termId": "GE-000378",
+    "caption": "長江デルタの位置",
+    "fileName": "Yangtze River Delta map.png"
+  },
+  {
+    "termId": "GE-000379",
+    "caption": "珠江デルタの位置",
+    "fileName": "Pearl River Delta Area.png"
+  },
+  {
+    "termId": "GE-000381",
+    "caption": "メコンデルタの位置",
+    "fileName": "Delta Mekong mappa.png"
+  },
+  {
+    "termId": "GE-000383",
+    "caption": "インド・ガンジス平原の範囲",
+    "fileName": "Indo-Gangetic Plain.en.png"
+  },
+  {
+    "termId": "GE-000385",
+    "caption": "アフリカのサヘル地域",
+    "fileName": "Sahel Map-Africa rough.svg"
+  },
+  {
+    "termId": "GE-000393",
+    "caption": "アメリカ合衆国のコーンベルト",
+    "fileName": "Map of USA highlighting Corn Belt.png"
+  },
+  {
+    "termId": "GE-000394",
+    "caption": "アメリカ合衆国のサンベルト",
+    "fileName": "Map of USA highlighting Sun Belt.png"
+  },
+  {
+    "termId": "GE-000396",
+    "caption": "アマゾン川流域の範囲",
+    "fileName": "Amazon river basin.png"
+  },
+  {
+    "termId": "GE-000398",
+    "caption": "南アメリカのパンパ地域",
+    "fileName": "Map for the Pampas region.svg"
+  }
+]

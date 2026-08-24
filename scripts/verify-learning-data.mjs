@@ -1373,6 +1373,22 @@ const expectedTermImages = mergeTermImageManifests([
       "japanese-history",
     ),
   }),
+  await loadTermImageManifest(expectedGeographyTerms, {
+    manifestPath: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "geography",
+      "term-images.json",
+    ),
+    imageSourceDirectory: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "geography",
+    ),
+    requireComplete: false,
+  }),
 ]);
 const imageAssetIds = new Set(generatedTermImages.assets.map((asset) => asset.id));
 const imageAssetById = new Map(
@@ -1385,7 +1401,7 @@ const assignedQuestionIds = new Set(
   generatedTermImages.assignments.map((assignment) => assignment.questionId),
 );
 const expectedTermIdByQuestionId = new Map(
-  [...generatedTerms, ...generatedJapaneseTerms].flatMap((term) =>
+  [...generatedTerms, ...generatedJapaneseTerms, ...generatedGeographyTerms].flatMap((term) =>
     Object.values(term.stages)
       .flat()
       .map((question) => [question.id, term.id]),
@@ -1394,10 +1410,10 @@ const expectedTermIdByQuestionId = new Map(
 if (
   JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages) ||
   generatedTermImages.schemaVersion !== 2 ||
-  fallbackTermIds.size !== 1600 ||
-  generatedTermImages.termFallbacks.length !== 1600 ||
-  assignedQuestionIds.size !== 10382 ||
-  generatedTermImages.assignments.length !== 10382 ||
+  fallbackTermIds.size !== expectedTermImages.termFallbacks.length ||
+  generatedTermImages.termFallbacks.length !== expectedTermImages.termFallbacks.length ||
+  assignedQuestionIds.size !== expectedTermImages.assignments.length ||
+  generatedTermImages.assignments.length !== expectedTermImages.assignments.length ||
   generatedTermImages.assets.some(
     (asset) =>
       !asset.path.endsWith(".webp") ||
@@ -1415,7 +1431,34 @@ if (
       expectedTermIdByQuestionId.get(assignment.questionId) !== assignment.termId,
   )
 ) {
-  throw new Error("世界史と日本史の関連画像が全問題へ正しく割り当てられていません。");
+  throw new Error("世界史・日本史・地理の関連画像が正しく割り当てられていません。");
+}
+
+const geographyImageOverrides = JSON.parse(
+  await readFile(
+    path.join(projectRoot, "data", "source", "geography", "image-overrides.json"),
+    "utf8",
+  ),
+);
+const geographyImageTermIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("GE-"))
+    .map((fallback) => fallback.termId),
+);
+const geographyImageQuestionIds = new Set(
+  generatedTermImages.assignments
+    .filter((assignment) => assignment.termId.startsWith("GE-"))
+    .map((assignment) => assignment.questionId),
+);
+if (
+  geographyImageOverrides.length !== 38 ||
+  geographyImageTermIds.size !== geographyImageOverrides.length ||
+  geographyImageQuestionIds.size !== geographyImageOverrides.length ||
+  geographyImageOverrides.some(
+    (override) => !geographyImageTermIds.has(override.termId),
+  )
+) {
+  throw new Error("地理の厳選画像が38項目へ用語単位で割り当てられていません。");
 }
 
 const normalizeCommonsFileName = (sourcePageUrl) => {
@@ -1439,6 +1482,16 @@ const sourceImageOverrides = JSON.parse(
     "utf8",
   ),
 );
+const geographySourceOverrideMismatches = geographyImageOverrides.filter((override) => {
+  const assetId = fallbackByTermId.get(override.termId)?.assetId;
+  const asset = imageAssetById.get(assetId);
+  return (
+    normalizeCommonsFileName(asset?.sourcePageUrl ?? "") !==
+    normalizeCommonsFileName(
+      `https://commons.wikimedia.org/wiki/File:${override.fileName}`,
+    )
+  );
+});
 const auditedFallbackMismatches = generatedTerms
   .filter(
     (term) => Number(term.id.slice(3, 9)) > 400 && termFileOverrides.has(term.term),
@@ -1491,7 +1544,8 @@ const sourceOverrideMismatches = sourceImageOverrides.filter((override) => {
 if (
   auditedFallbackMismatches.length > 0 ||
   auditedTargetMismatches.length > 0 ||
-  sourceOverrideMismatches.length > 0
+  sourceOverrideMismatches.length > 0 ||
+  geographySourceOverrideMismatches.length > 0
 ) {
   throw new Error(
     `監査済み画像が指定した史料と一致しません: ${[
@@ -1500,6 +1554,7 @@ if (
       ...sourceOverrideMismatches.map((override) =>
         override.target ? `${override.termId}:${override.target}` : override.termId,
       ),
+      ...geographySourceOverrideMismatches.map((override) => override.termId),
     ].join(", ")}`,
   );
 }

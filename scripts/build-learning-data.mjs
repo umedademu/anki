@@ -826,13 +826,12 @@ export function validateTerms(terms, { rankStart = 1 } = {}) {
         mnemonicsByAnswer.set(answer, mnemonics);
       }
       if (
-        exactDateQuestions.some((question) => !question.yearMnemonic.trim()) ||
         [...mnemonicsByAnswer.values()].some(
-          (mnemonics) => mnemonics.size !== 1 || mnemonics.has(""),
+          (mnemonics) => mnemonics.size !== 1,
         )
       ) {
         throw new Error(
-          `${term.term}の同じ単一年・年月・年月日の問題に、統一した年号語呂合わせがありません。`,
+          `${term.term}の同じ単一年・年月・年月日の問題で、年号語呂合わせが統一されていません。`,
         );
       }
       const integratedMnemonics = new Set(
@@ -871,13 +870,12 @@ export function validateTerms(terms, { rankStart = 1 } = {}) {
         mnemonicsByAnswer.set(answer, mnemonics);
       }
       if (
-        datedPeriodQuestions.some((question) => !question.yearMnemonic.trim()) ||
         [...mnemonicsByAnswer.values()].some(
-          (mnemonics) => mnemonics.size !== 1 || mnemonics.has(""),
+          (mnemonics) => mnemonics.size !== 1,
         )
       ) {
         throw new Error(
-          `${term.term}の数字を含む時期問題に、統一した年号語呂合わせがありません。`,
+          `${term.term}の数字を含む時期問題で、年号語呂合わせが統一されていません。`,
         );
       }
       const integratedMnemonics = new Set(

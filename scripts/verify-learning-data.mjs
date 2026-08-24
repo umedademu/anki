@@ -41,14 +41,14 @@ const expectedSpecs = new Map([
     {
       number: 1,
       version: "0836119c5d45",
-      contentVersion: "dd61908ed780",
+      contentVersion: "9665b14e4331",
       datasetLabel: "世界史段階別デッキ｜Deck 1｜最重要骨格400語",
       difficultyLabel: "Deck 1｜骨格・基礎",
       termCount: 400,
       questionCount: 2782,
       questionCounts: { beginner: 1200, reverse: 1182, integrated: 400 },
-      mnemonicCount: 1187,
-      distinctMnemonicCount: 403,
+      mnemonicCount: 386,
+      distinctMnemonicCount: 122,
       exactDateQuestionCount: 116,
       exactDateTermCount: 59,
       datedPeriodQuestionCount: 781,
@@ -61,14 +61,14 @@ const expectedSpecs = new Map([
     {
       number: 2,
       version: "8acba0d50165",
-      contentVersion: "c8e7d9746b85",
+      contentVersion: "79014ce3e8d2",
       datasetLabel: "世界史段階別デッキ｜Deck 2｜共通テスト基礎400語",
       difficultyLabel: "Deck 2｜骨格・基礎",
       termCount: 400,
       questionCount: 2400,
       questionCounts: { beginner: 1200, reverse: 800, integrated: 400 },
-      mnemonicCount: 1173,
-      distinctMnemonicCount: 398,
+      mnemonicCount: 271,
+      distinctMnemonicCount: 82,
       exactDateQuestionCount: 133,
       exactDateTermCount: 69,
       datedPeriodQuestionCount: 780,
@@ -81,14 +81,14 @@ const expectedSpecs = new Map([
     {
       number: 3,
       version: "7edfff4529a4",
-      contentVersion: "dec8a5fc810e",
+      contentVersion: "0371038da60b",
       datasetLabel: "世界史段階別デッキ｜Deck 3｜主要王朝・人物・制度の穴埋め400語",
       difficultyLabel: "Deck 3｜標準",
       termCount: 400,
       questionCount: 2400,
       questionCounts: { beginner: 1200, reverse: 800, integrated: 400 },
-      mnemonicCount: 1170,
-      distinctMnemonicCount: 390,
+      mnemonicCount: 124,
+      distinctMnemonicCount: 39,
       exactDateQuestionCount: 134,
       exactDateTermCount: 67,
       datedPeriodQuestionCount: 780,
@@ -140,13 +140,13 @@ const expectedEnglishSpecs = new Map([
 const expectedJapaneseSpec = {
   number: 1,
   version: "jh-455fb6def169",
-  contentVersion: "f11b35eb6bac",
+  contentVersion: "30424e3a962e",
   datasetLabel: "日本史段階別デッキ｜Deck 1｜日本史の最重要骨格400語",
   difficultyLabel: "Deck 1｜骨格・基礎",
   termCount: 400,
   questionCount: 2800,
   questionCounts: { beginner: 1200, reverse: 1200, integrated: 400 },
-  mnemonicCount: 604,
+  mnemonicCount: 231,
 };
 
 const expectedGeographySpec = {
@@ -398,7 +398,6 @@ for (const deckEntry of subjectEntry.decks) {
   if (
     exactDateQuestions.length !== spec.exactDateQuestionCount ||
     exactDateTerms.length !== spec.exactDateTermCount ||
-    exactDateQuestions.some((question) => !question.yearMnemonic.trim()) ||
     exactDateTerms.some((term) => {
       const targetQuestions = Object.values(term.stages)
         .flat()
@@ -416,12 +415,14 @@ for (const deckEntry of subjectEntry.decks) {
       );
       return (
         mnemonics.size !== 1 ||
-        !integratedMnemonics.has([...mnemonics][0])
+        !splitMnemonicList([...mnemonics][0]).every((mnemonic) =>
+          integratedMnemonics.has(mnemonic),
+        )
       );
     })
   ) {
     throw new Error(
-      `${deckEntry.id}の単一年・年月・年月日の語呂合わせが不足または不統一です。`,
+      `${deckEntry.id}の単一年・年月・年月日の語呂合わせが不統一です。`,
     );
   }
 
@@ -455,7 +456,6 @@ for (const deckEntry of subjectEntry.decks) {
     datedPeriodQuestions.length !== spec.datedPeriodQuestionCount ||
     datedPeriodTerms.length !== spec.datedPeriodTermCount ||
     datedPeriodExpressions.size !== spec.datedPeriodExpressionCount ||
-    datedPeriodQuestions.some((question) => !question.yearMnemonic.trim()) ||
     datedPeriodTerms.some((term) => {
       const targetQuestions = Object.values(term.stages)
         .flat()
@@ -487,7 +487,7 @@ for (const deckEntry of subjectEntry.decks) {
     })
   ) {
     throw new Error(
-      `${deckEntry.id}の数字を含む時期問題の語呂合わせが不足または不統一です。`,
+      `${deckEntry.id}の数字を含む時期問題の語呂合わせが不統一です。`,
     );
   }
   generatedDecks.push({ entry: deckEntry, subject, terms, questions });
@@ -1930,14 +1930,19 @@ if (
   throw new Error("日本史Deck 1のID・用語名・重要度順位が重複または欠落しています。");
 }
 
-const representativeMnemonic = generatedQuestions.find(
-  (question) => question.id === "WH-000045-B02",
-);
-if (
-  representativeMnemonic?.yearMnemonic !==
-  "476年：死なむ（476）西ローマ帝国"
-) {
-  throw new Error("Deck 1の既存語呂合わせが変更されています。");
+const duplicateMnemonicYearQuestion = [
+  ...generatedQuestions,
+  ...generatedJapaneseQuestions,
+].find((question) => {
+  const dates = splitMnemonicList(question.yearMnemonic).map((mnemonic) =>
+    mnemonic.match(/^([^:：]+)[：:]/u)?.[1].trim(),
+  );
+  return dates.some((date) => !date) || new Set(dates).size !== dates.length;
+});
+if (duplicateMnemonicYearQuestion) {
+  throw new Error(
+    `${duplicateMnemonicYearQuestion.id}で同じ対象年の語呂合わせが重複しています。`,
+  );
 }
 
 console.log(

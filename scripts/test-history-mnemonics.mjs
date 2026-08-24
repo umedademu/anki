@@ -1,25 +1,54 @@
 import {
   answerContainsDate,
-  createReplacements,
+  createApprovedMnemonicPlan,
   eventMatchesTerm,
-  extractSiteMnemonic,
-  formatPreferredMnemonic,
-  mergePreferredMnemonic,
-  parseSiteTitle,
-} from "./sync-goroawase-master-mnemonics.mjs";
+  extractMasterMnemonic,
+  formatMasterMnemonic,
+  formatWixMnemonic,
+  parseMasterTitle,
+  parseWixDateExpression,
+  parseWixPageItems,
+} from "./sync-approved-history-mnemonics.mjs";
 
 const html = `
 <div class="cap_box_ttl"><span>語呂合わせ</span></div><div class="cap_box_content">
 <p class="wp-block-paragraph">鳴くよ（794）ウグイス、<ruby><rb>平安京</rb><rt>へいあんきょう</rt></ruby></p>`;
 
 if (
-  extractSiteMnemonic(html) !== "鳴くよ（794）ウグイス、平安京" ||
-  JSON.stringify(parseSiteTitle("794年 平安京へ遷都")) !==
+  extractMasterMnemonic(html) !== "鳴くよ(794)ウグイス、平安京" ||
+  JSON.stringify(parseMasterTitle("794年 平安京へ遷都")) !==
     JSON.stringify({ date: "794年", event: "平安京へ遷都" }) ||
-  formatPreferredMnemonic("794年", "鳴くよ（794）ウグイス、平安京") !==
-    "794年：「鳴くよ」（794）ウグイス、平安京"
+  formatMasterMnemonic("794年", "鳴くよ（794）ウグイス、平安京") !==
+    "794年：「鳴くよ」(794)ウグイス、平安京"
 ) {
-  throw new Error("指定サイトから語呂合わせを正しく整形できませんでした。");
+  throw new Error("語呂合わせマスターの記事を正しく整形できませんでした。");
+}
+
+const wixHtml = `
+<div class="wixui-rich-text" data-testid="richTextElement">
+  <p>● １６５２ 年：二つの年を持つ出来事が始まる。</p>
+  <p>☆ 始まりを覚える試験用の語呂</p>
+</div>
+<div class="wixui-rich-text" data-testid="richTextElement">
+  <p>● １７０１ 年：二つの年を持つ出来事が終わる。</p>
+  <p>☆ 終わりを覚える試験用の語呂</p>
+</div>`;
+const parsedWixItems = parseWixPageItems(wixHtml, {
+  subjectId: "world-history",
+  sourceId: "sekaishi-goro",
+  url: "https://example.com/world-history",
+});
+if (
+  parsedWixItems.length !== 2 ||
+  JSON.stringify(parseWixDateExpression("BC264-BC146年")) !==
+    JSON.stringify([
+      { year: "264", beforeCommonEra: true, label: "前264年" },
+      { year: "146", beforeCommonEra: true, label: "前146年" },
+    ]) ||
+  formatWixMnemonic(parsedWixItems[0]) !==
+    "1652年：「始まりを覚える試験用の語呂」（1652）二つの年を持つ出来事が始まる。"
+) {
+  throw new Error("年代別語呂合わせサイトの記事を正しく整形できませんでした。");
 }
 
 if (
@@ -33,44 +62,72 @@ if (
   !answerContainsDate("755〜763年", "755年") ||
   !answerContainsDate("前264〜前146年", "前146年") ||
   !answerContainsDate("（前146）", "前146年") ||
-  answerContainsDate("前27年〜後14年在位", "27年") ||
-  mergePreferredMnemonic(
-    "755〜763年：「なごご」（755）から「なろみ」（763）までの安史の乱",
-    "755年",
-    "名ここ（755）に刻む、安史の乱",
-  ) !==
-    "755〜763年：「名ここ」（755）から「なろみ」（763）までの安史の乱" ||
-  mergePreferredMnemonic(
-    "418〜711年：「よいはじまり」（418〜711年）で覚える西ゴート王国",
-    "418年",
-    "良い輪（418）広げ、西ゴート王国の建国",
-  ) !== ""
+  answerContainsDate("前27年〜後14年在位", "27年")
 ) {
-  throw new Error("期間の端にある語呂だけを安全に改善できませんでした。");
+  throw new Error("期間の各年を正しく照合できませんでした。");
 }
 
-const { replacements } = createReplacements(
+const preferredCandidate = {
+  sourceId: "goroawase-master",
+  subjectId: "world-history",
+  dates: [{ year: "1652", beforeCommonEra: false, label: "1652年" }],
+  event: "二つの年を持つ出来事が始まる",
+  eventDescription: "二つの年を持つ出来事が始まる",
+  mnemonic: "二つの年を持つ出来事を覚える語呂",
+  formattedMnemonic:
+    "1652年：「二つの年を持つ出来事を覚える語呂」(1652)試験用",
+  url: "https://example.com/preferred",
+};
+const plan = createApprovedMnemonicPlan(
+  [...parsedWixItems, preferredCandidate],
   [
     {
-      subjectId: "japanese-history",
-      title: "794年 平安京へ遷都",
-      mnemonic: "鳴くよ（794）ウグイス、平安京",
-      url: "https://goroawase-master.com/794-heian-kyo/",
-    },
-  ],
-  [
-    {
-      subjectId: "japanese-history",
+      subjectId: "world-history",
       term: {
-        id: "JH-000083",
-        term: "平安京",
+        id: "WH-000001",
+        term: "二つの年を持つ出来事",
         aliases: [],
         stages: {
           beginner: [
             {
-              id: "JH-000083-B02",
-              answer: "794年",
-              yearMnemonic: "794年：「鳴くよ」（794）うぐいす平安京",
+              id: "WH-000001-B02",
+              stage: "beginner",
+              answer: "1652〜1701年",
+              yearMnemonic: "独自作成の削除対象",
+            },
+          ],
+          reverse: [
+            {
+              id: "WH-000001-R01",
+              stage: "reverse",
+              answer: "1652〜1701年",
+              yearMnemonic: "独自作成の削除対象",
+            },
+          ],
+          integrated: [
+            {
+              id: "WH-000001-I01",
+              stage: "integrated",
+              answer: "1652年に始まり、1701年までに関連する出来事を説明する。",
+              yearMnemonic: "独自作成の削除対象",
+            },
+          ],
+        },
+      },
+    },
+    {
+      subjectId: "world-history",
+      term: {
+        id: "WH-000002",
+        term: "掲載のない出来事",
+        aliases: [],
+        stages: {
+          beginner: [
+            {
+              id: "WH-000002-B02",
+              stage: "beginner",
+              answer: "1900年",
+              yearMnemonic: "独自作成の削除対象",
             },
           ],
           reverse: [],
@@ -82,49 +139,15 @@ const { replacements } = createReplacements(
 );
 
 if (
-  replacements.length !== 1 ||
-  replacements[0].termId !== "JH-000083" ||
-  replacements[0].newMnemonic !==
-    "794年：「鳴くよ」（794）ウグイス、平安京"
+  plan.desiredByQuestionId.get("WH-000001-B02") !==
+    [preferredCandidate.formattedMnemonic, parsedWixItems[1].formattedMnemonic].join("|") ||
+  plan.desiredByQuestionId.get("WH-000001-R01") !==
+    [preferredCandidate.formattedMnemonic, parsedWixItems[1].formattedMnemonic].join("|") ||
+  plan.desiredByQuestionId.get("WH-000001-I01") !==
+    [preferredCandidate.formattedMnemonic, parsedWixItems[1].formattedMnemonic].join("|") ||
+  plan.desiredByQuestionId.get("WH-000002-B02") !== ""
 ) {
-  throw new Error("Cloudflare上の問題と指定サイトを照合できませんでした。");
+  throw new Error("期間の片端・両端と未掲載語呂を正しく処理できませんでした。");
 }
 
-const alreadyPreferred = createReplacements(
-  [
-    {
-      subjectId: "japanese-history",
-      title: "794年 平安京へ遷都",
-      mnemonic: "鳴くよ（794）ウグイス、平安京",
-      url: "https://goroawase-master.com/794-heian-kyo/",
-    },
-  ],
-  [
-    {
-      subjectId: "japanese-history",
-      term: {
-        id: "JH-000083",
-        term: "平安京",
-        aliases: [],
-        stages: {
-          beginner: [
-            {
-              id: "JH-000083-B02",
-              answer: "794年",
-              yearMnemonic: "794年：「鳴くよ」（794）ウグイス、平安京",
-            },
-          ],
-        },
-      },
-    },
-  ],
-);
-if (
-  alreadyPreferred.replacements.length !== 0 ||
-  alreadyPreferred.matchedArticles.size !== 1 ||
-  alreadyPreferred.matchedTerms.size !== 1
-) {
-  throw new Error("反映済みの一致件数を正しく確認できませんでした。");
-}
-
-console.log("年号語呂合わせの照合処理を確認しました。");
+console.log("許可済みサイト限定の年号語呂合わせ処理を確認しました。");

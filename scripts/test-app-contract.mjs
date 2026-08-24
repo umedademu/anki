@@ -228,10 +228,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.112") ||
-  !changelog.includes("v0.112") ||
-  !settingsHtml.includes("v0.112") ||
-  !historyHtml.includes("v0.112")
+  !html.includes("v0.113") ||
+  !changelog.includes("v0.113") ||
+  !settingsHtml.includes("v0.113") ||
+  !historyHtml.includes("v0.113")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -383,7 +383,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.112"') ||
+  !html.includes('href="/styles.css?v=0.113"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -421,9 +421,9 @@ if (
   !generationPrompt.includes("段階別デッキシリーズ全体での累計重要度順位") ||
   !generationPrompt.includes("Deck 2は401〜800") ||
   !generationPrompt.includes("https://goroawase-master.com/") ||
-  !generationPrompt.includes("同じ年号・同じ出来事")
+  !generationPrompt.includes("同じ年・同じ出来事")
 ) {
-  throw new Error("問題集生成用プロンプトの読み仮名規則が不足しています。");
+  throw new Error("問題集生成用プロンプトの読み仮名・語呂合わせ規則が不足しています。");
 }
 if (
   !englishGenerationPrompt.includes("1英単語につき1行、全10列") ||
@@ -456,7 +456,7 @@ if (
   !japaneseHistoryGenerationPrompt.includes("東京大学史料編纂所") ||
   !japaneseHistoryGenerationPrompt.includes("墾田永年私財法(こんでんえいねんしざいほう)") ||
   !japaneseHistoryGenerationPrompt.includes("https://goroawase-master.com/") ||
-  !japaneseHistoryGenerationPrompt.includes("同じ年号・同じ出来事") ||
+  !japaneseHistoryGenerationPrompt.includes("同じ年・同じ出来事") ||
   japaneseHistoryGenerationPrompt.includes("https://www.y-history.net/") ||
   japaneseHistoryGenerationPrompt.includes("Deck 10") ||
   japaneseHistoryGenerationPrompt.includes("3,600語")
@@ -651,23 +651,23 @@ if (
 }
 if (
   !generationPrompt.includes("year_mnemonic") ||
-  !generationPrompt.includes("`question_type=time`で、`answer`に数字が含まれる問題") ||
+  !generationPrompt.includes("対象と同じ年・同じ出来事の語呂合わせが実際に掲載されている場合だけ") ||
   !generationPrompt.includes("`前550〜前330年`のような期間") ||
   !generationPrompt.includes("`485年以降`のような開始時期") ||
   !generationPrompt.includes("`11世紀`のような世紀") ||
   !generationPrompt.includes("`前1千年紀`のような千年紀") ||
-  !generationPrompt.includes("年号・時期の重要度を理由に対象から外してはいけません") ||
   !generationPrompt.includes("太字記号`**`を除いた`answer`") ||
-  !generationPrompt.includes("これらの問題では空欄を禁止") ||
+  !generationPrompt.includes("サイトに同じ対象年の掲載がなければ空欄") ||
   !generationPrompt.includes("文字単位で同じ`year_mnemonic`") ||
   !generationPrompt.includes("問題行で作った表現を言い換えずに並べてください") ||
   !generationPrompt.includes("問題文に年号が手掛かりとして書かれているだけ") ||
-  !generationPrompt.includes("期間の開始点と終了点は、別々の項目へ分けず") ||
-  !generationPrompt.includes("約700万年前〜約200万年前：「な・丸々」") ||
-  !generationPrompt.includes("前5千年紀〜前2千年紀：「ご」") ||
-  !generationPrompt.includes("一流の勉強 世界史の年号暗記に役立つ語呂合わせ一覧") ||
+  !generationPrompt.includes("ChatGPTが作った独自の語呂") ||
+  !generationPrompt.includes("開始点だけに掲載があれば開始点だけ") ||
+  !generationPrompt.includes("同じ出来事・同じ年に複数の掲載候補がある場合は併記せず") ||
+  !generationPrompt.includes("最も良い1件だけを記録する") ||
+  !generationPrompt.includes("https://adx50150.wixsite.com/sekaishi-goro") ||
   !generationPrompt.includes("語呂合わせサイトのURLを`source_url`へ記録してはいけません") ||
-  !generationPrompt.includes("必須対象の件数と、`year_mnemonic`が空欄でない必須対象の件数が完全に一致")
+  !generationPrompt.includes("ほかのサイトの語呂や独自作成の語呂で補ってはいけません")
 ) {
   throw new Error("問題集生成用プロンプトの年号語呂合わせ規則が不足しています。");
 }

@@ -818,12 +818,12 @@ body.is-listening .page {
   padding-bottom: calc(92px + env(safe-area-inset-bottom));
 }
 
-.listening-actions {
+.listening-rating-buttons {
   display: grid;
   width: min(100%, 680px);
   margin: 0 auto;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .action-buttons {
@@ -1839,9 +1839,9 @@ body.is-listening .page {
     background: none;
   }
 
-  .listening-actions {
+  .listening-rating-buttons {
     width: 100%;
-    gap: 4px;
+    gap: 3px;
   }
 
   .action-buttons,

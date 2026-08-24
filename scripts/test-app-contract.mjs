@@ -105,11 +105,20 @@ const deckProgressStyleBlock = styles.match(
 const listeningBackBlock = app.match(
   /async function goBackListeningOneStep\(\)[\s\S]*?async function advanceListening/,
 )?.[0];
+const advanceListeningBlock = app.match(
+  /async function advanceListening\(runId\)[\s\S]*?function speakListeningAnswer/,
+)?.[0];
 const startBlock = app.match(
   /async function start\(\)[\s\S]*?\n}\n\nelements\.subjectOptions/,
 )?.[0];
 const rateCurrentQuestionBlock = app.match(
   /async function rateCurrentQuestion\(rating\)[\s\S]*?async function resetAllProgress/,
+)?.[0];
+const rateListeningQuestionBlock = app.match(
+  /async function rateListeningQuestion\(rating\)[\s\S]*?async function rateCurrentQuestion/,
+)?.[0];
+const studyShellClickBlock = app.match(
+  /elements\.studyShell\.addEventListener\("click"[\s\S]*?window\.addEventListener\("keydown"/,
 )?.[0];
 const beginStudyBlock = app.match(
   /async function beginStudy\(\)[\s\S]*?async function resumeStudy/,
@@ -202,10 +211,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.105") ||
-  !changelog.includes("v0.105") ||
-  !settingsHtml.includes("v0.105") ||
-  !historyHtml.includes("v0.105")
+  !html.includes("v0.106") ||
+  !changelog.includes("v0.106") ||
+  !settingsHtml.includes("v0.106") ||
+  !historyHtml.includes("v0.106")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -313,7 +322,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.105"') ||
+  !html.includes('href="/styles.css?v=0.106"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -325,7 +334,7 @@ if (
   !html.includes('value="one-per-term"') ||
   !app.includes("createTermQuestionQueue") ||
   !app.includes('state.subject?.learningType !== "vocabulary"') ||
-  !app.includes("!state.selectedStage && !usesOneQuestionPerTerm()") ||
+  !app.includes("state.selectedStage || usesOneQuestionPerTerm()") ||
   !app.includes('if (rating === "again")') ||
   !app.includes("elements.questionAmountFilter,")
 ) {
@@ -619,11 +628,14 @@ if (
   !html.includes('id="hard-action"') ||
   !html.includes('id="good-action"') ||
   !html.includes('id="easy-action"') ||
+  !html.includes('id="listening-incorrect-action"') ||
+  !html.includes('id="listening-hard-action"') ||
+  !html.includes('id="listening-good-action"') ||
+  !html.includes('id="listening-easy-action"') ||
+  (html.match(/data-rating=/g) ?? []).length !== 8 ||
   !styles.includes("grid-template-columns: repeat(4, minmax(0, 1fr))") ||
-  !app.includes('rateCurrentQuestion("again")') ||
-  !app.includes('rateCurrentQuestion("hard")') ||
-  !app.includes('rateCurrentQuestion("good")') ||
-  !app.includes('rateCurrentQuestion("easy")') ||
+  !styles.includes(".listening-rating-buttons") ||
+  !app.includes('button.dataset.rating') ||
   html.includes('id="again-action"') ||
   html.includes('id="remembered-action"')
 ) {
@@ -721,8 +733,9 @@ if (
   (html.match(/data-speech-part-option/g) ?? []).length !== 0 ||
   !html.includes('id="listening-dock"') ||
   html.includes('id="listening-status"') ||
-  !html.includes('id="listening-toggle"') ||
-  !html.includes('id="listening-stop"') ||
+  html.includes('id="listening-back"') ||
+  html.includes('id="listening-toggle"') ||
+  html.includes('id="listening-stop"') ||
   !settingsHtml.includes('id="listening-pause-seconds"') ||
   !app.includes("function beginListeningQuestion()") ||
   !app.includes("function speakListeningAnswer(runId)") ||
@@ -776,14 +789,14 @@ if (
   throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
 }
 if (
-  !html.includes('id="listening-back"') ||
   html.includes('id="completion-back"') ||
-  !styles.includes("grid-template-columns: repeat(3, minmax(0, 1fr))") ||
   !listeningBackBlock ||
-  !listeningBackBlock.includes('["reveal", "listening-advance"]') ||
+  !listeningBackBlock.includes('"rating"') ||
   !listeningBackBlock.includes("state.answerVisible = false") ||
   !listeningBackBlock.includes("restoreActiveSession(snapshot.studySession") ||
   !listeningBackBlock.includes("undoCloudStudyActivity(") ||
+  !listeningBackBlock.includes("saveCloudStudyAnswer(") ||
+  !listeningBackBlock.includes("deleteActivityId: snapshot.studyActivityEventId") ||
   !listeningBackBlock.includes("state.listeningPaused = true") ||
   !app.includes('type: "listening-advance"') ||
   !app.includes('type: "reveal"') ||
@@ -794,6 +807,10 @@ if (
   app.includes("state.queue = state.sessionTasks.map(cloneTask)") ||
   !app.includes("usesListeningResultHalfScreenBack") ||
   !app.includes('window.matchMedia("(pointer: coarse)").matches') ||
+  !studyShellClickBlock?.includes("} else if (isListeningMode())") ||
+  !studyShellClickBlock?.includes("toggleListening();") ||
+  !app.includes('window.matchMedia("(orientation: portrait) and (pointer: coarse)")') ||
+  !app.includes("horizontalDistance < 60") ||
   !app.includes("void goBackListeningOneStep();") ||
   !cloudProgress.includes("export async function undoCloudStudyActivity") ||
   !cloudProgress.includes("completeSession = false") ||
@@ -805,6 +822,27 @@ if (
   !worker.includes("studyMode !== \"listen-answer\"")
 ) {
   throw new Error("聞き流しを回答表示と問題完了の単位で1手戻す構成が不足しています。");
+}
+if (
+  !rateListeningQuestionBlock ||
+  !advanceListeningBlock ||
+  !rateListeningQuestionBlock.includes("applyQuestionRating(term, question, rating)") ||
+  !rateListeningQuestionBlock.includes("stopListeningSequence();") ||
+  !rateListeningQuestionBlock.includes("await saveCloudStudyAnswer(") ||
+  !rateListeningQuestionBlock.includes('studyMode: "listen-answer"') ||
+  !rateListeningQuestionBlock.includes("activity,") ||
+  !rateListeningQuestionBlock.includes('setSavedSessionForMode("listen-answer", saved.session)') ||
+  !rateListeningQuestionBlock.includes("restoreRatingUndoSnapshot(state.progress, snapshot)") ||
+  rateListeningQuestionBlock.includes("queueActiveStudyActivity(") ||
+  !advanceListeningBlock.includes("queueActiveStudyActivity(activity,") ||
+  advanceListeningBlock.includes("applyQuestionRating(") ||
+  advanceListeningBlock.includes("saveCloudStudyAnswer(") ||
+  !app.includes("const showsListeningRatingActions = listening && hasQuestion && state.answerVisible") ||
+  !app.includes('elements.listeningDock.classList.toggle(\n    "is-hidden",\n    !showsListeningRatingActions') ||
+  !app.includes('state.currentTask &&\n      state.answerVisible &&\n      /^[1-4]$/.test(event.key)') ||
+  !worker.includes("if (!setupStudyModes.has(studyMode))")
+) {
+  throw new Error("聞き流しの任意評価またはCloudflareへの一括保存が揃っていません。");
 }
 if (
   !app.includes(

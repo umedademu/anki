@@ -144,14 +144,8 @@ const elements = {
   backAction: document.querySelector("#back-action"),
   nextAction: document.querySelector("#next-action"),
   ratingButtons: document.querySelector("#rating-buttons"),
-  incorrectAction: document.querySelector("#incorrect-action"),
-  hardAction: document.querySelector("#hard-action"),
-  goodAction: document.querySelector("#good-action"),
-  easyAction: document.querySelector("#easy-action"),
+  ratingActions: document.querySelectorAll("[data-rating]"),
   listeningDock: document.querySelector("#listening-dock"),
-  listeningBack: document.querySelector("#listening-back"),
-  listeningToggle: document.querySelector("#listening-toggle"),
-  listeningStop: document.querySelector("#listening-stop"),
   completionCard: document.querySelector("#completion-card"),
   completionEyebrow: document.querySelector("#completion-eyebrow"),
   completionTitle: document.querySelector("#completion-title"),
@@ -228,6 +222,8 @@ let pendingReviewTimer = null;
 let studyClockTimer = null;
 let studyClockLastTick = 0;
 let studyTimeSave = Promise.resolve();
+let listeningTouchStart = null;
+let suppressNextListeningClick = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -1117,7 +1113,8 @@ function renderActionControls() {
   const hasQuestion = Boolean(state.currentTask);
   const listening = isListeningMode();
   const canGoBack = state.history.length > 0;
-  const showsRatingActions = hasQuestion && state.answerVisible;
+  const showsRatingActions = !listening && hasQuestion && state.answerVisible;
+  const showsListeningRatingActions = listening && hasQuestion && state.answerVisible;
   elements.actionDock.classList.toggle("is-answer-visible", showsRatingActions);
   elements.actionDock.classList.toggle("is-back-only", !hasQuestion);
   elements.actionDock.classList.toggle(
@@ -1126,22 +1123,16 @@ function renderActionControls() {
   );
   elements.listeningDock.classList.toggle(
     "is-hidden",
-    !listening || !hasQuestion,
+    !showsListeningRatingActions,
   );
   elements.backAction.disabled = !canGoBack || state.saving;
-  elements.listeningBack.disabled = !canGoBack || state.saving;
   elements.nextAction.classList.toggle(
     "is-hidden",
     !hasQuestion || state.answerVisible,
   );
   elements.nextAction.disabled = state.saving;
   elements.ratingButtons.classList.toggle("is-hidden", !showsRatingActions);
-  [
-    elements.incorrectAction,
-    elements.hardAction,
-    elements.goodAction,
-    elements.easyAction,
-  ].forEach((button) => {
+  elements.ratingActions.forEach((button) => {
     button.disabled = state.saving;
   });
 }
@@ -1588,7 +1579,10 @@ async function goBackListeningOneStep() {
     return;
   }
   const snapshot = state.history.at(-1);
-  if (!snapshot || !["reveal", "listening-advance"].includes(snapshot.type)) {
+  if (
+    !snapshot ||
+    !["reveal", "listening-advance", "rating"].includes(snapshot.type)
+  ) {
     renderActionControls();
     return;
   }
@@ -1600,7 +1594,6 @@ async function goBackListeningOneStep() {
   stopStudyClock();
   state.listeningPaused = true;
   state.pendingListeningActivity = null;
-  elements.listeningToggle.textContent = "再開";
   state.saving = true;
   renderActionControls();
   await studySessionSave.catch(() => {});
@@ -1620,7 +1613,7 @@ async function goBackListeningOneStep() {
         captureActiveSession(),
       );
       setSavedSessionForMode("listen-answer", saved);
-    } else {
+    } else if (snapshot.type === "listening-advance") {
       const remainingHistory = [...state.history];
       if (!restoreActiveSession(snapshot.studySession, { updateControls: false })) {
         throw new Error("前の問題を復元できませんでした。");
@@ -1638,6 +1631,33 @@ async function goBackListeningOneStep() {
         { sessionDatasetVersion: state.sessionDatasetVersion },
       );
       setSavedSessionForMode("listen-answer", saved.session);
+    } else {
+      const remainingHistory = [...state.history];
+      const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
+      if (
+        !restored ||
+        !restoreActiveSession(snapshot.studySession, { updateControls: false })
+      ) {
+        throw new Error("評価前の問題を復元できませんでした。");
+      }
+      state.history = remainingHistory;
+      state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
+      state.answerVisible = true;
+      state.listeningPaused = true;
+      startNewStudyScreen();
+      const saved = await saveCloudStudyAnswer(
+        snapshot.studyActivityDatasetVersion ??
+          datasetVersionForQuestion(snapshot.questionId),
+        snapshot.questionId,
+        snapshot.previousQuestionRecord,
+        captureActiveSession(),
+        {
+          studyMode: "listen-answer",
+          deleteActivityId: snapshot.studyActivityEventId,
+          sessionDatasetVersion: state.sessionDatasetVersion,
+        },
+      );
+      setSavedSessionForMode("listen-answer", saved.session);
     }
   } catch (error) {
     const cloudState = await loadProgressFromCloud().catch(() => null);
@@ -1651,12 +1671,17 @@ async function goBackListeningOneStep() {
     ) {
       state.answerVisible = forwardAnswerVisible;
       state.history = previousHistory;
+    } else if (cloudState) {
+      state.activeSession = false;
+      state.currentTask = null;
+      state.queue = [];
+      state.answerVisible = false;
+      state.history = [];
     }
     state.unlockMessage = error.message;
   } finally {
     state.pendingListeningActivity = null;
     state.listeningPaused = true;
-    elements.listeningToggle.textContent = "再開";
     state.saving = false;
   }
 
@@ -1679,8 +1704,6 @@ async function advanceListening(runId) {
   stopStudyClock();
   state.saving = true;
   renderActionControls();
-  elements.listeningToggle.disabled = true;
-  elements.listeningStop.disabled = true;
   await studySessionSave.catch(() => {});
   try {
     await queueCurrentStudyTimeSave();
@@ -1689,9 +1712,6 @@ async function advanceListening(runId) {
     state.listeningPaused = true;
     stopListeningSequence();
     state.saving = false;
-    elements.listeningToggle.disabled = false;
-    elements.listeningStop.disabled = false;
-    elements.listeningToggle.textContent = "再開";
     state.unlockMessage = error.message;
     renderQuestion();
     return;
@@ -1731,16 +1751,11 @@ async function advanceListening(runId) {
     state.listeningPaused = true;
     stopListeningSequence();
     state.saving = false;
-    elements.listeningToggle.disabled = false;
-    elements.listeningStop.disabled = false;
-    elements.listeningToggle.textContent = "再開";
     state.unlockMessage = error.message;
     renderQuestion();
     return;
   }
   state.saving = false;
-  elements.listeningToggle.disabled = false;
-  elements.listeningStop.disabled = false;
   if (roundComplete) {
     stopListeningSequence();
     state.activeSession = false;
@@ -1890,7 +1905,6 @@ function toggleListening() {
   }
   if (state.listeningPaused) {
     state.listeningPaused = false;
-    elements.listeningToggle.textContent = "一時停止";
     startStudyClock();
     if (state.answerVisible) {
       const runId = ++state.listeningRunId;
@@ -1903,7 +1917,6 @@ function toggleListening() {
   stopStudyClock();
   state.listeningPaused = true;
   stopListeningSequence();
-  elements.listeningToggle.textContent = "再開";
   void queueCurrentStudyTimeSave().catch((error) => {
     state.unlockMessage = error.message;
   });
@@ -1915,7 +1928,6 @@ async function returnToSetup() {
   clearPendingReviewTimer();
   state.listeningPaused = false;
   state.pendingListeningActivity = null;
-  elements.listeningToggle.textContent = "一時停止";
   if (state.activeSession) {
     try {
       await queueCurrentStudyTimeSave();
@@ -1935,7 +1947,6 @@ async function returnToSubjectSelection() {
   clearPendingReviewTimer();
   state.listeningPaused = false;
   state.pendingListeningActivity = null;
-  elements.listeningToggle.textContent = "一時停止";
   if (state.activeSession) {
     try {
       await queueCurrentStudyTimeSave();
@@ -2265,16 +2276,18 @@ function formatInterval(seconds) {
 }
 
 function updateRatingIntervals() {
-  const mappings = [
-    [elements.incorrectAction, state.reviewSettings.againSeconds],
-    [elements.hardAction, state.reviewSettings.hardSeconds],
-    [elements.goodAction, state.reviewSettings.goodSeconds],
-    [elements.easyAction, state.reviewSettings.easySeconds],
-  ];
-  for (const [button, seconds] of mappings) {
+  const intervalSecondsByRating = {
+    again: state.reviewSettings.againSeconds,
+    hard: state.reviewSettings.hardSeconds,
+    good: state.reviewSettings.goodSeconds,
+    easy: state.reviewSettings.easySeconds,
+  };
+  for (const button of elements.ratingActions) {
     const interval = button.querySelector("small");
     if (interval) {
-      interval.textContent = formatInterval(seconds);
+      interval.textContent = formatInterval(
+        intervalSecondsByRating[button.dataset.rating],
+      );
     }
   }
 }
@@ -2556,11 +2569,129 @@ function buildQueue() {
   state.queue = state.shuffleEnabled ? shuffleTasks(tasks) : tasks;
 }
 
+function applyQuestionRating(term, question, rating) {
+  const stageBefore = state.selectedStage
+    ? null
+    : getTermStage(term, state.progress, state.subject.masteryTarget);
+  rateQuestion(
+    state.progress,
+    question.id,
+    rating,
+    state.subject.masteryTarget,
+    state.reviewSettings,
+  );
+  if (state.selectedStage || usesOneQuestionPerTerm()) {
+    return;
+  }
+  const stageAfter = getTermStage(
+    term,
+    state.progress,
+    state.subject.masteryTarget,
+  );
+  if (stageAfter === stageBefore) {
+    return;
+  }
+  if (stageAfter === "complete") {
+    state.unlockMessage = `${term.term}を完全習得しました。`;
+    return;
+  }
+  addTasksToActiveSession(
+    getTasksForStage(term, stageAfter, state.progress),
+  );
+}
+
+async function rateListeningQuestion(rating) {
+  const term = currentTerm();
+  const question = currentQuestion();
+  if (!term || !question || !state.answerVisible || state.saving) {
+    return;
+  }
+  stopListeningSequence();
+  stopStudyClock();
+  state.saving = true;
+  renderActionControls();
+  const pendingStudySessionSave = studySessionSave.catch(() => {});
+  const pendingStudyTimeSave = queueCurrentStudyTimeSave();
+  const snapshot = createRatingUndoSnapshot({
+    progress: state.progress,
+    questionId: question.id,
+    queue: state.queue,
+    currentTask: state.currentTask,
+    answerVisible: state.answerVisible,
+    answeredThisSession: state.answeredThisSession,
+    unlockMessage: state.unlockMessage,
+  });
+  snapshot.studySession = captureActiveSession();
+  const activity = createStudyActivity(question.id);
+  snapshot.studyActivityEventId = activity.eventId;
+  snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
+  const historyBefore = [...state.history];
+
+  applyQuestionRating(term, question, rating);
+  state.unseenQuestionIds.delete(question.id);
+  state.retryQuestionIds.delete(question.id);
+  state.answeredThisSession += 1;
+  state.currentTask = null;
+  ensureUnseenTasksQueued();
+  state.currentTask = state.queue.shift() ?? null;
+  state.answerVisible = false;
+  state.answerRevealedAt = 0;
+  const roundComplete = !state.currentTask;
+  if (roundComplete) {
+    state.activeSession = false;
+    state.listeningPaused = true;
+  }
+  startNewStudyScreen();
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  try {
+    await pendingStudySessionSave;
+    await pendingStudyTimeSave;
+    const saved = await saveCloudStudyAnswer(
+      snapshot.studyActivityDatasetVersion,
+      question.id,
+      state.progress.questions[question.id],
+      captureActiveSession(),
+      {
+        studyMode: "listen-answer",
+        activity,
+        sessionDatasetVersion: state.sessionDatasetVersion,
+      },
+    );
+    setSavedSessionForMode("listen-answer", saved.session);
+  } catch (error) {
+    restoreRatingUndoSnapshot(state.progress, snapshot);
+    restoreActiveSession(snapshot.studySession, { updateControls: false });
+    state.history = historyBefore;
+    state.answerVisible = true;
+    state.listeningPaused = true;
+    state.unlockMessage = error.message;
+    state.saving = false;
+    ensureCurrentStudyScreen();
+    renderQuestion();
+    return;
+  }
+
+  pushHistory(snapshot);
+  state.saving = false;
+  if (roundComplete) {
+    setSavedSessionForMode("listen-answer", null);
+    renderActionControls();
+    return;
+  }
+  startStudyClock();
+  beginListeningQuestion();
+}
+
 async function rateCurrentQuestion(rating) {
+  if (isListeningMode()) {
+    await rateListeningQuestion(rating);
+    return;
+  }
   const term = currentTerm();
   const question = currentQuestion();
   if (
-    isListeningMode() ||
     !term ||
     !question ||
     !state.answerVisible ||
@@ -2575,9 +2706,6 @@ async function rateCurrentQuestion(rating) {
   const pendingStudySessionSave = studySessionSave.catch(() => {});
   const pendingStudyTimeSave = queueCurrentStudyTimeSave();
 
-  const stageBefore = state.selectedStage
-    ? null
-    : getTermStage(term, state.progress, state.subject.masteryTarget);
   const snapshot = createRatingUndoSnapshot({
     progress: state.progress,
     questionId: question.id,
@@ -2591,33 +2719,7 @@ async function rateCurrentQuestion(rating) {
   const activity = createStudyActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
-  rateQuestion(
-    state.progress,
-    question.id,
-    rating,
-    state.subject.masteryTarget,
-    state.reviewSettings,
-  );
-  if (!state.selectedStage && !usesOneQuestionPerTerm()) {
-    const stageAfter = getTermStage(
-      term,
-      state.progress,
-      state.subject.masteryTarget,
-    );
-    if (stageAfter !== stageBefore) {
-      if (stageAfter === "complete") {
-        state.unlockMessage = `${term.term}を完全習得しました。`;
-      } else {
-        addTasksToActiveSession(
-          getTasksForStage(
-            term,
-            stageAfter,
-            state.progress,
-          ),
-        );
-      }
-    }
-  }
+  applyQuestionRating(term, question, rating);
 
   state.unseenQuestionIds.delete(question.id);
   if (rating === "again") {
@@ -2799,7 +2901,6 @@ async function beginStudy() {
   state.activeSession = state.sessionTasks.length > 0;
   startNewStudyScreen();
   clearListeningTimer();
-  elements.listeningToggle.textContent = "一時停止";
   const startsMemorizeScreenBeforeSave = !isListeningMode();
   if (startsMemorizeScreenBeforeSave) {
     state.saving = true;
@@ -2895,7 +2996,6 @@ async function resumeStudy() {
   state.answerVisible = state.answerVisible && Boolean(state.currentTask);
   state.listeningPaused = false;
   clearListeningTimer();
-  elements.listeningToggle.textContent = "一時停止";
   const resumesMemorizeScreenBeforeSave = !isListeningMode();
   if (resumesMemorizeScreenBeforeSave) {
     state.saving = true;
@@ -3067,7 +3167,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.105｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.106｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3265,7 +3365,6 @@ elements.changeSubject.addEventListener("click", () => {
 
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);
-elements.listeningBack.addEventListener("click", () => void goBackListeningOneStep());
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
 elements.questionSpeech.addEventListener("click", () =>
   toggleSpeechPart("question"),
@@ -3288,12 +3387,11 @@ elements.termImageContent.addEventListener("error", () => {
   elements.termImage.classList.add("is-hidden");
   elements.termOverviewMain.classList.remove("has-image", "image-only");
 });
-elements.incorrectAction.addEventListener("click", () => rateCurrentQuestion("again"));
-elements.hardAction.addEventListener("click", () => rateCurrentQuestion("hard"));
-elements.goodAction.addEventListener("click", () => rateCurrentQuestion("good"));
-elements.easyAction.addEventListener("click", () => rateCurrentQuestion("easy"));
-elements.listeningToggle.addEventListener("click", toggleListening);
-elements.listeningStop.addEventListener("click", () => void returnToSetup());
+for (const button of elements.ratingActions) {
+  button.addEventListener("click", () =>
+    void rateCurrentQuestion(button.dataset.rating),
+  );
+}
 elements.completionReturn.addEventListener("click", () => void returnToSetup());
 
 elements.resetProgress.addEventListener("click", () => {
@@ -3307,18 +3405,71 @@ elements.resetProgress.addEventListener("click", () => {
 });
 elements.retryButton.addEventListener("click", start);
 
+elements.studyShell.addEventListener("pointerdown", (event) => {
+  if (
+    !isListeningMode() ||
+    !state.currentTask ||
+    !window.matchMedia("(orientation: portrait) and (pointer: coarse)").matches ||
+    event.target.closest("button, a, input, select, textarea, label")
+  ) {
+    listeningTouchStart = null;
+    return;
+  }
+  listeningTouchStart = {
+    pointerId: event.pointerId,
+    x: event.clientX,
+    y: event.clientY,
+  };
+});
+
+elements.studyShell.addEventListener("pointerup", (event) => {
+  const start = listeningTouchStart;
+  listeningTouchStart = null;
+  if (!start || start.pointerId !== event.pointerId) {
+    return;
+  }
+  const horizontalDistance = event.clientX - start.x;
+  const verticalDistance = Math.abs(event.clientY - start.y);
+  if (horizontalDistance < 60 || horizontalDistance <= verticalDistance * 1.2) {
+    return;
+  }
+  suppressNextListeningClick = true;
+  window.setTimeout(() => {
+    suppressNextListeningClick = false;
+  }, 0);
+  void goBackListeningOneStep();
+});
+
+elements.studyShell.addEventListener("pointercancel", () => {
+  listeningTouchStart = null;
+});
+
 elements.studyShell.addEventListener("click", (event) => {
+  if (suppressNextListeningClick) {
+    suppressNextListeningClick = false;
+    return;
+  }
   const usesStudyHalfScreenNavigation = window.matchMedia(
     "(orientation: landscape) and (max-height: 600px)",
   ).matches;
+  const usesPortraitListeningTap =
+    isListeningMode() &&
+    Boolean(state.currentTask) &&
+    window.matchMedia("(orientation: portrait) and (pointer: coarse)").matches;
   const usesListeningResultHalfScreenBack =
     isListeningMode() &&
     !state.currentTask &&
     window.matchMedia("(pointer: coarse)").matches;
   if (
-    (!usesStudyHalfScreenNavigation && !usesListeningResultHalfScreenBack) ||
+    (!usesStudyHalfScreenNavigation &&
+      !usesPortraitListeningTap &&
+      !usesListeningResultHalfScreenBack) ||
     event.target.closest("button, a, input, select, textarea, label")
   ) {
+    return;
+  }
+  if (usesPortraitListeningTap) {
+    toggleListening();
     return;
   }
   if (event.clientX < window.innerWidth / 2) {
@@ -3327,19 +3478,33 @@ elements.studyShell.addEventListener("click", (event) => {
     } else {
       goBackOneStep();
     }
-  } else if (!isListeningMode()) {
+  } else if (isListeningMode()) {
+    toggleListening();
+  } else {
     performRightSideAction(true);
   }
 });
 
 window.addEventListener("keydown", (event) => {
-  if (event.target.closest("input, textarea, select") || event.repeat) {
+  if (
+    event.target.closest("button, a, input, textarea, select") ||
+    event.repeat
+  ) {
     return;
   }
   if (isListeningMode()) {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
       void goBackListeningOneStep();
+    } else if (
+      state.currentTask &&
+      state.answerVisible &&
+      /^[1-4]$/.test(event.key)
+    ) {
+      event.preventDefault();
+      void rateCurrentQuestion(
+        ["again", "hard", "good", "easy"][Number(event.key) - 1],
+      );
     } else if (state.currentTask && (event.key === " " || event.key === "Enter")) {
       event.preventDefault();
       toggleListening();

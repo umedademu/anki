@@ -3,6 +3,7 @@ import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  loadEarthScienceDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
   loadSourceDecks,
@@ -13,7 +14,14 @@ const projectRoot = path.resolve(scriptDirectory, "..");
 const subjectArgumentIndex = process.argv.indexOf("--subject");
 export const imageSubjectId =
   subjectArgumentIndex >= 0 ? process.argv[subjectArgumentIndex + 1] : "world-history";
-if (!["world-history", "japanese-history", "geography"].includes(imageSubjectId)) {
+if (
+  ![
+    "world-history",
+    "japanese-history",
+    "geography",
+    "earth-science-basics",
+  ].includes(imageSubjectId)
+) {
   throw new Error(`画像を準備できない科目です: ${imageSubjectId}`);
 }
 const sourceDirectory = path.join(projectRoot, "data", "source", imageSubjectId);
@@ -24,12 +32,16 @@ export const imageAssetIdPrefix =
     ? "WMJ"
     : imageSubjectId === "geography"
       ? "WMG"
+      : imageSubjectId === "earth-science-basics"
+        ? "WME"
       : "WM";
 const loadSubjectDecks =
   imageSubjectId === "japanese-history"
     ? loadJapaneseHistoryDecks
     : imageSubjectId === "geography"
       ? loadGeographyDecks
+      : imageSubjectId === "earth-science-basics"
+        ? loadEarthScienceDecks
       : loadSourceDecks;
 const userAgent = "anki-history-learning/1.0 (https://anki-ume.vercel.app/)";
 const apiHeaders = { "User-Agent": userAgent };
@@ -647,30 +659,32 @@ function questionList(term) {
 async function main() {
   const rebuild = process.argv.includes("--rebuild");
   const { terms: allTerms } = await loadSubjectDecks();
-  const geographyOverrides =
-    imageSubjectId === "geography"
+  const usesSelectedTerms = ["geography", "earth-science-basics"].includes(
+    imageSubjectId,
+  );
+  const selectedTermOverrides =
+    usesSelectedTerms
       ? JSON.parse(
           await readFile(path.join(sourceDirectory, "image-overrides.json"), "utf8"),
         )
       : [];
-  const geographyOverrideByTermId = new Map(
-    geographyOverrides.map((override) => [override.termId, override]),
+  const selectedOverrideByTermId = new Map(
+    selectedTermOverrides.map((override) => [override.termId, override]),
   );
-  if (geographyOverrideByTermId.size !== geographyOverrides.length) {
-    throw new Error("地理の画像指定に重複した用語IDがあります。");
+  if (selectedOverrideByTermId.size !== selectedTermOverrides.length) {
+    throw new Error(`${imageSubjectId}の画像指定に重複した用語IDがあります。`);
   }
   const knownTermIds = new Set(allTerms.map((term) => term.id));
-  const unknownGeographyTermIds = [...geographyOverrideByTermId.keys()].filter(
+  const unknownSelectedTermIds = [...selectedOverrideByTermId.keys()].filter(
     (termId) => !knownTermIds.has(termId),
   );
-  if (unknownGeographyTermIds.length > 0) {
+  if (unknownSelectedTermIds.length > 0) {
     throw new Error(
-      `地理の画像指定に存在しない用語IDがあります: ${unknownGeographyTermIds.join(", ")}`,
+      `${imageSubjectId}の画像指定に存在しない用語IDがあります: ${unknownSelectedTermIds.join(", ")}`,
     );
   }
-  const terms =
-    imageSubjectId === "geography"
-      ? allTerms.filter((term) => geographyOverrideByTermId.has(term.id))
+  const terms = usesSelectedTerms
+      ? allTerms.filter((term) => selectedOverrideByTermId.has(term.id))
       : allTerms;
   const activeTermQueryOverrides =
     imageSubjectId === "world-history" ? termQueryOverrides : new Map();
@@ -748,19 +762,19 @@ async function main() {
   const termsWithoutFallback = terms.filter((term) => !fallbackByTerm.has(term.id));
   const missingTerms = [];
   await mapLimit(termsWithoutFallback, 2, async (term, index) => {
-    const geographyOverride = geographyOverrideByTermId.get(term.id);
+    const selectedOverride = selectedOverrideByTermId.get(term.id);
     const query =
-      geographyOverride?.query ?? activeTermQueryOverrides.get(term.term) ?? term.term;
+      selectedOverride?.query ?? activeTermQueryOverrides.get(term.term) ?? term.term;
     const context =
-      geographyOverride?.context ??
+      selectedOverride?.context ??
       [term.era, term.geography?.regionDetail, term.subunit, term.category]
         .filter(Boolean)
         .join(" ");
     const asset = await resolveAsset(
       query,
       context,
-      geographyOverride?.caption ?? term.term,
-      geographyOverride?.fileName ?? activeTermFileOverrides.get(term.term),
+      selectedOverride?.caption ?? term.term,
+      selectedOverride?.fileName ?? activeTermFileOverrides.get(term.term),
     );
     if (!asset) {
       missingTerms.push(`${term.id} ${term.term}`);
@@ -776,7 +790,7 @@ async function main() {
   }
 
   const targetRequests = [];
-  for (const term of imageSubjectId === "geography" ? [] : terms) {
+  for (const term of usesSelectedTerms ? [] : terms) {
     for (const question of questionList(term)) {
       const previousAssignment = previousAssignmentByQuestion.get(question.id);
       if (previousAssignment?.termId === term.id) continue;
@@ -818,7 +832,7 @@ async function main() {
         assignments.push(previousAssignment);
         continue;
       }
-      const target = imageSubjectId !== "geography" && isUsefulAnswerTarget(question)
+      const target = !usesSelectedTerms && isUsefulAnswerTarget(question)
         ? cleanSearchText(question.answer)
         : term.term;
       const targetAssetId = targetAssets.get(`${term.id}\t${target}`);
@@ -841,8 +855,13 @@ async function main() {
   ]);
   const manifest = {
     schemaVersion: 2,
-    assets: assets
-      .filter((asset) => referencedAssetIds.has(asset.id))
+    assets: [
+      ...new Map(
+        assets
+          .filter((asset) => referencedAssetIds.has(asset.id))
+          .map((asset) => [asset.id, asset]),
+      ).values(),
+    ]
       .sort((left, right) => left.id.localeCompare(right.id)),
     termFallbacks,
     assignments,

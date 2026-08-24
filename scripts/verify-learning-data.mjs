@@ -1389,6 +1389,22 @@ const expectedTermImages = mergeTermImageManifests([
     ),
     requireComplete: false,
   }),
+  await loadTermImageManifest(expectedEarthScienceTerms, {
+    manifestPath: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "earth-science-basics",
+      "term-images.json",
+    ),
+    imageSourceDirectory: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "earth-science-basics",
+    ),
+    requireComplete: false,
+  }),
 ]);
 const imageAssetIds = new Set(generatedTermImages.assets.map((asset) => asset.id));
 const imageAssetById = new Map(
@@ -1401,11 +1417,16 @@ const assignedQuestionIds = new Set(
   generatedTermImages.assignments.map((assignment) => assignment.questionId),
 );
 const expectedTermIdByQuestionId = new Map(
-  [...generatedTerms, ...generatedJapaneseTerms, ...generatedGeographyTerms].flatMap((term) =>
-    Object.values(term.stages)
-      .flat()
-      .map((question) => [question.id, term.id]),
-  ),
+  [
+    ...generatedTerms,
+    ...generatedJapaneseTerms,
+    ...generatedGeographyTerms,
+    ...generatedEarthScienceTerms,
+  ].flatMap((term) =>
+      Object.values(term.stages)
+        .flat()
+        .map((question) => [question.id, term.id]),
+    ),
 );
 if (
   JSON.stringify(generatedTermImages) !== JSON.stringify(expectedTermImages) ||
@@ -1431,7 +1452,9 @@ if (
       expectedTermIdByQuestionId.get(assignment.questionId) !== assignment.termId,
   )
 ) {
-  throw new Error("世界史・日本史・地理の関連画像が正しく割り当てられていません。");
+  throw new Error(
+    "世界史・日本史・地理・地学基礎の関連画像が正しく割り当てられていません。",
+  );
 }
 
 const geographyImageOverrides = JSON.parse(
@@ -1459,6 +1482,58 @@ if (
   )
 ) {
   throw new Error("地理の厳選画像が38項目へ用語単位で割り当てられていません。");
+}
+
+const earthScienceImageOverrides = JSON.parse(
+  await readFile(
+    path.join(
+      projectRoot,
+      "data",
+      "source",
+      "earth-science-basics",
+      "image-overrides.json",
+    ),
+    "utf8",
+  ),
+);
+const earthScienceImageTermIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("ES-"))
+    .map((fallback) => fallback.termId),
+);
+const earthScienceImageAssignments = generatedTermImages.assignments.filter(
+  (assignment) => assignment.termId.startsWith("ES-"),
+);
+const earthScienceImageQuestionIds = new Set(
+  earthScienceImageAssignments.map((assignment) => assignment.questionId),
+);
+const earthScienceTermById = new Map(
+  generatedEarthScienceTerms.map((term) => [term.id, term]),
+);
+const expectedEarthScienceImageQuestionIds = new Set(
+  earthScienceImageOverrides.flatMap((override) =>
+    Object.values(earthScienceTermById.get(override.termId)?.stages ?? {})
+      .flat()
+      .map((question) => question.id),
+  ),
+);
+if (
+  earthScienceImageOverrides.length !== 64 ||
+  earthScienceImageTermIds.size !== earthScienceImageOverrides.length ||
+  earthScienceImageQuestionIds.size !== expectedEarthScienceImageQuestionIds.size ||
+  earthScienceImageOverrides.some(
+    (override) =>
+      !earthScienceImageTermIds.has(override.termId) || !override.fileName,
+  ) ||
+  earthScienceImageAssignments.some(
+    (assignment) =>
+      !expectedEarthScienceImageQuestionIds.has(assignment.questionId) ||
+      assignment.target !== earthScienceTermById.get(assignment.termId)?.term,
+  )
+) {
+  throw new Error(
+    "地学基礎の厳選画像が64項目へ回答文ではなく用語単位で割り当てられていません。",
+  );
 }
 
 const normalizeCommonsFileName = (sourcePageUrl) => {
@@ -1492,6 +1567,18 @@ const geographySourceOverrideMismatches = geographyImageOverrides.filter((overri
     )
   );
 });
+const earthScienceSourceOverrideMismatches = earthScienceImageOverrides.filter(
+  (override) => {
+    const assetId = fallbackByTermId.get(override.termId)?.assetId;
+    const asset = imageAssetById.get(assetId);
+    return (
+      normalizeCommonsFileName(asset?.sourcePageUrl ?? "") !==
+      normalizeCommonsFileName(
+        `https://commons.wikimedia.org/wiki/File:${override.fileName}`,
+      )
+    );
+  },
+);
 const auditedFallbackMismatches = generatedTerms
   .filter(
     (term) => Number(term.id.slice(3, 9)) > 400 && termFileOverrides.has(term.term),
@@ -1545,7 +1632,8 @@ if (
   auditedFallbackMismatches.length > 0 ||
   auditedTargetMismatches.length > 0 ||
   sourceOverrideMismatches.length > 0 ||
-  geographySourceOverrideMismatches.length > 0
+  geographySourceOverrideMismatches.length > 0 ||
+  earthScienceSourceOverrideMismatches.length > 0
 ) {
   throw new Error(
     `監査済み画像が指定した史料と一致しません: ${[
@@ -1555,6 +1643,7 @@ if (
         override.target ? `${override.termId}:${override.target}` : override.termId,
       ),
       ...geographySourceOverrideMismatches.map((override) => override.termId),
+      ...earthScienceSourceOverrideMismatches.map((override) => override.termId),
     ].join(", ")}`,
   );
 }

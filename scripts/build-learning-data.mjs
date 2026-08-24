@@ -46,6 +46,10 @@ const earthScienceSourceDirectory = path.join(
   "source",
   "earth-science-basics",
 );
+const earthScienceTermImageManifestPath = path.join(
+  earthScienceSourceDirectory,
+  "term-images.json",
+);
 const classicalJapaneseSourceDirectory = path.join(
   projectRoot,
   "data",
@@ -3160,6 +3164,7 @@ export async function main() {
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    earthScienceTermImageManifest,
   ] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
     loadTermImageManifest(japaneseHistoryData.terms, {
@@ -3171,11 +3176,17 @@ export async function main() {
       imageSourceDirectory: geographySourceDirectory,
       requireComplete: false,
     }),
+    loadTermImageManifest(earthScienceData.terms, {
+      manifestPath: earthScienceTermImageManifestPath,
+      imageSourceDirectory: earthScienceSourceDirectory,
+      requireComplete: false,
+    }),
   ]);
   const termImageManifest = mergeTermImageManifests([
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    earthScienceTermImageManifest,
   ]);
 
   const allDecks = [
@@ -3216,6 +3227,13 @@ export async function main() {
     if (geographyTermImageManifest.assets.length > 0) {
       await cp(
         path.join(geographySourceDirectory, "term-images"),
+        path.join(outputRoot, "term-images"),
+        { recursive: true },
+      );
+    }
+    if (earthScienceTermImageManifest.assets.length > 0) {
+      await cp(
+        path.join(earthScienceSourceDirectory, "term-images"),
         path.join(outputRoot, "term-images"),
         { recursive: true },
       );

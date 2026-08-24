@@ -16,7 +16,14 @@ const projectRoot = path.resolve(scriptDirectory, "..");
 const subjectArgumentIndex = process.argv.indexOf("--subject");
 const imageSubjectId =
   subjectArgumentIndex >= 0 ? process.argv[subjectArgumentIndex + 1] : "world-history";
-if (!["world-history", "japanese-history", "geography"].includes(imageSubjectId)) {
+if (
+  ![
+    "world-history",
+    "japanese-history",
+    "geography",
+    "earth-science-basics",
+  ].includes(imageSubjectId)
+) {
   throw new Error(`画像を圧縮できない科目です: ${imageSubjectId}`);
 }
 const sourceDirectory = path.join(projectRoot, "data", "source", imageSubjectId);
@@ -40,7 +47,7 @@ async function main() {
   const replacements = [];
   let optimizedCount = 0;
   for (const asset of manifest.assets) {
-    if (!/^WM(?:J|G)?-/.test(asset.id)) continue;
+    if (!/^WM(?:J|G|E)?-/.test(asset.id)) continue;
     const sourcePath = path.join(sourceDirectory, asset.path);
     const finalPath = path.join(optimizedDirectory, `${asset.id}.webp`);
     const temporaryPath = `${finalPath}.tmp`;
@@ -83,7 +90,7 @@ async function main() {
     recursive: true,
     withFileTypes: true,
   })) {
-    if (!entry.isFile() || !/^WM(?:J|G)?-/.test(entry.name)) continue;
+    if (!entry.isFile() || !/^WM(?:J|G|E)?-/.test(entry.name)) continue;
     const candidatePath = path.resolve(entry.parentPath, entry.name);
     assertInsideImageDirectory(candidatePath);
     if (!referencedPaths.has(candidatePath)) {

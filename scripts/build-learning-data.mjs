@@ -1540,17 +1540,6 @@ function politicsEconomicsExplanation(row) {
     .join("\n");
 }
 
-function politicsEconomicsReferenceDateLabels(referenceDate) {
-  const normalized = String(referenceDate ?? "").trim();
-  const isoDate = normalized.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-  return isoDate
-    ? [
-        normalized,
-        `${isoDate[1]}年${Number(isoDate[2])}月${Number(isoDate[3])}日`,
-      ]
-    : [normalized];
-}
-
 function normalizePoliticsEconomicsQuestion(row, rowIndex) {
   const rowNumber = rowIndex + 2;
   if (!politicsEconomicsCardTypes.has(row.card_type)) {
@@ -1574,13 +1563,10 @@ function normalizePoliticsEconomicsQuestion(row, rowIndex) {
   }
   if (
     row.time_sensitivity !== "stable" &&
-    (!/^(\d{4}-\d{2}-\d{2}|\d{4}年(?:度)?)$/.test(row.reference_date) ||
-      !politicsEconomicsReferenceDateLabels(row.reference_date).some((label) =>
-        row.question.includes(label),
-      ))
+    !/^(\d{4}-\d{2}-\d{2}|\d{4}年(?:度)?)$/.test(row.reference_date)
   ) {
     throw new Error(
-      `${rowNumber}行目の変わり得る知識はreference_dateを設定し、問題文にも含めてください。`,
+      `${rowNumber}行目の変わり得る知識はreference_dateを設定してください。`,
     );
   }
   const sourceUrls = geographyList(row.source_url);

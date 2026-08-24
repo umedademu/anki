@@ -185,7 +185,7 @@ const expectedEarthScienceSpec = {
 const expectedPoliticsEconomicsSpec = {
   number: 1,
   version: "politics-economics-deck-1-v1",
-  contentVersion: "55bf24b7fc9d",
+  contentVersion: "8410f76753f2",
   datasetLabel: "政治・経済 Deck 1 公共・政治・経済の骨格",
   difficultyLabel: "Deck 1・骨格",
   termCount: 400,
@@ -847,6 +847,8 @@ const politicsEconomicsTimeSensitivityCounts = Object.fromEntries(
     ).length,
   ]),
 );
+const politicsEconomicsReferenceDatePrefix =
+  /^\d{4}年(?:\d{1,2}月\d{1,2}日)?時点で、/u;
 if (
   new Set(generatedPoliticsEconomicsTerms.map((term) => term.id)).size !== 400 ||
   new Set(generatedPoliticsEconomicsTerms.map((term) => term.term)).size !== 400 ||
@@ -879,10 +881,15 @@ if (
     (term) =>
       term.politicsEconomics.legalBasis &&
       !term.stages.beginner[0].explanation.includes("根拠："),
+  ) ||
+  generatedPoliticsEconomicsQuestions.some(
+    (question) =>
+      question.prompt.includes("次の説明に当てはまる用語は何か") ||
+      politicsEconomicsReferenceDatePrefix.test(question.prompt),
   )
 ) {
   throw new Error(
-    "政治・経済Deck 1のID・重要度順位・領域・基準日・法的根拠が正しくありません。",
+    "政治・経済Deck 1のID・重要度順位・領域・基準日・法的根拠・問い方が正しくありません。",
   );
 }
 

@@ -237,10 +237,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.122") ||
-  !changelog.includes("v0.122") ||
-  !settingsHtml.includes("v0.122") ||
-  !historyHtml.includes("v0.122")
+  !html.includes("v0.123") ||
+  !changelog.includes("v0.123") ||
+  !settingsHtml.includes("v0.123") ||
+  !historyHtml.includes("v0.123")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -339,10 +339,14 @@ if (
   !app.includes("saveCloudStudyAnswer") ||
   !app.includes("saveCloudStudySession") ||
   !app.includes("savedSessionForMode(studyMode)") ||
-  !app.includes("deleteCloudStudySession(state.sessionDatasetVersion, studyMode)") ||
+  !app.includes("switchStudySessionMode(") ||
+  !cloudProgress.includes("export function switchStudySessionMode") ||
+  !cloudProgress.includes("modeChanged ? 0 : session.screenStudySeconds") ||
+  !app.includes('memorize: session,\n    "listen-answer": session') ||
   app.includes("savedSession: null") ||
   !cloudProgress.includes("normalizeStudySessions") ||
-  !cloudProgress.includes("&mode=${encodeURIComponent(studyMode)}") ||
+  !cloudProgress.includes('memorize: sharedSession') ||
+  cloudProgress.includes("&mode=${encodeURIComponent(studyMode)}") ||
   !worker.includes('url.pathname === "/v1/study-session"') ||
   !worker.includes("studyAnswerMatch") ||
   !studySessionsMigration.includes("CREATE TABLE IF NOT EXISTS study_sessions") ||
@@ -350,9 +354,11 @@ if (
   !studySessionsByModeMigration.includes("PRIMARY KEY (dataset_version, study_mode)") ||
   !studySessionsByModeMigration.includes("json_extract(session_json, '$.studyMode')") ||
   studySessionsByModeMigration.includes("DROP TABLE study_sessions") ||
-  !worker.includes("ON CONFLICT(dataset_version, study_mode)")
+  !worker.includes("ON CONFLICT(dataset_version) DO UPDATE SET") ||
+  !worker.includes("function deleteStudySessionStatements") ||
+  !worker.includes("legacySessionRows")
 ) {
-  throw new Error("暗記・聞き流し別の一周保存、再開、期限到来時の再出題が揃っていません。");
+  throw new Error("暗記・聞き流し共通の一周保存、切替再開、期限到来時の再出題が揃っていません。");
 }
 if (
   !html.includes("デッキ（複数選択可）") ||
@@ -392,7 +398,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.122"') ||
+  !html.includes('href="/styles.css?v=0.123"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -927,7 +933,7 @@ if (
   !app.includes('type: "reveal"') ||
   !app.includes("function isCompletedListeningSession(session)") ||
   !app.includes('setSavedSessionForMode("listen-answer", null)') ||
-  !app.includes("completeSession: roundComplete") ||
+  !app.includes("completeSession: sessionComplete") ||
   !app.includes('elements.completionEyebrow.textContent = "一巡完了"') ||
   app.includes("state.queue = state.sessionTasks.map(cloneTask)") ||
   !app.includes("usesListeningResultHalfScreenBack") ||

@@ -674,17 +674,26 @@ function progressStatement(env, datasetVersion, questionId, record, updatedAt) {
 
 function studySessionStatement(env, datasetVersion, session, updatedAt) {
   return env.DB.prepare(
-    `INSERT INTO study_sessions_by_mode (dataset_version, study_mode, session_json, updated_at)
-     VALUES (?, ?, ?, ?)
-     ON CONFLICT(dataset_version, study_mode) DO UPDATE SET
+    `INSERT INTO study_sessions (dataset_version, session_json, updated_at)
+     VALUES (?, ?, ?)
+     ON CONFLICT(dataset_version) DO UPDATE SET
        session_json = excluded.session_json,
        updated_at = excluded.updated_at`,
   ).bind(
     datasetVersion,
-    session.studyMode,
     JSON.stringify({ ...session, updatedAt }),
     updatedAt,
   );
+}
+
+function deleteStudySessionStatements(env, datasetVersion) {
+  return [
+    env.DB.prepare("DELETE FROM study_sessions WHERE dataset_version = ?")
+      .bind(datasetVersion),
+    env.DB.prepare(
+      "DELETE FROM study_sessions_by_mode WHERE dataset_version = ?",
+    ).bind(datasetVersion),
+  ];
 }
 
 function studyActivityStatement(env, activity, occurredAt) {
@@ -802,27 +811,32 @@ async function readStudyHistory(env) {
 }
 
 async function readState(env, datasetVersion) {
-  const [progressRows, settingsRow, sessionRows] = await Promise.all([
-    env.DB.prepare(
-      `SELECT question_id, streak, attempts, remembered_count, last_rating,
-        last_answered_at, next_review_at, ever_mastered, updated_at
-       FROM question_progress WHERE dataset_version = ?`,
-    ).bind(datasetVersion).all(),
-    env.DB.prepare(
-      `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
-        speech_source, azure_voice_id, english_azure_voice_id,
-        device_voice_id, english_device_voice_id, speech_rate,
-        shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
-        listening_question_interval_seconds,
-        study_time_limit_seconds,
-        speech_parts_json, setup_preferences_json, updated_at
-       FROM review_settings WHERE profile_id = 1`,
-    ).first(),
-    env.DB.prepare(
-      `SELECT study_mode, session_json, updated_at
-       FROM study_sessions_by_mode WHERE dataset_version = ?`,
-    ).bind(datasetVersion).all(),
-  ]);
+  const [progressRows, settingsRow, sharedSessionRow, legacySessionRows] =
+    await Promise.all([
+      env.DB.prepare(
+        `SELECT question_id, streak, attempts, remembered_count, last_rating,
+          last_answered_at, next_review_at, ever_mastered, updated_at
+         FROM question_progress WHERE dataset_version = ?`,
+      ).bind(datasetVersion).all(),
+      env.DB.prepare(
+        `SELECT again_seconds, hard_seconds, good_seconds, easy_seconds,
+          speech_source, azure_voice_id, english_azure_voice_id,
+          device_voice_id, english_device_voice_id, speech_rate,
+          shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+          listening_question_interval_seconds,
+          study_time_limit_seconds,
+          speech_parts_json, setup_preferences_json, updated_at
+         FROM review_settings WHERE profile_id = 1`,
+      ).first(),
+      env.DB.prepare(
+        `SELECT session_json, updated_at
+         FROM study_sessions WHERE dataset_version = ?`,
+      ).bind(datasetVersion).first(),
+      env.DB.prepare(
+        `SELECT study_mode, session_json, updated_at
+         FROM study_sessions_by_mode WHERE dataset_version = ?`,
+      ).bind(datasetVersion).all(),
+    ]);
   let newestUpdate = null;
   const questions = Object.fromEntries(
     (progressRows.results ?? []).map((row) => {
@@ -843,19 +857,24 @@ async function readState(env, datasetVersion) {
       ];
     }),
   );
-  const sessions = { memorize: null, "listen-answer": null };
+  const sessionRows = [
+    ...(sharedSessionRow ? [sharedSessionRow] : []),
+    ...(legacySessionRows.results ?? []),
+  ];
   let newestSession = null;
-  for (const row of sessionRows.results ?? []) {
+  for (const row of sessionRows) {
     const session = normalizeStudySession({
       ...JSON.parse(row.session_json),
       updatedAt: row.updated_at,
     });
-    if (session.studyMode !== row.study_mode) continue;
-    sessions[row.study_mode] = session;
     if (!newestSession || row.updated_at > newestSession.updatedAt) {
       newestSession = session;
     }
   }
+  const sessions = {
+    memorize: newestSession,
+    "listen-answer": newestSession,
+  };
   return {
     progress: { questions, updatedAt: newestUpdate },
     settings: settingsRow
@@ -1026,25 +1045,10 @@ async function handleRequest(request, env) {
     }
     if (request.method === "DELETE") {
       const studyMode = url.searchParams.get("mode");
-      if (studyMode == null) {
-        await env.DB.batch([
-          env.DB.prepare(
-            "DELETE FROM study_sessions_by_mode WHERE dataset_version = ?",
-          ).bind(datasetVersion),
-          env.DB.prepare("DELETE FROM study_sessions WHERE dataset_version = ?")
-            .bind(datasetVersion),
-        ]);
-      } else {
-        if (!setupStudyModes.has(studyMode)) {
-          return json(request, env, { error: "学習モードが正しくありません。" }, 400);
-        }
-        await env.DB.prepare(
-          `DELETE FROM study_sessions_by_mode
-           WHERE dataset_version = ? AND study_mode = ?`,
-        )
-          .bind(datasetVersion, studyMode)
-          .run();
+      if (studyMode != null && !setupStudyModes.has(studyMode)) {
+        return json(request, env, { error: "学習モードが正しくありません。" }, 400);
       }
+      await env.DB.batch(deleteStudySessionStatements(env, datasetVersion));
       return json(request, env, { ok: true });
     }
   }
@@ -1170,10 +1174,7 @@ async function handleRequest(request, env) {
     }
     if (completeSession) {
       statements.push(
-        env.DB.prepare(
-          `DELETE FROM study_sessions_by_mode
-           WHERE dataset_version = ? AND study_mode = ?`,
-        ).bind(sessionDatasetVersion, activity.studyMode),
+        ...deleteStudySessionStatements(env, sessionDatasetVersion),
       );
     } else if (session) {
       statements.push(
@@ -1246,16 +1247,16 @@ async function handleRequest(request, env) {
         : env.DB.prepare(
             "DELETE FROM question_progress WHERE dataset_version = ? AND question_id = ?",
           ).bind(datasetVersion, questionId),
-      session
-        ? studySessionStatement(env, sessionDatasetVersion, session, updatedAt)
-        : env.DB.prepare(
-            `DELETE FROM study_sessions_by_mode
-             WHERE dataset_version = ? AND study_mode = ?`,
-          ).bind(
-            sessionDatasetVersion,
-            studyMode,
-          ),
     ];
+    if (session) {
+      statements.push(
+        studySessionStatement(env, sessionDatasetVersion, session, updatedAt),
+      );
+    } else {
+      statements.push(
+        ...deleteStudySessionStatements(env, sessionDatasetVersion),
+      );
+    }
     if (activity) {
       statements.push(studyActivityStatement(env, activity, updatedAt));
     }

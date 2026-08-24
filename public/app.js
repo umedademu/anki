@@ -37,6 +37,7 @@ import {
   normalizeSetupPreferences,
   normalizeSpeechParts,
   normalizeStudySession,
+  switchStudySessionMode,
   resetCloudProgress,
   requestCloudSpeech,
   saveCloudStudyActivity,
@@ -345,21 +346,26 @@ function createEmptySavedSessions() {
 }
 
 function savedSessionForMode(studyMode = selectedStudyMode()) {
-  return state.savedSessions?.[studyMode] ?? null;
+  return state.savedSessions?.[studyMode] ??
+    state.savedSessions?.memorize ??
+    state.savedSessions?.["listen-answer"] ??
+    null;
 }
 
 function isCompletedListeningSession(session) {
   return Boolean(
     session?.studyMode === "listen-answer" &&
     session.tasks.length > 0 &&
-    session.answeredCount >= session.tasks.length
+    !session.currentTask &&
+    session.queue.length === 0 &&
+    session.retryQuestionIds.length === 0
   );
 }
 
-function setSavedSessionForMode(studyMode, session) {
+function setSavedSessionForMode(_studyMode, session) {
   state.savedSessions = {
-    ...state.savedSessions,
-    [studyMode]: session,
+    memorize: session,
+    "listen-answer": session,
   };
   return session;
 }
@@ -874,7 +880,6 @@ function setupMatchesSession(session, selectedTerms) {
     session &&
     sessionDeckIds.length === state.activeDeckIds.length &&
     sessionDeckIds.every((deckId) => state.activeDeckIds.includes(deckId)) &&
-    session.studyMode === selectedStudyMode() &&
     session.selectedStage === elements.questionStyleFilter.value &&
     session.questionAmountMode === selectedQuestionAmountMode() &&
     session.shuffleEnabled === elements.setupShuffle.checked &&
@@ -1544,7 +1549,6 @@ async function loadProgressFromCloud() {
   if (isCompletedListeningSession(state.savedSessions["listen-answer"])) {
     await deleteCloudStudySession(
       state.sessionDatasetVersion,
-      "listen-answer",
     );
     setSavedSessionForMode("listen-answer", null);
   }
@@ -2272,12 +2276,14 @@ async function advanceListening(runId) {
     completedTask.questionId,
     state.screenStudySeconds,
   );
-  const roundComplete = !state.currentTask;
+  const listeningPassComplete = !state.currentTask;
+  const sessionComplete =
+    listeningPassComplete && state.retryQuestionIds.size === 0;
   state.answerVisible = false;
   startNewStudyScreen();
   try {
     await queueActiveStudyActivity(activity, {
-      completeSession: roundComplete,
+      completeSession: sessionComplete,
       routineRun: routineChange?.changed ? state.routineRun : undefined,
     });
     state.pendingListeningActivity = null;
@@ -2304,18 +2310,20 @@ async function advanceListening(runId) {
   }
   state.saving = false;
   if (routineChange?.completedItem) {
-    if (roundComplete) {
+    if (sessionComplete) {
       state.activeSession = false;
       setSavedSessionForMode("listen-answer", null);
     }
     showRoutineStepCompletion(routineChange);
     return;
   }
-  if (roundComplete) {
+  if (listeningPassComplete) {
     stopListeningSequence();
-    state.activeSession = false;
     state.listeningPaused = true;
-    setSavedSessionForMode("listen-answer", null);
+    if (sessionComplete) {
+      state.activeSession = false;
+      setSavedSessionForMode("listen-answer", null);
+    }
     startNewStudyScreen();
     renderQuestion();
     return;
@@ -3235,8 +3243,10 @@ async function rateListeningQuestion(rating) {
     question.id,
     state.screenStudySeconds,
   );
-  const roundComplete = !state.currentTask;
-  if (roundComplete) {
+  const listeningPassComplete = !state.currentTask;
+  const sessionComplete =
+    listeningPassComplete && state.retryQuestionIds.size === 0;
+  if (sessionComplete) {
     state.activeSession = false;
     state.listeningPaused = true;
   }
@@ -3281,14 +3291,17 @@ async function rateListeningQuestion(rating) {
   pushHistory(snapshot);
   state.saving = false;
   if (routineChange?.completedItem) {
-    if (roundComplete) {
+    if (sessionComplete) {
       setSavedSessionForMode("listen-answer", null);
     }
     showRoutineStepCompletion(routineChange);
     return;
   }
-  if (roundComplete) {
-    setSavedSessionForMode("listen-answer", null);
+  if (listeningPassComplete) {
+    state.listeningPaused = true;
+    if (sessionComplete) {
+      setSavedSessionForMode("listen-answer", null);
+    }
     renderActionControls();
     return;
   }
@@ -3486,7 +3499,10 @@ async function beginStudy() {
     return;
   }
   const studyMode = selectedStudyMode();
-  const savedSession = savedSessionForMode(studyMode);
+  const savedSession = switchStudySessionMode(
+    savedSessionForMode(studyMode),
+    studyMode,
+  );
   if (
     savedSession &&
     !window.confirm(
@@ -3562,7 +3578,7 @@ async function beginStudy() {
       );
       setSavedSessionForMode(studyMode, saved);
     } else {
-      await deleteCloudStudySession(state.sessionDatasetVersion, studyMode);
+      await deleteCloudStudySession(state.sessionDatasetVersion);
       setSavedSessionForMode(studyMode, null);
     }
   } catch (error) {
@@ -3597,7 +3613,10 @@ async function beginStudy() {
 
 async function resumeStudy() {
   const studyMode = selectedStudyMode();
-  const savedSession = savedSessionForMode(studyMode);
+  const savedSession = switchStudySessionMode(
+    savedSessionForMode(studyMode),
+    studyMode,
+  );
   if (startingStudy || !savedSession || !state.cloudReady) return;
   startingStudy = true;
   elements.resumeStudy.disabled = true;
@@ -3605,7 +3624,7 @@ async function resumeStudy() {
   clearPendingReviewTimer();
   speechController.stop();
   if (!restoreActiveSession(savedSession)) {
-    await deleteCloudStudySession(state.sessionDatasetVersion, studyMode).catch(() => {});
+    await deleteCloudStudySession(state.sessionDatasetVersion).catch(() => {});
     setSavedSessionForMode(studyMode, null);
     state.activeSession = false;
     elements.cloudStatus.textContent = "前回の一周を復元できなかったため、はじめから開始してください。";
@@ -3624,10 +3643,13 @@ async function resumeStudy() {
   if (!state.currentTask) {
     state.currentTask = state.queue.shift() ?? null;
   }
-  if (isListeningMode() && !state.currentTask) {
+  if (
+    isListeningMode() &&
+    !state.currentTask &&
+    state.retryQuestionIds.size === 0
+  ) {
     await deleteCloudStudySession(
       state.sessionDatasetVersion,
-      "listen-answer",
     ).catch(() => {});
     setSavedSessionForMode("listen-answer", null);
     state.activeSession = false;
@@ -3813,7 +3835,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.122｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.123｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

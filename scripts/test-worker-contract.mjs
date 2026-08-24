@@ -21,6 +21,7 @@ import {
   normalizeSpeechParts as normalizeBrowserSpeechParts,
   normalizeStudySession as normalizeBrowserStudySession,
   normalizeStudySessions,
+  switchStudySessionMode,
 } from "../public/cloud-progress.js";
 
 if (normalizeDatasetVersion("d5d13f1099e9") !== "d5d13f1099e9") {
@@ -104,25 +105,44 @@ const listeningSessionInput = {
   studyMode: "listen-answer",
   answeredCount: 5,
   answerVisible: false,
+  updatedAt: "2026-08-25T01:00:00.000Z",
 };
-const separateStudySessions = normalizeStudySessions({
-  memorize: studySessionInput,
+const sharedStudySessions = normalizeStudySessions({
+  memorize: {
+    ...studySessionInput,
+    updatedAt: "2026-08-25T00:00:00.000Z",
+  },
   "listen-answer": listeningSessionInput,
 });
 if (
-  separateStudySessions.memorize?.answeredCount !== 12 ||
-  separateStudySessions["listen-answer"]?.answeredCount !== 5 ||
-  separateStudySessions.memorize.studyMode !== "memorize" ||
-  separateStudySessions["listen-answer"].studyMode !== "listen-answer"
+  sharedStudySessions.memorize?.answeredCount !== 5 ||
+  sharedStudySessions["listen-answer"]?.answeredCount !== 5 ||
+  sharedStudySessions.memorize.studyMode !== "listen-answer" ||
+  sharedStudySessions.memorize !== sharedStudySessions["listen-answer"]
 ) {
-  throw new Error("暗記と聞き流しの一周を別々に読み込めませんでした。");
+  throw new Error("暗記と聞き流しで最新の一周を共有できませんでした。");
 }
 const legacyStudySessions = normalizeStudySessions(null, listeningSessionInput);
 if (
-  legacyStudySessions.memorize !== null ||
+  legacyStudySessions.memorize?.answeredCount !== 5 ||
   legacyStudySessions["listen-answer"]?.answeredCount !== 5
 ) {
-  throw new Error("従来の一周を記録済みの学習モードへ引き継げませんでした。");
+  throw new Error("従来の一周を両方の学習モードへ引き継げませんでした。");
+}
+const switchedStudySession = switchStudySessionMode(
+  sharedStudySessions.memorize,
+  "memorize",
+);
+if (
+  switchedStudySession.studyMode !== "memorize" ||
+  switchedStudySession.currentTask.questionId !== "WH-Q-000001" ||
+  switchedStudySession.queue[0].questionId !== "WH-Q-000002" ||
+  switchedStudySession.answerVisible ||
+  switchedStudySession.screenStudySeconds !== 0 ||
+  switchedStudySession.savedScreenStudySeconds !== 0 ||
+  switchedStudySession.studyTimeEventId !== ""
+) {
+  throw new Error("一周の位置を保ったまま学習モードを切り替えられませんでした。");
 }
 
 const studyActivity = normalizeStudyActivity(

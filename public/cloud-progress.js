@@ -209,24 +209,41 @@ export function normalizeStudySession(value) {
   };
 }
 
+export function switchStudySessionMode(value, studyMode) {
+  const session = normalizeStudySession(value);
+  if (!session || !studyModes.has(studyMode)) return null;
+  const modeChanged = session.studyMode !== studyMode;
+  return normalizeStudySession({
+    ...session,
+    studyMode,
+    answerVisible: modeChanged ? false : session.answerVisible,
+    screenStudySeconds: modeChanged ? 0 : session.screenStudySeconds,
+    savedScreenStudySeconds: modeChanged ? 0 : session.savedScreenStudySeconds,
+    studyTimeEventId: modeChanged ? "" : session.studyTimeEventId,
+  });
+}
+
 export function normalizeStudySessions(value, legacySession = null) {
-  const sessions = { memorize: null, "listen-answer": null };
+  const candidates = [];
   if (value && typeof value === "object" && !Array.isArray(value)) {
     for (const studyMode of studyModes) {
       const session = normalizeStudySession(value[studyMode]);
-      if (session?.studyMode === studyMode) {
-        sessions[studyMode] = session;
-      }
+      if (session) candidates.push(session);
     }
   }
   const normalizedLegacySession = normalizeStudySession(legacySession);
-  if (
-    normalizedLegacySession &&
-    !sessions[normalizedLegacySession.studyMode]
-  ) {
-    sessions[normalizedLegacySession.studyMode] = normalizedLegacySession;
-  }
-  return sessions;
+  if (normalizedLegacySession) candidates.push(normalizedLegacySession);
+  const sharedSession = candidates.reduce((newest, session) => {
+    if (!newest) return session;
+    const newestAt = Date.parse(newest.updatedAt ?? "");
+    const sessionAt = Date.parse(session.updatedAt ?? "");
+    if (!Number.isFinite(sessionAt)) return newest;
+    return !Number.isFinite(newestAt) || sessionAt >= newestAt ? session : newest;
+  }, null);
+  return {
+    memorize: sharedSession,
+    "listen-answer": sharedSession,
+  };
 }
 
 function normalizeSetupPreferenceId(value) {
@@ -554,9 +571,9 @@ export async function saveCloudStudySession(datasetVersion, session) {
   return normalizeStudySession(payload.session);
 }
 
-export async function deleteCloudStudySession(datasetVersion, studyMode) {
+export async function deleteCloudStudySession(datasetVersion) {
   return cloudRequest(
-    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}&mode=${encodeURIComponent(studyMode)}`,
+    `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
     { method: "DELETE" },
   );
 }

@@ -39,6 +39,7 @@ import {
   requestCloudSpeech,
   saveCloudStudyActivity,
   saveCloudStudyAnswer,
+  saveCloudStudyRoutine,
   saveCloudSettings,
   saveCloudStudySession,
   saveCloudStudyTime,
@@ -65,16 +66,34 @@ import {
   mergeDeckProgress,
   normalizeDeckSelection,
 } from "./deck-selection.js";
+import {
+  continueStudyRoutineOnDate,
+  createStudyRoutineRun,
+  currentStudyRoutineItem,
+  normalizeStudyRoutineRun,
+  recordStudyRoutineQuestion,
+  studyRoutineTotals,
+} from "./study-routine.js";
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
   loadingPanel: document.querySelector("#loading-panel"),
   subjectPanel: document.querySelector("#subject-panel"),
   subjectOptions: document.querySelector("#subject-options"),
+  routineDashboard: document.querySelector("#routine-dashboard"),
+  routineDashboardTitle: document.querySelector("#routine-dashboard-title"),
+  routineDashboardSummary: document.querySelector("#routine-dashboard-summary"),
+  routineDashboardProgress: document.querySelector("#routine-dashboard-progress"),
+  routineDashboardList: document.querySelector("#routine-dashboard-list"),
+  startRoutine: document.querySelector("#start-routine"),
+  continueRoutine: document.querySelector("#continue-routine"),
   setupPanel: document.querySelector("#setup-panel"),
   setupEyebrow: document.querySelector("#setup-eyebrow"),
   setupTitle: document.querySelector("#setup-title"),
   setupDescription: document.querySelector("#setup-description"),
+  routineSetupBanner: document.querySelector("#routine-setup-banner"),
+  routineSetupTitle: document.querySelector("#routine-setup-title"),
+  routineSetupProgress: document.querySelector("#routine-setup-progress"),
   studyShell: document.querySelector("#study-shell"),
   errorPanel: document.querySelector("#error-panel"),
   errorMessage: document.querySelector("#error-message"),
@@ -113,6 +132,7 @@ const elements = {
   termReading: document.querySelector("#term-reading"),
   overallProgress: document.querySelector("#overall-progress"),
   termProgress: document.querySelector("#term-progress"),
+  routineProgress: document.querySelector("#routine-progress"),
   queueProgress: document.querySelector("#queue-progress"),
   studyTime: document.querySelector("#study-time"),
   progressBar: document.querySelector("#progress-bar"),
@@ -180,6 +200,7 @@ const state = {
   progress: createEmptyProgress(),
   reviewSettings: { ...defaultReviewSettings },
   cloudReady: false,
+  cloudConnected: false,
   cloudError: "",
   saving: false,
   queue: [],
@@ -197,6 +218,11 @@ const state = {
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: normalizeSpeechParts(),
   setupPreferences: normalizeSetupPreferences(),
+  routineRun: null,
+  routineStudyDate: "",
+  inRoutine: false,
+  routineCompletionAction: "",
+  routineTransition: null,
   studyMode: "memorize",
   listeningPaused: false,
   pendingListeningActivity: null,
@@ -348,6 +374,222 @@ function datasetVersionForQuestion(questionId) {
 function createEventId() {
   return window.crypto?.randomUUID?.() ??
     `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+}
+
+function routineSubjectTitle(subjectId) {
+  return state.subjectEntries.find((subject) => subject.id === subjectId)?.title ??
+    subjectId;
+}
+
+function syncRoutinePreferences(preferences, studyDate = "") {
+  state.setupPreferences = normalizeSetupPreferences(preferences);
+  state.routineRun = normalizeStudyRoutineRun(state.setupPreferences.routineRun);
+  if (/^\d{4}-\d{2}-\d{2}$/.test(studyDate)) {
+    state.routineStudyDate = studyDate;
+  }
+}
+
+function activeRoutineItem() {
+  if (!state.inRoutine) return null;
+  const item = currentStudyRoutineItem(state.routineRun);
+  return item?.subjectId === state.activeSubjectId ? item : null;
+}
+
+function routineRemainingCount(item = activeRoutineItem()) {
+  return item ? Math.max(0, item.questionTarget - item.completedCount) : 0;
+}
+
+function renderRoutineDashboard() {
+  const run = normalizeStudyRoutineRun(state.routineRun);
+  const activeItem = currentStudyRoutineItem(run);
+  const plan = run?.items ?? state.setupPreferences.routinePlan;
+  const totals = run
+    ? studyRoutineTotals(run)
+    : {
+        completed: 0,
+        target: plan.reduce((sum, item) => sum + item.questionTarget, 0),
+      };
+  const completed = Boolean(run && run.currentIndex >= run.items.length);
+  const previousDay = Boolean(
+    activeItem &&
+    state.routineStudyDate &&
+    run.studyDate !== state.routineStudyDate,
+  );
+  const connected = state.cloudConnected && Boolean(state.routineStudyDate);
+
+  elements.startRoutine.disabled = !connected || plan.length === 0;
+  elements.continueRoutine.disabled = !connected || !activeItem;
+  elements.continueRoutine.classList.toggle("is-hidden", !activeItem);
+  elements.startRoutine.textContent = run
+    ? completed
+      ? "もう一度1番から始める"
+      : "1番からやり直す"
+    : "1番から始める";
+  elements.continueRoutine.textContent = previousDay
+    ? "前回の続きを今日進める"
+    : "続きから始める";
+
+  if (!connected) {
+    elements.routineDashboardTitle.textContent = "今日の順番で学習する";
+    elements.routineDashboardSummary.textContent =
+      "設定ページでCloudflareへ接続すると、毎日のメニューを開始できます。";
+  } else if (completed) {
+    elements.routineDashboardTitle.textContent = "メニューをすべて完了しました";
+    elements.routineDashboardSummary.textContent = `${run.items.length}項目・${totals.target}問をすべて進めました。`;
+  } else if (activeItem && previousDay) {
+    elements.routineDashboardTitle.textContent = "新しい学習日になりました";
+    elements.routineDashboardSummary.textContent =
+      `1番から始めるか、前回の${run.currentIndex + 1}番「${routineSubjectTitle(activeItem.subjectId)}」${activeItem.completedCount}／${activeItem.questionTarget}問から続けるか選べます。`;
+  } else if (activeItem) {
+    elements.routineDashboardTitle.textContent =
+      `${run.currentIndex + 1}番「${routineSubjectTitle(activeItem.subjectId)}」の途中です`;
+    elements.routineDashboardSummary.textContent =
+      `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
+  } else {
+    elements.routineDashboardTitle.textContent = "今日の順番で学習する";
+    elements.routineDashboardSummary.textContent =
+      `${plan.length}項目・合計${totals.target}問のメニューです。科目ごとに学習内容を選んで進めます。`;
+  }
+
+  const percent = totals.target > 0 ? (totals.completed / totals.target) * 100 : 0;
+  elements.routineDashboardProgress.style.width = `${Math.min(100, percent)}%`;
+  const previewStart = activeItem ? run.currentIndex : 0;
+  const previewItems = plan.slice(previewStart, previewStart + 6);
+  elements.routineDashboardList.replaceChildren(
+    ...previewItems.map((item, index) => {
+      const listItem = document.createElement("li");
+      listItem.classList.toggle("is-current", index === 0 && Boolean(activeItem));
+      listItem.textContent = `${previewStart + index + 1}. ${routineSubjectTitle(item.subjectId)} ${item.questionTarget}問`;
+      return listItem;
+    }),
+  );
+}
+
+function renderRoutineSetupContext() {
+  const item = activeRoutineItem();
+  elements.routineSetupBanner.classList.toggle("is-hidden", !item);
+  elements.routineProgress.classList.toggle("is-hidden", !item);
+  if (!item) return;
+  const run = normalizeStudyRoutineRun(state.routineRun);
+  elements.routineSetupTitle.textContent =
+    `毎日のメニュー ${run.currentIndex + 1}／${run.items.length}｜${routineSubjectTitle(item.subjectId)}`;
+  elements.routineSetupProgress.textContent =
+    `${item.completedCount}／${item.questionTarget}問完了・残り${routineRemainingCount(item)}問。今回のデッキと学習方法を選んでください。`;
+  elements.routineProgress.textContent =
+    `メニュー ${item.completedCount} / ${item.questionTarget}問`;
+}
+
+async function persistRoutineRun(run) {
+  const saved = await saveCloudStudyRoutine({ routineRun: run });
+  syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+  return state.routineRun;
+}
+
+function restoreRoutineRun(run) {
+  state.routineRun = normalizeStudyRoutineRun(run);
+  state.setupPreferences = normalizeSetupPreferences({
+    ...state.setupPreferences,
+    routineRun: state.routineRun,
+  });
+}
+
+function recordActiveRoutineQuestion(questionId) {
+  const item = activeRoutineItem();
+  if (!item) return null;
+  const change = recordStudyRoutineQuestion(
+    state.routineRun,
+    state.activeSubjectId,
+    datasetVersionForQuestion(questionId),
+    questionId,
+  );
+  if (!change.counted) return change;
+  restoreRoutineRun(change.run);
+  return change;
+}
+
+function showRoutineStepCompletion(change) {
+  stopListeningSequence();
+  stopStudyClock();
+  state.listeningPaused = true;
+  state.routineTransition = change;
+  state.routineCompletionAction = change.nextItem ? "next" : "done";
+  elements.contextCard.classList.add("is-hidden");
+  elements.questionCard.classList.add("is-hidden");
+  elements.actionDock.classList.add("is-hidden");
+  elements.listeningDock.classList.add("is-hidden");
+  elements.completionCard.classList.remove("is-hidden");
+  elements.completionReturn.classList.remove("is-hidden");
+  elements.completionEyebrow.textContent = "メニューの1項目を完了";
+  elements.completionTitle.textContent =
+    `${routineSubjectTitle(change.completedItem.subjectId)}を${change.completedItem.questionTarget}問進めました`;
+  if (change.nextItem) {
+    elements.completionMessage.textContent =
+      `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
+    elements.completionReturn.textContent = "次の学習内容を選ぶ";
+  } else {
+    const totals = studyRoutineTotals(change.run);
+    elements.completionEyebrow.textContent = "毎日のメニュー完了";
+    elements.completionMessage.textContent =
+      `${change.run.items.length}項目・${totals.target}問をすべて進めました。`;
+    elements.completionReturn.textContent = "科目選択へ戻る";
+  }
+}
+
+async function launchRoutineCurrentStep() {
+  const item = currentStudyRoutineItem(state.routineRun);
+  if (!item) {
+    showSubjectSelection();
+    return;
+  }
+  state.inRoutine = true;
+  state.routineCompletionAction = "";
+  state.routineTransition = null;
+  showOnly(elements.loadingPanel);
+  await activateSubject(item.subjectId);
+  showOnly(elements.setupPanel);
+  renderRoutineSetupContext();
+  queueVisibleSetupPreferenceSave();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+async function startRoutineFromBeginning() {
+  if (!state.cloudConnected || !state.routineStudyDate) return;
+  if (
+    state.routineRun &&
+    currentStudyRoutineItem(state.routineRun) &&
+    !window.confirm("現在の毎日のメニューを終了し、1番からやり直しますか？")
+  ) {
+    return;
+  }
+  elements.startRoutine.disabled = true;
+  try {
+    const run = createStudyRoutineRun(
+      state.setupPreferences.routinePlan,
+      state.routineStudyDate,
+    );
+    await persistRoutineRun(run);
+    await launchRoutineCurrentStep();
+  } catch (error) {
+    elements.errorMessage.textContent = error.message;
+    showOnly(elements.errorPanel);
+  }
+}
+
+async function continueRoutine() {
+  const current = normalizeStudyRoutineRun(state.routineRun);
+  if (!currentStudyRoutineItem(current)) return;
+  elements.continueRoutine.disabled = true;
+  try {
+    if (current.studyDate !== state.routineStudyDate) {
+      await persistRoutineRun(
+        continueStudyRoutineOnDate(current, state.routineStudyDate),
+      );
+    }
+    await launchRoutineCurrentStep();
+  } catch (error) {
+    elements.errorMessage.textContent = error.message;
+    showOnly(elements.errorPanel);
+  }
 }
 
 function updateStudyTimeDisplay() {
@@ -700,7 +942,10 @@ function queueActiveSessionSave() {
   return studySessionSave;
 }
 
-function queueActiveStudyActivity(activity, { completeSession = false } = {}) {
+function queueActiveStudyActivity(
+  activity,
+  { completeSession = false, routineRun } = {},
+) {
   const session = captureActiveSession();
   const studyMode = state.studyMode;
   const datasetVersion = datasetVersionForQuestion(activity.questionId);
@@ -713,7 +958,7 @@ function queueActiveStudyActivity(activity, { completeSession = false } = {}) {
         datasetVersion,
         activity,
         session,
-        { sessionDatasetVersion, completeSession },
+        { sessionDatasetVersion, completeSession, routineRun },
       );
       if (
         saveVersion === studySessionSaveVersion &&
@@ -1078,7 +1323,8 @@ async function loadProgressFromCloud() {
     state.listeningPauseSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
-    state.setupPreferences = normalizeSetupPreferences();
+    syncRoutinePreferences(normalizeSetupPreferences());
+    state.cloudConnected = false;
     return;
   }
 
@@ -1115,8 +1361,9 @@ async function loadProgressFromCloud() {
     sessionCloudState.settings.studyTimeLimitSeconds,
   );
   state.speechParts = normalizeSpeechParts(sessionCloudState.settings.speechParts);
-  state.setupPreferences = normalizeSetupPreferences(
+  syncRoutinePreferences(
     sessionCloudState.settings.setupPreferences,
+    sessionCloudState.studyDate,
   );
   saveSpeechSettings(sessionCloudState.settings);
 
@@ -1140,6 +1387,7 @@ async function loadProgressFromCloud() {
     clearLegacyProgress(deck);
   }
   state.cloudReady = true;
+  state.cloudConnected = true;
   return {
     progress: state.progress,
     sessions: state.savedSessions,
@@ -1257,6 +1505,9 @@ async function goBackOneStep() {
       state.answeredThisSession = restored.answeredThisSession;
       state.unlockMessage = restored.unlockMessage;
     }
+    if (Object.hasOwn(snapshot, "routineRun")) {
+      restoreRoutineRun(snapshot.routineRun);
+    }
     state.history = remainingHistory;
     state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
     startNewStudyScreen();
@@ -1270,6 +1521,7 @@ async function goBackOneStep() {
           studyMode: "memorize",
           deleteActivityId: snapshot.studyActivityEventId,
           sessionDatasetVersion: state.sessionDatasetVersion,
+          routineRun: state.inRoutine ? state.routineRun : undefined,
         },
       );
       setSavedSessionForMode("memorize", saved.session);
@@ -1333,9 +1585,7 @@ function queueSetupPreferenceSave() {
       if (saveVersion === setupPreferenceSaveVersion) {
         state.shuffleEnabled = saved.shuffleEnabled;
         state.autoSpeechEnabled = saved.autoSpeechEnabled;
-        state.setupPreferences = normalizeSetupPreferences(
-          saved.setupPreferences,
-        );
+        syncRoutinePreferences(saved.setupPreferences);
         elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
       }
       return saved;
@@ -1663,6 +1913,9 @@ async function goBackListeningOneStep() {
       if (!restoreActiveSession(snapshot.studySession, { updateControls: false })) {
         throw new Error("前の問題を復元できませんでした。");
       }
+      if (Object.hasOwn(snapshot, "routineRun")) {
+        restoreRoutineRun(snapshot.routineRun);
+      }
       state.history = remainingHistory;
       state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
       state.answerVisible = true;
@@ -1673,7 +1926,10 @@ async function goBackListeningOneStep() {
           datasetVersionForQuestion(snapshot.studySession?.currentTask?.questionId),
         snapshot.studyActivityEventId,
         captureActiveSession(),
-        { sessionDatasetVersion: state.sessionDatasetVersion },
+        {
+          sessionDatasetVersion: state.sessionDatasetVersion,
+          routineRun: state.inRoutine ? state.routineRun : undefined,
+        },
       );
       setSavedSessionForMode("listen-answer", saved.session);
     } else {
@@ -1684,6 +1940,9 @@ async function goBackListeningOneStep() {
         !restoreActiveSession(snapshot.studySession, { updateControls: false })
       ) {
         throw new Error("評価前の問題を復元できませんでした。");
+      }
+      if (Object.hasOwn(snapshot, "routineRun")) {
+        restoreRoutineRun(snapshot.routineRun);
       }
       state.history = remainingHistory;
       state.studySeconds = Math.max(state.studySeconds, forwardStudySeconds);
@@ -1700,6 +1959,7 @@ async function goBackListeningOneStep() {
           studyMode: "listen-answer",
           deleteActivityId: snapshot.studyActivityEventId,
           sessionDatasetVersion: state.sessionDatasetVersion,
+          routineRun: state.inRoutine ? state.routineRun : undefined,
         },
       );
       setSavedSessionForMode("listen-answer", saved.session);
@@ -1768,6 +2028,9 @@ async function advanceListening(runId) {
     studyActivityEventId: activity.eventId,
     studyActivityDatasetVersion: datasetVersionForQuestion(activity.questionId),
     studySession: captureActiveSession(),
+    ...(state.inRoutine
+      ? { routineRun: normalizeStudyRoutineRun(state.routineRun) }
+      : {}),
   };
   const historyBefore = [...state.history];
   const previousQueue = state.queue.map(cloneTask);
@@ -1777,12 +2040,14 @@ async function advanceListening(runId) {
   state.unseenQuestionIds.delete(completedTask.questionId);
   state.answeredThisSession += 1;
   state.currentTask = state.queue.shift() ?? null;
+  const routineChange = recordActiveRoutineQuestion(completedTask.questionId);
   const roundComplete = !state.currentTask;
   state.answerVisible = false;
   startNewStudyScreen();
   try {
     await queueActiveStudyActivity(activity, {
       completeSession: roundComplete,
+      routineRun: routineChange?.counted ? state.routineRun : undefined,
     });
     state.pendingListeningActivity = null;
     pushHistory(undoSnapshot);
@@ -1794,6 +2059,9 @@ async function advanceListening(runId) {
       state.answeredThisSession = previousAnsweredCount;
     }
     state.history = historyBefore;
+    if (Object.hasOwn(undoSnapshot, "routineRun")) {
+      restoreRoutineRun(undoSnapshot.routineRun);
+    }
     state.answerVisible = true;
     state.listeningPaused = true;
     stopListeningSequence();
@@ -1804,6 +2072,14 @@ async function advanceListening(runId) {
     return;
   }
   state.saving = false;
+  if (routineChange?.completedItem) {
+    if (roundComplete) {
+      state.activeSession = false;
+      setSavedSessionForMode("listen-answer", null);
+    }
+    showRoutineStepCompletion(routineChange);
+    return;
+  }
   if (roundComplete) {
     stopListeningSequence();
     state.activeSession = false;
@@ -2287,6 +2563,16 @@ function updateSetupPreview() {
     : listening
       ? "聞き流しを開始"
       : "暗記モードを開始";
+  const routineItem = activeRoutineItem();
+  if (routineItem) {
+    const remaining = routineRemainingCount(routineItem);
+    elements.startStudy.textContent = hasSavedSession
+      ? `残り${remaining}問をはじめから進める`
+      : `残り${remaining}問を開始`;
+    elements.resumeStudy.textContent = `前回の続きから（残り${remaining}問）`;
+  } else {
+    elements.resumeStudy.textContent = "前回の続きから";
+  }
   elements.selectionSummary.textContent =
     terms.length === 0
       ? `条件に合う${termUnitLabel()}がありません。選択を変更してください。`
@@ -2399,6 +2685,7 @@ function configureSetup() {
   updateSpeechButtons();
   updateRatingIntervals();
   updateSetupPreview();
+  renderRoutineSetupContext();
 }
 
 function updateOverallProgress() {
@@ -2427,6 +2714,8 @@ function renderQuestion() {
     return;
   }
   const vocabularyMode = state.subject?.learningType === "vocabulary";
+  state.routineCompletionAction = "";
+  state.routineTransition = null;
   const currentDeckEntry = deckForQuestion(question.id)?.entry;
   if (currentDeckEntry) {
     const currentDeckName = deckDisplayLabel(currentDeckEntry);
@@ -2518,6 +2807,7 @@ function renderQuestion() {
   elements.queueProgress.textContent = isListeningMode()
     ? `一巡の残り ${state.queue.length + 1}問`
     : `この回の残り ${state.queue.length + 1}問`;
+  renderRoutineSetupContext();
   elements.unlockNotice.textContent = state.unlockMessage;
   elements.unlockNotice.classList.toggle("is-hidden", !state.unlockMessage);
   state.unlockMessage = "";
@@ -2552,6 +2842,24 @@ function renderCompletion() {
   elements.completionCard.classList.remove("is-hidden");
   const listening = isListeningMode();
   elements.completionReturn.classList.remove("is-hidden");
+  const routineItem = activeRoutineItem();
+  if (routineItem && routineRemainingCount(routineItem) > 0) {
+    state.routineCompletionAction = "reselect";
+    state.routineTransition = null;
+    elements.actionDock.classList.add("is-hidden");
+    elements.listeningDock.classList.add("is-hidden");
+    elements.completionEyebrow.textContent = "学習内容を選び直す";
+    elements.completionTitle.textContent =
+      `${routineSubjectTitle(routineItem.subjectId)}の現在出題できる問題をすべて終えました`;
+    elements.completionMessage.textContent =
+      `この項目は${routineItem.completedCount}／${routineItem.questionTarget}問まで完了しています。残り${routineRemainingCount(routineItem)}問を進めるデッキや学習方法を選んでください。`;
+    elements.completionReturn.textContent =
+      `残り${routineRemainingCount(routineItem)}問の学習内容を選ぶ`;
+    updateOverallProgress();
+    return;
+  }
+  state.routineCompletionAction = "";
+  elements.completionReturn.textContent = "開始画面に戻る";
   if (listening) {
     elements.queueProgress.textContent = "一巡の残り 0問";
     elements.completionEyebrow.textContent = "一巡完了";
@@ -2672,6 +2980,9 @@ async function rateListeningQuestion(rating) {
     unlockMessage: state.unlockMessage,
   });
   snapshot.studySession = captureActiveSession();
+  if (state.inRoutine) {
+    snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
+  }
   const activity = createStudyActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
@@ -2686,13 +2997,16 @@ async function rateListeningQuestion(rating) {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answerRevealedAt = 0;
+  const routineChange = recordActiveRoutineQuestion(question.id);
   const roundComplete = !state.currentTask;
   if (roundComplete) {
     state.activeSession = false;
     state.listeningPaused = true;
   }
   startNewStudyScreen();
-  renderQuestion();
+  if (!routineChange?.completedItem) {
+    renderQuestion();
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
 
   try {
@@ -2707,12 +3021,16 @@ async function rateListeningQuestion(rating) {
         studyMode: "listen-answer",
         activity,
         sessionDatasetVersion: state.sessionDatasetVersion,
+        routineRun: routineChange?.counted ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("listen-answer", saved.session);
   } catch (error) {
     restoreRatingUndoSnapshot(state.progress, snapshot);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
+    if (Object.hasOwn(snapshot, "routineRun")) {
+      restoreRoutineRun(snapshot.routineRun);
+    }
     state.history = historyBefore;
     state.answerVisible = true;
     state.listeningPaused = true;
@@ -2725,6 +3043,13 @@ async function rateListeningQuestion(rating) {
 
   pushHistory(snapshot);
   state.saving = false;
+  if (routineChange?.completedItem) {
+    if (roundComplete) {
+      setSavedSessionForMode("listen-answer", null);
+    }
+    showRoutineStepCompletion(routineChange);
+    return;
+  }
   if (roundComplete) {
     setSavedSessionForMode("listen-answer", null);
     renderActionControls();
@@ -2770,6 +3095,9 @@ async function rateCurrentQuestion(rating) {
     unlockMessage: state.unlockMessage,
   });
   snapshot.studySession = captureActiveSession();
+  if (state.inRoutine) {
+    snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
+  }
   const activity = createStudyActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
@@ -2795,10 +3123,13 @@ async function rateCurrentQuestion(rating) {
   ) {
     state.activeSession = false;
   }
+  const routineChange = recordActiveRoutineQuestion(question.id);
   startNewStudyScreen();
 
-  renderQuestion();
-  autoSpeakQuestion();
+  if (!routineChange?.completedItem) {
+    renderQuestion();
+    autoSpeakQuestion();
+  }
   window.scrollTo({ top: 0, behavior: "smooth" });
   try {
     await pendingStudySessionSave;
@@ -2812,6 +3143,7 @@ async function rateCurrentQuestion(rating) {
         studyMode: "memorize",
         activity,
         sessionDatasetVersion: state.sessionDatasetVersion,
+        routineRun: routineChange?.counted ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("memorize", saved.session);
@@ -2819,6 +3151,9 @@ async function rateCurrentQuestion(rating) {
     speechController.stop();
     restoreRatingUndoSnapshot(state.progress, snapshot);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
+    if (Object.hasOwn(snapshot, "routineRun")) {
+      restoreRoutineRun(snapshot.routineRun);
+    }
     state.history = historyBefore;
     state.unlockMessage = error.message;
     state.saving = false;
@@ -2827,8 +3162,12 @@ async function rateCurrentQuestion(rating) {
     return;
   }
   state.saving = false;
-  startStudyClock();
   pushHistory(snapshot);
+  if (routineChange?.completedItem) {
+    showRoutineStepCompletion(routineChange);
+    return;
+  }
+  startStudyClock();
   renderActionControls();
 }
 
@@ -3180,7 +3519,7 @@ async function activateDecks(deckIds) {
     state.listeningPauseSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
-    state.setupPreferences = normalizeSetupPreferences();
+    syncRoutinePreferences(normalizeSetupPreferences());
     state.cloudReady = false;
     state.cloudError = error.message;
   }
@@ -3222,7 +3561,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.109｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.110｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3258,11 +3597,15 @@ function renderSubjectOptions() {
 
 function showSubjectSelection() {
   stopListeningSequence();
+  state.inRoutine = false;
+  state.routineCompletionAction = "";
+  state.routineTransition = null;
   state.activeSession = false;
   state.currentTask = null;
   state.queue = [];
   state.answerVisible = false;
   elements.subjectName.textContent = "科目を選択";
+  renderRoutineDashboard();
   renderSubjectOptions();
   showOnly(elements.subjectPanel);
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -3323,13 +3666,18 @@ async function start() {
           cloudState.settings.studyTimeLimitSeconds,
         );
         state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
-        state.setupPreferences = normalizeSetupPreferences(
+        syncRoutinePreferences(
           cloudState.settings.setupPreferences,
+          cloudState.studyDate,
         );
+        state.cloudConnected = true;
         saveSpeechSettings(cloudState.settings);
       } catch {
-        state.setupPreferences = normalizeSetupPreferences();
+        syncRoutinePreferences(normalizeSetupPreferences());
+        state.cloudConnected = false;
       }
+    } else {
+      state.cloudConnected = false;
     }
     showSubjectSelection();
   } catch (error) {
@@ -3341,6 +3689,7 @@ async function start() {
 elements.subjectOptions.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-subject-id]");
   if (!button) return;
+  state.inRoutine = false;
   showOnly(elements.loadingPanel);
   void setupPreferenceSave
     .catch(() => {})
@@ -3353,6 +3702,12 @@ elements.subjectOptions.addEventListener("click", (event) => {
       elements.errorMessage.textContent = error.message;
       showOnly(elements.errorPanel);
     });
+});
+elements.startRoutine.addEventListener("click", () => {
+  void startRoutineFromBeginning();
+});
+elements.continueRoutine.addEventListener("click", () => {
+  void continueRoutine();
 });
 
 elements.deckFilter.addEventListener("change", () => {
@@ -3450,7 +3805,20 @@ for (const button of elements.ratingActions) {
     void rateCurrentQuestion(button.dataset.rating),
   );
 }
-elements.completionReturn.addEventListener("click", () => void returnToSetup());
+elements.completionReturn.addEventListener("click", () => {
+  if (state.routineCompletionAction === "next") {
+    void launchRoutineCurrentStep().catch((error) => {
+      elements.errorMessage.textContent = error.message;
+      showOnly(elements.errorPanel);
+    });
+    return;
+  }
+  if (state.routineCompletionAction === "done") {
+    showSubjectSelection();
+    return;
+  }
+  void returnToSetup();
+});
 
 elements.resetProgress.addEventListener("click", () => {
   if (

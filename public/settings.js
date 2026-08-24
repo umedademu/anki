@@ -8,6 +8,7 @@ import {
   normalizeListeningPauseSeconds,
   requestCloudSpeech,
   saveCloudSettings,
+  saveCloudStudyRoutine,
   storeAccessKey,
 } from "./cloud-progress.js";
 import { createSpeechController } from "./speech.js";
@@ -25,6 +26,10 @@ import {
   defaultStudyTimeLimitSeconds,
   normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
+import {
+  defaultStudyRoutinePlan,
+  normalizeStudyRoutinePlan,
+} from "./study-routine.js";
 
 const elements = {
   accessKey: document.querySelector("#access-key"),
@@ -36,6 +41,10 @@ const elements = {
   studyTimeLimitSeconds: document.querySelector("#study-time-limit-seconds"),
   saveStudyTimeSettings: document.querySelector("#save-study-time-settings"),
   studyTimeStatus: document.querySelector("#study-time-settings-status"),
+  routineEditor: document.querySelector("#routine-editor"),
+  addRoutineItem: document.querySelector("#add-routine-item"),
+  saveRoutine: document.querySelector("#save-routine"),
+  routineStatus: document.querySelector("#routine-status"),
   againValue: document.querySelector("#again-value"),
   againUnit: document.querySelector("#again-unit"),
   hardValue: document.querySelector("#hard-value"),
@@ -68,6 +77,9 @@ const fieldPairs = {
 let speechSettings = loadSpeechSettings();
 let cloudFallbackMessage = "";
 let previewStarted = false;
+let routinePlan = normalizeStudyRoutinePlan(defaultStudyRoutinePlan);
+let routineSubjects = [];
+let draggedRoutineItemId = "";
 
 function readSpeechForm() {
   return normalizeSpeechSettings({
@@ -238,11 +250,149 @@ function setBusy(busy) {
   elements.saveSettings.disabled = busy;
   elements.saveStudyTimeSettings.disabled = busy;
   elements.saveSpeechSettings.disabled = busy;
+  elements.saveRoutine.disabled = busy || routinePlan.length === 0;
+  elements.addRoutineItem.disabled = busy;
 }
 
 function setStatus(message, isError = false) {
   elements.status.textContent = message;
   elements.status.classList.toggle("is-error", isError);
+}
+
+function setRoutineStatus(message, isError = false) {
+  elements.routineStatus.textContent = message;
+  elements.routineStatus.classList.toggle("is-error", isError);
+}
+
+function createRoutineItemId() {
+  return `routine-${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`}`;
+}
+
+function routineSubjectTitle(subjectId) {
+  return routineSubjects.find((subject) => subject.id === subjectId)?.title ??
+    subjectId;
+}
+
+function createRoutineSubjectSelect(item) {
+  const select = document.createElement("select");
+  select.className = "routine-subject-select";
+  select.setAttribute("aria-label", "科目");
+  const availableSubjects = routineSubjects.some(
+    (subject) => subject.id === item.subjectId,
+  )
+    ? routineSubjects
+    : [{ id: item.subjectId, title: item.subjectId }, ...routineSubjects];
+  for (const subject of availableSubjects) {
+    const option = document.createElement("option");
+    option.value = subject.id;
+    option.textContent = subject.title;
+    select.append(option);
+  }
+  select.value = item.subjectId;
+  return select;
+}
+
+function renderRoutineEditor() {
+  elements.routineEditor.replaceChildren(
+    ...routinePlan.map((item, index) => {
+      const row = document.createElement("article");
+      row.className = "routine-editor-item";
+      row.dataset.routineItemId = item.id;
+
+      const handle = document.createElement("button");
+      handle.type = "button";
+      handle.className = "routine-drag-handle";
+      handle.draggable = true;
+      handle.setAttribute("aria-label", `${index + 1}番をつかんで並べ替える`);
+      handle.textContent = "☰";
+
+      const order = document.createElement("strong");
+      order.className = "routine-order";
+      order.textContent = String(index + 1);
+
+      const subject = createRoutineSubjectSelect(item);
+      subject.dataset.routineField = "subjectId";
+
+      const amount = document.createElement("label");
+      amount.className = "routine-amount";
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "1";
+      input.max = "10000";
+      input.step = "1";
+      input.inputMode = "numeric";
+      input.value = String(item.questionTarget);
+      input.dataset.routineField = "questionTarget";
+      input.setAttribute("aria-label", `${routineSubjectTitle(item.subjectId)}の問題数`);
+      amount.append(input, document.createTextNode("問"));
+
+      const actions = document.createElement("div");
+      actions.className = "routine-item-actions";
+      const actionDefinitions = [
+        ["up", "↑", "上へ"],
+        ["down", "↓", "下へ"],
+        ["copy", "複製", "複製"],
+        ["delete", "削除", "削除"],
+      ];
+      for (const [action, text, label] of actionDefinitions) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.routineAction = action;
+        button.textContent = text;
+        button.setAttribute("aria-label", `${index + 1}番を${label}`);
+        button.disabled =
+          (action === "up" && index === 0) ||
+          (action === "down" && index === routinePlan.length - 1);
+        actions.append(button);
+      }
+
+      row.append(handle, order, subject, amount, actions);
+      return row;
+    }),
+  );
+  elements.saveRoutine.disabled = routinePlan.length === 0;
+}
+
+function fillRoutinePlan(value) {
+  routinePlan = normalizeStudyRoutinePlan(value);
+  renderRoutineEditor();
+}
+
+function updateRoutineItem(itemId, patch) {
+  routinePlan = routinePlan.map((item) =>
+    item.id === itemId ? { ...item, ...patch } : item,
+  );
+}
+
+function moveRoutineItem(itemId, nextIndex) {
+  const currentIndex = routinePlan.findIndex((item) => item.id === itemId);
+  if (currentIndex < 0) return;
+  const boundedIndex = Math.max(0, Math.min(routinePlan.length - 1, nextIndex));
+  if (boundedIndex === currentIndex) return;
+  const next = [...routinePlan];
+  const [item] = next.splice(currentIndex, 1);
+  next.splice(boundedIndex, 0, item);
+  routinePlan = next;
+  renderRoutineEditor();
+}
+
+async function loadRoutineSubjects() {
+  const dataBaseUrl = String(window.ANKI_CONFIG?.dataBaseUrl ?? "").replace(/\/$/, "");
+  if (!dataBaseUrl) {
+    throw new Error("Cloudflareの学習データ読込先が設定されていません。");
+  }
+  const response = await fetch(`${dataBaseUrl}/index.json`, {
+    cache: "no-store",
+  });
+  if (!response.ok) {
+    throw new Error(`科目一覧を読み込めませんでした（${response.status}）。`);
+  }
+  const catalog = await response.json();
+  if (!Array.isArray(catalog.subjects) || catalog.subjects.length === 0) {
+    throw new Error("科目一覧の形式が正しくありません。");
+  }
+  routineSubjects = catalog.subjects.map(({ id, title }) => ({ id, title }));
+  renderRoutineEditor();
 }
 
 function chooseUnit(seconds) {
@@ -289,17 +439,126 @@ async function connect() {
     fillStudyTimeForm(cloudState.settings);
     speechSettings = saveSpeechSettings(cloudState.settings);
     fillSpeechForm(cloudState.settings);
+    fillRoutinePlan(cloudState.settings.setupPreferences.routinePlan);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
     setStudyTimeStatus("Cloudflareから学習時間の上限を読み込みました。");
     setSpeechStatus("Cloudflareから共有設定を読み込みました。");
+    setRoutineStatus("Cloudflareから毎日のメニューを読み込みました。");
   } catch (error) {
     setStatus(error.message, true);
   } finally {
     setBusy(false);
   }
 }
+
+function handleRoutineFieldChange(event) {
+  const row = event.target.closest("[data-routine-item-id]");
+  const field = event.target.dataset.routineField;
+  if (!row || !field) return;
+  updateRoutineItem(row.dataset.routineItemId, {
+    [field]: field === "questionTarget"
+      ? Number.parseInt(event.target.value, 10) || 1
+      : event.target.value,
+  });
+  setRoutineStatus("変更があります。「メニューを保存」を押してください。");
+}
+
+elements.routineEditor.addEventListener("input", handleRoutineFieldChange);
+elements.routineEditor.addEventListener("change", handleRoutineFieldChange);
+
+elements.routineEditor.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-routine-action]");
+  const row = event.target.closest("[data-routine-item-id]");
+  if (!button || !row) return;
+  const itemId = row.dataset.routineItemId;
+  const index = routinePlan.findIndex((item) => item.id === itemId);
+  if (index < 0) return;
+  if (button.dataset.routineAction === "up") {
+    moveRoutineItem(itemId, index - 1);
+  } else if (button.dataset.routineAction === "down") {
+    moveRoutineItem(itemId, index + 1);
+  } else if (button.dataset.routineAction === "copy") {
+    const next = [...routinePlan];
+    next.splice(index + 1, 0, {
+      ...routinePlan[index],
+      id: createRoutineItemId(),
+    });
+    routinePlan = next;
+    renderRoutineEditor();
+  } else if (button.dataset.routineAction === "delete") {
+    routinePlan = routinePlan.filter((item) => item.id !== itemId);
+    renderRoutineEditor();
+  }
+  setRoutineStatus("変更があります。「メニューを保存」を押してください。");
+});
+
+elements.routineEditor.addEventListener("dragstart", (event) => {
+  const row = event.target.closest("[data-routine-item-id]");
+  if (!row || !event.target.closest(".routine-drag-handle")) return;
+  draggedRoutineItemId = row.dataset.routineItemId;
+  row.classList.add("is-dragging");
+  event.dataTransfer.effectAllowed = "move";
+});
+
+elements.routineEditor.addEventListener("dragend", () => {
+  draggedRoutineItemId = "";
+  elements.routineEditor.querySelector(".is-dragging")?.classList.remove("is-dragging");
+});
+
+elements.routineEditor.addEventListener("dragover", (event) => {
+  if (!draggedRoutineItemId) return;
+  event.preventDefault();
+  event.dataTransfer.dropEffect = "move";
+});
+
+elements.routineEditor.addEventListener("drop", (event) => {
+  const targetRow = event.target.closest("[data-routine-item-id]");
+  if (!draggedRoutineItemId || !targetRow) return;
+  event.preventDefault();
+  const targetIndex = routinePlan.findIndex(
+    (item) => item.id === targetRow.dataset.routineItemId,
+  );
+  moveRoutineItem(draggedRoutineItemId, targetIndex);
+  setRoutineStatus("並び順を変更しました。「メニューを保存」を押してください。");
+});
+
+elements.addRoutineItem.addEventListener("click", () => {
+  const subjectId = routineSubjects[0]?.id ?? "world-history";
+  routinePlan = [
+    ...routinePlan,
+    { id: createRoutineItemId(), subjectId, questionTarget: 100 },
+  ];
+  renderRoutineEditor();
+  elements.routineEditor.lastElementChild?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+  });
+  setRoutineStatus("科目を追加しました。「メニューを保存」を押してください。");
+});
+
+elements.saveRoutine.addEventListener("click", async () => {
+  const normalized = normalizeStudyRoutinePlan(routinePlan, {
+    fallbackToDefault: false,
+  });
+  if (normalized.length === 0) {
+    setRoutineStatus("科目を1つ以上追加してください。", true);
+    return;
+  }
+  setBusy(true);
+  try {
+    const saved = await saveCloudStudyRoutine({ routinePlan: normalized });
+    fillRoutinePlan(saved.setupPreferences.routinePlan);
+    setRoutineStatus(
+      "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
+    );
+  } catch (error) {
+    setRoutineStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
 
 elements.connectCloud.addEventListener("click", connect);
 elements.studyTimeForm.addEventListener("submit", async (event) => {
@@ -387,8 +646,12 @@ window.addEventListener("pagehide", () => previewController.stop());
 
 fillForm(defaultReviewSettings);
 fillStudyTimeForm({ studyTimeLimitSeconds: defaultStudyTimeLimitSeconds });
+fillRoutinePlan(defaultStudyRoutinePlan);
 populateAzureVoices();
 fillSpeechForm(speechSettings);
+void loadRoutineSubjects().catch((error) => {
+  setRoutineStatus(error.message, true);
+});
 if (getStoredAccessKey()) {
   elements.accessKey.placeholder = "保存済み";
   void connect();

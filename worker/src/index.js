@@ -1,3 +1,9 @@
+import {
+  defaultStudyRoutinePlan,
+  normalizeStudyRoutinePlan,
+  normalizeStudyRoutineRun,
+} from "../../public/study-routine.js";
+
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
 const japaneseAzureSpeechVoices = new Set([
@@ -39,6 +45,8 @@ const defaultSetupPreferences = Object.freeze({
   schemaVersion: 1,
   lastSubjectId: "",
   subjects: Object.freeze({}),
+  routinePlan: defaultStudyRoutinePlan,
+  routineRun: null,
 });
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
@@ -258,6 +266,8 @@ function normalizeSetupPreferences(value) {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
+    routinePlan: normalizeStudyRoutinePlan(source.routinePlan),
+    routineRun: normalizeStudyRoutineRun(source.routineRun),
   };
 }
 
@@ -715,6 +725,21 @@ function studyTimeStatement(env, timeEntry, occurredAt) {
   );
 }
 
+function studyRoutineRunStatement(env, routineRun, updatedAt) {
+  return env.DB.prepare(
+    `UPDATE review_settings
+     SET setup_preferences_json = json_set(
+       CASE
+         WHEN json_valid(setup_preferences_json) THEN setup_preferences_json
+         ELSE '{}'
+       END,
+       '$.routineRun',
+       json(?)
+     ), updated_at = ?
+     WHERE profile_id = 1`,
+  ).bind(JSON.stringify(routineRun), updatedAt);
+}
+
 async function readStudyHistory(env) {
   const rows = await env.DB.prepare(
     `WITH answered AS (
@@ -928,18 +953,43 @@ async function handleRequest(request, env) {
 
   if (url.pathname === "/v1/state" && request.method === "GET") {
     const datasetVersion = url.searchParams.get("dataset");
+    const state = datasetVersion
+      ? await readState(env, normalizeDatasetVersion(datasetVersion))
+      : {
+          progress: { questions: {}, updatedAt: null },
+          settings: (await readState(env, "__settings_only__")).settings,
+          sessions: { memorize: null, "listen-answer": null },
+          session: null,
+        };
     return json(
       request,
       env,
-      datasetVersion
-        ? await readState(env, normalizeDatasetVersion(datasetVersion))
-        : {
-            progress: { questions: {}, updatedAt: null },
-            settings: (await readState(env, "__settings_only__")).settings,
-            sessions: { memorize: null, "listen-answer": null },
-            session: null,
-          },
+      { ...state, studyDate: studyDateAtFourJst(new Date()) },
     );
+  }
+
+  if (url.pathname === "/v1/study-routine" && request.method === "PATCH") {
+    const patch = await request.json();
+    if (!patch || typeof patch !== "object" || Array.isArray(patch)) {
+      return json(request, env, { error: "毎日のメニューの形式が正しくありません。" }, 400);
+    }
+    const current = (await readState(env, "__settings_only__")).settings;
+    const currentPreferences = normalizeSetupPreferences(current.setupPreferences);
+    const setupPreferences = normalizeSetupPreferences({
+      ...currentPreferences,
+      ...(Object.hasOwn(patch, "routinePlan")
+        ? { routinePlan: normalizeStudyRoutinePlan(patch.routinePlan) }
+        : {}),
+      ...(Object.hasOwn(patch, "routineRun")
+        ? { routineRun: normalizeStudyRoutineRun(patch.routineRun) }
+        : {}),
+    });
+    const settings = await saveSettings(env, { setupPreferences });
+    return json(request, env, {
+      ok: true,
+      setupPreferences: settings.setupPreferences,
+      studyDate: studyDateAtFourJst(settings.updatedAt),
+    });
   }
 
   if (url.pathname === "/v1/study-history" && request.method === "GET") {
@@ -1052,17 +1102,27 @@ async function handleRequest(request, env) {
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const routineRun = body.routineRun === undefined
+      ? undefined
+      : normalizeStudyRoutineRun(body.routineRun);
+    if (body.routineRun !== undefined && !routineRun) {
+      return json(request, env, { error: "毎日のメニューの進み方が正しくありません。" }, 400);
+    }
     if (session.studyMode !== "listen-answer") {
       return json(request, env, { error: "聞き流しの一周ではありません。" }, 400);
     }
     const updatedAt = new Date().toISOString();
-    await env.DB.batch([
+    const statements = [
       env.DB.prepare(
         `DELETE FROM study_activity_events
          WHERE event_id = ? AND dataset_version = ? AND study_mode = 'listen-answer'`,
       ).bind(eventId, datasetVersion),
       studySessionStatement(env, sessionDatasetVersion, session, updatedAt),
-    ]);
+    ];
+    if (routineRun) {
+      statements.push(studyRoutineRunStatement(env, routineRun, updatedAt));
+    }
+    await env.DB.batch(statements);
     return json(request, env, {
       ok: true,
       updatedAt,
@@ -1081,11 +1141,20 @@ async function handleRequest(request, env) {
       body.sessionDatasetVersion ?? datasetVersion,
     );
     const completeSession = body.completeSession === true;
+    const routineRun = body.routineRun === undefined
+      ? undefined
+      : normalizeStudyRoutineRun(body.routineRun);
+    if (body.routineRun !== undefined && !routineRun) {
+      return json(request, env, { error: "毎日のメニューの進み方が正しくありません。" }, 400);
+    }
     if (completeSession && activity.studyMode !== "listen-answer") {
       return json(request, env, { error: "聞き流し以外の一周は完了できません。" }, 400);
     }
     const occurredAt = new Date().toISOString();
     const statements = [studyActivityStatement(env, activity, occurredAt)];
+    if (routineRun) {
+      statements.push(studyRoutineRunStatement(env, routineRun, occurredAt));
+    }
     if (completeSession) {
       statements.push(
         env.DB.prepare(
@@ -1133,6 +1202,12 @@ async function handleRequest(request, env) {
       ? null
       : String(body.deleteActivityId);
     const studyMode = body.studyMode ?? session?.studyMode ?? activity?.studyMode ?? "memorize";
+    const routineRun = body.routineRun === undefined
+      ? undefined
+      : normalizeStudyRoutineRun(body.routineRun);
+    if (body.routineRun !== undefined && !routineRun) {
+      return json(request, env, { error: "毎日のメニューの進み方が正しくありません。" }, 400);
+    }
     if (!setupStudyModes.has(studyMode)) {
       return json(request, env, { error: "学習モードが正しくありません。" }, 400);
     }
@@ -1177,6 +1252,9 @@ async function handleRequest(request, env) {
           deleteActivityId,
         ),
       );
+    }
+    if (routineRun) {
+      statements.push(studyRoutineRunStatement(env, routineRun, updatedAt));
     }
     await env.DB.batch(statements);
     return json(request, env, {

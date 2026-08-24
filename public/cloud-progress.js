@@ -14,6 +14,11 @@ import {
   normalizeStudySeconds,
   normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
+import {
+  defaultStudyRoutinePlan,
+  normalizeStudyRoutinePlan,
+  normalizeStudyRoutineRun,
+} from "./study-routine.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
@@ -36,6 +41,8 @@ export const defaultSetupPreferences = Object.freeze({
   schemaVersion: 1,
   lastSubjectId: "",
   subjects: Object.freeze({}),
+  routinePlan: defaultStudyRoutinePlan,
+  routineRun: null,
 });
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
@@ -295,6 +302,8 @@ export function normalizeSetupPreferences(value) {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
+    routinePlan: normalizeStudyRoutinePlan(source.routinePlan),
+    routineRun: normalizeStudyRoutineRun(source.routineRun),
   };
 }
 
@@ -476,6 +485,7 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
     settings: normalizeSharedSettings(payload.settings),
     sessions: normalizeStudySessions(payload.sessions, payload.session),
     session: normalizeStudySession(payload.session),
+    studyDate: typeof payload.studyDate === "string" ? payload.studyDate : "",
   };
 }
 
@@ -561,6 +571,7 @@ export async function saveCloudStudyAnswer(
         deleteActivityId: historyChange.deleteActivityId ?? null,
         sessionDatasetVersion:
           historyChange.sessionDatasetVersion ?? datasetVersion,
+        routineRun: historyChange.routineRun,
       }),
     },
   );
@@ -577,6 +588,7 @@ export async function saveCloudStudyActivity(
   {
     sessionDatasetVersion = datasetVersion,
     completeSession = false,
+    routineRun,
   } = {},
 ) {
   const payload = await cloudRequest(
@@ -588,6 +600,7 @@ export async function saveCloudStudyActivity(
         session,
         sessionDatasetVersion,
         completeSession,
+        routineRun,
       }),
     },
   );
@@ -623,18 +636,29 @@ export async function undoCloudStudyActivity(
   datasetVersion,
   eventId,
   session,
-  { sessionDatasetVersion = datasetVersion } = {},
+  { sessionDatasetVersion = datasetVersion, routineRun } = {},
 ) {
   const payload = await cloudRequest(
     `/v1/study-activity/${encodeURIComponent(eventId)}/undo?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ session, sessionDatasetVersion }),
+      body: JSON.stringify({ session, sessionDatasetVersion, routineRun }),
     },
   );
   return {
     updatedAt: payload.updatedAt,
     session: normalizeStudySession(payload.session),
+  };
+}
+
+export async function saveCloudStudyRoutine(patch) {
+  const payload = await cloudRequest("/v1/study-routine", {
+    method: "PATCH",
+    body: JSON.stringify(patch),
+  });
+  return {
+    setupPreferences: normalizeSetupPreferences(payload.setupPreferences),
+    studyDate: typeof payload.studyDate === "string" ? payload.studyDate : "",
   };
 }
 

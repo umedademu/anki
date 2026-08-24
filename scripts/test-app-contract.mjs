@@ -224,12 +224,35 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.109") ||
-  !changelog.includes("v0.109") ||
-  !settingsHtml.includes("v0.109") ||
-  !historyHtml.includes("v0.109")
+  !html.includes("v0.110") ||
+  !changelog.includes("v0.110") ||
+  !settingsHtml.includes("v0.110") ||
+  !historyHtml.includes("v0.110")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !html.includes('id="routine-dashboard"') ||
+  !html.includes('id="start-routine"') ||
+  !html.includes('id="continue-routine"') ||
+  !html.includes('id="routine-setup-banner"') ||
+  !html.includes('id="routine-progress"') ||
+  !settingsHtml.includes('id="routine-editor"') ||
+  !settingsHtml.includes('id="add-routine-item"') ||
+  !settingsHtml.includes('id="save-routine"') ||
+  !settingsApp.includes("handleRoutineFieldChange") ||
+  !settingsApp.includes('addEventListener("input", handleRoutineFieldChange)') ||
+  !app.includes("recordActiveRoutineQuestion") ||
+  !app.includes("showRoutineStepCompletion") ||
+  !app.includes('state.routineCompletionAction = "reselect"') ||
+  !app.includes("continueStudyRoutineOnDate") ||
+  !cloudProgress.includes("export async function saveCloudStudyRoutine") ||
+  !cloudProgress.includes('cloudRequest("/v1/study-routine"') ||
+  !worker.includes('url.pathname === "/v1/study-routine"') ||
+  !worker.includes("studyRoutineRunStatement") ||
+  !worker.includes("json_set(")
+) {
+  throw new Error("毎日の学習メニューの編集、進行、Cloudflare保存が揃っていません。");
 }
 if (
   !html.includes('href="/history.html"') ||
@@ -339,7 +362,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.109"') ||
+  !html.includes('href="/styles.css?v=0.110"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

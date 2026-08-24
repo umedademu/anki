@@ -6,7 +6,7 @@
     <meta name="description" content="Anki科目別学習アプリの復習・学習時間・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.109" />
+    <link rel="stylesheet" href="/styles.css?v=0.110" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.109</span>
+        <span class="app-version">v0.110</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
@@ -40,6 +40,23 @@
         <button class="secondary-button settings-connect" id="connect-cloud" type="button">
           接続を確認
         </button>
+      </section>
+
+      <section class="settings-card" id="study-routine-settings">
+        <h2>毎日の学習メニュー</h2>
+        <p class="settings-description">
+          科目と問題数を順番に並べます。デッキや学習方法は、それぞれの科目を始める直前に選びます。進行中のメニューには次に1番から始めるまで変更を反映しません。
+        </p>
+        <div class="routine-editor" id="routine-editor" aria-label="毎日の学習メニュー"></div>
+        <div class="routine-editor-actions">
+          <button class="secondary-button" id="add-routine-item" type="button">
+            科目を追加
+          </button>
+          <button class="primary-button" id="save-routine" type="button">
+            メニューを保存
+          </button>
+        </div>
+        <p class="settings-status" id="routine-status" role="status"></p>
       </section>
 
       <form class="settings-card" id="study-time-settings-form">

@@ -935,6 +935,7 @@ const stableDatasetVersions = new Map([
   ["biology-basics:deck-1", "biology-basics-deck-1-v1"],
   ["earth-science-basics:deck-1", "earth-science-basics-deck-1-v1"],
   ["classical-japanese:deck-1", "classical-japanese-word-deck-1-v1"],
+  ["classical-japanese:deck-2", "classical-japanese-word-deck-2-v1"],
   ["classical-chinese:deck-1", "classical-chinese-deck-1-v1"],
 ]);
 
@@ -3495,7 +3496,7 @@ export async function main() {
         id: classicalJapaneseSubjectId,
         title: classicalJapaneseSubjectTitle,
         catalogLabel: "大学受験古文（国語）",
-        description: "最重要古文単語300語を、複数の語義も一問にまとめて覚える大学受験古文",
+        description: "最重要・受験標準の古文単語600語を、複数の語義も一問にまとめて覚える大学受験古文",
         learningType: "cards",
         termUnitLabel: "単語",
         availableStages: ["beginner"],

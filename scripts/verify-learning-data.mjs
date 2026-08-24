@@ -198,7 +198,7 @@ const expectedPoliticsEconomicsSpec = {
 const expectedClassicalJapaneseSpec = {
   number: 1,
   version: "classical-japanese-word-deck-1-v1",
-  contentVersion: "563652286c1b",
+  contentVersion: "8308d65d93ed",
   datasetLabel: "古文単語_単語Deck1_最重要古文単語_300",
   difficultyLabel: "単語Deck1_最重要古文単語",
   termCount: 300,
@@ -1221,7 +1221,8 @@ const classicalJapaneseMeaningRowsMatch = generatedClassicalJapaneseTerms.every(
       sourceRows.length > 0 &&
       term.stages.beginner.length === 1 &&
       question.id === `${term.id}-C01` &&
-      question.prompt === `古語「${term.term}」の意味は何か。` &&
+      sourceRows.every((row) => row.question === term.term) &&
+      question.prompt === term.term &&
       question.answer === sourceAnswers.join("／") &&
       question.acceptedAnswers.length === 0 &&
       [...sourceKeywords].every((keyword) => question.keywords.includes(keyword))

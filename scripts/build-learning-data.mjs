@@ -2349,10 +2349,10 @@ function uniqueClassicalJapaneseValues(values) {
 
 function aggregateClassicalJapaneseMeaningQuestion(itemRows, normalizedQuestions) {
   const firstRow = itemRows[0].row;
-  const expectedPrompt = `古語「${firstRow.item}」の意味は何か。`;
+  const expectedPrompt = firstRow.item;
   if (itemRows.some(({ row }) => row.question !== expectedPrompt)) {
     throw new Error(
-      `${firstRow.item}の語義問題は、語義数を示さない「${expectedPrompt}」に統一してください。`,
+      `${firstRow.item}の語義問題は、questionをitemと同じ「${expectedPrompt}」に統一してください。`,
     );
   }
   if (

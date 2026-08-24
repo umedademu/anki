@@ -1647,8 +1647,11 @@ const expectedEarthScienceImageQuestionIds = new Set(
       .map((question) => question.id),
   ),
 );
+const earthScienceImageCoverage =
+  earthScienceImageOverrides.length / generatedEarthScienceTerms.length;
 if (
-  earthScienceImageOverrides.length !== 64 ||
+  earthScienceImageCoverage < 0.4 ||
+  earthScienceImageCoverage > 0.6 ||
   earthScienceImageTermIds.size !== earthScienceImageOverrides.length ||
   earthScienceImageQuestionIds.size !== expectedEarthScienceImageQuestionIds.size ||
   earthScienceImageOverrides.some(
@@ -1662,7 +1665,7 @@ if (
   )
 ) {
   throw new Error(
-    "地学基礎の厳選画像が64項目へ回答文ではなく用語単位で割り当てられていません。",
+    "地学基礎の厳選画像が全項目の40%以上60%以下へ用語単位で割り当てられていません。",
   );
 }
 

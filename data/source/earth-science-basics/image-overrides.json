@@ -1,66 +1,852 @@
 [
-  { "termId": "ES-000004", "query": "Earth internal structure", "caption": "地球内部の層構造", "fileName": "Earth-crust-cutaway-japanese.svg" },
-  { "termId": "ES-000009", "query": "tectonic plates world map", "caption": "世界のプレート分布", "fileName": "Tectonic plates (2022).svg" },
-  { "termId": "ES-000015", "query": "divergent plate boundary diagram", "caption": "発散境界の模式図", "fileName": "Continental-continental constructive plate boundary.svg" },
-  { "termId": "ES-000016", "query": "convergent plate boundary diagram", "caption": "収束境界の模式図", "fileName": "Continental-continental destructive plate boundary.svg" },
-  { "termId": "ES-000017", "query": "transform plate boundary diagram", "caption": "すれ違う境界の模式図", "fileName": "Continental-continental conservative plate boundary opposite directions.svg" },
-  { "termId": "ES-000018", "query": "mid ocean ridge diagram", "caption": "海嶺と海洋底拡大の模式図", "fileName": "Mid-ocean ridge cut away view.png" },
-  { "termId": "ES-000019", "query": "oceanic trench subduction diagram", "caption": "海溝と沈み込み帯", "fileName": "Subduction-en.svg" },
-  { "termId": "ES-000020", "query": "subduction zone diagram", "caption": "沈み込みの模式図", "fileName": "Subduction zone - 2ategories.png" },
-  { "termId": "ES-000022", "query": "hypocenter epicenter diagram", "caption": "震源と震央の位置関係", "fileName": "Epicenter Diagram.svg" },
-  { "termId": "ES-000024", "query": "P wave S wave diagram", "caption": "P波の振動方向", "fileName": "P-wave longitudinal-wave jp.svg" },
-  { "termId": "ES-000025", "query": "P wave S wave diagram", "caption": "S波の振動方向", "fileName": "S-wave transverse-wave jp.svg" },
-  { "termId": "ES-000036", "query": "basalt rock specimen", "caption": "玄武岩", "fileName": "BasaltUSGOV.jpg" },
-  { "termId": "ES-000037", "query": "andesite rock specimen", "caption": "安山岩", "fileName": "Olivine-pyroxene andesite (GeoDIL number - 450).jpg" },
-  { "termId": "ES-000038", "query": "rhyolite rock specimen", "caption": "流紋岩", "fileName": "Rhyolite porphyry (GeoDIL number - 416).jpg" },
-  { "termId": "ES-000039", "query": "gabbro rock specimen", "caption": "斑れい岩", "fileName": "Gabbro (GeoDIL number - 94).jpg" },
-  { "termId": "ES-000040", "query": "diorite rock specimen", "caption": "閃緑岩", "fileName": "Diorite.jpg" },
-  { "termId": "ES-000041", "query": "granite rock specimen", "caption": "花こう岩", "fileName": "Delicatus Ice Granite (pegmatitic granite) 3 (35578021666).jpg" },
-  { "termId": "ES-000042", "query": "porphyritic texture rock", "caption": "斑状組織", "fileName": "Porphyritic aphanitic igneous rock groundmass phenocrysts.png" },
-  { "termId": "ES-000043", "query": "phaneritic texture rock", "caption": "等粒状組織", "fileName": "Granit strzelinski2.JPG" },
-  { "termId": "ES-000045", "query": "pyroclastic flow", "caption": "火砕流", "fileName": "Pyroclastic flows at Mayon Volcano.jpg" },
-  { "termId": "ES-000046", "query": "tsunami generation diagram", "caption": "津波発生の模式図", "fileName": "Eq-gen2.svg" },
-  { "termId": "ES-000047", "query": "layers of atmosphere diagram", "caption": "大気の層構造", "fileName": "Atmosphere structure-en.svg" },
-  { "termId": "ES-000057", "query": "Earth global atmospheric circulation diagram", "caption": "地球規模の大気大循環", "fileName": "Earth Global Circulation - en.svg" },
-  { "termId": "ES-000062", "query": "thermohaline circulation map", "caption": "海洋の大循環", "fileName": "Thermohaline Circulation 2.png" },
-  { "termId": "ES-000067", "query": "ocean currents around Japan map", "caption": "日本周辺の海流", "fileName": "Japan's ocean currents.PNG" },
-  { "termId": "ES-000068", "query": "ocean currents around Japan map", "caption": "日本周辺の海流", "fileName": "Japan's ocean currents.PNG" },
-  { "termId": "ES-000073", "query": "protoplanetary disk diagram", "caption": "原始太陽系円盤", "fileName": "Disk comet nebula.jpg" },
-  { "termId": "ES-000074", "query": "Solar System planets", "caption": "太陽系の天体", "fileName": "Solar System True Color JA.png" },
-  { "termId": "ES-000081", "query": "geologic time scale diagram", "caption": "地質時代の区分", "fileName": "Geological time spiral.png" },
-  { "termId": "ES-000090", "query": "law of superposition geology diagram", "caption": "地層累重の法則", "fileName": "Law of superposition.png" },
-  { "termId": "ES-000091", "query": "geological unconformity diagram", "caption": "不整合", "fileName": "Unconformities flow chart.svg" },
-  { "termId": "ES-000124", "query": "normal fault diagram", "caption": "正断層", "fileName": "Normal fault diagram.gif" },
-  { "termId": "ES-000125", "query": "reverse fault diagram", "caption": "逆断層", "fileName": "Reverse fault.gif" },
-  { "termId": "ES-000126", "query": "strike slip fault diagram", "caption": "横ずれ断層", "fileName": "Strike slip fault diagram.gif" },
-  { "termId": "ES-000127", "query": "anticline syncline diagram", "caption": "背斜と向斜", "fileName": "Anticline-Syncline-s-ink-FabioCrameri.png" },
-  { "termId": "ES-000128", "query": "anticline syncline diagram", "caption": "背斜と向斜", "fileName": "Anticline-Syncline-s-ink-FabioCrameri.png" },
-  { "termId": "ES-000139", "query": "caldera diagram", "caption": "カルデラのでき方", "fileName": "Long Valley Caldera schematic.gif" },
-  { "termId": "ES-000140", "query": "shield volcano diagram", "caption": "盾状火山", "fileName": "Shield volcano unlabelled.svg" },
-  { "termId": "ES-000141", "query": "stratovolcano diagram", "caption": "成層火山", "fileName": "Stratovolcano cross-section.svg" },
-  { "termId": "ES-000142", "query": "lava dome", "caption": "溶岩ドーム", "fileName": "Chaitén Volcano Lava Dome, Chile.jpg" },
-  { "termId": "ES-000147", "query": "pumice rock specimen", "caption": "軽石", "fileName": "Pumice (GeoDIL number - 415).jpg" },
-  { "termId": "ES-000148", "query": "scoria rock specimen", "caption": "スコリア", "fileName": "Scoria (GeoDIL number - 138).jpg" },
-  { "termId": "ES-000205", "query": "extratropical cyclone fronts diagram", "caption": "温帯低気圧と前線", "fileName": "UK Cyclone English.svg" },
-  { "termId": "ES-000208", "query": "warm front diagram", "caption": "温暖前線の断面", "fileName": "Warm front.svg" },
-  { "termId": "ES-000209", "query": "cold front diagram", "caption": "寒冷前線の断面", "fileName": "Front froid anabatique.png" },
-  { "termId": "ES-000217", "query": "winter pressure pattern Japan weather map", "caption": "冬型の気圧配置", "fileName": "Weathermap eastasia 1.png" },
-  { "termId": "ES-000220", "query": "Foehn effect diagram", "caption": "フェーン現象", "fileName": "Foehn effect mechanisms.png" },
-  { "termId": "ES-000221", "query": "cumulonimbus cloud", "caption": "積乱雲", "fileName": "Wagga-Cumulonimbus.jpg" },
-  { "termId": "ES-000249", "query": "aurora borealis", "caption": "オーロラ", "fileName": "Aurora in Abisko near Torneträsk.jpg" },
-  { "termId": "ES-000250", "query": "Milky Way galaxy diagram", "caption": "銀河系", "fileName": "Artist's impression of the Milky Way (updated - annotated).jpg" },
-  { "termId": "ES-000267", "query": "ripple marks sedimentary structure", "caption": "漣痕", "fileName": "Ripple marks in Futamachiya Miura.jpg" },
-  { "termId": "ES-000268", "query": "graded bedding sedimentary structure", "caption": "級化構造", "fileName": "Graded bedding (Wilhite Formation, Neoproterozoic; Kinzel Springs, Tennessee, USA) 1 (40920536724).jpg" },
-  { "termId": "ES-000269", "query": "cross bedding sedimentary structure", "caption": "斜交葉理", "fileName": "Luzna Fm, cross bedding.JPG" },
-  { "termId": "ES-000288", "query": "trilobite fossil", "caption": "三葉虫の化石", "fileName": "Trilobita Diversity.png" },
-  { "termId": "ES-000289", "query": "fusulinid fossil", "caption": "フズリナの化石", "fileName": "Fusulinid limestone, Upper Pennsylvanian; Elk County KS.jpg" },
-  { "termId": "ES-000290", "query": "Ichthyostega fossil reconstruction", "caption": "イクチオステガ", "fileName": "Ichthyostega skeletal reconstruction 2018.png" },
-  { "termId": "ES-000291", "query": "Lepidodendron fossil", "caption": "リンボクの化石", "fileName": "Lepidodendron fossil.jpg" },
-  { "termId": "ES-000292", "query": "dinosaur fossil skeleton", "caption": "恐竜の化石骨格", "fileName": "Journal.pone.0138352.g001A.jpg" },
-  { "termId": "ES-000293", "query": "ammonite fossil", "caption": "アンモナイトの化石", "fileName": "Ammonite section.JPG" },
-  { "termId": "ES-000294", "query": "cycad plant", "caption": "ソテツ", "fileName": "Starr 080716-9529 Cycas revoluta.jpg" },
-  { "termId": "ES-000295", "query": "Trigonia fossil", "caption": "トリゴニアの化石", "fileName": "Trigonia costata 34.jpg" },
-  { "termId": "ES-000296", "query": "Nummulites fossil", "caption": "貨幣石の化石", "fileName": "Nummulites (France).JPG" },
-  { "termId": "ES-000297", "query": "Vicarya fossil", "caption": "ビカリアの化石", "fileName": "Vicarya yokoyamai National Museum of Nature and Science, Japan.jpg" },
-  { "termId": "ES-000298", "query": "Naumann elephant fossil skeleton", "caption": "ナウマンゾウの化石骨格", "fileName": "Palaeoloxodon naumanni Hokkaido Museum collection.jpg" }
+  {
+    "termId": "ES-000001",
+    "query": "Earth Blue Marble full disk",
+    "fileName": "The Earth seen from Apollo 17.jpg"
+  },
+  {
+    "termId": "ES-000002",
+    "query": "oblate spheroid Earth shape diagram",
+    "fileName": "Forces oblate spheroid2.gif"
+  },
+  {
+    "termId": "ES-000004",
+    "query": "Earth internal structure",
+    "caption": "地球内部の層構造",
+    "fileName": "Earth-crust-cutaway-japanese.svg"
+  },
+  {
+    "termId": "ES-000009",
+    "query": "tectonic plates world map",
+    "caption": "世界のプレート分布",
+    "fileName": "Tectonic plates (2022).svg"
+  },
+  {
+    "termId": "ES-000015",
+    "query": "divergent plate boundary diagram",
+    "caption": "発散境界の模式図",
+    "fileName": "Continental-continental constructive plate boundary.svg"
+  },
+  {
+    "termId": "ES-000016",
+    "query": "convergent plate boundary diagram",
+    "caption": "収束境界の模式図",
+    "fileName": "Continental-continental destructive plate boundary.svg"
+  },
+  {
+    "termId": "ES-000017",
+    "query": "transform plate boundary diagram",
+    "caption": "すれ違う境界の模式図",
+    "fileName": "Continental-continental conservative plate boundary opposite directions.svg"
+  },
+  {
+    "termId": "ES-000018",
+    "query": "mid ocean ridge diagram",
+    "caption": "海嶺と海洋底拡大の模式図",
+    "fileName": "Mid-ocean ridge cut away view.png"
+  },
+  {
+    "termId": "ES-000019",
+    "query": "oceanic trench subduction diagram",
+    "caption": "海溝と沈み込み帯",
+    "fileName": "Subduction-en.svg"
+  },
+  {
+    "termId": "ES-000020",
+    "query": "subduction zone diagram",
+    "caption": "沈み込みの模式図",
+    "fileName": "Subduction zone - 2ategories.png"
+  },
+  {
+    "termId": "ES-000022",
+    "query": "hypocenter epicenter diagram",
+    "caption": "震源と震央の位置関係",
+    "fileName": "Epicenter Diagram.svg"
+  },
+  {
+    "termId": "ES-000024",
+    "query": "P wave S wave diagram",
+    "caption": "P波の振動方向",
+    "fileName": "P-wave longitudinal-wave jp.svg"
+  },
+  {
+    "termId": "ES-000025",
+    "query": "P wave S wave diagram",
+    "caption": "S波の振動方向",
+    "fileName": "S-wave transverse-wave jp.svg"
+  },
+  {
+    "termId": "ES-000031",
+    "query": "volcano eruption photograph",
+    "fileName": "Taal Volcano eruption on January 12, 2020.jpg"
+  },
+  {
+    "termId": "ES-000036",
+    "query": "basalt rock specimen",
+    "caption": "玄武岩",
+    "fileName": "BasaltUSGOV.jpg"
+  },
+  {
+    "termId": "ES-000037",
+    "query": "andesite rock specimen",
+    "caption": "安山岩",
+    "fileName": "Olivine-pyroxene andesite (GeoDIL number - 450).jpg"
+  },
+  {
+    "termId": "ES-000038",
+    "query": "rhyolite rock specimen",
+    "caption": "流紋岩",
+    "fileName": "Rhyolite porphyry (GeoDIL number - 416).jpg"
+  },
+  {
+    "termId": "ES-000039",
+    "query": "gabbro rock specimen",
+    "caption": "斑れい岩",
+    "fileName": "Gabbro (GeoDIL number - 94).jpg"
+  },
+  {
+    "termId": "ES-000040",
+    "query": "diorite rock specimen",
+    "caption": "閃緑岩",
+    "fileName": "Diorite.jpg"
+  },
+  {
+    "termId": "ES-000041",
+    "query": "granite rock specimen",
+    "caption": "花こう岩",
+    "fileName": "Delicatus Ice Granite (pegmatitic granite) 3 (35578021666).jpg"
+  },
+  {
+    "termId": "ES-000042",
+    "query": "porphyritic texture rock",
+    "caption": "斑状組織",
+    "fileName": "Porphyritic aphanitic igneous rock groundmass phenocrysts.png"
+  },
+  {
+    "termId": "ES-000043",
+    "query": "phaneritic texture rock",
+    "caption": "等粒状組織",
+    "fileName": "Granit strzelinski2.JPG"
+  },
+  {
+    "termId": "ES-000044",
+    "query": "volcanic ejecta tephra types diagram",
+    "fileName": "Santorini 94.jpg"
+  },
+  {
+    "termId": "ES-000045",
+    "query": "pyroclastic flow",
+    "caption": "火砕流",
+    "fileName": "Pyroclastic flows at Mayon Volcano.jpg"
+  },
+  {
+    "termId": "ES-000046",
+    "query": "tsunami generation diagram",
+    "caption": "津波発生の模式図",
+    "fileName": "Eq-gen2.svg"
+  },
+  {
+    "termId": "ES-000047",
+    "query": "layers of atmosphere diagram",
+    "caption": "大気の層構造",
+    "fileName": "Atmosphere structure-en.svg"
+  },
+  {
+    "termId": "ES-000053",
+    "query": "Earth energy budget diagram",
+    "fileName": "NASA earth energy budget ja.gif"
+  },
+  {
+    "termId": "ES-000055",
+    "query": "Earth energy budget diagram",
+    "fileName": "NASA earth energy budget ja.gif"
+  },
+  {
+    "termId": "ES-000056",
+    "query": "greenhouse effect diagram",
+    "fileName": "Greenhouse effect diagram.png"
+  },
+  {
+    "termId": "ES-000057",
+    "query": "Earth global atmospheric circulation diagram",
+    "caption": "地球規模の大気大循環",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "ES-000058",
+    "query": "Earth atmospheric circulation Hadley cell diagram",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "ES-000059",
+    "query": "Earth atmospheric circulation trade winds diagram",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "ES-000060",
+    "query": "Earth atmospheric circulation westerlies diagram",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "ES-000061",
+    "query": "Coriolis effect rotating Earth diagram",
+    "fileName": "Coriolis effect01.png"
+  },
+  {
+    "termId": "ES-000062",
+    "query": "thermohaline circulation map",
+    "caption": "海洋の大循環",
+    "fileName": "Thermohaline Circulation 2.png"
+  },
+  {
+    "termId": "ES-000063",
+    "query": "ocean surface circulation map",
+    "fileName": "Ocean currents 1943 (borderless)3.png",
+    "caption": "世界の表層海流"
+  },
+  {
+    "termId": "ES-000064",
+    "query": "thermohaline deep ocean circulation diagram",
+    "fileName": "Thermohaline Circulation 2.png"
+  },
+  {
+    "termId": "ES-000067",
+    "query": "ocean currents around Japan map",
+    "caption": "日本周辺の海流",
+    "fileName": "Japan's ocean currents.PNG"
+  },
+  {
+    "termId": "ES-000068",
+    "query": "ocean currents around Japan map",
+    "caption": "日本周辺の海流",
+    "fileName": "Japan's ocean currents.PNG"
+  },
+  {
+    "termId": "ES-000069",
+    "query": "Big Bang timeline diagram",
+    "caption": "宇宙の進化と宇宙の晴れ上がり",
+    "fileName": "CMB Timeline300 no WMAP.jpg"
+  },
+  {
+    "termId": "ES-000072",
+    "query": "cosmic microwave background map",
+    "fileName": "CMB Timeline300 no WMAP.jpg"
+  },
+  {
+    "termId": "ES-000073",
+    "query": "protoplanetary disk diagram",
+    "caption": "原始太陽系円盤",
+    "fileName": "Disk comet nebula.jpg"
+  },
+  {
+    "termId": "ES-000074",
+    "query": "Solar System planets",
+    "caption": "太陽系の天体",
+    "fileName": "Solar System True Color JA.png"
+  },
+  {
+    "termId": "ES-000075",
+    "query": "Sun full disk photograph",
+    "fileName": "Full disk of the Sun (eso1703e-comparisona).jpg"
+  },
+  {
+    "termId": "ES-000081",
+    "query": "geologic time scale diagram",
+    "caption": "地質時代の区分",
+    "fileName": "Geological time spiral.png"
+  },
+  {
+    "termId": "ES-000086",
+    "query": "sedimentary rock strata outcrop",
+    "fileName": "Rock strata south of Cullernose Point - geograph.org.uk - 412980.jpg"
+  },
+  {
+    "termId": "ES-000090",
+    "query": "law of superposition geology diagram",
+    "caption": "地層累重の法則",
+    "fileName": "Law of superposition.png"
+  },
+  {
+    "termId": "ES-000091",
+    "query": "geological unconformity diagram",
+    "caption": "不整合",
+    "fileName": "Unconformities flow chart.svg"
+  },
+  {
+    "termId": "ES-000093",
+    "query": "geological fold anticline syncline diagram",
+    "fileName": "Anticline-Syncline-s-ink-FabioCrameri.png"
+  },
+  {
+    "termId": "ES-000096",
+    "query": "El Nino sea surface temperature map diagram",
+    "fileName": "Movement of surface waters during El Nino.jpg"
+  },
+  {
+    "termId": "ES-000098",
+    "query": "Japan tectonic plates map",
+    "fileName": "Tectonic plates around Japan.png"
+  },
+  {
+    "termId": "ES-000099",
+    "query": "soil liquefaction earthquake photograph",
+    "fileName": "Soil-liquefaction at Shinkiba after 2011 Tohoku Pacific Ocean offshore earthquake.jpg"
+  },
+  {
+    "termId": "ES-000101",
+    "query": "geoid Earth gravity map diagram",
+    "fileName": "Earth Gravity Field Anomalies, geoid format, NASA Earth Observatory.jpg"
+  },
+  {
+    "termId": "ES-000104",
+    "query": "Eratosthenes Earth circumference measurement diagram",
+    "fileName": "Eratosthenes & measurement of the Earth.png"
+  },
+  {
+    "termId": "ES-000105",
+    "query": "Earth internal layers discontinuities diagram",
+    "fileName": "Earth-crust-cutaway-japanese.svg"
+  },
+  {
+    "termId": "ES-000108",
+    "query": "continental crust oceanic crust diagram",
+    "caption": "大陸地殻と海洋地殻",
+    "fileName": "Continental and oceanic crust-eu.png"
+  },
+  {
+    "termId": "ES-000109",
+    "query": "continental crust oceanic crust diagram",
+    "fileName": "Continental and oceanic crust-eu.png"
+  },
+  {
+    "termId": "ES-000110",
+    "query": "peridotite rock specimen",
+    "fileName": "Peridotite (GeoDIL number - 465).jpg"
+  },
+  {
+    "termId": "ES-000113",
+    "query": "mantle convection diagram",
+    "fileName": "Simulation of 2D mantle convection in a quarter of annulus using ASPECT mantle convection code.gif"
+  },
+  {
+    "termId": "ES-000115",
+    "query": "Hawaii hotspot volcanic chain diagram",
+    "fileName": "Hawaii hotspot cross-sectional diagram.jpg"
+  },
+  {
+    "termId": "ES-000116",
+    "query": "volcanic island arc subduction diagram",
+    "fileName": "CalabrianArc-GeotectonicSection.jpg"
+  },
+  {
+    "termId": "ES-000117",
+    "query": "continental collision plate boundary diagram",
+    "fileName": "Continental-continental convergence en.svg"
+  },
+  {
+    "termId": "ES-000118",
+    "query": "seafloor spreading mid ocean ridge diagram",
+    "fileName": "Oceanic.Stripe.Magnetic.Anomalies.Scheme.fr.gif"
+  },
+  {
+    "termId": "ES-000121",
+    "query": "active fault surface rupture photograph",
+    "fileName": "San Andreas Fault Aerial View.gif"
+  },
+  {
+    "termId": "ES-000124",
+    "query": "normal fault diagram",
+    "caption": "正断層",
+    "fileName": "Normal fault diagram.gif"
+  },
+  {
+    "termId": "ES-000125",
+    "query": "reverse fault diagram",
+    "caption": "逆断層",
+    "fileName": "Reverse fault.gif"
+  },
+  {
+    "termId": "ES-000126",
+    "query": "strike slip fault diagram",
+    "caption": "横ずれ断層",
+    "fileName": "Strike slip fault diagram.gif"
+  },
+  {
+    "termId": "ES-000127",
+    "query": "anticline syncline diagram",
+    "caption": "背斜と向斜",
+    "fileName": "Anticline-Syncline-s-ink-FabioCrameri.png"
+  },
+  {
+    "termId": "ES-000128",
+    "query": "anticline syncline diagram",
+    "caption": "背斜と向斜",
+    "fileName": "Anticline-Syncline-s-ink-FabioCrameri.png"
+  },
+  {
+    "termId": "ES-000129",
+    "query": "accretionary wedge prism subduction diagram",
+    "fileName": "Accretionary wedge.png"
+  },
+  {
+    "termId": "ES-000134",
+    "query": "marble metamorphic rock specimen",
+    "fileName": "Marble breccia (GeoDIL number - 467).jpg"
+  },
+  {
+    "termId": "ES-000136",
+    "query": "gneiss metamorphic rock specimen",
+    "fileName": "Isoclinal fold in gneiss 3 (49155412573).jpg"
+  },
+  {
+    "termId": "ES-000139",
+    "query": "caldera diagram",
+    "caption": "カルデラのでき方",
+    "fileName": "Long Valley Caldera schematic.gif"
+  },
+  {
+    "termId": "ES-000140",
+    "query": "shield volcano diagram",
+    "caption": "盾状火山",
+    "fileName": "Shield volcano unlabelled.svg"
+  },
+  {
+    "termId": "ES-000141",
+    "query": "stratovolcano diagram",
+    "caption": "成層火山",
+    "fileName": "Stratovolcano cross-section.svg"
+  },
+  {
+    "termId": "ES-000142",
+    "query": "lava dome",
+    "caption": "溶岩ドーム",
+    "fileName": "Chaitén Volcano Lava Dome, Chile.jpg"
+  },
+  {
+    "termId": "ES-000147",
+    "query": "pumice rock specimen",
+    "caption": "軽石",
+    "fileName": "Pumice (GeoDIL number - 415).jpg"
+  },
+  {
+    "termId": "ES-000148",
+    "query": "scoria rock specimen",
+    "caption": "スコリア",
+    "fileName": "Scoria (GeoDIL number - 138).jpg"
+  },
+  {
+    "termId": "ES-000152",
+    "query": "tuff rock specimen",
+    "fileName": "Welded tuff (GeoDIL number - 461).jpg"
+  },
+  {
+    "termId": "ES-000154",
+    "query": "quartz mineral crystal specimen",
+    "fileName": "Geode-with-encrustation-of-quartz-crystals-on-a-base-of-limonite-01.jpg"
+  },
+  {
+    "termId": "ES-000155",
+    "query": "feldspar mineral crystal specimen",
+    "fileName": "Quartz-Feldspar-Group-187657.jpg"
+  },
+  {
+    "termId": "ES-000156",
+    "query": "biotite mineral specimen",
+    "fileName": "Biotite flakes (GeoDIL number - 5).jpg"
+  },
+  {
+    "termId": "ES-000157",
+    "query": "pyroxene mineral specimen",
+    "fileName": "Pyroxene-Group-112595.jpg"
+  },
+  {
+    "termId": "ES-000158",
+    "query": "olivine mineral specimen",
+    "fileName": "Olivine-213076.jpg"
+  },
+  {
+    "termId": "ES-000159",
+    "query": "hornblende mineral specimen",
+    "fileName": "Apatite-(CaOH)-Hornblende-38354.jpg"
+  },
+  {
+    "termId": "ES-000160",
+    "query": "calcite mineral crystal specimen",
+    "fileName": "Calcite crystal (GeoDIL number - 698).jpg"
+  },
+  {
+    "termId": "ES-000163",
+    "query": "conglomerate sedimentary rock specimen",
+    "fileName": "Travertine-cemented conglomerate 4.jpg"
+  },
+  {
+    "termId": "ES-000164",
+    "query": "sandstone sedimentary rock specimen",
+    "fileName": "Sandstone (GeoDIL number - 474).jpg"
+  },
+  {
+    "termId": "ES-000165",
+    "query": "mudstone sedimentary rock specimen",
+    "fileName": "Mudstone (Graneros Formation, Upper Cretaceous; Ponca State Park, Nebraska, USA).jpg"
+  },
+  {
+    "termId": "ES-000166",
+    "query": "limestone sedimentary rock specimen",
+    "fileName": "Limestone (Salem Limestone, Middle Mississippian; Bloomington region, Indiana, USA).jpg"
+  },
+  {
+    "termId": "ES-000167",
+    "query": "chert sedimentary rock specimen",
+    "fileName": "Chert breccia (probably from the Tri-State Mining District, Missouri, USA) 1.jpg"
+  },
+  {
+    "termId": "ES-000168",
+    "query": "coal rock specimen",
+    "fileName": "Bituminous coal (GeoDIL number - 501).jpg"
+  },
+  {
+    "termId": "ES-000169",
+    "query": "weathered rock outcrop photograph",
+    "fileName": "Weathered rock outcrop - geograph.org.uk - 1414636.jpg"
+  },
+  {
+    "termId": "ES-000170",
+    "query": "physical weathering frost wedging photograph",
+    "fileName": "Weathering freeze thaw action iceland.jpg"
+  },
+  {
+    "termId": "ES-000171",
+    "query": "chemical weathering rock photograph",
+    "fileName": "Physical, chemical and biological weathering of a rock - geograph.org.uk - 4979954.jpg"
+  },
+  {
+    "termId": "ES-000172",
+    "query": "debris flow photograph",
+    "fileName": "Debris flow at the base of the cliffs - geograph.org.uk - 4924091.jpg"
+  },
+  {
+    "termId": "ES-000173",
+    "query": "landslide photograph",
+    "fileName": "Aerial photograph of Aratozawa Landslide Site on 2009-06-02.jpg"
+  },
+  {
+    "termId": "ES-000174",
+    "query": "slope collapse rockfall photograph",
+    "fileName": "Landslide by Kex Gill - geograph.org.uk - 1177228.jpg"
+  },
+  {
+    "termId": "ES-000176",
+    "query": "seismograph instrument photograph",
+    "fileName": "Een seismograaf in het weerkundig instituut in Den Bildt, Nederland, 1 maart 1909, SFA003008998.jpg"
+  },
+  {
+    "termId": "ES-000183",
+    "query": "tsunami run-up inundation diagram",
+    "fileName": "Tsunami run-up, height, and inundation.png"
+  },
+  {
+    "termId": "ES-000184",
+    "query": "tsunami deposit sediment photograph",
+    "fileName": "Tsunami deposit environments.svg"
+  },
+  {
+    "termId": "ES-000186",
+    "query": "atmospheric temperature lapse rate diagram",
+    "fileName": "Atmospheric heat flow profile.svg"
+  },
+  {
+    "termId": "ES-000188",
+    "query": "Earth albedo diagram",
+    "fileName": "Albedo diagram.svg"
+  },
+  {
+    "termId": "ES-000197",
+    "query": "cloud types classification diagram",
+    "fileName": "Cloud types en.svg"
+  },
+  {
+    "termId": "ES-000202",
+    "query": "water cycle precipitation diagram",
+    "fileName": "Water Cycle - br.svg"
+  },
+  {
+    "termId": "ES-000203",
+    "query": "low pressure weather map isobars",
+    "fileName": "Windmovement on weathermaps.JPG",
+    "caption": "高気圧と低気圧の風向"
+  },
+  {
+    "termId": "ES-000204",
+    "query": "high pressure weather map isobars",
+    "fileName": "Windmovement on weathermaps.JPG"
+  },
+  {
+    "termId": "ES-000205",
+    "query": "extratropical cyclone fronts diagram",
+    "caption": "温帯低気圧と前線",
+    "fileName": "UK Cyclone English.svg"
+  },
+  {
+    "termId": "ES-000206",
+    "query": "tropical cyclone satellite photograph",
+    "fileName": "Super Typhoon Oscar SE of Japan near peak intensity (2268-432).jpg",
+    "caption": "熱帯低気圧（台風）の雲の渦"
+  },
+  {
+    "termId": "ES-000207",
+    "query": "weather fronts warm cold stationary occluded diagram",
+    "fileName": "NWS weather fronts.svg"
+  },
+  {
+    "termId": "ES-000208",
+    "query": "warm front diagram",
+    "caption": "温暖前線の断面",
+    "fileName": "Warm front.svg"
+  },
+  {
+    "termId": "ES-000209",
+    "query": "cold front diagram",
+    "caption": "寒冷前線の断面",
+    "fileName": "Front froid anabatique.png"
+  },
+  {
+    "termId": "ES-000210",
+    "query": "stationary front weather symbol diagram",
+    "fileName": "Stationary front symbol.svg"
+  },
+  {
+    "termId": "ES-000211",
+    "query": "occluded front weather symbol diagram",
+    "fileName": "Occluded front symbol.svg"
+  },
+  {
+    "termId": "ES-000212",
+    "query": "Japan four air masses map",
+    "fileName": "East asian baiu-front and air masses.png",
+    "caption": "東アジアの気団と梅雨前線"
+  },
+  {
+    "termId": "ES-000213",
+    "query": "Japan four air masses map",
+    "fileName": "East asian baiu-front and air masses.png"
+  },
+  {
+    "termId": "ES-000214",
+    "query": "Japan four air masses map",
+    "fileName": "East asian baiu-front and air masses.png"
+  },
+  {
+    "termId": "ES-000215",
+    "query": "Japan four air masses map",
+    "fileName": "East asian baiu-front and air masses.png"
+  },
+  {
+    "termId": "ES-000216",
+    "query": "Baiu front Japan weather map",
+    "fileName": "East asian baiu-front and air masses.png"
+  },
+  {
+    "termId": "ES-000217",
+    "query": "winter pressure pattern Japan weather map",
+    "caption": "冬型の気圧配置",
+    "fileName": "Weathermap eastasia 1.png"
+  },
+  {
+    "termId": "ES-000219",
+    "query": "East Asia monsoon diagram",
+    "fileName": "India southwest summer monsoon onset map en.svg"
+  },
+  {
+    "termId": "ES-000220",
+    "query": "Foehn effect diagram",
+    "caption": "フェーン現象",
+    "fileName": "Foehn effect mechanisms.png"
+  },
+  {
+    "termId": "ES-000221",
+    "query": "cumulonimbus cloud",
+    "caption": "積乱雲",
+    "fileName": "Wagga-Cumulonimbus.jpg"
+  },
+  {
+    "termId": "ES-000223",
+    "query": "typhoon satellite image Japan",
+    "fileName": "Super Typhoon Oscar SE of Japan near peak intensity (2268-432).jpg"
+  },
+  {
+    "termId": "ES-000228",
+    "query": "world ocean currents map",
+    "fileName": "Ocean currents 1943 (borderless)3.png"
+  },
+  {
+    "termId": "ES-000232",
+    "query": "ocean thermocline temperature depth profile diagram",
+    "fileName": "Thermocline.png"
+  },
+  {
+    "termId": "ES-000237",
+    "query": "coastal upwelling ocean diagram",
+    "fileName": "Climate-science-ocean-upwelling-coastal-equatorial.png"
+  },
+  {
+    "termId": "ES-000247",
+    "query": "comet photograph tail",
+    "fileName": "Lspn comet halley.jpg"
+  },
+  {
+    "termId": "ES-000249",
+    "query": "aurora borealis",
+    "caption": "オーロラ",
+    "fileName": "Aurora in Abisko near Torneträsk.jpg"
+  },
+  {
+    "termId": "ES-000250",
+    "query": "Milky Way galaxy diagram",
+    "caption": "銀河系",
+    "fileName": "Artist's impression of the Milky Way (updated - annotated).jpg"
+  },
+  {
+    "termId": "ES-000251",
+    "query": "Milky Way galaxy bulge disk diagram",
+    "fileName": "Artist's impression of the Milky Way (updated - annotated).jpg"
+  },
+  {
+    "termId": "ES-000252",
+    "query": "Milky Way galaxy bulge disk diagram",
+    "fileName": "Artist's impression of the Milky Way (updated - annotated).jpg"
+  },
+  {
+    "termId": "ES-000254",
+    "query": "stellar parallax diagram",
+    "fileName": "Annual parallax.png"
+  },
+  {
+    "termId": "ES-000258",
+    "query": "protoplanetary disk diagram",
+    "fileName": "Disk comet nebula.jpg"
+  },
+  {
+    "termId": "ES-000259",
+    "query": "planetesimal formation diagram",
+    "fileName": "Disk comet nebula.jpg"
+  },
+  {
+    "termId": "ES-000262",
+    "query": "circumstellar habitable zone diagram",
+    "fileName": "Diagram of different habitable zone regions by Chester Harman.jpg"
+  },
+  {
+    "termId": "ES-000263",
+    "query": "cyanobacteria microscope photograph",
+    "fileName": "Hypersaline environments and extremely halophilic microbes.jpg"
+  },
+  {
+    "termId": "ES-000267",
+    "query": "ripple marks sedimentary structure",
+    "caption": "漣痕",
+    "fileName": "Ripple marks in Futamachiya Miura.jpg"
+  },
+  {
+    "termId": "ES-000268",
+    "query": "graded bedding sedimentary structure",
+    "caption": "級化構造",
+    "fileName": "Graded bedding (Wilhite Formation, Neoproterozoic; Kinzel Springs, Tennessee, USA) 1 (40920536724).jpg"
+  },
+  {
+    "termId": "ES-000269",
+    "query": "cross bedding sedimentary structure",
+    "caption": "斜交葉理",
+    "fileName": "Luzna Fm, cross bedding.JPG"
+  },
+  {
+    "termId": "ES-000284",
+    "query": "Cambrian explosion fossil reconstruction",
+    "fileName": "CambrianExplosion fauna illustration.jpg"
+  },
+  {
+    "termId": "ES-000285",
+    "query": "mass extinctions geological timeline graph",
+    "fileName": "Extinction intensity.svg"
+  },
+  {
+    "termId": "ES-000286",
+    "query": "Chicxulub asteroid impact illustration",
+    "fileName": "Impact event.jpg"
+  },
+  {
+    "termId": "ES-000287",
+    "query": "Cretaceous Paleogene boundary iridium layer photograph",
+    "fileName": "K–Pg boundary in Colorado.JPG"
+  },
+  {
+    "termId": "ES-000288",
+    "query": "trilobite fossil",
+    "caption": "三葉虫の化石",
+    "fileName": "Trilobita Diversity.png"
+  },
+  {
+    "termId": "ES-000289",
+    "query": "fusulinid fossil",
+    "caption": "フズリナの化石",
+    "fileName": "Fusulinid limestone, Upper Pennsylvanian; Elk County KS.jpg"
+  },
+  {
+    "termId": "ES-000290",
+    "query": "Ichthyostega fossil reconstruction",
+    "caption": "イクチオステガ",
+    "fileName": "Ichthyostega skeletal reconstruction 2018.png"
+  },
+  {
+    "termId": "ES-000291",
+    "query": "Lepidodendron fossil",
+    "caption": "リンボクの化石",
+    "fileName": "Lepidodendron fossil.jpg"
+  },
+  {
+    "termId": "ES-000292",
+    "query": "dinosaur fossil skeleton",
+    "caption": "恐竜の化石骨格",
+    "fileName": "Journal.pone.0138352.g001A.jpg"
+  },
+  {
+    "termId": "ES-000293",
+    "query": "ammonite fossil",
+    "caption": "アンモナイトの化石",
+    "fileName": "Ammonite section.JPG"
+  },
+  {
+    "termId": "ES-000294",
+    "query": "cycad plant",
+    "caption": "ソテツ",
+    "fileName": "Starr 080716-9529 Cycas revoluta.jpg"
+  },
+  {
+    "termId": "ES-000295",
+    "query": "Trigonia fossil",
+    "caption": "トリゴニアの化石",
+    "fileName": "Trigonia costata 34.jpg"
+  },
+  {
+    "termId": "ES-000296",
+    "query": "Nummulites fossil",
+    "caption": "貨幣石の化石",
+    "fileName": "Nummulites (France).JPG"
+  },
+  {
+    "termId": "ES-000297",
+    "query": "Vicarya fossil",
+    "caption": "ビカリアの化石",
+    "fileName": "Vicarya yokoyamai National Museum of Nature and Science, Japan.jpg"
+  },
+  {
+    "termId": "ES-000298",
+    "query": "Naumann elephant fossil skeleton",
+    "caption": "ナウマンゾウの化石骨格",
+    "fileName": "Palaeoloxodon naumanni Hokkaido Museum collection.jpg"
+  },
+  {
+    "termId": "ES-000299",
+    "query": "human evolution bipedal walking silhouettes diagram",
+    "fileName": "Human evolution.svg"
+  }
 ]

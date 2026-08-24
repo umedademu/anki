@@ -2,6 +2,26 @@
   "schemaVersion": 2,
   "assets": [
     {
+      "id": "WME-0564603e4384ea",
+      "path": "term-images/optimized/WME-0564603e4384ea.webp",
+      "alt": "津波堆積物",
+      "caption": "津波堆積物",
+      "creator": "Tsunami deposit environments.png by Mikenorton Derivative work by Voyagerim",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tsunami_deposit_environments.svg"
+    },
+    {
+      "id": "WME-070f21bb65b827",
+      "path": "term-images/optimized/WME-070f21bb65b827.webp",
+      "alt": "片麻岩",
+      "caption": "片麻岩",
+      "creator": "James St. John",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Isoclinal_fold_in_gneiss_3_(49155412573).jpg"
+    },
+    {
       "id": "WME-0873e4fa79f4f3",
       "path": "term-images/optimized/WME-0873e4fa79f4f3.webp",
       "alt": "海嶺と海洋底拡大の模式図",
@@ -10,6 +30,26 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mid-ocean_ridge_cut_away_view.png"
+    },
+    {
+      "id": "WME-09b43995cae272",
+      "path": "term-images/optimized/WME-09b43995cae272.webp",
+      "alt": "液状化現象",
+      "caption": "液状化現象",
+      "creator": "Morio This photo was taken with Sony NEX-5‎",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Soil-liquefaction_at_Shinkiba_after_2011_Tohoku_Pacific_Ocean_offshore_earthquake.jpg"
+    },
+    {
+      "id": "WME-0cc4e1f93d2dbc",
+      "path": "term-images/optimized/WME-0cc4e1f93d2dbc.webp",
+      "alt": "礫岩",
+      "caption": "礫岩",
+      "creator": "James St. John",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Travertine-cemented_conglomerate_4.jpg"
     },
     {
       "id": "WME-0d2bf6e0d09373",
@@ -32,6 +72,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thermohaline_Circulation_2.png"
     },
     {
+      "id": "WME-0e05bc9368470f",
+      "path": "term-images/optimized/WME-0e05bc9368470f.webp",
+      "alt": "大量絶滅",
+      "caption": "大量絶滅",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Extinction_intensity.svg"
+    },
+    {
+      "id": "WME-1299a7b6216f9b",
+      "path": "term-images/optimized/WME-1299a7b6216f9b.webp",
+      "alt": "イリジウム濃集層",
+      "caption": "イリジウム濃集層",
+      "creator": "Jeffrey Beall",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:K%E2%80%93Pg_boundary_in_Colorado.JPG"
+    },
+    {
       "id": "WME-13de36775cabb6",
       "path": "term-images/optimized/WME-13de36775cabb6.webp",
       "alt": "世界のプレート分布",
@@ -40,6 +100,66 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tectonic_plates_(2022).svg"
+    },
+    {
+      "id": "WME-16bb5c8f6d3a81",
+      "path": "term-images/optimized/WME-16bb5c8f6d3a81.webp",
+      "alt": "エラトステネスの測定",
+      "caption": "エラトステネスの測定",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Eratosthenes_%26_measurement_of_the_Earth.png"
+    },
+    {
+      "id": "WME-18778a6f86c346",
+      "path": "term-images/optimized/WME-18778a6f86c346.webp",
+      "alt": "火山砕屑物",
+      "caption": "火山砕屑物",
+      "creator": "LBM1948",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Santorini_94.jpg"
+    },
+    {
+      "id": "WME-189cdb8a8a37cf",
+      "path": "term-images/optimized/WME-189cdb8a8a37cf.webp",
+      "alt": "雲",
+      "caption": "雲",
+      "creator": "Valentin de Bruyn / Coton / This illustration has been created for Coton , the cloud identification guide for mobile.",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cloud_types_en.svg"
+    },
+    {
+      "id": "WME-190963227f049f",
+      "path": "term-images/optimized/WME-190963227f049f.webp",
+      "alt": "地層",
+      "caption": "地層",
+      "creator": "Phil Champion",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rock_strata_south_of_Cullernose_Point_-_geograph.org.uk_-_412980.jpg"
+    },
+    {
+      "id": "WME-199718535bc9de",
+      "path": "term-images/optimized/WME-199718535bc9de.webp",
+      "alt": "かんらん岩",
+      "caption": "かんらん岩",
+      "creator": "Nessa Eull",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Peridotite_(GeoDIL_number_-_465).jpg"
+    },
+    {
+      "id": "WME-222cdc25bbb49d",
+      "path": "term-images/optimized/WME-222cdc25bbb49d.webp",
+      "alt": "彗星",
+      "caption": "彗星",
+      "creator": "NASA/W. Liller",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Lspn_comet_halley.jpg"
     },
     {
       "id": "WME-2247a85fe91b8e",
@@ -82,6 +202,76 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Strike_slip_fault_diagram.gif"
     },
     {
+      "id": "WME-28bb6c0bfed7a7",
+      "path": "term-images/optimized/WME-28bb6c0bfed7a7.webp",
+      "alt": "停滞前線",
+      "caption": "停滞前線",
+      "creator": "cs:User:-xfi-",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stationary_front_symbol.svg"
+    },
+    {
+      "id": "WME-2cb7cce3f2ea8c",
+      "path": "term-images/optimized/WME-2cb7cce3f2ea8c.webp",
+      "alt": "長石",
+      "caption": "長石",
+      "creator": "Robert M. Lavinsky",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Quartz-Feldspar-Group-187657.jpg"
+    },
+    {
+      "id": "WME-32bfd5d2e5af9d",
+      "path": "term-images/optimized/WME-32bfd5d2e5af9d.webp",
+      "alt": "斜面崩壊",
+      "caption": "斜面崩壊",
+      "creator": "Gordon Hatton",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Landslide_by_Kex_Gill_-_geograph.org.uk_-_1177228.jpg"
+    },
+    {
+      "id": "WME-37507c90753ce7",
+      "path": "term-images/optimized/WME-37507c90753ce7.webp",
+      "alt": "地球の熱収支",
+      "caption": "地球の熱収支",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NASA_earth_energy_budget_ja.gif"
+    },
+    {
+      "id": "WME-38b3a5e8cf708a",
+      "path": "term-images/optimized/WME-38b3a5e8cf708a.webp",
+      "alt": "降水",
+      "caption": "降水",
+      "creator": "Kevregourez",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Water_Cycle_-_br.svg"
+    },
+    {
+      "id": "WME-38f3eeda1d166c",
+      "path": "term-images/optimized/WME-38f3eeda1d166c.webp",
+      "alt": "化学的風化",
+      "caption": "化学的風化",
+      "creator": "Andrew Diack",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Physical,_chemical_and_biological_weathering_of_a_rock_-_geograph.org.uk_-_4979954.jpg"
+    },
+    {
+      "id": "WME-43d236ad84f492",
+      "path": "term-images/optimized/WME-43d236ad84f492.webp",
+      "alt": "高気圧と低気圧の風向",
+      "caption": "高気圧と低気圧の風向",
+      "creator": "KVDP",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Windmovement_on_weathermaps.JPG"
+    },
+    {
       "id": "WME-46411a07355d78",
       "path": "term-images/optimized/WME-46411a07355d78.webp",
       "alt": "等粒状組織",
@@ -102,6 +292,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stratovolcano_cross-section.svg"
     },
     {
+      "id": "WME-495c4bf0d604c8",
+      "path": "term-images/optimized/WME-495c4bf0d604c8.webp",
+      "alt": "石英",
+      "caption": "石英",
+      "creator": "CEphoto, Uwe Aranas",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Geode-with-encrustation-of-quartz-crystals-on-a-base-of-limonite-01.jpg"
+    },
+    {
+      "id": "WME-4bcde820222a77",
+      "path": "term-images/optimized/WME-4bcde820222a77.webp",
+      "alt": "物理的風化",
+      "caption": "物理的風化",
+      "creator": "Till Niermann",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Weathering_freeze_thaw_action_iceland.jpg"
+    },
+    {
       "id": "WME-4d1a0356d6d9b6",
       "path": "term-images/optimized/WME-4d1a0356d6d9b6.webp",
       "alt": "ナウマンゾウの化石骨格",
@@ -120,6 +330,36 @@
       "license": "CC BY 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ichthyostega_skeletal_reconstruction_2018.png"
+    },
+    {
+      "id": "WME-4ff7627b77e7f6",
+      "path": "term-images/optimized/WME-4ff7627b77e7f6.webp",
+      "alt": "宇宙の進化と宇宙の晴れ上がり",
+      "caption": "宇宙の進化と宇宙の晴れ上がり",
+      "creator": "NASA/WMAP Science Team",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:CMB_Timeline300_no_WMAP.jpg"
+    },
+    {
+      "id": "WME-50a73aa6ea5be6",
+      "path": "term-images/optimized/WME-50a73aa6ea5be6.webp",
+      "alt": "地震計",
+      "caption": "地震計",
+      "creator": "Unknown author Unknown author",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Een_seismograaf_in_het_weerkundig_instituut_in_Den_Bildt,_Nederland,_1_maart_1909,_SFA003008998.jpg"
+    },
+    {
+      "id": "WME-50bd558516b428",
+      "path": "term-images/optimized/WME-50bd558516b428.webp",
+      "alt": "ホットスポット",
+      "caption": "ホットスポット",
+      "creator": "Joel E. Robinson, USGS.",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hawaii_hotspot_cross-sectional_diagram.jpg"
     },
     {
       "id": "WME-51ea29cf30427a",
@@ -182,6 +422,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shield_volcano_unlabelled.svg"
     },
     {
+      "id": "WME-58cdb666a38b1d",
+      "path": "term-images/optimized/WME-58cdb666a38b1d.webp",
+      "alt": "角閃石",
+      "caption": "角閃石",
+      "creator": "Robert M. Lavinsky",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Apatite-(CaOH)-Hornblende-38354.jpg"
+    },
+    {
+      "id": "WME-5a3c036953c6f1",
+      "path": "term-images/optimized/WME-5a3c036953c6f1.webp",
+      "alt": "地球",
+      "caption": "地球",
+      "creator": "NASA/Apollo 17 crew; taken by either Harrison Schmitt or Ron Evans",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Earth_seen_from_Apollo_17.jpg"
+    },
+    {
       "id": "WME-5ab1e6105b1b9e",
       "path": "term-images/optimized/WME-5ab1e6105b1b9e.webp",
       "alt": "斑れい岩",
@@ -190,6 +450,36 @@
       "license": "CC0",
       "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gabbro_(GeoDIL_number_-_94).jpg"
+    },
+    {
+      "id": "WME-5c4a84539f12d4",
+      "path": "term-images/optimized/WME-5c4a84539f12d4.webp",
+      "alt": "砂岩",
+      "caption": "砂岩",
+      "creator": "Nessa Eull",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sandstone_(GeoDIL_number_-_474).jpg"
+    },
+    {
+      "id": "WME-5d161dbc800025",
+      "path": "term-images/optimized/WME-5d161dbc800025.webp",
+      "alt": "カンブリア爆発",
+      "caption": "カンブリア爆発",
+      "creator": "MakairodonX",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:CambrianExplosion_fauna_illustration.jpg"
+    },
+    {
+      "id": "WME-5d2e1e1d85b334",
+      "path": "term-images/optimized/WME-5d2e1e1d85b334.webp",
+      "alt": "温室効果",
+      "caption": "温室効果",
+      "creator": "Earth equator northern hemisphere.png Spm derivative work: Alexchris ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Greenhouse_effect_diagram.png"
     },
     {
       "id": "WME-5de4b064857ad1",
@@ -222,6 +512,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Trilobita_Diversity.png"
     },
     {
+      "id": "WME-5f5da263aefb38",
+      "path": "term-images/optimized/WME-5f5da263aefb38.webp",
+      "alt": "土石流",
+      "caption": "土石流",
+      "creator": "Hugh Venables",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Debris_flow_at_the_base_of_the_cliffs_-_geograph.org.uk_-_4924091.jpg"
+    },
+    {
       "id": "WME-6049f49b708835",
       "path": "term-images/optimized/WME-6049f49b708835.webp",
       "alt": "冬型の気圧配置",
@@ -230,6 +530,16 @@
       "license": "CC BY 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Weathermap_eastasia_1.png"
+    },
+    {
+      "id": "WME-60cd5f6a8fbff9",
+      "path": "term-images/optimized/WME-60cd5f6a8fbff9.webp",
+      "alt": "石炭",
+      "caption": "石炭",
+      "creator": "Nessa Eull",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bituminous_coal_(GeoDIL_number_-_501).jpg"
     },
     {
       "id": "WME-668350c5843c71",
@@ -270,6 +580,36 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Unconformities_flow_chart.svg"
+    },
+    {
+      "id": "WME-6c0c4138391ce5",
+      "path": "term-images/optimized/WME-6c0c4138391ce5.webp",
+      "alt": "結晶質石灰岩",
+      "caption": "結晶質石灰岩",
+      "creator": "Darla Sondrol",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Marble_breccia_(GeoDIL_number_-_467).jpg"
+    },
+    {
+      "id": "WME-6d575f81782c5a",
+      "path": "term-images/optimized/WME-6d575f81782c5a.webp",
+      "alt": "世界の表層海流",
+      "caption": "世界の表層海流",
+      "creator": "US army",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ocean_currents_1943_(borderless)3.png"
+    },
+    {
+      "id": "WME-6f25f6bfc86a50",
+      "path": "term-images/optimized/WME-6f25f6bfc86a50.webp",
+      "alt": "アルベド",
+      "caption": "アルベド",
+      "creator": "Umqothu",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Albedo_diagram.svg"
     },
     {
       "id": "WME-713375a4c57a91",
@@ -352,6 +692,56 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Eq-gen2.svg"
     },
     {
+      "id": "WME-83622e55d1b4d9",
+      "path": "term-images/optimized/WME-83622e55d1b4d9.webp",
+      "alt": "火山",
+      "caption": "火山",
+      "creator": "Michael Angelo Luna",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Taal_Volcano_eruption_on_January_12,_2020.jpg"
+    },
+    {
+      "id": "WME-85d4d3adb352bd",
+      "path": "term-images/optimized/WME-85d4d3adb352bd.webp",
+      "alt": "石灰岩",
+      "caption": "石灰岩",
+      "creator": "James St. John",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Limestone_(Salem_Limestone,_Middle_Mississippian;_Bloomington_region,_Indiana,_USA).jpg"
+    },
+    {
+      "id": "WME-87d608e15285da",
+      "path": "term-images/optimized/WME-87d608e15285da.webp",
+      "alt": "凝灰岩",
+      "caption": "凝灰岩",
+      "creator": "Nessa Eull",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Welded_tuff_(GeoDIL_number_-_461).jpg"
+    },
+    {
+      "id": "WME-8815f864975c98",
+      "path": "term-images/optimized/WME-8815f864975c98.webp",
+      "alt": "日本列島",
+      "caption": "日本列島",
+      "creator": "Pekachu",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tectonic_plates_around_Japan.png"
+    },
+    {
+      "id": "WME-884895f7cbe663",
+      "path": "term-images/optimized/WME-884895f7cbe663.webp",
+      "alt": "輝石",
+      "caption": "輝石",
+      "creator": "Robert M. Lavinsky",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pyroxene-Group-112595.jpg"
+    },
+    {
       "id": "WME-8992cb5aa5d3c4",
       "path": "term-images/optimized/WME-8992cb5aa5d3c4.webp",
       "alt": "フズリナの化石",
@@ -360,6 +750,46 @@
       "license": "CC BY 2.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fusulinid_limestone,_Upper_Pennsylvanian;_Elk_County_KS.jpg"
+    },
+    {
+      "id": "WME-8db71c24197f17",
+      "path": "term-images/optimized/WME-8db71c24197f17.webp",
+      "alt": "太陽",
+      "caption": "太陽",
+      "creator": "NASA/SDO, ALMA (ESO/NAOJ/NRAO)",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Full_disk_of_the_Sun_(eso1703e-comparisona).jpg"
+    },
+    {
+      "id": "WME-910b953379dae1",
+      "path": "term-images/optimized/WME-910b953379dae1.webp",
+      "alt": "海洋底拡大",
+      "caption": "海洋底拡大",
+      "creator": "derivative work: Who killed Bambi ? ( talk ) Oceanic.Stripe.Magnetic.Anomalies.Scheme.gif : Kurgus",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Oceanic.Stripe.Magnetic.Anomalies.Scheme.fr.gif"
+    },
+    {
+      "id": "WME-936a6e856eeb2e",
+      "path": "term-images/optimized/WME-936a6e856eeb2e.webp",
+      "alt": "大陸衝突",
+      "caption": "大陸衝突",
+      "creator": "USGS, Nefronus , Gretarsson",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Continental-continental_convergence_en.svg"
+    },
+    {
+      "id": "WME-997a5571866bdc",
+      "path": "term-images/optimized/WME-997a5571866bdc.webp",
+      "alt": "地すべり",
+      "caption": "地すべり",
+      "creator": "Peka",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Aerial_photograph_of_Aratozawa_Landslide_Site_on_2009-06-02.jpg"
     },
     {
       "id": "WME-9b6224c1fd5dd2",
@@ -372,6 +802,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pumice_(GeoDIL_number_-_415).jpg"
     },
     {
+      "id": "WME-9ef31616dad4ed",
+      "path": "term-images/optimized/WME-9ef31616dad4ed.webp",
+      "alt": "気温減率",
+      "caption": "気温減率",
+      "creator": "Rhwentworth",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Atmospheric_heat_flow_profile.svg"
+    },
+    {
+      "id": "WME-a0a3150844a017",
+      "path": "term-images/optimized/WME-a0a3150844a017.webp",
+      "alt": "ジオイド",
+      "caption": "ジオイド",
+      "creator": "NASA Earth Observatory",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Earth_Gravity_Field_Anomalies,_geoid_format,_NASA_Earth_Observatory.jpg"
+    },
+    {
       "id": "WME-a1513198aa55be",
       "path": "term-images/optimized/WME-a1513198aa55be.webp",
       "alt": "逆断層",
@@ -380,6 +830,26 @@
       "license": "CC BY 3.0 us",
       "licenseUrl": "https://creativecommons.org/licenses/by/3.0/us/deed.en",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Reverse_fault.gif"
+    },
+    {
+      "id": "WME-a2a20eba4e86cc",
+      "path": "term-images/optimized/WME-a2a20eba4e86cc.webp",
+      "alt": "黒雲母",
+      "caption": "黒雲母",
+      "creator": "Dexter Perkins",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Biotite_flakes_(GeoDIL_number_-_5).jpg"
+    },
+    {
+      "id": "WME-a4958d769806e2",
+      "path": "term-images/optimized/WME-a4958d769806e2.webp",
+      "alt": "コリオリの力",
+      "caption": "コリオリの力",
+      "creator": "Cleonis at English Wikipedia",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Coriolis_effect01.png"
     },
     {
       "id": "WME-a6ce705cbc250b",
@@ -432,6 +902,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:UK_Cyclone_English.svg"
     },
     {
+      "id": "WME-b0c9402853ecd0",
+      "path": "term-images/optimized/WME-b0c9402853ecd0.webp",
+      "alt": "熱帯低気圧（台風）の雲の渦",
+      "caption": "熱帯低気圧（台風）の雲の渦",
+      "creator": "NOAA",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Super_Typhoon_Oscar_SE_of_Japan_near_peak_intensity_(2268-432).jpg"
+    },
+    {
+      "id": "WME-b2fe9fdd299514",
+      "path": "term-images/optimized/WME-b2fe9fdd299514.webp",
+      "alt": "岩石の風化",
+      "caption": "岩石の風化",
+      "creator": "Richard Dorrell",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Weathered_rock_outcrop_-_geograph.org.uk_-_1414636.jpg"
+    },
+    {
       "id": "WME-b35c882759d852",
       "path": "term-images/optimized/WME-b35c882759d852.webp",
       "alt": "温暖前線の断面",
@@ -452,6 +942,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Porphyritic_aphanitic_igneous_rock_groundmass_phenocrysts.png"
     },
     {
+      "id": "WME-ba2cc3b7ab8dd2",
+      "path": "term-images/optimized/WME-ba2cc3b7ab8dd2.webp",
+      "alt": "かんらん石",
+      "caption": "かんらん石",
+      "creator": "Robert M. Lavinsky",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Olivine-213076.jpg"
+    },
+    {
+      "id": "WME-bb4f5eec2bf6ee",
+      "path": "term-images/optimized/WME-bb4f5eec2bf6ee.webp",
+      "alt": "活断層",
+      "caption": "活断層",
+      "creator": "USGS",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:San_Andreas_Fault_Aerial_View.gif"
+    },
+    {
       "id": "WME-bd1c2b04911264",
       "path": "term-images/optimized/WME-bd1c2b04911264.webp",
       "alt": "寒冷前線の断面",
@@ -462,6 +972,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Front_froid_anabatique.png"
     },
     {
+      "id": "WME-be3e8667b917bb",
+      "path": "term-images/optimized/WME-be3e8667b917bb.webp",
+      "alt": "マントル対流",
+      "caption": "マントル対流",
+      "creator": "Kakitc",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Simulation_of_2D_mantle_convection_in_a_quarter_of_annulus_using_ASPECT_mantle_convection_code.gif"
+    },
+    {
+      "id": "WME-c09b22c0af0380",
+      "path": "term-images/optimized/WME-c09b22c0af0380.webp",
+      "alt": "島弧",
+      "caption": "島弧",
+      "creator": "Jpvandijk , J.P. van Dijk, Janpieter van Dijk, Johannes Petrus van Dijk",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:CalabrianArc-GeotectonicSection.jpg"
+    },
+    {
       "id": "WME-c0ba164574e40f",
       "path": "term-images/optimized/WME-c0ba164574e40f.webp",
       "alt": "原始太陽系円盤",
@@ -470,6 +1000,16 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Disk_comet_nebula.jpg"
+    },
+    {
+      "id": "WME-c2ea3c6ad75f97",
+      "path": "term-images/optimized/WME-c2ea3c6ad75f97.webp",
+      "alt": "付加体",
+      "caption": "付加体",
+      "creator": "Yukinobu Okamura , Azusa Nishizawa Yushiro Fujii, Hideaki Yanagisawa",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Accretionary_wedge.png"
     },
     {
       "id": "WME-c32b2da2abb6bd",
@@ -542,6 +1082,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Scoria_(GeoDIL_number_-_138).jpg"
     },
     {
+      "id": "WME-ccfde1de9a3f98",
+      "path": "term-images/optimized/WME-ccfde1de9a3f98.webp",
+      "alt": "チャート",
+      "caption": "チャート",
+      "creator": "James St. John",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chert_breccia_(probably_from_the_Tri-State_Mining_District,_Missouri,_USA)_1.jpg"
+    },
+    {
+      "id": "WME-d2f81874c4264e",
+      "path": "term-images/optimized/WME-d2f81874c4264e.webp",
+      "alt": "地球の形",
+      "caption": "地球の形",
+      "creator": "No machine-readable author provided. Cleontuni assumed (based on copyright claims).",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Forces_oblate_spheroid2.gif"
+    },
+    {
       "id": "WME-e13368857fdcc3",
       "path": "term-images/optimized/WME-e13368857fdcc3.webp",
       "alt": "海溝と沈み込み帯",
@@ -552,6 +1112,46 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Subduction-en.svg"
     },
     {
+      "id": "WME-e1968e2d56f456",
+      "path": "term-images/optimized/WME-e1968e2d56f456.webp",
+      "alt": "白亜紀末の大量絶滅",
+      "caption": "白亜紀末の大量絶滅",
+      "creator": "The original uploader was Fredrik at English Wikipedia .",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Impact_event.jpg"
+    },
+    {
+      "id": "WME-e1b8ca9ab48e56",
+      "path": "term-images/optimized/WME-e1b8ca9ab48e56.webp",
+      "alt": "湧昇",
+      "caption": "湧昇",
+      "creator": "ReddKing",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Climate-science-ocean-upwelling-coastal-equatorial.png"
+    },
+    {
+      "id": "WME-e3d29bf470976f",
+      "path": "term-images/optimized/WME-e3d29bf470976f.webp",
+      "alt": "年周視差",
+      "caption": "年周視差",
+      "creator": "P.wormer",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Annual_parallax.png"
+    },
+    {
+      "id": "WME-e406571cd8235d",
+      "path": "term-images/optimized/WME-e406571cd8235d.webp",
+      "alt": "水温躍層",
+      "caption": "水温躍層",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thermocline.png"
+    },
+    {
       "id": "WME-e4b511793f1f3a",
       "path": "term-images/optimized/WME-e4b511793f1f3a.webp",
       "alt": "地球規模の大気大循環",
@@ -560,6 +1160,26 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Earth_Global_Circulation_-_en.svg"
+    },
+    {
+      "id": "WME-e60cdec5bb232e",
+      "path": "term-images/optimized/WME-e60cdec5bb232e.webp",
+      "alt": "方解石",
+      "caption": "方解石",
+      "creator": "Nessa Eull",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Calcite_crystal_(GeoDIL_number_-_698).jpg"
+    },
+    {
+      "id": "WME-e96b8205c2125c",
+      "path": "term-images/optimized/WME-e96b8205c2125c.webp",
+      "alt": "温室効果",
+      "caption": "温室効果",
+      "creator": "Chester Harman",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Diagram_of_different_habitable_zone_regions_by_Chester_Harman.jpg"
     },
     {
       "id": "WME-e9b63bd0a78fbf",
@@ -582,6 +1202,36 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Anticline-Syncline-s-ink-FabioCrameri.png"
     },
     {
+      "id": "WME-ef613557150976",
+      "path": "term-images/optimized/WME-ef613557150976.webp",
+      "alt": "津波の遡上",
+      "caption": "津波の遡上",
+      "creator": "U.S. Geological Survey",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tsunami_run-up,_height,_and_inundation.png"
+    },
+    {
+      "id": "WME-eff0e6b9d5450c",
+      "path": "term-images/optimized/WME-eff0e6b9d5450c.webp",
+      "alt": "東アジアの気団と梅雨前線",
+      "caption": "東アジアの気団と梅雨前線",
+      "creator": "own work",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:East_asian_baiu-front_and_air_masses.png"
+    },
+    {
+      "id": "WME-f1d2512dd96a78",
+      "path": "term-images/optimized/WME-f1d2512dd96a78.webp",
+      "alt": "前線",
+      "caption": "前線",
+      "creator": "cs:User:-xfi-",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NWS_weather_fronts.svg"
+    },
+    {
       "id": "WME-f246dc591f517f",
       "path": "term-images/optimized/WME-f246dc591f517f.webp",
       "alt": "発散境界の模式図",
@@ -590,6 +1240,36 @@
       "license": "CC BY 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Continental-continental_constructive_plate_boundary.svg"
+    },
+    {
+      "id": "WME-f346fdd40c7982",
+      "path": "term-images/optimized/WME-f346fdd40c7982.webp",
+      "alt": "季節風",
+      "caption": "季節風",
+      "creator": "Saravask , based on work by Planemad and Nichalp",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:India_southwest_summer_monsoon_onset_map_en.svg"
+    },
+    {
+      "id": "WME-f62a69d7a8475e",
+      "path": "term-images/optimized/WME-f62a69d7a8475e.webp",
+      "alt": "シアノバクテリア",
+      "caption": "シアノバクテリア",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hypersaline_environments_and_extremely_halophilic_microbes.jpg"
+    },
+    {
+      "id": "WME-faaa59571e9ec1",
+      "path": "term-images/optimized/WME-faaa59571e9ec1.webp",
+      "alt": "泥岩",
+      "caption": "泥岩",
+      "creator": "James St. John",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mudstone_(Graneros_Formation,_Upper_Cretaceous;_Ponca_State_Park,_Nebraska,_USA).jpg"
     },
     {
       "id": "WME-fb57e159b69770",
@@ -612,6 +1292,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Trigonia_costata_34.jpg"
     },
     {
+      "id": "WME-fc8bbffb210012",
+      "path": "term-images/optimized/WME-fc8bbffb210012.webp",
+      "alt": "閉塞前線",
+      "caption": "閉塞前線",
+      "creator": "cs:User:-xfi-",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Occluded_front_symbol.svg"
+    },
+    {
       "id": "WME-fde39587aa8cef",
       "path": "term-images/optimized/WME-fde39587aa8cef.webp",
       "alt": "地質時代の区分",
@@ -620,9 +1310,47 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Geological_time_spiral.png"
+    },
+    {
+      "id": "WME-fdfc16de6d456d",
+      "path": "term-images/optimized/WME-fdfc16de6d456d.webp",
+      "alt": "エルニーニョ現象",
+      "caption": "エルニーニョ現象",
+      "creator": "Unknown author Unknown author",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Movement_of_surface_waters_during_El_Nino.jpg"
+    },
+    {
+      "id": "WME-fe46f886e46480",
+      "path": "term-images/optimized/WME-fe46f886e46480.webp",
+      "alt": "大陸地殻と海洋地殻",
+      "caption": "大陸地殻と海洋地殻",
+      "creator": "USGS and me.",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Continental_and_oceanic_crust-eu.png"
+    },
+    {
+      "id": "WME-ff42cc3c481d61",
+      "path": "term-images/optimized/WME-ff42cc3c481d61.webp",
+      "alt": "直立二足歩行",
+      "caption": "直立二足歩行",
+      "creator": "Tkgd2007",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Human_evolution.svg"
     }
   ],
   "termFallbacks": [
+    {
+      "termId": "ES-000001",
+      "assetId": "WME-5a3c036953c6f1"
+    },
+    {
+      "termId": "ES-000002",
+      "assetId": "WME-d2f81874c4264e"
+    },
     {
       "termId": "ES-000004",
       "assetId": "WME-51ea29cf30427a"
@@ -668,6 +1396,10 @@
       "assetId": "WME-25c397488b48f0"
     },
     {
+      "termId": "ES-000031",
+      "assetId": "WME-83622e55d1b4d9"
+    },
+    {
       "termId": "ES-000036",
       "assetId": "WME-526f5438dfbde6"
     },
@@ -700,6 +1432,10 @@
       "assetId": "WME-46411a07355d78"
     },
     {
+      "termId": "ES-000044",
+      "assetId": "WME-18778a6f86c346"
+    },
+    {
       "termId": "ES-000045",
       "assetId": "WME-ca4dac35f2570c"
     },
@@ -712,11 +1448,47 @@
       "assetId": "WME-802b4929a73d02"
     },
     {
+      "termId": "ES-000053",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "termId": "ES-000055",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "termId": "ES-000056",
+      "assetId": "WME-5d2e1e1d85b334"
+    },
+    {
       "termId": "ES-000057",
       "assetId": "WME-e4b511793f1f3a"
     },
     {
+      "termId": "ES-000058",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "termId": "ES-000059",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "termId": "ES-000060",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "termId": "ES-000061",
+      "assetId": "WME-a4958d769806e2"
+    },
+    {
       "termId": "ES-000062",
+      "assetId": "WME-0db2ae0ecd1832"
+    },
+    {
+      "termId": "ES-000063",
+      "assetId": "WME-6d575f81782c5a"
+    },
+    {
+      "termId": "ES-000064",
       "assetId": "WME-0db2ae0ecd1832"
     },
     {
@@ -728,6 +1500,14 @@
       "assetId": "WME-23fc5fa23b3f06"
     },
     {
+      "termId": "ES-000069",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
+      "termId": "ES-000072",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
       "termId": "ES-000073",
       "assetId": "WME-c0ba164574e40f"
     },
@@ -736,8 +1516,16 @@
       "assetId": "WME-ac3ca9bfbd6be8"
     },
     {
+      "termId": "ES-000075",
+      "assetId": "WME-8db71c24197f17"
+    },
+    {
       "termId": "ES-000081",
       "assetId": "WME-fde39587aa8cef"
+    },
+    {
+      "termId": "ES-000086",
+      "assetId": "WME-190963227f049f"
     },
     {
       "termId": "ES-000090",
@@ -746,6 +1534,70 @@
     {
       "termId": "ES-000091",
       "assetId": "WME-6bdd3cd1b9c94e"
+    },
+    {
+      "termId": "ES-000093",
+      "assetId": "WME-ea260178154aa1"
+    },
+    {
+      "termId": "ES-000096",
+      "assetId": "WME-fdfc16de6d456d"
+    },
+    {
+      "termId": "ES-000098",
+      "assetId": "WME-8815f864975c98"
+    },
+    {
+      "termId": "ES-000099",
+      "assetId": "WME-09b43995cae272"
+    },
+    {
+      "termId": "ES-000101",
+      "assetId": "WME-a0a3150844a017"
+    },
+    {
+      "termId": "ES-000104",
+      "assetId": "WME-16bb5c8f6d3a81"
+    },
+    {
+      "termId": "ES-000105",
+      "assetId": "WME-51ea29cf30427a"
+    },
+    {
+      "termId": "ES-000108",
+      "assetId": "WME-fe46f886e46480"
+    },
+    {
+      "termId": "ES-000109",
+      "assetId": "WME-fe46f886e46480"
+    },
+    {
+      "termId": "ES-000110",
+      "assetId": "WME-199718535bc9de"
+    },
+    {
+      "termId": "ES-000113",
+      "assetId": "WME-be3e8667b917bb"
+    },
+    {
+      "termId": "ES-000115",
+      "assetId": "WME-50bd558516b428"
+    },
+    {
+      "termId": "ES-000116",
+      "assetId": "WME-c09b22c0af0380"
+    },
+    {
+      "termId": "ES-000117",
+      "assetId": "WME-936a6e856eeb2e"
+    },
+    {
+      "termId": "ES-000118",
+      "assetId": "WME-910b953379dae1"
+    },
+    {
+      "termId": "ES-000121",
+      "assetId": "WME-bb4f5eec2bf6ee"
     },
     {
       "termId": "ES-000124",
@@ -766,6 +1618,18 @@
     {
       "termId": "ES-000128",
       "assetId": "WME-ea260178154aa1"
+    },
+    {
+      "termId": "ES-000129",
+      "assetId": "WME-c2ea3c6ad75f97"
+    },
+    {
+      "termId": "ES-000134",
+      "assetId": "WME-6c0c4138391ce5"
+    },
+    {
+      "termId": "ES-000136",
+      "assetId": "WME-070f21bb65b827"
     },
     {
       "termId": "ES-000139",
@@ -792,8 +1656,132 @@
       "assetId": "WME-cc8601e31ba025"
     },
     {
+      "termId": "ES-000152",
+      "assetId": "WME-87d608e15285da"
+    },
+    {
+      "termId": "ES-000154",
+      "assetId": "WME-495c4bf0d604c8"
+    },
+    {
+      "termId": "ES-000155",
+      "assetId": "WME-2cb7cce3f2ea8c"
+    },
+    {
+      "termId": "ES-000156",
+      "assetId": "WME-a2a20eba4e86cc"
+    },
+    {
+      "termId": "ES-000157",
+      "assetId": "WME-884895f7cbe663"
+    },
+    {
+      "termId": "ES-000158",
+      "assetId": "WME-ba2cc3b7ab8dd2"
+    },
+    {
+      "termId": "ES-000159",
+      "assetId": "WME-58cdb666a38b1d"
+    },
+    {
+      "termId": "ES-000160",
+      "assetId": "WME-e60cdec5bb232e"
+    },
+    {
+      "termId": "ES-000163",
+      "assetId": "WME-0cc4e1f93d2dbc"
+    },
+    {
+      "termId": "ES-000164",
+      "assetId": "WME-5c4a84539f12d4"
+    },
+    {
+      "termId": "ES-000165",
+      "assetId": "WME-faaa59571e9ec1"
+    },
+    {
+      "termId": "ES-000166",
+      "assetId": "WME-85d4d3adb352bd"
+    },
+    {
+      "termId": "ES-000167",
+      "assetId": "WME-ccfde1de9a3f98"
+    },
+    {
+      "termId": "ES-000168",
+      "assetId": "WME-60cd5f6a8fbff9"
+    },
+    {
+      "termId": "ES-000169",
+      "assetId": "WME-b2fe9fdd299514"
+    },
+    {
+      "termId": "ES-000170",
+      "assetId": "WME-4bcde820222a77"
+    },
+    {
+      "termId": "ES-000171",
+      "assetId": "WME-38f3eeda1d166c"
+    },
+    {
+      "termId": "ES-000172",
+      "assetId": "WME-5f5da263aefb38"
+    },
+    {
+      "termId": "ES-000173",
+      "assetId": "WME-997a5571866bdc"
+    },
+    {
+      "termId": "ES-000174",
+      "assetId": "WME-32bfd5d2e5af9d"
+    },
+    {
+      "termId": "ES-000176",
+      "assetId": "WME-50a73aa6ea5be6"
+    },
+    {
+      "termId": "ES-000183",
+      "assetId": "WME-ef613557150976"
+    },
+    {
+      "termId": "ES-000184",
+      "assetId": "WME-0564603e4384ea"
+    },
+    {
+      "termId": "ES-000186",
+      "assetId": "WME-9ef31616dad4ed"
+    },
+    {
+      "termId": "ES-000188",
+      "assetId": "WME-6f25f6bfc86a50"
+    },
+    {
+      "termId": "ES-000197",
+      "assetId": "WME-189cdb8a8a37cf"
+    },
+    {
+      "termId": "ES-000202",
+      "assetId": "WME-38b3a5e8cf708a"
+    },
+    {
+      "termId": "ES-000203",
+      "assetId": "WME-43d236ad84f492"
+    },
+    {
+      "termId": "ES-000204",
+      "assetId": "WME-43d236ad84f492"
+    },
+    {
       "termId": "ES-000205",
       "assetId": "WME-aea09d3882739d"
+    },
+    {
+      "termId": "ES-000206",
+      "assetId": "WME-b0c9402853ecd0"
+    },
+    {
+      "termId": "ES-000207",
+      "assetId": "WME-f1d2512dd96a78"
     },
     {
       "termId": "ES-000208",
@@ -804,8 +1792,40 @@
       "assetId": "WME-bd1c2b04911264"
     },
     {
+      "termId": "ES-000210",
+      "assetId": "WME-28bb6c0bfed7a7"
+    },
+    {
+      "termId": "ES-000211",
+      "assetId": "WME-fc8bbffb210012"
+    },
+    {
+      "termId": "ES-000212",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "termId": "ES-000213",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "termId": "ES-000214",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "termId": "ES-000215",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "termId": "ES-000216",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
       "termId": "ES-000217",
       "assetId": "WME-6049f49b708835"
+    },
+    {
+      "termId": "ES-000219",
+      "assetId": "WME-f346fdd40c7982"
     },
     {
       "termId": "ES-000220",
@@ -816,12 +1836,60 @@
       "assetId": "WME-c4c4db1f5bf588"
     },
     {
+      "termId": "ES-000223",
+      "assetId": "WME-b0c9402853ecd0"
+    },
+    {
+      "termId": "ES-000228",
+      "assetId": "WME-6d575f81782c5a"
+    },
+    {
+      "termId": "ES-000232",
+      "assetId": "WME-e406571cd8235d"
+    },
+    {
+      "termId": "ES-000237",
+      "assetId": "WME-e1b8ca9ab48e56"
+    },
+    {
+      "termId": "ES-000247",
+      "assetId": "WME-222cdc25bbb49d"
+    },
+    {
       "termId": "ES-000249",
       "assetId": "WME-67c8ac2c8d3e7e"
     },
     {
       "termId": "ES-000250",
       "assetId": "WME-562914633cf733"
+    },
+    {
+      "termId": "ES-000251",
+      "assetId": "WME-562914633cf733"
+    },
+    {
+      "termId": "ES-000252",
+      "assetId": "WME-562914633cf733"
+    },
+    {
+      "termId": "ES-000254",
+      "assetId": "WME-e3d29bf470976f"
+    },
+    {
+      "termId": "ES-000258",
+      "assetId": "WME-c0ba164574e40f"
+    },
+    {
+      "termId": "ES-000259",
+      "assetId": "WME-c0ba164574e40f"
+    },
+    {
+      "termId": "ES-000262",
+      "assetId": "WME-e96b8205c2125c"
+    },
+    {
+      "termId": "ES-000263",
+      "assetId": "WME-f62a69d7a8475e"
     },
     {
       "termId": "ES-000267",
@@ -834,6 +1902,22 @@
     {
       "termId": "ES-000269",
       "assetId": "WME-c32b2da2abb6bd"
+    },
+    {
+      "termId": "ES-000284",
+      "assetId": "WME-5d161dbc800025"
+    },
+    {
+      "termId": "ES-000285",
+      "assetId": "WME-0e05bc9368470f"
+    },
+    {
+      "termId": "ES-000286",
+      "assetId": "WME-e1968e2d56f456"
+    },
+    {
+      "termId": "ES-000287",
+      "assetId": "WME-1299a7b6216f9b"
     },
     {
       "termId": "ES-000288",
@@ -878,9 +1962,25 @@
     {
       "termId": "ES-000298",
       "assetId": "WME-4d1a0356d6d9b6"
+    },
+    {
+      "termId": "ES-000299",
+      "assetId": "WME-ff42cc3c481d61"
     }
   ],
   "assignments": [
+    {
+      "questionId": "ES-000001-C01",
+      "termId": "ES-000001",
+      "target": "地球",
+      "assetId": "WME-5a3c036953c6f1"
+    },
+    {
+      "questionId": "ES-000002-C01",
+      "termId": "ES-000002",
+      "target": "地球の形",
+      "assetId": "WME-d2f81874c4264e"
+    },
     {
       "questionId": "ES-000004-C01",
       "termId": "ES-000004",
@@ -1008,6 +2108,18 @@
       "assetId": "WME-25c397488b48f0"
     },
     {
+      "questionId": "ES-000031-C01",
+      "termId": "ES-000031",
+      "target": "火山",
+      "assetId": "WME-83622e55d1b4d9"
+    },
+    {
+      "questionId": "ES-000031-C02",
+      "termId": "ES-000031",
+      "target": "火山",
+      "assetId": "WME-83622e55d1b4d9"
+    },
+    {
       "questionId": "ES-000036-C01",
       "termId": "ES-000036",
       "target": "玄武岩",
@@ -1104,6 +2216,18 @@
       "assetId": "WME-46411a07355d78"
     },
     {
+      "questionId": "ES-000044-C01",
+      "termId": "ES-000044",
+      "target": "火山砕屑物",
+      "assetId": "WME-18778a6f86c346"
+    },
+    {
+      "questionId": "ES-000044-C02",
+      "termId": "ES-000044",
+      "target": "火山砕屑物",
+      "assetId": "WME-18778a6f86c346"
+    },
+    {
       "questionId": "ES-000045-C01",
       "termId": "ES-000045",
       "target": "火砕流",
@@ -1134,6 +2258,42 @@
       "assetId": "WME-802b4929a73d02"
     },
     {
+      "questionId": "ES-000053-C01",
+      "termId": "ES-000053",
+      "target": "太陽放射",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "questionId": "ES-000053-C02",
+      "termId": "ES-000053",
+      "target": "太陽放射",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "questionId": "ES-000055-C01",
+      "termId": "ES-000055",
+      "target": "地球の熱収支",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "questionId": "ES-000055-C02",
+      "termId": "ES-000055",
+      "target": "地球の熱収支",
+      "assetId": "WME-37507c90753ce7"
+    },
+    {
+      "questionId": "ES-000056-C01",
+      "termId": "ES-000056",
+      "target": "温室効果",
+      "assetId": "WME-5d2e1e1d85b334"
+    },
+    {
+      "questionId": "ES-000056-C02",
+      "termId": "ES-000056",
+      "target": "温室効果",
+      "assetId": "WME-5d2e1e1d85b334"
+    },
+    {
       "questionId": "ES-000057-C01",
       "termId": "ES-000057",
       "target": "大気の大循環",
@@ -1146,6 +2306,54 @@
       "assetId": "WME-e4b511793f1f3a"
     },
     {
+      "questionId": "ES-000058-C01",
+      "termId": "ES-000058",
+      "target": "ハドレー循環",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000058-C02",
+      "termId": "ES-000058",
+      "target": "ハドレー循環",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000059-C01",
+      "termId": "ES-000059",
+      "target": "貿易風",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000059-C02",
+      "termId": "ES-000059",
+      "target": "貿易風",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000060-C01",
+      "termId": "ES-000060",
+      "target": "偏西風",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000060-C02",
+      "termId": "ES-000060",
+      "target": "偏西風",
+      "assetId": "WME-e4b511793f1f3a"
+    },
+    {
+      "questionId": "ES-000061-C01",
+      "termId": "ES-000061",
+      "target": "コリオリの力",
+      "assetId": "WME-a4958d769806e2"
+    },
+    {
+      "questionId": "ES-000061-C02",
+      "termId": "ES-000061",
+      "target": "コリオリの力",
+      "assetId": "WME-a4958d769806e2"
+    },
+    {
       "questionId": "ES-000062-C01",
       "termId": "ES-000062",
       "target": "海洋の大循環",
@@ -1155,6 +2363,30 @@
       "questionId": "ES-000062-C02",
       "termId": "ES-000062",
       "target": "海洋の大循環",
+      "assetId": "WME-0db2ae0ecd1832"
+    },
+    {
+      "questionId": "ES-000063-C01",
+      "termId": "ES-000063",
+      "target": "表層循環",
+      "assetId": "WME-6d575f81782c5a"
+    },
+    {
+      "questionId": "ES-000063-C02",
+      "termId": "ES-000063",
+      "target": "表層循環",
+      "assetId": "WME-6d575f81782c5a"
+    },
+    {
+      "questionId": "ES-000064-C01",
+      "termId": "ES-000064",
+      "target": "深層循環",
+      "assetId": "WME-0db2ae0ecd1832"
+    },
+    {
+      "questionId": "ES-000064-C02",
+      "termId": "ES-000064",
+      "target": "深層循環",
       "assetId": "WME-0db2ae0ecd1832"
     },
     {
@@ -1182,6 +2414,30 @@
       "assetId": "WME-23fc5fa23b3f06"
     },
     {
+      "questionId": "ES-000069-C01",
+      "termId": "ES-000069",
+      "target": "ビッグバン",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
+      "questionId": "ES-000069-C02",
+      "termId": "ES-000069",
+      "target": "ビッグバン",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
+      "questionId": "ES-000072-C01",
+      "termId": "ES-000072",
+      "target": "宇宙の晴れ上がり",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
+      "questionId": "ES-000072-C02",
+      "termId": "ES-000072",
+      "target": "宇宙の晴れ上がり",
+      "assetId": "WME-4ff7627b77e7f6"
+    },
+    {
       "questionId": "ES-000073-C01",
       "termId": "ES-000073",
       "target": "原始太陽系円盤",
@@ -1206,6 +2462,18 @@
       "assetId": "WME-ac3ca9bfbd6be8"
     },
     {
+      "questionId": "ES-000075-C01",
+      "termId": "ES-000075",
+      "target": "太陽",
+      "assetId": "WME-8db71c24197f17"
+    },
+    {
+      "questionId": "ES-000075-C02",
+      "termId": "ES-000075",
+      "target": "太陽",
+      "assetId": "WME-8db71c24197f17"
+    },
+    {
       "questionId": "ES-000081-C01",
       "termId": "ES-000081",
       "target": "地質時代",
@@ -1216,6 +2484,12 @@
       "termId": "ES-000081",
       "target": "地質時代",
       "assetId": "WME-fde39587aa8cef"
+    },
+    {
+      "questionId": "ES-000086-C01",
+      "termId": "ES-000086",
+      "target": "地層",
+      "assetId": "WME-190963227f049f"
     },
     {
       "questionId": "ES-000090-C01",
@@ -1240,6 +2514,126 @@
       "termId": "ES-000091",
       "target": "不整合",
       "assetId": "WME-6bdd3cd1b9c94e"
+    },
+    {
+      "questionId": "ES-000093-C01",
+      "termId": "ES-000093",
+      "target": "褶曲",
+      "assetId": "WME-ea260178154aa1"
+    },
+    {
+      "questionId": "ES-000093-C02",
+      "termId": "ES-000093",
+      "target": "褶曲",
+      "assetId": "WME-ea260178154aa1"
+    },
+    {
+      "questionId": "ES-000096-C01",
+      "termId": "ES-000096",
+      "target": "エルニーニョ現象",
+      "assetId": "WME-fdfc16de6d456d"
+    },
+    {
+      "questionId": "ES-000096-C02",
+      "termId": "ES-000096",
+      "target": "エルニーニョ現象",
+      "assetId": "WME-fdfc16de6d456d"
+    },
+    {
+      "questionId": "ES-000098-C01",
+      "termId": "ES-000098",
+      "target": "日本列島",
+      "assetId": "WME-8815f864975c98"
+    },
+    {
+      "questionId": "ES-000098-C02",
+      "termId": "ES-000098",
+      "target": "日本列島",
+      "assetId": "WME-8815f864975c98"
+    },
+    {
+      "questionId": "ES-000099-C01",
+      "termId": "ES-000099",
+      "target": "液状化現象",
+      "assetId": "WME-09b43995cae272"
+    },
+    {
+      "questionId": "ES-000099-C02",
+      "termId": "ES-000099",
+      "target": "液状化現象",
+      "assetId": "WME-09b43995cae272"
+    },
+    {
+      "questionId": "ES-000101-C01",
+      "termId": "ES-000101",
+      "target": "ジオイド",
+      "assetId": "WME-a0a3150844a017"
+    },
+    {
+      "questionId": "ES-000104-C01",
+      "termId": "ES-000104",
+      "target": "エラトステネスの測定",
+      "assetId": "WME-16bb5c8f6d3a81"
+    },
+    {
+      "questionId": "ES-000105-C01",
+      "termId": "ES-000105",
+      "target": "モホロビチッチ不連続面",
+      "assetId": "WME-51ea29cf30427a"
+    },
+    {
+      "questionId": "ES-000108-C01",
+      "termId": "ES-000108",
+      "target": "大陸地殻",
+      "assetId": "WME-fe46f886e46480"
+    },
+    {
+      "questionId": "ES-000109-C01",
+      "termId": "ES-000109",
+      "target": "海洋地殻",
+      "assetId": "WME-fe46f886e46480"
+    },
+    {
+      "questionId": "ES-000110-C01",
+      "termId": "ES-000110",
+      "target": "かんらん岩",
+      "assetId": "WME-199718535bc9de"
+    },
+    {
+      "questionId": "ES-000113-C01",
+      "termId": "ES-000113",
+      "target": "マントル対流",
+      "assetId": "WME-be3e8667b917bb"
+    },
+    {
+      "questionId": "ES-000115-C01",
+      "termId": "ES-000115",
+      "target": "ホットスポット",
+      "assetId": "WME-50bd558516b428"
+    },
+    {
+      "questionId": "ES-000116-C01",
+      "termId": "ES-000116",
+      "target": "島弧",
+      "assetId": "WME-c09b22c0af0380"
+    },
+    {
+      "questionId": "ES-000117-C01",
+      "termId": "ES-000117",
+      "target": "大陸衝突",
+      "assetId": "WME-936a6e856eeb2e"
+    },
+    {
+      "questionId": "ES-000118-C01",
+      "termId": "ES-000118",
+      "target": "海洋底拡大",
+      "assetId": "WME-910b953379dae1"
+    },
+    {
+      "questionId": "ES-000121-C01",
+      "termId": "ES-000121",
+      "target": "活断層",
+      "assetId": "WME-bb4f5eec2bf6ee"
     },
     {
       "questionId": "ES-000124-C01",
@@ -1270,6 +2664,24 @@
       "termId": "ES-000128",
       "target": "向斜",
       "assetId": "WME-ea260178154aa1"
+    },
+    {
+      "questionId": "ES-000129-C01",
+      "termId": "ES-000129",
+      "target": "付加体",
+      "assetId": "WME-c2ea3c6ad75f97"
+    },
+    {
+      "questionId": "ES-000134-C01",
+      "termId": "ES-000134",
+      "target": "結晶質石灰岩",
+      "assetId": "WME-6c0c4138391ce5"
+    },
+    {
+      "questionId": "ES-000136-C01",
+      "termId": "ES-000136",
+      "target": "片麻岩",
+      "assetId": "WME-070f21bb65b827"
     },
     {
       "questionId": "ES-000139-C01",
@@ -1308,10 +2720,196 @@
       "assetId": "WME-cc8601e31ba025"
     },
     {
+      "questionId": "ES-000152-C01",
+      "termId": "ES-000152",
+      "target": "凝灰岩",
+      "assetId": "WME-87d608e15285da"
+    },
+    {
+      "questionId": "ES-000154-C01",
+      "termId": "ES-000154",
+      "target": "石英",
+      "assetId": "WME-495c4bf0d604c8"
+    },
+    {
+      "questionId": "ES-000155-C01",
+      "termId": "ES-000155",
+      "target": "長石",
+      "assetId": "WME-2cb7cce3f2ea8c"
+    },
+    {
+      "questionId": "ES-000156-C01",
+      "termId": "ES-000156",
+      "target": "黒雲母",
+      "assetId": "WME-a2a20eba4e86cc"
+    },
+    {
+      "questionId": "ES-000157-C01",
+      "termId": "ES-000157",
+      "target": "輝石",
+      "assetId": "WME-884895f7cbe663"
+    },
+    {
+      "questionId": "ES-000158-C01",
+      "termId": "ES-000158",
+      "target": "かんらん石",
+      "assetId": "WME-ba2cc3b7ab8dd2"
+    },
+    {
+      "questionId": "ES-000159-C01",
+      "termId": "ES-000159",
+      "target": "角閃石",
+      "assetId": "WME-58cdb666a38b1d"
+    },
+    {
+      "questionId": "ES-000160-C01",
+      "termId": "ES-000160",
+      "target": "方解石",
+      "assetId": "WME-e60cdec5bb232e"
+    },
+    {
+      "questionId": "ES-000163-C01",
+      "termId": "ES-000163",
+      "target": "礫岩",
+      "assetId": "WME-0cc4e1f93d2dbc"
+    },
+    {
+      "questionId": "ES-000164-C01",
+      "termId": "ES-000164",
+      "target": "砂岩",
+      "assetId": "WME-5c4a84539f12d4"
+    },
+    {
+      "questionId": "ES-000165-C01",
+      "termId": "ES-000165",
+      "target": "泥岩",
+      "assetId": "WME-faaa59571e9ec1"
+    },
+    {
+      "questionId": "ES-000166-C01",
+      "termId": "ES-000166",
+      "target": "石灰岩",
+      "assetId": "WME-85d4d3adb352bd"
+    },
+    {
+      "questionId": "ES-000167-C01",
+      "termId": "ES-000167",
+      "target": "チャート",
+      "assetId": "WME-ccfde1de9a3f98"
+    },
+    {
+      "questionId": "ES-000168-C01",
+      "termId": "ES-000168",
+      "target": "石炭",
+      "assetId": "WME-60cd5f6a8fbff9"
+    },
+    {
+      "questionId": "ES-000169-C01",
+      "termId": "ES-000169",
+      "target": "岩石の風化",
+      "assetId": "WME-b2fe9fdd299514"
+    },
+    {
+      "questionId": "ES-000170-C01",
+      "termId": "ES-000170",
+      "target": "物理的風化",
+      "assetId": "WME-4bcde820222a77"
+    },
+    {
+      "questionId": "ES-000171-C01",
+      "termId": "ES-000171",
+      "target": "化学的風化",
+      "assetId": "WME-38f3eeda1d166c"
+    },
+    {
+      "questionId": "ES-000172-C01",
+      "termId": "ES-000172",
+      "target": "土石流",
+      "assetId": "WME-5f5da263aefb38"
+    },
+    {
+      "questionId": "ES-000173-C01",
+      "termId": "ES-000173",
+      "target": "地すべり",
+      "assetId": "WME-997a5571866bdc"
+    },
+    {
+      "questionId": "ES-000174-C01",
+      "termId": "ES-000174",
+      "target": "斜面崩壊",
+      "assetId": "WME-32bfd5d2e5af9d"
+    },
+    {
+      "questionId": "ES-000176-C01",
+      "termId": "ES-000176",
+      "target": "地震計",
+      "assetId": "WME-50a73aa6ea5be6"
+    },
+    {
+      "questionId": "ES-000183-C01",
+      "termId": "ES-000183",
+      "target": "津波の遡上",
+      "assetId": "WME-ef613557150976"
+    },
+    {
+      "questionId": "ES-000184-C01",
+      "termId": "ES-000184",
+      "target": "津波堆積物",
+      "assetId": "WME-0564603e4384ea"
+    },
+    {
+      "questionId": "ES-000186-C01",
+      "termId": "ES-000186",
+      "target": "気温減率",
+      "assetId": "WME-9ef31616dad4ed"
+    },
+    {
+      "questionId": "ES-000188-C01",
+      "termId": "ES-000188",
+      "target": "アルベド",
+      "assetId": "WME-6f25f6bfc86a50"
+    },
+    {
+      "questionId": "ES-000197-C01",
+      "termId": "ES-000197",
+      "target": "雲",
+      "assetId": "WME-189cdb8a8a37cf"
+    },
+    {
+      "questionId": "ES-000202-C01",
+      "termId": "ES-000202",
+      "target": "降水",
+      "assetId": "WME-38b3a5e8cf708a"
+    },
+    {
+      "questionId": "ES-000203-C01",
+      "termId": "ES-000203",
+      "target": "低気圧",
+      "assetId": "WME-43d236ad84f492"
+    },
+    {
+      "questionId": "ES-000204-C01",
+      "termId": "ES-000204",
+      "target": "高気圧",
+      "assetId": "WME-43d236ad84f492"
+    },
+    {
       "questionId": "ES-000205-C01",
       "termId": "ES-000205",
       "target": "温帯低気圧",
       "assetId": "WME-aea09d3882739d"
+    },
+    {
+      "questionId": "ES-000206-C01",
+      "termId": "ES-000206",
+      "target": "熱帯低気圧",
+      "assetId": "WME-b0c9402853ecd0"
+    },
+    {
+      "questionId": "ES-000207-C01",
+      "termId": "ES-000207",
+      "target": "前線",
+      "assetId": "WME-f1d2512dd96a78"
     },
     {
       "questionId": "ES-000208-C01",
@@ -1326,10 +2924,58 @@
       "assetId": "WME-bd1c2b04911264"
     },
     {
+      "questionId": "ES-000210-C01",
+      "termId": "ES-000210",
+      "target": "停滞前線",
+      "assetId": "WME-28bb6c0bfed7a7"
+    },
+    {
+      "questionId": "ES-000211-C01",
+      "termId": "ES-000211",
+      "target": "閉塞前線",
+      "assetId": "WME-fc8bbffb210012"
+    },
+    {
+      "questionId": "ES-000212-C01",
+      "termId": "ES-000212",
+      "target": "シベリア気団",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "questionId": "ES-000213-C01",
+      "termId": "ES-000213",
+      "target": "オホーツク海気団",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "questionId": "ES-000214-C01",
+      "termId": "ES-000214",
+      "target": "小笠原気団",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "questionId": "ES-000215-C01",
+      "termId": "ES-000215",
+      "target": "揚子江気団",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
+      "questionId": "ES-000216-C01",
+      "termId": "ES-000216",
+      "target": "梅雨前線",
+      "assetId": "WME-eff0e6b9d5450c"
+    },
+    {
       "questionId": "ES-000217-C01",
       "termId": "ES-000217",
       "target": "冬型の気圧配置",
       "assetId": "WME-6049f49b708835"
+    },
+    {
+      "questionId": "ES-000219-C01",
+      "termId": "ES-000219",
+      "target": "季節風",
+      "assetId": "WME-f346fdd40c7982"
     },
     {
       "questionId": "ES-000220-C01",
@@ -1344,6 +2990,36 @@
       "assetId": "WME-c4c4db1f5bf588"
     },
     {
+      "questionId": "ES-000223-C01",
+      "termId": "ES-000223",
+      "target": "台風",
+      "assetId": "WME-b0c9402853ecd0"
+    },
+    {
+      "questionId": "ES-000228-C01",
+      "termId": "ES-000228",
+      "target": "海流",
+      "assetId": "WME-6d575f81782c5a"
+    },
+    {
+      "questionId": "ES-000232-C01",
+      "termId": "ES-000232",
+      "target": "水温躍層",
+      "assetId": "WME-e406571cd8235d"
+    },
+    {
+      "questionId": "ES-000237-C01",
+      "termId": "ES-000237",
+      "target": "湧昇",
+      "assetId": "WME-e1b8ca9ab48e56"
+    },
+    {
+      "questionId": "ES-000247-C01",
+      "termId": "ES-000247",
+      "target": "彗星",
+      "assetId": "WME-222cdc25bbb49d"
+    },
+    {
       "questionId": "ES-000249-C01",
       "termId": "ES-000249",
       "target": "オーロラ",
@@ -1354,6 +3030,48 @@
       "termId": "ES-000250",
       "target": "銀河系",
       "assetId": "WME-562914633cf733"
+    },
+    {
+      "questionId": "ES-000251-C01",
+      "termId": "ES-000251",
+      "target": "バルジ",
+      "assetId": "WME-562914633cf733"
+    },
+    {
+      "questionId": "ES-000252-C01",
+      "termId": "ES-000252",
+      "target": "銀河円盤",
+      "assetId": "WME-562914633cf733"
+    },
+    {
+      "questionId": "ES-000254-C01",
+      "termId": "ES-000254",
+      "target": "年周視差",
+      "assetId": "WME-e3d29bf470976f"
+    },
+    {
+      "questionId": "ES-000258-C01",
+      "termId": "ES-000258",
+      "target": "原始惑星",
+      "assetId": "WME-c0ba164574e40f"
+    },
+    {
+      "questionId": "ES-000259-C01",
+      "termId": "ES-000259",
+      "target": "微惑星",
+      "assetId": "WME-c0ba164574e40f"
+    },
+    {
+      "questionId": "ES-000262-C01",
+      "termId": "ES-000262",
+      "target": "生命居住可能領域",
+      "assetId": "WME-e96b8205c2125c"
+    },
+    {
+      "questionId": "ES-000263-C01",
+      "termId": "ES-000263",
+      "target": "シアノバクテリア",
+      "assetId": "WME-f62a69d7a8475e"
     },
     {
       "questionId": "ES-000267-C01",
@@ -1372,6 +3090,30 @@
       "termId": "ES-000269",
       "target": "斜交葉理",
       "assetId": "WME-c32b2da2abb6bd"
+    },
+    {
+      "questionId": "ES-000284-C01",
+      "termId": "ES-000284",
+      "target": "カンブリア爆発",
+      "assetId": "WME-5d161dbc800025"
+    },
+    {
+      "questionId": "ES-000285-C01",
+      "termId": "ES-000285",
+      "target": "大量絶滅",
+      "assetId": "WME-0e05bc9368470f"
+    },
+    {
+      "questionId": "ES-000286-C01",
+      "termId": "ES-000286",
+      "target": "白亜紀末の大量絶滅",
+      "assetId": "WME-e1968e2d56f456"
+    },
+    {
+      "questionId": "ES-000287-C01",
+      "termId": "ES-000287",
+      "target": "イリジウム濃集層",
+      "assetId": "WME-1299a7b6216f9b"
     },
     {
       "questionId": "ES-000288-C01",
@@ -1438,6 +3180,12 @@
       "termId": "ES-000298",
       "target": "ナウマンゾウ",
       "assetId": "WME-4d1a0356d6d9b6"
+    },
+    {
+      "questionId": "ES-000299-C01",
+      "termId": "ES-000299",
+      "target": "直立二足歩行",
+      "assetId": "WME-ff42cc3c481d61"
     }
   ]
 }

@@ -3,6 +3,7 @@ import { mkdir, readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  loadBiologyDecks,
   loadEarthScienceDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
@@ -19,6 +20,7 @@ if (
     "world-history",
     "japanese-history",
     "geography",
+    "biology-basics",
     "earth-science-basics",
   ].includes(imageSubjectId)
 ) {
@@ -32,17 +34,21 @@ export const imageAssetIdPrefix =
     ? "WMJ"
     : imageSubjectId === "geography"
       ? "WMG"
-      : imageSubjectId === "earth-science-basics"
-        ? "WME"
-      : "WM";
+      : imageSubjectId === "biology-basics"
+        ? "WMB"
+        : imageSubjectId === "earth-science-basics"
+          ? "WME"
+          : "WM";
 const loadSubjectDecks =
   imageSubjectId === "japanese-history"
     ? loadJapaneseHistoryDecks
     : imageSubjectId === "geography"
       ? loadGeographyDecks
-      : imageSubjectId === "earth-science-basics"
-        ? loadEarthScienceDecks
-      : loadSourceDecks;
+      : imageSubjectId === "biology-basics"
+        ? loadBiologyDecks
+        : imageSubjectId === "earth-science-basics"
+          ? loadEarthScienceDecks
+          : loadSourceDecks;
 const userAgent = "anki-history-learning/1.0 (https://anki-ume.vercel.app/)";
 const apiHeaders = { "User-Agent": userAgent };
 let apiRequestQueue = Promise.resolve();
@@ -659,7 +665,11 @@ function questionList(term) {
 async function main() {
   const rebuild = process.argv.includes("--rebuild");
   const { terms: allTerms } = await loadSubjectDecks();
-  const usesSelectedTerms = ["geography", "earth-science-basics"].includes(
+  const usesSelectedTerms = [
+    "geography",
+    "biology-basics",
+    "earth-science-basics",
+  ].includes(
     imageSubjectId,
   );
   const selectedTermOverrides =

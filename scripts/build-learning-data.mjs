@@ -40,6 +40,10 @@ const biologySourceDirectory = path.join(
   "source",
   "biology-basics",
 );
+const biologyTermImageManifestPath = path.join(
+  biologySourceDirectory,
+  "term-images.json",
+);
 const earthScienceSourceDirectory = path.join(
   projectRoot,
   "data",
@@ -3164,6 +3168,7 @@ export async function main() {
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    biologyTermImageManifest,
     earthScienceTermImageManifest,
   ] = await Promise.all([
     loadTermImageManifest(worldHistoryData.terms),
@@ -3176,6 +3181,11 @@ export async function main() {
       imageSourceDirectory: geographySourceDirectory,
       requireComplete: false,
     }),
+    loadTermImageManifest(biologyData.terms, {
+      manifestPath: biologyTermImageManifestPath,
+      imageSourceDirectory: biologySourceDirectory,
+      requireComplete: false,
+    }),
     loadTermImageManifest(earthScienceData.terms, {
       manifestPath: earthScienceTermImageManifestPath,
       imageSourceDirectory: earthScienceSourceDirectory,
@@ -3186,6 +3196,7 @@ export async function main() {
     worldTermImageManifest,
     japaneseTermImageManifest,
     geographyTermImageManifest,
+    biologyTermImageManifest,
     earthScienceTermImageManifest,
   ]);
 
@@ -3227,6 +3238,13 @@ export async function main() {
     if (geographyTermImageManifest.assets.length > 0) {
       await cp(
         path.join(geographySourceDirectory, "term-images"),
+        path.join(outputRoot, "term-images"),
+        { recursive: true },
+      );
+    }
+    if (biologyTermImageManifest.assets.length > 0) {
+      await cp(
+        path.join(biologySourceDirectory, "term-images"),
         path.join(outputRoot, "term-images"),
         { recursive: true },
       );

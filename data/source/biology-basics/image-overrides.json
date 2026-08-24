@@ -1,0 +1,500 @@
+[
+  {
+    "termId": "BB-000001",
+    "query": "animal cell structure diagram",
+    "caption": "細胞の基本構造",
+    "fileName": "Animal Cell.svg"
+  },
+  {
+    "termId": "BB-000004",
+    "query": "DNA double helix structure diagram",
+    "caption": "DNAの二重らせん構造",
+    "fileName": "DNA-structure-and-bases.png"
+  },
+  {
+    "termId": "BB-000005",
+    "query": "autonomic nervous system diagram",
+    "caption": "自律神経系の分布",
+    "fileName": "The Autonomic Nervous System.png"
+  },
+  {
+    "termId": "BB-000007",
+    "query": "ATP structure diagram",
+    "caption": "ATPの構造",
+    "fileName": "ATP structure.svg"
+  },
+  {
+    "termId": "BB-000013",
+    "query": "photosynthesis diagram",
+    "caption": "光合成の模式図",
+    "fileName": "Myoglobin.png"
+  },
+  {
+    "termId": "BB-000016",
+    "query": "cellular respiration diagram",
+    "caption": "呼吸の模式図",
+    "fileName": "Myoglobin.png"
+  },
+  {
+    "termId": "BB-000019",
+    "query": "enzyme substrate reaction diagram",
+    "caption": "酵素と基質の反応",
+    "fileName": "Enzyme activation energy.png"
+  },
+  {
+    "termId": "BB-000021",
+    "query": "food chain diagram",
+    "caption": "食物連鎖の模式図",
+    "fileName": "FoodChain.svg"
+  },
+  {
+    "termId": "BB-000022",
+    "query": "prokaryotic cell diagram",
+    "caption": "原核細胞の構造",
+    "fileName": "Prokaryote cell.svg"
+  },
+  {
+    "termId": "BB-000023",
+    "query": "antibody structure diagram",
+    "caption": "抗体の構造",
+    "fileName": "Antibody-drug conjugate structure-ar.svg"
+  },
+  {
+    "termId": "BB-000024",
+    "query": "food web diagram",
+    "caption": "食物網の模式図",
+    "fileName": "Food web diagram.svg"
+  },
+  {
+    "termId": "BB-000025",
+    "query": "eukaryotic cell diagram",
+    "caption": "真核細胞の構造",
+    "fileName": "Animal Cell.svg"
+  },
+  {
+    "termId": "BB-000027",
+    "query": "trophic levels diagram",
+    "caption": "栄養段階の模式図",
+    "fileName": "Ecological Pyramid.svg"
+  },
+  {
+    "termId": "BB-000028",
+    "query": "mitochondrion structure diagram",
+    "caption": "ミトコンドリアの構造",
+    "fileName": "Animal mitochondrion diagram et.svg"
+  },
+  {
+    "termId": "BB-000031",
+    "query": "chloroplast structure diagram",
+    "caption": "葉緑体の構造",
+    "fileName": "Chloroplast II.svg"
+  },
+  {
+    "termId": "BB-000037",
+    "query": "chromosome structure diagram",
+    "caption": "染色体の構造",
+    "fileName": "Chromosome structure.png"
+  },
+  {
+    "termId": "BB-000044",
+    "query": "phagocytosis diagram",
+    "caption": "食作用の模式図",
+    "fileName": "Phagocytosis in three steps zh.png"
+  },
+  {
+    "termId": "BB-000049",
+    "query": "cell membrane fluid mosaic model",
+    "caption": "細胞膜の流動モザイクモデル",
+    "fileName": "Biological cell.svg"
+  },
+  {
+    "termId": "BB-000052",
+    "query": "cell nucleus structure diagram",
+    "caption": "核の構造",
+    "fileName": "Animal cell structure en.svg"
+  },
+  {
+    "termId": "BB-000055",
+    "query": "ribosome structure diagram",
+    "caption": "リボソームの構造",
+    "fileName": "Ribosome structure including subunits and binding sites.png"
+  },
+  {
+    "termId": "BB-000061",
+    "query": "DNA double helix structure diagram",
+    "caption": "DNAの二重らせん構造",
+    "fileName": "DNA-structure-and-bases.png"
+  },
+  {
+    "termId": "BB-000064",
+    "query": "DNA complementary base pairs diagram",
+    "caption": "DNA塩基の相補的な結合",
+    "fileName": "DNA Diagram.png"
+  },
+  {
+    "termId": "BB-000067",
+    "query": "DNA replication diagram",
+    "caption": "DNA複製の模式図",
+    "fileName": "Semi-conservative replication.svg"
+  },
+  {
+    "termId": "BB-000068",
+    "query": "islets of Langerhans histology",
+    "caption": "ランゲルハンス島",
+    "fileName": "Highly Vascularized Islets of Langerhans by Phase Contrast (33850590688).jpg"
+  },
+  {
+    "termId": "BB-000070",
+    "query": "transcription DNA RNA diagram",
+    "caption": "転写の模式図",
+    "fileName": "A Schematic Diagram of RNA Transcription from a DNA Template.jpg"
+  },
+  {
+    "termId": "BB-000072",
+    "query": "forest vertical stratification diagram",
+    "caption": "森林の階層構造",
+    "fileName": "Stockwerke wald.png"
+  },
+  {
+    "termId": "BB-000073",
+    "query": "translation ribosome mRNA diagram",
+    "caption": "翻訳の模式図",
+    "fileName": "Ribosome mRNA translation en.svg"
+  },
+  {
+    "termId": "BB-000077",
+    "query": "humoral immune response diagram",
+    "caption": "体液性免疫の流れ",
+    "fileName": "Humoral Response Drawing.svg"
+  },
+  {
+    "termId": "BB-000080",
+    "query": "cell mediated immune response diagram",
+    "caption": "細胞性免疫の流れ",
+    "fileName": "SpecificImmuneResponse-2.svg"
+  },
+  {
+    "termId": "BB-000090",
+    "query": "ecological succession diagram",
+    "caption": "植生遷移の模式図",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000091",
+    "query": "cell cycle diagram",
+    "caption": "細胞周期",
+    "fileName": "The Cell Cycle.svg"
+  },
+  {
+    "termId": "BB-000095",
+    "query": "primary secondary immune response graph",
+    "caption": "一次応答と二次応答",
+    "fileName": "2223 Primary and Secondary Antibody Respons new.jpg"
+  },
+  {
+    "termId": "BB-000098",
+    "query": "primary secondary immune response graph",
+    "caption": "一次応答と二次応答",
+    "fileName": "2223 Primary and Secondary Antibody Respons new.jpg"
+  },
+  {
+    "termId": "BB-000103",
+    "query": "mitosis stages diagram",
+    "caption": "体細胞分裂の各段階",
+    "fileName": "Mitosis Stages - Persian.svg"
+  },
+  {
+    "termId": "BB-000107",
+    "query": "central nervous system diagram",
+    "caption": "中枢神経系",
+    "fileName": "Nervous system diagram numbered.svg"
+  },
+  {
+    "termId": "BB-000110",
+    "query": "peripheral nervous system diagram",
+    "caption": "末梢神経系",
+    "fileName": "Nervous system diagram-en.svg"
+  },
+  {
+    "termId": "BB-000111",
+    "query": "lichen on rock",
+    "caption": "岩上の地衣類",
+    "fileName": "Lichen on a rock.jpg"
+  },
+  {
+    "termId": "BB-000114",
+    "query": "moss plant",
+    "caption": "コケ植物",
+    "fileName": "Moss closeup.jpg"
+  },
+  {
+    "termId": "BB-000112",
+    "query": "cytokinesis diagram",
+    "caption": "細胞質分裂",
+    "fileName": "Cytokinesis eukaryotic mitosis.svg"
+  },
+  {
+    "termId": "BB-000115",
+    "query": "mitosis stages diagram",
+    "caption": "体細胞分裂の前期",
+    "fileName": "Mitosis Stages - Persian.svg"
+  },
+  {
+    "termId": "BB-000118",
+    "query": "mitosis stages diagram",
+    "caption": "体細胞分裂の中期",
+    "fileName": "Mitosis Stages - Persian.svg"
+  },
+  {
+    "termId": "BB-000121",
+    "query": "mitosis stages diagram",
+    "caption": "体細胞分裂の後期",
+    "fileName": "Mitosis Stages - Persian.svg"
+  },
+  {
+    "termId": "BB-000124",
+    "query": "mitosis stages diagram",
+    "caption": "体細胞分裂の終期",
+    "fileName": "Mitosis Stages - Persian.svg"
+  },
+  {
+    "termId": "BB-000128",
+    "query": "blood components microscope diagram",
+    "caption": "血液の主な成分",
+    "fileName": "Illu blood components.svg"
+  },
+  {
+    "termId": "BB-000152",
+    "query": "blood coagulation diagram",
+    "caption": "血液凝固の流れ",
+    "fileName": "Blood coagulation japanese.svg"
+  },
+  {
+    "termId": "BB-000161",
+    "query": "human liver anatomy",
+    "caption": "ヒトの肝臓",
+    "fileName": "Biliary system new-ja.svg"
+  },
+  {
+    "termId": "BB-000162",
+    "query": "terrestrial biomes map",
+    "caption": "世界の主なバイオーム",
+    "fileName": "Biomes of the world.svg"
+  },
+  {
+    "termId": "BB-000163",
+    "query": "cell organelles diagram",
+    "caption": "主な細胞小器官",
+    "fileName": "Animal Cell Diagram Colorful.png"
+  },
+  {
+    "termId": "BB-000169",
+    "query": "plant cell wall diagram",
+    "caption": "植物細胞の細胞壁",
+    "fileName": "Plant cell wall diagram-uk.svg"
+  },
+  {
+    "termId": "BB-000172",
+    "query": "plant cell vacuole diagram",
+    "caption": "植物細胞の液胞",
+    "fileName": "Plant cell structure-en.svg"
+  },
+  {
+    "termId": "BB-000175",
+    "query": "plant cell diagram",
+    "caption": "植物細胞の構造",
+    "fileName": "Plant cell structure-en.svg"
+  },
+  {
+    "termId": "BB-000178",
+    "query": "animal cell diagram",
+    "caption": "動物細胞の構造",
+    "fileName": "Animal Cell.svg"
+  },
+  {
+    "termId": "BB-000180",
+    "query": "tropical rainforest",
+    "caption": "熱帯多雨林",
+    "fileName": "Tropical rain forest.jpg"
+  },
+  {
+    "termId": "BB-000185",
+    "query": "pituitary gland anatomy diagram",
+    "caption": "下垂体の位置",
+    "fileName": "Illu pituitary pineal glands.jpg"
+  },
+  {
+    "termId": "BB-000188",
+    "query": "thyroid gland anatomy diagram",
+    "caption": "甲状腺の位置",
+    "fileName": "Diagram showing the position of the thyroid gland CRUK 363.svg"
+  },
+  {
+    "termId": "BB-000189",
+    "query": "evergreen broadleaf forest Japan",
+    "caption": "照葉樹林",
+    "fileName": "Subtropical Forest of Yanbaru National Park Okinawa 2018.jpg"
+  },
+  {
+    "termId": "BB-000191",
+    "query": "adrenal gland anatomy diagram",
+    "caption": "副腎髄質の位置",
+    "fileName": "Adrenal gland az.jpg"
+  },
+  {
+    "termId": "BB-000192",
+    "query": "temperate deciduous forest",
+    "caption": "夏緑樹林",
+    "fileName": "Deciduous forest fall.jpg"
+  },
+  {
+    "termId": "BB-000194",
+    "query": "adrenal gland anatomy diagram",
+    "caption": "副腎皮質の位置",
+    "fileName": "Adrenal gland az.jpg"
+  },
+  {
+    "termId": "BB-000195",
+    "query": "coniferous forest",
+    "caption": "針葉樹林",
+    "fileName": "Conifer forest.jpg"
+  },
+  {
+    "termId": "BB-000197",
+    "query": "pancreas anatomy diagram",
+    "caption": "膵臓の位置",
+    "fileName": "2424 Exocrine and Endocrine Pancreas.jpg"
+  },
+  {
+    "termId": "BB-000198",
+    "query": "savanna biome",
+    "caption": "サバンナ",
+    "fileName": "Serengeti-Landscape-2012.JPG"
+  },
+  {
+    "termId": "BB-000201",
+    "query": "steppe biome",
+    "caption": "ステップ",
+    "fileName": "Steppe.jpg"
+  },
+  {
+    "termId": "BB-000204",
+    "query": "desert biome",
+    "caption": "砂漠",
+    "fileName": "Sahara Desert.jpg"
+  },
+  {
+    "termId": "BB-000206",
+    "query": "negative feedback homeostasis diagram",
+    "caption": "負のフィードバック",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000207",
+    "query": "tundra biome",
+    "caption": "ツンドラ",
+    "fileName": "Tundra Landscape (31354285547).jpg"
+  },
+  {
+    "termId": "BB-000210",
+    "query": "alpine vegetation",
+    "caption": "高山帯",
+    "fileName": "TeideS.jpg"
+  },
+  {
+    "termId": "BB-000211",
+    "query": "enzyme substrate specificity diagram",
+    "caption": "酵素の基質特異性",
+    "fileName": "Lock and key enzyme mechanism.svg"
+  },
+  {
+    "termId": "BB-000228",
+    "query": "quadrat ecology sampling",
+    "caption": "方形区法による植生調査",
+    "fileName": "Quadrat sur le site du Vivier Basque (Ifremer 00561-67277).jpg"
+  },
+  {
+    "termId": "BB-000260",
+    "query": "antigen presentation diagram",
+    "caption": "抗原提示の模式図",
+    "fileName": "Antigen presentation-es.png"
+  },
+  {
+    "termId": "BB-000266",
+    "query": "antigen antibody reaction diagram",
+    "caption": "抗原抗体反応",
+    "fileName": "Antibody.svg"
+  },
+  {
+    "termId": "BB-000274",
+    "query": "semiconservative DNA replication diagram",
+    "caption": "DNAの半保存的複製",
+    "fileName": "Semi-conservative replication.svg"
+  },
+  {
+    "termId": "BB-000279",
+    "query": "eutrophication diagram",
+    "caption": "富栄養化の進行",
+    "fileName": "Ap env sci - eutrophication diagram.svg"
+  },
+  {
+    "termId": "BB-000281",
+    "query": "HIV virion structure diagram",
+    "caption": "HIVの構造",
+    "fileName": "HI-Virion Structure (5080768345).jpg"
+  },
+  {
+    "termId": "BB-000288",
+    "query": "ecological pyramid diagram",
+    "caption": "生態ピラミッド",
+    "fileName": "Ecological Pyramid.svg"
+  },
+  {
+    "termId": "BB-000291",
+    "query": "carbon cycle diagram",
+    "caption": "炭素循環",
+    "fileName": "Carbon cycle-simple diagram.svg"
+  },
+  {
+    "termId": "BB-000293",
+    "query": "lymph node anatomy diagram",
+    "caption": "リンパ節の構造",
+    "fileName": "Illu lymph node structure az.jpg"
+  },
+  {
+    "termId": "BB-000294",
+    "query": "nitrogen cycle diagram",
+    "caption": "窒素循環",
+    "fileName": "Nitrogen cycle.svg"
+  },
+  {
+    "termId": "BB-000296",
+    "query": "thymus anatomy diagram",
+    "caption": "胸腺の位置",
+    "fileName": "Thymus az.jpg"
+  },
+  {
+    "termId": "BB-000297",
+    "query": "ecosystem energy flow diagram",
+    "caption": "生態系のエネルギーの流れ",
+    "fileName": "Energy flow chart.png"
+  },
+  {
+    "termId": "BB-000298",
+    "query": "central dogma diagram",
+    "caption": "セントラルドグマ",
+    "fileName": "Central dogma of molecular biology old.jpg"
+  },
+  {
+    "termId": "BB-000299",
+    "query": "bone marrow anatomy",
+    "caption": "骨髄",
+    "fileName": "Bone Marrow (NIH BioArt 56).svg"
+  },
+  {
+    "termId": "BB-000300",
+    "query": "ecosystem matter cycle diagram",
+    "caption": "生態系の物質循環",
+    "fileName": "Nutrient cycle.svg"
+  }
+]

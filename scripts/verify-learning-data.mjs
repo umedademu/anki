@@ -1389,6 +1389,22 @@ const expectedTermImages = mergeTermImageManifests([
     ),
     requireComplete: false,
   }),
+  await loadTermImageManifest(expectedBiologyTerms, {
+    manifestPath: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "biology-basics",
+      "term-images.json",
+    ),
+    imageSourceDirectory: path.join(
+      projectRoot,
+      "data",
+      "source",
+      "biology-basics",
+    ),
+    requireComplete: false,
+  }),
   await loadTermImageManifest(expectedEarthScienceTerms, {
     manifestPath: path.join(
       projectRoot,
@@ -1421,6 +1437,7 @@ const expectedTermIdByQuestionId = new Map(
     ...generatedTerms,
     ...generatedJapaneseTerms,
     ...generatedGeographyTerms,
+    ...generatedBiologyTerms,
     ...generatedEarthScienceTerms,
   ].flatMap((term) =>
       Object.values(term.stages)
@@ -1453,7 +1470,7 @@ if (
   )
 ) {
   throw new Error(
-    "世界史・日本史・地理・地学基礎の関連画像が正しく割り当てられていません。",
+    "世界史・日本史・地理・地学基礎・生物基礎の関連画像が正しく割り当てられていません。",
   );
 }
 
@@ -1536,6 +1553,63 @@ if (
   );
 }
 
+const biologyImageOverrides = JSON.parse(
+  await readFile(
+    path.join(
+      projectRoot,
+      "data",
+      "source",
+      "biology-basics",
+      "image-overrides.json",
+    ),
+    "utf8",
+  ),
+);
+const biologyImageTermIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("BB-"))
+    .map((fallback) => fallback.termId),
+);
+const biologyImageAssignments = generatedTermImages.assignments.filter(
+  (assignment) => assignment.termId.startsWith("BB-"),
+);
+const biologyImageQuestionIds = new Set(
+  biologyImageAssignments.map((assignment) => assignment.questionId),
+);
+const biologyImageAssetIds = new Set(
+  generatedTermImages.termFallbacks
+    .filter((fallback) => fallback.termId.startsWith("BB-"))
+    .map((fallback) => fallback.assetId),
+);
+const biologyTermById = new Map(
+  generatedBiologyTerms.map((term) => [term.id, term]),
+);
+const expectedBiologyImageQuestionIds = new Set(
+  biologyImageOverrides.flatMap((override) =>
+    Object.values(biologyTermById.get(override.termId)?.stages ?? {})
+      .flat()
+      .map((question) => question.id),
+  ),
+);
+if (
+  biologyImageOverrides.length !== 83 ||
+  biologyImageTermIds.size !== biologyImageOverrides.length ||
+  biologyImageQuestionIds.size !== expectedBiologyImageQuestionIds.size ||
+  biologyImageAssetIds.size !== 70 ||
+  biologyImageOverrides.some(
+    (override) => !biologyImageTermIds.has(override.termId) || !override.fileName,
+  ) ||
+  biologyImageAssignments.some(
+    (assignment) =>
+      !expectedBiologyImageQuestionIds.has(assignment.questionId) ||
+      assignment.target !== biologyTermById.get(assignment.termId)?.term,
+  )
+) {
+  throw new Error(
+    "生物基礎の厳選画像70点が83項目へ回答文ではなく用語単位で割り当てられていません。",
+  );
+}
+
 const normalizeCommonsFileName = (sourcePageUrl) => {
   const marker = "/wiki/File:";
   const index = sourcePageUrl.indexOf(marker);
@@ -1579,6 +1653,16 @@ const earthScienceSourceOverrideMismatches = earthScienceImageOverrides.filter(
     );
   },
 );
+const biologySourceOverrideMismatches = biologyImageOverrides.filter((override) => {
+  const assetId = fallbackByTermId.get(override.termId)?.assetId;
+  const asset = imageAssetById.get(assetId);
+  return (
+    normalizeCommonsFileName(asset?.sourcePageUrl ?? "") !==
+    normalizeCommonsFileName(
+      `https://commons.wikimedia.org/wiki/File:${override.fileName}`,
+    )
+  );
+});
 const auditedFallbackMismatches = generatedTerms
   .filter(
     (term) => Number(term.id.slice(3, 9)) > 400 && termFileOverrides.has(term.term),
@@ -1633,7 +1717,8 @@ if (
   auditedTargetMismatches.length > 0 ||
   sourceOverrideMismatches.length > 0 ||
   geographySourceOverrideMismatches.length > 0 ||
-  earthScienceSourceOverrideMismatches.length > 0
+  earthScienceSourceOverrideMismatches.length > 0 ||
+  biologySourceOverrideMismatches.length > 0
 ) {
   throw new Error(
     `監査済み画像が指定した史料と一致しません: ${[
@@ -1644,6 +1729,7 @@ if (
       ),
       ...geographySourceOverrideMismatches.map((override) => override.termId),
       ...earthScienceSourceOverrideMismatches.map((override) => override.termId),
+      ...biologySourceOverrideMismatches.map((override) => override.termId),
     ].join(", ")}`,
   );
 }

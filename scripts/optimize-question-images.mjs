@@ -21,6 +21,7 @@ if (
     "world-history",
     "japanese-history",
     "geography",
+    "biology-basics",
     "earth-science-basics",
   ].includes(imageSubjectId)
 ) {
@@ -47,7 +48,7 @@ async function main() {
   const replacements = [];
   let optimizedCount = 0;
   for (const asset of manifest.assets) {
-    if (!/^WM(?:J|G|E)?-/.test(asset.id)) continue;
+    if (!/^WM(?:J|G|B|E)?-/.test(asset.id)) continue;
     const sourcePath = path.join(sourceDirectory, asset.path);
     const finalPath = path.join(optimizedDirectory, `${asset.id}.webp`);
     const temporaryPath = `${finalPath}.tmp`;
@@ -90,7 +91,7 @@ async function main() {
     recursive: true,
     withFileTypes: true,
   })) {
-    if (!entry.isFile() || !/^WM(?:J|G|E)?-/.test(entry.name)) continue;
+    if (!entry.isFile() || !/^WM(?:J|G|B|E)?-/.test(entry.name)) continue;
     const candidatePath = path.resolve(entry.parentPath, entry.name);
     assertInsideImageDirectory(candidatePath);
     if (!referencedPaths.has(candidatePath)) {

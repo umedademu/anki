@@ -1,5 +1,40 @@
 [
   {
+    "termId": "GE-000001",
+    "caption": "緯度",
+    "fileName": "WorldMapLongLat-eq-circles-tropics-non.png"
+  },
+  {
+    "termId": "GE-000002",
+    "caption": "経度",
+    "fileName": "Latitude and Longitude of the Earth-dty.svg"
+  },
+  {
+    "termId": "GE-000003",
+    "caption": "赤道",
+    "fileName": "World map with equator.jpg"
+  },
+  {
+    "termId": "GE-000004",
+    "caption": "本初子午線",
+    "fileName": "Prime Meridian, Greenwich - geograph.org.uk - 1472641.jpg"
+  },
+  {
+    "termId": "GE-000007",
+    "caption": "日付変更線",
+    "fileName": "Dateline-animation-3deg-borderonly-180px.gif"
+  },
+  {
+    "termId": "GE-000013",
+    "caption": "方位",
+    "fileName": "CompassRose (mul) 16 blue cardinal.svg"
+  },
+  {
+    "termId": "GE-000015",
+    "caption": "地形図",
+    "fileName": "Charleroi-carte topographique de 1873.jpg"
+  },
+  {
     "termId": "GE-000017",
     "caption": "メルカトル図法の世界地図",
     "fileName": "Mercator projection SW.jpg"
@@ -15,9 +50,69 @@
     "fileName": "Mollweide projection SW.jpg"
   },
   {
+    "termId": "GE-000021",
+    "caption": "階級区分図",
+    "fileName": "Australian Census 2011 demographic map - Australia by SLA - BCP field 2715 Christianity Anglican Persons.svg"
+  },
+  {
+    "termId": "GE-000022",
+    "caption": "ドットマップ",
+    "fileName": "Dot map black hispanic.png"
+  },
+  {
+    "termId": "GE-000024",
+    "caption": "流線図",
+    "fileName": "Minard’s map of French wine exports for 1864.jpg"
+  },
+  {
+    "termId": "GE-000025",
+    "caption": "カルトグラム",
+    "fileName": "PaullHennig2016WorldMap.OAha.CC-BY-4.0.jpg"
+  },
+  {
+    "termId": "GE-000026",
+    "caption": "GIS",
+    "fileName": "QGIS 2.2 Valmiera showing new menu design.png"
+  },
+  {
+    "termId": "GE-000028",
+    "caption": "リモートセンシング",
+    "fileName": "Remote Sensing Illustration.jpg"
+  },
+  {
+    "termId": "GE-000031",
+    "caption": "国境",
+    "fileName": "Arava Aquaba Border - Jordan.jpg"
+  },
+  {
+    "termId": "GE-000032",
+    "caption": "領海",
+    "fileName": "Zonmar-en.svg"
+  },
+  {
+    "termId": "GE-000033",
+    "caption": "排他的経済水域",
+    "fileName": "Exclusive Economic Zones - World.svg"
+  },
+  {
+    "termId": "GE-000034",
+    "caption": "大陸",
+    "fileName": "Continentes Wikipedia.svg"
+  },
+  {
+    "termId": "GE-000035",
+    "caption": "大洋",
+    "fileName": "Map of the World Oceans - January 2015.svg"
+  },
+  {
     "termId": "GE-000036",
     "caption": "地球の内部構造",
     "fileName": "Earth Internal Structure.svg"
+  },
+  {
+    "termId": "GE-000039",
+    "caption": "プレート",
+    "fileName": "Earth-cutaway-schematic-numbered.svg"
   },
   {
     "termId": "GE-000040",
@@ -25,9 +120,89 @@
     "fileName": "Tectonic plates (2022).svg"
   },
   {
+    "termId": "GE-000041",
+    "caption": "海嶺",
+    "fileName": "Carlsberg.svg"
+  },
+  {
+    "termId": "GE-000042",
+    "caption": "海溝",
+    "fileName": "Atlantic-trench.JPG"
+  },
+  {
+    "termId": "GE-000043",
+    "caption": "沈み込み帯",
+    "fileName": "Subduction.svg"
+  },
+  {
+    "termId": "GE-000044",
+    "caption": "発散境界",
+    "fileName": "Oceanic spreading.svg"
+  },
+  {
+    "termId": "GE-000045",
+    "caption": "収束境界",
+    "fileName": "Oceanic-continental destructive plate boundary.svg"
+  },
+  {
+    "termId": "GE-000046",
+    "caption": "横ずれ境界",
+    "fileName": "Continental-continental conservative plate boundary opposite directions.svg"
+  },
+  {
+    "termId": "GE-000047",
+    "caption": "断層",
+    "fileName": "Fault types.png"
+  },
+  {
+    "termId": "GE-000048",
+    "caption": "活断層",
+    "fileName": "San Andreas Fault Aerial View.gif"
+  },
+  {
+    "termId": "GE-000049",
+    "caption": "震源",
+    "fileName": "Hipocentro y epicentro.png"
+  },
+  {
+    "termId": "GE-000050",
+    "caption": "震央",
+    "fileName": "Epicenter Diagram.svg"
+  },
+  {
+    "termId": "GE-000053",
+    "caption": "火山",
+    "fileName": "Mount St. Helens erupting blue.jpg"
+  },
+  {
     "termId": "GE-000055",
     "caption": "環太平洋造山帯（環太平洋火山帯）",
     "fileName": "Pacific Ring of Fire.svg"
+  },
+  {
+    "termId": "GE-000056",
+    "caption": "アルプス・ヒマラヤ造山帯",
+    "fileName": "Alpiner Gebirgsgürtel.png"
+  },
+  {
+    "termId": "GE-000059",
+    "caption": "安定陸塊",
+    "fileName": "World geologic provinces.jpg"
+  },
+  {
+    "termId": "GE-000060",
+    "caption": "楯状地",
+    "fileName": "World geologic provinces.jpg"
+  },
+  {
+    "termId": "GE-000062",
+    "caption": "褶曲山地",
+    "fileName": "Chert Compression Fold (9940472926).jpg"
+  },
+  {
+    "termId": "GE-000063",
+    "caption": "断層山地",
+    "fileName": "Fault block mountain.JPG"
   },
   {
     "termId": "GE-000072",
@@ -38,6 +213,21 @@
     "termId": "GE-000073",
     "caption": "扇状地のでき方",
     "fileName": "Alluvial fan scheme.PNG"
+  },
+  {
+    "termId": "GE-000074",
+    "caption": "氾濫原",
+    "fileName": "Paraná River Floodplain.jpg"
+  },
+  {
+    "termId": "GE-000075",
+    "caption": "自然堤防",
+    "fileName": "Hanyu Aino River Natural Levee 1.JPG"
+  },
+  {
+    "termId": "GE-000076",
+    "caption": "後背湿地",
+    "fileName": "Hanyu Aino River Natural Levee 1.JPG"
   },
   {
     "termId": "GE-000077",
@@ -65,9 +255,49 @@
     "fileName": "Grande doline Plateau de Saint Barnabe 35-36mod.jpg"
   },
   {
+    "termId": "GE-000085",
+    "caption": "鍾乳洞",
+    "fileName": "Syuureimine gyokusendou.JPG"
+  },
+  {
+    "termId": "GE-000086",
+    "caption": "砂丘",
+    "fileName": "Morocco Africa Flickr Rosino December 2005 84514010.jpg"
+  },
+  {
+    "termId": "GE-000087",
+    "caption": "砂州",
+    "fileName": "13-09-29-nordfriesisches-wattenmeer-RalfR-12.jpg"
+  },
+  {
+    "termId": "GE-000088",
+    "caption": "潟湖",
+    "fileName": "Venice Lagoon December 9 2001.jpg"
+  },
+  {
+    "termId": "GE-000089",
+    "caption": "リアス海岸",
+    "fileName": "PortHacking-Sydney-Ria.jpg"
+  },
+  {
     "termId": "GE-000090",
     "caption": "氷河の侵食でできるフィヨルド",
     "fileName": "Fjord genesis.png"
+  },
+  {
+    "termId": "GE-000091",
+    "caption": "海岸段丘",
+    "fileName": "Fudeshi Coastal Terrace 2021-02 ac.jpg"
+  },
+  {
+    "termId": "GE-000092",
+    "caption": "海食崖",
+    "fileName": "Hole In The Rock In Bay Of Islands.jpg"
+  },
+  {
+    "termId": "GE-000093",
+    "caption": "サンゴ礁",
+    "fileName": "Coral Outcrop Flynn Reef.jpg"
   },
   {
     "termId": "GE-000094",
@@ -83,6 +313,11 @@
     "termId": "GE-000096",
     "caption": "環礁のでき方",
     "fileName": "Atoll forming-Atoll.png"
+  },
+  {
+    "termId": "GE-000097",
+    "caption": "氷河",
+    "fileName": "Ледник на западном побережье Земли Грейама.jpg"
   },
   {
     "termId": "GE-000098",
@@ -105,9 +340,34 @@
     "fileName": "Wadi rum desert.jpg"
   },
   {
+    "termId": "GE-000102",
+    "caption": "オアシス",
+    "fileName": "Libyen-oase1.jpg"
+  },
+  {
+    "termId": "GE-000104",
+    "caption": "溶岩台地",
+    "fileName": "Rangipo.jpg"
+  },
+  {
     "termId": "GE-000105",
     "caption": "ケスタの地形断面",
     "fileName": "Cuesta schematic.svg"
+  },
+  {
+    "termId": "GE-000110",
+    "caption": "年較差",
+    "fileName": "ClimateTokyoJapan.png"
+  },
+  {
+    "termId": "GE-000116",
+    "caption": "海洋性気候",
+    "fileName": "Koppen World Map Cfb Cfc Cwb Cwc.png"
+  },
+  {
+    "termId": "GE-000119",
+    "caption": "コリオリの力",
+    "fileName": "Coriolis effect01.png"
   },
   {
     "termId": "GE-000120",
@@ -115,9 +375,74 @@
     "fileName": "Earth Global Circulation - en.svg"
   },
   {
+    "termId": "GE-000121",
+    "caption": "赤道低圧帯",
+    "fileName": "ITCZ january-july.png"
+  },
+  {
+    "termId": "GE-000122",
+    "caption": "亜熱帯高圧帯",
+    "fileName": "Earth Global Circulation - en.svg"
+  },
+  {
+    "termId": "GE-000125",
+    "caption": "貿易風",
+    "fileName": "Earth Global Circulation.jpg"
+  },
+  {
+    "termId": "GE-000126",
+    "caption": "偏西風",
+    "fileName": "Atmospheric circulation ja.png"
+  },
+  {
+    "termId": "GE-000128",
+    "caption": "季節風",
+    "fileName": "Bombay flooded street.jpg"
+  },
+  {
+    "termId": "GE-000129",
+    "caption": "海流",
+    "fileName": "Corrientes-oceanicas.png"
+  },
+  {
+    "termId": "GE-000132",
+    "caption": "北大西洋海流",
+    "fileName": "North Atlantic currents.svg"
+  },
+  {
+    "termId": "GE-000133",
+    "caption": "ペルー海流",
+    "fileName": "Humboldt current.jpg"
+  },
+  {
+    "termId": "GE-000134",
+    "caption": "黒潮",
+    "fileName": "Kuroshio geschwindigkeit.png"
+  },
+  {
+    "termId": "GE-000135",
+    "caption": "親潮",
+    "fileName": "Corrent d'Oyashio.png"
+  },
+  {
+    "termId": "GE-000136",
+    "caption": "雨陰",
+    "fileName": "Harz Regenschatten.png"
+  },
+  {
+    "termId": "GE-000137",
+    "caption": "フェーン現象",
+    "fileName": "Foehn effect mechanisms.png"
+  },
+  {
     "termId": "GE-000138",
     "caption": "エルニーニョ現象時の海洋と大気",
     "fileName": "El Niño Diagram.jpg"
+  },
+  {
+    "termId": "GE-000139",
+    "caption": "ラニーニャ現象",
+    "fileName": "エルニーニョ・ラニーニャ.png"
   },
   {
     "termId": "GE-000140",
@@ -125,14 +450,389 @@
     "fileName": "Köppen-Geiger Climate Classification Map (1980–2016) no borders.png"
   },
   {
+    "termId": "GE-000141",
+    "caption": "熱帯雨林気候",
+    "fileName": "Koppen World Map Af.png"
+  },
+  {
+    "termId": "GE-000143",
+    "caption": "サバナ気候",
+    "fileName": "Köppen-geiger-hessd-2007.svg"
+  },
+  {
+    "termId": "GE-000144",
+    "caption": "ステップ気候",
+    "fileName": "Koppen-Geiger Map v2 BSk 1931–1960.svg"
+  },
+  {
+    "termId": "GE-000145",
+    "caption": "砂漠気候",
+    "fileName": "Amerika Rundreise Death Velly (179685405).jpeg"
+  },
+  {
+    "termId": "GE-000146",
+    "caption": "地中海性気候",
+    "fileName": "KoppenclassificationworldmapCs.png"
+  },
+  {
+    "termId": "GE-000148",
+    "caption": "西岸海洋性気候",
+    "fileName": "Koppen World Map Cfb Cfc Cwb Cwc.png"
+  },
+  {
+    "termId": "GE-000151",
+    "caption": "ツンドラ気候",
+    "fileName": "Koppen tundra world map 1991-2020 -3C borderless.png"
+  },
+  {
+    "termId": "GE-000153",
+    "caption": "高山気候",
+    "fileName": "White Mountain CA.JPG"
+  },
+  {
+    "termId": "GE-000154",
+    "caption": "熱帯雨林",
+    "fileName": "Forest on Barro Colorado.png"
+  },
+  {
+    "termId": "GE-000155",
+    "caption": "サバナ",
+    "fileName": "Oldoinyolengai.jpg"
+  },
+  {
+    "termId": "GE-000157",
+    "caption": "硬葉樹林",
+    "fileName": "Blackbutt St Ives.JPG"
+  },
+  {
+    "termId": "GE-000159",
+    "caption": "タイガ",
+    "fileName": "Taiga assemblage.png"
+  },
+  {
+    "termId": "GE-000160",
+    "caption": "ツンドラ",
+    "fileName": "Greenland scoresby-sydkapp2 hg.jpg"
+  },
+  {
+    "termId": "GE-000162",
+    "caption": "テラロッサ",
+    "fileName": "Terra Rossa.jpg"
+  },
+  {
+    "termId": "GE-000166",
+    "caption": "水循環",
+    "fileName": "Watercyclejapanese.jpg"
+  },
+  {
+    "termId": "GE-000167",
+    "caption": "流域",
+    "fileName": "Harta 3D pentru Bazinul Raului Curpanu si Cotii, afluenti ai Oltului.jpg"
+  },
+  {
+    "termId": "GE-000168",
+    "caption": "分水界",
+    "fileName": "Minor drainage divide south of Buckeye Arizona aerial.jpg"
+  },
+  {
+    "termId": "GE-000169",
+    "caption": "地下水の流れ",
+    "fileName": "Groundwater flow.svg"
+  },
+  {
+    "termId": "GE-000170",
+    "caption": "帯水層",
+    "fileName": "Groundwater flow.svg"
+  },
+  {
+    "termId": "GE-000173",
+    "caption": "内陸流域",
+    "fileName": "Uvs-nuur.jpg"
+  },
+  {
+    "termId": "GE-000176",
+    "caption": "液状化現象",
+    "fileName": "Liquefaction at Niigata.JPG"
+  },
+  {
+    "termId": "GE-000177",
+    "caption": "津波",
+    "fileName": "Tsunami run-up, height, and inundation.png"
+  },
+  {
+    "termId": "GE-000178",
+    "caption": "高潮",
+    "fileName": "Deichbruch Winterstein 1661.jpg"
+  },
+  {
+    "termId": "GE-000179",
+    "caption": "土石流",
+    "fileName": "Torrent du Pousset.jpg"
+  },
+  {
+    "termId": "GE-000180",
+    "caption": "地すべり",
+    "fileName": "Nefyn marine landslide - coastal erosion as a result of Climate Change - Wales 19 April 2021 16.jpg"
+  },
+  {
+    "termId": "GE-000183",
+    "caption": "ハザードマップ",
+    "fileName": "South America seismic hazard map with estimated El Tigre Fault location inset.png"
+  },
+  {
+    "termId": "GE-000187",
+    "caption": "地球温暖化",
+    "fileName": "Change in Average Temperature With Fahrenheit.svg"
+  },
+  {
+    "termId": "GE-000190",
+    "caption": "砂漠化",
+    "fileName": "Desertification map.png"
+  },
+  {
+    "termId": "GE-000192",
+    "caption": "酸性雨",
+    "fileName": "Pollution - Damaged by acid rain.jpg"
+  },
+  {
+    "termId": "GE-000194",
+    "caption": "富栄養化",
+    "fileName": "River algae Sichuan.jpg"
+  },
+  {
+    "termId": "GE-000198",
+    "caption": "世界の人口密度分布",
+    "fileName": "World Population Density Map 2020.png"
+  },
+  {
+    "termId": "GE-000205",
+    "caption": "人口転換",
+    "fileName": "Demographic-TransitionOWID.png"
+  },
+  {
     "termId": "GE-000209",
     "caption": "人口ピラミッドの例",
     "fileName": "Population Pyramid.png"
   },
   {
+    "termId": "GE-000210",
+    "caption": "富士山型",
+    "fileName": "Population Pyramid.png"
+  },
+  {
+    "termId": "GE-000211",
+    "caption": "つりがね型",
+    "fileName": "Population Pyramid.png"
+  },
+  {
+    "termId": "GE-000212",
+    "caption": "つぼ型",
+    "fileName": "Population Pyramid.png"
+  },
+  {
+    "termId": "GE-000219",
+    "caption": "人口移動",
+    "fileName": "Chinese Emigration to America.jpg"
+  },
+  {
+    "termId": "GE-000224",
+    "caption": "難民",
+    "fileName": "A Dutch school teacher leads a group of refugee children just disembarked from a ship at Tilbury Docks in Essex during 1945. D24064.jpg"
+  },
+  {
+    "termId": "GE-000230",
+    "caption": "メガロポリス",
+    "fileName": "NASA ISS006-E-24987.jpg"
+  },
+  {
+    "termId": "GE-000232",
+    "caption": "ドーナツ化現象",
+    "fileName": "Do-natu.PNG"
+  },
+  {
+    "termId": "GE-000234",
+    "caption": "ジェントリフィケーション",
+    "fileName": "NYC SoHo Green Street.jpg"
+  },
+  {
+    "termId": "GE-000235",
+    "caption": "中心業務地区",
+    "fileName": "Vista aérea Centro do Rio de Janeiro RJ.jpg"
+  },
+  {
+    "termId": "GE-000236",
+    "caption": "都市の内部構造",
+    "fileName": "Burgess model.svg"
+  },
+  {
+    "termId": "GE-000237",
+    "caption": "スラム",
+    "fileName": "Favela Vidigal.jpg"
+  },
+  {
+    "termId": "GE-000243",
+    "caption": "文化景観",
+    "fileName": "Bocicoel 2009.JPG"
+  },
+  {
+    "termId": "GE-000251",
+    "caption": "稲作",
+    "fileName": "Palawan, Philippines, Rice fields in the middle of Palawan Island.jpg"
+  },
+  {
+    "termId": "GE-000252",
+    "caption": "小麦",
+    "fileName": "Wheat close-up.JPG"
+  },
+  {
+    "termId": "GE-000253",
+    "caption": "とうもろこし",
+    "fileName": "Corntassel 7095.jpg"
+  },
+  {
+    "termId": "GE-000254",
+    "caption": "大豆",
+    "fileName": "Soybean.USDA.jpg"
+  },
+  {
+    "termId": "GE-000255",
+    "caption": "灌漑農業",
+    "fileName": "PivotIrrigationOnCotton.jpg"
+  },
+  {
+    "termId": "GE-000256",
+    "caption": "天水農業",
+    "fileName": "Palouse hills - 9591.jpg"
+  },
+  {
     "termId": "GE-000257",
     "caption": "タイで行われている焼畑農業",
     "fileName": "An example of slash and burn agriculture practice Thailand.jpg"
+  },
+  {
+    "termId": "GE-000258",
+    "caption": "遊牧",
+    "fileName": "Pastoral Nomadism (266139773).jpg"
+  },
+  {
+    "termId": "GE-000259",
+    "caption": "移牧",
+    "fileName": "Transumanza nel Parc National des Ecrins.jpg"
+  },
+  {
+    "termId": "GE-000260",
+    "caption": "プランテーション",
+    "fileName": "Cuba - Sugar plantation 01.jpg"
+  },
+  {
+    "termId": "GE-000263",
+    "caption": "コーヒー",
+    "fileName": "Coffee plant in Uganda.jpg"
+  },
+  {
+    "termId": "GE-000264",
+    "caption": "茶",
+    "fileName": "Longjing tea after steeping.jpg"
+  },
+  {
+    "termId": "GE-000265",
+    "caption": "カカオ",
+    "fileName": "Cacao pods.jpg"
+  },
+  {
+    "termId": "GE-000266",
+    "caption": "綿花",
+    "fileName": "Cotton - പരുത്തി 03.JPG"
+  },
+  {
+    "termId": "GE-000267",
+    "caption": "天然ゴム",
+    "fileName": "Rubber tapping (76655).jpg"
+  },
+  {
+    "termId": "GE-000268",
+    "caption": "油やし",
+    "fileName": "Elaeis guineensis oil palm fruit Portoviejo Ecuador.jpg"
+  },
+  {
+    "termId": "GE-000269",
+    "caption": "さとうきび",
+    "fileName": "Saccharum officinarum, Mozambique.jpg"
+  },
+  {
+    "termId": "GE-000271",
+    "caption": "酪農",
+    "fileName": "Dairy Managment 01.jpg"
+  },
+  {
+    "termId": "GE-000273",
+    "caption": "地中海式農業",
+    "fileName": "KoppenclassificationworldmapCs.png"
+  },
+  {
+    "termId": "GE-000274",
+    "caption": "園芸農業",
+    "fileName": "20150319-OC-LSC-0608 (16247565064).jpg"
+  },
+  {
+    "termId": "GE-000290",
+    "caption": "鉄鉱石",
+    "fileName": "Hematite.jpg"
+  },
+  {
+    "termId": "GE-000291",
+    "caption": "ボーキサイト",
+    "fileName": "Bauxite.jpg"
+  },
+  {
+    "termId": "GE-000292",
+    "caption": "銅鉱",
+    "fileName": "Azurite from China.jpg"
+  },
+  {
+    "termId": "GE-000293",
+    "caption": "石炭",
+    "fileName": "Coal (Anthracite).JPG"
+  },
+  {
+    "termId": "GE-000294",
+    "caption": "石油",
+    "fileName": "Petroleum sample.jpg"
+  },
+  {
+    "termId": "GE-000300",
+    "caption": "水力発電",
+    "fileName": "ThreeGorgesDam-China2009.jpg"
+  },
+  {
+    "termId": "GE-000302",
+    "caption": "太陽光発電",
+    "fileName": "SolarPowerPlantSerpa.jpg"
+  },
+  {
+    "termId": "GE-000303",
+    "caption": "風力発電",
+    "fileName": "Alto de Penouta.JPG"
+  },
+  {
+    "termId": "GE-000304",
+    "caption": "地熱発電",
+    "fileName": "NesjavellirPowerPlant edit2.jpg"
+  },
+  {
+    "termId": "GE-000316",
+    "caption": "臨海型工業",
+    "fileName": "Port of Yokkaichi , Mie - panoramio (18).jpg"
+  },
+  {
+    "termId": "GE-000340",
+    "caption": "コンテナ輸送",
+    "fileName": "Line3174 - Shipping Containers at the terminal at Port Elizabeth, New Jersey - NOAA.jpg"
+  },
+  {
+    "termId": "GE-000341",
+    "caption": "ハブ港",
+    "fileName": "Yangshan-Port-Balanced.jpg"
   },
   {
     "termId": "GE-000343",
@@ -145,6 +845,81 @@
     "fileName": "Panama Canal Map EN.svg"
   },
   {
+    "termId": "GE-000350",
+    "caption": "SDGs",
+    "fileName": "SustainableDevelopmentGoalsLogoAlone.svg"
+  },
+  {
+    "termId": "GE-000351",
+    "caption": "日本列島",
+    "fileName": "Satellite View of Japan 1999.jpg"
+  },
+  {
+    "termId": "GE-000352",
+    "caption": "フォッサマグナ",
+    "fileName": "Tectonic map of southwest Japan.png"
+  },
+  {
+    "termId": "GE-000353",
+    "caption": "日本アルプス",
+    "fileName": "Hakubarenpou.JPG"
+  },
+  {
+    "termId": "GE-000354",
+    "caption": "関東平野",
+    "fileName": "KantoHeiya.jpg"
+  },
+  {
+    "termId": "GE-000355",
+    "caption": "濃尾平野",
+    "fileName": "Nobi Plain and Nagoya from Mount Sanpo 2008-9-24.jpg"
+  },
+  {
+    "termId": "GE-000356",
+    "caption": "大阪平野",
+    "fileName": "Osaka Plain Relief Map, SRTM-1.jpg"
+  },
+  {
+    "termId": "GE-000357",
+    "caption": "石狩平野",
+    "fileName": "Sapporo metropolitan area.jpg"
+  },
+  {
+    "termId": "GE-000363",
+    "caption": "南西諸島の気候",
+    "fileName": "Nansei-Islands-Japan-23-May-2019-NASA.png"
+  },
+  {
+    "termId": "GE-000366",
+    "caption": "太平洋ベルト",
+    "fileName": "Megalopolis.png"
+  },
+  {
+    "termId": "GE-000367",
+    "caption": "京浜工業地帯",
+    "fileName": "Tokyo Kawasaki.jpg"
+  },
+  {
+    "termId": "GE-000368",
+    "caption": "中京工業地帯",
+    "fileName": "Nagoya Port 02.jpg"
+  },
+  {
+    "termId": "GE-000372",
+    "caption": "三大都市圏",
+    "fileName": "Japan Honshu central location map.svg"
+  },
+  {
+    "termId": "GE-000376",
+    "caption": "東アジア",
+    "fileName": "Map of East Asia (border).png"
+  },
+  {
+    "termId": "GE-000377",
+    "caption": "中国東部に集中する人口分布",
+    "fileName": "China population density 2022.png"
+  },
+  {
     "termId": "GE-000378",
     "caption": "長江デルタの位置",
     "fileName": "Yangtze River Delta map.png"
@@ -155,9 +930,19 @@
     "fileName": "Pearl River Delta Area.png"
   },
   {
+    "termId": "GE-000380",
+    "caption": "東南アジア",
+    "fileName": "Southeast Asia Political Map World Factbook 2020.png"
+  },
+  {
     "termId": "GE-000381",
     "caption": "メコンデルタの位置",
     "fileName": "Delta Mekong mappa.png"
+  },
+  {
+    "termId": "GE-000382",
+    "caption": "南アジア",
+    "fileName": "South Asia (orthographic projection) without national boundaries.svg"
   },
   {
     "termId": "GE-000383",
@@ -165,9 +950,49 @@
     "fileName": "Indo-Gangetic Plain.en.png"
   },
   {
+    "termId": "GE-000384",
+    "caption": "西アジア",
+    "fileName": "Western Asia on the World map.png"
+  },
+  {
     "termId": "GE-000385",
     "caption": "アフリカのサヘル地域",
     "fileName": "Sahel Map-Africa rough.svg"
+  },
+  {
+    "termId": "GE-000386",
+    "caption": "ナイル川流域",
+    "fileName": "Nile River Basin Map.png"
+  },
+  {
+    "termId": "GE-000387",
+    "caption": "南アフリカ共和国",
+    "fileName": "Map of South Africa with English labels.svg"
+  },
+  {
+    "termId": "GE-000388",
+    "caption": "西ヨーロッパ",
+    "fileName": "Europe subregion map UN geoscheme.svg"
+  },
+  {
+    "termId": "GE-000389",
+    "caption": "ライン川",
+    "fileName": "Loreleyblick Maria Ruh 2025.jpg"
+  },
+  {
+    "termId": "GE-000390",
+    "caption": "ロシア",
+    "fileName": "Russia 87.74494E 66.20034N.jpg"
+  },
+  {
+    "termId": "GE-000391",
+    "caption": "シベリア",
+    "fileName": "Siberia (orthographic projection).svg"
+  },
+  {
+    "termId": "GE-000392",
+    "caption": "北アメリカ",
+    "fileName": "North America satellite orthographic.jpg"
   },
   {
     "termId": "GE-000393",
@@ -180,13 +1005,33 @@
     "fileName": "Map of USA highlighting Sun Belt.png"
   },
   {
+    "termId": "GE-000395",
+    "caption": "ラテンアメリカ",
+    "fileName": "Latin America (orthographic projection).svg"
+  },
+  {
     "termId": "GE-000396",
     "caption": "アマゾン川流域の範囲",
     "fileName": "Amazon river basin.png"
   },
   {
+    "termId": "GE-000397",
+    "caption": "アンデス山脈",
+    "fileName": "Andes 70.30345W 42.99203S.jpg"
+  },
+  {
     "termId": "GE-000398",
     "caption": "南アメリカのパンパ地域",
     "fileName": "Map for the Pampas region.svg"
+  },
+  {
+    "termId": "GE-000399",
+    "caption": "オーストラリア",
+    "fileName": "Australia satellite plane.jpg"
+  },
+  {
+    "termId": "GE-000400",
+    "caption": "ニュージーランド",
+    "fileName": "New Zealand Topography.jpg"
   }
 ]

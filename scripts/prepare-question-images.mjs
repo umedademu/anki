@@ -516,6 +516,8 @@ function normalizeMetadata(info) {
     license,
     licenseUrl,
     mime,
+    originalMime: info?.mime,
+    originalUrl: info?.url,
     sourcePageUrl,
   };
 }
@@ -605,45 +607,58 @@ function extensionFor(metadata) {
     "image/gif": "gif",
     "image/jpeg": "jpg",
     "image/png": "png",
+    "image/svg+xml": "svg",
     "image/webp": "webp",
   };
   return types[metadata.mime] ?? "jpg";
 }
 
 async function downloadAsset(metadata, assetId) {
-  const extension = extensionFor(metadata);
-  const relativePath = `term-images/${assetId}.${extension}`;
-  const absolutePath = path.join(sourceDirectory, relativePath);
-  try {
-    await stat(absolutePath);
-    return relativePath;
-  } catch {
-    // 未取得なら下で保存する。
-  }
-  const downloadUrl = new URL(metadata.downloadUrl);
-  for (const key of [...downloadUrl.searchParams.keys()]) {
-    if (key.toLowerCase().startsWith("utm_")) downloadUrl.searchParams.delete(key);
-  }
+  const downloadCandidates = [
+    { mime: metadata.mime, url: metadata.downloadUrl },
+    { mime: metadata.originalMime, url: metadata.originalUrl },
+  ].filter(
+    (candidate, index, candidates) =>
+      candidate.mime &&
+      candidate.url &&
+      candidates.findIndex((other) => other.url === candidate.url) === index,
+  );
   let lastFailure = "応答なし";
-  for (let attempt = 1; attempt <= 6; attempt += 1) {
+  for (const candidate of downloadCandidates) {
+    const extension = extensionFor({ mime: candidate.mime });
+    const relativePath = `term-images/${assetId}.${extension}`;
+    const absolutePath = path.join(sourceDirectory, relativePath);
     try {
-      const response = await fetch(downloadUrl, {
-        headers: apiHeaders,
-        signal: AbortSignal.timeout(60_000),
-      });
-      const contentType = String(response.headers.get("content-type") ?? "");
-      if (response.ok && contentType.startsWith("image/")) {
-        await mkdir(path.dirname(absolutePath), { recursive: true });
-        await writeFile(absolutePath, Buffer.from(await response.arrayBuffer()));
-        return relativePath;
-      }
-      lastFailure = `${response.status} ${contentType || "content-typeなし"}`;
-    } catch (error) {
-      lastFailure = error instanceof Error ? error.message : String(error);
+      await stat(absolutePath);
+      return relativePath;
+    } catch {
+      // 未取得なら下で保存する。
     }
-    await delay(attempt * 1_000);
+    const downloadUrl = new URL(candidate.url);
+    for (const key of [...downloadUrl.searchParams.keys()]) {
+      if (key.toLowerCase().startsWith("utm_")) downloadUrl.searchParams.delete(key);
+    }
+    for (let attempt = 1; attempt <= 6; attempt += 1) {
+      try {
+        const response = await fetch(downloadUrl, {
+          headers: apiHeaders,
+          signal: AbortSignal.timeout(60_000),
+        });
+        const contentType = String(response.headers.get("content-type") ?? "");
+        if (response.ok && contentType.startsWith("image/")) {
+          await mkdir(path.dirname(absolutePath), { recursive: true });
+          await writeFile(absolutePath, Buffer.from(await response.arrayBuffer()));
+          return relativePath;
+        }
+        lastFailure = `${response.status} ${contentType || "content-typeなし"}`;
+        if (response.status === 429 && downloadCandidates.length > 1) break;
+      } catch (error) {
+        lastFailure = error instanceof Error ? error.message : String(error);
+      }
+      await delay(attempt * 1_000);
+    }
   }
-  throw new Error(`画像を取得できません: ${downloadUrl}（${lastFailure}）`);
+  throw new Error(`画像を取得できません: ${metadata.downloadUrl}（${lastFailure}）`);
 }
 
 async function mapLimit(values, limit, worker) {
@@ -670,6 +685,7 @@ function questionList(term) {
 
 async function main() {
   const rebuild = process.argv.includes("--rebuild");
+  const refreshFileOverrides = process.argv.includes("--refresh-file-overrides");
   const { terms: allTerms } = await loadSubjectDecks();
   const usesSelectedTerms = [
     "geography",
@@ -688,6 +704,8 @@ async function main() {
   const selectedOverrideByTermId = new Map(
     selectedTermOverrides.map((override) => [override.termId, override]),
   );
+  const shouldRefreshSelectedTerm = (termId) =>
+    refreshFileOverrides && Boolean(selectedOverrideByTermId.get(termId)?.fileName);
   if (selectedOverrideByTermId.size !== selectedTermOverrides.length) {
     throw new Error(`${imageSubjectId}の画像指定に重複した用語IDがあります。`);
   }
@@ -739,14 +757,20 @@ async function main() {
       assetBySource.set(asset.sourcePageUrl, asset);
     }
     for (const fallback of previousManifest.termFallbacks) {
-      if (!rebuild || fallback.assetId.startsWith("LEGACY-")) {
+      if (
+        (!rebuild && !shouldRefreshSelectedTerm(fallback.termId)) ||
+        fallback.assetId.startsWith("LEGACY-")
+      ) {
         fallbackByTerm.set(fallback.termId, fallback.assetId);
       }
     }
     if (!rebuild) {
       const previousAssetIds = new Set(previousManifest.assets.map((asset) => asset.id));
       for (const assignment of previousManifest.assignments) {
-        if (previousAssetIds.has(assignment.assetId)) {
+        if (
+          previousAssetIds.has(assignment.assetId) &&
+          !shouldRefreshSelectedTerm(assignment.termId)
+        ) {
           previousAssignmentByQuestion.set(assignment.questionId, assignment);
         }
       }

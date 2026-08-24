@@ -1507,15 +1507,20 @@ const geographyImageQuestionIds = new Set(
     .filter((assignment) => assignment.termId.startsWith("GE-"))
     .map((assignment) => assignment.questionId),
 );
+const geographyImageCoverage =
+  geographyImageOverrides.length / generatedGeographyTerms.length;
 if (
-  geographyImageOverrides.length !== 38 ||
+  geographyImageCoverage < 0.4 ||
+  geographyImageCoverage > 0.6 ||
   geographyImageTermIds.size !== geographyImageOverrides.length ||
   geographyImageQuestionIds.size !== geographyImageOverrides.length ||
   geographyImageOverrides.some(
     (override) => !geographyImageTermIds.has(override.termId),
   )
 ) {
-  throw new Error("地理の厳選画像が38項目へ用語単位で割り当てられていません。");
+  throw new Error(
+    "地理の厳選画像が全項目の40%以上60%以下へ用語単位で割り当てられていません。",
+  );
 }
 
 const politicsEconomicsImageOverrides = JSON.parse(

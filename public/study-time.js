@@ -1,5 +1,13 @@
-export const maxStudySecondsPerScreen = 30;
+export const defaultStudyTimeLimitSeconds = 30;
+export const maximumStudyTimeLimitSeconds = 3600;
 const maxRecordedStudySeconds = 1_000_000_000;
+
+export function normalizeStudyTimeLimitSeconds(value) {
+  const seconds = Number.parseInt(value, 10);
+  return Number.isFinite(seconds)
+    ? Math.min(maximumStudyTimeLimitSeconds, Math.max(1, seconds))
+    : defaultStudyTimeLimitSeconds;
+}
 
 export function normalizeStudySeconds(value, maximum = maxRecordedStudySeconds) {
   const seconds = Number.parseInt(value, 10);
@@ -8,19 +16,25 @@ export function normalizeStudySeconds(value, maximum = maxRecordedStudySeconds) 
     : 0;
 }
 
-export function addStudySeconds(totalSeconds, screenSeconds, elapsedSeconds) {
+export function addStudySeconds(
+  totalSeconds,
+  screenSeconds,
+  elapsedSeconds,
+  maximum = defaultStudyTimeLimitSeconds,
+) {
+  const limit = normalizeStudyTimeLimitSeconds(maximum);
   const total = normalizeStudySeconds(totalSeconds);
   const screen = normalizeStudySeconds(
     screenSeconds,
-    maxStudySecondsPerScreen,
+    limit,
   );
   const elapsed = normalizeStudySeconds(
     elapsedSeconds,
-    maxStudySecondsPerScreen,
+    limit,
   );
   const addedSeconds = Math.min(
     elapsed,
-    maxStudySecondsPerScreen - screen,
+    limit - screen,
   );
   return {
     totalSeconds: normalizeStudySeconds(total + addedSeconds),

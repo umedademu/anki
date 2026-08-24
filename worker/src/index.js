@@ -46,6 +46,8 @@ const setupStudyModes = new Set(["memorize", "listen-answer"]);
 const setupQuestionStyles = new Set(["", "beginner", "reverse", "integrated"]);
 const setupQuestionAmountModes = new Set(["all", "one-per-term"]);
 const studySessionTaskLimit = 10_000;
+const defaultStudyTimeLimitSeconds = 30;
+const maximumStudyTimeLimitSeconds = 3600;
 
 const defaultSettings = {
   againSeconds: 60,
@@ -61,6 +63,7 @@ const defaultSettings = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
 };
@@ -318,9 +321,14 @@ export function normalizeStudyActivity(value, datasetVersion, eventId) {
 
 export function normalizeStudyTimeEntry(value, datasetVersion, eventId) {
   const activity = normalizeStudyActivity(value, datasetVersion, eventId);
-  const studySeconds = integer(value.studySeconds, 0, 1, 30);
+  const studySeconds = integer(
+    value.studySeconds,
+    0,
+    1,
+    maximumStudyTimeLimitSeconds,
+  );
   if (studySeconds === 0) {
-    throw new Error("学習時間は1秒から30秒の範囲で指定してください。");
+    throw new Error("学習時間は1秒以上で指定してください。");
   }
   return {
     ...activity,
@@ -435,12 +443,17 @@ function normalizeStudySession(value) {
     ),
     answeredCount: integer(source.answeredCount, 0),
     studySeconds: integer(source.studySeconds, 0),
-    screenStudySeconds: integer(source.screenStudySeconds, 0, 0, 30),
+    screenStudySeconds: integer(
+      source.screenStudySeconds,
+      0,
+      0,
+      maximumStudyTimeLimitSeconds,
+    ),
     savedScreenStudySeconds: integer(
       source.savedScreenStudySeconds,
       0,
       0,
-      30,
+      maximumStudyTimeLimitSeconds,
     ),
     studyTimeEventId: studyActivityIdPattern.test(studyTimeEventId)
       ? studyTimeEventId
@@ -490,6 +503,12 @@ function normalizeSettings(value) {
     autoSpeechEnabled:
       source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
     listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
+    studyTimeLimitSeconds: integer(
+      source.studyTimeLimitSeconds,
+      defaultStudyTimeLimitSeconds,
+      1,
+      maximumStudyTimeLimitSeconds,
+    ),
     speechParts: normalizeSpeechParts(source.speechParts),
     setupPreferences: normalizeSetupPreferences(source.setupPreferences),
   };
@@ -762,6 +781,7 @@ async function readState(env, datasetVersion) {
         speech_source, azure_voice_id, english_azure_voice_id,
         device_voice_id, english_device_voice_id, speech_rate,
         shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+        study_time_limit_seconds,
         speech_parts_json, setup_preferences_json, updated_at
        FROM review_settings WHERE profile_id = 1`,
     ).first(),
@@ -820,6 +840,7 @@ async function readState(env, datasetVersion) {
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
           autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
+          studyTimeLimitSeconds: settingsRow.study_time_limit_seconds,
           speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
           setupPreferences: normalizeSetupPreferences(
             settingsRow.setup_preferences_json,
@@ -842,8 +863,9 @@ async function saveSettings(env, patch) {
       speech_source, azure_voice_id, english_azure_voice_id,
       device_voice_id, english_device_voice_id, speech_rate,
       shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
+      study_time_limit_seconds,
       speech_parts_json, setup_preferences_json, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -858,6 +880,7 @@ async function saveSettings(env, patch) {
       shuffle_enabled = excluded.shuffle_enabled,
       auto_speech_enabled = excluded.auto_speech_enabled,
       listening_pause_seconds = excluded.listening_pause_seconds,
+      study_time_limit_seconds = excluded.study_time_limit_seconds,
       speech_parts_json = excluded.speech_parts_json,
       setup_preferences_json = excluded.setup_preferences_json,
       updated_at = excluded.updated_at`,
@@ -876,6 +899,7 @@ async function saveSettings(env, patch) {
       settings.shuffleEnabled ? 1 : 0,
       settings.autoSpeechEnabled ? 1 : 0,
       settings.listeningPauseSeconds,
+      settings.studyTimeLimitSeconds,
       JSON.stringify(settings.speechParts),
       JSON.stringify(settings.setupPreferences),
       updatedAt,
@@ -972,6 +996,15 @@ async function handleRequest(request, env) {
       datasetVersion,
       eventId,
     );
+    const settings = (await readState(env, "__settings_only__")).settings;
+    if (timeEntry.studySeconds > settings.studyTimeLimitSeconds) {
+      return json(
+        request,
+        env,
+        { error: "学習時間が設定した上限を超えています。" },
+        400,
+      );
+    }
     const session = normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,

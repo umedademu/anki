@@ -71,8 +71,8 @@ const studySessionInput = {
   retryQuestionIds: ["WH-Q-000001"],
   answeredCount: 12,
   studySeconds: 4264,
-  screenStudySeconds: 30,
-  savedScreenStudySeconds: 25,
+  screenStudySeconds: 90,
+  savedScreenStudySeconds: 80,
   studyTimeEventId: "study-time-event-1",
   answerVisible: true,
   startedAt: "2026-08-22T00:00:00.000Z",
@@ -90,8 +90,8 @@ for (const session of [
     session.retryQuestionIds[0] !== "WH-Q-000001" ||
     session.answeredCount !== 12 ||
     session.studySeconds !== 4264 ||
-    session.screenStudySeconds !== 30 ||
-    session.savedScreenStudySeconds !== 25 ||
+    session.screenStudySeconds !== 90 ||
+    session.savedScreenStudySeconds !== 80 ||
     session.studyTimeEventId !== "study-time-event-1" ||
     !session.answerVisible
   ) {
@@ -150,7 +150,7 @@ if (
   studyActivity.deckId !== "deck-2" ||
   studyActivity.studyMode !== "listen-answer" ||
   studyActivity.datasetVersion !== "world-history-deck-2-v1" ||
-  studyTimeEntry.studySeconds !== 30 ||
+  studyTimeEntry.studySeconds !== 90 ||
   studyDateAtFourJst("2026-08-22T18:59:59.999Z") !== "2026-08-22" ||
   studyDateAtFourJst("2026-08-22T19:00:00.000Z") !== "2026-08-23"
 ) {
@@ -319,6 +319,7 @@ const settings = normalizeSettings({
   shuffleEnabled: true,
   autoSpeechEnabled: false,
   listeningPauseSeconds: 2.5,
+  studyTimeLimitSeconds: 90,
   speechParts: {
     history: {
       question: false,
@@ -371,6 +372,7 @@ if (
   !settings.shuffleEnabled ||
   settings.autoSpeechEnabled ||
   settings.listeningPauseSeconds !== 2.5 ||
+  settings.studyTimeLimitSeconds !== 90 ||
   settings.speechParts.history.question ||
   !settings.speechParts.history.explanation ||
   settings.speechParts.vocabulary.meaning ||
@@ -398,6 +400,7 @@ if (
   !browserSettings.shuffleEnabled ||
   browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5 ||
+  browserSettings.studyTimeLimitSeconds !== 90 ||
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||

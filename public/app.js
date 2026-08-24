@@ -56,8 +56,9 @@ import {
 import { loadSpeechSettings, saveSpeechSettings } from "./speech-settings.js";
 import {
   addStudySeconds,
+  defaultStudyTimeLimitSeconds,
   formatStudyDuration,
-  maxStudySecondsPerScreen,
+  normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
 import {
   createSessionDatasetVersion,
@@ -193,6 +194,7 @@ const state = {
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: normalizeSpeechParts(),
   setupPreferences: normalizeSetupPreferences(),
   studyMode: "memorize",
@@ -359,8 +361,7 @@ function canCountStudyTime({ includeHidden = false } = {}) {
     document.body.classList.contains("is-studying") &&
     (includeHidden || !document.hidden) &&
     !state.saving &&
-    !(isListeningMode() && state.listeningPaused) &&
-    state.screenStudySeconds < maxStudySecondsPerScreen
+    state.screenStudySeconds < state.studyTimeLimitSeconds
   );
 }
 
@@ -379,11 +380,12 @@ function tickStudyClock(
     state.studySeconds,
     state.screenStudySeconds,
     elapsedSeconds,
+    state.studyTimeLimitSeconds,
   );
   state.studySeconds = next.totalSeconds;
   state.screenStudySeconds = next.screenSeconds;
   updateStudyTimeDisplay();
-  if (state.screenStudySeconds >= maxStudySecondsPerScreen) {
+  if (state.screenStudySeconds >= state.studyTimeLimitSeconds) {
     stopStudyClock({ capture: false });
     void queueCurrentStudyTimeSave().catch((error) => {
       state.unlockMessage = error.message;
@@ -396,7 +398,7 @@ function startStudyClock() {
     studyClockTimer !== null ||
     !state.activeSession ||
     !state.currentTask ||
-    state.screenStudySeconds >= maxStudySecondsPerScreen
+    state.screenStudySeconds >= state.studyTimeLimitSeconds
   ) {
     updateStudyTimeDisplay();
     return;
@@ -657,9 +659,15 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.autoSpeechEnabled = session.autoSpeechEnabled;
   state.answeredThisSession = session.answeredCount;
   state.studySeconds = session.studySeconds;
-  state.screenStudySeconds = session.screenStudySeconds;
+  state.screenStudySeconds = Math.min(
+    session.screenStudySeconds,
+    state.studyTimeLimitSeconds,
+  );
   state.studyTimeEventId = session.studyTimeEventId;
-  state.studyTimeSavedSeconds = session.savedScreenStudySeconds;
+  state.studyTimeSavedSeconds = Math.min(
+    session.savedScreenStudySeconds,
+    state.screenStudySeconds,
+  );
   state.answerVisible = session.answerVisible && session.studyMode === "memorize";
   state.sessionStartedAt = session.startedAt ?? new Date().toISOString();
   state.activeSession = true;
@@ -1068,6 +1076,7 @@ async function loadProgressFromCloud() {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     state.setupPreferences = normalizeSetupPreferences();
     return;
@@ -1101,6 +1110,9 @@ async function loadProgressFromCloud() {
   state.autoSpeechEnabled = sessionCloudState.settings.autoSpeechEnabled;
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     sessionCloudState.settings.listeningPauseSeconds,
+  );
+  state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
+    sessionCloudState.settings.studyTimeLimitSeconds,
   );
   state.speechParts = normalizeSpeechParts(sessionCloudState.settings.speechParts);
   state.setupPreferences = normalizeSetupPreferences(
@@ -1718,6 +1730,7 @@ async function goBackListeningOneStep() {
     state.saving = false;
   }
 
+  startStudyClock();
   renderQuestion();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -1746,6 +1759,7 @@ async function advanceListening(runId) {
     stopListeningSequence();
     state.saving = false;
     state.unlockMessage = error.message;
+    startStudyClock();
     renderQuestion();
     return;
   }
@@ -1785,6 +1799,7 @@ async function advanceListening(runId) {
     stopListeningSequence();
     state.saving = false;
     state.unlockMessage = error.message;
+    startStudyClock();
     renderQuestion();
     return;
   }
@@ -1948,7 +1963,6 @@ function toggleListening() {
     }
     return;
   }
-  stopStudyClock();
   state.listeningPaused = true;
   stopListeningSequence();
   showListeningPlaybackFeedback("pause");
@@ -3164,6 +3178,7 @@ async function activateDecks(deckIds) {
     state.shuffleEnabled = false;
     state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
+    state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     state.setupPreferences = normalizeSetupPreferences();
     state.cloudReady = false;
@@ -3207,7 +3222,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.108｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.109｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3303,6 +3318,9 @@ async function start() {
         state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
         state.listeningPauseSeconds = normalizeListeningPauseSeconds(
           cloudState.settings.listeningPauseSeconds,
+        );
+        state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
+          cloudState.settings.studyTimeLimitSeconds,
         );
         state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
         state.setupPreferences = normalizeSetupPreferences(

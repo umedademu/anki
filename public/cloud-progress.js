@@ -9,8 +9,10 @@ import {
   normalizeSpeechSettings,
 } from "./speech-settings.js";
 import {
-  maxStudySecondsPerScreen,
+  defaultStudyTimeLimitSeconds,
+  maximumStudyTimeLimitSeconds,
   normalizeStudySeconds,
+  normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
@@ -187,11 +189,11 @@ export function normalizeStudySession(value) {
     studySeconds: normalizeStudySeconds(source.studySeconds),
     screenStudySeconds: normalizeStudySeconds(
       source.screenStudySeconds,
-      maxStudySecondsPerScreen,
+      maximumStudyTimeLimitSeconds,
     ),
     savedScreenStudySeconds: normalizeStudySeconds(
       source.savedScreenStudySeconds,
-      maxStudySecondsPerScreen,
+      maximumStudyTimeLimitSeconds,
     ),
     studyTimeEventId: normalizeStudySessionId(source.studyTimeEventId),
     answerVisible: source.answerVisible === true,
@@ -331,6 +333,7 @@ export const defaultSharedSettings = Object.freeze({
   shuffleEnabled: false,
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
+  studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
 });
@@ -353,6 +356,9 @@ export function normalizeSharedSettings(value) {
         : source.autoSpeechEnabled === true || source.autoSpeechEnabled === "true",
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       source.listeningPauseSeconds,
+    ),
+    studyTimeLimitSeconds: normalizeStudyTimeLimitSeconds(
+      source.studyTimeLimitSeconds,
     ),
     speechParts: normalizeSpeechParts(source.speechParts),
     setupPreferences: normalizeSetupPreferences(source.setupPreferences),

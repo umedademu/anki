@@ -77,6 +77,10 @@ const studyTimeMigration = await readFile(
   path.join(projectRoot, "worker", "migrations", "0011_study_time.sql"),
   "utf8",
 );
+const studyTimeLimitMigration = await readFile(
+  path.join(projectRoot, "worker", "migrations", "0012_study_time_limit.sql"),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
@@ -104,6 +108,9 @@ const listeningPlaybackFeedbackBlock = app.match(
 )?.[0];
 const toggleListeningBlock = app.match(
   /function toggleListening\(\)[\s\S]*?async function returnToSetup/,
+)?.[0];
+const studyClockBlock = app.match(
+  /function canCountStudyTime\([\s\S]*?function startNewStudyScreen/,
 )?.[0];
 const deckProgressStyleBlock = styles.match(
   /\.deck-progress-name\s*\{[^}]*\}/,
@@ -217,10 +224,10 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.108") ||
-  !changelog.includes("v0.108") ||
-  !settingsHtml.includes("v0.108") ||
-  !historyHtml.includes("v0.108")
+  !html.includes("v0.109") ||
+  !changelog.includes("v0.109") ||
+  !settingsHtml.includes("v0.109") ||
+  !historyHtml.includes("v0.109")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -251,18 +258,22 @@ if (
   !styles.includes(".study-time {") ||
   !styles.includes("font-variant-numeric: tabular-nums") ||
   !app.includes('studyTime: document.querySelector("#study-time")') ||
-  !app.includes("maxStudySecondsPerScreen") ||
+  !studyClockBlock ||
   !app.includes("function tickStudyClock") ||
-  !app.includes("state.screenStudySeconds < maxStudySecondsPerScreen") ||
+  !studyClockBlock.includes("state.screenStudySeconds < state.studyTimeLimitSeconds") ||
+  !studyClockBlock.includes("state.studyTimeLimitSeconds,") ||
+  studyClockBlock.includes("state.listeningPaused") ||
   !app.includes("queueCurrentStudyTimeSave({ keepalive: true })") ||
   !cloudProgress.includes("export async function saveCloudStudyTime") ||
   !worker.includes("studyTimeMatch") ||
   !worker.includes("SUM(study_seconds) AS study_seconds") ||
   !studyTimeMigration.includes("CREATE TABLE IF NOT EXISTS study_time_events") ||
   !studyTimeMigration.includes("study_seconds INTEGER NOT NULL") ||
+  !studyTimeLimitMigration.includes("study_time_limit_seconds") ||
+  !studyTimeLimitMigration.includes("study_seconds BETWEEN 1 AND 3600") ||
   !historyApp.includes("formatStudyDuration")
 ) {
-  throw new Error("学習時間の同一行表示、30秒上限、Cloudflare保存が揃っていません。");
+  throw new Error("学習時間の同一行表示、共通上限、Cloudflare保存が揃っていません。");
 }
 if (
   !html.includes('id="resume-study"') ||
@@ -328,7 +339,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.108"') ||
+  !html.includes('href="/styles.css?v=0.109"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -649,7 +660,14 @@ if (
 }
 if (
   !settingsHtml.includes('id="review-settings-form"') ||
+  !settingsHtml.includes('id="study-time-settings-form"') ||
+  !settingsHtml.includes('id="study-time-limit-seconds"') ||
+  !settingsHtml.includes('id="save-study-time-settings"') ||
   !settingsHtml.includes('id="access-key"') ||
+  !settingsApp.includes("normalizeStudyTimeLimitSeconds") ||
+  !settingsApp.includes("saveCloudSettings(readStudyTimeForm())") ||
+  !cloudProgress.includes("studyTimeLimitSeconds: defaultStudyTimeLimitSeconds") ||
+  !worker.includes("study_time_limit_seconds") ||
   !cloudProgress.includes("saveCloudSettings") ||
   !cloudProgress.includes("saveCloudQuestion") ||
   !app.includes("loadProgressFromCloud") ||
@@ -803,6 +821,7 @@ if (
   !listeningPlaybackFeedbackBlock.includes("}, 1000);") ||
   !toggleListeningBlock.includes('showListeningPlaybackFeedback("play")') ||
   !toggleListeningBlock.includes('showListeningPlaybackFeedback("pause")') ||
+  toggleListeningBlock.includes("stopStudyClock();") ||
   !styles.includes("background: rgb(25 31 27 / 48%)") ||
   !styles.includes("top: 50%") ||
   !styles.includes("left: 50%")

@@ -21,6 +21,10 @@ import {
   normalizeSpeechSettings,
   saveSpeechSettings,
 } from "./speech-settings.js";
+import {
+  defaultStudyTimeLimitSeconds,
+  normalizeStudyTimeLimitSeconds,
+} from "./study-time.js";
 
 const elements = {
   accessKey: document.querySelector("#access-key"),
@@ -28,6 +32,10 @@ const elements = {
   form: document.querySelector("#review-settings-form"),
   saveSettings: document.querySelector("#save-settings"),
   status: document.querySelector("#settings-status"),
+  studyTimeForm: document.querySelector("#study-time-settings-form"),
+  studyTimeLimitSeconds: document.querySelector("#study-time-limit-seconds"),
+  saveStudyTimeSettings: document.querySelector("#save-study-time-settings"),
+  studyTimeStatus: document.querySelector("#study-time-settings-status"),
   againValue: document.querySelector("#again-value"),
   againUnit: document.querySelector("#again-unit"),
   hardValue: document.querySelector("#hard-value"),
@@ -84,6 +92,25 @@ function readSharedSpeechForm() {
 function setSpeechStatus(message, isError = false) {
   elements.speechStatus.textContent = message;
   elements.speechStatus.classList.toggle("is-error", isError);
+}
+
+function setStudyTimeStatus(message, isError = false) {
+  elements.studyTimeStatus.textContent = message;
+  elements.studyTimeStatus.classList.toggle("is-error", isError);
+}
+
+function fillStudyTimeForm(settings) {
+  elements.studyTimeLimitSeconds.value = String(
+    normalizeStudyTimeLimitSeconds(settings?.studyTimeLimitSeconds),
+  );
+}
+
+function readStudyTimeForm() {
+  return {
+    studyTimeLimitSeconds: normalizeStudyTimeLimitSeconds(
+      elements.studyTimeLimitSeconds.value,
+    ),
+  };
 }
 
 function updateSpeechRateOutput() {
@@ -209,6 +236,7 @@ const previewController = createSpeechController({
 function setBusy(busy) {
   elements.connectCloud.disabled = busy;
   elements.saveSettings.disabled = busy;
+  elements.saveStudyTimeSettings.disabled = busy;
   elements.saveSpeechSettings.disabled = busy;
 }
 
@@ -258,11 +286,13 @@ async function connect() {
     }
     const cloudState = await loadCloudState();
     fillForm(cloudState.settings);
+    fillStudyTimeForm(cloudState.settings);
     speechSettings = saveSpeechSettings(cloudState.settings);
     fillSpeechForm(cloudState.settings);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
+    setStudyTimeStatus("Cloudflareから学習時間の上限を読み込みました。");
     setSpeechStatus("Cloudflareから共有設定を読み込みました。");
   } catch (error) {
     setStatus(error.message, true);
@@ -272,6 +302,21 @@ async function connect() {
 }
 
 elements.connectCloud.addEventListener("click", connect);
+elements.studyTimeForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  setBusy(true);
+  try {
+    const saved = await saveCloudSettings(readStudyTimeForm());
+    fillStudyTimeForm(saved);
+    setStudyTimeStatus(
+      "学習時間の上限をCloudflareへ保存し、暗記・聞き流しで共有しました。",
+    );
+  } catch (error) {
+    setStudyTimeStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
 elements.form.addEventListener("submit", async (event) => {
   event.preventDefault();
   setBusy(true);
@@ -341,6 +386,7 @@ globalThis.speechSynthesis?.addEventListener?.("voiceschanged", populateDeviceVo
 window.addEventListener("pagehide", () => previewController.stop());
 
 fillForm(defaultReviewSettings);
+fillStudyTimeForm({ studyTimeLimitSeconds: defaultStudyTimeLimitSeconds });
 populateAzureVoices();
 fillSpeechForm(speechSettings);
 if (getStoredAccessKey()) {

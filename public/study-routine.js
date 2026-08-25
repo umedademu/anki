@@ -308,6 +308,75 @@ export function normalizeStudyRoutineRun(value) {
   };
 }
 
+export function migrateLegacyStudyRoutineRun(run, plan) {
+  const normalized = normalizeStudyRoutineRun(run);
+  const normalizedPlan = normalizeStudyRoutinePlan(plan, {
+    fallbackToDefault: false,
+  });
+  if (
+    !normalized ||
+    normalized.items.some((item) => item.kind === "video") ||
+    !normalizedPlan.some((item) => item.kind === "video")
+  ) {
+    return { run: normalized, changed: false };
+  }
+
+  const legacyStudyItems = normalized.items.filter((item) => item.kind === "study");
+  const plannedStudyItems = normalizedPlan.filter((item) => item.kind === "study");
+  if (
+    legacyStudyItems.length !== plannedStudyItems.length ||
+    legacyStudyItems.some((item, index) => item.id !== plannedStudyItems[index].id)
+  ) {
+    return { run: normalized, changed: false };
+  }
+
+  const activeStudyIndex = legacyStudyItems.findIndex(
+    (item) => item.completedCount < item.questionTarget,
+  );
+  const activeStudy = legacyStudyItems[activeStudyIndex] ?? null;
+  let pendingVideoStart = normalizedPlan.length;
+  if (activeStudy) {
+    const activePlanIndex = normalizedPlan.findIndex(
+      (item) => item.kind === "study" && item.id === activeStudy.id,
+    );
+    if (activeStudy.completedCount > 0) {
+      pendingVideoStart = activePlanIndex + 1;
+    } else if (activeStudyIndex > 0) {
+      const previousStudyId = legacyStudyItems[activeStudyIndex - 1].id;
+      pendingVideoStart = normalizedPlan.findIndex(
+        (item) => item.kind === "study" && item.id === previousStudyId,
+      ) + 1;
+    } else {
+      pendingVideoStart = 0;
+    }
+  } else if (legacyStudyItems.length > 0) {
+    const lastStudyId = legacyStudyItems.at(-1).id;
+    pendingVideoStart = normalizedPlan.findIndex(
+      (item) => item.kind === "study" && item.id === lastStudyId,
+    ) + 1;
+  }
+
+  const studyItemsById = new Map(
+    legacyStudyItems.map((item) => [item.id, item]),
+  );
+  const items = normalizedPlan.map((item, index) =>
+    item.kind === "study"
+      ? { ...studyItemsById.get(item.id) }
+      : {
+          ...item,
+          youtubeId: "",
+          videoTitle: "",
+          videoAuthorName: "",
+          completed: index < pendingVideoStart,
+          studySeconds: 0,
+        },
+  );
+  return {
+    run: normalizeStudyRoutineRun({ ...normalized, items }),
+    changed: true,
+  };
+}
+
 function createRoutineRunId() {
   return globalThis.crypto?.randomUUID?.() ??
     `routine-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;

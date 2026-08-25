@@ -487,6 +487,45 @@ for (const normalized of [
   }
 }
 
+const legacyRoutinePreferences = {
+  routinePlan: [
+    { id: "first", kind: "study", subjectId: "world-history", questionTarget: 1 },
+    { id: "first-video", kind: "video" },
+    { id: "second", kind: "study", subjectId: "geography", questionTarget: 1 },
+  ],
+  routineRun: {
+    schemaVersion: 1,
+    id: "legacy-run",
+    studyDate: "2026-08-25",
+    items: [
+      {
+        id: "first",
+        subjectId: "world-history",
+        questionTarget: 1,
+        completedCount: 1,
+      },
+      {
+        id: "second",
+        subjectId: "geography",
+        questionTarget: 1,
+        completedCount: 0,
+      },
+    ],
+  },
+};
+for (const normalized of [
+  normalizeWorkerSetupPreferences(legacyRoutinePreferences),
+  normalizeBrowserSetupPreferences(legacyRoutinePreferences),
+]) {
+  if (
+    normalized.routineRun.items.length !== 3 ||
+    normalized.routineRun.items[1].kind !== "video" ||
+    normalized.routineRun.currentIndex !== 1
+  ) {
+    throw new Error("動画追加前の進行中メニューをCloudflareと画面で同じように移行できませんでした。");
+  }
+}
+
 const workerStoredSpeechParts = normalizeWorkerSpeechParts(
   JSON.stringify(settings.speechParts),
 );

@@ -8,6 +8,7 @@ import {
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   extractYouTubeVideoId,
+  migrateLegacyStudyRoutineRun,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
@@ -73,6 +74,78 @@ if (
   normalizedPlan[1].questionTarget !== 80
 ) {
   throw new Error("メニューの科目・問題数・重複番号を安全に整形できませんでした。");
+}
+
+const planWithAddedVideos = [
+  { id: "legacy-first", kind: "study", subjectId: "world-history", questionTarget: 2 },
+  { id: "legacy-video-first", kind: "video" },
+  { id: "legacy-second", kind: "study", subjectId: "geography", questionTarget: 2 },
+  { id: "legacy-video-second", kind: "video" },
+];
+const legacyRun = normalizeStudyRoutineRun({
+  schemaVersion: 1,
+  id: "legacy-run",
+  studyDate: "2026-08-25",
+  items: [
+    {
+      id: "legacy-first",
+      subjectId: "world-history",
+      questionTarget: 2,
+      completedCount: 2,
+      studySeconds: 20,
+      ratingCounts: { good: 2 },
+    },
+    {
+      id: "legacy-second",
+      subjectId: "geography",
+      questionTarget: 2,
+      completedCount: 0,
+      studySeconds: 0,
+    },
+  ],
+  countedQuestionKeys: ["world-deck::question-1"],
+});
+const migratedLegacyRun = migrateLegacyStudyRoutineRun(
+  legacyRun,
+  planWithAddedVideos,
+);
+if (
+  !migratedLegacyRun.changed ||
+  migratedLegacyRun.run.items.length !== 4 ||
+  migratedLegacyRun.run.items[0].completedCount !== 2 ||
+  migratedLegacyRun.run.items[0].studySeconds !== 20 ||
+  migratedLegacyRun.run.items[0].ratingCounts.good !== 2 ||
+  migratedLegacyRun.run.items[1].kind !== "video" ||
+  migratedLegacyRun.run.items[1].completed ||
+  currentStudyRoutineItem(migratedLegacyRun.run)?.id !== "legacy-video-first" ||
+  migratedLegacyRun.run.countedQuestionKeys[0] !== "world-deck::question-1"
+) {
+  throw new Error("動画追加前から進行中のメニューへ、達成状況を保って動画を補えませんでした。");
+}
+
+const partiallyStartedLegacyRun = normalizeStudyRoutineRun({
+  ...legacyRun,
+  items: legacyRun.items.map((item, index) =>
+    index === 1 ? { ...item, completedCount: 1 } : item,
+  ),
+});
+const migratedPartiallyStartedRun = migrateLegacyStudyRoutineRun(
+  partiallyStartedLegacyRun,
+  planWithAddedVideos,
+).run;
+if (
+  !migratedPartiallyStartedRun.items[1].completed ||
+  currentStudyRoutineItem(migratedPartiallyStartedRun)?.id !== "legacy-second"
+) {
+  throw new Error("着手済みの学習を動画移行で巻き戻しました。");
+}
+
+const unmatchedLegacyRun = migrateLegacyStudyRoutineRun(legacyRun, [
+  { id: "different", kind: "study", subjectId: "world-history", questionTarget: 2 },
+  { id: "different-video", kind: "video" },
+]);
+if (unmatchedLegacyRun.changed || unmatchedLegacyRun.run.items.length !== 2) {
+  throw new Error("内容が異なる進行中メニューへ動画を誤って差し込みました。");
 }
 
 let run = createStudyRoutineRun(

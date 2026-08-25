@@ -19,6 +19,7 @@ import {
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
+  migrateLegacyStudyRoutineRun,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   normalizeStudyRoutineVideoLibrary,
@@ -322,12 +323,17 @@ export function normalizeSetupPreferences(value) {
   }
   const lastSubjectId = normalizeSetupPreferenceId(source.lastSubjectId);
   const routineVideos = normalizeStudyRoutineVideoLibrary(source.routineVideos);
+  const routinePlan = normalizeStudyRoutinePlan(source.routinePlan);
+  const routineRun = migrateLegacyStudyRoutineRun(
+    source.routineRun,
+    routinePlan,
+  ).run;
   return {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
-    routinePlan: normalizeStudyRoutinePlan(source.routinePlan),
-    routineRun: normalizeStudyRoutineRun(source.routineRun),
+    routinePlan,
+    routineRun,
     routineVideos,
     routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
       source.routineVideoShuffle,

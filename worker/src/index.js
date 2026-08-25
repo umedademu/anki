@@ -1,7 +1,12 @@
 import {
   defaultStudyRoutinePlan,
+  defaultStudyRoutineVideos,
+  defaultStudyRoutineVideoShuffle,
+  extractYouTubeVideoId,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
+  normalizeStudyRoutineVideoLibrary,
+  normalizeStudyRoutineVideoShuffle,
 } from "../../public/study-routine.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
@@ -47,6 +52,8 @@ const defaultSetupPreferences = Object.freeze({
   subjects: Object.freeze({}),
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
+  routineVideos: defaultStudyRoutineVideos,
+  routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
@@ -263,12 +270,18 @@ function normalizeSetupPreferences(value) {
     };
   }
   const lastSubjectId = normalizeSetupPreferenceId(source.lastSubjectId);
+  const routineVideos = normalizeStudyRoutineVideoLibrary(source.routineVideos);
   return {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
     routinePlan: normalizeStudyRoutinePlan(source.routinePlan),
     routineRun: normalizeStudyRoutineRun(source.routineRun),
+    routineVideos,
+    routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
+      source.routineVideoShuffle,
+      routineVideos,
+    ),
   };
 }
 
@@ -638,6 +651,35 @@ async function handleSpeech(request, env) {
   return new Response(audio, {
     headers: audioHeaders(request, env, "MISS"),
   });
+}
+
+async function fetchYouTubeVideoMetadata(value, env) {
+  const youtubeId = extractYouTubeVideoId(value);
+  if (!youtubeId) {
+    throw new Error("YouTube動画のURLを正しく入力してください。");
+  }
+  const metadataFetch = env.YOUTUBE_METADATA_FETCH ?? fetch;
+  const watchUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+  const response = await metadataFetch(
+    `https://www.youtube.com/oembed?url=${encodeURIComponent(watchUrl)}&format=json`,
+    { headers: { Accept: "application/json" } },
+  );
+  if (!response.ok) {
+    throw new Error("動画の題名をYouTubeから取得できませんでした。");
+  }
+  const metadata = await response.json();
+  const [video] = normalizeStudyRoutineVideoLibrary(
+    [{
+      youtubeId,
+      title: metadata.title,
+      authorName: metadata.author_name,
+    }],
+    { fallbackToDefault: false },
+  );
+  if (!video) {
+    throw new Error("YouTubeから取得した動画情報の形式が正しくありません。");
+  }
+  return video;
 }
 
 function progressStatement(env, datasetVersion, questionId, record, updatedAt) {
@@ -1012,12 +1054,74 @@ async function handleRequest(request, env) {
       ...(Object.hasOwn(patch, "routineRun")
         ? { routineRun: normalizeStudyRoutineRun(patch.routineRun) }
         : {}),
+      ...(Object.hasOwn(patch, "routineVideos")
+        ? {
+            routineVideos: normalizeStudyRoutineVideoLibrary(
+              patch.routineVideos,
+              { fallbackToDefault: false },
+            ),
+          }
+        : {}),
+      ...(Object.hasOwn(patch, "routineVideoShuffle")
+        ? { routineVideoShuffle: patch.routineVideoShuffle }
+        : {}),
     });
     const settings = await saveSettings(env, { setupPreferences });
     return json(request, env, {
       ok: true,
       setupPreferences: settings.setupPreferences,
       studyDate: studyDateAtFourJst(settings.updatedAt),
+    });
+  }
+
+  if (url.pathname === "/v1/study-routine/videos" && request.method === "POST") {
+    const body = await request.json();
+    const video = await fetchYouTubeVideoMetadata(body?.url, env);
+    const current = (await readState(env, "__settings_only__")).settings;
+    const currentPreferences = normalizeSetupPreferences(current.setupPreferences);
+    const existingIndex = currentPreferences.routineVideos.findIndex(
+      (candidate) => candidate.youtubeId === video.youtubeId,
+    );
+    const routineVideos = [...currentPreferences.routineVideos];
+    if (existingIndex >= 0) {
+      routineVideos[existingIndex] = video;
+    } else {
+      routineVideos.push(video);
+    }
+    const setupPreferences = normalizeSetupPreferences({
+      ...currentPreferences,
+      routineVideos,
+    });
+    const settings = await saveSettings(env, { setupPreferences });
+    return json(request, env, {
+      ok: true,
+      video,
+      setupPreferences: settings.setupPreferences,
+    });
+  }
+
+  const routineVideoDeleteMatch = url.pathname.match(
+    /^\/v1\/study-routine\/videos\/([A-Za-z0-9_-]{11})$/,
+  );
+  if (routineVideoDeleteMatch && request.method === "DELETE") {
+    const youtubeId = routineVideoDeleteMatch[1];
+    const current = (await readState(env, "__settings_only__")).settings;
+    const currentPreferences = normalizeSetupPreferences(current.setupPreferences);
+    const routineVideos = currentPreferences.routineVideos.filter(
+      (video) => video.youtubeId !== youtubeId,
+    );
+    const setupPreferences = normalizeSetupPreferences({
+      ...currentPreferences,
+      routineVideos,
+      routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
+        currentPreferences.routineVideoShuffle,
+        routineVideos,
+      ),
+    });
+    const settings = await saveSettings(env, { setupPreferences });
+    return json(request, env, {
+      ok: true,
+      setupPreferences: settings.setupPreferences,
     });
   }
 

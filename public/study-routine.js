@@ -1,6 +1,8 @@
 const routineIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
+const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const routineQuestionKeyPattern = /^[A-Za-z0-9_-]{1,100}::[A-Za-z0-9_-]{1,100}$/;
 const routineItemLimit = 100;
+const routineVideoLimit = 200;
 const routineQuestionTargetLimit = 10_000;
 const routineCountedQuestionLimit = 20_000;
 const routineStudySecondsLimit = 365 * 24 * 60 * 60;
@@ -30,19 +32,78 @@ const defaultSubjects = [
   "world-history",
 ];
 
-export const defaultStudyRoutinePlan = Object.freeze(
-  defaultSubjects.map((subjectId, index) =>
-    Object.freeze({
-      id: `default-${String(index + 1).padStart(2, "0")}`,
-      subjectId,
-      questionTarget: 100,
-    }),
+const initialVideos = [
+  ["0djQ-8zHnAY", "ラップで覚える「漢の武帝の時代」【東大生ラッパー】prod by HANEY PATH FRIEND", "法念の世界史ちゃんねる"],
+  ["HXRpVe-ZHU8", "東大生とラップで覚えるアテネ政治史【参考書『ラップで学ぶ世界史』発売中（概要欄でチェック！）】（prod. A$AMINE BEAZ）", "法念の世界史ちゃんねる"],
+  ["6Wx07rE4ZZM", "【語呂合わせ】ラップで覚える「ローマ文化史」【東大生ラッパー】Beats by MastPOP", "法念の世界史ちゃんねる"],
+  ["OchmHspbrYY", "【語呂合わせ】世界史超重要年号８選ラップ（人物編）【東大生ラッパー】Prod by Tambourine Man", "法念の世界史ちゃんねる"],
+  ["37JGQk_prYk", "【語呂合わせ】世界史超重要年号８選ラップ（出来事編）【東大生ラッパー】Prod by Tambourine Man", "法念の世界史ちゃんねる"],
+  ["4Qz_uDvbz7M", "【語呂合わせ】ラップで覚える「中世ヨーロッパ文化史」【東大生ラッパー】Prod. by Pegunjo Music", "法念の世界史ちゃんねる"],
+  ["_PifI8GjNUE", "東大生が教える日本史重要年号ラップ（平安時代編）Prod. by Pegunjo Music", "法念の世界史ちゃんねる"],
+  ["iP76VwU6uPA", "【語呂合わせ】ラップで覚える「ルネサンス」文化史【東大生ラッパー】Prod. Tambourine Man", "法念の世界史ちゃんねる"],
+  ["A1CuzBxnw1o", "【語呂合わせ】ラップで覚える「イスラーム文化史」【東大生ラッパー】（Prod. by S.M.S）", "法念の世界史ちゃんねる"],
+  ["1eXGq31w-lk", "【語呂合わせ】ラップで覚える「19世紀ヨーロッパ文化史・前編」（文学・美術編）【東大生ラッパー】（prod. BKOJ!）", "法念の世界史ちゃんねる"],
+  ["XUb2ymi0ly8", "【語呂合わせ】ラップで覚える「17〜18世紀ヨーロッパ文化史・前編」（科学・芸術編）【東大生ラッパー】（prod. by DRAG）", "法念の世界史ちゃんねる"],
+  ["xXMmRmM_IRc", "【語呂合わせ】ラップで覚える「ヨーロッパ建築史」【東大生ラッパー】（prod. BKOJ!）", "法念の世界史ちゃんねる"],
+  ["PMiyAnphuac", "【語呂合わせ】ラップで覚える「明清文化史」【東大生ラッパー】Prod. Tambourine Man", "法念の世界史ちゃんねる"],
+  ["IHJba4ZZeiI", "【語呂合わせ】ラップで覚える「19世紀ヨーロッパ文化史・後編」（思想・科学技術編）【東大生ラッパー】（prod. BKOJ!）", "法念の世界史ちゃんねる"],
+  ["HfOoVw-ef_o", "【世界史替え歌】東大生の世界史ラップ「イスラーム世界史」【全部俺】", "法念の世界史ちゃんねる"],
+  ["_mv5r0wix3M", "東大生とラップで覚える「歴代アメリカ合衆国大統領」【参考書『ラップで学ぶ世界史』発売中（概要欄でチェック！）】", "法念の世界史ちゃんねる"],
+  ["I4enQyck0Xo", "【語呂合わせ】ラップで覚える「唐宋文化史」【東大生ラッパー】（Prod by KOHZO）", "法念の世界史ちゃんねる"],
+  ["nplcU6NFPpg", "【語呂合わせ】ラップで覚える「古代中国文化史」【東大生ラッパー】Prod. Tambourine Man", "法念の世界史ちゃんねる"],
+  ["Q3DilierZMw", "【語呂合わせ】ラップで覚える「歴代清朝皇帝」【東大生ラッパー】", "法念の世界史ちゃんねる"],
+  ["J4tRQr7Ie2M", "【イスラーム王朝】替え歌で覚える歴史【チキチキバンバン】", "とある社会の替歌目録"],
+  ["SFCt774SVio", "【語呂合わせ】ラップで覚えるギリシア文化史【東大生ラッパー】（Prod. by gaga sss）", "法念の世界史ちゃんねる"],
+  ["_Tip3hxT-40", "【語呂合わせ】ラップで覚える「19世紀ロシア皇帝」【東大生ラッパー】[Prod. P.J INLAND]", "法念の世界史ちゃんねる"],
+  ["2ohIsEH7Iiw", "【語呂合わせ】ラップで覚える「魏晋南北朝時代の文化史」【東大生ラッパー】（prod. BKOJ!）", "法念の世界史ちゃんねる"],
+  ["u5Mdnw2vcpc", "【語呂合わせ】ラップで覚える「20世紀文化史」【東大生ラッパー】（prod. BKOJ!）", "法念の世界史ちゃんねる"],
+  ["1YwdL9bxl_E", "【語呂合わせ】ラップで覚える「インド文化史」【東大生ラッパー】Prod. Tambourine Man", "法念の世界史ちゃんねる"],
+  ["-jq-1K2nbzU", "【語呂合わせ】ラップで覚える歴代イギリス王朝【東大生ラッパー】（Produced by AK BEATZ）", "法念の世界史ちゃんねる"],
+  ["7-SIArJukeo", "【語呂合わせ】ラップで覚える「産業革命」【東大生ラッパー】（Prod. K3NTA）", "法念の世界史ちゃんねる"],
+];
+
+export const defaultStudyRoutineVideos = Object.freeze(
+  initialVideos.map(([youtubeId, title, authorName]) =>
+    Object.freeze({ youtubeId, title, authorName }),
   ),
 );
+
+export const defaultStudyRoutinePlan = Object.freeze(
+  defaultSubjects.flatMap((subjectId, index) => {
+    const number = String(index + 1).padStart(2, "0");
+    return [
+      Object.freeze({
+        id: `default-${number}`,
+        kind: "study",
+        subjectId,
+        questionTarget: 100,
+      }),
+      Object.freeze({
+        id: `default-video-${number}`,
+        kind: "video",
+      }),
+    ];
+  }),
+);
+
+export const defaultStudyRoutineVideoShuffle = Object.freeze({
+  schemaVersion: 1,
+  remainingYoutubeIds: Object.freeze([]),
+  lastYoutubeId: "",
+});
 
 function normalizeRoutineId(value) {
   const id = String(value ?? "");
   return routineIdPattern.test(id) ? id : "";
+}
+
+function normalizeYoutubeId(value) {
+  const youtubeId = String(value ?? "");
+  return youtubeIdPattern.test(youtubeId) ? youtubeId : "";
+}
+
+function normalizeVideoText(value, maximumLength) {
+  return String(value ?? "").trim().slice(0, maximumLength);
 }
 
 function normalizeQuestionTarget(value) {
@@ -54,8 +115,9 @@ function normalizeQuestionTarget(value) {
 
 function normalizeRoutineItem(value, index, usedIds) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const subjectId = normalizeRoutineId(value.subjectId);
-  if (!subjectId) return null;
+  const kind = value.kind === "video" ? "video" : "study";
+  const subjectId = kind === "study" ? normalizeRoutineId(value.subjectId) : "";
+  if (kind === "study" && !subjectId) return null;
   const requestedId = normalizeRoutineId(value.id);
   let id = requestedId || `routine-${String(index + 1).padStart(2, "0")}`;
   let suffix = 2;
@@ -64,15 +126,22 @@ function normalizeRoutineItem(value, index, usedIds) {
     suffix += 1;
   }
   usedIds.add(id);
-  return {
-    id,
-    subjectId,
-    questionTarget: normalizeQuestionTarget(value.questionTarget),
-  };
+  return kind === "video"
+    ? { id, kind }
+    : {
+        id,
+        kind,
+        subjectId,
+        questionTarget: normalizeQuestionTarget(value.questionTarget),
+      };
 }
 
 function cloneDefaultPlan() {
   return defaultStudyRoutinePlan.map((item) => ({ ...item }));
+}
+
+function cloneDefaultVideos() {
+  return defaultStudyRoutineVideos.map((video) => ({ ...video }));
 }
 
 export function normalizeStudyRoutinePlan(value, { fallbackToDefault = true } = {}) {
@@ -87,6 +156,75 @@ export function normalizeStudyRoutinePlan(value, { fallbackToDefault = true } = 
   return plan.length > 0 || !fallbackToDefault ? plan : cloneDefaultPlan();
 }
 
+export function normalizeStudyRoutineVideoLibrary(
+  value,
+  { fallbackToDefault = true } = {},
+) {
+  if (!Array.isArray(value)) {
+    return fallbackToDefault ? cloneDefaultVideos() : [];
+  }
+  const usedIds = new Set();
+  return value.slice(0, routineVideoLimit).flatMap((video) => {
+    if (!video || typeof video !== "object" || Array.isArray(video)) return [];
+    const youtubeId = normalizeYoutubeId(video.youtubeId);
+    const title = normalizeVideoText(video.title, 300);
+    if (!youtubeId || !title || usedIds.has(youtubeId)) return [];
+    usedIds.add(youtubeId);
+    return [{
+      youtubeId,
+      title,
+      authorName: normalizeVideoText(video.authorName, 200),
+    }];
+  });
+}
+
+export function normalizeStudyRoutineVideoShuffle(value, videoLibrary) {
+  const source = value && typeof value === "object" && !Array.isArray(value)
+    ? value
+    : {};
+  const allowedIds = new Set(
+    normalizeStudyRoutineVideoLibrary(videoLibrary, { fallbackToDefault: false })
+      .map((video) => video.youtubeId),
+  );
+  const remainingYoutubeIds = [...new Set(
+    (Array.isArray(source.remainingYoutubeIds)
+      ? source.remainingYoutubeIds
+      : [])
+      .map(normalizeYoutubeId)
+      .filter((youtubeId) => youtubeId && allowedIds.has(youtubeId)),
+  )];
+  return {
+    schemaVersion: 1,
+    remainingYoutubeIds,
+    lastYoutubeId: normalizeYoutubeId(source.lastYoutubeId),
+  };
+}
+
+export function extractYouTubeVideoId(value) {
+  const input = String(value ?? "").trim();
+  if (youtubeIdPattern.test(input)) return input;
+  let url;
+  try {
+    url = new URL(input);
+  } catch {
+    return "";
+  }
+  const hostname = url.hostname.toLowerCase().replace(/^www\./, "");
+  let candidate = "";
+  if (hostname === "youtu.be") {
+    candidate = url.pathname.split("/").filter(Boolean)[0] ?? "";
+  } else if (["youtube.com", "m.youtube.com", "music.youtube.com"].includes(hostname)) {
+    candidate = url.searchParams.get("v") ?? "";
+    if (!candidate) {
+      const parts = url.pathname.split("/").filter(Boolean);
+      if (["embed", "shorts", "live"].includes(parts[0])) {
+        candidate = parts[1] ?? "";
+      }
+    }
+  }
+  return normalizeYoutubeId(candidate);
+}
+
 function normalizeStudyDate(value) {
   const date = String(value ?? "");
   return /^\d{4}-\d{2}-\d{2}$/.test(date) ? date : "";
@@ -97,6 +235,12 @@ function normalizeRoutineStudySeconds(value) {
   return Number.isFinite(parsed)
     ? Math.min(routineStudySecondsLimit, Math.max(0, parsed))
     : 0;
+}
+
+function routineItemComplete(item) {
+  return item.kind === "video"
+    ? item.completed === true
+    : item.completedCount >= item.questionTarget;
 }
 
 export function normalizeStudyRoutineRun(value) {
@@ -113,21 +257,30 @@ export function normalizeStudyRoutineRun(value) {
   }
   const id = normalizeRoutineId(source.id);
   const studyDate = normalizeStudyDate(source.studyDate);
-  const items = normalizeStudyRoutinePlan(source.items, {
+  const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
-  }).map((item, index) => ({
-    ...item,
-    completedCount: Math.min(
-      item.questionTarget,
-      Math.max(
-        0,
-        Number.parseInt(source.items?.[index]?.completedCount, 10) || 0,
+  });
+  const items = normalizedPlan.map((item, index) => {
+    const sourceItem = source.items?.[index] ?? {};
+    if (item.kind === "video") {
+      return {
+        ...item,
+        youtubeId: normalizeYoutubeId(sourceItem.youtubeId),
+        videoTitle: normalizeVideoText(sourceItem.videoTitle, 300),
+        videoAuthorName: normalizeVideoText(sourceItem.videoAuthorName, 200),
+        completed: sourceItem.completed === true,
+        studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
+      };
+    }
+    return {
+      ...item,
+      completedCount: Math.min(
+        item.questionTarget,
+        Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
-    ),
-    studySeconds: normalizeRoutineStudySeconds(
-      source.items?.[index]?.studySeconds,
-    ),
-  }));
+      studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
+    };
+  });
   if (!id || !studyDate || items.length === 0) return null;
   const countedQuestionKeys = [...new Set(
     (Array.isArray(source.countedQuestionKeys)
@@ -136,17 +289,12 @@ export function normalizeStudyRoutineRun(value) {
       .map((key) => String(key ?? ""))
       .filter((key) => routineQuestionKeyPattern.test(key)),
   )].slice(0, routineCountedQuestionLimit);
-  const firstIncompleteIndex = items.findIndex(
-    (item) => item.completedCount < item.questionTarget,
-  );
-  const currentIndex = firstIncompleteIndex < 0
-    ? items.length
-    : firstIncompleteIndex;
+  const firstIncompleteIndex = items.findIndex((item) => !routineItemComplete(item));
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     id,
     studyDate,
-    currentIndex,
+    currentIndex: firstIncompleteIndex < 0 ? items.length : firstIncompleteIndex,
     items,
     countedQuestionKeys,
   };
@@ -158,13 +306,20 @@ function createRoutineRunId() {
 }
 
 export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()) {
-  const items = normalizeStudyRoutinePlan(plan).map((item) => ({
-    ...item,
-    completedCount: 0,
-    studySeconds: 0,
-  }));
+  const items = normalizeStudyRoutinePlan(plan).map((item) =>
+    item.kind === "video"
+      ? {
+          ...item,
+          youtubeId: "",
+          videoTitle: "",
+          videoAuthorName: "",
+          completed: false,
+          studySeconds: 0,
+        }
+      : { ...item, completedCount: 0, studySeconds: 0 },
+  );
   return normalizeStudyRoutineRun({
-    schemaVersion: 1,
+    schemaVersion: 2,
     id,
     studyDate,
     currentIndex: 0,
@@ -181,15 +336,36 @@ export function currentStudyRoutineItem(run) {
 export function studyRoutineTotals(run) {
   const normalized = normalizeStudyRoutineRun(run);
   if (!normalized) {
-    return { completed: 0, target: 0, studySeconds: 0 };
+    return {
+      completed: 0,
+      target: 0,
+      studySeconds: 0,
+      completedItems: 0,
+      totalItems: 0,
+      completedVideos: 0,
+      totalVideos: 0,
+    };
   }
   return normalized.items.reduce(
     (totals, item) => ({
-      completed: totals.completed + item.completedCount,
-      target: totals.target + item.questionTarget,
+      completed: totals.completed + (item.kind === "study" ? item.completedCount : 0),
+      target: totals.target + (item.kind === "study" ? item.questionTarget : 0),
       studySeconds: totals.studySeconds + item.studySeconds,
+      completedItems: totals.completedItems + (routineItemComplete(item) ? 1 : 0),
+      totalItems: totals.totalItems + 1,
+      completedVideos: totals.completedVideos +
+        (item.kind === "video" && item.completed ? 1 : 0),
+      totalVideos: totals.totalVideos + (item.kind === "video" ? 1 : 0),
     }),
-    { completed: 0, target: 0, studySeconds: 0 },
+    {
+      completed: 0,
+      target: 0,
+      studySeconds: 0,
+      completedItems: 0,
+      totalItems: 0,
+      completedVideos: 0,
+      totalVideos: 0,
+    },
   );
 }
 
@@ -199,6 +375,121 @@ export function continueStudyRoutineOnDate(run, studyDate) {
   return normalized && nextStudyDate
     ? { ...normalized, studyDate: nextStudyDate }
     : null;
+}
+
+function shuffledIds(ids, random) {
+  const shuffled = [...ids];
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomValue = Math.max(0, Math.min(0.999999999, Number(random()) || 0));
+    const swapIndex = Math.floor(randomValue * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+  }
+  return shuffled;
+}
+
+export function assignStudyRoutineVideo(
+  run,
+  videoLibrary,
+  videoShuffle,
+  random = Math.random,
+) {
+  const normalized = normalizeStudyRoutineRun(run);
+  const item = currentStudyRoutineItem(normalized);
+  const videos = normalizeStudyRoutineVideoLibrary(videoLibrary, {
+    fallbackToDefault: false,
+  });
+  const shuffle = normalizeStudyRoutineVideoShuffle(videoShuffle, videos);
+  if (!normalized || item?.kind !== "video") {
+    return { run: normalized, videoShuffle: shuffle, video: null, changed: false };
+  }
+  if (item.youtubeId) {
+    const savedVideo = videos.find((video) => video.youtubeId === item.youtubeId);
+    return {
+      run: normalized,
+      videoShuffle: shuffle,
+      video: savedVideo ?? {
+        youtubeId: item.youtubeId,
+        title: item.videoTitle || "YouTube動画",
+        authorName: item.videoAuthorName,
+      },
+      changed: false,
+    };
+  }
+  if (videos.length === 0) {
+    return { run: normalized, videoShuffle: shuffle, video: null, changed: false };
+  }
+  let remainingYoutubeIds = [...shuffle.remainingYoutubeIds];
+  if (remainingYoutubeIds.length === 0) {
+    remainingYoutubeIds = shuffledIds(
+      videos.map((video) => video.youtubeId),
+      random,
+    );
+    if (
+      remainingYoutubeIds.length > 1 &&
+      remainingYoutubeIds[0] === shuffle.lastYoutubeId
+    ) {
+      const swapIndex = remainingYoutubeIds.findIndex(
+        (youtubeId) => youtubeId !== shuffle.lastYoutubeId,
+      );
+      [remainingYoutubeIds[0], remainingYoutubeIds[swapIndex]] =
+        [remainingYoutubeIds[swapIndex], remainingYoutubeIds[0]];
+    }
+  }
+  const youtubeId = remainingYoutubeIds.shift();
+  const video = videos.find((candidate) => candidate.youtubeId === youtubeId);
+  const items = normalized.items.map((candidate, index) =>
+    index === normalized.currentIndex
+      ? {
+          ...candidate,
+          youtubeId: video.youtubeId,
+          videoTitle: video.title,
+          videoAuthorName: video.authorName,
+        }
+      : { ...candidate },
+  );
+  return {
+    run: { ...normalized, items },
+    videoShuffle: {
+      schemaVersion: 1,
+      remainingYoutubeIds,
+      lastYoutubeId: video.youtubeId,
+    },
+    video,
+    changed: true,
+  };
+}
+
+export function completeStudyRoutineVideo(run, studySeconds = 0) {
+  const normalized = normalizeStudyRoutineRun(run);
+  const item = currentStudyRoutineItem(normalized);
+  if (!normalized || item?.kind !== "video" || !item.youtubeId || item.completed) {
+    return {
+      run: normalized,
+      changed: false,
+      completedItem: null,
+      nextItem: item,
+    };
+  }
+  const items = normalized.items.map((candidate, index) =>
+    index === normalized.currentIndex
+      ? {
+          ...candidate,
+          completed: true,
+          studySeconds: Math.min(
+            routineStudySecondsLimit,
+            candidate.studySeconds + normalizeRoutineStudySeconds(studySeconds),
+          ),
+        }
+      : { ...candidate },
+  );
+  const currentIndex = Math.min(items.length, normalized.currentIndex + 1);
+  const next = { ...normalized, currentIndex, items };
+  return {
+    run: next,
+    changed: true,
+    completedItem: items[normalized.currentIndex],
+    nextItem: items[currentIndex] ?? null,
+  };
 }
 
 export function recordStudyRoutineQuestion(
@@ -213,7 +504,7 @@ export function recordStudyRoutineQuestion(
   const key = `${normalizeRoutineId(datasetVersion)}::${normalizeRoutineId(questionId)}`;
   if (
     !normalized ||
-    !item ||
+    item?.kind !== "study" ||
     item.subjectId !== normalizeRoutineId(subjectId) ||
     !routineQuestionKeyPattern.test(key)
   ) {
@@ -251,9 +542,7 @@ export function recordStudyRoutineQuestion(
     currentIndex,
     items,
     countedQuestionKeys: counted
-      ? [...normalized.countedQuestionKeys, key].slice(
-          -routineCountedQuestionLimit,
-        )
+      ? [...normalized.countedQuestionKeys, key].slice(-routineCountedQuestionLimit)
       : normalized.countedQuestionKeys,
   };
   return {

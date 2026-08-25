@@ -6,7 +6,7 @@
     <meta name="description" content="Anki科目別学習アプリの復習・学習時間・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.124" />
+    <link rel="stylesheet" href="/styles.css?v=0.126" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.125</span>
+        <span class="app-version">v0.126</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
@@ -45,18 +45,46 @@
       <section class="settings-card" id="study-routine-settings">
         <h2>毎日の学習メニュー</h2>
         <p class="settings-description">
-          科目と問題数を順番に並べます。デッキや学習方法は、それぞれの科目を始める直前に選びます。進行中のメニューには次に1番から始めるまで変更を反映しません。
+          科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。デッキや学習方法は、それぞれの科目を始める直前に選びます。進行中のメニューには次に1番から始めるまで変更を反映しません。
         </p>
         <div class="routine-editor" id="routine-editor" aria-label="毎日の学習メニュー"></div>
         <div class="routine-editor-actions">
           <button class="secondary-button" id="add-routine-item" type="button">
             科目を追加
           </button>
+          <button class="secondary-button" id="add-routine-video-item" type="button">
+            動画を追加
+          </button>
           <button class="primary-button" id="save-routine" type="button">
             メニューを保存
           </button>
         </div>
         <p class="settings-status" id="routine-status" role="status"></p>
+
+        <section class="routine-video-settings" aria-labelledby="routine-video-settings-title">
+          <h3 id="routine-video-settings-title">ランダム再生する動画</h3>
+          <p class="settings-description">
+            一巡するまで同じ動画を重ねず、全動画を見終えたら順番を混ぜ直します。URLを登録すると題名を自動取得します。
+          </p>
+          <form class="routine-video-form" id="routine-video-form">
+            <label for="routine-video-url">
+              <span>YouTube動画のURL</span>
+              <input
+                id="routine-video-url"
+                type="url"
+                inputmode="url"
+                autocomplete="url"
+                placeholder="https://www.youtube.com/watch?v=..."
+                required
+              />
+            </label>
+            <button class="primary-button" id="add-routine-video" type="submit">
+              動画を登録
+            </button>
+          </form>
+          <div class="routine-video-list" id="routine-video-list" aria-label="登録動画"></div>
+          <p class="settings-status" id="routine-video-status" role="status"></p>
+        </section>
       </section>
 
       <form class="settings-card" id="study-time-settings-form">

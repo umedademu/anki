@@ -378,6 +378,18 @@ const settings = normalizeSettings({
         lastDeckId: "deck-9",
       },
     },
+    routineVideos: [
+      {
+        youtubeId: "HfOoVw-ef_o",
+        title: "イスラーム世界史",
+        authorName: "法念の世界史ちゃんねる",
+      },
+      { youtubeId: "invalid", title: "不正" },
+    ],
+    routineVideoShuffle: {
+      remainingYoutubeIds: ["HfOoVw-ef_o", "invalid"],
+      lastYoutubeId: "_mv5r0wix3M",
+    },
   },
 });
 if (
@@ -407,6 +419,9 @@ if (
   settings.setupPreferences.subjects["world-history"].studyMode !== "listen-answer" ||
   settings.setupPreferences.subjects["world-history"].decks["deck-2"].questionAmountMode !==
     "one-per-term" ||
+  settings.setupPreferences.routineVideos.length !== 1 ||
+  settings.setupPreferences.routineVideoShuffle.remainingYoutubeIds[0] !==
+    "HfOoVw-ef_o" ||
   "不正な科目ID" in settings.setupPreferences.subjects
 ) {
   throw new Error("Cloudflareへ保存する共通設定を正規化できませんでした。");
@@ -429,7 +444,8 @@ if (
   browserSettings.speechParts.vocabulary.exampleJapanese ||
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
   browserSettings.setupPreferences.subjects["world-history"].decks["deck-2"]
-    .regionDetail !== "東アジア"
+    .regionDetail !== "東アジア" ||
+  browserSettings.setupPreferences.routineVideos[0].youtubeId !== "HfOoVw-ef_o"
 ) {
   throw new Error("Cloudflareの共通設定をブラウザー側へ反映できませんでした。");
 }

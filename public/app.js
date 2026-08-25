@@ -74,6 +74,8 @@ import {
   normalizeDeckSelection,
 } from "./deck-selection.js";
 import {
+  assignStudyRoutineVideo,
+  completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
   createStudyRoutineRun,
   currentStudyRoutineItem,
@@ -153,6 +155,15 @@ const elements = {
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
   changeSubject: document.querySelector("#change-subject"),
+  routineVideoPanel: document.querySelector("#routine-video-panel"),
+  routineVideoEyebrow: document.querySelector("#routine-video-eyebrow"),
+  routineVideoTitle: document.querySelector("#routine-video-title"),
+  routineVideoAuthor: document.querySelector("#routine-video-author"),
+  routineVideoPlayerFrame: document.querySelector("#routine-video-player-frame"),
+  routineVideoMessage: document.querySelector("#routine-video-message"),
+  routineVideoComplete: document.querySelector("#routine-video-complete"),
+  routineVideoYoutubeLink: document.querySelector("#routine-video-youtube-link"),
+  routineVideoHome: document.querySelector("#routine-video-home"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
   deckProgressName: document.querySelector("#deck-progress-name"),
@@ -204,6 +215,7 @@ const elements = {
   completionReturn: document.querySelector("#completion-return"),
   completionHome: document.querySelector("#completion-home"),
   routineResultSummary: document.querySelector("#routine-result-summary"),
+  routineResultPrimaryLabel: document.querySelector("#routine-result-primary-label"),
   routineResultQuestions: document.querySelector("#routine-result-questions"),
   routineResultTime: document.querySelector("#routine-result-time"),
   routineResultTotal: document.querySelector("#routine-result-total"),
@@ -258,6 +270,8 @@ const state = {
   inRoutine: false,
   routineCompletionAction: "",
   routineTransition: null,
+  routineVideoStartedAt: 0,
+  routineVideoCompleting: false,
   studyMode: "memorize",
   listeningPaused: false,
   pendingListeningActivity: null,
@@ -294,6 +308,9 @@ let studyTimeSave = Promise.resolve();
 let listeningTouchStart = null;
 let suppressNextListeningClick = false;
 let studyMenuLastFocused = null;
+let routineVideoPlayer = null;
+let routineVideoPlayerLoadId = 0;
+let youtubePlayerApiPromise = null;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -431,6 +448,18 @@ function routineSubjectTitle(subjectId) {
     subjectId;
 }
 
+function routineItemTitle(item) {
+  return item?.kind === "video"
+    ? item.videoTitle || "覚え歌をランダム再生"
+    : routineSubjectTitle(item?.subjectId);
+}
+
+function routineItemSummary(item) {
+  return item?.kind === "video"
+    ? "動画を1本見る"
+    : `${item.questionTarget}問`;
+}
+
 function syncRoutinePreferences(preferences, studyDate = "") {
   state.setupPreferences = normalizeSetupPreferences(preferences);
   state.routineRun = normalizeStudyRoutineRun(state.setupPreferences.routineRun);
@@ -442,7 +471,9 @@ function syncRoutinePreferences(preferences, studyDate = "") {
 function activeRoutineItem() {
   if (!state.inRoutine) return null;
   const item = currentStudyRoutineItem(state.routineRun);
-  return item?.subjectId === state.activeSubjectId ? item : null;
+  return item?.kind === "study" && item.subjectId === state.activeSubjectId
+    ? item
+    : null;
 }
 
 function routineRemainingCount(item = activeRoutineItem()) {
@@ -455,10 +486,15 @@ function renderRoutineDashboard() {
   const plan = run?.items ?? state.setupPreferences.routinePlan;
   const totals = run
     ? studyRoutineTotals(run)
-    : {
-        completed: 0,
-        target: plan.reduce((sum, item) => sum + item.questionTarget, 0),
-      };
+    : plan.reduce(
+        (summary, item) => ({
+          ...summary,
+          target: summary.target + (item.kind === "study" ? item.questionTarget : 0),
+          totalItems: summary.totalItems + 1,
+          totalVideos: summary.totalVideos + (item.kind === "video" ? 1 : 0),
+        }),
+        { completed: 0, target: 0, completedItems: 0, totalItems: 0, totalVideos: 0 },
+      );
   const completed = Boolean(run && run.currentIndex >= run.items.length);
   const previousDay = Boolean(
     activeItem &&
@@ -485,23 +521,34 @@ function renderRoutineDashboard() {
       "設定ページでCloudflareへ接続すると、毎日のメニューを開始できます。";
   } else if (completed) {
     elements.routineDashboardTitle.textContent = "メニューをすべて完了しました";
-    elements.routineDashboardSummary.textContent = `${run.items.length}項目・${totals.target}問をすべて進めました。`;
+    elements.routineDashboardSummary.textContent =
+      `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
   } else if (activeItem && previousDay) {
     elements.routineDashboardTitle.textContent = "新しい学習日になりました";
-    elements.routineDashboardSummary.textContent =
-      `1番から始めるか、前回の${run.currentIndex + 1}番「${routineSubjectTitle(activeItem.subjectId)}」${activeItem.completedCount}／${activeItem.questionTarget}問から続けるか選べます。`;
+    elements.routineDashboardSummary.textContent = activeItem.kind === "video"
+      ? `1番から始めるか、前回の${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」から続けるか選べます。`
+      : `1番から始めるか、前回の${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」${activeItem.completedCount}／${activeItem.questionTarget}問から続けるか選べます。`;
   } else if (activeItem) {
     elements.routineDashboardTitle.textContent =
-      `${run.currentIndex + 1}番「${routineSubjectTitle(activeItem.subjectId)}」の途中です`;
-    elements.routineDashboardSummary.textContent =
-      `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
+      `${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」の途中です`;
+    elements.routineDashboardSummary.textContent = activeItem.kind === "video"
+      ? "選ばれた覚え歌を視聴すると次へ進みます。"
+      : `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
   } else {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
     elements.routineDashboardSummary.textContent =
-      `${plan.length}項目・合計${totals.target}問のメニューです。科目ごとに学習内容を選んで進めます。`;
+      `${plan.length}項目・合計${totals.target}問・動画${totals.totalVideos}本のメニューです。`;
   }
 
-  const percent = totals.target > 0 ? (totals.completed / totals.target) * 100 : 0;
+  const completedUnits = run
+    ? run.items.reduce(
+        (sum, item) => sum + (item.kind === "video"
+          ? item.completed ? 1 : 0
+          : item.completedCount / item.questionTarget),
+        0,
+      )
+    : 0;
+  const percent = plan.length > 0 ? (completedUnits / plan.length) * 100 : 0;
   elements.routineDashboardProgress.style.width = `${Math.min(100, percent)}%`;
   const previewStart = activeItem ? run.currentIndex : 0;
   const previewItems = plan.slice(previewStart, previewStart + 6);
@@ -509,7 +556,8 @@ function renderRoutineDashboard() {
     ...previewItems.map((item, index) => {
       const listItem = document.createElement("li");
       listItem.classList.toggle("is-current", index === 0 && Boolean(activeItem));
-      listItem.textContent = `${previewStart + index + 1}. ${routineSubjectTitle(item.subjectId)} ${item.questionTarget}問`;
+      listItem.textContent =
+        `${previewStart + index + 1}. ${routineItemTitle(item)} ${routineItemSummary(item)}`;
       return listItem;
     }),
   );
@@ -571,6 +619,7 @@ function showRoutineStepCompletion(change) {
   elements.completionCard.classList.remove("is-hidden");
   elements.completionReturn.classList.remove("is-hidden");
   elements.routineResultSummary.classList.remove("is-hidden");
+  elements.routineResultPrimaryLabel.textContent = "進めた問題";
   elements.completionEyebrow.textContent = "メニューの1項目を完了";
   elements.completionTitle.textContent =
     `${routineSubjectTitle(change.completedItem.subjectId)}を${change.completedItem.questionTarget}問進めました`;
@@ -582,16 +631,195 @@ function showRoutineStepCompletion(change) {
   elements.routineResultTotal.textContent =
     `${totals.completed} / ${totals.target}問`;
   if (change.nextItem) {
-    elements.completionMessage.textContent =
-      `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
+    elements.completionMessage.textContent = change.nextItem.kind === "video"
+      ? "次は登録動画から重複なく選ばれた覚え歌を見ます。"
+      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
     elements.completionReturn.textContent = "次の学習内容を選ぶ";
     elements.completionHome.classList.remove("is-hidden");
   } else {
     elements.completionEyebrow.textContent = "毎日のメニュー完了";
     elements.completionMessage.textContent =
-      `${change.run.items.length}項目・${totals.target}問をすべて進めました。`;
+      `${change.run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
     elements.completionReturn.textContent = "科目選択へ戻る";
     elements.completionHome.classList.add("is-hidden");
+  }
+}
+
+function destroyRoutineVideoPlayer() {
+  routineVideoPlayerLoadId += 1;
+  if (routineVideoPlayer?.destroy) {
+    routineVideoPlayer.destroy();
+  }
+  routineVideoPlayer = null;
+  elements.routineVideoPlayerFrame.replaceChildren();
+}
+
+function loadYouTubePlayerApi() {
+  if (globalThis.YT?.Player) return Promise.resolve(globalThis.YT);
+  if (youtubePlayerApiPromise) return youtubePlayerApiPromise;
+  youtubePlayerApiPromise = new Promise((resolve, reject) => {
+    const previousReady = globalThis.onYouTubeIframeAPIReady;
+    globalThis.onYouTubeIframeAPIReady = () => {
+      previousReady?.();
+      resolve(globalThis.YT);
+    };
+    const script = document.createElement("script");
+    script.src = "https://www.youtube.com/iframe_api";
+    script.async = true;
+    script.onerror = () => reject(new Error("YouTubeの再生機能を読み込めませんでした。"));
+    document.head.append(script);
+  });
+  return youtubePlayerApiPromise;
+}
+
+async function createRoutineVideoPlayer(video) {
+  const loadId = ++routineVideoPlayerLoadId;
+  const holder = document.createElement("div");
+  holder.id = `routine-video-player-${loadId}`;
+  elements.routineVideoPlayerFrame.replaceChildren(holder);
+  const YT = await loadYouTubePlayerApi();
+  if (loadId !== routineVideoPlayerLoadId) return;
+  routineVideoPlayer = new YT.Player(holder, {
+    host: "https://www.youtube-nocookie.com",
+    videoId: video.youtubeId,
+    playerVars: {
+      playsinline: 1,
+      rel: 0,
+      enablejsapi: 1,
+      origin: window.location.origin,
+    },
+    events: {
+      onStateChange(event) {
+        if (event.data === YT.PlayerState.ENDED) {
+          void completeCurrentRoutineVideo();
+        }
+      },
+      onError() {
+        elements.routineVideoMessage.textContent =
+          "アプリ内で再生できません。YouTubeで開くか、視聴完了ボタンで次へ進めます。";
+        elements.routineVideoMessage.classList.add("is-error");
+      },
+    },
+  });
+}
+
+function showRoutineVideoCompletion(change) {
+  const totals = studyRoutineTotals(change.run);
+  state.activeSession = false;
+  state.currentTask = null;
+  state.routineTransition = change;
+  state.routineCompletionAction = change.nextItem ? "next" : "done";
+  showOnly(elements.studyShell);
+  elements.contextCard.classList.add("is-hidden");
+  elements.questionCard.classList.add("is-hidden");
+  elements.actionDock.classList.add("is-hidden");
+  elements.listeningDock.classList.add("is-hidden");
+  elements.completionCard.classList.remove("is-hidden");
+  elements.completionReturn.classList.remove("is-hidden");
+  elements.routineResultSummary.classList.remove("is-hidden");
+  elements.completionEyebrow.textContent = change.nextItem
+    ? "メニューの動画を完了"
+    : "毎日のメニュー完了";
+  elements.completionTitle.textContent = "覚え歌を1本視聴しました";
+  elements.routineResultPrimaryLabel.textContent = "視聴した動画";
+  elements.routineResultQuestions.textContent = "1本";
+  elements.routineResultTime.textContent =
+    formatStudyDuration(change.completedItem.studySeconds);
+  elements.routineResultTotal.textContent =
+    `${totals.completedItems} / ${totals.totalItems}項目`;
+  if (change.nextItem) {
+    elements.completionMessage.textContent = change.nextItem.kind === "video"
+      ? "次も登録動画から重複なく選ばれた覚え歌を見ます。"
+      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。`;
+    elements.completionReturn.textContent = "次の学習内容へ進む";
+    elements.completionHome.classList.remove("is-hidden");
+  } else {
+    elements.completionMessage.textContent =
+      `${change.run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
+    elements.completionReturn.textContent = "科目選択へ戻る";
+    elements.completionHome.classList.add("is-hidden");
+  }
+}
+
+async function completeCurrentRoutineVideo() {
+  if (state.routineVideoCompleting) return;
+  const elapsedSeconds = state.routineVideoStartedAt > 0
+    ? Math.max(0, Math.round((Date.now() - state.routineVideoStartedAt) / 1000))
+    : 0;
+  const change = completeStudyRoutineVideo(state.routineRun, elapsedSeconds);
+  if (!change.changed) return;
+  state.routineVideoCompleting = true;
+  elements.routineVideoComplete.disabled = true;
+  elements.routineVideoMessage.classList.remove("is-error");
+  elements.routineVideoMessage.textContent = "視聴完了をCloudflareへ保存しています。";
+  try {
+    await persistRoutineRun(change.run);
+    destroyRoutineVideoPlayer();
+    showRoutineVideoCompletion({
+      ...change,
+      run: state.routineRun,
+      nextItem: currentStudyRoutineItem(state.routineRun),
+    });
+  } catch (error) {
+    elements.routineVideoMessage.textContent = error.message;
+    elements.routineVideoMessage.classList.add("is-error");
+  } finally {
+    state.routineVideoCompleting = false;
+    elements.routineVideoComplete.disabled = false;
+  }
+}
+
+async function showRoutineVideoStep() {
+  stopListeningSequence();
+  stopStudyClock();
+  clearPendingReviewTimer();
+  const assignment = assignStudyRoutineVideo(
+    state.routineRun,
+    state.setupPreferences.routineVideos,
+    state.setupPreferences.routineVideoShuffle,
+  );
+  if (!assignment.video) {
+    throw new Error("設定ページでランダム再生する動画を1本以上登録してください。");
+  }
+  if (assignment.changed) {
+    const saved = await saveCloudStudyRoutine({
+      routineRun: assignment.run,
+      routineVideoShuffle: assignment.videoShuffle,
+    });
+    syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+  }
+  const item = currentStudyRoutineItem(state.routineRun);
+  const video = assignment.changed
+    ? {
+        youtubeId: item.youtubeId,
+        title: item.videoTitle,
+        authorName: item.videoAuthorName,
+      }
+    : assignment.video;
+  state.routineVideoStartedAt = Date.now();
+  state.routineVideoCompleting = false;
+  state.activeSession = false;
+  state.currentTask = null;
+  state.queue = [];
+  elements.subjectName.textContent = "覚え歌";
+  elements.routineVideoEyebrow.textContent =
+    `毎日のメニュー ${state.routineRun.currentIndex + 1}／${state.routineRun.items.length}｜覚え歌`;
+  elements.routineVideoTitle.textContent = video.title;
+  elements.routineVideoAuthor.textContent = video.authorName;
+  elements.routineVideoMessage.textContent =
+    "再生ボタンを押して動画を見てください。最後まで再生すると自動で完了します。";
+  elements.routineVideoMessage.classList.remove("is-error");
+  elements.routineVideoYoutubeLink.href =
+    `https://www.youtube.com/watch?v=${video.youtubeId}`;
+  elements.routineVideoComplete.disabled = false;
+  showOnly(elements.routineVideoPanel);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  try {
+    await createRoutineVideoPlayer(video);
+  } catch (error) {
+    elements.routineVideoMessage.textContent =
+      `${error.message} YouTubeで開くか、視聴完了ボタンで次へ進めます。`;
+    elements.routineVideoMessage.classList.add("is-error");
   }
 }
 
@@ -604,6 +832,10 @@ async function launchRoutineCurrentStep() {
   state.inRoutine = true;
   state.routineCompletionAction = "";
   state.routineTransition = null;
+  if (item.kind === "video") {
+    await showRoutineVideoStep();
+    return;
+  }
   showOnly(elements.loadingPanel);
   await activateSubject(item.subjectId);
   showOnly(elements.setupPanel);
@@ -1414,6 +1646,9 @@ function showOnly(panel) {
     stopStudyClock();
     hideListeningPlaybackFeedback();
   }
+  if (panel !== elements.routineVideoPanel && routineVideoPlayer) {
+    destroyRoutineVideoPlayer();
+  }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
   document.body.classList.toggle(
     "is-listening",
@@ -1423,6 +1658,7 @@ function showOnly(panel) {
     elements.loadingPanel,
     elements.subjectPanel,
     elements.setupPanel,
+    elements.routineVideoPanel,
     elements.studyShell,
     elements.errorPanel,
   ].forEach((candidate) =>
@@ -3817,7 +4053,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.125｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.126｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3967,6 +4203,12 @@ elements.startRoutine.addEventListener("click", () => {
 });
 elements.continueRoutine.addEventListener("click", () => {
   void continueRoutine();
+});
+elements.routineVideoComplete.addEventListener("click", () => {
+  void completeCurrentRoutineVideo();
+});
+elements.routineVideoHome.addEventListener("click", () => {
+  showSubjectSelection();
 });
 
 elements.deckFilter.addEventListener("change", () => {

@@ -16,8 +16,12 @@ import {
 } from "./study-time.js";
 import {
   defaultStudyRoutinePlan,
+  defaultStudyRoutineVideos,
+  defaultStudyRoutineVideoShuffle,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
+  normalizeStudyRoutineVideoLibrary,
+  normalizeStudyRoutineVideoShuffle,
 } from "./study-routine.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
@@ -43,6 +47,8 @@ export const defaultSetupPreferences = Object.freeze({
   subjects: Object.freeze({}),
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
+  routineVideos: defaultStudyRoutineVideos,
+  routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
@@ -313,12 +319,18 @@ export function normalizeSetupPreferences(value) {
     };
   }
   const lastSubjectId = normalizeSetupPreferenceId(source.lastSubjectId);
+  const routineVideos = normalizeStudyRoutineVideoLibrary(source.routineVideos);
   return {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
     routinePlan: normalizeStudyRoutinePlan(source.routinePlan),
     routineRun: normalizeStudyRoutineRun(source.routineRun),
+    routineVideos,
+    routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
+      source.routineVideoShuffle,
+      routineVideos,
+    ),
   };
 }
 
@@ -680,6 +692,29 @@ export async function saveCloudStudyRoutine(patch) {
   return {
     setupPreferences: normalizeSetupPreferences(payload.setupPreferences),
     studyDate: typeof payload.studyDate === "string" ? payload.studyDate : "",
+  };
+}
+
+export async function addCloudStudyRoutineVideo(url) {
+  const payload = await cloudRequest("/v1/study-routine/videos", {
+    method: "POST",
+    body: JSON.stringify({ url }),
+  });
+  return {
+    video: payload.video && typeof payload.video === "object"
+      ? payload.video
+      : null,
+    setupPreferences: normalizeSetupPreferences(payload.setupPreferences),
+  };
+}
+
+export async function deleteCloudStudyRoutineVideo(youtubeId) {
+  const payload = await cloudRequest(
+    `/v1/study-routine/videos/${encodeURIComponent(youtubeId)}`,
+    { method: "DELETE" },
+  );
+  return {
+    setupPreferences: normalizeSetupPreferences(payload.setupPreferences),
   };
 }
 

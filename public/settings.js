@@ -3,6 +3,8 @@ import {
   normalizeReviewSettings,
 } from "./learning-engine.js";
 import {
+  addCloudStudyRoutineVideo,
+  deleteCloudStudyRoutineVideo,
   getStoredAccessKey,
   loadCloudState,
   normalizeListeningPauseSeconds,
@@ -30,6 +32,7 @@ import {
 import {
   defaultStudyRoutinePlan,
   normalizeStudyRoutinePlan,
+  normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
 
 const elements = {
@@ -44,8 +47,14 @@ const elements = {
   studyTimeStatus: document.querySelector("#study-time-settings-status"),
   routineEditor: document.querySelector("#routine-editor"),
   addRoutineItem: document.querySelector("#add-routine-item"),
+  addRoutineVideoItem: document.querySelector("#add-routine-video-item"),
   saveRoutine: document.querySelector("#save-routine"),
   routineStatus: document.querySelector("#routine-status"),
+  routineVideoForm: document.querySelector("#routine-video-form"),
+  routineVideoUrl: document.querySelector("#routine-video-url"),
+  addRoutineVideo: document.querySelector("#add-routine-video"),
+  routineVideoList: document.querySelector("#routine-video-list"),
+  routineVideoStatus: document.querySelector("#routine-video-status"),
   againValue: document.querySelector("#again-value"),
   againUnit: document.querySelector("#again-unit"),
   hardValue: document.querySelector("#hard-value"),
@@ -83,6 +92,7 @@ let cloudFallbackMessage = "";
 let previewStarted = false;
 let routinePlan = normalizeStudyRoutinePlan(defaultStudyRoutinePlan);
 let routineSubjects = [];
+let routineVideos = [];
 let draggedRoutineItemId = "";
 
 function readSpeechForm() {
@@ -264,6 +274,12 @@ function setBusy(busy) {
   elements.saveSpeechSettings.disabled = busy;
   elements.saveRoutine.disabled = busy || routinePlan.length === 0;
   elements.addRoutineItem.disabled = busy;
+  elements.addRoutineVideoItem.disabled = busy;
+  elements.addRoutineVideo.disabled = busy;
+  elements.routineVideoUrl.disabled = busy;
+  for (const button of elements.routineVideoList.querySelectorAll("button")) {
+    button.disabled = busy;
+  }
 }
 
 function setStatus(message, isError = false) {
@@ -274,6 +290,11 @@ function setStatus(message, isError = false) {
 function setRoutineStatus(message, isError = false) {
   elements.routineStatus.textContent = message;
   elements.routineStatus.classList.toggle("is-error", isError);
+}
+
+function setRoutineVideoStatus(message, isError = false) {
+  elements.routineVideoStatus.textContent = message;
+  elements.routineVideoStatus.classList.toggle("is-error", isError);
 }
 
 function createRoutineItemId() {
@@ -309,6 +330,7 @@ function renderRoutineEditor() {
     ...routinePlan.map((item, index) => {
       const row = document.createElement("article");
       row.className = "routine-editor-item";
+      row.classList.toggle("is-video", item.kind === "video");
       row.dataset.routineItemId = item.id;
 
       const handle = document.createElement("button");
@@ -321,22 +343,6 @@ function renderRoutineEditor() {
       const order = document.createElement("strong");
       order.className = "routine-order";
       order.textContent = String(index + 1);
-
-      const subject = createRoutineSubjectSelect(item);
-      subject.dataset.routineField = "subjectId";
-
-      const amount = document.createElement("label");
-      amount.className = "routine-amount";
-      const input = document.createElement("input");
-      input.type = "number";
-      input.min = "1";
-      input.max = "10000";
-      input.step = "1";
-      input.inputMode = "numeric";
-      input.value = String(item.questionTarget);
-      input.dataset.routineField = "questionTarget";
-      input.setAttribute("aria-label", `${routineSubjectTitle(item.subjectId)}の問題数`);
-      amount.append(input, document.createTextNode("問"));
 
       const actions = document.createElement("div");
       actions.className = "routine-item-actions";
@@ -358,16 +364,82 @@ function renderRoutineEditor() {
         actions.append(button);
       }
 
-      row.append(handle, order, subject, amount, actions);
+      if (item.kind === "video") {
+        const videoLabel = document.createElement("div");
+        videoLabel.className = "routine-video-item-label";
+        const title = document.createElement("strong");
+        title.textContent = "覚え歌をランダム再生";
+        const description = document.createElement("small");
+        description.textContent = "一巡するまで同じ動画を重ねません";
+        videoLabel.append(title, description);
+        row.append(handle, order, videoLabel, actions);
+      } else {
+        const subject = createRoutineSubjectSelect(item);
+        subject.dataset.routineField = "subjectId";
+
+        const amount = document.createElement("label");
+        amount.className = "routine-amount";
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = "1";
+        input.max = "10000";
+        input.step = "1";
+        input.inputMode = "numeric";
+        input.value = String(item.questionTarget);
+        input.dataset.routineField = "questionTarget";
+        input.setAttribute("aria-label", `${routineSubjectTitle(item.subjectId)}の問題数`);
+        amount.append(input, document.createTextNode("問"));
+        row.append(handle, order, subject, amount, actions);
+      }
       return row;
     }),
   );
   elements.saveRoutine.disabled = routinePlan.length === 0;
 }
 
+function renderRoutineVideos() {
+  if (routineVideos.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "routine-video-empty";
+    empty.textContent = "動画が登録されていません。動画項目を進めるには1本以上登録してください。";
+    elements.routineVideoList.replaceChildren(empty);
+    return;
+  }
+  elements.routineVideoList.replaceChildren(
+    ...routineVideos.map((video, index) => {
+      const row = document.createElement("article");
+      row.className = "routine-video-list-item";
+      row.dataset.youtubeId = video.youtubeId;
+      const image = document.createElement("img");
+      image.src = `https://i.ytimg.com/vi/${video.youtubeId}/mqdefault.jpg`;
+      image.alt = "";
+      image.loading = "lazy";
+      const text = document.createElement("div");
+      const title = document.createElement("strong");
+      title.textContent = `${index + 1}. ${video.title}`;
+      const author = document.createElement("small");
+      author.textContent = video.authorName || "YouTube";
+      text.append(title, author);
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.className = "secondary-button";
+      remove.dataset.routineVideoAction = "delete";
+      remove.textContent = "削除";
+      remove.setAttribute("aria-label", `${video.title}を削除`);
+      row.append(image, text, remove);
+      return row;
+    }),
+  );
+}
+
 function fillRoutinePlan(value) {
   routinePlan = normalizeStudyRoutinePlan(value);
   renderRoutineEditor();
+}
+
+function fillRoutineVideos(value) {
+  routineVideos = normalizeStudyRoutineVideoLibrary(value);
+  renderRoutineVideos();
 }
 
 function updateRoutineItem(itemId, patch) {
@@ -452,12 +524,16 @@ async function connect() {
     speechSettings = saveSpeechSettings(cloudState.settings);
     fillSpeechForm(cloudState.settings);
     fillRoutinePlan(cloudState.settings.setupPreferences.routinePlan);
+    fillRoutineVideos(cloudState.settings.setupPreferences.routineVideos);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
     setStudyTimeStatus("Cloudflareから学習時間の上限を読み込みました。");
     setSpeechStatus("Cloudflareから共有設定を読み込みました。");
     setRoutineStatus("Cloudflareから毎日のメニューを読み込みました。");
+    setRoutineVideoStatus(
+      `Cloudflareから${routineVideos.length}本の動画を読み込みました。`,
+    );
   } catch (error) {
     setStatus(error.message, true);
   } finally {
@@ -550,6 +626,19 @@ elements.addRoutineItem.addEventListener("click", () => {
   setRoutineStatus("科目を追加しました。「メニューを保存」を押してください。");
 });
 
+elements.addRoutineVideoItem.addEventListener("click", () => {
+  routinePlan = [
+    ...routinePlan,
+    { id: createRoutineItemId(), kind: "video" },
+  ];
+  renderRoutineEditor();
+  elements.routineEditor.lastElementChild?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+  });
+  setRoutineStatus("動画を追加しました。「メニューを保存」を押してください。");
+});
+
 elements.saveRoutine.addEventListener("click", async () => {
   const normalized = normalizeStudyRoutinePlan(routinePlan, {
     fallbackToDefault: false,
@@ -567,6 +656,48 @@ elements.saveRoutine.addEventListener("click", async () => {
     );
   } catch (error) {
     setRoutineStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
+
+elements.routineVideoForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const url = elements.routineVideoUrl.value.trim();
+  if (!url) return;
+  setBusy(true);
+  setRoutineVideoStatus("YouTubeから題名を取得しています。");
+  try {
+    const saved = await addCloudStudyRoutineVideo(url);
+    fillRoutineVideos(saved.setupPreferences.routineVideos);
+    elements.routineVideoUrl.value = "";
+    setRoutineVideoStatus(
+      `「${saved.video?.title ?? "動画"}」をCloudflareへ登録しました。`,
+    );
+  } catch (error) {
+    setRoutineVideoStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
+
+elements.routineVideoList.addEventListener("click", async (event) => {
+  const button = event.target.closest("button[data-routine-video-action='delete']");
+  const row = event.target.closest("[data-youtube-id]");
+  if (!button || !row) return;
+  const video = routineVideos.find(
+    (candidate) => candidate.youtubeId === row.dataset.youtubeId,
+  );
+  if (!video || !window.confirm(`「${video.title}」を登録動画から削除しますか？`)) {
+    return;
+  }
+  setBusy(true);
+  try {
+    const saved = await deleteCloudStudyRoutineVideo(video.youtubeId);
+    fillRoutineVideos(saved.setupPreferences.routineVideos);
+    setRoutineVideoStatus(`「${video.title}」を削除しました。`);
+  } catch (error) {
+    setRoutineVideoStatus(error.message, true);
   } finally {
     setBusy(false);
   }
@@ -659,6 +790,7 @@ window.addEventListener("pagehide", () => previewController.stop());
 fillForm(defaultReviewSettings);
 fillStudyTimeForm({ studyTimeLimitSeconds: defaultStudyTimeLimitSeconds });
 fillRoutinePlan(defaultStudyRoutinePlan);
+fillRoutineVideos();
 populateAzureVoices();
 fillSpeechForm(speechSettings);
 void loadRoutineSubjects().catch((error) => {

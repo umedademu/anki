@@ -237,11 +237,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.125") ||
-  !app.includes("v0.125｜") ||
-  !changelog.includes("v0.125") ||
-  !settingsHtml.includes("v0.125") ||
-  !historyHtml.includes("v0.125")
+  !html.includes("v0.126") ||
+  !app.includes("v0.126｜") ||
+  !changelog.includes("v0.126") ||
+  !settingsHtml.includes("v0.126") ||
+  !historyHtml.includes("v0.126")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -266,8 +266,14 @@ if (
   !html.includes('id="routine-result-time"') ||
   !html.includes('id="routine-result-total"') ||
   !html.includes('id="completion-home"') ||
+  !html.includes('id="routine-video-panel"') ||
+  !html.includes('id="routine-video-player-frame"') ||
+  !html.includes('id="routine-video-complete"') ||
   !settingsHtml.includes('id="routine-editor"') ||
   !settingsHtml.includes('id="add-routine-item"') ||
+  !settingsHtml.includes('id="add-routine-video-item"') ||
+  !settingsHtml.includes('id="routine-video-form"') ||
+  !settingsHtml.includes('id="routine-video-list"') ||
   !settingsHtml.includes('id="save-routine"') ||
   !settingsApp.includes("handleRoutineFieldChange") ||
   !settingsApp.includes('addEventListener("input", handleRoutineFieldChange)') ||
@@ -277,9 +283,17 @@ if (
   !app.includes('completionHome.addEventListener("click"') ||
   !app.includes('state.routineCompletionAction = "reselect"') ||
   !app.includes("continueStudyRoutineOnDate") ||
+  !app.includes("assignStudyRoutineVideo") ||
+  !app.includes("completeCurrentRoutineVideo") ||
+  !app.includes("youtube-nocookie.com") ||
+  !settingsApp.includes("addCloudStudyRoutineVideo") ||
+  !settingsApp.includes("deleteCloudStudyRoutineVideo") ||
   !cloudProgress.includes("export async function saveCloudStudyRoutine") ||
+  !cloudProgress.includes("export async function addCloudStudyRoutineVideo") ||
   !cloudProgress.includes('cloudRequest("/v1/study-routine"') ||
   !worker.includes('url.pathname === "/v1/study-routine"') ||
+  !worker.includes('url.pathname === "/v1/study-routine/videos"') ||
+  !worker.includes("fetchYouTubeVideoMetadata") ||
   !worker.includes("studyRoutineRunStatement") ||
   !worker.includes("json_set(")
 ) {
@@ -399,7 +413,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.124"') ||
+  !html.includes('href="/styles.css?v=0.126"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

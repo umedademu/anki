@@ -1,8 +1,13 @@
 import {
+  assignStudyRoutineVideo,
+  completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
   createStudyRoutineRun,
   currentStudyRoutineItem,
   defaultStudyRoutinePlan,
+  defaultStudyRoutineVideos,
+  defaultStudyRoutineVideoShuffle,
+  extractYouTubeVideoId,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
@@ -35,21 +40,35 @@ const expectedSubjects = [
 ];
 
 if (
-  defaultStudyRoutinePlan.length !== 22 ||
-  defaultStudyRoutinePlan.map((item) => item.subjectId).join(",") !==
+  defaultStudyRoutinePlan.length !== 44 ||
+  defaultStudyRoutinePlan.filter((item) => item.kind === "study")
+    .map((item) => item.subjectId).join(",") !==
     expectedSubjects.join(",") ||
-  defaultStudyRoutinePlan.some((item) => item.questionTarget !== 100)
+  defaultStudyRoutinePlan.filter((item) => item.kind === "study")
+    .some((item) => item.questionTarget !== 100) ||
+  defaultStudyRoutinePlan.filter((item) => item.kind === "video").length !== 22
 ) {
-  throw new Error("指定された22項目・各100問の初期メニューになっていません。");
+  throw new Error("22件の科目学習それぞれの後に動画がある初期メニューになっていません。");
+}
+
+if (
+  defaultStudyRoutineVideos.length !== 27 ||
+  new Set(defaultStudyRoutineVideos.map((video) => video.youtubeId)).size !== 27 ||
+  extractYouTubeVideoId("https://youtu.be/HfOoVw-ef_o?si=test") !== "HfOoVw-ef_o" ||
+  extractYouTubeVideoId("https://www.youtube.com/watch?v=_mv5r0wix3M") !==
+    "_mv5r0wix3M"
+) {
+  throw new Error("指定された27本の動画またはYouTubeのURL判定が正しくありません。");
 }
 
 const normalizedPlan = normalizeStudyRoutinePlan([
   { id: "first", subjectId: "world-history", questionTarget: 100 },
   { id: "first", subjectId: "english-vocabulary", questionTarget: 80 },
+  { id: "video", kind: "video" },
   { id: "invalid", subjectId: "不正な科目", questionTarget: 0 },
 ]);
 if (
-  normalizedPlan.length !== 2 ||
+  normalizedPlan.length !== 3 ||
   normalizedPlan[0].id === normalizedPlan[1].id ||
   normalizedPlan[1].questionTarget !== 80
 ) {
@@ -108,13 +127,62 @@ if (
   !change.completedItem ||
   change.completedItem.subjectId !== "world-history" ||
   change.completedItem.studySeconds !== 15 ||
-  currentStudyRoutineItem(run)?.subjectId !== "english-vocabulary" ||
+  currentStudyRoutineItem(run)?.kind !== "video" ||
   run.currentIndex !== 1
 ) {
-  throw new Error("100問完了後に次の科目へ進めませんでした。");
+  throw new Error("100問完了後に次の動画へ進めませんでした。");
 }
 
-const continued = continueStudyRoutineOnDate(run, "2026-08-25");
+const studiedRun = run;
+let videoShuffle = defaultStudyRoutineVideoShuffle;
+const playedYoutubeIds = [];
+for (let index = 0; index < defaultStudyRoutineVideos.length; index += 1) {
+  const videoChange = assignStudyRoutineVideo(
+    run,
+    defaultStudyRoutineVideos,
+    videoShuffle,
+    () => 0,
+  );
+  if (!videoChange.changed || !videoChange.video) {
+    throw new Error("動画を一巡分シャッフルして割り当てられませんでした。");
+  }
+  playedYoutubeIds.push(videoChange.video.youtubeId);
+  videoShuffle = videoChange.videoShuffle;
+  const completion = completeStudyRoutineVideo(videoChange.run, 30);
+  if (!completion.changed) {
+    throw new Error("動画の視聴完了を記録できませんでした。");
+  }
+  run = index === defaultStudyRoutineVideos.length - 1
+    ? completion.run
+    : createStudyRoutineRun(
+        [{ id: `video-${index}`, kind: "video" }],
+        "2026-08-24",
+        `video-run-${index}`,
+      );
+}
+if (
+  new Set(playedYoutubeIds).size !== defaultStudyRoutineVideos.length ||
+  videoShuffle.remainingYoutubeIds.length !== 0
+) {
+  throw new Error("一巡する前に同じ動画が重複しました。");
+}
+
+const nextCycleRun = createStudyRoutineRun(
+  [{ id: "next-cycle-video", kind: "video" }],
+  "2026-08-25",
+  "next-cycle-run",
+);
+const nextCycle = assignStudyRoutineVideo(
+  nextCycleRun,
+  defaultStudyRoutineVideos,
+  videoShuffle,
+  () => 0,
+);
+if (nextCycle.video.youtubeId === playedYoutubeIds.at(-1)) {
+  throw new Error("一巡の境目で同じ動画が連続しました。");
+}
+
+const continued = continueStudyRoutineOnDate(studiedRun, "2026-08-25");
 if (
   continued.studyDate !== "2026-08-25" ||
   continued.currentIndex !== 1 ||
@@ -126,4 +194,4 @@ if (
   throw new Error("午前4時後に前回の続きへ引き継げませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 初期22項目・重複除外・学習時間・次科目・翌日継続を確認");
+console.log("毎日のメニュー検証完了: 学習後動画・27本一巡・連続防止・Cloudflare用状態を確認");

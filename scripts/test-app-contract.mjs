@@ -237,11 +237,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.126") ||
-  !app.includes("v0.126｜") ||
-  !changelog.includes("v0.126") ||
-  !settingsHtml.includes("v0.126") ||
-  !historyHtml.includes("v0.126")
+  !html.includes("v0.127") ||
+  !app.includes("v0.127｜") ||
+  !changelog.includes("v0.127") ||
+  !settingsHtml.includes("v0.127") ||
+  !historyHtml.includes("v0.127")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -265,6 +265,11 @@ if (
   !html.includes('id="routine-result-summary"') ||
   !html.includes('id="routine-result-time"') ||
   !html.includes('id="routine-result-total"') ||
+  !html.includes('id="rating-result-summary"') ||
+  !html.includes('id="rating-result-again"') ||
+  !html.includes('id="rating-result-hard"') ||
+  !html.includes('id="rating-result-good"') ||
+  !html.includes('id="rating-result-easy"') ||
   !html.includes('id="completion-home"') ||
   !html.includes('id="routine-video-panel"') ||
   !html.includes('id="routine-video-player-frame"') ||
@@ -280,6 +285,10 @@ if (
   !app.includes("recordActiveRoutineQuestion") ||
   !app.includes("showRoutineStepCompletion") ||
   !app.includes("change.completedItem.studySeconds") ||
+  !app.includes("renderRatingResult(change.completedItem.ratingCounts)") ||
+  !app.includes("state.ratingCounts = addRatingCount(state.ratingCounts, rating)") ||
+  !cloudProgress.includes("ratingCounts: normalizeRatingCounts(source.ratingCounts)") ||
+  !styles.includes(".rating-result-summary") ||
   !app.includes('completionHome.addEventListener("click"') ||
   !app.includes('state.routineCompletionAction = "reselect"') ||
   !app.includes("continueStudyRoutineOnDate") ||
@@ -413,7 +422,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.126"') ||
+  !html.includes('href="/styles.css?v=0.127"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

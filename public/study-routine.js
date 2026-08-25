@@ -1,3 +1,10 @@
+import {
+  addRatingCount,
+  createEmptyRatingCounts,
+  normalizeRatingCounts,
+  ratingValues,
+} from "./rating-results.js";
+
 const routineIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const routineQuestionKeyPattern = /^[A-Za-z0-9_-]{1,100}::[A-Za-z0-9_-]{1,100}$/;
@@ -279,6 +286,7 @@ export function normalizeStudyRoutineRun(value) {
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
       studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
+      ratingCounts: normalizeRatingCounts(sourceItem.ratingCounts),
     };
   });
   if (!id || !studyDate || items.length === 0) return null;
@@ -316,7 +324,12 @@ export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()
           completed: false,
           studySeconds: 0,
         }
-      : { ...item, completedCount: 0, studySeconds: 0 },
+      : {
+          ...item,
+          completedCount: 0,
+          studySeconds: 0,
+          ratingCounts: createEmptyRatingCounts(),
+        },
   );
   return normalizeStudyRoutineRun({
     schemaVersion: 2,
@@ -498,6 +511,7 @@ export function recordStudyRoutineQuestion(
   datasetVersion,
   questionId,
   studySeconds = 0,
+  rating = "",
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -518,6 +532,7 @@ export function recordStudyRoutineQuestion(
   }
   const counted = !normalized.countedQuestionKeys.includes(key);
   const addedStudySeconds = normalizeRoutineStudySeconds(studySeconds);
+  const hasRating = ratingValues.includes(rating);
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
       ? {
@@ -527,6 +542,9 @@ export function recordStudyRoutineQuestion(
             routineStudySecondsLimit,
             candidate.studySeconds + addedStudySeconds,
           ),
+          ratingCounts: hasRating
+            ? addRatingCount(candidate.ratingCounts, rating)
+            : normalizeRatingCounts(candidate.ratingCounts),
         }
       : { ...candidate },
   );
@@ -547,7 +565,7 @@ export function recordStudyRoutineQuestion(
   };
   return {
     run: next,
-    changed: counted || addedStudySeconds > 0,
+    changed: counted || addedStudySeconds > 0 || hasRating,
     counted,
     completedItem,
     nextItem: next.items[next.currentIndex] ?? null,

@@ -84,6 +84,11 @@ import {
   studyRoutineTotals,
 } from "./study-routine.js";
 import { createRatingSoundPlayer } from "./rating-sound.js";
+import {
+  addRatingCount,
+  createEmptyRatingCounts,
+  normalizeRatingCounts,
+} from "./rating-results.js";
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
@@ -219,6 +224,11 @@ const elements = {
   routineResultQuestions: document.querySelector("#routine-result-questions"),
   routineResultTime: document.querySelector("#routine-result-time"),
   routineResultTotal: document.querySelector("#routine-result-total"),
+  ratingResultSummary: document.querySelector("#rating-result-summary"),
+  ratingResultAgain: document.querySelector("#rating-result-again"),
+  ratingResultHard: document.querySelector("#rating-result-hard"),
+  ratingResultGood: document.querySelector("#rating-result-good"),
+  ratingResultEasy: document.querySelector("#rating-result-easy"),
   unlockNotice: document.querySelector("#unlock-notice"),
   listeningPlaybackFeedback: document.querySelector(
     "#listening-playback-feedback",
@@ -280,6 +290,7 @@ const state = {
   selectedStage: "",
   questionAmountMode: "all",
   answeredThisSession: 0,
+  ratingCounts: createEmptyRatingCounts(),
   studySeconds: 0,
   screenStudySeconds: 0,
   studyTimeEventId: "",
@@ -591,7 +602,7 @@ function restoreRoutineRun(run) {
   });
 }
 
-function recordActiveRoutineQuestion(questionId, studySeconds = 0) {
+function recordActiveRoutineQuestion(questionId, studySeconds = 0, rating = "") {
   const item = activeRoutineItem();
   if (!item) return null;
   const change = recordStudyRoutineQuestion(
@@ -600,10 +611,20 @@ function recordActiveRoutineQuestion(questionId, studySeconds = 0) {
     datasetVersionForQuestion(questionId),
     questionId,
     studySeconds,
+    rating,
   );
   if (!change.changed) return change;
   restoreRoutineRun(change.run);
   return change;
+}
+
+function renderRatingResult(value = state.ratingCounts) {
+  const counts = normalizeRatingCounts(value);
+  elements.ratingResultSummary.classList.remove("is-hidden");
+  elements.ratingResultAgain.textContent = `${counts.again}回`;
+  elements.ratingResultHard.textContent = `${counts.hard}回`;
+  elements.ratingResultGood.textContent = `${counts.good}回`;
+  elements.ratingResultEasy.textContent = `${counts.easy}回`;
 }
 
 function showRoutineStepCompletion(change) {
@@ -619,6 +640,7 @@ function showRoutineStepCompletion(change) {
   elements.completionCard.classList.remove("is-hidden");
   elements.completionReturn.classList.remove("is-hidden");
   elements.routineResultSummary.classList.remove("is-hidden");
+  renderRatingResult(change.completedItem.ratingCounts);
   elements.routineResultPrimaryLabel.textContent = "進めた問題";
   elements.completionEyebrow.textContent = "メニューの1項目を完了";
   elements.completionTitle.textContent =
@@ -717,6 +739,7 @@ function showRoutineVideoCompletion(change) {
   elements.completionCard.classList.remove("is-hidden");
   elements.completionReturn.classList.remove("is-hidden");
   elements.routineResultSummary.classList.remove("is-hidden");
+  elements.ratingResultSummary.classList.add("is-hidden");
   elements.completionEyebrow.textContent = change.nextItem
     ? "メニューの動画を完了"
     : "毎日のメニュー完了";
@@ -1006,6 +1029,7 @@ function captureActiveSession() {
     unseenQuestionIds: [...state.unseenQuestionIds],
     retryQuestionIds: [...state.retryQuestionIds],
     answeredCount: state.answeredThisSession,
+    ratingCounts: state.ratingCounts,
     studySeconds: state.studySeconds,
     screenStudySeconds: state.screenStudySeconds,
     savedScreenStudySeconds: state.studyTimeSavedSeconds,
@@ -1189,6 +1213,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.questionAmountMode = session.questionAmountMode;
   state.shuffleEnabled = session.shuffleEnabled;
   state.answeredThisSession = session.answeredCount;
+  state.ratingCounts = normalizeRatingCounts(session.ratingCounts);
   state.studySeconds = session.studySeconds;
   state.screenStudySeconds = Math.min(
     session.screenStudySeconds,
@@ -1938,6 +1963,7 @@ async function goBackOneStep() {
       state.currentTask = restored.currentTask;
       state.answerVisible = restored.answerVisible;
       state.answeredThisSession = restored.answeredThisSession;
+      state.ratingCounts = normalizeRatingCounts(restored.ratingCounts);
       state.unlockMessage = restored.unlockMessage;
     }
     if (Object.hasOwn(snapshot, "routineRun")) {
@@ -3304,6 +3330,9 @@ function renderCompletion() {
   elements.completionReturn.classList.remove("is-hidden");
   elements.completionHome.classList.add("is-hidden");
   elements.routineResultSummary.classList.add("is-hidden");
+  renderRatingResult(
+    activeRoutineItem()?.ratingCounts ?? state.ratingCounts,
+  );
   const routineItem = activeRoutineItem();
   if (routineItem && routineRemainingCount(routineItem) > 0) {
     state.routineCompletionAction = "reselect";
@@ -3440,6 +3469,7 @@ async function rateListeningQuestion(rating) {
     currentTask: state.currentTask,
     answerVisible: state.answerVisible,
     answeredThisSession: state.answeredThisSession,
+    ratingCounts: state.ratingCounts,
     unlockMessage: state.unlockMessage,
   });
   snapshot.studySession = captureActiveSession();
@@ -3451,6 +3481,7 @@ async function rateListeningQuestion(rating) {
   snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
   const historyBefore = [...state.history];
 
+  state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
   state.unseenQuestionIds.delete(question.id);
   state.retryQuestionIds.delete(question.id);
@@ -3463,6 +3494,7 @@ async function rateListeningQuestion(rating) {
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
+    rating,
   );
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
@@ -3574,6 +3606,7 @@ async function rateCurrentQuestion(rating) {
     currentTask: state.currentTask,
     answerVisible: state.answerVisible,
     answeredThisSession: state.answeredThisSession,
+    ratingCounts: state.ratingCounts,
     unlockMessage: state.unlockMessage,
   });
   snapshot.studySession = captureActiveSession();
@@ -3583,6 +3616,7 @@ async function rateCurrentQuestion(rating) {
   const activity = createStudyActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
+  state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
 
   state.unseenQuestionIds.delete(question.id);
@@ -3608,6 +3642,7 @@ async function rateCurrentQuestion(rating) {
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
+    rating,
   );
   startNewStudyScreen();
 
@@ -3691,6 +3726,7 @@ async function resetAllProgress() {
     if (deck) clearLegacyProgress(deck);
   });
   state.answeredThisSession = 0;
+  state.ratingCounts = createEmptyRatingCounts();
   state.studySeconds = 0;
   state.screenStudySeconds = 0;
   state.studyTimeEventId = "";
@@ -3767,6 +3803,7 @@ async function beginStudy() {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answeredThisSession = 0;
+  state.ratingCounts = createEmptyRatingCounts();
   state.studySeconds = 0;
   state.screenStudySeconds = 0;
   state.studyTimeEventId = "";
@@ -4027,6 +4064,7 @@ async function activateDecks(deckIds) {
   clearPendingReviewTimer();
   state.answerVisible = false;
   state.answeredThisSession = 0;
+  state.ratingCounts = createEmptyRatingCounts();
   state.studySeconds = 0;
   state.screenStudySeconds = 0;
   state.studyTimeEventId = "";
@@ -4053,7 +4091,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.126｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.127｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

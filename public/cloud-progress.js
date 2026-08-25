@@ -4,6 +4,7 @@ import {
   normalizeProgress,
   normalizeReviewSettings,
 } from "./learning-engine.js";
+import { normalizeRatingCounts } from "./rating-results.js";
 import {
   defaultSpeechSettings,
   normalizeSpeechSettings,
@@ -197,6 +198,7 @@ export function normalizeStudySession(value) {
       1_000_000_000,
       Math.max(0, Number.parseInt(source.answeredCount, 10) || 0),
     ),
+    ratingCounts: normalizeRatingCounts(source.ratingCounts),
     studySeconds: normalizeStudySeconds(source.studySeconds),
     screenStudySeconds: normalizeStudySeconds(
       source.screenStudySeconds,

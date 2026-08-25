@@ -8,6 +8,7 @@ import {
   normalizeStudyRoutineVideoLibrary,
   normalizeStudyRoutineVideoShuffle,
 } from "../../public/study-routine.js";
+import { normalizeRatingCounts } from "../../public/rating-results.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -464,6 +465,7 @@ function normalizeStudySession(value) {
       validQuestionIds,
     ),
     answeredCount: integer(source.answeredCount, 0),
+    ratingCounts: normalizeRatingCounts(source.ratingCounts),
     studySeconds: integer(source.studySeconds, 0),
     screenStudySeconds: integer(
       source.screenStudySeconds,

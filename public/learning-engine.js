@@ -7,7 +7,8 @@ export const stageLabels = {
   complete: "完全習得",
 };
 
-export const ratingValues = ["again", "hard", "good", "easy"];
+export { ratingValues } from "./rating-results.js";
+import { ratingValues } from "./rating-results.js";
 
 export const defaultReviewSettings = {
   againSeconds: 60,
@@ -690,6 +691,7 @@ export function createRatingUndoSnapshot({
   currentTask,
   answerVisible,
   answeredThisSession,
+  ratingCounts,
   unlockMessage,
 }) {
   const previousQuestionRecord = progress.questions[questionId];
@@ -704,6 +706,7 @@ export function createRatingUndoSnapshot({
     currentTask: cloneTask(currentTask),
     answerVisible: Boolean(answerVisible),
     answeredThisSession,
+    ratingCounts,
     unlockMessage,
   };
 }
@@ -723,6 +726,7 @@ export function restoreRatingUndoSnapshot(progress, snapshot) {
     currentTask: cloneTask(snapshot.currentTask),
     answerVisible: Boolean(snapshot.answerVisible),
     answeredThisSession: snapshot.answeredThisSession,
+    ratingCounts: snapshot.ratingCounts,
     unlockMessage: snapshot.unlockMessage,
   };
 }

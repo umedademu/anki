@@ -71,6 +71,7 @@ const studySessionInput = {
   unseenQuestionIds: ["WH-Q-000001", "WH-Q-000002"],
   retryQuestionIds: ["WH-Q-000001"],
   answeredCount: 12,
+  ratingCounts: { again: 2, hard: "3", good: 4, easy: -1 },
   studySeconds: 4264,
   screenStudySeconds: 90,
   savedScreenStudySeconds: 80,
@@ -90,6 +91,10 @@ for (const session of [
     session.currentTask.questionId !== "WH-Q-000001" ||
     session.retryQuestionIds[0] !== "WH-Q-000001" ||
     session.answeredCount !== 12 ||
+    session.ratingCounts.again !== 2 ||
+    session.ratingCounts.hard !== 3 ||
+    session.ratingCounts.good !== 4 ||
+    session.ratingCounts.easy !== 0 ||
     session.studySeconds !== 4264 ||
     session.screenStudySeconds !== 90 ||
     session.savedScreenStudySeconds !== 80 ||

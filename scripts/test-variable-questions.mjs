@@ -468,11 +468,17 @@ const undoSnapshot = createRatingUndoSnapshot({
   currentTask: undoTask,
   answerVisible: true,
   answeredThisSession: 5,
+  ratingCounts: { again: 1, hard: 2, good: 3, easy: 4 },
   unlockMessage: "",
 });
 rateQuestion(undoProgress, "UNDO", "easy", masteryTarget, defaultReviewSettings, startAt);
 const restoredUndo = restoreRatingUndoSnapshot(undoProgress, undoSnapshot);
-if ("UNDO" in undoProgress.questions || restoredUndo.currentTask.questionId !== "UNDO" || !restoredUndo.answerVisible) {
+if (
+  "UNDO" in undoProgress.questions ||
+  restoredUndo.currentTask.questionId !== "UNDO" ||
+  !restoredUndo.answerVisible ||
+  restoredUndo.ratingCounts.good !== 3
+) {
   throw new Error("4段階評価を一手戻しで取り消せませんでした。");
 }
 

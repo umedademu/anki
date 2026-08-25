@@ -86,13 +86,15 @@ let change = recordStudyRoutineQuestion(
   "world-deck-1",
   "question-1",
   12,
+  "again",
 );
 run = change.run;
 if (
   !change.changed ||
   !change.counted ||
   run.items[0].completedCount !== 1 ||
-  run.items[0].studySeconds !== 12
+  run.items[0].studySeconds !== 12 ||
+  run.items[0].ratingCounts.again !== 1
 ) {
   throw new Error("最初に進めた問題をメニューへ加算できませんでした。");
 }
@@ -103,13 +105,15 @@ change = recordStudyRoutineQuestion(
   "world-deck-1",
   "question-1",
   3,
+  "good",
 );
 run = change.run;
 if (
   !change.changed ||
   change.counted ||
   run.items[0].completedCount !== 1 ||
-  run.items[0].studySeconds !== 15
+  run.items[0].studySeconds !== 15 ||
+  run.items[0].ratingCounts.good !== 1
 ) {
   throw new Error("同じ問題の再出題件数または学習時間を正しく集計できませんでした。");
 }
@@ -127,6 +131,8 @@ if (
   !change.completedItem ||
   change.completedItem.subjectId !== "world-history" ||
   change.completedItem.studySeconds !== 15 ||
+  change.completedItem.ratingCounts.again !== 1 ||
+  change.completedItem.ratingCounts.good !== 1 ||
   currentStudyRoutineItem(run)?.kind !== "video" ||
   run.currentIndex !== 1
 ) {

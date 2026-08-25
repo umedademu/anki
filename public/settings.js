@@ -30,7 +30,9 @@ import {
   normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
 import {
+  defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
+  normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
@@ -50,6 +52,12 @@ const elements = {
   addRoutineVideoItem: document.querySelector("#add-routine-video-item"),
   saveRoutine: document.querySelector("#save-routine"),
   routineStatus: document.querySelector("#routine-status"),
+  routineOvertimeForm: document.querySelector("#routine-overtime-settings-form"),
+  routineOvertimeMinutes: document.querySelector("#routine-overtime-minutes"),
+  saveRoutineOvertimeSettings: document.querySelector(
+    "#save-routine-overtime-settings",
+  ),
+  routineOvertimeStatus: document.querySelector("#routine-overtime-status"),
   routineVideoForm: document.querySelector("#routine-video-form"),
   routineVideoUrl: document.querySelector("#routine-video-url"),
   addRoutineVideo: document.querySelector("#add-routine-video"),
@@ -126,6 +134,27 @@ function setSpeechStatus(message, isError = false) {
 function setStudyTimeStatus(message, isError = false) {
   elements.studyTimeStatus.textContent = message;
   elements.studyTimeStatus.classList.toggle("is-error", isError);
+}
+
+function setRoutineOvertimeStatus(message, isError = false) {
+  elements.routineOvertimeStatus.textContent = message;
+  elements.routineOvertimeStatus.classList.toggle("is-error", isError);
+}
+
+function fillRoutineOvertimeForm(settings) {
+  elements.routineOvertimeMinutes.value = String(
+    normalizeStudyRoutineOvertimeSeconds(
+      settings?.studyRoutineOvertimeSeconds,
+    ) / 60,
+  );
+}
+
+function readRoutineOvertimeForm() {
+  return {
+    studyRoutineOvertimeSeconds: normalizeStudyRoutineOvertimeSeconds(
+      Number(elements.routineOvertimeMinutes.value) * 60,
+    ),
+  };
 }
 
 function fillStudyTimeForm(settings) {
@@ -271,6 +300,7 @@ function setBusy(busy) {
   elements.connectCloud.disabled = busy;
   elements.saveSettings.disabled = busy;
   elements.saveStudyTimeSettings.disabled = busy;
+  elements.saveRoutineOvertimeSettings.disabled = busy;
   elements.saveSpeechSettings.disabled = busy;
   elements.saveRoutine.disabled = busy || routinePlan.length === 0;
   elements.addRoutineItem.disabled = busy;
@@ -521,6 +551,7 @@ async function connect() {
     const cloudState = await loadCloudState();
     fillForm(cloudState.settings);
     fillStudyTimeForm(cloudState.settings);
+    fillRoutineOvertimeForm(cloudState.settings);
     speechSettings = saveSpeechSettings(cloudState.settings);
     fillSpeechForm(cloudState.settings);
     fillRoutinePlan(cloudState.settings.setupPreferences.routinePlan);
@@ -529,6 +560,7 @@ async function connect() {
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
     setStudyTimeStatus("Cloudflareから学習時間の上限を読み込みました。");
+    setRoutineOvertimeStatus("Cloudflareから復習猶予を読み込みました。");
     setSpeechStatus("Cloudflareから共有設定を読み込みました。");
     setRoutineStatus("Cloudflareから毎日のメニューを読み込みました。");
     setRoutineVideoStatus(
@@ -704,6 +736,21 @@ elements.routineVideoList.addEventListener("click", async (event) => {
 });
 
 elements.connectCloud.addEventListener("click", connect);
+elements.routineOvertimeForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  setBusy(true);
+  try {
+    const saved = await saveCloudSettings(readRoutineOvertimeForm());
+    fillRoutineOvertimeForm(saved);
+    setRoutineOvertimeStatus(
+      "目標達成後の復習猶予をCloudflareへ保存しました。",
+    );
+  } catch (error) {
+    setRoutineOvertimeStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
 elements.studyTimeForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   setBusy(true);
@@ -789,6 +836,9 @@ window.addEventListener("pagehide", () => previewController.stop());
 
 fillForm(defaultReviewSettings);
 fillStudyTimeForm({ studyTimeLimitSeconds: defaultStudyTimeLimitSeconds });
+fillRoutineOvertimeForm({
+  studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
+});
 fillRoutinePlan(defaultStudyRoutinePlan);
 fillRoutineVideos();
 populateAzureVoices();

@@ -14,6 +14,9 @@ const routineQuestionTargetLimit = 10_000;
 const routineCountedQuestionLimit = 20_000;
 const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 
+export const defaultStudyRoutineOvertimeSeconds = 10 * 60;
+export const maximumStudyRoutineOvertimeSeconds = 24 * 60 * 60;
+
 const defaultSubjects = [
   "world-history",
   "english-vocabulary",
@@ -244,10 +247,17 @@ function normalizeRoutineStudySeconds(value) {
     : 0;
 }
 
+export function normalizeStudyRoutineOvertimeSeconds(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(maximumStudyRoutineOvertimeSeconds, Math.max(0, parsed))
+    : defaultStudyRoutineOvertimeSeconds;
+}
+
 function routineItemComplete(item) {
   return item.kind === "video"
     ? item.completed === true
-    : item.completedCount >= item.questionTarget;
+    : item.completedCount >= item.questionTarget && !item.overtimePending;
 }
 
 export function normalizeStudyRoutineRun(value) {
@@ -285,6 +295,9 @@ export function normalizeStudyRoutineRun(value) {
         item.questionTarget,
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
+      overtimePending:
+        sourceItem.overtimePending === true &&
+        Number.parseInt(sourceItem.completedCount, 10) >= item.questionTarget,
       studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
       ratingCounts: normalizeRatingCounts(sourceItem.ratingCounts),
     };
@@ -602,6 +615,7 @@ export function recordStudyRoutineQuestion(
   questionId,
   studySeconds = 0,
   rating = "",
+  { deferCompletion = false } = {},
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -625,21 +639,27 @@ export function recordStudyRoutineQuestion(
   const hasRating = ratingValues.includes(rating);
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
-      ? {
-          ...candidate,
-          completedCount: candidate.completedCount + (counted ? 1 : 0),
-          studySeconds: Math.min(
-            routineStudySecondsLimit,
-            candidate.studySeconds + addedStudySeconds,
-          ),
-          ratingCounts: hasRating
-            ? addRatingCount(candidate.ratingCounts, rating)
-            : normalizeRatingCounts(candidate.ratingCounts),
-        }
+      ? (() => {
+          const completedCount = candidate.completedCount + (counted ? 1 : 0);
+          return {
+            ...candidate,
+            completedCount,
+            overtimePending:
+              completedCount >= candidate.questionTarget && deferCompletion,
+            studySeconds: Math.min(
+              routineStudySecondsLimit,
+              candidate.studySeconds + addedStudySeconds,
+            ),
+            ratingCounts: hasRating
+              ? addRatingCount(candidate.ratingCounts, rating)
+              : normalizeRatingCounts(candidate.ratingCounts),
+          };
+        })()
       : { ...candidate },
   );
-  const completedItem = counted && items[normalized.currentIndex].completedCount >=
-      items[normalized.currentIndex].questionTarget
+  const completedItem = items[normalized.currentIndex].completedCount >=
+      items[normalized.currentIndex].questionTarget &&
+      !items[normalized.currentIndex].overtimePending
     ? items[normalized.currentIndex]
     : null;
   const currentIndex = completedItem
@@ -655,7 +675,12 @@ export function recordStudyRoutineQuestion(
   };
   return {
     run: next,
-    changed: counted || addedStudySeconds > 0 || hasRating,
+    changed:
+      counted ||
+      addedStudySeconds > 0 ||
+      hasRating ||
+      (normalized.items[normalized.currentIndex].overtimePending &&
+        Boolean(completedItem)),
     counted,
     completedItem,
     nextItem: next.items[next.currentIndex] ?? null,

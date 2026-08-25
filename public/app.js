@@ -79,7 +79,9 @@ import {
   continueStudyRoutineOnDate,
   createStudyRoutineRun,
   currentStudyRoutineItem,
+  defaultStudyRoutineOvertimeSeconds,
   drawStudyRoutineVideo,
+  normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   studyRoutineTotals,
@@ -274,6 +276,8 @@ const state = {
   listeningPauseSeconds: 0,
   listeningQuestionIntervalSeconds: 0,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
+  studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
+  routineOvertimeEndsAt: null,
   speechParts: normalizeSpeechParts(),
   setupPreferences: normalizeSetupPreferences(),
   routineRun: null,
@@ -493,6 +497,65 @@ function routineRemainingCount(item = activeRoutineItem()) {
   return item ? Math.max(0, item.questionTarget - item.completedCount) : 0;
 }
 
+function routineOvertimeCutoffAt() {
+  if (!state.inRoutine || isListeningMode() || !state.routineOvertimeEndsAt) {
+    return null;
+  }
+  const cutoffAt = Date.parse(state.routineOvertimeEndsAt);
+  return Number.isFinite(cutoffAt) ? cutoffAt : null;
+}
+
+function nextRoutineOvertimeReviewAt(cutoffAt = routineOvertimeCutoffAt()) {
+  if (!Number.isFinite(cutoffAt)) return null;
+  return state.sessionTasks.reduce((earliest, task) => {
+    if (state.unseenQuestionIds.has(task.questionId)) return earliest;
+    const record = state.progress.questions[task.questionId];
+    const nextReviewAt = Date.parse(record?.nextReviewAt ?? "");
+    if (
+      !record?.lastAnsweredAt ||
+      !Number.isFinite(nextReviewAt) ||
+      nextReviewAt > cutoffAt
+    ) {
+      return earliest;
+    }
+    return earliest === null ? nextReviewAt : Math.min(earliest, nextReviewAt);
+  }, null);
+}
+
+function hasPendingRoutineOvertimeReview() {
+  return nextRoutineOvertimeReviewAt() !== null;
+}
+
+function clearRoutineOvertime() {
+  state.routineOvertimeEndsAt = null;
+}
+
+function startRoutineOvertimeIfNeeded(questionId) {
+  const item = activeRoutineItem();
+  const overtimeSeconds = normalizeStudyRoutineOvertimeSeconds(
+    state.studyRoutineOvertimeSeconds,
+  );
+  const questionKey = `${datasetVersionForQuestion(questionId)}::${questionId}`;
+  if (
+    !item ||
+    item.overtimePending ||
+    routineRemainingCount(item) !== 1 ||
+    overtimeSeconds === 0 ||
+    state.routineRun.countedQuestionKeys.includes(questionKey)
+  ) {
+    return false;
+  }
+  const cutoffAt = Date.now() + overtimeSeconds * 1000;
+  if (nextRoutineOvertimeReviewAt(cutoffAt) === null) return false;
+  state.routineOvertimeEndsAt = new Date(cutoffAt).toISOString();
+  state.activeSession = true;
+  state.currentTask = null;
+  state.queue = [];
+  enqueueDueSessionTasks();
+  state.currentTask = state.queue.shift() ?? null;
+  return true;
+}
+
 function renderRoutineDashboard() {
   const run = normalizeStudyRoutineRun(state.routineRun);
   const activeItem = currentStudyRoutineItem(run);
@@ -604,7 +667,12 @@ function restoreRoutineRun(run) {
   });
 }
 
-function recordActiveRoutineQuestion(questionId, studySeconds = 0, rating = "") {
+function recordActiveRoutineQuestion(
+  questionId,
+  studySeconds = 0,
+  rating = "",
+  options = {},
+) {
   const item = activeRoutineItem();
   if (!item) return null;
   const change = recordStudyRoutineQuestion(
@@ -614,6 +682,7 @@ function recordActiveRoutineQuestion(questionId, studySeconds = 0, rating = "") 
     questionId,
     studySeconds,
     rating,
+    options,
   );
   if (!change.changed) return change;
   restoreRoutineRun(change.run);
@@ -630,6 +699,7 @@ function renderRatingResult(value = state.ratingCounts) {
 }
 
 function showRoutineStepCompletion(change) {
+  clearRoutineOvertime();
   stopListeningSequence();
   stopStudyClock();
   state.listeningPaused = true;
@@ -1098,6 +1168,7 @@ function captureActiveSession() {
     savedScreenStudySeconds: state.studyTimeSavedSeconds,
     studyTimeEventId: state.studyTimeEventId,
     answerVisible: state.answerVisible,
+    routineOvertimeEndsAt: state.routineOvertimeEndsAt,
     startedAt: state.sessionStartedAt,
   });
 }
@@ -1288,6 +1359,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
     state.screenStudySeconds,
   );
   state.answerVisible = session.answerVisible && session.studyMode === "memorize";
+  state.routineOvertimeEndsAt = session.routineOvertimeEndsAt;
   state.sessionStartedAt = session.startedAt ?? new Date().toISOString();
   state.activeSession = true;
   setSavedSessionForMode(session.studyMode, session);
@@ -1367,6 +1439,7 @@ function addTasksToActiveSession(tasks, { unseen = true } = {}) {
 }
 
 function ensureUnseenTasksQueued() {
+  if (routineOvertimeCutoffAt() !== null) return;
   const queuedIds = new Set([
     state.currentTask?.questionId,
     ...state.queue.map((task) => task.questionId),
@@ -1380,6 +1453,7 @@ function ensureUnseenTasksQueued() {
 
 function enqueueDueSessionTasks(now = new Date()) {
   if (!state.activeSession || isListeningMode()) return;
+  const overtimeCutoffAt = routineOvertimeCutoffAt();
   const queuedIds = new Set([
     state.currentTask?.questionId,
     ...state.queue.map((task) => task.questionId),
@@ -1390,6 +1464,9 @@ function enqueueDueSessionTasks(now = new Date()) {
       return (
         record?.lastAnsweredAt &&
         !queuedIds.has(task.questionId) &&
+        (overtimeCutoffAt === null ||
+          (!state.unseenQuestionIds.has(task.questionId) &&
+            Date.parse(record.nextReviewAt ?? "") <= overtimeCutoffAt)) &&
         isQuestionDue(state.progress, task.questionId, now)
       );
     })
@@ -1402,6 +1479,8 @@ function enqueueDueSessionTasks(now = new Date()) {
 }
 
 function nextPendingRetryAt() {
+  const overtimeReviewAt = nextRoutineOvertimeReviewAt();
+  if (routineOvertimeCutoffAt() !== null) return overtimeReviewAt;
   return [...state.retryQuestionIds].reduce((earliest, questionId) => {
     const nextReviewAt = Date.parse(
       state.progress.questions[questionId]?.nextReviewAt ?? "",
@@ -1413,11 +1492,14 @@ function nextPendingRetryAt() {
 
 function schedulePendingReview() {
   clearPendingReviewTimer();
+  const hasPendingReview = routineOvertimeCutoffAt() !== null
+    ? hasPendingRoutineOvertimeReview()
+    : state.retryQuestionIds.size > 0;
   if (
     !state.activeSession ||
     isListeningMode() ||
     state.currentTask ||
-    state.retryQuestionIds.size === 0
+    !hasPendingReview
   ) {
     return;
   }
@@ -1841,6 +1923,7 @@ async function loadProgressFromCloud() {
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
+    state.studyRoutineOvertimeSeconds = defaultStudyRoutineOvertimeSeconds;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     syncRoutinePreferences(normalizeSetupPreferences());
@@ -1879,6 +1962,9 @@ async function loadProgressFromCloud() {
     normalizeListeningQuestionIntervalSeconds(
       sessionCloudState.settings.listeningQuestionIntervalSeconds,
     );
+  state.studyRoutineOvertimeSeconds = normalizeStudyRoutineOvertimeSeconds(
+    sessionCloudState.settings.studyRoutineOvertimeSeconds,
+  );
   state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
     sessionCloudState.settings.studyTimeLimitSeconds,
   );
@@ -3142,10 +3228,16 @@ function updateSetupPreview() {
   const routineItem = activeRoutineItem();
   if (routineItem) {
     const remaining = routineRemainingCount(routineItem);
-    elements.startStudy.textContent = hasSavedSession
-      ? `残り${remaining}問をはじめから進める`
-      : `残り${remaining}問を開始`;
-    elements.resumeStudy.textContent = `前回の続きから（残り${remaining}問）`;
+    if (routineItem.overtimePending) {
+      elements.startStudy.disabled = true;
+      elements.startStudy.textContent = "ロスタイム中は続きから再開";
+      elements.resumeStudy.textContent = "ロスタイムの復習を再開";
+    } else {
+      elements.startStudy.textContent = hasSavedSession
+        ? `残り${remaining}問をはじめから進める`
+        : `残り${remaining}問を開始`;
+      elements.resumeStudy.textContent = `前回の続きから（残り${remaining}問）`;
+    }
   } else {
     elements.resumeStudy.textContent = "前回の続きから";
   }
@@ -3167,6 +3259,10 @@ function updateSetupPreview() {
       : selectedStage
         ? `${terms.length}${termUnitLabel()}・${questions}問（${questionStyleLabel(selectedStage)}）`
         : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
+  if (routineItem?.overtimePending) {
+    elements.selectionSummary.textContent =
+      "目標問題数は達成済みです。続きからロスタイムの復習を再開してください。";
+  }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
     ? "学習記録：Cloudflareに接続済み"
@@ -3445,14 +3541,23 @@ function renderCompletion() {
     return;
   }
   elements.completionEyebrow.textContent = "全段階完了";
-  if (state.activeSession && state.retryQuestionIds.size > 0) {
+  if (
+    state.activeSession &&
+    (state.retryQuestionIds.size > 0 || hasPendingRoutineOvertimeReview())
+  ) {
     const nextReviewAt = nextPendingRetryAt();
-    elements.completionTitle.textContent = "不正解だった問題の再出題を待っています";
+    const routineOvertime = routineOvertimeCutoffAt() !== null;
+    elements.completionEyebrow.textContent = routineOvertime
+      ? "メニューのロスタイム"
+      : "全段階完了";
+    elements.completionTitle.textContent = routineOvertime
+      ? "目標達成後の復習問題を待っています"
+      : "不正解だった問題の再出題を待っています";
     elements.completionMessage.textContent = nextReviewAt
       ? `${new Intl.DateTimeFormat("ja-JP", {
           dateStyle: "medium",
           timeStyle: "short",
-        }).format(new Date(nextReviewAt))}以降に、この一周の続きとして再出題します。アプリを閉じても進行状況は保存されます。`
+        }).format(new Date(nextReviewAt))}以降に、${routineOvertime ? "ロスタイムの復習として" : "この一周の続きとして"}再出題します。アプリを閉じても進行状況は保存されます。`
       : "復習時刻を確認できませんでした。開始画面へ戻って、前回の続きから再開してください。";
     schedulePendingReview();
     renderActionControls();
@@ -3723,11 +3828,14 @@ async function rateCurrentQuestion(rating) {
   ) {
     state.activeSession = false;
   }
+  startRoutineOvertimeIfNeeded(question.id);
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
     rating,
+    { deferCompletion: hasPendingRoutineOvertimeReview() },
   );
+  if (routineChange?.completedItem) clearRoutineOvertime();
   startNewStudyScreen();
 
   if (!routineChange?.completedItem) {
@@ -3804,6 +3912,7 @@ async function resetAllProgress() {
   state.unseenQuestionIds = new Set();
   state.retryQuestionIds = new Set();
   state.sessionStartedAt = null;
+  clearRoutineOvertime();
   clearPendingReviewTimer();
   state.activeDeckIds.forEach((deckId) => {
     const deck = state.loadedDecks.get(deckId);
@@ -3885,6 +3994,7 @@ async function beginStudy() {
   );
   state.retryQuestionIds = new Set();
   state.currentTask = state.queue.shift() ?? null;
+  clearRoutineOvertime();
   state.answerVisible = false;
   state.answeredThisSession = 0;
   state.ratingCounts = createEmptyRatingCounts();
@@ -3952,9 +4062,13 @@ async function beginStudy() {
 }
 
 async function resumeStudy() {
-  const studyMode = selectedStudyMode();
+  const requestedStudyMode = selectedStudyMode();
+  const savedStudySession = savedSessionForMode(requestedStudyMode);
+  const studyMode = activeRoutineItem()?.overtimePending
+    ? savedStudySession?.studyMode ?? requestedStudyMode
+    : requestedStudyMode;
   const savedSession = switchStudySessionMode(
-    savedSessionForMode(studyMode),
+    savedStudySession,
     studyMode,
   );
   if (startingStudy || !savedSession || !state.cloudReady) return;
@@ -4130,6 +4244,7 @@ async function activateDecks(deckIds) {
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
+    state.studyRoutineOvertimeSeconds = defaultStudyRoutineOvertimeSeconds;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
     syncRoutinePreferences(normalizeSetupPreferences());
@@ -4144,6 +4259,7 @@ async function activateDecks(deckIds) {
   state.unseenQuestionIds = new Set();
   state.retryQuestionIds = new Set();
   state.sessionStartedAt = null;
+  clearRoutineOvertime();
   state.activeSession = false;
   clearPendingReviewTimer();
   state.answerVisible = false;
@@ -4175,7 +4291,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.135｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.136｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4292,6 +4408,9 @@ async function start() {
           normalizeListeningQuestionIntervalSeconds(
             cloudState.settings.listeningQuestionIntervalSeconds,
           );
+        state.studyRoutineOvertimeSeconds = normalizeStudyRoutineOvertimeSeconds(
+          cloudState.settings.studyRoutineOvertimeSeconds,
+        );
         state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
           cloudState.settings.studyTimeLimitSeconds,
         );

@@ -4,17 +4,27 @@ import {
   continueStudyRoutineOnDate,
   createStudyRoutineRun,
   currentStudyRoutineItem,
+  defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   drawStudyRoutineVideo,
   extractYouTubeVideoId,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   studyRoutineTotals,
 } from "../public/study-routine.js";
+
+if (
+  defaultStudyRoutineOvertimeSeconds !== 600 ||
+  normalizeStudyRoutineOvertimeSeconds(-1) !== 0 ||
+  normalizeStudyRoutineOvertimeSeconds(90_000) !== 86_400
+) {
+  throw new Error("目標達成後の復習猶予を安全な範囲へ整形できませんでした。");
+}
 
 const expectedSubjects = [
   "world-history",
@@ -204,6 +214,48 @@ if (
   run.items[0].ratingCounts.good !== 1
 ) {
   throw new Error("同じ問題の再出題件数または学習時間を正しく集計できませんでした。");
+}
+
+let overtimeRun = createStudyRoutineRun(
+  [
+    { id: "overtime-study", subjectId: "world-history", questionTarget: 1 },
+    { id: "overtime-video", kind: "video" },
+  ],
+  "2026-08-25",
+  "overtime-test",
+);
+let overtimeChange = recordStudyRoutineQuestion(
+  overtimeRun,
+  "world-history",
+  "world-deck-1",
+  "overtime-question",
+  5,
+  "again",
+  { deferCompletion: true },
+);
+overtimeRun = overtimeChange.run;
+if (
+  overtimeChange.completedItem ||
+  !currentStudyRoutineItem(overtimeRun)?.overtimePending ||
+  currentStudyRoutineItem(overtimeRun)?.completedCount !== 1
+) {
+  throw new Error("目標達成後の復習がある項目をロスタイムとして維持できませんでした。");
+}
+overtimeChange = recordStudyRoutineQuestion(
+  overtimeRun,
+  "world-history",
+  "world-deck-1",
+  "overtime-question",
+  3,
+  "good",
+);
+if (
+  !overtimeChange.completedItem ||
+  currentStudyRoutineItem(overtimeChange.run)?.kind !== "video" ||
+  overtimeChange.completedItem.completedCount !== 1 ||
+  overtimeChange.completedItem.studySeconds !== 8
+) {
+  throw new Error("ロスタイムの復習後に件数を重ねず次の項目へ進めませんでした。");
 }
 
 for (let index = 2; index <= 100; index += 1) {

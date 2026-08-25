@@ -77,6 +77,7 @@ const studySessionInput = {
   savedScreenStudySeconds: 80,
   studyTimeEventId: "study-time-event-1",
   answerVisible: true,
+  routineOvertimeEndsAt: "2026-08-25T00:10:00.000Z",
   startedAt: "2026-08-22T00:00:00.000Z",
 };
 for (const session of [
@@ -99,6 +100,7 @@ for (const session of [
     session.screenStudySeconds !== 90 ||
     session.savedScreenStudySeconds !== 80 ||
     session.studyTimeEventId !== "study-time-event-1" ||
+    session.routineOvertimeEndsAt !== "2026-08-25T00:10:00.000Z" ||
     !session.autoSpeechEnabled ||
     !session.answerVisible
   ) {
@@ -346,6 +348,7 @@ const settings = normalizeSettings({
   autoSpeechEnabled: false,
   listeningPauseSeconds: 2.5,
   listeningQuestionIntervalSeconds: 1.5,
+  studyRoutineOvertimeSeconds: 900,
   studyTimeLimitSeconds: 90,
   speechParts: {
     history: {
@@ -412,6 +415,7 @@ if (
   !settings.autoSpeechEnabled ||
   settings.listeningPauseSeconds !== 2.5 ||
   settings.listeningQuestionIntervalSeconds !== 1.5 ||
+  settings.studyRoutineOvertimeSeconds !== 900 ||
   settings.studyTimeLimitSeconds !== 90 ||
   settings.speechParts.history.question ||
   !settings.speechParts.history.explanation ||
@@ -444,6 +448,7 @@ if (
   !browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5 ||
   browserSettings.listeningQuestionIntervalSeconds !== 1.5 ||
+  browserSettings.studyRoutineOvertimeSeconds !== 900 ||
   browserSettings.studyTimeLimitSeconds !== 90 ||
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||

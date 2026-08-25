@@ -90,6 +90,15 @@ const listeningQuestionIntervalMigration = await readFile(
   ),
   "utf8",
 );
+const studyRoutineOvertimeMigration = await readFile(
+  path.join(
+    projectRoot,
+    "worker",
+    "migrations",
+    "0014_study_routine_overtime.sql",
+  ),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const ratingSound = await readFile(
   path.join(projectRoot, "public", "rating-sound.js"),
@@ -243,11 +252,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.135") ||
-  !app.includes("v0.135｜") ||
-  !changelog.includes("v0.135") ||
-  !settingsHtml.includes("v0.135") ||
-  !historyHtml.includes("v0.135")
+  !html.includes("v0.136") ||
+  !app.includes("v0.136｜") ||
+  !changelog.includes("v0.136") ||
+  !settingsHtml.includes("v0.136") ||
+  !historyHtml.includes("v0.136")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -373,6 +382,10 @@ if (
   !app.includes("async function resumeStudy()") ||
   !app.includes("function enqueueDueSessionTasks") ||
   !app.includes("function schedulePendingReview") ||
+  !app.includes("function startRoutineOvertimeIfNeeded") ||
+  !app.includes("deferCompletion: hasPendingRoutineOvertimeReview()") ||
+  !cloudProgress.includes("routineOvertimeEndsAt") ||
+  !worker.includes("routineOvertimeEndsAt") ||
   !app.includes("saveCloudStudyAnswer") ||
   !app.includes("saveCloudStudySession") ||
   !app.includes("savedSessionForMode(studyMode)") ||
@@ -435,7 +448,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.135"') ||
+  !html.includes('href="/styles.css?v=0.136"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -771,10 +784,22 @@ if (
   !settingsHtml.includes('id="study-time-settings-form"') ||
   !settingsHtml.includes('id="study-time-limit-seconds"') ||
   !settingsHtml.includes('id="save-study-time-settings"') ||
+  !settingsHtml.includes('id="routine-overtime-settings-form"') ||
+  !settingsHtml.includes('id="routine-overtime-minutes"') ||
+  !settingsHtml.includes('id="save-routine-overtime-settings"') ||
   !settingsHtml.includes('id="access-key"') ||
   !settingsApp.includes("normalizeStudyTimeLimitSeconds") ||
+  !settingsApp.includes("normalizeStudyRoutineOvertimeSeconds") ||
+  !settingsApp.includes("saveCloudSettings(readRoutineOvertimeForm())") ||
   !settingsApp.includes("saveCloudSettings(readStudyTimeForm())") ||
   !cloudProgress.includes("studyTimeLimitSeconds: defaultStudyTimeLimitSeconds") ||
+  !cloudProgress.includes(
+    "studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds",
+  ) ||
+  !worker.includes("study_routine_overtime_seconds") ||
+  !studyRoutineOvertimeMigration.includes(
+    "study_routine_overtime_seconds INTEGER NOT NULL DEFAULT 600",
+  ) ||
   !worker.includes("study_time_limit_seconds") ||
   !cloudProgress.includes("saveCloudSettings") ||
   !cloudProgress.includes("saveCloudQuestion") ||

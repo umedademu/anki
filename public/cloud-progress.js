@@ -16,10 +16,12 @@ import {
   normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
 import {
+  defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   normalizeStudyRoutineVideoLibrary,
@@ -211,6 +213,11 @@ export function normalizeStudySession(value) {
     ),
     studyTimeEventId: normalizeStudySessionId(source.studyTimeEventId),
     answerVisible: source.answerVisible === true,
+    routineOvertimeEndsAt:
+      typeof source.routineOvertimeEndsAt === "string" &&
+      Number.isFinite(Date.parse(source.routineOvertimeEndsAt))
+        ? new Date(source.routineOvertimeEndsAt).toISOString()
+        : null,
     startedAt: typeof source.startedAt === "string" ? source.startedAt : null,
     updatedAt: typeof source.updatedAt === "string" ? source.updatedAt : null,
   };
@@ -378,6 +385,7 @@ export const defaultSharedSettings = Object.freeze({
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   listeningQuestionIntervalSeconds: 0,
+  studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
@@ -406,6 +414,9 @@ export function normalizeSharedSettings(value) {
     ),
     listeningQuestionIntervalSeconds: normalizeListeningQuestionIntervalSeconds(
       source.listeningQuestionIntervalSeconds,
+    ),
+    studyRoutineOvertimeSeconds: normalizeStudyRoutineOvertimeSeconds(
+      source.studyRoutineOvertimeSeconds,
     ),
     studyTimeLimitSeconds: normalizeStudyTimeLimitSeconds(
       source.studyTimeLimitSeconds,

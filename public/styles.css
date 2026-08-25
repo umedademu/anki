@@ -1790,16 +1790,23 @@ body.is-listening .page {
   grid-column: 1 / -1;
 }
 
+.routine-overtime-settings,
 .routine-video-settings {
   margin-top: 28px;
   padding-top: 24px;
   border-top: 1px solid rgb(34 80 53 / 12%);
 }
 
+.routine-overtime-settings h3,
 .routine-video-settings h3 {
   margin: 0 0 8px;
   color: #2d5540;
   font-size: 1rem;
+}
+
+.routine-overtime-settings .speech-setting-row {
+  max-width: 650px;
+  margin-top: 16px;
 }
 
 .routine-video-form {

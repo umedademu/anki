@@ -1,4 +1,5 @@
 import {
+  defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
@@ -8,6 +9,7 @@ import {
   normalizeStudyRoutineVideoLibrary,
   normalizeStudyRoutineVideoShuffle,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineOvertimeSeconds,
 } from "../../public/study-routine.js";
 import { normalizeRatingCounts } from "../../public/rating-results.js";
 
@@ -81,6 +83,7 @@ const defaultSettings = {
   autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   listeningQuestionIntervalSeconds: 0,
+  studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
@@ -489,6 +492,9 @@ function normalizeStudySession(value) {
       ? studyTimeEventId
       : "",
     answerVisible: source.answerVisible === true,
+    routineOvertimeEndsAt: source.routineOvertimeEndsAt == null
+      ? null
+      : optionalDate(source.routineOvertimeEndsAt),
     startedAt: source.startedAt == null ? null : optionalDate(source.startedAt),
     updatedAt: source.updatedAt == null ? null : optionalDate(source.updatedAt),
   };
@@ -537,6 +543,9 @@ function normalizeSettings(value) {
       0,
       0,
       60,
+    ),
+    studyRoutineOvertimeSeconds: normalizeStudyRoutineOvertimeSeconds(
+      source.studyRoutineOvertimeSeconds,
     ),
     studyTimeLimitSeconds: integer(
       source.studyTimeLimitSeconds,
@@ -871,6 +880,7 @@ async function readState(env, datasetVersion) {
           device_voice_id, english_device_voice_id, speech_rate,
           shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
           listening_question_interval_seconds,
+          study_routine_overtime_seconds,
           study_time_limit_seconds,
           speech_parts_json, setup_preferences_json, updated_at
          FROM review_settings WHERE profile_id = 1`,
@@ -941,6 +951,8 @@ async function readState(env, datasetVersion) {
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
           listeningQuestionIntervalSeconds:
             settingsRow.listening_question_interval_seconds,
+          studyRoutineOvertimeSeconds:
+            settingsRow.study_routine_overtime_seconds,
           studyTimeLimitSeconds: settingsRow.study_time_limit_seconds,
           speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
           setupPreferences: normalizeSetupPreferences(
@@ -965,9 +977,10 @@ async function saveSettings(env, patch) {
       device_voice_id, english_device_voice_id, speech_rate,
       shuffle_enabled, auto_speech_enabled, listening_pause_seconds,
       listening_question_interval_seconds,
+      study_routine_overtime_seconds,
       study_time_limit_seconds,
       speech_parts_json, setup_preferences_json, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -983,6 +996,7 @@ async function saveSettings(env, patch) {
       auto_speech_enabled = excluded.auto_speech_enabled,
       listening_pause_seconds = excluded.listening_pause_seconds,
       listening_question_interval_seconds = excluded.listening_question_interval_seconds,
+      study_routine_overtime_seconds = excluded.study_routine_overtime_seconds,
       study_time_limit_seconds = excluded.study_time_limit_seconds,
       speech_parts_json = excluded.speech_parts_json,
       setup_preferences_json = excluded.setup_preferences_json,
@@ -1003,6 +1017,7 @@ async function saveSettings(env, patch) {
       settings.autoSpeechEnabled ? 1 : 0,
       settings.listeningPauseSeconds,
       settings.listeningQuestionIntervalSeconds,
+      settings.studyRoutineOvertimeSeconds,
       settings.studyTimeLimitSeconds,
       JSON.stringify(settings.speechParts),
       JSON.stringify(settings.setupPreferences),

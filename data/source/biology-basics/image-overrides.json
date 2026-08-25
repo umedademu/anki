@@ -27,13 +27,13 @@
     "termId": "BB-000013",
     "query": "photosynthesis diagram",
     "caption": "光合成の模式図",
-    "fileName": "Myoglobin.png"
+    "fileName": "Simple photosynthesis overview-ja.svg"
   },
   {
     "termId": "BB-000016",
     "query": "cellular respiration diagram",
     "caption": "呼吸の模式図",
-    "fileName": "Myoglobin.png"
+    "fileName": "Cellular respiration EN.svg"
   },
   {
     "termId": "BB-000019",
@@ -496,5 +496,999 @@
     "query": "ecosystem matter cycle diagram",
     "caption": "生態系の物質循環",
     "fileName": "Nutrient cycle.svg"
+  },
+  {
+    "termId": "BB-000002",
+    "query": "恒常性 生理学",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "血糖調節にみる恒常性",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000003",
+    "query": "生態系",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "生態系",
+    "fileName": "Wild zebra on Kenya countryside.jpg"
+  },
+  {
+    "termId": "BB-000006",
+    "query": "生物多様性",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "生物多様性",
+    "fileName": "Animal diversity October 2007.jpg"
+  },
+  {
+    "termId": "BB-000008",
+    "query": "ホルモン 内分泌",
+    "context": "生物基礎 情報の伝達",
+    "caption": "ホルモン",
+    "fileName": "Illu endocrine system.png"
+  },
+  {
+    "termId": "BB-000010",
+    "query": "遺伝子 DNA",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "遺伝子",
+    "fileName": "DNA Diagram.png"
+  },
+  {
+    "termId": "BB-000011",
+    "query": "インスリン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "インスリン",
+    "fileName": "Insulin.jpg"
+  },
+  {
+    "termId": "BB-000012",
+    "query": "生態系 生産者",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "食物連鎖における生産者",
+    "fileName": "FoodChain.svg"
+  },
+  {
+    "termId": "BB-000014",
+    "query": "グルカゴン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "グルカゴン",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000015",
+    "query": "生態系 消費者",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "食物連鎖における消費者",
+    "fileName": "FoodChain.svg"
+  },
+  {
+    "termId": "BB-000017",
+    "query": "自然免疫",
+    "context": "生物基礎 免疫",
+    "caption": "自然免疫",
+    "fileName": "Innate immune system.png"
+  },
+  {
+    "termId": "BB-000018",
+    "query": "生態系 分解者",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "食物連鎖における分解者",
+    "fileName": "FoodChain.svg"
+  },
+  {
+    "termId": "BB-000020",
+    "query": "獲得免疫",
+    "context": "生物基礎 免疫",
+    "caption": "獲得免疫",
+    "fileName": "SEM Lymphocyte.jpg"
+  },
+  {
+    "termId": "BB-000026",
+    "query": "抗原",
+    "context": "生物基礎 免疫",
+    "caption": "抗原",
+    "fileName": "Antibody.svg"
+  },
+  {
+    "termId": "BB-000029",
+    "query": "B細胞",
+    "context": "生物基礎 免疫",
+    "caption": "B細胞",
+    "fileName": "Blausen 0624 Lymphocyte B cell (crop).png"
+  },
+  {
+    "termId": "BB-000032",
+    "query": "ヘルパーT細胞",
+    "context": "生物基礎 免疫",
+    "caption": "ヘルパーT細胞",
+    "fileName": "Healthy Human T Cell.jpg"
+  },
+  {
+    "termId": "BB-000035",
+    "query": "細胞傷害性T細胞",
+    "context": "生物基礎 免疫",
+    "caption": "キラーT細胞による感染細胞の排除",
+    "fileName": "Cytotoxic T Cell Killing an Infected Cell.svg"
+  },
+  {
+    "termId": "BB-000038",
+    "query": "メモリーT細胞",
+    "context": "生物基礎 免疫",
+    "caption": "免疫記憶による二次応答",
+    "fileName": "2223 Primary and Secondary Antibody Respons new.jpg"
+  },
+  {
+    "termId": "BB-000045",
+    "query": "外来種",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "外来生物",
+    "fileName": "Invasive Species.jpg"
+  },
+  {
+    "termId": "BB-000047",
+    "query": "内分泌系",
+    "context": "生物基礎 情報の伝達",
+    "caption": "内分泌系",
+    "fileName": "Endocrine English.svg"
+  },
+  {
+    "termId": "BB-000048",
+    "query": "絶滅種",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "絶滅",
+    "fileName": "Various dinosaurs.png"
+  },
+  {
+    "termId": "BB-000050",
+    "query": "神経系",
+    "context": "生物基礎 情報の伝達",
+    "caption": "神経系",
+    "fileName": "Nervous System (PSF).png"
+  },
+  {
+    "termId": "BB-000051",
+    "query": "生息地分断化",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "生息地の分断",
+    "fileName": "Indiana Dunes Habitat Fragmentation.jpg"
+  },
+  {
+    "termId": "BB-000053",
+    "query": "交感神経",
+    "context": "生物基礎 情報の伝達",
+    "caption": "交感神経",
+    "fileName": "Blausen 0838 Sympathetic Innervation.png"
+  },
+  {
+    "termId": "BB-000056",
+    "query": "副交感神経",
+    "context": "生物基礎 情報の伝達",
+    "caption": "副交感神経",
+    "fileName": "1503 Connections of the Parasympathetic Nervous System.jpg"
+  },
+  {
+    "termId": "BB-000057",
+    "query": "キーストーン種 生態学",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "キーストーン種のヒトデ",
+    "fileName": "Ochre sea star.jpg"
+  },
+  {
+    "termId": "BB-000058",
+    "query": "ゲノム 染色体",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "ゲノム",
+    "fileName": "HumanChromosomesChromomycinA3.jpg"
+  },
+  {
+    "termId": "BB-000059",
+    "query": "視床下部",
+    "context": "生物基礎 情報の伝達",
+    "caption": "視床下部",
+    "fileName": "Hypothalamus.gif"
+  },
+  {
+    "termId": "BB-000063",
+    "query": "植生",
+    "context": "生物基礎 植生と遷移",
+    "caption": "植生",
+    "fileName": "Pamje e bimesise ne mal..JPG"
+  },
+  {
+    "termId": "BB-000065",
+    "query": "血糖調節",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "血糖濃度の調節",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000071",
+    "query": "膵島 β細胞",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "膵島のβ細胞とα細胞",
+    "fileName": "Schematic diagram showing the interdependency of islet cells.png"
+  },
+  {
+    "termId": "BB-000074",
+    "query": "膵島 α細胞",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "膵島のα細胞とβ細胞",
+    "fileName": "Schematic diagram showing the interdependency of islet cells.png"
+  },
+  {
+    "termId": "BB-000075",
+    "query": "林冠",
+    "context": "生物基礎 植生と遷移",
+    "caption": "林冠",
+    "fileName": "Havelock Island, Canopy of tropical moist evergreen forest, Andaman Islands.jpg"
+  },
+  {
+    "termId": "BB-000076",
+    "query": "mRNA 構造",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "mRNA",
+    "fileName": "MRNA-interaction.svg"
+  },
+  {
+    "termId": "BB-000078",
+    "query": "森林 階層構造 亜高木層",
+    "context": "生物基礎 植生と遷移",
+    "caption": "森林の亜高木層",
+    "fileName": "Stockwerke wald.png"
+  },
+  {
+    "termId": "BB-000079",
+    "query": "タンパク質 構造",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "タンパク質",
+    "fileName": "Myoglobin.png"
+  },
+  {
+    "termId": "BB-000081",
+    "query": "森林 階層構造 低木層",
+    "context": "生物基礎 植生と遷移",
+    "caption": "森林の低木層",
+    "fileName": "Stockwerke wald.png"
+  },
+  {
+    "termId": "BB-000082",
+    "query": "アミノ酸 構造",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "アミノ酸",
+    "fileName": "Glycine-skeletal.png"
+  },
+  {
+    "termId": "BB-000083",
+    "query": "マクロファージ",
+    "context": "生物基礎 免疫",
+    "caption": "マクロファージ",
+    "fileName": "Giemsa Stain Macrophage Illustration.png"
+  },
+  {
+    "termId": "BB-000084",
+    "query": "森林 階層構造 草本層",
+    "context": "生物基礎 植生と遷移",
+    "caption": "森林の草本層",
+    "fileName": "Stockwerke wald.png"
+  },
+  {
+    "termId": "BB-000085",
+    "query": "コドン表",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "コドン",
+    "fileName": "RNA-codon.png"
+  },
+  {
+    "termId": "BB-000086",
+    "query": "樹状細胞",
+    "context": "生物基礎 免疫",
+    "caption": "樹状細胞",
+    "fileName": "Dendritic cells.jpg"
+  },
+  {
+    "termId": "BB-000087",
+    "query": "森林 階層構造 林床",
+    "context": "生物基礎 植生と遷移",
+    "caption": "森林の林床",
+    "fileName": "Stockwerke wald.png"
+  },
+  {
+    "termId": "BB-000088",
+    "query": "遺伝子発現",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "遺伝子発現",
+    "fileName": "Central dogma of molecular biology old.jpg"
+  },
+  {
+    "termId": "BB-000089",
+    "query": "好中球",
+    "context": "生物基礎 免疫",
+    "caption": "好中球",
+    "fileName": "Neutrophil 1.jpg"
+  },
+  {
+    "termId": "BB-000092",
+    "query": "形質細胞",
+    "context": "生物基礎 免疫",
+    "caption": "形質細胞",
+    "fileName": "Plasmacell.jpg"
+  },
+  {
+    "termId": "BB-000093",
+    "query": "一次遷移",
+    "context": "生物基礎 植生と遷移",
+    "caption": "裸地から始まる一次遷移",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000094",
+    "query": "細胞周期 間期",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "間期",
+    "fileName": "Major events in mitosis.svg"
+  },
+  {
+    "termId": "BB-000096",
+    "query": "二次遷移",
+    "context": "生物基礎 植生と遷移",
+    "caption": "植生が残る場所から始まる二次遷移",
+    "fileName": "Secondary Succession.png"
+  },
+  {
+    "termId": "BB-000097",
+    "query": "細胞周期 分裂期",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "分裂期",
+    "fileName": "Major events in mitosis.svg"
+  },
+  {
+    "termId": "BB-000099",
+    "query": "乾性遷移",
+    "context": "生物基礎 植生と遷移",
+    "caption": "裸地から始まる乾性遷移",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000100",
+    "query": "細胞周期 S期",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "S期",
+    "fileName": "Major events in mitosis.svg"
+  },
+  {
+    "termId": "BB-000102",
+    "query": "湿性遷移",
+    "context": "生物基礎 植生と遷移",
+    "caption": "水域から始まる湿性遷移",
+    "fileName": "Aquatic Succession or Hydrosere.svg"
+  },
+  {
+    "termId": "BB-000104",
+    "query": "ワクチン 免疫",
+    "context": "生物基礎 免疫",
+    "caption": "ワクチン",
+    "fileName": "HPV-vaccine- Gardasil2016JAPAN.jpg"
+  },
+  {
+    "termId": "BB-000105",
+    "query": "裸地",
+    "context": "生物基礎 植生と遷移",
+    "caption": "遷移初期の裸地",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000106",
+    "query": "細胞周期 G1期",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "G1期",
+    "fileName": "Major events in mitosis.svg"
+  },
+  {
+    "termId": "BB-000108",
+    "query": "先駆植物",
+    "context": "生物基礎 植生と遷移",
+    "caption": "先駆植物として定着する地衣類",
+    "fileName": "Lichen on a rock.jpg"
+  },
+  {
+    "termId": "BB-000109",
+    "query": "細胞周期 G2期",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "G2期",
+    "fileName": "Major events in mitosis.svg"
+  },
+  {
+    "termId": "BB-000113",
+    "query": "脳幹",
+    "context": "生物基礎 情報の伝達",
+    "caption": "脳幹",
+    "fileName": "Gray719.png"
+  },
+  {
+    "termId": "BB-000116",
+    "query": "延髄",
+    "context": "生物基礎 情報の伝達",
+    "caption": "延髄",
+    "fileName": "Medulla oblongata.gif"
+  },
+  {
+    "termId": "BB-000120",
+    "query": "陽樹林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "遷移初期の陽樹林",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000122",
+    "query": "内部環境 体液",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "血液・組織液・リンパ液からなる体内環境",
+    "fileName": "Blausen 0623 LymphaticSystem Female.png"
+  },
+  {
+    "termId": "BB-000123",
+    "query": "混交林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "混交林",
+    "fileName": "2017 Las mieszany na stoku Rudki, Masyw Śnieżnika, Sudety.jpg"
+  },
+  {
+    "termId": "BB-000125",
+    "query": "体液 人体",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "体液の循環",
+    "fileName": "Blausen 0623 LymphaticSystem Female.png"
+  },
+  {
+    "termId": "BB-000126",
+    "query": "陰樹林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "陰樹林",
+    "fileName": "Forest01s2048.jpg"
+  },
+  {
+    "termId": "BB-000127",
+    "query": "ヌクレオチド 構造",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "ヌクレオチドの構造",
+    "fileName": "Nukleotid num.svg"
+  },
+  {
+    "termId": "BB-000129",
+    "query": "極相林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "極相",
+    "fileName": "Fagus crenata in Mount Daimon 2011-06-19.jpg"
+  },
+  {
+    "termId": "BB-000131",
+    "query": "組織液",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "組織液",
+    "fileName": "Blausen 0623 LymphaticSystem Female.png"
+  },
+  {
+    "termId": "BB-000132",
+    "query": "土壌生成 土壌断面",
+    "context": "生物基礎 植生と遷移",
+    "caption": "土壌形成",
+    "fileName": "Estructura-suelo.jpg"
+  },
+  {
+    "termId": "BB-000134",
+    "query": "リンパ液",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "リンパ液",
+    "fileName": "Homa limfo 001.jpg"
+  },
+  {
+    "termId": "BB-000137",
+    "query": "血漿",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "血しょう",
+    "fileName": "FreshFrozenPlasma.JPG"
+  },
+  {
+    "termId": "BB-000138",
+    "query": "陽生植物",
+    "context": "生物基礎 植生と遷移",
+    "caption": "光の強さと光合成速度の関係",
+    "fileName": "Carbon assimilation vs irradiance.png"
+  },
+  {
+    "termId": "BB-000140",
+    "query": "赤血球",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "赤血球",
+    "fileName": "Red Blood Cell.jpg"
+  },
+  {
+    "termId": "BB-000141",
+    "query": "陰生植物",
+    "context": "生物基礎 植生と遷移",
+    "caption": "光の強さと光合成速度の関係",
+    "fileName": "Carbon assimilation vs irradiance.png"
+  },
+  {
+    "termId": "BB-000143",
+    "query": "白血球",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "白血球",
+    "fileName": "Red White Blood cells.jpg"
+  },
+  {
+    "termId": "BB-000144",
+    "query": "陽樹",
+    "context": "生物基礎 植生と遷移",
+    "caption": "遷移初期に優占する陽樹",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000145",
+    "query": "RNA 構造",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "RNA",
+    "fileName": "MRNA-interaction.svg"
+  },
+  {
+    "termId": "BB-000146",
+    "query": "血小板",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "血小板",
+    "fileName": "Активированный тромбоцит на стекле с иммобилизованным фибриногеном.jpg"
+  },
+  {
+    "termId": "BB-000147",
+    "query": "陰樹",
+    "context": "生物基礎 植生と遷移",
+    "caption": "遷移後期に優占する陰樹",
+    "fileName": "AP Biology - Primary Succession Drawing.svg"
+  },
+  {
+    "termId": "BB-000149",
+    "query": "ヘモグロビン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "ヘモグロビン",
+    "fileName": "Redbloodcells.jpg"
+  },
+  {
+    "termId": "BB-000151",
+    "query": "DNA 塩基配列",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "DNA塩基配列",
+    "fileName": "DNA Structure+Key+Labelled.pn NoBB.png"
+  },
+  {
+    "termId": "BB-000155",
+    "query": "フィブリン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "フィブリン",
+    "fileName": "Fibrinandligand.png"
+  },
+  {
+    "termId": "BB-000156",
+    "query": "光合成 光補償点",
+    "context": "生物基礎 植生と遷移",
+    "caption": "光合成速度と光補償点",
+    "fileName": "Carbon assimilation vs irradiance.png"
+  },
+  {
+    "termId": "BB-000157",
+    "query": "細胞分化",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "幹細胞からの細胞分化",
+    "fileName": "Stem cell division and differentiation.svg"
+  },
+  {
+    "termId": "BB-000158",
+    "query": "血栓 血液凝固",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "フィブリンによる血ぺい形成",
+    "fileName": "Blood clot formation.svg"
+  },
+  {
+    "termId": "BB-000159",
+    "query": "光合成 光飽和点",
+    "context": "生物基礎 植生と遷移",
+    "caption": "光合成速度と光飽和点",
+    "fileName": "Carbon assimilation vs irradiance.png"
+  },
+  {
+    "termId": "BB-000160",
+    "query": "遺伝子発現 選択性",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "遺伝子発現の違いによる細胞分化",
+    "fileName": "Stem cell division and differentiation.svg"
+  },
+  {
+    "termId": "BB-000164",
+    "query": "グリコーゲン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "グリコーゲン",
+    "fileName": "Glycogen.png"
+  },
+  {
+    "termId": "BB-000166",
+    "query": "細胞質基質",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "細胞質基質",
+    "fileName": "Crowded cytosol.png"
+  },
+  {
+    "termId": "BB-000167",
+    "query": "糖尿病 インスリン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "糖尿病に関わる血糖調節",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000170",
+    "query": "アドレナリン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "アドレナリン",
+    "fileName": "Epinephrine.svg"
+  },
+  {
+    "termId": "BB-000171",
+    "query": "バイオーム 緯度分布",
+    "context": "生物基礎 植生と遷移",
+    "caption": "植生帯の緯度分布",
+    "fileName": "Vegetationszonen.png"
+  },
+  {
+    "termId": "BB-000173",
+    "query": "糖質コルチコイド",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "糖質コルチコイド",
+    "fileName": "Steroidogenesis.svg"
+  },
+  {
+    "termId": "BB-000174",
+    "query": "植生 垂直分布",
+    "context": "生物基礎 植生と遷移",
+    "caption": "標高に伴う植生の垂直分布",
+    "fileName": "Altitudinal zones of Alps mountains-extended diagram.svg"
+  },
+  {
+    "termId": "BB-000176",
+    "query": "チロキシン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "チロキシン",
+    "fileName": "Thyroxine2.svg"
+  },
+  {
+    "termId": "BB-000177",
+    "query": "森林限界",
+    "context": "生物基礎 植生と遷移",
+    "caption": "森林限界",
+    "fileName": "Valle del Frances.jpg"
+  },
+  {
+    "termId": "BB-000181",
+    "query": "原核生物",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "原核生物",
+    "fileName": "Diversidad procariota.PNG"
+  },
+  {
+    "termId": "BB-000182",
+    "query": "バソプレッシン",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "抗利尿ホルモン",
+    "fileName": "Vasopressin structure.png"
+  },
+  {
+    "termId": "BB-000183",
+    "query": "亜熱帯多雨林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "亜熱帯多雨林",
+    "fileName": "Daintree Rainforest.JPG"
+  },
+  {
+    "termId": "BB-000184",
+    "query": "真核生物",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "真核生物",
+    "fileName": "Rhodomonas salina CCMP 322.jpg"
+  },
+  {
+    "termId": "BB-000186",
+    "query": "雨緑樹林",
+    "context": "生物基礎 植生と遷移",
+    "caption": "雨緑樹林",
+    "fileName": "Subtropical semi-evergreen seasonal forest in Northern Thailand.JPG"
+  },
+  {
+    "termId": "BB-000187",
+    "query": "単細胞生物",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "単細胞生物",
+    "fileName": "Paramecium.jpg"
+  },
+  {
+    "termId": "BB-000190",
+    "query": "多細胞生物",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "多細胞生物",
+    "fileName": "C elegans stained.jpg"
+  },
+  {
+    "termId": "BB-000196",
+    "query": "核様体",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "核様体",
+    "fileName": "Prokaryote cell-ja.svg"
+  },
+  {
+    "termId": "BB-000202",
+    "query": "進化 系統樹",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "進化",
+    "fileName": "Phylogenetic Tree of Life-ja.png"
+  },
+  {
+    "termId": "BB-000205",
+    "query": "酵素 触媒作用",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素による触媒作用",
+    "fileName": "Lock and key enzyme mechanism.svg"
+  },
+  {
+    "termId": "BB-000208",
+    "query": "酵素 基質",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素と基質",
+    "fileName": "Lock and key enzyme mechanism.svg"
+  },
+  {
+    "termId": "BB-000209",
+    "query": "インスリン グルカゴン 拮抗作用",
+    "context": "生物基礎 体内環境の維持",
+    "caption": "インスリンとグルカゴンの拮抗作用",
+    "fileName": "Homeostasis of blood sugar.png"
+  },
+  {
+    "termId": "BB-000213",
+    "query": "亜熱帯多雨林 植物",
+    "context": "生物基礎 植生と遷移",
+    "caption": "亜熱帯多雨林の代表種・ガジュマル",
+    "fileName": "Ficus microcarpa - La Gomera 01.jpg"
+  },
+  {
+    "termId": "BB-000214",
+    "query": "活性化エネルギー グラフ",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素が活性化エネルギーを下げる仕組み",
+    "fileName": "Enzyme activation energy.png"
+  },
+  {
+    "termId": "BB-000216",
+    "query": "照葉樹林 代表種",
+    "context": "生物基礎 植生と遷移",
+    "caption": "照葉樹林の代表種・スダジイ",
+    "fileName": "Castanopsis sieboldii2.jpg"
+  },
+  {
+    "termId": "BB-000217",
+    "query": "酵素 最適温度 グラフ",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素活性と温度の関係",
+    "fileName": "Enzyme-temperature.png"
+  },
+  {
+    "termId": "BB-000219",
+    "query": "夏緑樹林 代表種",
+    "context": "生物基礎 植生と遷移",
+    "caption": "夏緑樹林の代表種・ブナ",
+    "fileName": "Bijinbayashi means beautiful forest.jpg"
+  },
+  {
+    "termId": "BB-000220",
+    "query": "酵素 失活",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素の失活",
+    "fileName": "Denaturation in Enzymes.jpg"
+  },
+  {
+    "termId": "BB-000222",
+    "query": "亜高山帯針葉樹林 代表種",
+    "context": "生物基礎 植生と遷移",
+    "caption": "亜高山帯針葉樹林の代表種・シラビソ",
+    "fileName": "Abies veitchii2.JPG"
+  },
+  {
+    "termId": "BB-000223",
+    "query": "酵素 最適pH グラフ",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "酵素活性とpHの関係",
+    "fileName": "Enzyme-ph.png"
+  },
+  {
+    "termId": "BB-000225",
+    "query": "高山植物",
+    "context": "生物基礎 植生と遷移",
+    "caption": "高山帯の代表種・ハイマツ",
+    "fileName": "Pinus pumila1.JPG"
+  },
+  {
+    "termId": "BB-000226",
+    "query": "カタラーゼ 過酸化水素",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "カタラーゼの立体構造",
+    "fileName": "Catalase Structure.png"
+  },
+  {
+    "termId": "BB-000232",
+    "query": "ATP 加水分解",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "ATPの加水分解",
+    "fileName": "Hydrolysis of ATP.png"
+  },
+  {
+    "termId": "BB-000241",
+    "query": "ATP 合成",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "ATP合成酵素によるATP合成",
+    "fileName": "ATP synthase.svg"
+  },
+  {
+    "termId": "BB-000245",
+    "query": "皮膚 構造",
+    "context": "生物基礎 免疫",
+    "caption": "皮膚の断面構造",
+    "fileName": "Skin cross-section.svg"
+  },
+  {
+    "termId": "BB-000248",
+    "query": "粘膜 免疫",
+    "context": "生物基礎 免疫",
+    "caption": "粘膜の断面構造",
+    "fileName": "Structure of Mucous membrane.jpg"
+  },
+  {
+    "termId": "BB-000252",
+    "query": "生態学 個体群",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "同種個体の集まりである個体群",
+    "fileName": "Wild zebra on Kenya countryside.jpg"
+  },
+  {
+    "termId": "BB-000255",
+    "query": "生態学 生物群集",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "複数種からなる生物群集",
+    "fileName": "Animal diversity October 2007.jpg"
+  },
+  {
+    "termId": "BB-000262",
+    "query": "グルコース 構造式",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "グルコースの構造",
+    "fileName": "Glucose Haworth.png"
+  },
+  {
+    "termId": "BB-000263",
+    "query": "炎症 免疫",
+    "context": "生物基礎 免疫",
+    "caption": "炎症",
+    "fileName": "Neutrophil with anthrax copy.jpg"
+  },
+  {
+    "termId": "BB-000264",
+    "query": "遺伝的多様性",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "遺伝的多様性",
+    "fileName": "Genetic Diversity in Asia Fig 2-B.jpg"
+  },
+  {
+    "termId": "BB-000265",
+    "query": "クロロフィル 構造",
+    "context": "生物基礎 生物とエネルギー",
+    "caption": "クロロフィル",
+    "fileName": "Mélisse Feuilles FR 2013b.jpg"
+  },
+  {
+    "termId": "BB-000267",
+    "query": "生態系 多様性",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "多様な生態系を形づくるバイオーム",
+    "fileName": "Biomes of the world.svg"
+  },
+  {
+    "termId": "BB-000268",
+    "query": "核膜 核膜孔",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "核膜",
+    "fileName": "Diagram human cell nucleus multilang.svg"
+  },
+  {
+    "termId": "BB-000272",
+    "query": "アレルギー 免疫",
+    "context": "生物基礎 免疫",
+    "caption": "アレルギー",
+    "fileName": "Hives2010.JPG"
+  },
+  {
+    "termId": "BB-000273",
+    "query": "絶滅危惧種",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "絶滅危惧種",
+    "fileName": "IUCN Red List - December 2023 ja.svg"
+  },
+  {
+    "termId": "BB-000277",
+    "query": "細胞周期 DNA量 グラフ",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "S期にDNA量が2倍になる細胞周期",
+    "fileName": "The Cell Cycle.svg"
+  },
+  {
+    "termId": "BB-000280",
+    "query": "DNA 塩基対",
+    "context": "生物基礎 遺伝情報とDNA",
+    "caption": "塩基対",
+    "fileName": "Base pair GC.svg"
+  },
+  {
+    "termId": "BB-000282",
+    "query": "溶存酸素 水質",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "富栄養化による溶存酸素の減少",
+    "fileName": "Ap env sci - eutrophication diagram.svg"
+  },
+  {
+    "termId": "BB-000283",
+    "query": "遺伝暗号 コドン表",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "遺伝暗号",
+    "fileName": "RNA-codon.png"
+  },
+  {
+    "termId": "BB-000284",
+    "query": "後天性免疫不全症候群",
+    "context": "生物基礎 免疫",
+    "caption": "エイズ",
+    "fileName": "Red Ribbon.svg"
+  },
+  {
+    "termId": "BB-000285",
+    "query": "生活排水 水質汚濁",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "生活排水",
+    "fileName": "Canal-pollution.jpg"
+  },
+  {
+    "termId": "BB-000289",
+    "query": "ポリペプチド 構造",
+    "context": "生物基礎 遺伝情報とタンパク質の合成",
+    "caption": "ポリペプチド",
+    "fileName": "Protein primary structure.svg"
+  },
+  {
+    "termId": "BB-000290",
+    "query": "移植 拒絶反応",
+    "context": "生物基礎 免疫",
+    "caption": "拒絶反応",
+    "fileName": "Heart transplant.jpg"
+  },
+  {
+    "termId": "BB-000292",
+    "query": "細胞説 フック",
+    "context": "生物基礎 生物の共通性と多様性",
+    "caption": "フックが観察したコルクの細胞",
+    "fileName": "Cork Micrographia Hooke.png"
+  },
+  {
+    "termId": "BB-000030",
+    "query": "捕食者 被食者 食物連鎖",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "捕食者",
+    "fileName": "FoodChain.svg"
+  },
+  {
+    "termId": "BB-000033",
+    "query": "捕食者 被食者 食物連鎖",
+    "context": "生物基礎 生態系とその保全",
+    "caption": "被食者",
+    "fileName": "FoodChain.svg"
   }
 ]

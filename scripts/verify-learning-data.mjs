@@ -1767,11 +1767,26 @@ const expectedBiologyImageQuestionIds = new Set(
       .map((question) => question.id),
   ),
 );
+const biologyImageCoverage =
+  biologyImageOverrides.length / generatedBiologyTerms.length;
+const biologyImageCategoryCounts = [
+  "生物の特徴",
+  "ヒトの体の調節",
+  "生物の多様性と生態系",
+].map(
+  (category) =>
+    generatedBiologyTerms.filter(
+      (term) => category === term.category && biologyImageTermIds.has(term.id),
+    ).length,
+);
 if (
-  biologyImageOverrides.length !== 83 ||
+  biologyImageOverrides.length !== 225 ||
+  biologyImageCoverage < 0.7 ||
+  biologyImageCoverage > 0.8 ||
+  biologyImageCategoryCounts.some((count) => count !== 75) ||
   biologyImageTermIds.size !== biologyImageOverrides.length ||
   biologyImageQuestionIds.size !== expectedBiologyImageQuestionIds.size ||
-  biologyImageAssetIds.size !== 70 ||
+  biologyImageAssetIds.size !== 167 ||
   biologyImageOverrides.some(
     (override) => !biologyImageTermIds.has(override.termId) || !override.fileName,
   ) ||
@@ -1782,7 +1797,7 @@ if (
   )
 ) {
   throw new Error(
-    "生物基礎の厳選画像70点が83項目へ回答文ではなく用語単位で割り当てられていません。",
+    "生物基礎の関連画像167点が3大項目各75項目・全225項目へ用語単位で割り当てられていません。",
   );
 }
 

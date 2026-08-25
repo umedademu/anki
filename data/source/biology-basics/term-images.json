@@ -2,6 +2,26 @@
   "schemaVersion": 2,
   "assets": [
     {
+      "id": "WMB-001604ba941b97",
+      "path": "term-images/optimized/WMB-001604ba941b97.webp",
+      "alt": "フィブリンによる血ぺい形成",
+      "caption": "フィブリンによる血ぺい形成",
+      "creator": "Victdomi",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Blood_clot_formation.svg"
+    },
+    {
+      "id": "WMB-021f69109007b1",
+      "path": "term-images/optimized/WMB-021f69109007b1.webp",
+      "alt": "拒絶反応",
+      "caption": "拒絶反応",
+      "creator": "No machine-readable author provided. D Dinneen~commonswiki assumed (based on copyright claims).",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Heart_transplant.jpg"
+    },
+    {
       "id": "WMB-02fd018fd970ad",
       "path": "term-images/optimized/WMB-02fd018fd970ad.webp",
       "alt": "植物細胞の細胞壁",
@@ -12,6 +32,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Plant_cell_wall_diagram-uk.svg"
     },
     {
+      "id": "WMB-038873a238ff44",
+      "path": "term-images/optimized/WMB-038873a238ff44.webp",
+      "alt": "抗利尿ホルモン",
+      "caption": "抗利尿ホルモン",
+      "creator": "Edgar181",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Vasopressin_structure.png"
+    },
+    {
       "id": "WMB-05395a7fa585c2",
       "path": "term-images/optimized/WMB-05395a7fa585c2.webp",
       "alt": "細胞周期",
@@ -20,6 +50,26 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Cell_Cycle.svg"
+    },
+    {
+      "id": "WMB-05e255262e4f99",
+      "path": "term-images/optimized/WMB-05e255262e4f99.webp",
+      "alt": "mRNA",
+      "caption": "mRNA",
+      "creator": "National Human Genome Research Institute, NIH",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:MRNA-interaction.svg"
+    },
+    {
+      "id": "WMB-0605d584b9eea5",
+      "path": "term-images/optimized/WMB-0605d584b9eea5.webp",
+      "alt": "糖質コルチコイド",
+      "caption": "糖質コルチコイド",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Steroidogenesis.svg"
     },
     {
       "id": "WMB-07d73d3f3204b4",
@@ -42,6 +92,36 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Quadrat_sur_le_site_du_Vivier_Basque_(Ifremer_00561-67277).jpg"
     },
     {
+      "id": "WMB-161a24f3585cdd",
+      "path": "term-images/optimized/WMB-161a24f3585cdd.webp",
+      "alt": "形質細胞",
+      "caption": "形質細胞",
+      "creator": "The original uploader was CS99 at German Wikipedia .",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Plasmacell.jpg"
+    },
+    {
+      "id": "WMB-1690f910b6d7ca",
+      "path": "term-images/optimized/WMB-1690f910b6d7ca.webp",
+      "alt": "白血球",
+      "caption": "白血球",
+      "creator": "Electron Microscopy Facility at The National Cancer Institute at Frederick (NCI-Frederick)",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Red_White_Blood_cells.jpg"
+    },
+    {
+      "id": "WMB-17d0326fd41bfc",
+      "path": "term-images/optimized/WMB-17d0326fd41bfc.webp",
+      "alt": "粘膜の断面構造",
+      "caption": "粘膜の断面構造",
+      "creator": "Jacques Christophe Werner (1798–1856)",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Structure_of_Mucous_membrane.jpg"
+    },
+    {
       "id": "WMB-1826d1c543d8da",
       "path": "term-images/optimized/WMB-1826d1c543d8da.webp",
       "alt": "血液凝固の流れ",
@@ -62,6 +142,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Biological_cell.svg"
     },
     {
+      "id": "WMB-1bef7a79850abc",
+      "path": "term-images/optimized/WMB-1bef7a79850abc.webp",
+      "alt": "アドレナリン",
+      "caption": "アドレナリン",
+      "creator": "Roland Mattern",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Epinephrine.svg"
+    },
+    {
       "id": "WMB-1bf079b29082db",
       "path": "term-images/optimized/WMB-1bf079b29082db.webp",
       "alt": "甲状腺の位置",
@@ -70,6 +160,16 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Diagram_showing_the_position_of_the_thyroid_gland_CRUK_363.svg"
+    },
+    {
+      "id": "WMB-1df680258a21c7",
+      "path": "term-images/optimized/WMB-1df680258a21c7.webp",
+      "alt": "塩基対",
+      "caption": "塩基対",
+      "creator": "Yikrazuul",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Base_pair_GC.svg"
     },
     {
       "id": "WMB-205eb728337c12",
@@ -82,6 +182,46 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Biliary_system_new-ja.svg"
     },
     {
+      "id": "WMB-224c35ae14e113",
+      "path": "term-images/optimized/WMB-224c35ae14e113.webp",
+      "alt": "キーストーン種のヒトデ",
+      "caption": "キーストーン種のヒトデ",
+      "creator": "D. Gordon E. Robertson",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ochre_sea_star.jpg"
+    },
+    {
+      "id": "WMB-22e505dcce7972",
+      "path": "term-images/optimized/WMB-22e505dcce7972.webp",
+      "alt": "核様体",
+      "caption": "核様体",
+      "creator": "Ali Zifan",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Prokaryote_cell-ja.svg"
+    },
+    {
+      "id": "WMB-2355128936e823",
+      "path": "term-images/optimized/WMB-2355128936e823.webp",
+      "alt": "ワクチン",
+      "caption": "ワクチン",
+      "creator": "melvil",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:HPV-vaccine-_Gardasil2016JAPAN.jpg"
+    },
+    {
+      "id": "WMB-23857eff9c6006",
+      "path": "term-images/optimized/WMB-23857eff9c6006.webp",
+      "alt": "リンパ液",
+      "caption": "リンパ液",
+      "creator": "Petr Adam Dohnálek",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Homa_limfo_001.jpg"
+    },
+    {
       "id": "WMB-2430566872c9bb",
       "path": "term-images/optimized/WMB-2430566872c9bb.webp",
       "alt": "針葉樹林",
@@ -90,6 +230,26 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Conifer_forest.jpg"
+    },
+    {
+      "id": "WMB-243cd425de5df0",
+      "path": "term-images/optimized/WMB-243cd425de5df0.webp",
+      "alt": "ホルモン",
+      "caption": "ホルモン",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Illu_endocrine_system.png"
+    },
+    {
+      "id": "WMB-25c7c59257725f",
+      "path": "term-images/optimized/WMB-25c7c59257725f.webp",
+      "alt": "亜高木層",
+      "caption": "亜高木層",
+      "creator": "663highland",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Forest01s2048.jpg"
     },
     {
       "id": "WMB-260d4535462ee6",
@@ -102,6 +262,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Illu_blood_components.svg"
     },
     {
+      "id": "WMB-266f99ae97464f",
+      "path": "term-images/optimized/WMB-266f99ae97464f.webp",
+      "alt": "キラーT細胞による感染細胞の排除",
+      "caption": "キラーT細胞による感染細胞の排除",
+      "creator": "SpencerAC",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cytotoxic_T_Cell_Killing_an_Infected_Cell.svg"
+    },
+    {
       "id": "WMB-28c9ccb5200cf3",
       "path": "term-images/optimized/WMB-28c9ccb5200cf3.webp",
       "alt": "負のフィードバック",
@@ -110,6 +280,16 @@
       "license": "CC0",
       "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Homeostasis_of_blood_sugar.png"
+    },
+    {
+      "id": "WMB-291f2cd076acea",
+      "path": "term-images/optimized/WMB-291f2cd076acea.webp",
+      "alt": "組織液",
+      "caption": "組織液",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Blausen_0623_LymphaticSystem_Female.png"
     },
     {
       "id": "WMB-29f7cbfb6f179d",
@@ -132,6 +312,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Phagocytosis_in_three_steps_zh.png"
     },
     {
+      "id": "WMB-2ca3604bfb9510",
+      "path": "term-images/optimized/WMB-2ca3604bfb9510.webp",
+      "alt": "雨緑樹林",
+      "caption": "雨緑樹林",
+      "creator": "Adbar",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Subtropical_semi-evergreen_seasonal_forest_in_Northern_Thailand.JPG"
+    },
+    {
+      "id": "WMB-2dfc09b92b78e9",
+      "path": "term-images/optimized/WMB-2dfc09b92b78e9.webp",
+      "alt": "フィブリン",
+      "caption": "フィブリン",
+      "creator": "amolinski",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fibrinandligand.png"
+    },
+    {
       "id": "WMB-2ed98d68513769",
       "path": "term-images/optimized/WMB-2ed98d68513769.webp",
       "alt": "DNAの二重らせん構造",
@@ -140,6 +340,16 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:DNA-structure-and-bases.png"
+    },
+    {
+      "id": "WMB-307b14ac108495",
+      "path": "term-images/optimized/WMB-307b14ac108495.webp",
+      "alt": "呼吸の模式図",
+      "caption": "呼吸の模式図",
+      "creator": "Zlir'a",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cellular_respiration_EN.svg"
     },
     {
       "id": "WMB-328e3cb5a30492",
@@ -172,6 +382,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Antigen_presentation-es.png"
     },
     {
+      "id": "WMB-38bbc56d73d481",
+      "path": "term-images/optimized/WMB-38bbc56d73d481.webp",
+      "alt": "遺伝的多様性",
+      "caption": "遺伝的多様性",
+      "creator": "Prof. Dr. Shuhua Xu & HUGO Pan Asia SNP Consortium",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Genetic_Diversity_in_Asia_Fig_2-B.jpg"
+    },
+    {
+      "id": "WMB-3b80a4a4fd9eb7",
+      "path": "term-images/optimized/WMB-3b80a4a4fd9eb7.webp",
+      "alt": "植生",
+      "caption": "植生",
+      "creator": "Jetnor Elezi",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pamje_e_bimesise_ne_mal..JPG"
+    },
+    {
       "id": "WMB-3daef22258c889",
       "path": "term-images/optimized/WMB-3daef22258c889.webp",
       "alt": "下垂体の位置",
@@ -202,6 +432,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:DNA_Diagram.png"
     },
     {
+      "id": "WMB-437c7eec8059a7",
+      "path": "term-images/optimized/WMB-437c7eec8059a7.webp",
+      "alt": "間期",
+      "caption": "間期",
+      "creator": "Mysid",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Major_events_in_mitosis.svg"
+    },
+    {
+      "id": "WMB-453ff2ac19fb2d",
+      "path": "term-images/optimized/WMB-453ff2ac19fb2d.webp",
+      "alt": "土壌形成",
+      "caption": "土壌形成",
+      "creator": "Carlosblh",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Estructura-suelo.jpg"
+    },
+    {
       "id": "WMB-464e656169fafc",
       "path": "term-images/optimized/WMB-464e656169fafc.webp",
       "alt": "世界の主なバイオーム",
@@ -222,6 +472,36 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chromosome_structure.png"
     },
     {
+      "id": "WMB-4d2dbd7010be35",
+      "path": "term-images/optimized/WMB-4d2dbd7010be35.webp",
+      "alt": "外来生物",
+      "caption": "外来生物",
+      "creator": "Sims..28",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Invasive_Species.jpg"
+    },
+    {
+      "id": "WMB-4d79f3e5642742",
+      "path": "term-images/optimized/WMB-4d79f3e5642742.webp",
+      "alt": "アレルギー",
+      "caption": "アレルギー",
+      "creator": "James Heilman, MD",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hives2010.JPG"
+    },
+    {
+      "id": "WMB-4d98a55a2ccbc7",
+      "path": "term-images/optimized/WMB-4d98a55a2ccbc7.webp",
+      "alt": "亜熱帯多雨林",
+      "caption": "亜熱帯多雨林",
+      "creator": "The original uploader was Adz at English Wikipedia .",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Daintree_Rainforest.JPG"
+    },
+    {
       "id": "WMB-506706934416fb",
       "path": "term-images/optimized/WMB-506706934416fb.webp",
       "alt": "リンパ節の構造",
@@ -230,6 +510,86 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Illu_lymph_node_structure_az.jpg"
+    },
+    {
+      "id": "WMB-50e5cab76fc161",
+      "path": "term-images/optimized/WMB-50e5cab76fc161.webp",
+      "alt": "真核生物",
+      "caption": "真核生物",
+      "creator": "Daniel Vaulot, CNRS , Station Biologique de Roscoff",
+      "license": "CC BY-SA 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rhodomonas_salina_CCMP_322.jpg"
+    },
+    {
+      "id": "WMB-50f4c5cf2e66a6",
+      "path": "term-images/optimized/WMB-50f4c5cf2e66a6.webp",
+      "alt": "酵素活性とpHの関係",
+      "caption": "酵素活性とpHの関係",
+      "creator": "Gal m",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Enzyme-ph.png"
+    },
+    {
+      "id": "WMB-51a4596f63fa8d",
+      "path": "term-images/optimized/WMB-51a4596f63fa8d.webp",
+      "alt": "絶滅危惧種",
+      "caption": "絶滅危惧種",
+      "creator": "Erkcan",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:IUCN_Red_List_-_December_2023_ja.svg"
+    },
+    {
+      "id": "WMB-557e65d0a49fc8",
+      "path": "term-images/optimized/WMB-557e65d0a49fc8.webp",
+      "alt": "核膜",
+      "caption": "核膜",
+      "creator": "Mariana Ruiz LadyofHats",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Diagram_human_cell_nucleus_multilang.svg"
+    },
+    {
+      "id": "WMB-5645ae96914ea9",
+      "path": "term-images/optimized/WMB-5645ae96914ea9.webp",
+      "alt": "B細胞",
+      "caption": "B細胞",
+      "creator": "Blausen Medical",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Blausen_0624_Lymphocyte_B_cell_(crop).png"
+    },
+    {
+      "id": "WMB-56d2d2825132c8",
+      "path": "term-images/optimized/WMB-56d2d2825132c8.webp",
+      "alt": "生態系",
+      "caption": "生態系",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wild_zebra_on_Kenya_countryside.jpg"
+    },
+    {
+      "id": "WMB-56f9d4fda37be8",
+      "path": "term-images/optimized/WMB-56f9d4fda37be8.webp",
+      "alt": "好中球",
+      "caption": "好中球",
+      "creator": "Dr. Roshan Nasimudeen",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Neutrophil_1.jpg"
+    },
+    {
+      "id": "WMB-572c2666b61356",
+      "path": "term-images/optimized/WMB-572c2666b61356.webp",
+      "alt": "ゲノム",
+      "caption": "ゲノム",
+      "creator": "Steffen Dietzel",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:HumanChromosomesChromomycinA3.jpg"
     },
     {
       "id": "WMB-57faae92ece01a",
@@ -260,6 +620,26 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nutrient_cycle.svg"
+    },
+    {
+      "id": "WMB-5bc41608ada69f",
+      "path": "term-images/optimized/WMB-5bc41608ada69f.webp",
+      "alt": "自然免疫",
+      "caption": "自然免疫",
+      "creator": "Architha Srinivasan",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Innate_immune_system.png"
+    },
+    {
+      "id": "WMB-5ed9ce9050b4d4",
+      "path": "term-images/optimized/WMB-5ed9ce9050b4d4.webp",
+      "alt": "一次遷移",
+      "caption": "一次遷移",
+      "creator": "NEUROtiker ( talk )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nukleotid_num.svg"
     },
     {
       "id": "WMB-6392cb78ee8463",
@@ -302,6 +682,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stockwerke_wald.png"
     },
     {
+      "id": "WMB-67f163d39edbd9",
+      "path": "term-images/optimized/WMB-67f163d39edbd9.webp",
+      "alt": "原核生物",
+      "caption": "原核生物",
+      "creator": "Maulucioni basado en imágenes de Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Diversidad_procariota.PNG"
+    },
+    {
       "id": "WMB-69ba0914b25f49",
       "path": "term-images/optimized/WMB-69ba0914b25f49.webp",
       "alt": "食物網の模式図",
@@ -342,6 +732,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ecological_Pyramid.svg"
     },
     {
+      "id": "WMB-7252d1f0564e42",
+      "path": "term-images/optimized/WMB-7252d1f0564e42.webp",
+      "alt": "膵島のβ細胞とα細胞",
+      "caption": "膵島のβ細胞とα細胞",
+      "creator": "Da Silva Xavier, G.",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Schematic_diagram_showing_the_interdependency_of_islet_cells.png"
+    },
+    {
       "id": "WMB-7321d8ae95f72f",
       "path": "term-images/optimized/WMB-7321d8ae95f72f.webp",
       "alt": "一次応答と二次応答",
@@ -350,6 +750,16 @@
       "license": "CC BY 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:2223_Primary_and_Secondary_Antibody_Respons_new.jpg"
+    },
+    {
+      "id": "WMB-74de96c542cb20",
+      "path": "term-images/optimized/WMB-74de96c542cb20.webp",
+      "alt": "陰生植物",
+      "caption": "陰生植物",
+      "creator": "Daniel Mayer (mav) - original image Vector version by Yerpo 和訳/Japanese translation by UkainoADX",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Simple_photosynthesis_overview-ja.svg"
     },
     {
       "id": "WMB-75ddc129d417e2",
@@ -362,6 +772,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:FoodChain.svg"
     },
     {
+      "id": "WMB-79f66b018c7819",
+      "path": "term-images/optimized/WMB-79f66b018c7819.webp",
+      "alt": "ヘルパーT細胞",
+      "caption": "ヘルパーT細胞",
+      "creator": "NIAID/NIH",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Healthy_Human_T_Cell.jpg"
+    },
+    {
       "id": "WMB-7a0c617b2d11d3",
       "path": "term-images/optimized/WMB-7a0c617b2d11d3.webp",
       "alt": "ATPの構造",
@@ -370,6 +790,26 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:ATP_structure.svg"
+    },
+    {
+      "id": "WMB-7a3fb9b2b05a67",
+      "path": "term-images/optimized/WMB-7a3fb9b2b05a67.webp",
+      "alt": "森林限界",
+      "caption": "森林限界",
+      "creator": "Mirko Thiessen",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Valle_del_Frances.jpg"
+    },
+    {
+      "id": "WMB-7b3ef5a1b9d4af",
+      "path": "term-images/optimized/WMB-7b3ef5a1b9d4af.webp",
+      "alt": "酵素の失活",
+      "caption": "酵素の失活",
+      "creator": "Chloed2026",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Denaturation_in_Enzymes.jpg"
     },
     {
       "id": "WMB-7c177709d6c398",
@@ -382,6 +822,36 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thymus_az.jpg"
     },
     {
+      "id": "WMB-7d2c816e3a7696",
+      "path": "term-images/optimized/WMB-7d2c816e3a7696.webp",
+      "alt": "脳幹",
+      "caption": "脳幹",
+      "creator": "Henry Vandyke Carter",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gray719.png"
+    },
+    {
+      "id": "WMB-7ed64578f2d81d",
+      "path": "term-images/optimized/WMB-7ed64578f2d81d.webp",
+      "alt": "視床下部",
+      "caption": "視床下部",
+      "creator": "Images are generated by Life Science Databases(LSDB).",
+      "license": "CC BY-SA 2.1 jp",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hypothalamus.gif"
+    },
+    {
+      "id": "WMB-7f3e6bda5dacb9",
+      "path": "term-images/optimized/WMB-7f3e6bda5dacb9.webp",
+      "alt": "ヘモグロビン",
+      "caption": "ヘモグロビン",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Redbloodcells.jpg"
+    },
+    {
       "id": "WMB-7f40a94be676d5",
       "path": "term-images/optimized/WMB-7f40a94be676d5.webp",
       "alt": "翻訳の模式図",
@@ -392,6 +862,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ribosome_mRNA_translation_en.svg"
     },
     {
+      "id": "WMB-7fb0b0268244f5",
+      "path": "term-images/optimized/WMB-7fb0b0268244f5.webp",
+      "alt": "進化",
+      "caption": "進化",
+      "creator": "投稿者作成",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Phylogenetic_Tree_of_Life-ja.png"
+    },
+    {
       "id": "WMB-8004433328e1db",
       "path": "term-images/optimized/WMB-8004433328e1db.webp",
       "alt": "抗原抗体反応",
@@ -400,6 +880,16 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Antibody.svg"
+    },
+    {
+      "id": "WMB-806e110855508b",
+      "path": "term-images/optimized/WMB-806e110855508b.webp",
+      "alt": "マクロファージ",
+      "caption": "マクロファージ",
+      "creator": "Noah Smith",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Giemsa_Stain_Macrophage_Illustration.png"
     },
     {
       "id": "WMB-8353c6c9acaba3",
@@ -422,6 +912,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Energy_flow_chart.png"
     },
     {
+      "id": "WMB-83a640483d2caf",
+      "path": "term-images/optimized/WMB-83a640483d2caf.webp",
+      "alt": "アミノ酸",
+      "caption": "アミノ酸",
+      "creator": "Ben Mills",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Glycine-skeletal.png"
+    },
+    {
+      "id": "WMB-8426d326bb71e2",
+      "path": "term-images/optimized/WMB-8426d326bb71e2.webp",
+      "alt": "生息地の分断",
+      "caption": "生息地の分断",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Indiana_Dunes_Habitat_Fragmentation.jpg"
+    },
+    {
       "id": "WMB-84f497686686e0",
       "path": "term-images/optimized/WMB-84f497686686e0.webp",
       "alt": "細胞の基本構造",
@@ -430,6 +940,36 @@
       "license": "CC0",
       "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Animal_Cell.svg"
+    },
+    {
+      "id": "WMB-86872b0ae856c9",
+      "path": "term-images/optimized/WMB-86872b0ae856c9.webp",
+      "alt": "グリコーゲン",
+      "caption": "グリコーゲン",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Glycogen.png"
+    },
+    {
+      "id": "WMB-8801fca23110c3",
+      "path": "term-images/optimized/WMB-8801fca23110c3.webp",
+      "alt": "血小板",
+      "caption": "血小板",
+      "creator": "Сергей Обыденный",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%D0%90%D0%BA%D1%82%D0%B8%D0%B2%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%B9_%D1%82%D1%80%D0%BE%D0%BC%D0%B1%D0%BE%D1%86%D0%B8%D1%82_%D0%BD%D0%B0_%D1%81%D1%82%D0%B5%D0%BA%D0%BB%D0%B5_%D1%81_%D0%B8%D0%BC%D0%BC%D0%BE%D0%B1%D0%B8%D0%BB%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D1%8B%D0%BC_%D1%84%D0%B8%D0%B1%D1%80%D0%B8%D0%BD%D0%BE%D0%B3%D0%B5%D0%BD%D0%BE%D0%BC.jpg"
+    },
+    {
+      "id": "WMB-89633070710771",
+      "path": "term-images/optimized/WMB-89633070710771.webp",
+      "alt": "内分泌系",
+      "caption": "内分泌系",
+      "creator": "OpenStax & Tomáš Kebert & umimeto.org",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Endocrine_English.svg"
     },
     {
       "id": "WMB-8a2b9d259879e1",
@@ -452,6 +992,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Humoral_Response_Drawing.svg"
     },
     {
+      "id": "WMB-8ac66587f79542",
+      "path": "term-images/optimized/WMB-8ac66587f79542.webp",
+      "alt": "樹状細胞",
+      "caption": "樹状細胞",
+      "creator": "Haymanj",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Dendritic_cells.jpg"
+    },
+    {
       "id": "WMB-8bde6c7858e056",
       "path": "term-images/optimized/WMB-8bde6c7858e056.webp",
       "alt": "夏緑樹林",
@@ -472,6 +1022,36 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cytokinesis_eukaryotic_mitosis.svg"
     },
     {
+      "id": "WMB-8ca3a6a12315c1",
+      "path": "term-images/optimized/WMB-8ca3a6a12315c1.webp",
+      "alt": "溶存酸素",
+      "caption": "溶存酸素",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Canal-pollution.jpg"
+    },
+    {
+      "id": "WMB-94b09e6efb9df1",
+      "path": "term-images/optimized/WMB-94b09e6efb9df1.webp",
+      "alt": "コドン",
+      "caption": "コドン",
+      "creator": "The original uploader was Sverdrup at English Wikipedia .",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:RNA-codon.png"
+    },
+    {
+      "id": "WMB-9609cf44b0a881",
+      "path": "term-images/optimized/WMB-9609cf44b0a881.webp",
+      "alt": "インスリン",
+      "caption": "インスリン",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Insulin.jpg"
+    },
+    {
       "id": "WMB-96fddc8b1f065d",
       "path": "term-images/optimized/WMB-96fddc8b1f065d.webp",
       "alt": "高山帯",
@@ -480,6 +1060,56 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:TeideS.jpg"
+    },
+    {
+      "id": "WMB-9ad81c5a59829d",
+      "path": "term-images/optimized/WMB-9ad81c5a59829d.webp",
+      "alt": "生物多様性",
+      "caption": "生物多様性",
+      "creator": "en:User:Justin",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Animal_diversity_October_2007.jpg"
+    },
+    {
+      "id": "WMB-9b29506325eaf9",
+      "path": "term-images/optimized/WMB-9b29506325eaf9.webp",
+      "alt": "極相",
+      "caption": "極相",
+      "creator": "Alpsdake",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fagus_crenata_in_Mount_Daimon_2011-06-19.jpg"
+    },
+    {
+      "id": "WMB-9dcf45a1c8ab74",
+      "path": "term-images/optimized/WMB-9dcf45a1c8ab74.webp",
+      "alt": "エイズ",
+      "caption": "エイズ",
+      "creator": "Gary van der Merwe",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Red_Ribbon.svg"
+    },
+    {
+      "id": "WMB-9ddf7535d6e3e8",
+      "path": "term-images/optimized/WMB-9ddf7535d6e3e8.webp",
+      "alt": "DNA塩基配列",
+      "caption": "DNA塩基配列",
+      "creator": "Zephyris",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:DNA_Structure%2BKey%2BLabelled.pn_NoBB.png"
+    },
+    {
+      "id": "WMB-9e45841d5a6bbf",
+      "path": "term-images/optimized/WMB-9e45841d5a6bbf.webp",
+      "alt": "交感神経",
+      "caption": "交感神経",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Blausen_0838_Sympathetic_Innervation.png"
     },
     {
       "id": "WMB-9e7a60b4320e12",
@@ -500,6 +1130,26 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Semi-conservative_replication.svg"
+    },
+    {
+      "id": "WMB-a1981f087677fb",
+      "path": "term-images/optimized/WMB-a1981f087677fb.webp",
+      "alt": "乾性遷移",
+      "caption": "乾性遷移",
+      "creator": "Katelyn Murphy",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Secondary_Succession.png"
+    },
+    {
+      "id": "WMB-a3c8f3789e8a04",
+      "path": "term-images/optimized/WMB-a3c8f3789e8a04.webp",
+      "alt": "ATPの加水分解",
+      "caption": "ATPの加水分解",
+      "creator": "SrKellyOP",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hydrolysis_of_ATP.png"
     },
     {
       "id": "WMB-a438f0a4feb151",
@@ -532,6 +1182,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chloroplast_II.svg"
     },
     {
+      "id": "WMB-a603e38a366f33",
+      "path": "term-images/optimized/WMB-a603e38a366f33.webp",
+      "alt": "細胞質基質",
+      "caption": "細胞質基質",
+      "creator": "TimVickers",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Crowded_cytosol.png"
+    },
+    {
+      "id": "WMB-a8a9e365a0c25b",
+      "path": "term-images/optimized/WMB-a8a9e365a0c25b.webp",
+      "alt": "標高に伴う植生の垂直分布",
+      "caption": "標高に伴う植生の垂直分布",
+      "creator": "Delphi234",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Altitudinal_zones_of_Alps_mountains-extended_diagram.svg"
+    },
+    {
       "id": "WMB-ab6cbc4a6bc2b8",
       "path": "term-images/optimized/WMB-ab6cbc4a6bc2b8.webp",
       "alt": "植物細胞の液胞",
@@ -540,6 +1210,16 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Plant_cell_structure-en.svg"
+    },
+    {
+      "id": "WMB-ac1924c8ce6fce",
+      "path": "term-images/optimized/WMB-ac1924c8ce6fce.webp",
+      "alt": "グルコースの構造",
+      "caption": "グルコースの構造",
+      "creator": "Steinsky at English Wikipedia",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Glucose_Haworth.png"
     },
     {
       "id": "WMB-b24e0263731fd6",
@@ -562,6 +1242,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Steppe.jpg"
     },
     {
+      "id": "WMB-b397fcf6252eb1",
+      "path": "term-images/optimized/WMB-b397fcf6252eb1.webp",
+      "alt": "幹細胞からの細胞分化",
+      "caption": "幹細胞からの細胞分化",
+      "creator": "User:Wykis",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stem_cell_division_and_differentiation.svg"
+    },
+    {
+      "id": "WMB-b66d93c85b2faa",
+      "path": "term-images/optimized/WMB-b66d93c85b2faa.webp",
+      "alt": "赤血球",
+      "caption": "赤血球",
+      "creator": "Arek Socha",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Red_Blood_Cell.jpg"
+    },
+    {
       "id": "WMB-b6c6349fd49565",
       "path": "term-images/optimized/WMB-b6c6349fd49565.webp",
       "alt": "核の構造",
@@ -570,6 +1270,66 @@
       "license": "Public domain",
       "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Animal_cell_structure_en.svg"
+    },
+    {
+      "id": "WMB-b6f3b4403b4448",
+      "path": "term-images/optimized/WMB-b6f3b4403b4448.webp",
+      "alt": "照葉樹林の代表種・スダジイ",
+      "caption": "照葉樹林の代表種・スダジイ",
+      "creator": "KENPEI",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Castanopsis_sieboldii2.jpg"
+    },
+    {
+      "id": "WMB-b89f114a587d37",
+      "path": "term-images/optimized/WMB-b89f114a587d37.webp",
+      "alt": "獲得免疫",
+      "caption": "獲得免疫",
+      "creator": "Unknown photographer/artist (False color modifications made by myself-- DO11.10 )",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:SEM_Lymphocyte.jpg"
+    },
+    {
+      "id": "WMB-ba33fae415a270",
+      "path": "term-images/optimized/WMB-ba33fae415a270.webp",
+      "alt": "植生帯の緯度分布",
+      "caption": "植生帯の緯度分布",
+      "creator": "Ökologix",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Vegetationszonen.png"
+    },
+    {
+      "id": "WMB-c1661a7d47c826",
+      "path": "term-images/optimized/WMB-c1661a7d47c826.webp",
+      "alt": "副交感神経",
+      "caption": "副交感神経",
+      "creator": "OpenStax College",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:1503_Connections_of_the_Parasympathetic_Nervous_System.jpg"
+    },
+    {
+      "id": "WMB-c1a8ac7a8c4b22",
+      "path": "term-images/optimized/WMB-c1a8ac7a8c4b22.webp",
+      "alt": "皮膚の断面構造",
+      "caption": "皮膚の断面構造",
+      "creator": "Bastique",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Skin_cross-section.svg"
+    },
+    {
+      "id": "WMB-c237cede27b79a",
+      "path": "term-images/optimized/WMB-c237cede27b79a.webp",
+      "alt": "延髄",
+      "caption": "延髄",
+      "creator": "Images are generated by Life Science Databases(LSDB).",
+      "license": "CC BY-SA 2.1 jp",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.1/jp/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Medulla_oblongata.gif"
     },
     {
       "id": "WMB-c2c5f5a8942c6f",
@@ -582,6 +1342,16 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Moss_closeup.jpg"
     },
     {
+      "id": "WMB-c38b8698294b1f",
+      "path": "term-images/optimized/WMB-c38b8698294b1f.webp",
+      "alt": "高山帯の代表種・ハイマツ",
+      "caption": "高山帯の代表種・ハイマツ",
+      "creator": "No machine-readable author provided. Inti-sol~commonswiki assumed (based on copyright claims).",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pinus_pumila1.JPG"
+    },
+    {
       "id": "WMB-c3c46902cabf80",
       "path": "term-images/optimized/WMB-c3c46902cabf80.webp",
       "alt": "植生遷移の模式図",
@@ -590,6 +1360,16 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:AP_Biology_-_Primary_Succession_Drawing.svg"
+    },
+    {
+      "id": "WMB-c43bb5bbf5be33",
+      "path": "term-images/optimized/WMB-c43bb5bbf5be33.webp",
+      "alt": "神経系",
+      "caption": "神経系",
+      "creator": "Pearson Scott Foresman",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nervous_System_(PSF).png"
     },
     {
       "id": "WMB-c662ce40e9c445",
@@ -602,6 +1382,56 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Prokaryote_cell.svg"
     },
     {
+      "id": "WMB-c69ab8f482f9f3",
+      "path": "term-images/optimized/WMB-c69ab8f482f9f3.webp",
+      "alt": "光の強さと光合成速度の関係",
+      "caption": "光の強さと光合成速度の関係",
+      "creator": "Obsidian Soul",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Carbon_assimilation_vs_irradiance.png"
+    },
+    {
+      "id": "WMB-c6dccbdd57405d",
+      "path": "term-images/optimized/WMB-c6dccbdd57405d.webp",
+      "alt": "酵素活性と温度の関係",
+      "caption": "酵素活性と温度の関係",
+      "creator": "Gal m",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Enzyme-temperature.png"
+    },
+    {
+      "id": "WMB-c8c36e54e7b02e",
+      "path": "term-images/optimized/WMB-c8c36e54e7b02e.webp",
+      "alt": "単細胞生物",
+      "caption": "単細胞生物",
+      "creator": "Barfooz at the English Wikipedia .",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Paramecium.jpg"
+    },
+    {
+      "id": "WMB-c8c4be8d367b66",
+      "path": "term-images/optimized/WMB-c8c4be8d367b66.webp",
+      "alt": "水域から始まる湿性遷移",
+      "caption": "水域から始まる湿性遷移",
+      "creator": "Dhrithi Vishwa",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Aquatic_Succession_or_Hydrosere.svg"
+    },
+    {
+      "id": "WMB-c8f51c043428f1",
+      "path": "term-images/optimized/WMB-c8f51c043428f1.webp",
+      "alt": "チロキシン",
+      "caption": "チロキシン",
+      "creator": "Boghog",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thyroxine2.svg"
+    },
+    {
       "id": "WMB-c9a2673e5fc533",
       "path": "term-images/optimized/WMB-c9a2673e5fc533.webp",
       "alt": "砂漠",
@@ -612,6 +1442,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sahara_Desert.jpg"
     },
     {
+      "id": "WMB-cc3c6fb7294a88",
+      "path": "term-images/optimized/WMB-cc3c6fb7294a88.webp",
+      "alt": "林冠",
+      "caption": "林冠",
+      "creator": "Vyacheslav Argenberg",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Havelock_Island,_Canopy_of_tropical_moist_evergreen_forest,_Andaman_Islands.jpg"
+    },
+    {
+      "id": "WMB-cc51258912ae2e",
+      "path": "term-images/optimized/WMB-cc51258912ae2e.webp",
+      "alt": "カタラーゼの立体構造",
+      "caption": "カタラーゼの立体構造",
+      "creator": "Vossman",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Catalase_Structure.png"
+    },
+    {
       "id": "WMB-cc5d3544c5c05c",
       "path": "term-images/optimized/WMB-cc5d3544c5c05c.webp",
       "alt": "中枢神経系",
@@ -620,6 +1470,16 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nervous_system_diagram_numbered.svg"
+    },
+    {
+      "id": "WMB-d09d7fb1f10295",
+      "path": "term-images/optimized/WMB-d09d7fb1f10295.webp",
+      "alt": "絶滅",
+      "caption": "絶滅",
+      "creator": "Various; see individual pictures",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Various_dinosaurs.png"
     },
     {
       "id": "WMB-d36cfb48a7d881",
@@ -652,6 +1512,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:SpecificImmuneResponse-2.svg"
     },
     {
+      "id": "WMB-db5e4fea4146f6",
+      "path": "term-images/optimized/WMB-db5e4fea4146f6.webp",
+      "alt": "血しょう",
+      "caption": "血しょう",
+      "creator": "DiverDave",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:FreshFrozenPlasma.JPG"
+    },
+    {
+      "id": "WMB-dc39527a5765fd",
+      "path": "term-images/optimized/WMB-dc39527a5765fd.webp",
+      "alt": "亜熱帯多雨林の代表種・ガジュマル",
+      "caption": "亜熱帯多雨林の代表種・ガジュマル",
+      "creator": "H. Zell",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ficus_microcarpa_-_La_Gomera_01.jpg"
+    },
+    {
       "id": "WMB-ddca375ca7ca98",
       "path": "term-images/optimized/WMB-ddca375ca7ca98.webp",
       "alt": "酵素と基質の反応",
@@ -660,6 +1540,36 @@
       "license": "CC BY-SA 3.0",
       "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Enzyme_activation_energy.png"
+    },
+    {
+      "id": "WMB-df0a83b2744727",
+      "path": "term-images/optimized/WMB-df0a83b2744727.webp",
+      "alt": "多細胞生物",
+      "caption": "多細胞生物",
+      "creator": "Wikimedia Commons掲載作者",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:C_elegans_stained.jpg"
+    },
+    {
+      "id": "WMB-e19ea3a9c2d7ad",
+      "path": "term-images/optimized/WMB-e19ea3a9c2d7ad.webp",
+      "alt": "ATP合成酵素によるATP合成",
+      "caption": "ATP合成酵素によるATP合成",
+      "creator": "TheBartgry",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:ATP_synthase.svg"
+    },
+    {
+      "id": "WMB-e4671705e1f4e5",
+      "path": "term-images/optimized/WMB-e4671705e1f4e5.webp",
+      "alt": "混交林",
+      "caption": "混交林",
+      "creator": "Jacek Halicki",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:2017_Las_mieszany_na_stoku_Rudki,_Masyw_%C5%9Anie%C5%BCnika,_Sudety.jpg"
     },
     {
       "id": "WMB-e7a47612d2917b",
@@ -672,6 +1582,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tundra_Landscape_(31354285547).jpg"
     },
     {
+      "id": "WMB-ea4dc82ccff477",
+      "path": "term-images/optimized/WMB-ea4dc82ccff477.webp",
+      "alt": "粘膜",
+      "caption": "粘膜",
+      "creator": "Volker Brinkmann",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Neutrophil_with_anthrax_copy.jpg"
+    },
+    {
+      "id": "WMB-eaac3986adb6f0",
+      "path": "term-images/optimized/WMB-eaac3986adb6f0.webp",
+      "alt": "夏緑樹林の代表種・ブナ",
+      "caption": "夏緑樹林の代表種・ブナ",
+      "creator": "Nihongo1234",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bijinbayashi_means_beautiful_forest.jpg"
+    },
+    {
       "id": "WMB-ec2b6fee6e5d41",
       "path": "term-images/optimized/WMB-ec2b6fee6e5d41.webp",
       "alt": "炭素循環",
@@ -682,6 +1612,26 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Carbon_cycle-simple_diagram.svg"
     },
     {
+      "id": "WMB-f54bcd0080665a",
+      "path": "term-images/optimized/WMB-f54bcd0080665a.webp",
+      "alt": "ポリペプチド",
+      "caption": "ポリペプチド",
+      "creator": "National Human Genome Research Institute",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Protein_primary_structure.svg"
+    },
+    {
+      "id": "WMB-f81cdb6de680a9",
+      "path": "term-images/optimized/WMB-f81cdb6de680a9.webp",
+      "alt": "亜高山帯針葉樹林の代表種・シラビソ",
+      "caption": "亜高山帯針葉樹林の代表種・シラビソ",
+      "creator": "Inti-sol",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Abies_veitchii2.JPG"
+    },
+    {
       "id": "WMB-f85b8db8b55f9f",
       "path": "term-images/optimized/WMB-f85b8db8b55f9f.webp",
       "alt": "末梢神経系",
@@ -690,6 +1640,26 @@
       "license": "CC BY-SA 4.0",
       "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nervous_system_diagram-en.svg"
+    },
+    {
+      "id": "WMB-f92c66b1292f23",
+      "path": "term-images/optimized/WMB-f92c66b1292f23.webp",
+      "alt": "クロロフィル",
+      "caption": "クロロフィル",
+      "creator": "JLPC",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:M%C3%A9lisse_Feuilles_FR_2013b.jpg"
+    },
+    {
+      "id": "WMB-f9513e91ee75b6",
+      "path": "term-images/optimized/WMB-f9513e91ee75b6.webp",
+      "alt": "フックが観察したコルクの細胞",
+      "caption": "フックが観察したコルクの細胞",
+      "creator": "Robert Hooke",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cork_Micrographia_Hooke.png"
     },
     {
       "id": "WMB-fcfeaf602aa20d",
@@ -708,6 +1678,14 @@
       "assetId": "WMB-84f497686686e0"
     },
     {
+      "termId": "BB-000002",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
+      "termId": "BB-000003",
+      "assetId": "WMB-56d2d2825132c8"
+    },
+    {
       "termId": "BB-000004",
       "assetId": "WMB-2ed98d68513769"
     },
@@ -716,20 +1694,60 @@
       "assetId": "WMB-640b88eff1816a"
     },
     {
+      "termId": "BB-000006",
+      "assetId": "WMB-9ad81c5a59829d"
+    },
+    {
       "termId": "BB-000007",
       "assetId": "WMB-7a0c617b2d11d3"
     },
     {
+      "termId": "BB-000008",
+      "assetId": "WMB-243cd425de5df0"
+    },
+    {
+      "termId": "BB-000010",
+      "assetId": "WMB-430bfe1fc24dfa"
+    },
+    {
+      "termId": "BB-000011",
+      "assetId": "WMB-9609cf44b0a881"
+    },
+    {
+      "termId": "BB-000012",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
       "termId": "BB-000013",
-      "assetId": "WMB-35bf311dc64d51"
+      "assetId": "WMB-74de96c542cb20"
+    },
+    {
+      "termId": "BB-000014",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
+      "termId": "BB-000015",
+      "assetId": "WMB-75ddc129d417e2"
     },
     {
       "termId": "BB-000016",
-      "assetId": "WMB-35bf311dc64d51"
+      "assetId": "WMB-307b14ac108495"
+    },
+    {
+      "termId": "BB-000017",
+      "assetId": "WMB-5bc41608ada69f"
+    },
+    {
+      "termId": "BB-000018",
+      "assetId": "WMB-75ddc129d417e2"
     },
     {
       "termId": "BB-000019",
       "assetId": "WMB-ddca375ca7ca98"
+    },
+    {
+      "termId": "BB-000020",
+      "assetId": "WMB-b89f114a587d37"
     },
     {
       "termId": "BB-000021",
@@ -752,6 +1770,10 @@
       "assetId": "WMB-84f497686686e0"
     },
     {
+      "termId": "BB-000026",
+      "assetId": "WMB-8004433328e1db"
+    },
+    {
       "termId": "BB-000027",
       "assetId": "WMB-708602421beeaf"
     },
@@ -760,36 +1782,108 @@
       "assetId": "WMB-9e7a60b4320e12"
     },
     {
+      "termId": "BB-000029",
+      "assetId": "WMB-5645ae96914ea9"
+    },
+    {
+      "termId": "BB-000030",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
       "termId": "BB-000031",
       "assetId": "WMB-a4db77a7cee5fc"
+    },
+    {
+      "termId": "BB-000032",
+      "assetId": "WMB-79f66b018c7819"
+    },
+    {
+      "termId": "BB-000033",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
+      "termId": "BB-000035",
+      "assetId": "WMB-266f99ae97464f"
     },
     {
       "termId": "BB-000037",
       "assetId": "WMB-4a78a5cbddc651"
     },
     {
+      "termId": "BB-000038",
+      "assetId": "WMB-7321d8ae95f72f"
+    },
+    {
       "termId": "BB-000044",
       "assetId": "WMB-2a31d56df75efe"
+    },
+    {
+      "termId": "BB-000045",
+      "assetId": "WMB-4d2dbd7010be35"
+    },
+    {
+      "termId": "BB-000047",
+      "assetId": "WMB-89633070710771"
+    },
+    {
+      "termId": "BB-000048",
+      "assetId": "WMB-d09d7fb1f10295"
     },
     {
       "termId": "BB-000049",
       "assetId": "WMB-1baf75927de3c3"
     },
     {
+      "termId": "BB-000050",
+      "assetId": "WMB-c43bb5bbf5be33"
+    },
+    {
+      "termId": "BB-000051",
+      "assetId": "WMB-8426d326bb71e2"
+    },
+    {
       "termId": "BB-000052",
       "assetId": "WMB-b6c6349fd49565"
+    },
+    {
+      "termId": "BB-000053",
+      "assetId": "WMB-9e45841d5a6bbf"
     },
     {
       "termId": "BB-000055",
       "assetId": "WMB-650c11f5a398e6"
     },
     {
+      "termId": "BB-000056",
+      "assetId": "WMB-c1661a7d47c826"
+    },
+    {
+      "termId": "BB-000057",
+      "assetId": "WMB-224c35ae14e113"
+    },
+    {
+      "termId": "BB-000058",
+      "assetId": "WMB-572c2666b61356"
+    },
+    {
+      "termId": "BB-000059",
+      "assetId": "WMB-7ed64578f2d81d"
+    },
+    {
       "termId": "BB-000061",
       "assetId": "WMB-2ed98d68513769"
     },
     {
+      "termId": "BB-000063",
+      "assetId": "WMB-3b80a4a4fd9eb7"
+    },
+    {
       "termId": "BB-000064",
       "assetId": "WMB-430bfe1fc24dfa"
+    },
+    {
+      "termId": "BB-000065",
+      "assetId": "WMB-28c9ccb5200cf3"
     },
     {
       "termId": "BB-000067",
@@ -804,6 +1898,10 @@
       "assetId": "WMB-8a2b9d259879e1"
     },
     {
+      "termId": "BB-000071",
+      "assetId": "WMB-7252d1f0564e42"
+    },
+    {
       "termId": "BB-000072",
       "assetId": "WMB-677e0d2dfc0c4f"
     },
@@ -812,12 +1910,68 @@
       "assetId": "WMB-7f40a94be676d5"
     },
     {
+      "termId": "BB-000074",
+      "assetId": "WMB-7252d1f0564e42"
+    },
+    {
+      "termId": "BB-000075",
+      "assetId": "WMB-cc3c6fb7294a88"
+    },
+    {
+      "termId": "BB-000076",
+      "assetId": "WMB-05e255262e4f99"
+    },
+    {
       "termId": "BB-000077",
       "assetId": "WMB-8a64dc4276b84a"
     },
     {
+      "termId": "BB-000078",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "termId": "BB-000079",
+      "assetId": "WMB-35bf311dc64d51"
+    },
+    {
       "termId": "BB-000080",
       "assetId": "WMB-da26cfed66e636"
+    },
+    {
+      "termId": "BB-000081",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "termId": "BB-000082",
+      "assetId": "WMB-83a640483d2caf"
+    },
+    {
+      "termId": "BB-000083",
+      "assetId": "WMB-806e110855508b"
+    },
+    {
+      "termId": "BB-000084",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "termId": "BB-000085",
+      "assetId": "WMB-94b09e6efb9df1"
+    },
+    {
+      "termId": "BB-000086",
+      "assetId": "WMB-8ac66587f79542"
+    },
+    {
+      "termId": "BB-000087",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "termId": "BB-000088",
+      "assetId": "WMB-592f7250555607"
+    },
+    {
+      "termId": "BB-000089",
+      "assetId": "WMB-56f9d4fda37be8"
     },
     {
       "termId": "BB-000090",
@@ -828,20 +1982,72 @@
       "assetId": "WMB-05395a7fa585c2"
     },
     {
+      "termId": "BB-000092",
+      "assetId": "WMB-161a24f3585cdd"
+    },
+    {
+      "termId": "BB-000093",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "termId": "BB-000094",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
       "termId": "BB-000095",
       "assetId": "WMB-7321d8ae95f72f"
+    },
+    {
+      "termId": "BB-000096",
+      "assetId": "WMB-a1981f087677fb"
+    },
+    {
+      "termId": "BB-000097",
+      "assetId": "WMB-437c7eec8059a7"
     },
     {
       "termId": "BB-000098",
       "assetId": "WMB-7321d8ae95f72f"
     },
     {
+      "termId": "BB-000099",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "termId": "BB-000100",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
+      "termId": "BB-000102",
+      "assetId": "WMB-c8c4be8d367b66"
+    },
+    {
       "termId": "BB-000103",
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "termId": "BB-000104",
+      "assetId": "WMB-2355128936e823"
+    },
+    {
+      "termId": "BB-000105",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "termId": "BB-000106",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
       "termId": "BB-000107",
       "assetId": "WMB-cc5d3544c5c05c"
+    },
+    {
+      "termId": "BB-000108",
+      "assetId": "WMB-a47bf926917bf3"
+    },
+    {
+      "termId": "BB-000109",
+      "assetId": "WMB-437c7eec8059a7"
     },
     {
       "termId": "BB-000110",
@@ -856,6 +2062,10 @@
       "assetId": "WMB-8c1bbc55f4cc47"
     },
     {
+      "termId": "BB-000113",
+      "assetId": "WMB-7d2c816e3a7696"
+    },
+    {
       "termId": "BB-000114",
       "assetId": "WMB-c2c5f5a8942c6f"
     },
@@ -864,24 +2074,136 @@
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "termId": "BB-000116",
+      "assetId": "WMB-c237cede27b79a"
+    },
+    {
       "termId": "BB-000118",
       "assetId": "WMB-57faae92ece01a"
+    },
+    {
+      "termId": "BB-000120",
+      "assetId": "WMB-c3c46902cabf80"
     },
     {
       "termId": "BB-000121",
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "termId": "BB-000122",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "termId": "BB-000123",
+      "assetId": "WMB-e4671705e1f4e5"
+    },
+    {
       "termId": "BB-000124",
       "assetId": "WMB-57faae92ece01a"
+    },
+    {
+      "termId": "BB-000125",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "termId": "BB-000126",
+      "assetId": "WMB-25c7c59257725f"
+    },
+    {
+      "termId": "BB-000127",
+      "assetId": "WMB-5ed9ce9050b4d4"
     },
     {
       "termId": "BB-000128",
       "assetId": "WMB-260d4535462ee6"
     },
     {
+      "termId": "BB-000129",
+      "assetId": "WMB-9b29506325eaf9"
+    },
+    {
+      "termId": "BB-000131",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "termId": "BB-000132",
+      "assetId": "WMB-453ff2ac19fb2d"
+    },
+    {
+      "termId": "BB-000134",
+      "assetId": "WMB-23857eff9c6006"
+    },
+    {
+      "termId": "BB-000137",
+      "assetId": "WMB-db5e4fea4146f6"
+    },
+    {
+      "termId": "BB-000138",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "termId": "BB-000140",
+      "assetId": "WMB-b66d93c85b2faa"
+    },
+    {
+      "termId": "BB-000141",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "termId": "BB-000143",
+      "assetId": "WMB-1690f910b6d7ca"
+    },
+    {
+      "termId": "BB-000144",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "termId": "BB-000145",
+      "assetId": "WMB-05e255262e4f99"
+    },
+    {
+      "termId": "BB-000146",
+      "assetId": "WMB-8801fca23110c3"
+    },
+    {
+      "termId": "BB-000147",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "termId": "BB-000149",
+      "assetId": "WMB-7f3e6bda5dacb9"
+    },
+    {
+      "termId": "BB-000151",
+      "assetId": "WMB-9ddf7535d6e3e8"
+    },
+    {
       "termId": "BB-000152",
       "assetId": "WMB-1826d1c543d8da"
+    },
+    {
+      "termId": "BB-000155",
+      "assetId": "WMB-2dfc09b92b78e9"
+    },
+    {
+      "termId": "BB-000156",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "termId": "BB-000157",
+      "assetId": "WMB-b397fcf6252eb1"
+    },
+    {
+      "termId": "BB-000158",
+      "assetId": "WMB-001604ba941b97"
+    },
+    {
+      "termId": "BB-000159",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "termId": "BB-000160",
+      "assetId": "WMB-b397fcf6252eb1"
     },
     {
       "termId": "BB-000161",
@@ -896,16 +2218,52 @@
       "assetId": "WMB-a438f0a4feb151"
     },
     {
+      "termId": "BB-000164",
+      "assetId": "WMB-86872b0ae856c9"
+    },
+    {
+      "termId": "BB-000166",
+      "assetId": "WMB-a603e38a366f33"
+    },
+    {
+      "termId": "BB-000167",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
       "termId": "BB-000169",
       "assetId": "WMB-02fd018fd970ad"
+    },
+    {
+      "termId": "BB-000170",
+      "assetId": "WMB-1bef7a79850abc"
+    },
+    {
+      "termId": "BB-000171",
+      "assetId": "WMB-ba33fae415a270"
     },
     {
       "termId": "BB-000172",
       "assetId": "WMB-ab6cbc4a6bc2b8"
     },
     {
+      "termId": "BB-000173",
+      "assetId": "WMB-0605d584b9eea5"
+    },
+    {
+      "termId": "BB-000174",
+      "assetId": "WMB-a8a9e365a0c25b"
+    },
+    {
       "termId": "BB-000175",
       "assetId": "WMB-ab6cbc4a6bc2b8"
+    },
+    {
+      "termId": "BB-000176",
+      "assetId": "WMB-c8f51c043428f1"
+    },
+    {
+      "termId": "BB-000177",
+      "assetId": "WMB-7a3fb9b2b05a67"
     },
     {
       "termId": "BB-000178",
@@ -916,8 +2274,32 @@
       "assetId": "WMB-6392cb78ee8463"
     },
     {
+      "termId": "BB-000181",
+      "assetId": "WMB-67f163d39edbd9"
+    },
+    {
+      "termId": "BB-000182",
+      "assetId": "WMB-038873a238ff44"
+    },
+    {
+      "termId": "BB-000183",
+      "assetId": "WMB-4d98a55a2ccbc7"
+    },
+    {
+      "termId": "BB-000184",
+      "assetId": "WMB-50e5cab76fc161"
+    },
+    {
       "termId": "BB-000185",
       "assetId": "WMB-3daef22258c889"
+    },
+    {
+      "termId": "BB-000186",
+      "assetId": "WMB-2ca3604bfb9510"
+    },
+    {
+      "termId": "BB-000187",
+      "assetId": "WMB-c8c36e54e7b02e"
     },
     {
       "termId": "BB-000188",
@@ -926,6 +2308,10 @@
     {
       "termId": "BB-000189",
       "assetId": "WMB-fcfeaf602aa20d"
+    },
+    {
+      "termId": "BB-000190",
+      "assetId": "WMB-df0a83b2744727"
     },
     {
       "termId": "BB-000191",
@@ -944,6 +2330,10 @@
       "assetId": "WMB-2430566872c9bb"
     },
     {
+      "termId": "BB-000196",
+      "assetId": "WMB-22e505dcce7972"
+    },
+    {
       "termId": "BB-000197",
       "assetId": "WMB-b24e0263731fd6"
     },
@@ -956,8 +2346,16 @@
       "assetId": "WMB-b2d0175eb94435"
     },
     {
+      "termId": "BB-000202",
+      "assetId": "WMB-7fb0b0268244f5"
+    },
+    {
       "termId": "BB-000204",
       "assetId": "WMB-c9a2673e5fc533"
+    },
+    {
+      "termId": "BB-000205",
+      "assetId": "WMB-d749bd88a59f9e"
     },
     {
       "termId": "BB-000206",
@@ -968,6 +2366,14 @@
       "assetId": "WMB-e7a47612d2917b"
     },
     {
+      "termId": "BB-000208",
+      "assetId": "WMB-d749bd88a59f9e"
+    },
+    {
+      "termId": "BB-000209",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
       "termId": "BB-000210",
       "assetId": "WMB-96fddc8b1f065d"
     },
@@ -976,36 +2382,168 @@
       "assetId": "WMB-d749bd88a59f9e"
     },
     {
+      "termId": "BB-000213",
+      "assetId": "WMB-dc39527a5765fd"
+    },
+    {
+      "termId": "BB-000214",
+      "assetId": "WMB-ddca375ca7ca98"
+    },
+    {
+      "termId": "BB-000216",
+      "assetId": "WMB-b6f3b4403b4448"
+    },
+    {
+      "termId": "BB-000217",
+      "assetId": "WMB-c6dccbdd57405d"
+    },
+    {
+      "termId": "BB-000219",
+      "assetId": "WMB-eaac3986adb6f0"
+    },
+    {
+      "termId": "BB-000220",
+      "assetId": "WMB-7b3ef5a1b9d4af"
+    },
+    {
+      "termId": "BB-000222",
+      "assetId": "WMB-f81cdb6de680a9"
+    },
+    {
+      "termId": "BB-000223",
+      "assetId": "WMB-50f4c5cf2e66a6"
+    },
+    {
+      "termId": "BB-000225",
+      "assetId": "WMB-c38b8698294b1f"
+    },
+    {
+      "termId": "BB-000226",
+      "assetId": "WMB-cc51258912ae2e"
+    },
+    {
       "termId": "BB-000228",
       "assetId": "WMB-0d1da17f928527"
+    },
+    {
+      "termId": "BB-000232",
+      "assetId": "WMB-a3c8f3789e8a04"
+    },
+    {
+      "termId": "BB-000241",
+      "assetId": "WMB-e19ea3a9c2d7ad"
+    },
+    {
+      "termId": "BB-000245",
+      "assetId": "WMB-c1a8ac7a8c4b22"
+    },
+    {
+      "termId": "BB-000248",
+      "assetId": "WMB-17d0326fd41bfc"
+    },
+    {
+      "termId": "BB-000252",
+      "assetId": "WMB-56d2d2825132c8"
+    },
+    {
+      "termId": "BB-000255",
+      "assetId": "WMB-9ad81c5a59829d"
     },
     {
       "termId": "BB-000260",
       "assetId": "WMB-36a4f07865d31d"
     },
     {
+      "termId": "BB-000262",
+      "assetId": "WMB-ac1924c8ce6fce"
+    },
+    {
+      "termId": "BB-000263",
+      "assetId": "WMB-ea4dc82ccff477"
+    },
+    {
+      "termId": "BB-000264",
+      "assetId": "WMB-38bbc56d73d481"
+    },
+    {
+      "termId": "BB-000265",
+      "assetId": "WMB-f92c66b1292f23"
+    },
+    {
       "termId": "BB-000266",
       "assetId": "WMB-8004433328e1db"
+    },
+    {
+      "termId": "BB-000267",
+      "assetId": "WMB-464e656169fafc"
+    },
+    {
+      "termId": "BB-000268",
+      "assetId": "WMB-557e65d0a49fc8"
+    },
+    {
+      "termId": "BB-000272",
+      "assetId": "WMB-4d79f3e5642742"
+    },
+    {
+      "termId": "BB-000273",
+      "assetId": "WMB-51a4596f63fa8d"
     },
     {
       "termId": "BB-000274",
       "assetId": "WMB-9ea4f93d084ef1"
     },
     {
+      "termId": "BB-000277",
+      "assetId": "WMB-05395a7fa585c2"
+    },
+    {
       "termId": "BB-000279",
       "assetId": "WMB-29f7cbfb6f179d"
+    },
+    {
+      "termId": "BB-000280",
+      "assetId": "WMB-1df680258a21c7"
     },
     {
       "termId": "BB-000281",
       "assetId": "WMB-6d32e3fec2a742"
     },
     {
+      "termId": "BB-000282",
+      "assetId": "WMB-29f7cbfb6f179d"
+    },
+    {
+      "termId": "BB-000283",
+      "assetId": "WMB-94b09e6efb9df1"
+    },
+    {
+      "termId": "BB-000284",
+      "assetId": "WMB-9dcf45a1c8ab74"
+    },
+    {
+      "termId": "BB-000285",
+      "assetId": "WMB-8ca3a6a12315c1"
+    },
+    {
       "termId": "BB-000288",
       "assetId": "WMB-708602421beeaf"
     },
     {
+      "termId": "BB-000289",
+      "assetId": "WMB-f54bcd0080665a"
+    },
+    {
+      "termId": "BB-000290",
+      "assetId": "WMB-021f69109007b1"
+    },
+    {
       "termId": "BB-000291",
       "assetId": "WMB-ec2b6fee6e5d41"
+    },
+    {
+      "termId": "BB-000292",
+      "assetId": "WMB-f9513e91ee75b6"
     },
     {
       "termId": "BB-000293",
@@ -1044,6 +2582,18 @@
       "assetId": "WMB-84f497686686e0"
     },
     {
+      "questionId": "BB-000002-C01",
+      "termId": "BB-000002",
+      "target": "恒常性",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
+      "questionId": "BB-000003-C01",
+      "termId": "BB-000003",
+      "target": "生態系",
+      "assetId": "WMB-56d2d2825132c8"
+    },
+    {
       "questionId": "BB-000004-C01",
       "termId": "BB-000004",
       "target": "DNA",
@@ -1056,28 +2606,88 @@
       "assetId": "WMB-640b88eff1816a"
     },
     {
+      "questionId": "BB-000006-C01",
+      "termId": "BB-000006",
+      "target": "生物多様性",
+      "assetId": "WMB-9ad81c5a59829d"
+    },
+    {
       "questionId": "BB-000007-C01",
       "termId": "BB-000007",
       "target": "ATP",
       "assetId": "WMB-7a0c617b2d11d3"
     },
     {
+      "questionId": "BB-000008-C01",
+      "termId": "BB-000008",
+      "target": "ホルモン",
+      "assetId": "WMB-243cd425de5df0"
+    },
+    {
+      "questionId": "BB-000010-C01",
+      "termId": "BB-000010",
+      "target": "遺伝子",
+      "assetId": "WMB-430bfe1fc24dfa"
+    },
+    {
+      "questionId": "BB-000011-C01",
+      "termId": "BB-000011",
+      "target": "インスリン",
+      "assetId": "WMB-9609cf44b0a881"
+    },
+    {
+      "questionId": "BB-000012-C01",
+      "termId": "BB-000012",
+      "target": "生産者",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
       "questionId": "BB-000013-C01",
       "termId": "BB-000013",
       "target": "光合成",
-      "assetId": "WMB-35bf311dc64d51"
+      "assetId": "WMB-74de96c542cb20"
+    },
+    {
+      "questionId": "BB-000014-C01",
+      "termId": "BB-000014",
+      "target": "グルカゴン",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
+      "questionId": "BB-000015-C01",
+      "termId": "BB-000015",
+      "target": "消費者",
+      "assetId": "WMB-75ddc129d417e2"
     },
     {
       "questionId": "BB-000016-C01",
       "termId": "BB-000016",
       "target": "呼吸",
-      "assetId": "WMB-35bf311dc64d51"
+      "assetId": "WMB-307b14ac108495"
+    },
+    {
+      "questionId": "BB-000017-C01",
+      "termId": "BB-000017",
+      "target": "自然免疫",
+      "assetId": "WMB-5bc41608ada69f"
+    },
+    {
+      "questionId": "BB-000018-C01",
+      "termId": "BB-000018",
+      "target": "分解者",
+      "assetId": "WMB-75ddc129d417e2"
     },
     {
       "questionId": "BB-000019-C01",
       "termId": "BB-000019",
       "target": "酵素",
       "assetId": "WMB-ddca375ca7ca98"
+    },
+    {
+      "questionId": "BB-000020-C01",
+      "termId": "BB-000020",
+      "target": "獲得免疫",
+      "assetId": "WMB-b89f114a587d37"
     },
     {
       "questionId": "BB-000021-C01",
@@ -1110,6 +2720,12 @@
       "assetId": "WMB-84f497686686e0"
     },
     {
+      "questionId": "BB-000026-C01",
+      "termId": "BB-000026",
+      "target": "抗原",
+      "assetId": "WMB-8004433328e1db"
+    },
+    {
       "questionId": "BB-000027-C01",
       "termId": "BB-000027",
       "target": "栄養段階",
@@ -1122,10 +2738,40 @@
       "assetId": "WMB-9e7a60b4320e12"
     },
     {
+      "questionId": "BB-000029-C01",
+      "termId": "BB-000029",
+      "target": "B細胞",
+      "assetId": "WMB-5645ae96914ea9"
+    },
+    {
+      "questionId": "BB-000030-C01",
+      "termId": "BB-000030",
+      "target": "捕食者",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
       "questionId": "BB-000031-C01",
       "termId": "BB-000031",
       "target": "葉緑体",
       "assetId": "WMB-a4db77a7cee5fc"
+    },
+    {
+      "questionId": "BB-000032-C01",
+      "termId": "BB-000032",
+      "target": "ヘルパーT細胞",
+      "assetId": "WMB-79f66b018c7819"
+    },
+    {
+      "questionId": "BB-000033-C01",
+      "termId": "BB-000033",
+      "target": "被食者",
+      "assetId": "WMB-75ddc129d417e2"
+    },
+    {
+      "questionId": "BB-000035-C01",
+      "termId": "BB-000035",
+      "target": "キラーT細胞",
+      "assetId": "WMB-266f99ae97464f"
     },
     {
       "questionId": "BB-000037-C01",
@@ -1134,10 +2780,34 @@
       "assetId": "WMB-4a78a5cbddc651"
     },
     {
+      "questionId": "BB-000038-C01",
+      "termId": "BB-000038",
+      "target": "記憶細胞",
+      "assetId": "WMB-7321d8ae95f72f"
+    },
+    {
       "questionId": "BB-000044-C01",
       "termId": "BB-000044",
       "target": "食作用",
       "assetId": "WMB-2a31d56df75efe"
+    },
+    {
+      "questionId": "BB-000045-C01",
+      "termId": "BB-000045",
+      "target": "外来生物",
+      "assetId": "WMB-4d2dbd7010be35"
+    },
+    {
+      "questionId": "BB-000047-C01",
+      "termId": "BB-000047",
+      "target": "内分泌系",
+      "assetId": "WMB-89633070710771"
+    },
+    {
+      "questionId": "BB-000048-C01",
+      "termId": "BB-000048",
+      "target": "絶滅",
+      "assetId": "WMB-d09d7fb1f10295"
     },
     {
       "questionId": "BB-000049-C01",
@@ -1146,10 +2816,28 @@
       "assetId": "WMB-1baf75927de3c3"
     },
     {
+      "questionId": "BB-000050-C01",
+      "termId": "BB-000050",
+      "target": "神経系",
+      "assetId": "WMB-c43bb5bbf5be33"
+    },
+    {
+      "questionId": "BB-000051-C01",
+      "termId": "BB-000051",
+      "target": "生息地の分断",
+      "assetId": "WMB-8426d326bb71e2"
+    },
+    {
       "questionId": "BB-000052-C01",
       "termId": "BB-000052",
       "target": "核",
       "assetId": "WMB-b6c6349fd49565"
+    },
+    {
+      "questionId": "BB-000053-C01",
+      "termId": "BB-000053",
+      "target": "交感神経",
+      "assetId": "WMB-9e45841d5a6bbf"
     },
     {
       "questionId": "BB-000055-C01",
@@ -1158,16 +2846,52 @@
       "assetId": "WMB-650c11f5a398e6"
     },
     {
+      "questionId": "BB-000056-C01",
+      "termId": "BB-000056",
+      "target": "副交感神経",
+      "assetId": "WMB-c1661a7d47c826"
+    },
+    {
+      "questionId": "BB-000057-C01",
+      "termId": "BB-000057",
+      "target": "キーストーン種",
+      "assetId": "WMB-224c35ae14e113"
+    },
+    {
+      "questionId": "BB-000058-C01",
+      "termId": "BB-000058",
+      "target": "ゲノム",
+      "assetId": "WMB-572c2666b61356"
+    },
+    {
+      "questionId": "BB-000059-C01",
+      "termId": "BB-000059",
+      "target": "視床下部",
+      "assetId": "WMB-7ed64578f2d81d"
+    },
+    {
       "questionId": "BB-000061-C01",
       "termId": "BB-000061",
       "target": "DNAの二重らせん",
       "assetId": "WMB-2ed98d68513769"
     },
     {
+      "questionId": "BB-000063-C01",
+      "termId": "BB-000063",
+      "target": "植生",
+      "assetId": "WMB-3b80a4a4fd9eb7"
+    },
+    {
       "questionId": "BB-000064-C01",
       "termId": "BB-000064",
       "target": "塩基の相補性",
       "assetId": "WMB-430bfe1fc24dfa"
+    },
+    {
+      "questionId": "BB-000065-C01",
+      "termId": "BB-000065",
+      "target": "血糖濃度",
+      "assetId": "WMB-28c9ccb5200cf3"
     },
     {
       "questionId": "BB-000067-C01",
@@ -1188,6 +2912,12 @@
       "assetId": "WMB-8a2b9d259879e1"
     },
     {
+      "questionId": "BB-000071-C01",
+      "termId": "BB-000071",
+      "target": "β細胞",
+      "assetId": "WMB-7252d1f0564e42"
+    },
+    {
       "questionId": "BB-000072-C01",
       "termId": "BB-000072",
       "target": "階層構造",
@@ -1200,16 +2930,100 @@
       "assetId": "WMB-7f40a94be676d5"
     },
     {
+      "questionId": "BB-000074-C01",
+      "termId": "BB-000074",
+      "target": "α細胞",
+      "assetId": "WMB-7252d1f0564e42"
+    },
+    {
+      "questionId": "BB-000075-C01",
+      "termId": "BB-000075",
+      "target": "林冠",
+      "assetId": "WMB-cc3c6fb7294a88"
+    },
+    {
+      "questionId": "BB-000076-C01",
+      "termId": "BB-000076",
+      "target": "mRNA",
+      "assetId": "WMB-05e255262e4f99"
+    },
+    {
       "questionId": "BB-000077-C01",
       "termId": "BB-000077",
       "target": "体液性免疫",
       "assetId": "WMB-8a64dc4276b84a"
     },
     {
+      "questionId": "BB-000078-C01",
+      "termId": "BB-000078",
+      "target": "亜高木層",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "questionId": "BB-000079-C01",
+      "termId": "BB-000079",
+      "target": "タンパク質",
+      "assetId": "WMB-35bf311dc64d51"
+    },
+    {
       "questionId": "BB-000080-C01",
       "termId": "BB-000080",
       "target": "細胞性免疫",
       "assetId": "WMB-da26cfed66e636"
+    },
+    {
+      "questionId": "BB-000081-C01",
+      "termId": "BB-000081",
+      "target": "低木層",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "questionId": "BB-000082-C01",
+      "termId": "BB-000082",
+      "target": "アミノ酸",
+      "assetId": "WMB-83a640483d2caf"
+    },
+    {
+      "questionId": "BB-000083-C01",
+      "termId": "BB-000083",
+      "target": "マクロファージ",
+      "assetId": "WMB-806e110855508b"
+    },
+    {
+      "questionId": "BB-000084-C01",
+      "termId": "BB-000084",
+      "target": "草本層",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "questionId": "BB-000085-C01",
+      "termId": "BB-000085",
+      "target": "コドン",
+      "assetId": "WMB-94b09e6efb9df1"
+    },
+    {
+      "questionId": "BB-000086-C01",
+      "termId": "BB-000086",
+      "target": "樹状細胞",
+      "assetId": "WMB-8ac66587f79542"
+    },
+    {
+      "questionId": "BB-000087-C01",
+      "termId": "BB-000087",
+      "target": "林床",
+      "assetId": "WMB-677e0d2dfc0c4f"
+    },
+    {
+      "questionId": "BB-000088-C01",
+      "termId": "BB-000088",
+      "target": "遺伝子発現",
+      "assetId": "WMB-592f7250555607"
+    },
+    {
+      "questionId": "BB-000089-C01",
+      "termId": "BB-000089",
+      "target": "好中球",
+      "assetId": "WMB-56f9d4fda37be8"
     },
     {
       "questionId": "BB-000090-C01",
@@ -1224,10 +3038,40 @@
       "assetId": "WMB-05395a7fa585c2"
     },
     {
+      "questionId": "BB-000092-C01",
+      "termId": "BB-000092",
+      "target": "形質細胞",
+      "assetId": "WMB-161a24f3585cdd"
+    },
+    {
+      "questionId": "BB-000093-C01",
+      "termId": "BB-000093",
+      "target": "一次遷移",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "questionId": "BB-000094-C01",
+      "termId": "BB-000094",
+      "target": "間期",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
       "questionId": "BB-000095-C01",
       "termId": "BB-000095",
       "target": "一次応答",
       "assetId": "WMB-7321d8ae95f72f"
+    },
+    {
+      "questionId": "BB-000096-C01",
+      "termId": "BB-000096",
+      "target": "二次遷移",
+      "assetId": "WMB-a1981f087677fb"
+    },
+    {
+      "questionId": "BB-000097-C01",
+      "termId": "BB-000097",
+      "target": "分裂期",
+      "assetId": "WMB-437c7eec8059a7"
     },
     {
       "questionId": "BB-000098-C01",
@@ -1236,16 +3080,64 @@
       "assetId": "WMB-7321d8ae95f72f"
     },
     {
+      "questionId": "BB-000099-C01",
+      "termId": "BB-000099",
+      "target": "乾性遷移",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "questionId": "BB-000100-C01",
+      "termId": "BB-000100",
+      "target": "S期",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
+      "questionId": "BB-000102-C01",
+      "termId": "BB-000102",
+      "target": "湿性遷移",
+      "assetId": "WMB-c8c4be8d367b66"
+    },
+    {
       "questionId": "BB-000103-C01",
       "termId": "BB-000103",
       "target": "体細胞分裂",
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "questionId": "BB-000104-C01",
+      "termId": "BB-000104",
+      "target": "ワクチン",
+      "assetId": "WMB-2355128936e823"
+    },
+    {
+      "questionId": "BB-000105-C01",
+      "termId": "BB-000105",
+      "target": "裸地",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "questionId": "BB-000106-C01",
+      "termId": "BB-000106",
+      "target": "G1期",
+      "assetId": "WMB-437c7eec8059a7"
+    },
+    {
       "questionId": "BB-000107-C01",
       "termId": "BB-000107",
       "target": "中枢神経系",
       "assetId": "WMB-cc5d3544c5c05c"
+    },
+    {
+      "questionId": "BB-000108-C01",
+      "termId": "BB-000108",
+      "target": "先駆植物",
+      "assetId": "WMB-a47bf926917bf3"
+    },
+    {
+      "questionId": "BB-000109-C01",
+      "termId": "BB-000109",
+      "target": "G2期",
+      "assetId": "WMB-437c7eec8059a7"
     },
     {
       "questionId": "BB-000110-C01",
@@ -1266,6 +3158,12 @@
       "assetId": "WMB-8c1bbc55f4cc47"
     },
     {
+      "questionId": "BB-000113-C01",
+      "termId": "BB-000113",
+      "target": "脳幹",
+      "assetId": "WMB-7d2c816e3a7696"
+    },
+    {
       "questionId": "BB-000114-C01",
       "termId": "BB-000114",
       "target": "コケ植物",
@@ -1278,10 +3176,22 @@
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "questionId": "BB-000116-C01",
+      "termId": "BB-000116",
+      "target": "延髄",
+      "assetId": "WMB-c237cede27b79a"
+    },
+    {
       "questionId": "BB-000118-C01",
       "termId": "BB-000118",
       "target": "中期",
       "assetId": "WMB-57faae92ece01a"
+    },
+    {
+      "questionId": "BB-000120-C01",
+      "termId": "BB-000120",
+      "target": "陽樹林",
+      "assetId": "WMB-c3c46902cabf80"
     },
     {
       "questionId": "BB-000121-C01",
@@ -1290,10 +3200,40 @@
       "assetId": "WMB-57faae92ece01a"
     },
     {
+      "questionId": "BB-000122-C01",
+      "termId": "BB-000122",
+      "target": "体内環境",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "questionId": "BB-000123-C01",
+      "termId": "BB-000123",
+      "target": "混交林",
+      "assetId": "WMB-e4671705e1f4e5"
+    },
+    {
       "questionId": "BB-000124-C01",
       "termId": "BB-000124",
       "target": "終期",
       "assetId": "WMB-57faae92ece01a"
+    },
+    {
+      "questionId": "BB-000125-C01",
+      "termId": "BB-000125",
+      "target": "体液",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "questionId": "BB-000126-C01",
+      "termId": "BB-000126",
+      "target": "陰樹林",
+      "assetId": "WMB-25c7c59257725f"
+    },
+    {
+      "questionId": "BB-000127-C01",
+      "termId": "BB-000127",
+      "target": "ヌクレオチド",
+      "assetId": "WMB-5ed9ce9050b4d4"
     },
     {
       "questionId": "BB-000128-C01",
@@ -1302,10 +3242,136 @@
       "assetId": "WMB-260d4535462ee6"
     },
     {
+      "questionId": "BB-000129-C01",
+      "termId": "BB-000129",
+      "target": "極相",
+      "assetId": "WMB-9b29506325eaf9"
+    },
+    {
+      "questionId": "BB-000131-C01",
+      "termId": "BB-000131",
+      "target": "組織液",
+      "assetId": "WMB-291f2cd076acea"
+    },
+    {
+      "questionId": "BB-000132-C01",
+      "termId": "BB-000132",
+      "target": "土壌形成",
+      "assetId": "WMB-453ff2ac19fb2d"
+    },
+    {
+      "questionId": "BB-000134-C01",
+      "termId": "BB-000134",
+      "target": "リンパ液",
+      "assetId": "WMB-23857eff9c6006"
+    },
+    {
+      "questionId": "BB-000137-C01",
+      "termId": "BB-000137",
+      "target": "血しょう",
+      "assetId": "WMB-db5e4fea4146f6"
+    },
+    {
+      "questionId": "BB-000138-C01",
+      "termId": "BB-000138",
+      "target": "陽生植物",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "questionId": "BB-000140-C01",
+      "termId": "BB-000140",
+      "target": "赤血球",
+      "assetId": "WMB-b66d93c85b2faa"
+    },
+    {
+      "questionId": "BB-000141-C01",
+      "termId": "BB-000141",
+      "target": "陰生植物",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "questionId": "BB-000143-C01",
+      "termId": "BB-000143",
+      "target": "白血球",
+      "assetId": "WMB-1690f910b6d7ca"
+    },
+    {
+      "questionId": "BB-000144-C01",
+      "termId": "BB-000144",
+      "target": "陽樹",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "questionId": "BB-000145-C01",
+      "termId": "BB-000145",
+      "target": "RNA",
+      "assetId": "WMB-05e255262e4f99"
+    },
+    {
+      "questionId": "BB-000146-C01",
+      "termId": "BB-000146",
+      "target": "血小板",
+      "assetId": "WMB-8801fca23110c3"
+    },
+    {
+      "questionId": "BB-000147-C01",
+      "termId": "BB-000147",
+      "target": "陰樹",
+      "assetId": "WMB-c3c46902cabf80"
+    },
+    {
+      "questionId": "BB-000149-C01",
+      "termId": "BB-000149",
+      "target": "ヘモグロビン",
+      "assetId": "WMB-7f3e6bda5dacb9"
+    },
+    {
+      "questionId": "BB-000151-C01",
+      "termId": "BB-000151",
+      "target": "DNA塩基配列",
+      "assetId": "WMB-9ddf7535d6e3e8"
+    },
+    {
       "questionId": "BB-000152-C01",
       "termId": "BB-000152",
       "target": "血液凝固",
       "assetId": "WMB-1826d1c543d8da"
+    },
+    {
+      "questionId": "BB-000155-C01",
+      "termId": "BB-000155",
+      "target": "フィブリン",
+      "assetId": "WMB-2dfc09b92b78e9"
+    },
+    {
+      "questionId": "BB-000156-C01",
+      "termId": "BB-000156",
+      "target": "光補償点",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "questionId": "BB-000157-C01",
+      "termId": "BB-000157",
+      "target": "細胞分化",
+      "assetId": "WMB-b397fcf6252eb1"
+    },
+    {
+      "questionId": "BB-000158-C01",
+      "termId": "BB-000158",
+      "target": "血ぺい",
+      "assetId": "WMB-001604ba941b97"
+    },
+    {
+      "questionId": "BB-000159-C01",
+      "termId": "BB-000159",
+      "target": "光飽和点",
+      "assetId": "WMB-c69ab8f482f9f3"
+    },
+    {
+      "questionId": "BB-000160-C01",
+      "termId": "BB-000160",
+      "target": "遺伝子発現の選択性",
+      "assetId": "WMB-b397fcf6252eb1"
     },
     {
       "questionId": "BB-000161-C01",
@@ -1326,10 +3392,40 @@
       "assetId": "WMB-a438f0a4feb151"
     },
     {
+      "questionId": "BB-000164-C01",
+      "termId": "BB-000164",
+      "target": "グリコーゲン",
+      "assetId": "WMB-86872b0ae856c9"
+    },
+    {
+      "questionId": "BB-000166-C01",
+      "termId": "BB-000166",
+      "target": "細胞質基質",
+      "assetId": "WMB-a603e38a366f33"
+    },
+    {
+      "questionId": "BB-000167-C01",
+      "termId": "BB-000167",
+      "target": "糖尿病",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
       "questionId": "BB-000169-C01",
       "termId": "BB-000169",
       "target": "細胞壁",
       "assetId": "WMB-02fd018fd970ad"
+    },
+    {
+      "questionId": "BB-000170-C01",
+      "termId": "BB-000170",
+      "target": "アドレナリン",
+      "assetId": "WMB-1bef7a79850abc"
+    },
+    {
+      "questionId": "BB-000171-C01",
+      "termId": "BB-000171",
+      "target": "緯度分布",
+      "assetId": "WMB-ba33fae415a270"
     },
     {
       "questionId": "BB-000172-C01",
@@ -1338,10 +3434,34 @@
       "assetId": "WMB-ab6cbc4a6bc2b8"
     },
     {
+      "questionId": "BB-000173-C01",
+      "termId": "BB-000173",
+      "target": "糖質コルチコイド",
+      "assetId": "WMB-0605d584b9eea5"
+    },
+    {
+      "questionId": "BB-000174-C01",
+      "termId": "BB-000174",
+      "target": "垂直分布",
+      "assetId": "WMB-a8a9e365a0c25b"
+    },
+    {
       "questionId": "BB-000175-C01",
       "termId": "BB-000175",
       "target": "植物細胞",
       "assetId": "WMB-ab6cbc4a6bc2b8"
+    },
+    {
+      "questionId": "BB-000176-C01",
+      "termId": "BB-000176",
+      "target": "チロキシン",
+      "assetId": "WMB-c8f51c043428f1"
+    },
+    {
+      "questionId": "BB-000177-C01",
+      "termId": "BB-000177",
+      "target": "森林限界",
+      "assetId": "WMB-7a3fb9b2b05a67"
     },
     {
       "questionId": "BB-000178-C01",
@@ -1356,10 +3476,46 @@
       "assetId": "WMB-6392cb78ee8463"
     },
     {
+      "questionId": "BB-000181-C01",
+      "termId": "BB-000181",
+      "target": "原核生物",
+      "assetId": "WMB-67f163d39edbd9"
+    },
+    {
+      "questionId": "BB-000182-C01",
+      "termId": "BB-000182",
+      "target": "抗利尿ホルモン",
+      "assetId": "WMB-038873a238ff44"
+    },
+    {
+      "questionId": "BB-000183-C01",
+      "termId": "BB-000183",
+      "target": "亜熱帯多雨林",
+      "assetId": "WMB-4d98a55a2ccbc7"
+    },
+    {
+      "questionId": "BB-000184-C01",
+      "termId": "BB-000184",
+      "target": "真核生物",
+      "assetId": "WMB-50e5cab76fc161"
+    },
+    {
       "questionId": "BB-000185-C01",
       "termId": "BB-000185",
       "target": "下垂体",
       "assetId": "WMB-3daef22258c889"
+    },
+    {
+      "questionId": "BB-000186-C01",
+      "termId": "BB-000186",
+      "target": "雨緑樹林",
+      "assetId": "WMB-2ca3604bfb9510"
+    },
+    {
+      "questionId": "BB-000187-C01",
+      "termId": "BB-000187",
+      "target": "単細胞生物",
+      "assetId": "WMB-c8c36e54e7b02e"
     },
     {
       "questionId": "BB-000188-C01",
@@ -1372,6 +3528,12 @@
       "termId": "BB-000189",
       "target": "照葉樹林",
       "assetId": "WMB-fcfeaf602aa20d"
+    },
+    {
+      "questionId": "BB-000190-C01",
+      "termId": "BB-000190",
+      "target": "多細胞生物",
+      "assetId": "WMB-df0a83b2744727"
     },
     {
       "questionId": "BB-000191-C01",
@@ -1398,6 +3560,12 @@
       "assetId": "WMB-2430566872c9bb"
     },
     {
+      "questionId": "BB-000196-C01",
+      "termId": "BB-000196",
+      "target": "核様体",
+      "assetId": "WMB-22e505dcce7972"
+    },
+    {
       "questionId": "BB-000197-C01",
       "termId": "BB-000197",
       "target": "膵臓",
@@ -1416,10 +3584,22 @@
       "assetId": "WMB-b2d0175eb94435"
     },
     {
+      "questionId": "BB-000202-C01",
+      "termId": "BB-000202",
+      "target": "進化",
+      "assetId": "WMB-7fb0b0268244f5"
+    },
+    {
       "questionId": "BB-000204-C01",
       "termId": "BB-000204",
       "target": "砂漠",
       "assetId": "WMB-c9a2673e5fc533"
+    },
+    {
+      "questionId": "BB-000205-C01",
+      "termId": "BB-000205",
+      "target": "触媒作用",
+      "assetId": "WMB-d749bd88a59f9e"
     },
     {
       "questionId": "BB-000206-C01",
@@ -1434,6 +3614,18 @@
       "assetId": "WMB-e7a47612d2917b"
     },
     {
+      "questionId": "BB-000208-C01",
+      "termId": "BB-000208",
+      "target": "基質",
+      "assetId": "WMB-d749bd88a59f9e"
+    },
+    {
+      "questionId": "BB-000209-C01",
+      "termId": "BB-000209",
+      "target": "拮抗作用",
+      "assetId": "WMB-28c9ccb5200cf3"
+    },
+    {
       "questionId": "BB-000210-C01",
       "termId": "BB-000210",
       "target": "高山帯",
@@ -1446,10 +3638,106 @@
       "assetId": "WMB-d749bd88a59f9e"
     },
     {
+      "questionId": "BB-000213-C01",
+      "termId": "BB-000213",
+      "target": "亜熱帯多雨林の代表種",
+      "assetId": "WMB-dc39527a5765fd"
+    },
+    {
+      "questionId": "BB-000214-C01",
+      "termId": "BB-000214",
+      "target": "活性化エネルギー",
+      "assetId": "WMB-ddca375ca7ca98"
+    },
+    {
+      "questionId": "BB-000216-C01",
+      "termId": "BB-000216",
+      "target": "照葉樹林の代表種",
+      "assetId": "WMB-b6f3b4403b4448"
+    },
+    {
+      "questionId": "BB-000217-C01",
+      "termId": "BB-000217",
+      "target": "最適温度",
+      "assetId": "WMB-c6dccbdd57405d"
+    },
+    {
+      "questionId": "BB-000219-C01",
+      "termId": "BB-000219",
+      "target": "夏緑樹林の代表種",
+      "assetId": "WMB-eaac3986adb6f0"
+    },
+    {
+      "questionId": "BB-000220-C01",
+      "termId": "BB-000220",
+      "target": "失活",
+      "assetId": "WMB-7b3ef5a1b9d4af"
+    },
+    {
+      "questionId": "BB-000222-C01",
+      "termId": "BB-000222",
+      "target": "亜高山帯針葉樹林の代表種",
+      "assetId": "WMB-f81cdb6de680a9"
+    },
+    {
+      "questionId": "BB-000223-C01",
+      "termId": "BB-000223",
+      "target": "最適pH",
+      "assetId": "WMB-50f4c5cf2e66a6"
+    },
+    {
+      "questionId": "BB-000225-C01",
+      "termId": "BB-000225",
+      "target": "高山帯の代表種",
+      "assetId": "WMB-c38b8698294b1f"
+    },
+    {
+      "questionId": "BB-000226-C01",
+      "termId": "BB-000226",
+      "target": "カタラーゼ",
+      "assetId": "WMB-cc51258912ae2e"
+    },
+    {
       "questionId": "BB-000228-C01",
       "termId": "BB-000228",
       "target": "方形区法",
       "assetId": "WMB-0d1da17f928527"
+    },
+    {
+      "questionId": "BB-000232-C01",
+      "termId": "BB-000232",
+      "target": "ATPの加水分解",
+      "assetId": "WMB-a3c8f3789e8a04"
+    },
+    {
+      "questionId": "BB-000241-C01",
+      "termId": "BB-000241",
+      "target": "ATP合成",
+      "assetId": "WMB-e19ea3a9c2d7ad"
+    },
+    {
+      "questionId": "BB-000245-C01",
+      "termId": "BB-000245",
+      "target": "皮膚",
+      "assetId": "WMB-c1a8ac7a8c4b22"
+    },
+    {
+      "questionId": "BB-000248-C01",
+      "termId": "BB-000248",
+      "target": "粘膜",
+      "assetId": "WMB-17d0326fd41bfc"
+    },
+    {
+      "questionId": "BB-000252-C01",
+      "termId": "BB-000252",
+      "target": "個体群",
+      "assetId": "WMB-56d2d2825132c8"
+    },
+    {
+      "questionId": "BB-000255-C01",
+      "termId": "BB-000255",
+      "target": "生物群集",
+      "assetId": "WMB-9ad81c5a59829d"
     },
     {
       "questionId": "BB-000260-C01",
@@ -1458,10 +3746,58 @@
       "assetId": "WMB-36a4f07865d31d"
     },
     {
+      "questionId": "BB-000262-C01",
+      "termId": "BB-000262",
+      "target": "グルコース",
+      "assetId": "WMB-ac1924c8ce6fce"
+    },
+    {
+      "questionId": "BB-000263-C01",
+      "termId": "BB-000263",
+      "target": "炎症",
+      "assetId": "WMB-ea4dc82ccff477"
+    },
+    {
+      "questionId": "BB-000264-C01",
+      "termId": "BB-000264",
+      "target": "遺伝的多様性",
+      "assetId": "WMB-38bbc56d73d481"
+    },
+    {
+      "questionId": "BB-000265-C01",
+      "termId": "BB-000265",
+      "target": "クロロフィル",
+      "assetId": "WMB-f92c66b1292f23"
+    },
+    {
       "questionId": "BB-000266-C01",
       "termId": "BB-000266",
       "target": "抗原抗体反応",
       "assetId": "WMB-8004433328e1db"
+    },
+    {
+      "questionId": "BB-000267-C01",
+      "termId": "BB-000267",
+      "target": "生態系の多様性",
+      "assetId": "WMB-464e656169fafc"
+    },
+    {
+      "questionId": "BB-000268-C01",
+      "termId": "BB-000268",
+      "target": "核膜",
+      "assetId": "WMB-557e65d0a49fc8"
+    },
+    {
+      "questionId": "BB-000272-C01",
+      "termId": "BB-000272",
+      "target": "アレルギー",
+      "assetId": "WMB-4d79f3e5642742"
+    },
+    {
+      "questionId": "BB-000273-C01",
+      "termId": "BB-000273",
+      "target": "絶滅危惧種",
+      "assetId": "WMB-51a4596f63fa8d"
     },
     {
       "questionId": "BB-000274-C01",
@@ -1470,10 +3806,22 @@
       "assetId": "WMB-9ea4f93d084ef1"
     },
     {
+      "questionId": "BB-000277-C01",
+      "termId": "BB-000277",
+      "target": "DNA量",
+      "assetId": "WMB-05395a7fa585c2"
+    },
+    {
       "questionId": "BB-000279-C01",
       "termId": "BB-000279",
       "target": "富栄養化",
       "assetId": "WMB-29f7cbfb6f179d"
+    },
+    {
+      "questionId": "BB-000280-C01",
+      "termId": "BB-000280",
+      "target": "塩基対",
+      "assetId": "WMB-1df680258a21c7"
     },
     {
       "questionId": "BB-000281-C01",
@@ -1482,16 +3830,58 @@
       "assetId": "WMB-6d32e3fec2a742"
     },
     {
+      "questionId": "BB-000282-C01",
+      "termId": "BB-000282",
+      "target": "溶存酸素",
+      "assetId": "WMB-29f7cbfb6f179d"
+    },
+    {
+      "questionId": "BB-000283-C01",
+      "termId": "BB-000283",
+      "target": "遺伝暗号",
+      "assetId": "WMB-94b09e6efb9df1"
+    },
+    {
+      "questionId": "BB-000284-C01",
+      "termId": "BB-000284",
+      "target": "エイズ",
+      "assetId": "WMB-9dcf45a1c8ab74"
+    },
+    {
+      "questionId": "BB-000285-C01",
+      "termId": "BB-000285",
+      "target": "生活排水",
+      "assetId": "WMB-8ca3a6a12315c1"
+    },
+    {
       "questionId": "BB-000288-C01",
       "termId": "BB-000288",
       "target": "生態ピラミッド",
       "assetId": "WMB-708602421beeaf"
     },
     {
+      "questionId": "BB-000289-C01",
+      "termId": "BB-000289",
+      "target": "ポリペプチド",
+      "assetId": "WMB-f54bcd0080665a"
+    },
+    {
+      "questionId": "BB-000290-C01",
+      "termId": "BB-000290",
+      "target": "拒絶反応",
+      "assetId": "WMB-021f69109007b1"
+    },
+    {
       "questionId": "BB-000291-C01",
       "termId": "BB-000291",
       "target": "炭素循環",
       "assetId": "WMB-ec2b6fee6e5d41"
+    },
+    {
+      "questionId": "BB-000292-C01",
+      "termId": "BB-000292",
+      "target": "細胞説",
+      "assetId": "WMB-f9513e91ee75b6"
     },
     {
       "questionId": "BB-000293-C01",

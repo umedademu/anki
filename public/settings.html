@@ -6,7 +6,7 @@
     <meta name="description" content="Anki科目別学習アプリの復習・学習時間・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.137" />
+    <link rel="stylesheet" href="/styles.css?v=0.138" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.137</span>
+        <span class="app-version">v0.138</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
@@ -64,10 +64,10 @@
         <form class="routine-overtime-settings" id="routine-overtime-settings-form">
           <h3>目標達成後の復習猶予</h3>
           <p class="settings-description">
-            目標問題数へ達した時、この時間以内に復習予定の問題があれば、同じ科目のロスタイムとして復習してから次へ進みます。0分にすると使用しません。
+            目標問題数へ達した時、この時間以内に復習予定の問題があれば、待機画面を挟まず追加の復習としてすぐに出題します。0分にすると使用しません。
           </p>
           <label class="speech-setting-row" for="routine-overtime-minutes">
-            <span>復習を待つ時間</span>
+            <span>追加復習の対象時間</span>
             <span class="seconds-input">
               <input
                 id="routine-overtime-minutes"

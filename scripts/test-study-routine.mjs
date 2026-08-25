@@ -268,7 +268,7 @@ if (
   currentStudyRoutineItem(overtimeRun)?.overtimePending ||
   currentStudyRoutineItem(overtimeRun)?.completedCount !== 0
 ) {
-  throw new Error("不正解でロスタイムを開始してしまいました。");
+  throw new Error("不正解で追加復習を開始してしまいました。");
 }
 overtimeChange = recordStudyRoutineQuestion(
   overtimeRun,
@@ -285,7 +285,7 @@ if (
   !currentStudyRoutineItem(overtimeRun)?.overtimePending ||
   currentStudyRoutineItem(overtimeRun)?.completedCount !== 1
 ) {
-  throw new Error("正答側評価で目標へ達した項目をロスタイムとして維持できませんでした。");
+  throw new Error("正答側評価で目標へ達した項目を追加復習中として維持できませんでした。");
 }
 overtimeChange = recordStudyRoutineQuestion(
   overtimeRun,
@@ -301,7 +301,7 @@ if (
   overtimeChange.completedItem.completedCount !== 1 ||
   overtimeChange.completedItem.studySeconds !== 10
 ) {
-  throw new Error("ロスタイムで目標数を超えず次の項目へ進めませんでした。");
+  throw new Error("追加復習で目標数を超えず次の項目へ進めませんでした。");
 }
 
 for (let index = 2; index <= 99; index += 1) {

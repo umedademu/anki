@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.137" />
+    <link rel="stylesheet" href="/styles.css?v=0.138" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.137</span>
+        <span class="app-version">v0.138</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.138</h2>
+          <time datetime="2026-08-26">2026年8月26日</time>
+        </div>
+        <ul>
+          <li>目標達成後の対象問題を、結果画面や待機画面を挟まずそのまま続けて出題</li>
+          <li>対象となる追加復習をすべて終えた後に、項目の結果を一度だけ表示</li>
+          <li>対象問題は目標達成時点で確定し、追加の回答によって対象時間が延び続けないよう調整</li>
+          <li>画面内の呼び方を「追加復習」に統一し、復習猶予は引き続き初期値10分で変更可能</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">
@@ -44,8 +57,8 @@
           <time datetime="2026-08-25">2026年8月25日</time>
         </div>
         <ul>
-          <li>毎日の学習メニューで目標数へ達した後も、設定時間内の復習問題をロスタイムとして出題</li>
-          <li>ロスタイムでは未出題問題へ進まず、復習を目標問題数へ重複加算しないよう対応</li>
+          <li>毎日の学習メニューで目標数へ達した後も、設定時間内の問題を追加復習として出題</li>
+          <li>追加復習では未出題問題へ進まず、復習を目標問題数へ重複加算しないよう対応</li>
           <li>初期値10分の復習猶予を設定ページで変更し、Cloudflareへ保存・端末間共有できるよう対応</li>
           <li>猶予終了時刻を途中記録へ保存し、画面を閉じても対象の復習から再開できるよう対応</li>
         </ul>

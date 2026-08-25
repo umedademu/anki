@@ -506,25 +506,36 @@ function routineOvertimeCutoffAt() {
   return Number.isFinite(cutoffAt) ? cutoffAt : null;
 }
 
-function nextRoutineOvertimeReviewAt(cutoffAt = routineOvertimeCutoffAt()) {
-  if (!Number.isFinite(cutoffAt)) return null;
-  return state.sessionTasks.reduce((earliest, task) => {
-    if (state.unseenQuestionIds.has(task.questionId)) return earliest;
-    const record = state.progress.questions[task.questionId];
-    const nextReviewAt = Date.parse(record?.nextReviewAt ?? "");
-    if (
-      !record?.lastAnsweredAt ||
-      !Number.isFinite(nextReviewAt) ||
-      nextReviewAt > cutoffAt
-    ) {
-      return earliest;
-    }
-    return earliest === null ? nextReviewAt : Math.min(earliest, nextReviewAt);
-  }, null);
+function routineOvertimeReviewTasks(cutoffAt) {
+  if (!Number.isFinite(cutoffAt)) return [];
+  return state.sessionTasks
+    .filter((task) => {
+      if (state.unseenQuestionIds.has(task.questionId)) return false;
+      const record = state.progress.questions[task.questionId];
+      const nextReviewAt = Date.parse(record?.nextReviewAt ?? "");
+      return (
+        record?.lastAnsweredAt &&
+        Number.isFinite(nextReviewAt) &&
+        nextReviewAt <= cutoffAt
+      );
+    })
+    .sort((left, right) => {
+      const leftAt = Date.parse(
+        state.progress.questions[left.questionId]?.nextReviewAt ?? "",
+      );
+      const rightAt = Date.parse(
+        state.progress.questions[right.questionId]?.nextReviewAt ?? "",
+      );
+      return leftAt - rightAt;
+    })
+    .map(cloneTask);
 }
 
 function hasPendingRoutineOvertimeReview() {
-  return nextRoutineOvertimeReviewAt() !== null;
+  return (
+    routineOvertimeCutoffAt() !== null &&
+    Boolean(state.currentTask || state.queue.length > 0)
+  );
 }
 
 function clearRoutineOvertime() {
@@ -546,12 +557,12 @@ function startRoutineOvertimeIfNeeded(rating) {
     return false;
   }
   const cutoffAt = Date.now() + overtimeSeconds * 1000;
-  if (nextRoutineOvertimeReviewAt(cutoffAt) === null) return false;
+  const reviewTasks = routineOvertimeReviewTasks(cutoffAt);
+  if (reviewTasks.length === 0) return false;
   state.routineOvertimeEndsAt = new Date(cutoffAt).toISOString();
   state.activeSession = true;
   state.currentTask = null;
-  state.queue = [];
-  enqueueDueSessionTasks();
+  state.queue = reviewTasks;
   state.currentTask = state.queue.shift() ?? null;
   return true;
 }
@@ -1457,7 +1468,7 @@ function ensureUnseenTasksQueued() {
 
 function enqueueDueSessionTasks(now = new Date()) {
   if (!state.activeSession || isListeningMode()) return;
-  const overtimeCutoffAt = routineOvertimeCutoffAt();
+  if (routineOvertimeCutoffAt() !== null) return;
   const queuedIds = new Set([
     state.currentTask?.questionId,
     ...state.queue.map((task) => task.questionId),
@@ -1468,9 +1479,6 @@ function enqueueDueSessionTasks(now = new Date()) {
       return (
         record?.lastAnsweredAt &&
         !queuedIds.has(task.questionId) &&
-        (overtimeCutoffAt === null ||
-          (!state.unseenQuestionIds.has(task.questionId) &&
-            Date.parse(record.nextReviewAt ?? "") <= overtimeCutoffAt)) &&
         isQuestionDue(state.progress, task.questionId, now)
       );
     })
@@ -1483,8 +1491,6 @@ function enqueueDueSessionTasks(now = new Date()) {
 }
 
 function nextPendingRetryAt() {
-  const overtimeReviewAt = nextRoutineOvertimeReviewAt();
-  if (routineOvertimeCutoffAt() !== null) return overtimeReviewAt;
   return [...state.retryQuestionIds].reduce((earliest, questionId) => {
     const nextReviewAt = Date.parse(
       state.progress.questions[questionId]?.nextReviewAt ?? "",
@@ -1496,14 +1502,11 @@ function nextPendingRetryAt() {
 
 function schedulePendingReview() {
   clearPendingReviewTimer();
-  const hasPendingReview = routineOvertimeCutoffAt() !== null
-    ? hasPendingRoutineOvertimeReview()
-    : state.retryQuestionIds.size > 0;
   if (
     !state.activeSession ||
     isListeningMode() ||
     state.currentTask ||
-    !hasPendingReview
+    state.retryQuestionIds.size === 0
   ) {
     return;
   }
@@ -3234,8 +3237,8 @@ function updateSetupPreview() {
     const remaining = routineRemainingCount(routineItem);
     if (routineItem.overtimePending) {
       elements.startStudy.disabled = true;
-      elements.startStudy.textContent = "ロスタイム中は続きから再開";
-      elements.resumeStudy.textContent = "ロスタイムの復習を再開";
+      elements.startStudy.textContent = "追加復習中は続きから再開";
+      elements.resumeStudy.textContent = "追加の復習を再開";
     } else {
       elements.startStudy.textContent = hasSavedSession
         ? `残り${remaining}問をはじめから進める`
@@ -3265,7 +3268,7 @@ function updateSetupPreview() {
         : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
   if (routineItem?.overtimePending) {
     elements.selectionSummary.textContent =
-      "目標問題数は達成済みです。続きからロスタイムの復習を再開してください。";
+      "目標問題数は達成済みです。続きから追加の復習を再開してください。";
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
@@ -3551,23 +3554,15 @@ function renderCompletion() {
     return;
   }
   elements.completionEyebrow.textContent = "全段階完了";
-  if (
-    state.activeSession &&
-    (state.retryQuestionIds.size > 0 || hasPendingRoutineOvertimeReview())
-  ) {
+  if (state.activeSession && state.retryQuestionIds.size > 0) {
     const nextReviewAt = nextPendingRetryAt();
-    const routineOvertime = routineOvertimeCutoffAt() !== null;
-    elements.completionEyebrow.textContent = routineOvertime
-      ? "メニューのロスタイム"
-      : "全段階完了";
-    elements.completionTitle.textContent = routineOvertime
-      ? "目標達成後の復習問題を待っています"
-      : "不正解だった問題の再出題を待っています";
+    elements.completionTitle.textContent =
+      "不正解だった問題の再出題を待っています";
     elements.completionMessage.textContent = nextReviewAt
       ? `${new Intl.DateTimeFormat("ja-JP", {
           dateStyle: "medium",
           timeStyle: "short",
-        }).format(new Date(nextReviewAt))}以降に、${routineOvertime ? "ロスタイムの復習として" : "この一周の続きとして"}再出題します。アプリを閉じても進行状況は保存されます。`
+        }).format(new Date(nextReviewAt))}以降に、この一周の続きとして再出題します。アプリを閉じても進行状況は保存されます。`
       : "復習時刻を確認できませんでした。開始画面へ戻って、前回の続きから再開してください。";
     schedulePendingReview();
     renderActionControls();
@@ -4301,7 +4296,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.137｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.138｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

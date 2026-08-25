@@ -158,6 +158,15 @@ const rateCurrentQuestionBlock = app.match(
 const rateListeningQuestionBlock = app.match(
   /async function rateListeningQuestion\(rating\)[\s\S]*?async function rateCurrentQuestion/,
 )?.[0];
+const startRoutineOvertimeBlock = app.match(
+  /function startRoutineOvertimeIfNeeded\(rating\)[\s\S]*?function renderRoutineDashboard/,
+)?.[0];
+const enqueueDueSessionTasksBlock = app.match(
+  /function enqueueDueSessionTasks\(now = new Date\(\)\)[\s\S]*?function nextPendingRetryAt/,
+)?.[0];
+const renderCompletionBlock = app.match(
+  /function renderCompletion\(\)[\s\S]*?function buildQueue/,
+)?.[0];
 const studyShellClickBlock = app.match(
   /elements\.studyShell\.addEventListener\("click"[\s\S]*?window\.addEventListener\("keydown"/,
 )?.[0];
@@ -252,13 +261,17 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.137") ||
-  !app.includes("v0.137｜") ||
-  !changelog.includes("v0.137") ||
-  !settingsHtml.includes("v0.137") ||
-  !historyHtml.includes("v0.137")
+  !html.includes("v0.138") ||
+  !app.includes("v0.138｜") ||
+  !changelog.includes("v0.138") ||
+  !settingsHtml.includes("v0.138") ||
+  !historyHtml.includes("v0.138")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+const unusedOvertimeLabel = "\u30ed\u30b9\u30bf\u30a4\u30e0";
+if ([html, app, settingsHtml, changelog].some((source) => source.includes(unusedOvertimeLabel))) {
+  throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
   !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js"') ||
@@ -386,7 +399,12 @@ if (
   !app.includes("state.studyTimeEventId || undefined") ||
   !rateCurrentQuestionBlock?.includes("createRatingActivity(question.id)") ||
   !rateListeningQuestionBlock?.includes("createRatingActivity(question.id)") ||
-  !app.includes("function startRoutineOvertimeIfNeeded") ||
+  !startRoutineOvertimeBlock?.includes("routineOvertimeReviewTasks(cutoffAt)") ||
+  !startRoutineOvertimeBlock?.includes("state.queue = reviewTasks") ||
+  startRoutineOvertimeBlock?.includes("enqueueDueSessionTasks()") ||
+  !enqueueDueSessionTasksBlock?.includes("if (routineOvertimeCutoffAt() !== null) return;") ||
+  !renderCompletionBlock ||
+  renderCompletionBlock?.includes("hasPendingRoutineOvertimeReview()") ||
   !app.includes("const waitsForMemorizeRetry") ||
   !app.includes("deferCompletion: hasPendingRoutineOvertimeReview()") ||
   !cloudProgress.includes("routineOvertimeEndsAt") ||
@@ -453,7 +471,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.137"') ||
+  !html.includes('href="/styles.css?v=0.138"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

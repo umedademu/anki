@@ -100,6 +100,7 @@ import {
   createEmptyRatingCounts,
   normalizeRatingCounts,
 } from "./rating-results.js";
+import { createAudioOutput } from "./audio-output.js";
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
@@ -336,13 +337,15 @@ let studyMenuLastFocused = null;
 let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
+const audioOutput = createAudioOutput();
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
+  audioOutput,
   getSettings: loadSpeechSettings,
   getHistoryReadings: () => state.historySpeechReadings,
   onTargetChange: updateSpeechButtons,
 });
-const ratingSoundPlayer = createRatingSoundPlayer();
+const ratingSoundPlayer = createRatingSoundPlayer({ audioOutput });
 const loadedRatingSoundVersions = new Map();
 
 async function syncRatingSoundSettings(settings = {}) {
@@ -4337,7 +4340,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.140｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.141｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4864,6 +4867,7 @@ window.addEventListener("pagehide", () => {
   stopStudyClock({ includeHidden: true });
   void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
   void ratingSoundPlayer.close();
+  void audioOutput.close();
 });
 
 start();

@@ -370,7 +370,10 @@ export function createSpeechController({
     );
   }
 
-  function speak(segments, { onComplete = () => {} } = {}) {
+  function speak(
+    segments,
+    { onComplete = () => {}, onError = () => {} } = {},
+  ) {
     if (!supported) {
       return false;
     }
@@ -392,6 +395,18 @@ export function createSpeechController({
       });
     }
 
+    function failPlayback(error) {
+      if (ticket !== generation) {
+        return;
+      }
+      setCurrentTarget("");
+      onError(
+        error instanceof Error
+          ? error
+          : new Error("音声を再生できませんでした。"),
+      );
+    }
+
     function finishCloudAudio(audio, audioUrl) {
       if (activeAudio === audio) {
         activeAudio = null;
@@ -406,9 +421,18 @@ export function createSpeechController({
       revokeObjectUrl(audioUrl);
     }
 
-    function speakWithDevice(segment, settings, done, retryCount = 0) {
-      if (!deviceSupported || ticket !== generation) {
-        done();
+    function speakWithDevice(
+      segment,
+      settings,
+      done,
+      fail,
+      retryCount = 0,
+    ) {
+      if (ticket !== generation) {
+        return;
+      }
+      if (!deviceSupported) {
+        fail(new Error("端末音声を利用できません。"));
         return;
       }
       const utterance = new Utterance(segment.text);
@@ -444,7 +468,7 @@ export function createSpeechController({
         finished = true;
         continueAfterPlayback(done);
       };
-      const retryOrContinue = () => {
+      const retryOrFail = (error) => {
         if (finished || ticket !== generation) {
           return;
         }
@@ -458,24 +482,39 @@ export function createSpeechController({
         if (retryCount < 1) {
           globalThis.setTimeout(() => {
             if (ticket === generation) {
-              speakWithDevice(segment, settings, done, retryCount + 1);
+              speakWithDevice(
+                segment,
+                settings,
+                done,
+                fail,
+                retryCount + 1,
+              );
             }
           }, 0);
           return;
         }
-        continueAfterPlayback(done);
+        continueAfterPlayback(() =>
+          fail(
+            error instanceof Error
+              ? error
+              : new Error("端末音声の再生を開始できませんでした。"),
+          ),
+        );
       };
       const handleStartTimeout = () => {
         if (synthesis.speaking === true) {
           markStarted();
           return;
         }
-        retryOrContinue();
+        retryOrFail(
+          new Error("端末音声の再生を開始できませんでした。"),
+        );
       };
       utterance.onstart = markStarted;
       utterance.onboundary = markStarted;
       utterance.onend = finish;
-      utterance.onerror = retryOrContinue;
+      utterance.onerror = () =>
+        retryOrFail(new Error("端末音声の再生中に問題が発生しました。"));
       const startTimeoutMs = Number(deviceStartTimeoutMs);
       if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
         startTimer = globalThis.setTimeout(
@@ -487,14 +526,14 @@ export function createSpeechController({
         synthesis.resume?.();
         synthesis.speak(utterance);
       } catch {
-        retryOrContinue();
+        retryOrFail(new Error("端末音声の再生を開始できませんでした。"));
       }
     }
 
-    async function speakWithCloud(segment, settings, done) {
+    async function speakWithCloud(segment, settings, done, fail) {
       if (!cloudSupported || ticket !== generation) {
         onFallback(new Error("Azure音声を利用できません。"));
-        speakWithDevice(segment, settings, done);
+        speakWithDevice(segment, settings, done, fail);
         return;
       }
       try {
@@ -532,7 +571,9 @@ export function createSpeechController({
           clearStartTimer();
           finishCloudAudio(audio, audioUrl);
           onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
-          continueAfterPlayback(() => speakWithDevice(segment, settings, done));
+          continueAfterPlayback(() =>
+            speakWithDevice(segment, settings, done, fail),
+          );
         };
         audio.onplaying = clearStartTimer;
         audio.onended = finish;
@@ -554,7 +595,7 @@ export function createSpeechController({
           return;
         }
         onFallback(error instanceof Error ? error : new Error("Azure音声を利用できません。"));
-        speakWithDevice(segment, settings, done);
+        speakWithDevice(segment, settings, done, fail);
       }
     }
 
@@ -572,9 +613,9 @@ export function createSpeechController({
       setCurrentTarget(segment.target);
       const settings = normalizeSpeechSettings(getSettings());
       if (settings.source === "cloud") {
-        void speakWithCloud(segment, settings, speakNext);
+        void speakWithCloud(segment, settings, speakNext, failPlayback);
       } else {
-        speakWithDevice(segment, settings, speakNext);
+        speakWithDevice(segment, settings, speakNext, failPlayback);
       }
     }
 

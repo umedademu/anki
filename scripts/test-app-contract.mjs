@@ -243,11 +243,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.134") ||
-  !app.includes("v0.134｜") ||
-  !changelog.includes("v0.134") ||
-  !settingsHtml.includes("v0.134") ||
-  !historyHtml.includes("v0.134")
+  !html.includes("v0.135") ||
+  !app.includes("v0.135｜") ||
+  !changelog.includes("v0.135") ||
+  !settingsHtml.includes("v0.135") ||
+  !historyHtml.includes("v0.135")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -435,7 +435,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.134"') ||
+  !html.includes('href="/styles.css?v=0.135"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -927,6 +927,16 @@ if (
   !speech.includes("utterance.onboundary = markStarted") ||
   !speech.includes("synthesis.resume?.()") ||
   !speech.includes("retryCount < 1") ||
+  !speech.includes("onError = () => {}") ||
+  !speech.includes("failPlayback") ||
+  !listeningAnswerSpeechBlock?.includes(
+    "onError: () => pauseListeningAfterSpeechFailure(runId)",
+  ) ||
+  !listeningQuestionSpeechBlock?.includes(
+    "onError: () => pauseListeningAfterSpeechFailure(runId)",
+  ) ||
+  !app.includes("function pauseListeningAfterSpeechFailure(runId)") ||
+  !app.includes("音声を再生できなかったため、この問題で一時停止しました") ||
   !speech.includes("export function createHistorySpeechReadings(terms)") ||
   !speech.includes("getHistoryReadings = () => ({})") ||
   !app.includes("createHistorySpeechReadings(state.allTerms)") ||

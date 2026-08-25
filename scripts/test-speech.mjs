@@ -462,6 +462,7 @@ if (
 
 let neverStartAttempts = 0;
 let neverStartCompletions = 0;
+let neverStartErrors = 0;
 const neverStartController = createSpeechController({
   synthesis: {
     cancel() {},
@@ -479,11 +480,18 @@ const neverStartController = createSpeechController({
 });
 neverStartController.speak(
   [{ target: "answer", text: "開始できない回答" }],
-  { onComplete: () => neverStartCompletions += 1 },
+  {
+    onComplete: () => neverStartCompletions += 1,
+    onError: () => neverStartErrors += 1,
+  },
 );
 await new Promise((resolve) => setTimeout(resolve, 20));
-if (neverStartAttempts !== 2 || neverStartCompletions !== 1) {
-  throw new Error("端末音声の再試行失敗後に無期限の停止を防げませんでした。");
+if (
+  neverStartAttempts !== 2 ||
+  neverStartCompletions !== 0 ||
+  neverStartErrors !== 1
+) {
+  throw new Error("端末音声の再試行失敗を読み上げ完了として扱っています。");
 }
 
 const hangingCloudFallbackSpoken = [];
@@ -680,6 +688,35 @@ if (
   spoken.at(-1).voice !== "日本語 高品質"
 ) {
   throw new Error("Cloudflare失敗時に選択した端末音声へ切り替えられませんでした。");
+}
+
+let unavailableCloudCompletions = 0;
+let unavailableCloudErrors = 0;
+const unavailableCloudController = createSpeechController({
+  synthesis: null,
+  Utterance: null,
+  AudioPlayer: FakeAudio,
+  createObjectUrl: () => "blob:unavailable-cloud",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async () => {
+    throw new Error("自然音声を取得できません");
+  },
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    rate: 1,
+  }),
+});
+unavailableCloudController.speak(
+  [{ target: "question", text: "読み飛ばしてはいけない問題" }],
+  {
+    onComplete: () => unavailableCloudCompletions += 1,
+    onError: () => unavailableCloudErrors += 1,
+  },
+);
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (unavailableCloudCompletions !== 0 || unavailableCloudErrors !== 1) {
+  throw new Error("再生できない自然音声を読み上げ完了として扱っています。");
 }
 controller.stop();
 if (controller.currentTarget !== "" || synthesis.cancelCount < 1) {

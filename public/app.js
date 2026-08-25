@@ -2675,6 +2675,7 @@ function speakListeningAnswer(runId) {
         void advanceListening(runId);
       }, state.listeningQuestionIntervalSeconds * 1000);
     },
+    onError: () => pauseListeningAfterSpeechFailure(runId),
   });
   if (!started) {
     state.listeningTimer = window.setTimeout(() => {
@@ -2682,6 +2683,21 @@ function speakListeningAnswer(runId) {
       void advanceListening(runId);
     }, state.listeningQuestionIntervalSeconds * 1000);
   }
+}
+
+function pauseListeningAfterSpeechFailure(runId) {
+  if (
+    runId !== state.listeningRunId ||
+    state.listeningPaused ||
+    !isListeningMode()
+  ) {
+    return;
+  }
+  state.listeningPaused = true;
+  stopListeningSequence();
+  state.unlockMessage =
+    "音声を再生できなかったため、この問題で一時停止しました。画面中央を押すと、同じ問題からもう一度読み上げます。";
+  renderQuestion();
 }
 
 function beginListeningQuestion() {
@@ -2709,6 +2725,7 @@ function beginListeningQuestion() {
         speakListeningAnswer(runId);
       }, pauseSeconds * 1000);
     },
+    onError: () => pauseListeningAfterSpeechFailure(runId),
   });
   if (!started) {
     speakListeningAnswer(runId);
@@ -4158,7 +4175,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.134｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.135｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

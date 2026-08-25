@@ -101,6 +101,9 @@ const cloudProgress = await readFile(
 );
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
 const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
+const answerLineBlock = html.match(
+  /<div class="answer-line">[\s\S]*?<\/div>/,
+)?.[0];
 const speechSegmentsBlock = app.match(
   /function speechSegmentsFor\(target,[\s\S]*?function answerSpeechSequence\(/,
 )?.[0];
@@ -237,11 +240,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.128") ||
-  !app.includes("v0.128｜") ||
-  !changelog.includes("v0.128") ||
-  !settingsHtml.includes("v0.128") ||
-  !historyHtml.includes("v0.128")
+  !html.includes("v0.129") ||
+  !app.includes("v0.129｜") ||
+  !changelog.includes("v0.129") ||
+  !settingsHtml.includes("v0.129") ||
+  !historyHtml.includes("v0.129")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -425,7 +428,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.128"') ||
+  !html.includes('href="/styles.css?v=0.129"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -590,7 +593,8 @@ if (
 if (
   html.includes('class="answer-label"') ||
   html.includes('class="term-overview-label"') ||
-  !html.includes('<div class="answer-line">') ||
+  !answerLineBlock?.includes('id="answer-text"') ||
+  !answerLineBlock?.includes('id="answer-note"') ||
   html.includes("別解：") ||
   html.includes('id="accepted-panel"') ||
   styles.includes(".accepted-answer") ||
@@ -604,13 +608,21 @@ if (
   throw new Error("回答・解説の見出し撤去または横向きの文字サイズ調整が不完全です。");
 }
 if (
+  !speechSegmentsBlock ||
+  speechSegmentsBlock.includes("question.answerNote") ||
+  !styles.includes(".answer-line {") ||
+  !styles.includes("display: flex") ||
+  !styles.includes("flex: 0 1 34%") ||
+  !styles.includes("font-size: clamp(0.62rem, 1.4vw, 0.72rem)")
+) {
+  throw new Error("回答補足の右側表示または読み上げ除外が揃っていません。");
+}
+if (
   !app.includes('elements.questionCard.classList.toggle("is-vocabulary", vocabularyMode)') ||
   !styles.includes(".question-card.is-vocabulary h2") ||
   !styles.includes("font-size: clamp(1.35rem, 3.4vw, 1.62rem)") ||
   !styles.includes(".question-card.is-vocabulary #answer-text") ||
-  !styles.includes("font-size: clamp(1.35rem, 3vw, 1.5rem)") ||
-  !styles.includes(".question-card.is-vocabulary .answer-note") ||
-  !styles.includes("font-size: clamp(0.95rem, 2vw, 1rem)")
+  !styles.includes("font-size: clamp(1.35rem, 3vw, 1.5rem)")
 ) {
   throw new Error("英単語の横向き画面で問題・回答・例文を拡大する指定が不足しています。");
 }

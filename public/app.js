@@ -2259,16 +2259,11 @@ function speechSegmentsFor(target, task = state.currentTask) {
     return [
       {
         target,
-        text: [
-          getQuestionAnswerSpeechText(question, {
-            includeAcceptedAnswers,
-            preferFullName,
-            term,
-          }),
-          question.answerNote,
-        ]
-          .filter(Boolean)
-          .join("。"),
+        text: getQuestionAnswerSpeechText(question, {
+          includeAcceptedAnswers,
+          preferFullName,
+          term,
+        }),
         language: "ja-JP",
       },
     ];
@@ -4091,7 +4086,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.128｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.129｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

@@ -10,7 +10,6 @@ const productionOrigin = "https://anki-ume.vercel.app";
 const historyFields = [
   ["問題", "prompt"],
   ["回答", "answer"],
-  ["解説", "answerNote"],
   ["語呂合わせ", "yearMnemonic"],
 ];
 const remainingReadingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/u;

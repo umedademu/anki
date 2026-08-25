@@ -471,6 +471,18 @@ body.is-study-menu-open {
   line-height: 1.6;
 }
 
+.random-video-choice {
+  color: #5a3d18;
+  background: linear-gradient(135deg, #fff7df, #f6efe4);
+  border-color: rgb(139 91 26 / 22%);
+}
+
+.random-video-choice:hover,
+.random-video-choice:focus-visible {
+  background: #fff0c5;
+  border-color: rgb(139 91 26 / 38%);
+}
+
 .routine-dashboard {
   display: grid;
   margin-top: 24px;

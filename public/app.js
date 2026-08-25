@@ -79,6 +79,7 @@ import {
   continueStudyRoutineOnDate,
   createStudyRoutineRun,
   currentStudyRoutineItem,
+  drawStudyRoutineVideo,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   studyRoutineTotals,
@@ -282,6 +283,7 @@ const state = {
   routineTransition: null,
   routineVideoStartedAt: 0,
   routineVideoCompleting: false,
+  standaloneVideoMode: false,
   studyMode: "memorize",
   listeningPaused: false,
   pendingListeningActivity: null,
@@ -713,12 +715,18 @@ async function createRoutineVideoPlayer(video) {
     events: {
       onStateChange(event) {
         if (event.data === YT.PlayerState.ENDED) {
-          void completeCurrentRoutineVideo();
+          if (state.standaloneVideoMode) {
+            elements.routineVideoMessage.textContent =
+              "視聴が終わりました。別の動画を選ぶか、科目選択へ戻れます。";
+          } else {
+            void completeCurrentRoutineVideo();
+          }
         }
       },
       onError() {
-        elements.routineVideoMessage.textContent =
-          "アプリ内で再生できません。YouTubeで開くか、視聴完了ボタンで次へ進めます。";
+        elements.routineVideoMessage.textContent = state.standaloneVideoMode
+          ? "アプリ内で再生できません。YouTubeで開くか、別の動画を選んでください。"
+          : "アプリ内で再生できません。YouTubeで開くか、視聴完了ボタンで次へ進めます。";
         elements.routineVideoMessage.classList.add("is-error");
       },
     },
@@ -821,6 +829,7 @@ async function showRoutineVideoStep() {
     : assignment.video;
   state.routineVideoStartedAt = Date.now();
   state.routineVideoCompleting = false;
+  state.standaloneVideoMode = false;
   state.activeSession = false;
   state.currentTask = null;
   state.queue = [];
@@ -835,6 +844,8 @@ async function showRoutineVideoStep() {
   elements.routineVideoYoutubeLink.href =
     `https://www.youtube.com/watch?v=${video.youtubeId}`;
   elements.routineVideoComplete.disabled = false;
+  elements.routineVideoComplete.textContent = "視聴を完了して次へ";
+  elements.routineVideoHome.textContent = "トップへ戻る";
   showOnly(elements.routineVideoPanel);
   window.scrollTo({ top: 0, behavior: "smooth" });
   try {
@@ -842,6 +853,58 @@ async function showRoutineVideoStep() {
   } catch (error) {
     elements.routineVideoMessage.textContent =
       `${error.message} YouTubeで開くか、視聴完了ボタンで次へ進めます。`;
+    elements.routineVideoMessage.classList.add("is-error");
+  }
+}
+
+async function showStandaloneRandomVideo() {
+  if (!state.cloudConnected) {
+    throw new Error(
+      "設定ページでCloudflareへ接続すると、覚え歌をランダム再生できます。",
+    );
+  }
+  stopListeningSequence();
+  stopStudyClock();
+  clearPendingReviewTimer();
+  destroyRoutineVideoPlayer();
+  showOnly(elements.loadingPanel);
+  const draw = drawStudyRoutineVideo(
+    state.setupPreferences.routineVideos,
+    state.setupPreferences.routineVideoShuffle,
+  );
+  if (!draw.video) {
+    throw new Error("設定ページでランダム再生する動画を1本以上登録してください。");
+  }
+  const saved = await saveCloudStudyRoutine({
+    routineVideoShuffle: draw.videoShuffle,
+  });
+  syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+  state.inRoutine = false;
+  state.standaloneVideoMode = true;
+  state.routineVideoStartedAt = 0;
+  state.routineVideoCompleting = false;
+  state.activeSession = false;
+  state.currentTask = null;
+  state.queue = [];
+  elements.subjectName.textContent = "覚え歌";
+  elements.routineVideoEyebrow.textContent = "科目選択｜覚え歌をランダム再生";
+  elements.routineVideoTitle.textContent = draw.video.title;
+  elements.routineVideoAuthor.textContent = draw.video.authorName;
+  elements.routineVideoMessage.textContent =
+    "再生ボタンを押して動画を見てください。一巡するまで同じ動画は選ばれません。";
+  elements.routineVideoMessage.classList.remove("is-error");
+  elements.routineVideoYoutubeLink.href =
+    `https://www.youtube.com/watch?v=${draw.video.youtubeId}`;
+  elements.routineVideoComplete.disabled = false;
+  elements.routineVideoComplete.textContent = "別の動画をランダム再生";
+  elements.routineVideoHome.textContent = "科目選択へ戻る";
+  showOnly(elements.routineVideoPanel);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  try {
+    await createRoutineVideoPlayer(draw.video);
+  } catch (error) {
+    elements.routineVideoMessage.textContent =
+      `${error.message} YouTubeで開くか、別の動画を選んでください。`;
     elements.routineVideoMessage.classList.add("is-error");
   }
 }
@@ -4086,7 +4149,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.131｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.132｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4117,12 +4180,25 @@ function renderSubjectOptions() {
       button.append(title, description);
       return button;
     }),
+    (() => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "subject-choice random-video-choice";
+      button.dataset.randomVideoAction = "play";
+      const title = document.createElement("strong");
+      title.textContent = "覚え歌をランダム再生";
+      const description = document.createElement("small");
+      description.textContent = "登録動画から重複なく1本を選んで再生する";
+      button.append(title, description);
+      return button;
+    })(),
   );
 }
 
 function showSubjectSelection() {
   stopListeningSequence();
   state.inRoutine = false;
+  state.standaloneVideoMode = false;
   state.routineCompletionAction = "";
   state.routineTransition = null;
   state.activeSession = false;
@@ -4215,6 +4291,18 @@ async function start() {
 }
 
 elements.subjectOptions.addEventListener("click", (event) => {
+  const randomVideoButton = event.target.closest(
+    "button[data-random-video-action='play']",
+  );
+  if (randomVideoButton) {
+    randomVideoButton.disabled = true;
+    void showStandaloneRandomVideo().catch((error) => {
+      state.standaloneVideoMode = false;
+      elements.errorMessage.textContent = error.message;
+      showOnly(elements.errorPanel);
+    });
+    return;
+  }
   const button = event.target.closest("button[data-subject-id]");
   if (!button) return;
   state.inRoutine = false;
@@ -4238,7 +4326,16 @@ elements.continueRoutine.addEventListener("click", () => {
   void continueRoutine();
 });
 elements.routineVideoComplete.addEventListener("click", () => {
-  void completeCurrentRoutineVideo();
+  if (state.standaloneVideoMode) {
+    elements.routineVideoComplete.disabled = true;
+    void showStandaloneRandomVideo().catch((error) => {
+      state.standaloneVideoMode = false;
+      elements.errorMessage.textContent = error.message;
+      showOnly(elements.errorPanel);
+    });
+  } else {
+    void completeCurrentRoutineVideo();
+  }
 });
 elements.routineVideoHome.addEventListener("click", () => {
   showSubjectSelection();

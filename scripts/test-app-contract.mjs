@@ -240,11 +240,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.131") ||
-  !app.includes("v0.131｜") ||
-  !changelog.includes("v0.131") ||
-  !settingsHtml.includes("v0.131") ||
-  !historyHtml.includes("v0.131")
+  !html.includes("v0.132") ||
+  !app.includes("v0.132｜") ||
+  !changelog.includes("v0.132") ||
+  !settingsHtml.includes("v0.132") ||
+  !historyHtml.includes("v0.132")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -299,6 +299,10 @@ if (
   !app.includes('state.routineCompletionAction = "reselect"') ||
   !app.includes("continueStudyRoutineOnDate") ||
   !app.includes("assignStudyRoutineVideo") ||
+  !app.includes("drawStudyRoutineVideo") ||
+  !app.includes('button.dataset.randomVideoAction = "play"') ||
+  !app.includes("showStandaloneRandomVideo") ||
+  !styles.includes(".random-video-choice") ||
   !app.includes("completeCurrentRoutineVideo") ||
   !app.includes("youtube-nocookie.com") ||
   !settingsApp.includes("addCloudStudyRoutineVideo") ||
@@ -428,7 +432,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.131"') ||
+  !html.includes('href="/styles.css?v=0.132"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

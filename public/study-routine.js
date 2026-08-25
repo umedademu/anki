@@ -469,6 +469,48 @@ function shuffledIds(ids, random) {
   return shuffled;
 }
 
+export function drawStudyRoutineVideo(
+  videoLibrary,
+  videoShuffle,
+  random = Math.random,
+) {
+  const videos = normalizeStudyRoutineVideoLibrary(videoLibrary, {
+    fallbackToDefault: false,
+  });
+  const shuffle = normalizeStudyRoutineVideoShuffle(videoShuffle, videos);
+  if (videos.length === 0) {
+    return { videoShuffle: shuffle, video: null, changed: false };
+  }
+  let remainingYoutubeIds = [...shuffle.remainingYoutubeIds];
+  if (remainingYoutubeIds.length === 0) {
+    remainingYoutubeIds = shuffledIds(
+      videos.map((video) => video.youtubeId),
+      random,
+    );
+    if (
+      remainingYoutubeIds.length > 1 &&
+      remainingYoutubeIds[0] === shuffle.lastYoutubeId
+    ) {
+      const swapIndex = remainingYoutubeIds.findIndex(
+        (youtubeId) => youtubeId !== shuffle.lastYoutubeId,
+      );
+      [remainingYoutubeIds[0], remainingYoutubeIds[swapIndex]] =
+        [remainingYoutubeIds[swapIndex], remainingYoutubeIds[0]];
+    }
+  }
+  const youtubeId = remainingYoutubeIds.shift();
+  const video = videos.find((candidate) => candidate.youtubeId === youtubeId);
+  return {
+    videoShuffle: {
+      schemaVersion: 1,
+      remainingYoutubeIds,
+      lastYoutubeId: video.youtubeId,
+    },
+    video,
+    changed: true,
+  };
+}
+
 export function assignStudyRoutineVideo(
   run,
   videoLibrary,
@@ -500,25 +542,8 @@ export function assignStudyRoutineVideo(
   if (videos.length === 0) {
     return { run: normalized, videoShuffle: shuffle, video: null, changed: false };
   }
-  let remainingYoutubeIds = [...shuffle.remainingYoutubeIds];
-  if (remainingYoutubeIds.length === 0) {
-    remainingYoutubeIds = shuffledIds(
-      videos.map((video) => video.youtubeId),
-      random,
-    );
-    if (
-      remainingYoutubeIds.length > 1 &&
-      remainingYoutubeIds[0] === shuffle.lastYoutubeId
-    ) {
-      const swapIndex = remainingYoutubeIds.findIndex(
-        (youtubeId) => youtubeId !== shuffle.lastYoutubeId,
-      );
-      [remainingYoutubeIds[0], remainingYoutubeIds[swapIndex]] =
-        [remainingYoutubeIds[swapIndex], remainingYoutubeIds[0]];
-    }
-  }
-  const youtubeId = remainingYoutubeIds.shift();
-  const video = videos.find((candidate) => candidate.youtubeId === youtubeId);
+  const draw = drawStudyRoutineVideo(videos, shuffle, random);
+  const video = draw.video;
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
       ? {
@@ -531,11 +556,7 @@ export function assignStudyRoutineVideo(
   );
   return {
     run: { ...normalized, items },
-    videoShuffle: {
-      schemaVersion: 1,
-      remainingYoutubeIds,
-      lastYoutubeId: video.youtubeId,
-    },
+    videoShuffle: draw.videoShuffle,
     video,
     changed: true,
   };

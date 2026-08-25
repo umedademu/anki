@@ -7,6 +7,7 @@ import {
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
+  drawStudyRoutineVideo,
   extractYouTubeVideoId,
   migrateLegacyStudyRoutineRun,
   normalizeStudyRoutinePlan,
@@ -60,6 +61,20 @@ if (
     "_mv5r0wix3M"
 ) {
   throw new Error("指定された27本の動画またはYouTubeのURL判定が正しくありません。");
+}
+
+const standaloneDraw = drawStudyRoutineVideo(
+  defaultStudyRoutineVideos,
+  defaultStudyRoutineVideoShuffle,
+  () => 0,
+);
+if (
+  !standaloneDraw.changed ||
+  !standaloneDraw.video ||
+  standaloneDraw.videoShuffle.remainingYoutubeIds.length !== 26 ||
+  standaloneDraw.videoShuffle.lastYoutubeId !== standaloneDraw.video.youtubeId
+) {
+  throw new Error("科目選択から登録動画をランダムに1本選べませんでした。");
 }
 
 const normalizedPlan = normalizeStudyRoutinePlan([

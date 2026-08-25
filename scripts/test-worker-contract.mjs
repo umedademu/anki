@@ -94,6 +94,7 @@ for (const session of [
     session.screenStudySeconds !== 90 ||
     session.savedScreenStudySeconds !== 80 ||
     session.studyTimeEventId !== "study-time-event-1" ||
+    !session.autoSpeechEnabled ||
     !session.answerVisible
   ) {
     throw new Error("Cloudflareへ保存する一周を正規化できませんでした。");
@@ -391,7 +392,7 @@ if (
   settings.englishVoiceId !== "english-device-voice-id" ||
   settings.rate !== 3 ||
   !settings.shuffleEnabled ||
-  settings.autoSpeechEnabled ||
+  !settings.autoSpeechEnabled ||
   settings.listeningPauseSeconds !== 2.5 ||
   settings.listeningQuestionIntervalSeconds !== 1.5 ||
   settings.studyTimeLimitSeconds !== 90 ||
@@ -420,7 +421,7 @@ if (
   browserSettings.englishVoiceId !== "english-device-voice-id" ||
   browserSettings.rate !== 3 ||
   !browserSettings.shuffleEnabled ||
-  browserSettings.autoSpeechEnabled ||
+  !browserSettings.autoSpeechEnabled ||
   browserSettings.listeningPauseSeconds !== 2.5 ||
   browserSettings.listeningQuestionIntervalSeconds !== 1.5 ||
   browserSettings.studyTimeLimitSeconds !== 90 ||

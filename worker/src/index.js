@@ -424,9 +424,7 @@ function normalizeStudySession(value) {
       ? source.questionAmountMode
       : "all",
     shuffleEnabled: source.shuffleEnabled === true,
-    autoSpeechEnabled: source.autoSpeechEnabled == null
-      ? true
-      : source.autoSpeechEnabled === true,
+    autoSpeechEnabled: true,
     filters: {
       macroRegion: normalizeSetupSelection(source.filters?.macroRegion),
       regionDetail: normalizeSetupSelection(source.filters?.regionDetail),
@@ -511,8 +509,7 @@ function normalizeSettings(value) {
     englishVoiceId: String(source.englishVoiceId ?? "").slice(0, 500),
     rate: decimal(source.rate, 1, 0.7, 3),
     shuffleEnabled: source.shuffleEnabled === true,
-    autoSpeechEnabled:
-      source.autoSpeechEnabled == null ? true : source.autoSpeechEnabled === true,
+    autoSpeechEnabled: true,
     listeningPauseSeconds: decimal(source.listeningPauseSeconds, 0, 0, 60),
     listeningQuestionIntervalSeconds: decimal(
       source.listeningQuestionIntervalSeconds,
@@ -890,7 +887,7 @@ async function readState(env, datasetVersion) {
           englishVoiceId: settingsRow.english_device_voice_id,
           rate: settingsRow.speech_rate,
           shuffleEnabled: Boolean(settingsRow.shuffle_enabled),
-          autoSpeechEnabled: Boolean(settingsRow.auto_speech_enabled),
+          autoSpeechEnabled: true,
           listeningPauseSeconds: settingsRow.listening_pause_seconds,
           listeningQuestionIntervalSeconds:
             settingsRow.listening_question_interval_seconds,

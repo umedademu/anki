@@ -165,9 +165,7 @@ export function normalizeStudySession(value) {
       ? source.questionAmountMode
       : "all",
     shuffleEnabled: source.shuffleEnabled === true,
-    autoSpeechEnabled: source.autoSpeechEnabled == null
-      ? true
-      : source.autoSpeechEnabled === true,
+    autoSpeechEnabled: true,
     filters: {
       macroRegion: normalizeSetupSelection(source.filters?.macroRegion),
       regionDetail: normalizeSetupSelection(source.filters?.regionDetail),
@@ -382,10 +380,7 @@ export function normalizeSharedSettings(value) {
     ...normalizeSpeechSettings(source),
     shuffleEnabled:
       source.shuffleEnabled === true || source.shuffleEnabled === "true",
-    autoSpeechEnabled:
-      source.autoSpeechEnabled == null
-        ? true
-        : source.autoSpeechEnabled === true || source.autoSpeechEnabled === "true",
+    autoSpeechEnabled: true,
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       source.listeningPauseSeconds,
     ),

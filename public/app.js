@@ -148,8 +148,6 @@ const elements = {
     "#listening-answer-description",
   ),
   setupShuffle: document.querySelector("#setup-shuffle"),
-  setupSpeech: document.querySelector("#setup-speech"),
-  speechChoice: document.querySelector(".speech-choice"),
   selectionSummary: document.querySelector("#selection-summary"),
   resumeStudy: document.querySelector("#resume-study"),
   startStudy: document.querySelector("#start-study"),
@@ -250,7 +248,6 @@ const state = {
   savedSessions: createEmptySavedSessions(),
   answerVisible: false,
   shuffleEnabled: false,
-  autoSpeechEnabled: true,
   listeningPauseSeconds: 0,
   listeningQuestionIntervalSeconds: 0,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
@@ -768,7 +765,7 @@ function captureActiveSession() {
     selectedStage: state.selectedStage,
     questionAmountMode: state.questionAmountMode,
     shuffleEnabled: state.shuffleEnabled,
-    autoSpeechEnabled: state.autoSpeechEnabled,
+    autoSpeechEnabled: true,
     filters: selectedFilters(),
     termIds: state.terms.map((term) => term.id),
     tasks: state.sessionTasks,
@@ -902,7 +899,6 @@ function setSetupControlsFromSession(session) {
     option.checked = option.value === session.studyMode;
   }
   elements.setupShuffle.checked = session.shuffleEnabled;
-  elements.setupSpeech.checked = session.autoSpeechEnabled;
 }
 
 function restoreActiveSession(value, { updateControls = true } = {}) {
@@ -960,7 +956,6 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.selectedStage = session.selectedStage;
   state.questionAmountMode = session.questionAmountMode;
   state.shuffleEnabled = session.shuffleEnabled;
-  state.autoSpeechEnabled = session.autoSpeechEnabled;
   state.answeredThisSession = session.answeredCount;
   state.studySeconds = session.studySeconds;
   state.screenStudySeconds = Math.min(
@@ -1520,7 +1515,6 @@ async function loadProgressFromCloud() {
     state.savedSessions = createEmptySavedSessions();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
-    state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
@@ -1554,7 +1548,6 @@ async function loadProgressFromCloud() {
   }
   state.reviewSettings = normalizeReviewSettings(sessionCloudState.settings);
   state.shuffleEnabled = sessionCloudState.settings.shuffleEnabled;
-  state.autoSpeechEnabled = sessionCloudState.settings.autoSpeechEnabled;
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     sessionCloudState.settings.listeningPauseSeconds,
   );
@@ -1777,11 +1770,10 @@ function performRightSideAction(fromHalfScreen = false) {
 function queueSetupPreferenceSave() {
   const saveVersion = ++setupPreferenceSaveVersion;
   state.shuffleEnabled = elements.setupShuffle.checked;
-  state.autoSpeechEnabled = elements.setupSpeech.checked;
   state.setupPreferences = captureSetupPreferences();
   const patch = {
     shuffleEnabled: state.shuffleEnabled,
-    autoSpeechEnabled: state.autoSpeechEnabled,
+    autoSpeechEnabled: true,
     setupPreferences: state.setupPreferences,
   };
   setupPreferenceSave = setupPreferenceSave
@@ -1790,7 +1782,6 @@ function queueSetupPreferenceSave() {
       const saved = await saveCloudSettings(patch);
       if (saveVersion === setupPreferenceSaveVersion) {
         state.shuffleEnabled = saved.shuffleEnabled;
-        state.autoSpeechEnabled = saved.autoSpeechEnabled;
         syncRoutinePreferences(saved.setupPreferences);
         elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
       }
@@ -2086,7 +2077,7 @@ function preloadListeningTask(task) {
 
 function autoSpeakQuestion() {
   if (
-    state.autoSpeechEnabled &&
+    speechController.supported &&
     !isListeningMode() &&
     currentQuestionSpeechEnabled()
   ) {
@@ -2095,7 +2086,7 @@ function autoSpeakQuestion() {
 }
 
 function autoSpeakAnswerAndOverview() {
-  if (!state.autoSpeechEnabled || isListeningMode()) {
+  if (!speechController.supported || isListeningMode()) {
     return;
   }
   speechController.speak(answerSpeechSequence());
@@ -2898,8 +2889,6 @@ function configureSetup() {
   );
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
-  elements.setupSpeech.checked = state.autoSpeechEnabled;
-  elements.setupSpeech.disabled = !speechController.supported;
   elements.listeningAnswerDescription.textContent =
     "保存済みの読み上げ対象を繰り返し再生する";
   for (const option of elements.studyModeOptions) {
@@ -2909,10 +2898,6 @@ function configureSetup() {
     }
   }
   applySetupPreferences();
-  elements.speechChoice.classList.toggle(
-    "is-hidden",
-    !speechController.supported || listeningModes.has(selectedStudyMode()),
-  );
   [
     elements.questionSpeech,
     elements.answerSpeech,
@@ -3528,8 +3513,6 @@ async function beginStudy() {
   state.questionAmountMode = selectedQuestionAmountMode();
   state.studyMode = studyMode;
   state.shuffleEnabled = elements.setupShuffle.checked;
-  state.autoSpeechEnabled =
-    speechController.supported && elements.setupSpeech.checked;
   speechController.stop();
   clearPendingReviewTimer();
   if (setupMatchesSession(savedSession, selectedTerms)) {
@@ -3788,7 +3771,6 @@ async function activateDecks(deckIds) {
     state.savedSessions = createEmptySavedSessions();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
-    state.autoSpeechEnabled = true;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
@@ -3835,7 +3817,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.124｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.125｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -3932,7 +3914,6 @@ async function start() {
       try {
         const cloudState = await loadCloudState();
         state.shuffleEnabled = cloudState.settings.shuffleEnabled;
-        state.autoSpeechEnabled = cloudState.settings.autoSpeechEnabled;
         state.listeningPauseSeconds = normalizeListeningPauseSeconds(
           cloudState.settings.listeningPauseSeconds,
         );
@@ -4028,20 +4009,12 @@ for (const control of [
 }
 for (const option of elements.studyModeOptions) {
   option.addEventListener("change", () => {
-    elements.speechChoice.classList.toggle(
-      "is-hidden",
-      !speechController.supported || listeningModes.has(selectedStudyMode()),
-    );
     updateSetupPreview();
     queueVisibleSetupPreferenceSave();
   });
 }
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
-  queueVisibleSetupPreferenceSave();
-});
-elements.setupSpeech.addEventListener("change", () => {
-  state.autoSpeechEnabled = elements.setupSpeech.checked;
   queueVisibleSetupPreferenceSave();
 });
 elements.startStudy.addEventListener("click", () => void beginStudy());

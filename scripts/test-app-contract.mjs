@@ -237,10 +237,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.124") ||
-  !changelog.includes("v0.124") ||
-  !settingsHtml.includes("v0.124") ||
-  !historyHtml.includes("v0.124")
+  !html.includes("v0.125") ||
+  !app.includes("v0.125｜") ||
+  !changelog.includes("v0.125") ||
+  !settingsHtml.includes("v0.125") ||
+  !historyHtml.includes("v0.125")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -506,7 +507,9 @@ if (
   throw new Error("地学基礎Deck生成用プロンプトの暗記範囲・27列・読み規則が不足しています。");
 }
 if (
-  !html.includes('id="setup-speech"') ||
+  html.includes('id="setup-speech"') ||
+  app.includes("elements.setupSpeech") ||
+  app.includes("state.autoSpeechEnabled") ||
   !html.includes('id="question-speech"') ||
   !html.includes('id="answer-speech"') ||
   !html.includes('id="overview-speech"') ||
@@ -516,6 +519,7 @@ if (
   app.includes("getIntegratedExplanationQuestion") ||
   !app.includes("autoSpeakQuestion") ||
   !app.includes("autoSpeakAnswerAndOverview") ||
+  !app.includes("speechController.supported") ||
   !app.includes("prepareMnemonicSpeechText(yearMnemonic)") ||
   !speech.includes("export function prepareMnemonicSpeechText") ||
   !app.includes("function toggleSpeechPart(target)") ||

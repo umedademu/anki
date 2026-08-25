@@ -1,202 +1,289 @@
 const silenceGain = 0.0001;
 
+export const ratingSoundMasterVolume = 1.65;
+
+function freezePattern(notes) {
+  return Object.freeze(notes.map((note) => Object.freeze(note)));
+}
+
 export const ratingSoundPatterns = Object.freeze({
-  again: Object.freeze([
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.38,
-      glideSeconds: 0.12,
-      startFrequency: 392,
-      endFrequency: 330,
-      wave: "triangle",
-      volume: 0.11,
-    }),
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.24,
-      glideSeconds: 0.12,
-      startFrequency: 784,
-      endFrequency: 660,
-      wave: "sine",
-      volume: 0.032,
-    }),
-    Object.freeze({
-      delaySeconds: 0.1,
-      durationSeconds: 0.4,
-      glideSeconds: 0.11,
-      startFrequency: 330,
-      endFrequency: 294,
-      wave: "sine",
-      volume: 0.095,
-    }),
-  ]),
-  hard: Object.freeze([
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.36,
-      glideSeconds: 0.09,
-      startFrequency: 392,
-      endFrequency: 415,
-      wave: "triangle",
-      volume: 0.105,
-    }),
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.22,
-      glideSeconds: 0.09,
-      startFrequency: 784,
-      endFrequency: 830,
-      wave: "sine",
-      volume: 0.028,
-    }),
-    Object.freeze({
-      delaySeconds: 0.11,
-      durationSeconds: 0.44,
-      glideSeconds: 0.1,
-      startFrequency: 440,
-      endFrequency: 466,
-      wave: "sine",
-      volume: 0.1,
-    }),
-    Object.freeze({
-      delaySeconds: 0.11,
-      durationSeconds: 0.25,
-      glideSeconds: 0.1,
-      startFrequency: 880,
-      endFrequency: 932,
-      wave: "sine",
-      volume: 0.025,
-    }),
-  ]),
-  good: Object.freeze([
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.32,
-      glideSeconds: 0.09,
-      startFrequency: 523,
-      endFrequency: 587,
-      wave: "sine",
-      volume: 0.11,
-    }),
-    Object.freeze({
+  again: freezePattern([
+    {
       delaySeconds: 0,
       durationSeconds: 0.2,
-      glideSeconds: 0.09,
-      startFrequency: 1046,
+      glideSeconds: 0.05,
+      startFrequency: 659,
+      endFrequency: 587,
+      wave: "triangle",
+      volume: 0.18,
+    },
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.13,
+      glideSeconds: 0.05,
+      startFrequency: 1318,
       endFrequency: 1174,
       wave: "sine",
-      volume: 0.028,
-    }),
-    Object.freeze({
-      delaySeconds: 0.1,
-      durationSeconds: 0.38,
-      glideSeconds: 0.09,
+      volume: 0.065,
+    },
+    {
+      delaySeconds: 0.075,
+      durationSeconds: 0.44,
+      glideSeconds: 0.07,
+      startFrequency: 587,
+      endFrequency: 523,
+      wave: "triangle",
+      volume: 0.175,
+    },
+    {
+      delaySeconds: 0.075,
+      durationSeconds: 0.24,
+      glideSeconds: 0.07,
+      startFrequency: 1174,
+      endFrequency: 1046,
+      wave: "sine",
+      volume: 0.06,
+    },
+  ]),
+  hard: freezePattern([
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.2,
+      glideSeconds: 0.05,
       startFrequency: 659,
       endFrequency: 698,
-      wave: "sine",
-      volume: 0.11,
-    }),
-    Object.freeze({
-      delaySeconds: 0.1,
-      durationSeconds: 0.22,
-      glideSeconds: 0.09,
+      wave: "triangle",
+      volume: 0.18,
+    },
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.13,
+      glideSeconds: 0.05,
       startFrequency: 1318,
       endFrequency: 1396,
       wave: "sine",
-      volume: 0.026,
-    }),
-    Object.freeze({
-      delaySeconds: 0.2,
-      durationSeconds: 0.48,
-      glideSeconds: 0.12,
+      volume: 0.062,
+    },
+    {
+      delaySeconds: 0.085,
+      durationSeconds: 0.38,
+      glideSeconds: 0.06,
       startFrequency: 784,
-      endFrequency: 880,
+      endFrequency: 830,
+      wave: "triangle",
+      volume: 0.18,
+    },
+    {
+      delaySeconds: 0.085,
+      durationSeconds: 0.21,
+      glideSeconds: 0.06,
+      startFrequency: 1568,
+      endFrequency: 1660,
       wave: "sine",
-      volume: 0.12,
-    }),
-    Object.freeze({
-      delaySeconds: 0.2,
-      durationSeconds: 0.27,
-      glideSeconds: 0.12,
+      volume: 0.06,
+    },
+    {
+      delaySeconds: 0.18,
+      durationSeconds: 0.42,
+      glideSeconds: 0.07,
+      startFrequency: 932,
+      endFrequency: 988,
+      wave: "triangle",
+      volume: 0.16,
+    },
+    {
+      delaySeconds: 0.18,
+      durationSeconds: 0.24,
+      glideSeconds: 0.07,
+      startFrequency: 1864,
+      endFrequency: 1976,
+      wave: "sine",
+      volume: 0.052,
+    },
+  ]),
+  good: freezePattern([
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.18,
+      glideSeconds: 0.04,
+      startFrequency: 1046,
+      endFrequency: 1174,
+      wave: "triangle",
+      volume: 0.185,
+    },
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.11,
+      glideSeconds: 0.04,
+      startFrequency: 2092,
+      endFrequency: 2348,
+      wave: "sine",
+      volume: 0.055,
+    },
+    {
+      delaySeconds: 0.065,
+      durationSeconds: 0.2,
+      glideSeconds: 0.04,
+      startFrequency: 1318,
+      endFrequency: 1396,
+      wave: "triangle",
+      volume: 0.19,
+    },
+    {
+      delaySeconds: 0.065,
+      durationSeconds: 0.12,
+      glideSeconds: 0.04,
+      startFrequency: 2636,
+      endFrequency: 2792,
+      wave: "sine",
+      volume: 0.056,
+    },
+    {
+      delaySeconds: 0.13,
+      durationSeconds: 0.24,
+      glideSeconds: 0.05,
       startFrequency: 1568,
       endFrequency: 1760,
+      wave: "triangle",
+      volume: 0.195,
+    },
+    {
+      delaySeconds: 0.13,
+      durationSeconds: 0.14,
+      glideSeconds: 0.05,
+      startFrequency: 3136,
+      endFrequency: 3520,
       wave: "sine",
-      volume: 0.03,
-    }),
+      volume: 0.058,
+    },
+    {
+      delaySeconds: 0.205,
+      durationSeconds: 0.46,
+      glideSeconds: 0.07,
+      startFrequency: 2092,
+      endFrequency: 2348,
+      wave: "triangle",
+      volume: 0.22,
+    },
+    {
+      delaySeconds: 0.205,
+      durationSeconds: 0.27,
+      glideSeconds: 0.07,
+      startFrequency: 4184,
+      endFrequency: 4696,
+      wave: "sine",
+      volume: 0.068,
+    },
+    {
+      delaySeconds: 0.205,
+      durationSeconds: 0.46,
+      glideSeconds: 0.07,
+      startFrequency: 2636,
+      endFrequency: 2792,
+      wave: "sine",
+      volume: 0.09,
+    },
   ]),
-  easy: Object.freeze([
-    Object.freeze({
+  easy: freezePattern([
+    {
       delaySeconds: 0,
-      durationSeconds: 0.28,
-      glideSeconds: 0.08,
-      startFrequency: 523,
-      endFrequency: 659,
-      wave: "sine",
-      volume: 0.105,
-    }),
-    Object.freeze({
-      delaySeconds: 0,
-      durationSeconds: 0.17,
-      glideSeconds: 0.08,
+      durationSeconds: 0.16,
+      glideSeconds: 0.035,
       startFrequency: 1046,
-      endFrequency: 1318,
+      endFrequency: 1174,
+      wave: "triangle",
+      volume: 0.18,
+    },
+    {
+      delaySeconds: 0,
+      durationSeconds: 0.1,
+      glideSeconds: 0.035,
+      startFrequency: 2092,
+      endFrequency: 2348,
       wave: "sine",
-      volume: 0.026,
-    }),
-    Object.freeze({
-      delaySeconds: 0.075,
-      durationSeconds: 0.34,
-      glideSeconds: 0.09,
-      startFrequency: 659,
-      endFrequency: 784,
-      wave: "sine",
-      volume: 0.108,
-    }),
-    Object.freeze({
-      delaySeconds: 0.075,
-      durationSeconds: 0.19,
-      glideSeconds: 0.09,
+      volume: 0.055,
+    },
+    {
+      delaySeconds: 0.055,
+      durationSeconds: 0.18,
+      glideSeconds: 0.04,
       startFrequency: 1318,
       endFrequency: 1568,
+      wave: "triangle",
+      volume: 0.185,
+    },
+    {
+      delaySeconds: 0.055,
+      durationSeconds: 0.11,
+      glideSeconds: 0.04,
+      startFrequency: 2636,
+      endFrequency: 3136,
       wave: "sine",
-      volume: 0.027,
-    }),
-    Object.freeze({
-      delaySeconds: 0.15,
-      durationSeconds: 0.4,
-      glideSeconds: 0.1,
-      startFrequency: 784,
-      endFrequency: 1046,
-      wave: "sine",
-      volume: 0.112,
-    }),
-    Object.freeze({
-      delaySeconds: 0.15,
-      durationSeconds: 0.22,
-      glideSeconds: 0.1,
+      volume: 0.056,
+    },
+    {
+      delaySeconds: 0.11,
+      durationSeconds: 0.2,
+      glideSeconds: 0.04,
       startFrequency: 1568,
-      endFrequency: 2092,
+      endFrequency: 1760,
+      wave: "triangle",
+      volume: 0.19,
+    },
+    {
+      delaySeconds: 0.11,
+      durationSeconds: 0.12,
+      glideSeconds: 0.04,
+      startFrequency: 3136,
+      endFrequency: 3520,
       wave: "sine",
-      volume: 0.028,
-    }),
-    Object.freeze({
-      delaySeconds: 0.24,
-      durationSeconds: 0.52,
-      glideSeconds: 0.12,
-      startFrequency: 1046,
-      endFrequency: 1318,
-      wave: "sine",
-      volume: 0.118,
-    }),
-    Object.freeze({
-      delaySeconds: 0.24,
-      durationSeconds: 0.28,
-      glideSeconds: 0.12,
+      volume: 0.058,
+    },
+    {
+      delaySeconds: 0.17,
+      durationSeconds: 0.24,
+      glideSeconds: 0.05,
       startFrequency: 2092,
-      endFrequency: 2636,
+      endFrequency: 2348,
+      wave: "triangle",
+      volume: 0.2,
+    },
+    {
+      delaySeconds: 0.17,
+      durationSeconds: 0.14,
+      glideSeconds: 0.05,
+      startFrequency: 4184,
+      endFrequency: 4696,
       wave: "sine",
-      volume: 0.03,
-    }),
+      volume: 0.062,
+    },
+    {
+      delaySeconds: 0.24,
+      durationSeconds: 0.55,
+      glideSeconds: 0.075,
+      startFrequency: 2636,
+      endFrequency: 3136,
+      wave: "triangle",
+      volume: 0.225,
+    },
+    {
+      delaySeconds: 0.24,
+      durationSeconds: 0.3,
+      glideSeconds: 0.075,
+      startFrequency: 5272,
+      endFrequency: 6272,
+      wave: "sine",
+      volume: 0.07,
+    },
+    {
+      delaySeconds: 0.24,
+      durationSeconds: 0.55,
+      glideSeconds: 0.075,
+      startFrequency: 2092,
+      endFrequency: 2348,
+      wave: "sine",
+      volume: 0.12,
+    },
   ]),
 });
 
@@ -205,13 +292,39 @@ export function createRatingSoundPlayer({
     globalThis.AudioContext ?? globalThis.webkitAudioContext ?? null,
 } = {}) {
   let audioContext = null;
+  let outputNode = null;
+
+  function createOutputNode(context) {
+    const masterGain = context.createGain();
+    masterGain.gain.setValueAtTime(
+      ratingSoundMasterVolume,
+      context.currentTime,
+    );
+
+    if (typeof context.createDynamicsCompressor !== "function") {
+      masterGain.connect(context.destination);
+      return masterGain;
+    }
+
+    const compressor = context.createDynamicsCompressor();
+    compressor.threshold.setValueAtTime(-6, context.currentTime);
+    compressor.knee.setValueAtTime(10, context.currentTime);
+    compressor.ratio.setValueAtTime(10, context.currentTime);
+    compressor.attack.setValueAtTime(0.003, context.currentTime);
+    compressor.release.setValueAtTime(0.18, context.currentTime);
+    masterGain.connect(compressor);
+    compressor.connect(context.destination);
+    return masterGain;
+  }
 
   function ensureAudioContext() {
     if (audioContext?.state === "closed") {
       audioContext = null;
+      outputNode = null;
     }
     if (!audioContext && typeof AudioContextClass === "function") {
       audioContext = new AudioContextClass();
+      outputNode = createOutputNode(audioContext);
     }
     return audioContext;
   }
@@ -219,7 +332,7 @@ export function createRatingSoundPlayer({
   function scheduleNote(context, note, baseTime) {
     const startTime = baseTime + note.delaySeconds;
     const endTime = startTime + note.durationSeconds;
-    const attackEndTime = Math.min(startTime + 0.012, endTime);
+    const attackEndTime = Math.min(startTime + 0.008, endTime);
     const glideEndTime = Math.min(
       startTime + (note.glideSeconds ?? note.durationSeconds),
       endTime,
@@ -238,7 +351,7 @@ export function createRatingSoundPlayer({
     gain.gain.linearRampToValueAtTime(note.volume, attackEndTime);
     gain.gain.exponentialRampToValueAtTime(silenceGain, endTime);
     oscillator.connect(gain);
-    gain.connect(context.destination);
+    gain.connect(outputNode ?? context.destination);
     oscillator.start(startTime);
     oscillator.stop(endTime + 0.02);
     oscillator.addEventListener?.(
@@ -271,6 +384,7 @@ export function createRatingSoundPlayer({
       return true;
     } catch {
       audioContext = null;
+      outputNode = null;
       return false;
     }
   }
@@ -278,6 +392,7 @@ export function createRatingSoundPlayer({
   function close() {
     const context = audioContext;
     audioContext = null;
+    outputNode = null;
     if (!context || context.state === "closed") {
       return Promise.resolve();
     }

@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import {
   createRatingSoundPlayer,
+  ratingSoundMasterVolume,
   ratingSoundPatterns,
 } from "../public/rating-sound.js";
 
@@ -50,6 +51,14 @@ class FakeGain extends FakeAudioNode {
   gain = new FakeAudioParameter();
 }
 
+class FakeDynamicsCompressor extends FakeAudioNode {
+  threshold = new FakeAudioParameter();
+  knee = new FakeAudioParameter();
+  ratio = new FakeAudioParameter();
+  attack = new FakeAudioParameter();
+  release = new FakeAudioParameter();
+}
+
 class FakeAudioContext {
   static instances = [];
 
@@ -59,6 +68,7 @@ class FakeAudioContext {
     this.destination = new FakeAudioNode();
     this.oscillators = [];
     this.gains = [];
+    this.compressors = [];
     this.resumeCount = 0;
     FakeAudioContext.instances.push(this);
   }
@@ -73,6 +83,12 @@ class FakeAudioContext {
     const gain = new FakeGain();
     this.gains.push(gain);
     return gain;
+  }
+
+  createDynamicsCompressor() {
+    const compressor = new FakeDynamicsCompressor();
+    this.compressors.push(compressor);
+    return compressor;
   }
 
   resume() {
@@ -99,12 +115,13 @@ const distinctPatterns = new Set(
 assert.equal(distinctPatterns.size, 4);
 const allNotes = Object.values(ratingSoundPatterns).flat();
 assert.ok(allNotes.every((note) => note.glideSeconds > 0));
-assert.ok(allNotes.every((note) => note.durationSeconds >= 0.17));
+assert.ok(allNotes.every((note) => note.durationSeconds >= 0.1));
 assert.ok(
   Object.values(ratingSoundPatterns).every(
-    (pattern) => Math.max(...pattern.map((note) => note.volume)) >= 0.095,
+    (pattern) => Math.max(...pattern.map((note) => note.volume)) >= 0.16,
   ),
 );
+assert.ok(ratingSoundMasterVolume >= 1.6);
 assert.ok(
   Math.max(
     ...ratingSoundPatterns.good.map(
@@ -120,7 +137,7 @@ assert.ok(
   ) >= 0.75,
 );
 assert.ok(ratingSoundPatterns.good.length >= 6);
-assert.ok(ratingSoundPatterns.easy.length >= 8);
+assert.ok(ratingSoundPatterns.easy.length >= 10);
 
 const player = createRatingSoundPlayer({ AudioContextClass: FakeAudioContext });
 for (const rating of Object.keys(ratingSoundPatterns)) {
@@ -136,7 +153,8 @@ const expectedNoteCount = Object.values(ratingSoundPatterns).reduce(
 assert.equal(FakeAudioContext.instances.length, 1);
 assert.equal(context.resumeCount, 1);
 assert.equal(context.oscillators.length, expectedNoteCount);
-assert.equal(context.gains.length, expectedNoteCount);
+assert.equal(context.gains.length, expectedNoteCount + 1);
+assert.equal(context.compressors.length, 1);
 assert.ok(
   context.oscillators.every((oscillator) => oscillator.starts.length === 1),
 );
@@ -148,7 +166,25 @@ assert.ok(
     (oscillator) => oscillator.frequency.events.length === 3,
   ),
 );
-assert.ok(context.gains.every((gain) => gain.connections[0] === context.destination));
+const [masterGain, ...noteGains] = context.gains;
+assert.deepEqual(masterGain.gain.events[0], [
+  "set",
+  ratingSoundMasterVolume,
+  context.currentTime,
+]);
+assert.equal(masterGain.connections[0], context.compressors[0]);
+assert.equal(context.compressors[0].connections[0], context.destination);
+assert.deepEqual(context.compressors[0].threshold.events[0], [
+  "set",
+  -6,
+  context.currentTime,
+]);
+assert.deepEqual(context.compressors[0].ratio.events[0], [
+  "set",
+  10,
+  context.currentTime,
+]);
+assert.ok(noteGains.every((gain) => gain.connections[0] === masterGain));
 
 await player.close();
 assert.equal(context.state, "closed");

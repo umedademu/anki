@@ -261,11 +261,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.138") ||
-  !app.includes("v0.138｜") ||
-  !changelog.includes("v0.138") ||
-  !settingsHtml.includes("v0.138") ||
-  !historyHtml.includes("v0.138")
+  !html.includes("v0.139") ||
+  !app.includes("v0.139｜") ||
+  !changelog.includes("v0.139") ||
+  !settingsHtml.includes("v0.139") ||
+  !historyHtml.includes("v0.139")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -277,10 +277,10 @@ if (
   !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
-  !ratingSound.includes("again: Object.freeze") ||
-  !ratingSound.includes("hard: Object.freeze") ||
-  !ratingSound.includes("good: Object.freeze") ||
-  !ratingSound.includes("easy: Object.freeze")
+  !ratingSound.includes("again: freezePattern") ||
+  !ratingSound.includes("hard: freezePattern") ||
+  !ratingSound.includes("good: freezePattern") ||
+  !ratingSound.includes("easy: freezePattern")
 ) {
   throw new Error("4段階評価ごとの効果音と、暗記・聞き流しへの接続が揃っていません。");
 }
@@ -471,7 +471,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.138"') ||
+  !html.includes('href="/styles.css?v=0.139"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

@@ -2,6 +2,7 @@ import {
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
+  countsTowardStudyRoutine,
   createStudyRoutineRun,
   currentStudyRoutineItem,
   defaultStudyRoutineOvertimeSeconds,
@@ -24,6 +25,16 @@ if (
   normalizeStudyRoutineOvertimeSeconds(90_000) !== 86_400
 ) {
   throw new Error("目標達成後の復習猶予を安全な範囲へ整形できませんでした。");
+}
+if (
+  countsTowardStudyRoutine("again") ||
+  !countsTowardStudyRoutine("hard") ||
+  !countsTowardStudyRoutine("good") ||
+  !countsTowardStudyRoutine("easy") ||
+  !countsTowardStudyRoutine("") ||
+  countsTowardStudyRoutine("invalid")
+) {
+  throw new Error("毎日のメニューへ加算する回答を判定できませんでした。");
 }
 
 const expectedSubjects = [
@@ -143,9 +154,9 @@ if (
   migratedLegacyRun.run.items[1].kind !== "video" ||
   migratedLegacyRun.run.items[1].completed ||
   currentStudyRoutineItem(migratedLegacyRun.run)?.id !== "legacy-video-first" ||
-  migratedLegacyRun.run.countedQuestionKeys[0] !== "world-deck::question-1"
+  Object.hasOwn(migratedLegacyRun.run, "countedQuestionKeys")
 ) {
-  throw new Error("動画追加前から進行中のメニューへ、達成状況を保って動画を補えませんでした。");
+  throw new Error("従来の重複記録を除き、達成状況を保って動画を補えませんでした。");
 }
 
 const partiallyStartedLegacyRun = normalizeStudyRoutineRun({
@@ -189,12 +200,12 @@ let change = recordStudyRoutineQuestion(
 run = change.run;
 if (
   !change.changed ||
-  !change.counted ||
-  run.items[0].completedCount !== 1 ||
+  change.counted ||
+  run.items[0].completedCount !== 0 ||
   run.items[0].studySeconds !== 12 ||
   run.items[0].ratingCounts.again !== 1
 ) {
-  throw new Error("最初に進めた問題をメニューへ加算できませんでした。");
+  throw new Error("不正解をメニュー件数へ加算せず記録できませんでした。");
 }
 
 change = recordStudyRoutineQuestion(
@@ -208,12 +219,30 @@ change = recordStudyRoutineQuestion(
 run = change.run;
 if (
   !change.changed ||
-  change.counted ||
+  !change.counted ||
   run.items[0].completedCount !== 1 ||
   run.items[0].studySeconds !== 15 ||
   run.items[0].ratingCounts.good !== 1
 ) {
-  throw new Error("同じ問題の再出題件数または学習時間を正しく集計できませんでした。");
+  throw new Error("不正解後の正答側評価をメニューへ加算できませんでした。");
+}
+
+change = recordStudyRoutineQuestion(
+  run,
+  "world-history",
+  "world-deck-1",
+  "question-1",
+  2,
+  "hard",
+);
+run = change.run;
+if (
+  !change.counted ||
+  run.items[0].completedCount !== 2 ||
+  run.items[0].studySeconds !== 17 ||
+  run.items[0].ratingCounts.hard !== 1
+) {
+  throw new Error("同じ問題への正答側評価を回答ごとに加算できませんでした。");
 }
 
 let overtimeRun = createStudyRoutineRun(
@@ -236,10 +265,10 @@ let overtimeChange = recordStudyRoutineQuestion(
 overtimeRun = overtimeChange.run;
 if (
   overtimeChange.completedItem ||
-  !currentStudyRoutineItem(overtimeRun)?.overtimePending ||
-  currentStudyRoutineItem(overtimeRun)?.completedCount !== 1
+  currentStudyRoutineItem(overtimeRun)?.overtimePending ||
+  currentStudyRoutineItem(overtimeRun)?.completedCount !== 0
 ) {
-  throw new Error("目標達成後の復習がある項目をロスタイムとして維持できませんでした。");
+  throw new Error("不正解でロスタイムを開始してしまいました。");
 }
 overtimeChange = recordStudyRoutineQuestion(
   overtimeRun,
@@ -248,17 +277,34 @@ overtimeChange = recordStudyRoutineQuestion(
   "overtime-question",
   3,
   "good",
+  { deferCompletion: true },
+);
+overtimeRun = overtimeChange.run;
+if (
+  overtimeChange.completedItem ||
+  !currentStudyRoutineItem(overtimeRun)?.overtimePending ||
+  currentStudyRoutineItem(overtimeRun)?.completedCount !== 1
+) {
+  throw new Error("正答側評価で目標へ達した項目をロスタイムとして維持できませんでした。");
+}
+overtimeChange = recordStudyRoutineQuestion(
+  overtimeRun,
+  "world-history",
+  "world-deck-1",
+  "overtime-question",
+  2,
+  "hard",
 );
 if (
   !overtimeChange.completedItem ||
   currentStudyRoutineItem(overtimeChange.run)?.kind !== "video" ||
   overtimeChange.completedItem.completedCount !== 1 ||
-  overtimeChange.completedItem.studySeconds !== 8
+  overtimeChange.completedItem.studySeconds !== 10
 ) {
-  throw new Error("ロスタイムの復習後に件数を重ねず次の項目へ進めませんでした。");
+  throw new Error("ロスタイムで目標数を超えず次の項目へ進めませんでした。");
 }
 
-for (let index = 2; index <= 100; index += 1) {
+for (let index = 2; index <= 99; index += 1) {
   change = recordStudyRoutineQuestion(
     run,
     "world-history",
@@ -270,9 +316,10 @@ for (let index = 2; index <= 100; index += 1) {
 if (
   !change.completedItem ||
   change.completedItem.subjectId !== "world-history" ||
-  change.completedItem.studySeconds !== 15 ||
+  change.completedItem.studySeconds !== 17 ||
   change.completedItem.ratingCounts.again !== 1 ||
   change.completedItem.ratingCounts.good !== 1 ||
+  change.completedItem.ratingCounts.hard !== 1 ||
   currentStudyRoutineItem(run)?.kind !== "video" ||
   run.currentIndex !== 1
 ) {
@@ -334,10 +381,10 @@ if (
   continued.currentIndex !== 1 ||
   continued.items[0].completedCount !== 100 ||
   studyRoutineTotals(continued).target !== 2200 ||
-  studyRoutineTotals(continued).studySeconds !== 15 ||
+  studyRoutineTotals(continued).studySeconds !== 17 ||
   !normalizeStudyRoutineRun(JSON.stringify(continued))
 ) {
   throw new Error("午前4時後に前回の続きへ引き継げませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 学習後動画・27本一巡・連続防止・Cloudflare用状態を確認");
+console.log("毎日のメニュー検証完了: 回答別加算・学習後動画・27本一巡・連続防止を確認");

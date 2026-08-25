@@ -77,6 +77,7 @@ import {
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
+  countsTowardStudyRoutine,
   createStudyRoutineRun,
   currentStudyRoutineItem,
   defaultStudyRoutineOvertimeSeconds,
@@ -530,18 +531,17 @@ function clearRoutineOvertime() {
   state.routineOvertimeEndsAt = null;
 }
 
-function startRoutineOvertimeIfNeeded(questionId) {
+function startRoutineOvertimeIfNeeded(rating) {
   const item = activeRoutineItem();
   const overtimeSeconds = normalizeStudyRoutineOvertimeSeconds(
     state.studyRoutineOvertimeSeconds,
   );
-  const questionKey = `${datasetVersionForQuestion(questionId)}::${questionId}`;
   if (
     !item ||
     item.overtimePending ||
     routineRemainingCount(item) !== 1 ||
     overtimeSeconds === 0 ||
-    state.routineRun.countedQuestionKeys.includes(questionKey)
+    !countsTowardStudyRoutine(rating)
   ) {
     return false;
   }
@@ -1189,6 +1189,10 @@ function createStudyActivity(questionId, eventId = createEventId()) {
     studyMode: state.studyMode,
     questionId,
   };
+}
+
+function createRatingActivity(questionId) {
+  return createStudyActivity(questionId, state.studyTimeEventId || undefined);
 }
 
 function captureStudyTimeEntry() {
@@ -3514,7 +3518,13 @@ function renderCompletion() {
     activeRoutineItem()?.ratingCounts ?? state.ratingCounts,
   );
   const routineItem = activeRoutineItem();
-  if (routineItem && routineRemainingCount(routineItem) > 0) {
+  const waitsForMemorizeRetry =
+    !listening && state.activeSession && state.retryQuestionIds.size > 0;
+  if (
+    routineItem &&
+    routineRemainingCount(routineItem) > 0 &&
+    !waitsForMemorizeRetry
+  ) {
     state.routineCompletionAction = "reselect";
     state.routineTransition = null;
     elements.actionDock.classList.add("is-hidden");
@@ -3665,7 +3675,7 @@ async function rateListeningQuestion(rating) {
   if (state.inRoutine) {
     snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
   }
-  const activity = createStudyActivity(question.id);
+  const activity = createRatingActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
   const historyBefore = [...state.history];
@@ -3802,7 +3812,7 @@ async function rateCurrentQuestion(rating) {
   if (state.inRoutine) {
     snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
   }
-  const activity = createStudyActivity(question.id);
+  const activity = createRatingActivity(question.id);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
@@ -3828,7 +3838,7 @@ async function rateCurrentQuestion(rating) {
   ) {
     state.activeSession = false;
   }
-  startRoutineOvertimeIfNeeded(question.id);
+  startRoutineOvertimeIfNeeded(rating);
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
@@ -4291,7 +4301,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.136｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.137｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

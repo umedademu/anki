@@ -252,11 +252,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.136") ||
-  !app.includes("v0.136｜") ||
-  !changelog.includes("v0.136") ||
-  !settingsHtml.includes("v0.136") ||
-  !historyHtml.includes("v0.136")
+  !html.includes("v0.137") ||
+  !app.includes("v0.137｜") ||
+  !changelog.includes("v0.137") ||
+  !settingsHtml.includes("v0.137") ||
+  !historyHtml.includes("v0.137")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -382,7 +382,12 @@ if (
   !app.includes("async function resumeStudy()") ||
   !app.includes("function enqueueDueSessionTasks") ||
   !app.includes("function schedulePendingReview") ||
+  !app.includes("function createRatingActivity") ||
+  !app.includes("state.studyTimeEventId || undefined") ||
+  !rateCurrentQuestionBlock?.includes("createRatingActivity(question.id)") ||
+  !rateListeningQuestionBlock?.includes("createRatingActivity(question.id)") ||
   !app.includes("function startRoutineOvertimeIfNeeded") ||
+  !app.includes("const waitsForMemorizeRetry") ||
   !app.includes("deferCompletion: hasPendingRoutineOvertimeReview()") ||
   !cloudProgress.includes("routineOvertimeEndsAt") ||
   !worker.includes("routineOvertimeEndsAt") ||
@@ -448,7 +453,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.136"') ||
+  !html.includes('href="/styles.css?v=0.137"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

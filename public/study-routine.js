@@ -7,11 +7,9 @@ import {
 
 const routineIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
-const routineQuestionKeyPattern = /^[A-Za-z0-9_-]{1,100}::[A-Za-z0-9_-]{1,100}$/;
 const routineItemLimit = 100;
 const routineVideoLimit = 200;
 const routineQuestionTargetLimit = 10_000;
-const routineCountedQuestionLimit = 20_000;
 const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 
 export const defaultStudyRoutineOvertimeSeconds = 10 * 60;
@@ -303,21 +301,13 @@ export function normalizeStudyRoutineRun(value) {
     };
   });
   if (!id || !studyDate || items.length === 0) return null;
-  const countedQuestionKeys = [...new Set(
-    (Array.isArray(source.countedQuestionKeys)
-      ? source.countedQuestionKeys
-      : [])
-      .map((key) => String(key ?? ""))
-      .filter((key) => routineQuestionKeyPattern.test(key)),
-  )].slice(0, routineCountedQuestionLimit);
   const firstIncompleteIndex = items.findIndex((item) => !routineItemComplete(item));
   return {
-    schemaVersion: 2,
+    schemaVersion: 3,
     id,
     studyDate,
     currentIndex: firstIncompleteIndex < 0 ? items.length : firstIncompleteIndex,
     items,
-    countedQuestionKeys,
   };
 }
 
@@ -414,12 +404,11 @@ export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()
         },
   );
   return normalizeStudyRoutineRun({
-    schemaVersion: 2,
+    schemaVersion: 3,
     id,
     studyDate,
     currentIndex: 0,
     items,
-    countedQuestionKeys: [],
   });
 }
 
@@ -608,6 +597,11 @@ export function completeStudyRoutineVideo(run, studySeconds = 0) {
   };
 }
 
+export function countsTowardStudyRoutine(rating = "") {
+  return rating === "" ||
+    (ratingValues.includes(rating) && rating !== "again");
+}
+
 export function recordStudyRoutineQuestion(
   run,
   subjectId,
@@ -619,12 +613,14 @@ export function recordStudyRoutineQuestion(
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
-  const key = `${normalizeRoutineId(datasetVersion)}::${normalizeRoutineId(questionId)}`;
+  const normalizedDatasetVersion = normalizeRoutineId(datasetVersion);
+  const normalizedQuestionId = normalizeRoutineId(questionId);
   if (
     !normalized ||
     item?.kind !== "study" ||
     item.subjectId !== normalizeRoutineId(subjectId) ||
-    !routineQuestionKeyPattern.test(key)
+    !normalizedDatasetVersion ||
+    !normalizedQuestionId
   ) {
     return {
       run: normalized,
@@ -634,13 +630,18 @@ export function recordStudyRoutineQuestion(
       nextItem: item,
     };
   }
-  const counted = !normalized.countedQuestionKeys.includes(key);
+  const counted =
+    item.completedCount < item.questionTarget &&
+    countsTowardStudyRoutine(rating);
   const addedStudySeconds = normalizeRoutineStudySeconds(studySeconds);
   const hasRating = ratingValues.includes(rating);
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
       ? (() => {
-          const completedCount = candidate.completedCount + (counted ? 1 : 0);
+          const completedCount = Math.min(
+            candidate.questionTarget,
+            candidate.completedCount + (counted ? 1 : 0),
+          );
           return {
             ...candidate,
             completedCount,
@@ -669,9 +670,6 @@ export function recordStudyRoutineQuestion(
     ...normalized,
     currentIndex,
     items,
-    countedQuestionKeys: counted
-      ? [...normalized.countedQuestionKeys, key].slice(-routineCountedQuestionLimit)
-      : normalized.countedQuestionKeys,
   };
   return {
     run: next,

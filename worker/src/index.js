@@ -12,6 +12,17 @@ import {
   normalizeStudyRoutineOvertimeSeconds,
 } from "../../public/study-routine.js";
 import { normalizeRatingCounts } from "../../public/rating-results.js";
+import {
+  createRatingSoundMetadata,
+  defaultRatingSoundVolume,
+  maximumRatingSoundFileBytes,
+  normalizeRatingSoundContentType,
+  normalizeRatingSoundFileName,
+  normalizeRatingSoundKey,
+  normalizeRatingSounds,
+  normalizeRatingSoundVolume,
+  ratingSoundFileExtension,
+} from "../../public/rating-sound-settings.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -85,6 +96,8 @@ const defaultSettings = {
   listeningQuestionIntervalSeconds: 0,
   studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
+  ratingSoundVolume: defaultRatingSoundVolume,
+  ratingSounds: normalizeRatingSounds(),
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
 };
@@ -115,6 +128,37 @@ function audioHeaders(request, env, cacheStatus) {
   headers["Cache-Control"] = "private, max-age=604800";
   headers["X-Speech-Cache"] = cacheStatus;
   return headers;
+}
+
+function ratingSoundAudioHeaders(request, env, contentType) {
+  const headers = corsHeaders(request, env);
+  headers["Content-Type"] = contentType;
+  headers["Cache-Control"] = "private, no-store";
+  return headers;
+}
+
+export function hasExpectedRatingSoundSignature(value, contentType) {
+  const bytes = value instanceof Uint8Array ? value : new Uint8Array(value);
+  if (contentType === "audio/mpeg") {
+    return (
+      (bytes[0] === 0x49 && bytes[1] === 0x44 && bytes[2] === 0x33) ||
+      (bytes[0] === 0xff && (bytes[1] & 0xe0) === 0xe0)
+    );
+  }
+  if (contentType === "audio/wav") {
+    return (
+      bytes.length >= 12 &&
+      String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" &&
+      String.fromCharCode(...bytes.slice(8, 12)) === "WAVE"
+    );
+  }
+  if (contentType === "audio/mp4") {
+    return (
+      bytes.length >= 12 &&
+      String.fromCharCode(...bytes.slice(4, 8)) === "ftyp"
+    );
+  }
+  return false;
 }
 
 function json(request, env, payload, status = 200) {
@@ -553,6 +597,8 @@ function normalizeSettings(value) {
       1,
       maximumStudyTimeLimitSeconds,
     ),
+    ratingSoundVolume: normalizeRatingSoundVolume(source.ratingSoundVolume),
+    ratingSounds: normalizeRatingSounds(source.ratingSounds),
     speechParts: normalizeSpeechParts(source.speechParts),
     setupPreferences: normalizeSetupPreferences(source.setupPreferences),
   };
@@ -668,6 +714,109 @@ async function handleSpeech(request, env) {
   return new Response(audio, {
     headers: audioHeaders(request, env, "MISS"),
   });
+}
+
+async function handleRatingSoundRead(request, env, rating) {
+  if (!env.SPEECH_CACHE) {
+    throw new Error("Cloudflareの評価音保管先がありません。");
+  }
+  const current = (await readState(env, "__settings_only__")).settings;
+  const metadata = normalizeRatingSounds(current.ratingSounds)[rating];
+  if (!metadata) {
+    return json(request, env, { error: "この評価には独自の音が登録されていません。" }, 404);
+  }
+  const stored = await env.SPEECH_CACHE.get(metadata.storageKey);
+  if (!stored) {
+    return json(request, env, { error: "登録した評価音が見つかりません。" }, 404);
+  }
+  return new Response(stored.body, {
+    headers: ratingSoundAudioHeaders(request, env, metadata.contentType),
+  });
+}
+
+async function handleRatingSoundUpload(request, env, rating, url) {
+  if (!env.SPEECH_CACHE) {
+    throw new Error("Cloudflareの評価音保管先がありません。");
+  }
+  const contentLength = Number(request.headers.get("Content-Length"));
+  if (Number.isFinite(contentLength) && contentLength > maximumRatingSoundFileBytes) {
+    return json(request, env, { error: "評価音は1ファイル2MBまでです。" }, 413);
+  }
+  const fileName = normalizeRatingSoundFileName(
+    url.searchParams.get("name"),
+    request.headers.get("Content-Type"),
+  );
+  const contentType = normalizeRatingSoundContentType(
+    request.headers.get("Content-Type"),
+    fileName,
+  );
+  const extension = ratingSoundFileExtension(contentType);
+  if (!extension) {
+    return json(request, env, { error: "MP3・WAV・M4Aの音声を選んでください。" }, 415);
+  }
+  const audio = new Uint8Array(await request.arrayBuffer());
+  if (audio.byteLength === 0 || audio.byteLength > maximumRatingSoundFileBytes) {
+    return json(request, env, { error: "評価音は1バイト以上2MB以下にしてください。" }, 413);
+  }
+  if (!hasExpectedRatingSoundSignature(audio, contentType)) {
+    return json(request, env, { error: "選んだファイルは正しい音声形式ではありません。" }, 400);
+  }
+
+  const current = (await readState(env, "__settings_only__")).settings;
+  const currentSounds = normalizeRatingSounds(current.ratingSounds);
+  const previous = currentSounds[rating];
+  const updatedAt = new Date().toISOString();
+  const storageKey = `rating-sounds/${rating}/${crypto.randomUUID()}.${extension}`;
+  const metadata = createRatingSoundMetadata({
+    rating,
+    storageKey,
+    fileName,
+    contentType,
+    size: audio.byteLength,
+    updatedAt,
+  });
+  await env.SPEECH_CACHE.put(storageKey, audio, {
+    httpMetadata: { contentType },
+    customMetadata: {
+      kind: "rating-sound",
+      rating,
+      fileName: metadata.fileName,
+    },
+  });
+
+  let settings;
+  try {
+    settings = await saveSettings(env, {
+      ratingSounds: { ...currentSounds, [rating]: metadata },
+    });
+  } catch (error) {
+    await env.SPEECH_CACHE.delete(storageKey).catch(() => {});
+    throw error;
+  }
+  if (previous?.storageKey && previous.storageKey !== storageKey) {
+    await env.SPEECH_CACHE.delete(previous.storageKey).catch(() => {});
+  }
+  return json(request, env, {
+    ok: true,
+    sound: settings.ratingSounds[rating],
+    settings,
+  });
+}
+
+async function handleRatingSoundDelete(request, env, rating) {
+  if (!env.SPEECH_CACHE) {
+    throw new Error("Cloudflareの評価音保管先がありません。");
+  }
+  const current = (await readState(env, "__settings_only__")).settings;
+  const currentSounds = normalizeRatingSounds(current.ratingSounds);
+  const previous = currentSounds[rating];
+  const settings = await saveSettings(env, {
+    ratingSounds: { ...currentSounds, [rating]: null },
+  });
+  if (previous?.storageKey) {
+    await env.SPEECH_CACHE.delete(previous.storageKey).catch(() => {});
+  }
+  return json(request, env, { ok: true, settings });
 }
 
 async function fetchYouTubeVideoMetadata(value, env) {
@@ -882,6 +1031,7 @@ async function readState(env, datasetVersion) {
           listening_question_interval_seconds,
           study_routine_overtime_seconds,
           study_time_limit_seconds,
+          rating_sound_volume, rating_sounds_json,
           speech_parts_json, setup_preferences_json, updated_at
          FROM review_settings WHERE profile_id = 1`,
       ).first(),
@@ -954,6 +1104,8 @@ async function readState(env, datasetVersion) {
           studyRoutineOvertimeSeconds:
             settingsRow.study_routine_overtime_seconds,
           studyTimeLimitSeconds: settingsRow.study_time_limit_seconds,
+          ratingSoundVolume: settingsRow.rating_sound_volume,
+          ratingSounds: normalizeRatingSounds(settingsRow.rating_sounds_json),
           speechParts: normalizeSpeechParts(settingsRow.speech_parts_json),
           setupPreferences: normalizeSetupPreferences(
             settingsRow.setup_preferences_json,
@@ -979,8 +1131,9 @@ async function saveSettings(env, patch) {
       listening_question_interval_seconds,
       study_routine_overtime_seconds,
       study_time_limit_seconds,
+      rating_sound_volume, rating_sounds_json,
       speech_parts_json, setup_preferences_json, updated_at
-    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ) VALUES (1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(profile_id) DO UPDATE SET
       again_seconds = excluded.again_seconds,
       hard_seconds = excluded.hard_seconds,
@@ -998,6 +1151,8 @@ async function saveSettings(env, patch) {
       listening_question_interval_seconds = excluded.listening_question_interval_seconds,
       study_routine_overtime_seconds = excluded.study_routine_overtime_seconds,
       study_time_limit_seconds = excluded.study_time_limit_seconds,
+      rating_sound_volume = excluded.rating_sound_volume,
+      rating_sounds_json = excluded.rating_sounds_json,
       speech_parts_json = excluded.speech_parts_json,
       setup_preferences_json = excluded.setup_preferences_json,
       updated_at = excluded.updated_at`,
@@ -1019,6 +1174,8 @@ async function saveSettings(env, patch) {
       settings.listeningQuestionIntervalSeconds,
       settings.studyRoutineOvertimeSeconds,
       settings.studyTimeLimitSeconds,
+      settings.ratingSoundVolume,
+      JSON.stringify(settings.ratingSounds),
       JSON.stringify(settings.speechParts),
       JSON.stringify(settings.setupPreferences),
       updatedAt,
@@ -1043,6 +1200,22 @@ async function handleRequest(request, env) {
 
   if (url.pathname === "/v1/speech" && request.method === "POST") {
     return handleSpeech(request, env);
+  }
+
+  const ratingSoundMatch = url.pathname.match(
+    /^\/v1\/rating-sounds\/(again|hard|good|easy)$/,
+  );
+  if (ratingSoundMatch) {
+    const rating = normalizeRatingSoundKey(ratingSoundMatch[1]);
+    if (request.method === "GET") {
+      return handleRatingSoundRead(request, env, rating);
+    }
+    if (request.method === "PUT") {
+      return handleRatingSoundUpload(request, env, rating, url);
+    }
+    if (request.method === "DELETE") {
+      return handleRatingSoundDelete(request, env, rating);
+    }
   }
 
   if (url.pathname === "/v1/state" && request.method === "GET") {

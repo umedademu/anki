@@ -37,6 +37,7 @@ import {
   normalizeSetupPreferences,
   normalizeSpeechParts,
   normalizeStudySession,
+  requestCloudRatingSound,
   switchStudySessionMode,
   resetCloudProgress,
   requestCloudSpeech,
@@ -88,6 +89,12 @@ import {
   studyRoutineTotals,
 } from "./study-routine.js";
 import { createRatingSoundPlayer } from "./rating-sound.js";
+import {
+  defaultRatingSoundVolume,
+  normalizeRatingSounds,
+  normalizeRatingSoundVolume,
+  ratingSoundKeys,
+} from "./rating-sound-settings.js";
 import {
   addRatingCount,
   createEmptyRatingCounts,
@@ -336,6 +343,35 @@ const speechController = createSpeechController({
   onTargetChange: updateSpeechButtons,
 });
 const ratingSoundPlayer = createRatingSoundPlayer();
+const loadedRatingSoundVersions = new Map();
+
+async function syncRatingSoundSettings(settings = {}) {
+  ratingSoundPlayer.setVolume(
+    normalizeRatingSoundVolume(settings.ratingSoundVolume),
+  );
+  const sounds = normalizeRatingSounds(settings.ratingSounds);
+  await Promise.all(
+    ratingSoundKeys.map(async (rating) => {
+      const metadata = sounds[rating];
+      if (!metadata) {
+        loadedRatingSoundVersions.delete(rating);
+        ratingSoundPlayer.clearCustomSound(rating);
+        return;
+      }
+      if (loadedRatingSoundVersions.get(rating) === metadata.updatedAt) {
+        return;
+      }
+      try {
+        const audio = await requestCloudRatingSound(rating);
+        await ratingSoundPlayer.setCustomSound(rating, await audio.arrayBuffer());
+        loadedRatingSoundVersions.set(rating, metadata.updatedAt);
+      } catch {
+        loadedRatingSoundVersions.delete(rating);
+        ratingSoundPlayer.clearCustomSound(rating);
+      }
+    }),
+  );
+}
 
 const listeningModes = new Set(["listen-answer"]);
 const oneQuestionPerTermMode = "one-per-term";
@@ -1933,6 +1969,10 @@ async function loadProgressFromCloud() {
     state.studyRoutineOvertimeSeconds = defaultStudyRoutineOvertimeSeconds;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
+    await syncRatingSoundSettings({
+      ratingSoundVolume: defaultRatingSoundVolume,
+      ratingSounds: normalizeRatingSounds(),
+    });
     syncRoutinePreferences(normalizeSetupPreferences());
     state.cloudConnected = false;
     return;
@@ -1981,6 +2021,7 @@ async function loadProgressFromCloud() {
     sessionCloudState.studyDate,
   );
   saveSpeechSettings(sessionCloudState.settings);
+  await syncRatingSoundSettings(sessionCloudState.settings);
 
   for (const deck of loadedDecks) {
     const legacyProgress = readLegacyProgress(deck);
@@ -4296,7 +4337,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.139｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.140｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4426,11 +4467,20 @@ async function start() {
         );
         state.cloudConnected = true;
         saveSpeechSettings(cloudState.settings);
+        await syncRatingSoundSettings(cloudState.settings);
       } catch {
         syncRoutinePreferences(normalizeSetupPreferences());
+        await syncRatingSoundSettings({
+          ratingSoundVolume: defaultRatingSoundVolume,
+          ratingSounds: normalizeRatingSounds(),
+        });
         state.cloudConnected = false;
       }
     } else {
+      await syncRatingSoundSettings({
+        ratingSoundVolume: defaultRatingSoundVolume,
+        ratingSounds: normalizeRatingSounds(),
+      });
       state.cloudConnected = false;
     }
     showSubjectSelection();
@@ -4813,6 +4863,7 @@ document.addEventListener("visibilitychange", () => {
 window.addEventListener("pagehide", () => {
   stopStudyClock({ includeHidden: true });
   void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
+  void ratingSoundPlayer.close();
 });
 
 start();

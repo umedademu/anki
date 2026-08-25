@@ -5,14 +5,17 @@ import {
 import {
   addCloudStudyRoutineVideo,
   deleteCloudStudyRoutineVideo,
+  deleteCloudRatingSound,
   getStoredAccessKey,
   loadCloudState,
   normalizeListeningPauseSeconds,
   normalizeListeningQuestionIntervalSeconds,
   requestCloudSpeech,
+  requestCloudRatingSound,
   saveCloudSettings,
   saveCloudStudyRoutine,
   storeAccessKey,
+  uploadCloudRatingSound,
 } from "./cloud-progress.js";
 import { createSpeechController } from "./speech.js";
 import {
@@ -36,6 +39,15 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
+import { createRatingSoundPlayer } from "./rating-sound.js";
+import {
+  defaultRatingSoundVolume,
+  maximumRatingSoundFileBytes,
+  normalizeRatingSoundContentType,
+  normalizeRatingSounds,
+  normalizeRatingSoundVolume,
+  ratingSoundKeys,
+} from "./rating-sound-settings.js";
 
 const elements = {
   accessKey: document.querySelector("#access-key"),
@@ -86,6 +98,15 @@ const elements = {
   previewEnglishSpeech: document.querySelector("#preview-english-speech"),
   saveSpeechSettings: document.querySelector("#save-speech-settings"),
   speechStatus: document.querySelector("#speech-settings-status"),
+  ratingSoundList: document.querySelector("#rating-sound-list"),
+  ratingSoundVolume: document.querySelector("#rating-sound-volume"),
+  ratingSoundVolumeOutput: document.querySelector(
+    "#rating-sound-volume-output",
+  ),
+  saveRatingSoundVolume: document.querySelector(
+    "#save-rating-sound-volume",
+  ),
+  ratingSoundStatus: document.querySelector("#rating-sound-status"),
 };
 
 const fieldPairs = {
@@ -102,6 +123,9 @@ let routinePlan = normalizeStudyRoutinePlan(defaultStudyRoutinePlan);
 let routineSubjects = [];
 let routineVideos = [];
 let draggedRoutineItemId = "";
+let ratingSounds = normalizeRatingSounds();
+const pendingRatingSoundFiles = new Map();
+const ratingSoundPlayer = createRatingSoundPlayer();
 
 function readSpeechForm() {
   return normalizeSpeechSettings({
@@ -129,6 +153,105 @@ function readSharedSpeechForm() {
 function setSpeechStatus(message, isError = false) {
   elements.speechStatus.textContent = message;
   elements.speechStatus.classList.toggle("is-error", isError);
+}
+
+function setRatingSoundStatus(message, isError = false) {
+  elements.ratingSoundStatus.textContent = message;
+  elements.ratingSoundStatus.classList.toggle("is-error", isError);
+}
+
+function formatRatingSoundFileSize(bytes) {
+  return bytes >= 1024 * 1024
+    ? `${(bytes / (1024 * 1024)).toFixed(1)}MB`
+    : `${Math.max(1, Math.round(bytes / 1024))}KB`;
+}
+
+function ratingSoundRow(rating) {
+  return elements.ratingSoundList.querySelector(
+    `[data-rating-sound="${rating}"]`,
+  );
+}
+
+function updateRatingSoundVolumeOutput() {
+  const percent = Number(elements.ratingSoundVolume.value);
+  elements.ratingSoundVolumeOutput.value = `${percent}%`;
+  ratingSoundPlayer.setVolume(percent / 100);
+}
+
+function renderRatingSoundNames() {
+  for (const rating of ratingSoundKeys) {
+    const row = ratingSoundRow(rating);
+    const name = row?.querySelector("[data-rating-sound-name]");
+    if (!name) continue;
+    const pending = pendingRatingSoundFiles.get(rating);
+    const saved = ratingSounds[rating];
+    name.textContent = pending
+      ? `選択中：${pending.name}（まだ未登録）`
+      : saved
+        ? `登録済み：${saved.fileName}（${formatRatingSoundFileSize(saved.size)}）`
+        : "初期音を使用中";
+    name.title = name.textContent;
+  }
+}
+
+function fillRatingSoundSettings(settings) {
+  ratingSounds = normalizeRatingSounds(settings?.ratingSounds);
+  const volume = normalizeRatingSoundVolume(settings?.ratingSoundVolume);
+  elements.ratingSoundVolume.value = String(Math.round(volume * 100));
+  updateRatingSoundVolumeOutput();
+  renderRatingSoundNames();
+}
+
+async function loadConfiguredRatingSounds(settings) {
+  pendingRatingSoundFiles.clear();
+  fillRatingSoundSettings(settings);
+  const failures = [];
+  let loadedCount = 0;
+  await Promise.all(
+    ratingSoundKeys.map(async (rating) => {
+      ratingSoundPlayer.clearCustomSound(rating);
+      if (!ratingSounds[rating]) return;
+      try {
+        const audio = await requestCloudRatingSound(rating);
+        await ratingSoundPlayer.setCustomSound(rating, await audio.arrayBuffer());
+        loadedCount += 1;
+      } catch (error) {
+        failures.push(error.message);
+      }
+    }),
+  );
+  if (failures.length > 0) {
+    setRatingSoundStatus(
+      `一部の登録音を読み込めなかったため、初期音を使います。${failures[0]}`,
+      true,
+    );
+    return;
+  }
+  setRatingSoundStatus(
+    loadedCount > 0
+      ? `Cloudflareから${loadedCount}種類の登録音を読み込みました。`
+      : "現在は4種類とも初期音を使用しています。",
+  );
+}
+
+async function prepareRatingSoundFile(rating, file) {
+  if (!file) return;
+  const contentType = normalizeRatingSoundContentType(file.type, file.name);
+  if (!contentType) {
+    throw new Error("MP3・WAV・M4Aの音声を選んでください。");
+  }
+  if (file.size < 1 || file.size > maximumRatingSoundFileBytes) {
+    throw new Error("評価音は1ファイル2MBまでです。");
+  }
+  const decoded = await ratingSoundPlayer.setCustomSound(
+    rating,
+    await file.arrayBuffer(),
+  );
+  pendingRatingSoundFiles.set(rating, file);
+  renderRatingSoundNames();
+  setRatingSoundStatus(
+    `「${file.name}」を確認しました（${decoded.duration.toFixed(2)}秒）。音を試してから「登録」を押してください。`,
+  );
 }
 
 function setStudyTimeStatus(message, isError = false) {
@@ -302,6 +425,8 @@ function setBusy(busy) {
   elements.saveStudyTimeSettings.disabled = busy;
   elements.saveRoutineOvertimeSettings.disabled = busy;
   elements.saveSpeechSettings.disabled = busy;
+  elements.saveRatingSoundVolume.disabled = busy;
+  elements.ratingSoundVolume.disabled = busy;
   elements.saveRoutine.disabled = busy || routinePlan.length === 0;
   elements.addRoutineItem.disabled = busy;
   elements.addRoutineVideoItem.disabled = busy;
@@ -309,6 +434,11 @@ function setBusy(busy) {
   elements.routineVideoUrl.disabled = busy;
   for (const button of elements.routineVideoList.querySelectorAll("button")) {
     button.disabled = busy;
+  }
+  for (const control of elements.ratingSoundList.querySelectorAll(
+    "button, input",
+  )) {
+    control.disabled = busy;
   }
 }
 
@@ -556,6 +686,7 @@ async function connect() {
     fillSpeechForm(cloudState.settings);
     fillRoutinePlan(cloudState.settings.setupPreferences.routinePlan);
     fillRoutineVideos(cloudState.settings.setupPreferences.routineVideos);
+    await loadConfiguredRatingSounds(cloudState.settings);
     elements.accessKey.value = "";
     elements.accessKey.placeholder = "保存済み";
     setStatus("Cloudflareへ接続しました。学習記録と設定を端末間で共有します。");
@@ -831,8 +962,105 @@ elements.saveSpeechSettings.addEventListener("click", async () => {
   }
 });
 
+elements.ratingSoundVolume.addEventListener(
+  "input",
+  updateRatingSoundVolumeOutput,
+);
+elements.saveRatingSoundVolume.addEventListener("click", async () => {
+  setBusy(true);
+  try {
+    const saved = await saveCloudSettings({
+      ratingSoundVolume: normalizeRatingSoundVolume(
+        Number(elements.ratingSoundVolume.value) / 100,
+      ),
+    });
+    fillRatingSoundSettings(saved);
+    setRatingSoundStatus("効果音の音量をCloudflareへ保存しました。");
+  } catch (error) {
+    setRatingSoundStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
+
+elements.ratingSoundList.addEventListener("change", async (event) => {
+  const input = event.target.closest("[data-rating-sound-file]");
+  if (!input) return;
+  const rating = input.dataset.ratingSoundFile;
+  setBusy(true);
+  try {
+    await prepareRatingSoundFile(rating, input.files?.[0]);
+  } catch (error) {
+    input.value = "";
+    setRatingSoundStatus(error.message, true);
+  } finally {
+    setBusy(false);
+  }
+});
+
+elements.ratingSoundList.addEventListener("click", async (event) => {
+  const button = event.target.closest("[data-rating-sound-action]");
+  const row = event.target.closest("[data-rating-sound]");
+  if (!button || !row) return;
+  const rating = row.dataset.ratingSound;
+  const action = button.dataset.ratingSoundAction;
+  if (action === "preview") {
+    if (!ratingSoundPlayer.play(rating)) {
+      setRatingSoundStatus("この端末では効果音を再生できません。", true);
+    } else {
+      setRatingSoundStatus("選んだ音量で試聴しています。");
+    }
+    return;
+  }
+  if (action === "upload") {
+    const file = pendingRatingSoundFiles.get(rating);
+    if (!file) {
+      setRatingSoundStatus("先に登録する音声ファイルを選んでください。", true);
+      return;
+    }
+    setBusy(true);
+    try {
+      const saved = await uploadCloudRatingSound(rating, file);
+      pendingRatingSoundFiles.delete(rating);
+      row.querySelector("[data-rating-sound-file]").value = "";
+      fillRatingSoundSettings(saved.settings);
+      setRatingSoundStatus(`「${file.name}」をCloudflareへ登録しました。`);
+    } catch (error) {
+      setRatingSoundStatus(error.message, true);
+    } finally {
+      setBusy(false);
+    }
+    return;
+  }
+  if (action === "reset") {
+    if (!ratingSounds[rating] && !pendingRatingSoundFiles.has(rating)) {
+      setRatingSoundStatus("この評価はすでに初期音です。");
+      return;
+    }
+    if (!window.confirm("この評価の登録音を削除し、初期音へ戻しますか？")) {
+      return;
+    }
+    setBusy(true);
+    try {
+      const saved = await deleteCloudRatingSound(rating);
+      pendingRatingSoundFiles.delete(rating);
+      ratingSoundPlayer.clearCustomSound(rating);
+      row.querySelector("[data-rating-sound-file]").value = "";
+      fillRatingSoundSettings(saved);
+      setRatingSoundStatus("登録音を削除し、初期音へ戻しました。");
+    } catch (error) {
+      setRatingSoundStatus(error.message, true);
+    } finally {
+      setBusy(false);
+    }
+  }
+});
+
 globalThis.speechSynthesis?.addEventListener?.("voiceschanged", populateDeviceVoices);
-window.addEventListener("pagehide", () => previewController.stop());
+window.addEventListener("pagehide", () => {
+  previewController.stop();
+  void ratingSoundPlayer.close();
+});
 
 fillForm(defaultReviewSettings);
 fillStudyTimeForm({ studyTimeLimitSeconds: defaultStudyTimeLimitSeconds });
@@ -841,6 +1069,10 @@ fillRoutineOvertimeForm({
 });
 fillRoutinePlan(defaultStudyRoutinePlan);
 fillRoutineVideos();
+fillRatingSoundSettings({
+  ratingSoundVolume: defaultRatingSoundVolume,
+  ratingSounds: normalizeRatingSounds(),
+});
 populateAzureVoices();
 fillSpeechForm(speechSettings);
 void loadRoutineSubjects().catch((error) => {

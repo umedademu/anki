@@ -1,3 +1,9 @@
+import {
+  maximumRatingSoundDurationSeconds,
+  normalizeRatingSoundKey,
+  normalizeRatingSoundVolume,
+} from "./rating-sound-settings.js";
+
 const silenceGain = 0.0001;
 
 export const ratingSoundMasterVolume = 1.65;
@@ -290,20 +296,32 @@ export const ratingSoundPatterns = Object.freeze({
 export function createRatingSoundPlayer({
   AudioContextClass =
     globalThis.AudioContext ?? globalThis.webkitAudioContext ?? null,
+  initialVolume = 1,
 } = {}) {
   let audioContext = null;
-  let outputNode = null;
+  let outputNodes = null;
+  let volume = normalizeRatingSoundVolume(initialVolume);
+  const customBuffers = new Map();
 
-  function createOutputNode(context) {
-    const masterGain = context.createGain();
-    masterGain.gain.setValueAtTime(
-      ratingSoundMasterVolume,
+  function applyOutputVolume(context) {
+    if (!outputNodes) return;
+    outputNodes.builtIn.gain.setValueAtTime(
+      ratingSoundMasterVolume * volume,
       context.currentTime,
     );
+    outputNodes.custom.gain.setValueAtTime(volume, context.currentTime);
+  }
+
+  function createOutputNodes(context) {
+    const builtIn = context.createGain();
+    const custom = context.createGain();
 
     if (typeof context.createDynamicsCompressor !== "function") {
-      masterGain.connect(context.destination);
-      return masterGain;
+      builtIn.connect(context.destination);
+      custom.connect(context.destination);
+      outputNodes = { builtIn, custom };
+      applyOutputVolume(context);
+      return outputNodes;
     }
 
     const compressor = context.createDynamicsCompressor();
@@ -312,19 +330,22 @@ export function createRatingSoundPlayer({
     compressor.ratio.setValueAtTime(10, context.currentTime);
     compressor.attack.setValueAtTime(0.003, context.currentTime);
     compressor.release.setValueAtTime(0.18, context.currentTime);
-    masterGain.connect(compressor);
+    builtIn.connect(compressor);
+    custom.connect(compressor);
     compressor.connect(context.destination);
-    return masterGain;
+    outputNodes = { builtIn, custom };
+    applyOutputVolume(context);
+    return outputNodes;
   }
 
   function ensureAudioContext() {
     if (audioContext?.state === "closed") {
       audioContext = null;
-      outputNode = null;
+      outputNodes = null;
     }
     if (!audioContext && typeof AudioContextClass === "function") {
       audioContext = new AudioContextClass();
-      outputNode = createOutputNode(audioContext);
+      createOutputNodes(audioContext);
     }
     return audioContext;
   }
@@ -351,7 +372,7 @@ export function createRatingSoundPlayer({
     gain.gain.linearRampToValueAtTime(note.volume, attackEndTime);
     gain.gain.exponentialRampToValueAtTime(silenceGain, endTime);
     oscillator.connect(gain);
-    gain.connect(outputNode ?? context.destination);
+    gain.connect(outputNodes?.builtIn ?? context.destination);
     oscillator.start(startTime);
     oscillator.stop(endTime + 0.02);
     oscillator.addEventListener?.(
@@ -365,7 +386,8 @@ export function createRatingSoundPlayer({
   }
 
   function play(rating) {
-    const pattern = ratingSoundPatterns[rating];
+    const normalizedRating = normalizeRatingSoundKey(rating);
+    const pattern = ratingSoundPatterns[normalizedRating];
     if (!pattern) {
       return false;
     }
@@ -377,6 +399,19 @@ export function createRatingSoundPlayer({
       if (context.state === "suspended") {
         void context.resume?.().catch?.(() => {});
       }
+      const customBuffer = customBuffers.get(normalizedRating);
+      if (customBuffer && typeof context.createBufferSource === "function") {
+        const source = context.createBufferSource();
+        source.buffer = customBuffer;
+        source.connect(outputNodes?.custom ?? context.destination);
+        source.start(context.currentTime + 0.005);
+        source.addEventListener?.(
+          "ended",
+          () => source.disconnect?.(),
+          { once: true },
+        );
+        return true;
+      }
       const baseTime = context.currentTime + 0.005;
       for (const note of pattern) {
         scheduleNote(context, note, baseTime);
@@ -384,15 +419,71 @@ export function createRatingSoundPlayer({
       return true;
     } catch {
       audioContext = null;
-      outputNode = null;
+      outputNodes = null;
       return false;
     }
+  }
+
+  async function setCustomSound(rating, audioData) {
+    const normalizedRating = normalizeRatingSoundKey(rating);
+    const context = ensureAudioContext();
+    if (
+      !normalizedRating ||
+      !context ||
+      typeof context.decodeAudioData !== "function"
+    ) {
+      throw new Error("この端末では評価音を読み込めません。");
+    }
+    const source = audioData instanceof ArrayBuffer
+      ? audioData
+      : ArrayBuffer.isView(audioData)
+        ? audioData.buffer.slice(
+            audioData.byteOffset,
+            audioData.byteOffset + audioData.byteLength,
+          )
+        : null;
+    if (!source?.byteLength) {
+      throw new Error("評価音の内容が空です。");
+    }
+    let buffer;
+    try {
+      buffer = await context.decodeAudioData(source.slice(0));
+    } catch {
+      throw new Error("この端末で再生できるMP3・WAV・M4Aを選んでください。");
+    }
+    if (
+      !Number.isFinite(buffer?.duration) ||
+      buffer.duration <= 0 ||
+      buffer.duration > maximumRatingSoundDurationSeconds
+    ) {
+      throw new Error(`評価音は${maximumRatingSoundDurationSeconds}秒以内にしてください。`);
+    }
+    customBuffers.set(normalizedRating, buffer);
+    return { duration: buffer.duration };
+  }
+
+  function clearCustomSound(rating) {
+    const normalizedRating = normalizeRatingSoundKey(rating);
+    return normalizedRating ? customBuffers.delete(normalizedRating) : false;
+  }
+
+  function hasCustomSound(rating) {
+    return customBuffers.has(normalizeRatingSoundKey(rating));
+  }
+
+  function setVolume(value) {
+    volume = normalizeRatingSoundVolume(value);
+    if (audioContext && outputNodes) {
+      applyOutputVolume(audioContext);
+    }
+    return volume;
   }
 
   function close() {
     const context = audioContext;
     audioContext = null;
-    outputNode = null;
+    outputNodes = null;
+    customBuffers.clear();
     if (!context || context.state === "closed") {
       return Promise.resolve();
     }
@@ -403,5 +494,12 @@ export function createRatingSoundPlayer({
     }
   }
 
-  return { play, close };
+  return {
+    play,
+    close,
+    setCustomSound,
+    clearCustomSound,
+    hasCustomSound,
+    setVolume,
+  };
 }

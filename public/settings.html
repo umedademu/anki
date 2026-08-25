@@ -6,7 +6,7 @@
     <meta name="description" content="Anki科目別学習アプリの復習・学習時間・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.139" />
+    <link rel="stylesheet" href="/styles.css?v=0.140" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +14,7 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.139</span>
+        <span class="app-version">v0.140</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
@@ -24,8 +24,8 @@
     <main class="page settings-page">
       <section class="settings-heading">
         <p class="eyebrow">設定</p>
-        <h1>復習・学習時間・音声読み上げ</h1>
-        <p>復習間隔、1問ごとの学習時間上限、日本語・英語の音声、聞き流しの回答待ち時間と次の問題までの間隔を設定します。</p>
+        <h1>復習・学習時間・音声</h1>
+        <p>復習間隔、学習時間、日本語・英語の読み上げ、4段階評価の効果音を設定します。</p>
       </section>
 
       <section class="settings-card">
@@ -222,6 +222,75 @@
           <button class="primary-button" id="save-speech-settings" type="button">音声設定を保存</button>
         </div>
         <p class="speech-settings-status" id="speech-settings-status" role="status"></p>
+      </section>
+
+      <section class="settings-card" id="rating-sound-settings">
+        <h2>評価ボタンの効果音</h2>
+        <p class="settings-description">
+          不正解・難しい・正解・簡単へ別々の音を登録できます。MP3・WAV・M4Aの5秒以内、1ファイル2MBまでに対応し、Cloudflareを通して端末間で共有します。
+        </p>
+        <label class="speech-setting-row rating-sound-volume" for="rating-sound-volume">
+          <span>効果音の音量 <output id="rating-sound-volume-output">100%</output></span>
+          <input id="rating-sound-volume" type="range" min="25" max="200" step="5" value="100" />
+        </label>
+        <button class="primary-button settings-save" id="save-rating-sound-volume" type="button">
+          音量を保存
+        </button>
+        <div class="rating-sound-list" id="rating-sound-list">
+          <article class="rating-sound-item rating-incorrect-row" data-rating-sound="again">
+            <strong>× 不正解</strong>
+            <p data-rating-sound-name>初期音を使用中</p>
+            <label class="rating-sound-file">
+              <span>音声ファイルを選ぶ</span>
+              <input type="file" accept=".mp3,.wav,.m4a,audio/mpeg,audio/wav,audio/mp4" data-rating-sound-file="again" />
+            </label>
+            <div class="rating-sound-actions">
+              <button class="secondary-button" type="button" data-rating-sound-action="preview">音を試す</button>
+              <button class="primary-button" type="button" data-rating-sound-action="upload">登録</button>
+              <button class="secondary-button" type="button" data-rating-sound-action="reset">初期音へ戻す</button>
+            </div>
+          </article>
+          <article class="rating-sound-item rating-hard-row" data-rating-sound="hard">
+            <strong>△ 難しい</strong>
+            <p data-rating-sound-name>初期音を使用中</p>
+            <label class="rating-sound-file">
+              <span>音声ファイルを選ぶ</span>
+              <input type="file" accept=".mp3,.wav,.m4a,audio/mpeg,audio/wav,audio/mp4" data-rating-sound-file="hard" />
+            </label>
+            <div class="rating-sound-actions">
+              <button class="secondary-button" type="button" data-rating-sound-action="preview">音を試す</button>
+              <button class="primary-button" type="button" data-rating-sound-action="upload">登録</button>
+              <button class="secondary-button" type="button" data-rating-sound-action="reset">初期音へ戻す</button>
+            </div>
+          </article>
+          <article class="rating-sound-item rating-good-row" data-rating-sound="good">
+            <strong>○ 正解</strong>
+            <p data-rating-sound-name>初期音を使用中</p>
+            <label class="rating-sound-file">
+              <span>音声ファイルを選ぶ</span>
+              <input type="file" accept=".mp3,.wav,.m4a,audio/mpeg,audio/wav,audio/mp4" data-rating-sound-file="good" />
+            </label>
+            <div class="rating-sound-actions">
+              <button class="secondary-button" type="button" data-rating-sound-action="preview">音を試す</button>
+              <button class="primary-button" type="button" data-rating-sound-action="upload">登録</button>
+              <button class="secondary-button" type="button" data-rating-sound-action="reset">初期音へ戻す</button>
+            </div>
+          </article>
+          <article class="rating-sound-item rating-easy-row" data-rating-sound="easy">
+            <strong>◎ 簡単</strong>
+            <p data-rating-sound-name>初期音を使用中</p>
+            <label class="rating-sound-file">
+              <span>音声ファイルを選ぶ</span>
+              <input type="file" accept=".mp3,.wav,.m4a,audio/mpeg,audio/wav,audio/mp4" data-rating-sound-file="easy" />
+            </label>
+            <div class="rating-sound-actions">
+              <button class="secondary-button" type="button" data-rating-sound-action="preview">音を試す</button>
+              <button class="primary-button" type="button" data-rating-sound-action="upload">登録</button>
+              <button class="secondary-button" type="button" data-rating-sound-action="reset">初期音へ戻す</button>
+            </div>
+          </article>
+        </div>
+        <p class="speech-settings-status" id="rating-sound-status" role="status"></p>
       </section>
 
       <form class="settings-card" id="review-settings-form">

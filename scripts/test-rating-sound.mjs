@@ -59,6 +59,17 @@ class FakeDynamicsCompressor extends FakeAudioNode {
   release = new FakeAudioParameter();
 }
 
+class FakeBufferSource extends FakeAudioNode {
+  buffer = null;
+  starts = [];
+
+  start(time) {
+    this.starts.push(time);
+  }
+
+  addEventListener() {}
+}
+
 class FakeAudioContext {
   static instances = [];
 
@@ -69,6 +80,8 @@ class FakeAudioContext {
     this.oscillators = [];
     this.gains = [];
     this.compressors = [];
+    this.bufferSources = [];
+    this.nextDecodeDuration = 0.8;
     this.resumeCount = 0;
     FakeAudioContext.instances.push(this);
   }
@@ -89,6 +102,16 @@ class FakeAudioContext {
     const compressor = new FakeDynamicsCompressor();
     this.compressors.push(compressor);
     return compressor;
+  }
+
+  createBufferSource() {
+    const source = new FakeBufferSource();
+    this.bufferSources.push(source);
+    return source;
+  }
+
+  async decodeAudioData() {
+    return { duration: this.nextDecodeDuration };
   }
 
   resume() {
@@ -153,7 +176,7 @@ const expectedNoteCount = Object.values(ratingSoundPatterns).reduce(
 assert.equal(FakeAudioContext.instances.length, 1);
 assert.equal(context.resumeCount, 1);
 assert.equal(context.oscillators.length, expectedNoteCount);
-assert.equal(context.gains.length, expectedNoteCount + 1);
+assert.equal(context.gains.length, expectedNoteCount + 2);
 assert.equal(context.compressors.length, 1);
 assert.ok(
   context.oscillators.every((oscillator) => oscillator.starts.length === 1),
@@ -166,13 +189,15 @@ assert.ok(
     (oscillator) => oscillator.frequency.events.length === 3,
   ),
 );
-const [masterGain, ...noteGains] = context.gains;
-assert.deepEqual(masterGain.gain.events[0], [
+const [builtInGain, customGain, ...noteGains] = context.gains;
+assert.deepEqual(builtInGain.gain.events[0], [
   "set",
   ratingSoundMasterVolume,
   context.currentTime,
 ]);
-assert.equal(masterGain.connections[0], context.compressors[0]);
+assert.deepEqual(customGain.gain.events[0], ["set", 1, context.currentTime]);
+assert.equal(builtInGain.connections[0], context.compressors[0]);
+assert.equal(customGain.connections[0], context.compressors[0]);
 assert.equal(context.compressors[0].connections[0], context.destination);
 assert.deepEqual(context.compressors[0].threshold.events[0], [
   "set",
@@ -184,7 +209,33 @@ assert.deepEqual(context.compressors[0].ratio.events[0], [
   10,
   context.currentTime,
 ]);
-assert.ok(noteGains.every((gain) => gain.connections[0] === masterGain));
+assert.ok(noteGains.every((gain) => gain.connections[0] === builtInGain));
+
+assert.deepEqual(
+  await player.setCustomSound("good", Uint8Array.from([1, 2, 3])),
+  { duration: 0.8 },
+);
+assert.equal(player.hasCustomSound("good"), true);
+const oscillatorCountBeforeCustomPlay = context.oscillators.length;
+assert.equal(player.play("good"), true);
+assert.equal(context.oscillators.length, oscillatorCountBeforeCustomPlay);
+assert.equal(context.bufferSources.length, 1);
+assert.equal(context.bufferSources[0].connections[0], customGain);
+assert.equal(context.bufferSources[0].starts.length, 1);
+assert.equal(player.setVolume(1.5), 1.5);
+assert.deepEqual(builtInGain.gain.events.at(-1), [
+  "set",
+  ratingSoundMasterVolume * 1.5,
+  context.currentTime,
+]);
+assert.deepEqual(customGain.gain.events.at(-1), ["set", 1.5, context.currentTime]);
+assert.equal(player.clearCustomSound("good"), true);
+assert.equal(player.hasCustomSound("good"), false);
+context.nextDecodeDuration = 6;
+await assert.rejects(
+  player.setCustomSound("easy", Uint8Array.from([1])),
+  /5秒以内/,
+);
 
 await player.close();
 assert.equal(context.state, "closed");

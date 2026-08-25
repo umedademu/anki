@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.139" />
+    <link rel="stylesheet" href="/styles.css?v=0.140" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.139</span>
+        <span class="app-version">v0.140</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.140</h2>
+          <time datetime="2026-08-26">2026年8月26日</time>
+        </div>
+        <ul>
+          <li>不正解・難しい・正解・簡単へ別々のMP3・WAV・M4Aを登録し、その場で試聴できる設定を追加</li>
+          <li>5秒以内・2MB以下の登録音を一人用アクセスキーで保護し、Cloudflareへ保存して端末間で共有</li>
+          <li>初期音と登録音に共通する音量を25%〜200%で変更できるよう対応</li>
+          <li>種類ごとの初期化と、登録音を読み込めない時に初期音で学習を続ける処理を追加</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

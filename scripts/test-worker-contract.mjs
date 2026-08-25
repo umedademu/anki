@@ -1,5 +1,6 @@
 import {
   escapeSsml,
+  hasExpectedRatingSoundSignature,
   normalizeAzureSpeechVoice,
   normalizeEnglishAzureSpeechVoice,
   normalizeDatasetVersion,
@@ -13,6 +14,12 @@ import {
   normalizeSpeechPrompt,
   studyDateAtFourJst,
 } from "../worker/src/index.js";
+import {
+  normalizeRatingSoundContentType,
+  normalizeRatingSounds,
+  normalizeRatingSoundVolume,
+  ratingSoundFileExtension,
+} from "../public/rating-sound-settings.js";
 import worker from "../worker/src/index.js";
 import {
   normalizeSetupPreferences as normalizeBrowserSetupPreferences,
@@ -233,6 +240,26 @@ if (
 ) {
   throw new Error("英語のAzure音声を正規化できませんでした。");
 }
+if (
+  normalizeRatingSoundContentType("audio/x-wav") !== "audio/wav" ||
+  normalizeRatingSoundContentType("", "coin.mp3") !== "audio/mpeg" ||
+  ratingSoundFileExtension("audio/mp4") !== "m4a" ||
+  normalizeRatingSoundVolume(9) !== 2 ||
+  !hasExpectedRatingSoundSignature(
+    Uint8Array.from([0x49, 0x44, 0x33, 0x04]),
+    "audio/mpeg",
+  ) ||
+  !hasExpectedRatingSoundSignature(
+    new TextEncoder().encode("RIFF1234WAVE"),
+    "audio/wav",
+  ) ||
+  hasExpectedRatingSoundSignature(
+    new TextEncoder().encode("not audio"),
+    "audio/wav",
+  )
+) {
+  throw new Error("登録する評価音の形式を安全に検査できませんでした。");
+}
 for (const invalidPrompt of ["", "あ".repeat(2001)]) {
   let failed = false;
   try {
@@ -350,6 +377,17 @@ const settings = normalizeSettings({
   listeningQuestionIntervalSeconds: 1.5,
   studyRoutineOvertimeSeconds: 900,
   studyTimeLimitSeconds: 90,
+  ratingSoundVolume: 1.75,
+  ratingSounds: {
+    good: {
+      storageKey: "rating-sounds/good/test-id.mp3",
+      fileName: "正解音.mp3",
+      contentType: "audio/mpeg",
+      size: 12345,
+      updatedAt: "2026-08-26T00:00:00.000Z",
+    },
+    easy: { storageKey: "speech-cache/private.mp3" },
+  },
   speechParts: {
     history: {
       question: false,
@@ -417,6 +455,9 @@ if (
   settings.listeningQuestionIntervalSeconds !== 1.5 ||
   settings.studyRoutineOvertimeSeconds !== 900 ||
   settings.studyTimeLimitSeconds !== 90 ||
+  settings.ratingSoundVolume !== 1.75 ||
+  settings.ratingSounds.good?.fileName !== "正解音.mp3" ||
+  settings.ratingSounds.easy !== null ||
   settings.speechParts.history.question ||
   !settings.speechParts.history.explanation ||
   settings.speechParts.vocabulary.meaning ||
@@ -450,6 +491,9 @@ if (
   browserSettings.listeningQuestionIntervalSeconds !== 1.5 ||
   browserSettings.studyRoutineOvertimeSeconds !== 900 ||
   browserSettings.studyTimeLimitSeconds !== 90 ||
+  browserSettings.ratingSoundVolume !== 1.75 ||
+  browserSettings.ratingSounds.good?.size !== 12345 ||
+  normalizeRatingSounds(browserSettings.ratingSounds).easy !== null ||
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
@@ -575,5 +619,5 @@ for (const invalid of [
 }
 
 console.log(
-  "Cloudflare窓口検証完了: 学習記録・開始設定・Azure音声生成を確認",
+  "Cloudflare窓口検証完了: 学習記録・開始設定・Azure音声・評価音を確認",
 );

@@ -27,6 +27,13 @@ import {
   normalizeStudyRoutineVideoLibrary,
   normalizeStudyRoutineVideoShuffle,
 } from "./study-routine.js";
+import {
+  defaultRatingSoundVolume,
+  normalizeRatingSoundContentType,
+  normalizeRatingSoundKey,
+  normalizeRatingSounds,
+  normalizeRatingSoundVolume,
+} from "./rating-sound-settings.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
@@ -387,6 +394,8 @@ export const defaultSharedSettings = Object.freeze({
   listeningQuestionIntervalSeconds: 0,
   studyRoutineOvertimeSeconds: defaultStudyRoutineOvertimeSeconds,
   studyTimeLimitSeconds: defaultStudyTimeLimitSeconds,
+  ratingSoundVolume: defaultRatingSoundVolume,
+  ratingSounds: Object.freeze(normalizeRatingSounds()),
   speechParts: defaultSpeechParts,
   setupPreferences: defaultSetupPreferences,
 });
@@ -421,6 +430,8 @@ export function normalizeSharedSettings(value) {
     studyTimeLimitSeconds: normalizeStudyTimeLimitSeconds(
       source.studyTimeLimitSeconds,
     ),
+    ratingSoundVolume: normalizeRatingSoundVolume(source.ratingSoundVolume),
+    ratingSounds: normalizeRatingSounds(source.ratingSounds),
     speechParts: normalizeSpeechParts(source.speechParts),
     setupPreferences: normalizeSetupPreferences(source.setupPreferences),
   };
@@ -525,6 +536,84 @@ export async function requestCloudSpeech(text, voice, language = "ja-JP") {
     throw new Error("Azureから音声を受け取れませんでした。");
   }
   return audio;
+}
+
+export async function requestCloudRatingSound(rating) {
+  const normalizedRating = normalizeRatingSoundKey(rating);
+  if (!normalizedRating) {
+    throw new Error("評価の種類が正しくありません。");
+  }
+  const accessKey = getStoredAccessKey();
+  if (!accessKey) {
+    throw new Error("Cloudflareのアクセスキーが登録されていません。");
+  }
+  let response;
+  try {
+    response = await fetch(
+      `${getApiBaseUrl()}/v1/rating-sounds/${normalizedRating}`,
+      {
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${accessKey}`,
+          Accept: "audio/*",
+        },
+      },
+    );
+  } catch {
+    throw new Error("Cloudflareから評価音を読み込めませんでした。");
+  }
+  if (!response.ok) {
+    const payload = await response.json().catch(() => ({}));
+    if (response.status === 401) {
+      throw new Error("Cloudflareのアクセスキーが正しくありません。");
+    }
+    throw new Error(
+      payload.error || `評価音を読み込めませんでした（${response.status}）。`,
+    );
+  }
+  const audio = await response.blob();
+  if (!audio.type.startsWith("audio/") || audio.size === 0) {
+    throw new Error("Cloudflareから正しい評価音を受け取れませんでした。");
+  }
+  return audio;
+}
+
+export async function uploadCloudRatingSound(rating, file) {
+  const normalizedRating = normalizeRatingSoundKey(rating);
+  if (!normalizedRating) {
+    throw new Error("評価の種類が正しくありません。");
+  }
+  const fileName = String(file?.name ?? "").trim();
+  const contentType = normalizeRatingSoundContentType(file?.type, fileName);
+  if (!contentType || !file || typeof file.arrayBuffer !== "function") {
+    throw new Error("MP3・WAV・M4Aの音声を選んでください。");
+  }
+  const payload = await cloudRequest(
+    `/v1/rating-sounds/${normalizedRating}?name=${encodeURIComponent(fileName)}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": contentType },
+      body: file,
+    },
+  );
+  return {
+    sound: normalizeRatingSounds({ [normalizedRating]: payload.sound })[
+      normalizedRating
+    ],
+    settings: normalizeSharedSettings(payload.settings),
+  };
+}
+
+export async function deleteCloudRatingSound(rating) {
+  const normalizedRating = normalizeRatingSoundKey(rating);
+  if (!normalizedRating) {
+    throw new Error("評価の種類が正しくありません。");
+  }
+  const payload = await cloudRequest(
+    `/v1/rating-sounds/${normalizedRating}`,
+    { method: "DELETE" },
+  );
+  return normalizeSharedSettings(payload.settings);
 }
 
 export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {

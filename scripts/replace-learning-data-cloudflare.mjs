@@ -44,7 +44,12 @@ const assertLearningDataKey = (key) => {
   ) {
     throw new Error(`問題集以外の削除候補を検出しました: ${key}`);
   }
-  if (key.includes("..") || key.startsWith("/") || key.startsWith("speech-cache/")) {
+  if (
+    key.includes("..") ||
+    key.startsWith("/") ||
+    key.startsWith("speech-cache/") ||
+    key.startsWith("rating-sounds/")
+  ) {
     throw new Error(`安全でない削除候補を検出しました: ${key}`);
   }
   return key;

@@ -99,6 +99,15 @@ const studyRoutineOvertimeMigration = await readFile(
   ),
   "utf8",
 );
+const ratingSoundsMigration = await readFile(
+  path.join(
+    projectRoot,
+    "worker",
+    "migrations",
+    "0015_rating_sounds.sql",
+  ),
+  "utf8",
+);
 const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
 const ratingSound = await readFile(
   path.join(projectRoot, "public", "rating-sound.js"),
@@ -261,11 +270,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.139") ||
-  !app.includes("v0.139｜") ||
-  !changelog.includes("v0.139") ||
-  !settingsHtml.includes("v0.139") ||
-  !historyHtml.includes("v0.139")
+  !html.includes("v0.140") ||
+  !app.includes("v0.140｜") ||
+  !changelog.includes("v0.140") ||
+  !settingsHtml.includes("v0.140") ||
+  !historyHtml.includes("v0.140")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -283,6 +292,35 @@ if (
   !ratingSound.includes("easy: freezePattern")
 ) {
   throw new Error("4段階評価ごとの効果音と、暗記・聞き流しへの接続が揃っていません。");
+}
+if (
+  !settingsHtml.includes('id="rating-sound-settings"') ||
+  !settingsHtml.includes('id="rating-sound-volume"') ||
+  !settingsHtml.includes('data-rating-sound-file="again"') ||
+  !settingsHtml.includes('data-rating-sound-file="hard"') ||
+  !settingsHtml.includes('data-rating-sound-file="good"') ||
+  !settingsHtml.includes('data-rating-sound-file="easy"') ||
+  !settingsHtml.includes("MP3・WAV・M4A") ||
+  !settingsApp.includes("uploadCloudRatingSound") ||
+  !settingsApp.includes("deleteCloudRatingSound") ||
+  !settingsApp.includes("prepareRatingSoundFile") ||
+  !settingsApp.includes("ratingSoundPlayer.setCustomSound") ||
+  !cloudProgress.includes("export async function requestCloudRatingSound") ||
+  !cloudProgress.includes("export async function uploadCloudRatingSound") ||
+  !cloudProgress.includes("export async function deleteCloudRatingSound") ||
+  !app.includes("async function syncRatingSoundSettings") ||
+  !app.includes("requestCloudRatingSound(rating)") ||
+  !ratingSound.includes("async function setCustomSound") ||
+  !ratingSound.includes("context.createBufferSource") ||
+  !worker.includes("handleRatingSoundUpload") ||
+  !worker.includes("handleRatingSoundRead") ||
+  !worker.includes("handleRatingSoundDelete") ||
+  !worker.includes("rating-sounds/${rating}") ||
+  !ratingSoundsMigration.includes("rating_sound_volume") ||
+  !ratingSoundsMigration.includes("rating_sounds_json") ||
+  !styles.includes(".rating-sound-list")
+) {
+  throw new Error("評価音の登録・試聴・初期化・Cloudflare共有が揃っていません。");
 }
 if (
   !html.includes('id="routine-dashboard"') ||
@@ -458,6 +496,7 @@ if (
   !cloudflareReplacement.includes("await waitForVerificationSlot()") ||
   !cloudflareReplacement.includes("while (nextVerificationAt > Date.now())") ||
   !cloudflareReplacement.includes("response.status !== 429") ||
+  !cloudflareReplacement.includes('key.startsWith("rating-sounds/")') ||
   !cloudflareReplacement.includes("assetUploadJobs") ||
   !cloudflareReplacement.includes("remoteAssetKeys") ||
   !cloudflareReplacement.includes("await uploadAndVerify(localDeckIndexJobs") ||
@@ -471,7 +510,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.139"') ||
+  !html.includes('href="/styles.css?v=0.140"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

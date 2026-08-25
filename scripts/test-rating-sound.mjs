@@ -97,6 +97,30 @@ const distinctPatterns = new Set(
   Object.values(ratingSoundPatterns).map((pattern) => JSON.stringify(pattern)),
 );
 assert.equal(distinctPatterns.size, 4);
+const allNotes = Object.values(ratingSoundPatterns).flat();
+assert.ok(allNotes.every((note) => note.glideSeconds > 0));
+assert.ok(allNotes.every((note) => note.durationSeconds >= 0.17));
+assert.ok(
+  Object.values(ratingSoundPatterns).every(
+    (pattern) => Math.max(...pattern.map((note) => note.volume)) >= 0.095,
+  ),
+);
+assert.ok(
+  Math.max(
+    ...ratingSoundPatterns.good.map(
+      (note) => note.delaySeconds + note.durationSeconds,
+    ),
+  ) >= 0.65,
+);
+assert.ok(
+  Math.max(
+    ...ratingSoundPatterns.easy.map(
+      (note) => note.delaySeconds + note.durationSeconds,
+    ),
+  ) >= 0.75,
+);
+assert.ok(ratingSoundPatterns.good.length >= 6);
+assert.ok(ratingSoundPatterns.easy.length >= 8);
 
 const player = createRatingSoundPlayer({ AudioContextClass: FakeAudioContext });
 for (const rating of Object.keys(ratingSoundPatterns)) {
@@ -118,6 +142,11 @@ assert.ok(
 );
 assert.ok(
   context.oscillators.every((oscillator) => oscillator.stops.length === 1),
+);
+assert.ok(
+  context.oscillators.every(
+    (oscillator) => oscillator.frequency.events.length === 3,
+  ),
 );
 assert.ok(context.gains.every((gain) => gain.connections[0] === context.destination));
 

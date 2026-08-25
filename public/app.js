@@ -2797,6 +2797,15 @@ function toggleListening() {
   });
 }
 
+function advanceListeningManually() {
+  if (!isListeningMode() || !state.currentTask || state.saving) {
+    return;
+  }
+  stopListeningSequence();
+  state.listeningPaused = false;
+  void advanceListening(state.listeningRunId);
+}
+
 async function returnToSetup() {
   stopListeningSequence();
   stopStudyClock();
@@ -4149,7 +4158,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.133｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.134｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4523,6 +4532,10 @@ elements.studyShell.addEventListener("click", (event) => {
   const usesStudyHalfScreenNavigation = window.matchMedia(
     "(orientation: landscape) and (max-height: 600px)",
   ).matches;
+  const usesLandscapeListeningThirds =
+    isListeningMode() &&
+    Boolean(state.currentTask) &&
+    usesStudyHalfScreenNavigation;
   const usesPortraitListeningTap =
     isListeningMode() &&
     Boolean(state.currentTask) &&
@@ -4533,6 +4546,7 @@ elements.studyShell.addEventListener("click", (event) => {
     window.matchMedia("(pointer: coarse)").matches;
   if (
     (!usesStudyHalfScreenNavigation &&
+      !usesLandscapeListeningThirds &&
       !usesPortraitListeningTap &&
       !usesListeningResultHalfScreenBack) ||
     event.target.closest("button, a, input, select, textarea, label")
@@ -4541,6 +4555,20 @@ elements.studyShell.addEventListener("click", (event) => {
   }
   if (usesPortraitListeningTap) {
     toggleListening();
+    return;
+  }
+  if (usesLandscapeListeningThirds) {
+    const touchZone = Math.min(
+      2,
+      Math.floor(event.clientX / (window.innerWidth / 3)),
+    );
+    if (touchZone === 0) {
+      void goBackListeningOneStep();
+    } else if (touchZone === 1) {
+      toggleListening();
+    } else {
+      advanceListeningManually();
+    }
     return;
   }
   if (event.clientX < window.innerWidth / 2) {

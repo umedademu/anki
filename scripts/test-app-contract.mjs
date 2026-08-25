@@ -125,6 +125,9 @@ const listeningPlaybackFeedbackBlock = app.match(
 const toggleListeningBlock = app.match(
   /function toggleListening\(\)[\s\S]*?async function returnToSetup/,
 )?.[0];
+const advanceListeningManuallyBlock = app.match(
+  /function advanceListeningManually\(\)[\s\S]*?async function returnToSetup/,
+)?.[0];
 const studyClockBlock = app.match(
   /function canCountStudyTime\([\s\S]*?function startNewStudyScreen/,
 )?.[0];
@@ -240,11 +243,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.133") ||
-  !app.includes("v0.133｜") ||
-  !changelog.includes("v0.133") ||
-  !settingsHtml.includes("v0.133") ||
-  !historyHtml.includes("v0.133")
+  !html.includes("v0.134") ||
+  !app.includes("v0.134｜") ||
+  !changelog.includes("v0.134") ||
+  !settingsHtml.includes("v0.134") ||
+  !historyHtml.includes("v0.134")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -432,7 +435,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.133"') ||
+  !html.includes('href="/styles.css?v=0.134"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -987,6 +990,20 @@ if (
   !studyShellClickBlock?.includes("} else if (isListeningMode())") ||
   !studyShellClickBlock?.includes("toggleListening();") ||
   !app.includes('window.matchMedia("(orientation: portrait) and (pointer: coarse)")') ||
+  !advanceListeningManuallyBlock ||
+  !advanceListeningManuallyBlock.includes("stopListeningSequence();") ||
+  !advanceListeningManuallyBlock.includes("state.listeningPaused = false") ||
+  !advanceListeningManuallyBlock.includes(
+    "void advanceListening(state.listeningRunId);",
+  ) ||
+  !studyShellClickBlock?.includes("usesLandscapeListeningThirds") ||
+  !studyShellClickBlock?.includes("window.innerWidth / 3") ||
+  !studyShellClickBlock?.includes("advanceListeningManually();") ||
+  !styles.includes(
+    "@media (orientation: landscape) and (max-height: 600px)",
+  ) ||
+  !styles.includes("height: 20dvh") ||
+  !styles.includes("opacity: 0") ||
   !app.includes("horizontalDistance < 60") ||
   !app.includes("void goBackListeningOneStep();") ||
   !cloudProgress.includes("export async function undoCloudStudyActivity") ||

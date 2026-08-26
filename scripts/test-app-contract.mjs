@@ -274,11 +274,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.142") ||
-  !app.includes("v0.142｜") ||
-  !changelog.includes("v0.142") ||
-  !settingsHtml.includes("v0.142") ||
-  !historyHtml.includes("v0.142")
+  !html.includes("v0.143") ||
+  !app.includes("v0.143｜") ||
+  !changelog.includes("v0.143") ||
+  !settingsHtml.includes("v0.143") ||
+  !historyHtml.includes("v0.143")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -514,7 +514,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.142"') ||
+  !html.includes('href="/styles.css?v=0.143"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1014,6 +1014,15 @@ if (
   speech.includes("resetPlayback(Boolean(currentTarget))") ||
   !speech.includes("deviceStartTimeoutMs = 1500") ||
   !speech.includes("cloudStartTimeoutMs = 3000") ||
+  !speech.includes("cloudPlaybackTimeoutMs = 60000") ||
+  !speech.includes("let sharedCloudAudio = null") ||
+  !speech.includes("function unlock()") ||
+  !speech.includes("const audio = ensureCloudAudio()") ||
+  !speech.includes("audio.src = audioUrl") ||
+  speech.includes("new AudioPlayer(audioUrl)") ||
+  !speech.includes("audio.onplaying = armPlaybackTimer") ||
+  !speech.includes('error?.name === "NotAllowedError"') ||
+  !app.includes("speechController.unlock()") ||
   !speech.includes("utterance.onstart = markStarted") ||
   !speech.includes("utterance.onboundary = markStarted") ||
   !speech.includes("synthesis.resume?.()") ||
@@ -1021,12 +1030,13 @@ if (
   !speech.includes("onError = () => {}") ||
   !speech.includes("failPlayback") ||
   !listeningAnswerSpeechBlock?.includes(
-    "onError: () => pauseListeningAfterSpeechFailure(runId)",
+    "onError: (error) => pauseListeningAfterSpeechFailure(runId, error)",
   ) ||
   !listeningQuestionSpeechBlock?.includes(
-    "onError: () => pauseListeningAfterSpeechFailure(runId)",
+    "onError: (error) => pauseListeningAfterSpeechFailure(runId, error)",
   ) ||
-  !app.includes("function pauseListeningAfterSpeechFailure(runId)") ||
+  !app.includes("function pauseListeningAfterSpeechFailure(runId, error = null)") ||
+  !app.includes("音声の再生許可が必要です") ||
   !app.includes("音声を再生できなかったため、この問題で一時停止しました") ||
   !speech.includes("export function createHistorySpeechReadings(terms)") ||
   !speech.includes("getHistoryReadings = () => ({})") ||

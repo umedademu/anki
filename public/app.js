@@ -2809,7 +2809,7 @@ function speakListeningAnswer(runId) {
         void advanceListening(runId);
       }, state.listeningQuestionIntervalSeconds * 1000);
     },
-    onError: () => pauseListeningAfterSpeechFailure(runId),
+    onError: (error) => pauseListeningAfterSpeechFailure(runId, error),
   });
   if (!started) {
     state.listeningTimer = window.setTimeout(() => {
@@ -2819,7 +2819,7 @@ function speakListeningAnswer(runId) {
   }
 }
 
-function pauseListeningAfterSpeechFailure(runId) {
+function pauseListeningAfterSpeechFailure(runId, error = null) {
   if (
     runId !== state.listeningRunId ||
     state.listeningPaused ||
@@ -2830,7 +2830,9 @@ function pauseListeningAfterSpeechFailure(runId) {
   state.listeningPaused = true;
   stopListeningSequence();
   state.unlockMessage =
-    "音声を再生できなかったため、この問題で一時停止しました。画面中央を押すと、同じ問題からもう一度読み上げます。";
+    error?.name === "NotAllowedError"
+      ? "音声の再生許可が必要です。画面中央を押すと、同じ問題から読み上げを再開します。"
+      : "音声を再生できなかったため、この問題で一時停止しました。画面中央を押すと、同じ問題からもう一度読み上げます。";
   renderQuestion();
 }
 
@@ -2859,7 +2861,7 @@ function beginListeningQuestion() {
         speakListeningAnswer(runId);
       }, pauseSeconds * 1000);
     },
-    onError: () => pauseListeningAfterSpeechFailure(runId),
+    onError: (error) => pauseListeningAfterSpeechFailure(runId, error),
   });
   if (!started) {
     speakListeningAnswer(runId);
@@ -2928,6 +2930,7 @@ function toggleListening() {
   if (!isListeningMode() || !state.currentTask || state.saving) {
     return;
   }
+  speechController.unlock();
   if (state.listeningPaused) {
     state.listeningPaused = false;
     showListeningPlaybackFeedback("play");
@@ -4337,7 +4340,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.142｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.143｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4519,6 +4522,13 @@ elements.subjectOptions.addEventListener("click", (event) => {
       showOnly(elements.errorPanel);
     });
 });
+document.addEventListener(
+  "click",
+  () => {
+    speechController.unlock();
+  },
+  { capture: true },
+);
 elements.startRoutine.addEventListener("click", () => {
   void startRoutineFromBeginning();
 });

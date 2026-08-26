@@ -258,6 +258,7 @@ export function createSpeechController({
   onFallback = () => {},
   deviceStartTimeoutMs = 1500,
   cloudStartTimeoutMs = 3000,
+  cloudPlaybackTimeoutMs = 60000,
 } = {}) {
   const deviceSupported = Boolean(
     synthesis &&
@@ -276,6 +277,8 @@ export function createSpeechController({
   let currentTarget = "";
   let activeAudio = null;
   let activeAudioUrl = "";
+  let sharedCloudAudio = null;
+  let activeCloudCancel = null;
   const cloudAudioCache = new Map();
   const cloudAudioCacheLimit = 12;
   const scheduleContinuation =
@@ -293,7 +296,12 @@ export function createSpeechController({
     if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
-    if (activeAudio) {
+    if (activeCloudCancel) {
+      const cancel = activeCloudCancel;
+      activeCloudCancel = null;
+      cancel();
+    } else if (activeAudio) {
+      activeAudio.onplaying = null;
       activeAudio.onended = null;
       activeAudio.onerror = null;
       activeAudio.pause?.();
@@ -308,6 +316,35 @@ export function createSpeechController({
 
   function stop() {
     resetPlayback();
+  }
+
+  function ensureCloudAudio() {
+    if (!sharedCloudAudio) {
+      sharedCloudAudio = new AudioPlayer();
+      sharedCloudAudio.preload = "auto";
+    }
+    return sharedCloudAudio;
+  }
+
+  function unlock() {
+    if (!cloudSupported) {
+      return false;
+    }
+    try {
+      const audio = ensureCloudAudio();
+      if (activeAudio === audio) {
+        return true;
+      }
+      audio.load?.();
+      return true;
+    } catch (error) {
+      onFallback(
+        error instanceof Error
+          ? error
+          : new Error("自然音声の再生準備に失敗しました。"),
+      );
+      return false;
+    }
   }
 
   function normalizedSegments(segments) {
@@ -419,6 +456,14 @@ export function createSpeechController({
       audio.onplaying = null;
       audio.pause?.();
       revokeObjectUrl(audioUrl);
+      try {
+        if (typeof audio.removeAttribute === "function") {
+          audio.removeAttribute("src");
+        } else {
+          audio.src = "";
+        }
+        audio.load?.();
+      } catch {}
     }
 
     function speakWithDevice(
@@ -541,25 +586,57 @@ export function createSpeechController({
         if (ticket !== generation) {
           return;
         }
+        const audio = ensureCloudAudio();
         const audioUrl = createObjectUrl(blob);
-        const audio = new AudioPlayer(audioUrl);
         activeAudio = audio;
         activeAudioUrl = audioUrl;
         audio.playbackRate = settings.rate;
         let finished = false;
         let startTimer = null;
+        let playbackTimer = null;
         const clearStartTimer = () => {
           if (startTimer !== null) {
             globalThis.clearTimeout(startTimer);
             startTimer = null;
           }
         };
+        const clearPlaybackTimer = () => {
+          if (playbackTimer !== null) {
+            globalThis.clearTimeout(playbackTimer);
+            playbackTimer = null;
+          }
+        };
+        const clearPlaybackTimers = () => {
+          clearStartTimer();
+          clearPlaybackTimer();
+        };
+        const armPlaybackTimer = () => {
+          clearStartTimer();
+          const minimumTimeoutMs = Number(cloudPlaybackTimeoutMs);
+          if (!Number.isFinite(minimumTimeoutMs) || minimumTimeoutMs < 0) {
+            return;
+          }
+          const durationSeconds = Number(audio.duration);
+          const rate = Number(audio.playbackRate);
+          const expectedTimeoutMs =
+            Number.isFinite(durationSeconds) && durationSeconds > 0
+              ? (durationSeconds / (Number.isFinite(rate) && rate > 0 ? rate : 1)) *
+                  1000 +
+                5000
+              : 0;
+          playbackTimer = globalThis.setTimeout(() => {
+            fallback(new Error("自然音声の再生が完了しませんでした。"));
+          }, Math.max(minimumTimeoutMs, expectedTimeoutMs));
+        };
         const finish = () => {
           if (finished) {
             return;
           }
           finished = true;
-          clearStartTimer();
+          clearPlaybackTimers();
+          if (activeCloudCancel === cancel) {
+            activeCloudCancel = null;
+          }
           finishCloudAudio(audio, audioUrl);
           continueAfterPlayback(done);
         };
@@ -568,14 +645,30 @@ export function createSpeechController({
             return;
           }
           finished = true;
-          clearStartTimer();
+          clearPlaybackTimers();
+          if (activeCloudCancel === cancel) {
+            activeCloudCancel = null;
+          }
           finishCloudAudio(audio, audioUrl);
           onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
+          if (error?.name === "NotAllowedError") {
+            continueAfterPlayback(() => fail(error));
+            return;
+          }
           continueAfterPlayback(() =>
             speakWithDevice(segment, settings, done, fail),
           );
         };
-        audio.onplaying = clearStartTimer;
+        const cancel = () => {
+          if (finished) {
+            return;
+          }
+          finished = true;
+          clearPlaybackTimers();
+          finishCloudAudio(audio, audioUrl);
+        };
+        activeCloudCancel = cancel;
+        audio.onplaying = armPlaybackTimer;
         audio.onended = finish;
         audio.onerror = fallback;
         const startTimeoutMs = Number(cloudStartTimeoutMs);
@@ -585,8 +678,9 @@ export function createSpeechController({
           }, startTimeoutMs);
         }
         try {
+          audio.src = audioUrl;
+          audio.load?.();
           await audio.play();
-          clearStartTimer();
         } catch (error) {
           fallback(error);
         }
@@ -633,5 +727,6 @@ export function createSpeechController({
     preload,
     speak,
     stop,
+    unlock,
   };
 }

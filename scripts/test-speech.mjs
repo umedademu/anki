@@ -548,21 +548,138 @@ if (
   throw new Error("始まらない自然音声から端末音声へ自動切替できませんでした。");
 }
 
+const silentCloudFallbackSpoken = [];
+let silentCloudCompletions = 0;
+class SilentCloudAudio {
+  constructor() {
+    this.src = "";
+    this.playbackRate = 1;
+    this.onplaying = null;
+    this.onended = null;
+    this.onerror = null;
+  }
+
+  async play() {}
+
+  load() {}
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
+  }
+
+  pause() {}
+}
+const silentCloudController = createSpeechController({
+  synthesis: {
+    cancel() {},
+    resume() {},
+    getVoices() {
+      return [];
+    },
+    speak(utterance) {
+      silentCloudFallbackSpoken.push(utterance.text);
+      utterance.onstart();
+      utterance.onend();
+    },
+  },
+  Utterance: FakeUtterance,
+  AudioPlayer: SilentCloudAudio,
+  createObjectUrl: () => "blob:silent-cloud",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+  cloudStartTimeoutMs: 1,
+  deviceStartTimeoutMs: 1,
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    rate: 1,
+  }),
+});
+silentCloudController.speak(
+  [{ target: "answer", text: "成功扱いでも無音の回答" }],
+  { onComplete: () => silentCloudCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 20));
+if (
+  silentCloudFallbackSpoken.join("|") !== "成功扱いでも無音の回答" ||
+  silentCloudCompletions !== 1
+) {
+  throw new Error("成功扱いでも始まらない自然音声を検知できませんでした。");
+}
+
+const unfinishedCloudFallbackSpoken = [];
+let unfinishedCloudCompletions = 0;
+class UnfinishedCloudAudio extends SilentCloudAudio {
+  async play() {
+    this.onplaying?.();
+  }
+}
+const unfinishedCloudController = createSpeechController({
+  synthesis: {
+    cancel() {},
+    resume() {},
+    getVoices() {
+      return [];
+    },
+    speak(utterance) {
+      unfinishedCloudFallbackSpoken.push(utterance.text);
+      utterance.onstart();
+      utterance.onend();
+    },
+  },
+  Utterance: FakeUtterance,
+  AudioPlayer: UnfinishedCloudAudio,
+  createObjectUrl: () => "blob:unfinished-cloud",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+  cloudStartTimeoutMs: 1,
+  cloudPlaybackTimeoutMs: 1,
+  deviceStartTimeoutMs: 1,
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-KeitaNeural",
+    rate: 1,
+  }),
+});
+unfinishedCloudController.speak(
+  [{ target: "answer", text: "終了しない自然音声" }],
+  { onComplete: () => unfinishedCloudCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 20));
+if (
+  unfinishedCloudFallbackSpoken.join("|") !== "終了しない自然音声" ||
+  unfinishedCloudCompletions !== 1
+) {
+  throw new Error("終了しない自然音声を時間切れにできませんでした。");
+}
+
 const cloudRequests = [];
 const cloudTargets = [];
 const revokedUrls = [];
 const playedRates = [];
 class FakeAudio {
-  constructor(url) {
-    this.url = url;
+  constructor() {
+    this.src = "";
     this.playbackRate = 1;
+    this.onplaying = null;
     this.onended = null;
     this.onerror = null;
   }
 
   async play() {
     playedRates.push(this.playbackRate);
+    this.onplaying?.();
     queueMicrotask(() => this.onended?.());
+  }
+
+  load() {}
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
   }
 
   pause() {}
@@ -609,15 +726,24 @@ const preloadRequests = [];
 const preloadResolvers = [];
 const preloadPlayers = [];
 class PreloadAudio {
-  constructor(url) {
-    this.url = url;
+  constructor() {
+    this.src = "";
     this.playbackRate = 1;
+    this.onplaying = null;
     this.onended = null;
     this.onerror = null;
     preloadPlayers.push(this);
   }
 
   async play() {}
+
+  load() {}
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
+  }
 
   pause() {}
 }
@@ -657,10 +783,111 @@ if (preloadRequests.length !== 2 || preloadPlayers.length !== 1) {
 }
 preloadPlayers[0].onended();
 await new Promise((resolve) => setTimeout(resolve, 0));
-if (preloadPlayers.length !== 2) {
-  throw new Error("先読みした別パーツを待ち時間なく続けて再生できませんでした。");
+if (preloadPlayers.length !== 1) {
+  throw new Error("先読みした別パーツを同じ音声再生器で続けて再生できませんでした。");
 }
-preloadPlayers[1].onended();
+preloadPlayers[0].onended();
+
+let iosGestureActive = false;
+let iosAudioPlayers = 0;
+let iosCloudRequests = 0;
+let iosDeviceAttempts = 0;
+let iosPlaybackErrors = 0;
+let iosPlaybackCompletions = 0;
+const iosPlayResults = [];
+class IosRestrictedAudio {
+  constructor() {
+    iosAudioPlayers += 1;
+    this.src = "";
+    this.playbackRate = 1;
+    this.onplaying = null;
+    this.onended = null;
+    this.onerror = null;
+    this.unlocked = false;
+  }
+
+  load() {
+    if (iosGestureActive) {
+      this.unlocked = true;
+    }
+  }
+
+  async play() {
+    if (!this.unlocked) {
+      iosPlayResults.push("blocked");
+      const error = new Error("利用者操作が必要です。");
+      error.name = "NotAllowedError";
+      throw error;
+    }
+    iosPlayResults.push("played");
+    this.onplaying?.();
+    queueMicrotask(() => this.onended?.());
+  }
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
+  }
+
+  pause() {}
+}
+const iosController = createSpeechController({
+  synthesis: {
+    cancel() {},
+    resume() {},
+    getVoices() {
+      return [];
+    },
+    speak() {
+      iosDeviceAttempts += 1;
+    },
+  },
+  Utterance: FakeUtterance,
+  AudioPlayer: IosRestrictedAudio,
+  createObjectUrl: () => "blob:ios-restricted",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async () => {
+    iosCloudRequests += 1;
+    return { type: "audio/mpeg", size: 100 };
+  },
+  cloudStartTimeoutMs: 5,
+  cloudPlaybackTimeoutMs: 20,
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-NanamiNeural",
+    rate: 1.75,
+  }),
+});
+const iosFirstSegment = [{ target: "question", text: "最初の問題" }];
+iosController.speak(iosFirstSegment, {
+  onComplete: () => iosPlaybackCompletions += 1,
+  onError: () => iosPlaybackErrors += 1,
+});
+await new Promise((resolve) => setTimeout(resolve, 0));
+iosGestureActive = true;
+iosController.unlock();
+iosGestureActive = false;
+iosController.speak(iosFirstSegment, {
+  onComplete: () => iosPlaybackCompletions += 1,
+  onError: () => iosPlaybackErrors += 1,
+});
+await new Promise((resolve) => setTimeout(resolve, 0));
+iosController.speak([{ target: "question", text: "次の問題" }], {
+  onComplete: () => iosPlaybackCompletions += 1,
+  onError: () => iosPlaybackErrors += 1,
+});
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (
+  iosAudioPlayers !== 1 ||
+  iosCloudRequests !== 2 ||
+  iosDeviceAttempts !== 0 ||
+  iosPlaybackErrors !== 1 ||
+  iosPlaybackCompletions !== 2 ||
+  iosPlayResults.join("|") !== "blocked|played|played"
+) {
+  throw new Error("iPhoneの再生許可取得後に同じ音声再生器を使い回せませんでした。");
+}
 
 const fallbackSpokenBefore = spoken.length;
 const fallbackMessages = [];

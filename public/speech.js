@@ -590,7 +590,6 @@ export function createSpeechController({
         const audioUrl = createObjectUrl(blob);
         activeAudio = audio;
         activeAudioUrl = audioUrl;
-        audio.playbackRate = settings.rate;
         let finished = false;
         let startTimer = null;
         let playbackTimer = null;
@@ -680,6 +679,8 @@ export function createSpeechController({
         try {
           audio.src = audioUrl;
           audio.load?.();
+          audio.defaultPlaybackRate = settings.rate;
+          audio.playbackRate = settings.rate;
           await audio.play();
         } catch (error) {
           fallback(error);

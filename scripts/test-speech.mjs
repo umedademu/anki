@@ -795,6 +795,7 @@ let iosDeviceAttempts = 0;
 let iosPlaybackErrors = 0;
 let iosPlaybackCompletions = 0;
 const iosPlayResults = [];
+const iosPlayedRates = [];
 class IosRestrictedAudio {
   constructor() {
     iosAudioPlayers += 1;
@@ -807,6 +808,9 @@ class IosRestrictedAudio {
   }
 
   load() {
+    if (this.src) {
+      this.playbackRate = 1;
+    }
     if (iosGestureActive) {
       this.unlocked = true;
     }
@@ -820,6 +824,7 @@ class IosRestrictedAudio {
       throw error;
     }
     iosPlayResults.push("played");
+    iosPlayedRates.push(this.playbackRate);
     this.onplaying?.();
     queueMicrotask(() => this.onended?.());
   }
@@ -884,9 +889,10 @@ if (
   iosDeviceAttempts !== 0 ||
   iosPlaybackErrors !== 1 ||
   iosPlaybackCompletions !== 2 ||
-  iosPlayResults.join("|") !== "blocked|played|played"
+  iosPlayResults.join("|") !== "blocked|played|played" ||
+  iosPlayedRates.some((rate) => rate !== 1.75)
 ) {
-  throw new Error("iPhoneの再生許可取得後に同じ音声再生器を使い回せませんでした。");
+  throw new Error("iPhoneで同じ音声再生器と設定速度を維持できませんでした。");
 }
 
 const fallbackSpokenBefore = spoken.length;

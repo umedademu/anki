@@ -274,11 +274,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.143") ||
-  !app.includes("v0.143｜") ||
-  !changelog.includes("v0.143") ||
-  !settingsHtml.includes("v0.143") ||
-  !historyHtml.includes("v0.143")
+  !html.includes("v0.144") ||
+  !app.includes("v0.144｜") ||
+  !changelog.includes("v0.144") ||
+  !settingsHtml.includes("v0.144") ||
+  !historyHtml.includes("v0.144")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -514,7 +514,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.143"') ||
+  !html.includes('href="/styles.css?v=0.144"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1019,6 +1019,9 @@ if (
   !speech.includes("function unlock()") ||
   !speech.includes("const audio = ensureCloudAudio()") ||
   !speech.includes("audio.src = audioUrl") ||
+  !speech.includes(
+    "audio.load?.();\n          audio.defaultPlaybackRate = settings.rate;\n          audio.playbackRate = settings.rate;\n          await audio.play();",
+  ) ||
   speech.includes("new AudioPlayer(audioUrl)") ||
   !speech.includes("audio.onplaying = armPlaybackTimer") ||
   !speech.includes('error?.name === "NotAllowedError"') ||

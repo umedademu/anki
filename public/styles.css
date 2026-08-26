@@ -2496,6 +2496,20 @@ body.is-listening .page {
     overflow: hidden;
   }
 
+  .page:has(.study-shell:not(.is-hidden) .completion-card:not(.is-hidden)) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .study-shell:not(.is-hidden):has(.completion-card:not(.is-hidden)) {
+    height: auto;
+    min-height: 100%;
+  }
+
+  .study-shell:not(.is-hidden):has(.completion-card:not(.is-hidden)) .completion-card {
+    align-self: start;
+  }
+
   body.is-studying .page {
     padding-top: max(3px, env(safe-area-inset-top));
   }

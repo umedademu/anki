@@ -108,7 +108,9 @@ const ratingSoundsMigration = await readFile(
   ),
   "utf8",
 );
-const app = await readFile(path.join(projectRoot, "public", "app.js"), "utf8");
+const app = (
+  await readFile(path.join(projectRoot, "public", "app.js"), "utf8")
+).replaceAll("\r\n", "\n");
 const ratingSound = await readFile(
   path.join(projectRoot, "public", "rating-sound.js"),
   "utf8",
@@ -118,7 +120,9 @@ const cloudProgress = await readFile(
   "utf8",
 );
 const config = await readFile(path.join(projectRoot, "public", "config.js"), "utf8");
-const styles = await readFile(path.join(projectRoot, "public", "styles.css"), "utf8");
+const styles = (
+  await readFile(path.join(projectRoot, "public", "styles.css"), "utf8")
+).replaceAll("\r\n", "\n");
 const answerLineBlock = html.match(
   /<div class="answer-line">[\s\S]*?<\/div>/,
 )?.[0];
@@ -270,11 +274,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.140") ||
-  !app.includes("v0.140｜") ||
-  !changelog.includes("v0.140") ||
-  !settingsHtml.includes("v0.140") ||
-  !historyHtml.includes("v0.140")
+  !html.includes("v0.141") ||
+  !app.includes("v0.141｜") ||
+  !changelog.includes("v0.141") ||
+  !settingsHtml.includes("v0.141") ||
+  !historyHtml.includes("v0.141")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -510,7 +514,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.140"') ||
+  !html.includes('href="/styles.css?v=0.141"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1149,6 +1153,18 @@ if (
   !styles.includes("body.is-studying .page")
 ) {
   throw new Error("学習開始後にヘッダーを隠して上部余白を縮める処理がありません。");
+}
+if (
+  !styles.includes(
+    ".page:has(.study-shell:not(.is-hidden) .completion-card:not(.is-hidden))",
+  ) ||
+  !styles.includes(
+    ".study-shell:not(.is-hidden):has(.completion-card:not(.is-hidden))",
+  ) ||
+  !styles.includes("-webkit-overflow-scrolling: touch") ||
+  !styles.includes("align-self: start")
+) {
+  throw new Error("スマートフォン横向きの完了画面を上下に動かす指定がありません。");
 }
 if (
   !styles.includes(".progress-track {\n    height: 3px;\n    margin: 0;\n    grid-row: 2;") ||

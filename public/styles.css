@@ -2496,6 +2496,7 @@ body.is-listening .page {
     overflow: hidden;
   }
 
+  .page:has(.routine-video-panel:not(.is-hidden)),
   .page:has(.study-shell:not(.is-hidden) .completion-card:not(.is-hidden)) {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

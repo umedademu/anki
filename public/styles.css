@@ -1243,14 +1243,34 @@ body.is-study-menu-open {
 }
 
 .listening-dock {
-  display: block;
+  display: grid;
   min-height: calc(76px + env(safe-area-inset-bottom));
   padding: 12px max(16px, env(safe-area-inset-right))
     max(10px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  gap: 8px;
 }
 
 body.is-listening .page {
   padding-bottom: calc(92px + env(safe-area-inset-bottom));
+}
+
+body.is-listening.is-listening-answer-visible .page {
+  padding-bottom: calc(158px + env(safe-area-inset-bottom));
+}
+
+.listening-navigation-buttons {
+  display: grid;
+  width: min(100%, 680px);
+  margin: 0 auto;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.listening-navigation-buttons .primary-button,
+.listening-navigation-buttons .secondary-button {
+  min-height: 48px;
+  padding: 7px 10px;
+  border-radius: 12px;
 }
 
 .listening-rating-buttons {
@@ -2515,7 +2535,8 @@ body.is-listening .page {
     padding-top: max(3px, env(safe-area-inset-top));
   }
 
-  body.is-listening .page {
+  body.is-listening .page,
+  body.is-listening.is-listening-answer-visible .page {
     padding-bottom: max(3px, env(safe-area-inset-bottom));
   }
 
@@ -2866,6 +2887,10 @@ body.is-listening .page {
   .listening-rating-buttons {
     width: 100%;
     gap: 3px;
+  }
+
+  .listening-navigation-buttons {
+    display: none;
   }
 
   .action-buttons,

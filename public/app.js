@@ -224,6 +224,10 @@ const elements = {
   ratingButtons: document.querySelector("#rating-buttons"),
   ratingActions: document.querySelectorAll("[data-rating]"),
   listeningDock: document.querySelector("#listening-dock"),
+  listeningRatingButtons: document.querySelector("#listening-rating-buttons"),
+  listeningBackAction: document.querySelector("#listening-back-action"),
+  listeningToggleAction: document.querySelector("#listening-toggle-action"),
+  listeningNextAction: document.querySelector("#listening-next-action"),
   completionCard: document.querySelector("#completion-card"),
   completionEyebrow: document.querySelector("#completion-eyebrow"),
   completionTitle: document.querySelector("#completion-title"),
@@ -2064,6 +2068,7 @@ function renderActionControls() {
   const canGoBack = state.history.length > 0;
   const showsRatingActions = !listening && hasQuestion && state.answerVisible;
   const showsListeningRatingActions = listening && hasQuestion && state.answerVisible;
+  const showsListeningControls = listening && hasQuestion;
   elements.actionDock.classList.toggle("is-answer-visible", showsRatingActions);
   elements.actionDock.classList.toggle("is-back-only", !hasQuestion);
   elements.actionDock.classList.toggle(
@@ -2072,7 +2077,15 @@ function renderActionControls() {
   );
   elements.listeningDock.classList.toggle(
     "is-hidden",
+    !showsListeningControls,
+  );
+  elements.listeningRatingButtons.classList.toggle(
+    "is-hidden",
     !showsListeningRatingActions,
+  );
+  document.body.classList.toggle(
+    "is-listening-answer-visible",
+    showsListeningRatingActions,
   );
   elements.backAction.disabled = !canGoBack || state.saving;
   elements.nextAction.classList.toggle(
@@ -2084,6 +2097,9 @@ function renderActionControls() {
   elements.ratingActions.forEach((button) => {
     button.disabled = state.saving;
   });
+  elements.listeningBackAction.disabled = !canGoBack || state.saving;
+  elements.listeningToggleAction.disabled = state.saving;
+  elements.listeningNextAction.disabled = state.saving;
   elements.studyMenuTrigger.disabled = state.saving;
 }
 
@@ -2957,6 +2973,10 @@ function advanceListeningManually() {
   }
   stopListeningSequence();
   state.listeningPaused = false;
+  if (!state.answerVisible) {
+    speakListeningAnswer(state.listeningRunId);
+    return;
+  }
   void advanceListening(state.listeningRunId);
 }
 
@@ -4340,7 +4360,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.144｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.145｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4631,6 +4651,11 @@ elements.studyMenuSettings.addEventListener("submit", (event) => {
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);
 elements.nextAction.addEventListener("click", revealCurrentAnswer);
+elements.listeningBackAction.addEventListener("click", () =>
+  void goBackListeningOneStep(),
+);
+elements.listeningToggleAction.addEventListener("click", toggleListening);
+elements.listeningNextAction.addEventListener("click", advanceListeningManually);
 elements.questionSpeech.addEventListener("click", () =>
   toggleSpeechPart("question"),
 );
@@ -4710,15 +4735,23 @@ elements.studyShell.addEventListener("pointerup", (event) => {
     return;
   }
   const horizontalDistance = event.clientX - start.x;
+  const absoluteHorizontalDistance = Math.abs(horizontalDistance);
   const verticalDistance = Math.abs(event.clientY - start.y);
-  if (horizontalDistance < 60 || horizontalDistance <= verticalDistance * 1.2) {
+  if (
+    absoluteHorizontalDistance < 60 ||
+    absoluteHorizontalDistance <= verticalDistance * 1.2
+  ) {
     return;
   }
   suppressNextListeningClick = true;
   window.setTimeout(() => {
     suppressNextListeningClick = false;
   }, 0);
-  void goBackListeningOneStep();
+  if (horizontalDistance > 0) {
+    void goBackListeningOneStep();
+  } else {
+    advanceListeningManually();
+  }
 });
 
 elements.studyShell.addEventListener("pointercancel", () => {
@@ -4803,6 +4836,11 @@ window.addEventListener("keydown", (event) => {
     if (event.key === "ArrowLeft") {
       event.preventDefault();
       void goBackListeningOneStep();
+    } else if (
+      state.currentTask && event.key === "ArrowRight"
+    ) {
+      event.preventDefault();
+      advanceListeningManually();
     } else if (
       state.currentTask &&
       state.answerVisible &&

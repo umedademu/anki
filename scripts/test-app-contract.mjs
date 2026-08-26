@@ -150,6 +150,10 @@ const toggleListeningBlock = app.match(
 const advanceListeningManuallyBlock = app.match(
   /function advanceListeningManually\(\)[\s\S]*?async function returnToSetup/,
 )?.[0];
+const advanceListeningManuallySource = advanceListeningManuallyBlock?.replace(
+  /\n\nasync function returnToSetup$/,
+  "",
+);
 const studyClockBlock = app.match(
   /function canCountStudyTime\([\s\S]*?function startNewStudyScreen/,
 )?.[0];
@@ -183,12 +187,49 @@ const renderCompletionBlock = app.match(
 const studyShellClickBlock = app.match(
   /elements\.studyShell\.addEventListener\("click"[\s\S]*?window\.addEventListener\("keydown"/,
 )?.[0];
+const studyShellPointerUpBlock = app.match(
+  /elements\.studyShell\.addEventListener\("pointerup"[\s\S]*?elements\.studyShell\.addEventListener\("pointercancel"/,
+)?.[0];
 const beginStudyBlock = app.match(
   /async function beginStudy\(\)[\s\S]*?async function resumeStudy/,
 )?.[0];
 const resumeStudyBlock = app.match(
   /async function resumeStudy\(\)[\s\S]*?async function activateDecks/,
 )?.[0];
+
+function simulateListeningForwardStep(answerVisible) {
+  if (!advanceListeningManuallySource) return null;
+  const calls = [];
+  const state = {
+    answerVisible,
+    currentTask: { questionId: "Q-1" },
+    listeningPaused: true,
+    listeningRunId: 7,
+    saving: false,
+  };
+  runInNewContext(
+    `${advanceListeningManuallySource}\nadvanceListeningManually();`,
+    {
+      advanceListening(runId) {
+        calls.push(`advance:${runId}`);
+      },
+      calls,
+      isListeningMode: () => true,
+      speakListeningAnswer(runId) {
+        calls.push(`reveal:${runId}`);
+      },
+      state,
+      stopListeningSequence() {
+        calls.push("stop");
+        state.listeningRunId += 1;
+      },
+    },
+  );
+  return { calls, state };
+}
+
+const listeningForwardFromQuestion = simulateListeningForwardStep(false);
+const listeningForwardFromAnswer = simulateListeningForwardStep(true);
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -274,11 +315,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.144") ||
-  !app.includes("v0.144｜") ||
-  !changelog.includes("v0.144") ||
-  !settingsHtml.includes("v0.144") ||
-  !historyHtml.includes("v0.144")
+  !html.includes("v0.145") ||
+  !app.includes("v0.145｜") ||
+  !changelog.includes("v0.145") ||
+  !settingsHtml.includes("v0.145") ||
+  !historyHtml.includes("v0.145")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -514,7 +555,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.144"') ||
+  !html.includes('href="/styles.css?v=0.145"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1083,6 +1124,30 @@ if (
   throw new Error("聞き流しの一時停止・再開を示す中央の一時表示が揃っていません。");
 }
 if (
+  !advanceListeningManuallySource ||
+  listeningForwardFromQuestion?.calls.join(",") !== "stop,reveal:8" ||
+  listeningForwardFromQuestion?.state.listeningPaused !== false ||
+  listeningForwardFromAnswer?.calls.join(",") !== "stop,advance:8" ||
+  listeningForwardFromAnswer?.state.listeningPaused !== false ||
+  !html.includes('id="listening-back-action"') ||
+  !html.includes('id="listening-toggle-action"') ||
+  !html.includes('id="listening-next-action"') ||
+  !app.includes(
+    'elements.listeningBackAction.addEventListener("click", () =>',
+  ) ||
+  !app.includes(
+    'elements.listeningNextAction.addEventListener("click", advanceListeningManually)',
+  ) ||
+  !studyShellPointerUpBlock?.includes("Math.abs(horizontalDistance)") ||
+  !studyShellPointerUpBlock.includes("advanceListeningManually();") ||
+  !app.includes(
+    'state.currentTask && event.key === "ArrowRight"\n    ) {\n      event.preventDefault();\n      advanceListeningManually();',
+  ) ||
+  !styles.includes(".listening-navigation-buttons")
+) {
+  throw new Error("聞き流しの進む操作を端末共通で一手単位にする構成が不足しています。");
+}
+if (
   html.includes('id="completion-back"') ||
   !listeningBackBlock ||
   !listeningBackBlock.includes('"rating"') ||
@@ -1118,7 +1183,7 @@ if (
   ) ||
   !styles.includes("height: 20dvh") ||
   !styles.includes("opacity: 0") ||
-  !app.includes("horizontalDistance < 60") ||
+  !app.includes("absoluteHorizontalDistance < 60") ||
   !app.includes("void goBackListeningOneStep();") ||
   !cloudProgress.includes("export async function undoCloudStudyActivity") ||
   !cloudProgress.includes("completeSession = false") ||
@@ -1152,7 +1217,7 @@ if (
   advanceListeningBlock.includes("applyQuestionRating(") ||
   advanceListeningBlock.includes("saveCloudStudyAnswer(") ||
   !app.includes("const showsListeningRatingActions = listening && hasQuestion && state.answerVisible") ||
-  !app.includes('elements.listeningDock.classList.toggle(\n    "is-hidden",\n    !showsListeningRatingActions') ||
+  !app.includes('elements.listeningRatingButtons.classList.toggle(\n    "is-hidden",\n    !showsListeningRatingActions') ||
   !app.includes('state.currentTask &&\n      state.answerVisible &&\n      /^[1-4]$/.test(event.key)') ||
   !worker.includes("if (!setupStudyModes.has(studyMode))")
 ) {

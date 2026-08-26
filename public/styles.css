@@ -107,7 +107,7 @@ body.is-studying .site-header {
 }
 
 body.is-studying .page {
-  padding-top: 10px;
+  padding-top: 56px;
 }
 
 .study-shell {
@@ -119,7 +119,8 @@ body.is-studying .page {
   position: fixed;
   z-index: 32;
   top: max(8px, env(safe-area-inset-top));
-  right: max(12px, env(safe-area-inset-right));
+  right: auto;
+  left: 50%;
   display: inline-flex;
   min-width: 92px;
   min-height: 38px;
@@ -136,6 +137,7 @@ body.is-studying .page {
   font: inherit;
   font-size: 0.72rem;
   font-weight: 900;
+  transform: translateX(-50%);
 }
 
 .study-menu-trigger > span {
@@ -2160,7 +2162,7 @@ body.is-listening.is-listening-answer-visible .page {
 
   .study-menu-trigger {
     top: max(6px, env(safe-area-inset-top));
-    right: max(8px, env(safe-area-inset-right));
+    right: auto;
     min-width: 82px;
     min-height: 34px;
     padding: 5px 10px;
@@ -2955,13 +2957,13 @@ body.is-listening.is-listening-answer-visible .page {
   .study-menu-trigger,
   .study-menu-trigger:disabled {
     top: 0;
-    right: 0;
-    left: 0;
-    width: 100%;
+    right: auto;
+    left: 50%;
+    width: calc(100% / 3);
     height: 20dvh;
     min-height: 0;
     padding: 0;
-    transform: none;
+    transform: translateX(-50%);
     opacity: 0;
     background: transparent;
     border: 0;

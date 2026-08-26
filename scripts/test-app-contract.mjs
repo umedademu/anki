@@ -123,6 +123,12 @@ const config = await readFile(path.join(projectRoot, "public", "config.js"), "ut
 const styles = (
   await readFile(path.join(projectRoot, "public", "styles.css"), "utf8")
 ).replaceAll("\r\n", "\n");
+const studyMenuTriggerStyleBlock = styles.match(
+  /\.study-menu-trigger \{[\s\S]*?\n\}/,
+)?.[0];
+const landscapeMenuTapAreaBlock = styles.match(
+  /@media \(orientation: landscape\) and \(max-height: 600px\) \{\n  \.study-menu-trigger,\n  \.study-menu-trigger:disabled \{[\s\S]*?\n  \}\n\}/,
+)?.[0];
 const answerLineBlock = html.match(
   /<div class="answer-line">[\s\S]*?<\/div>/,
 )?.[0];
@@ -315,11 +321,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.145") ||
-  !app.includes("v0.145｜") ||
-  !changelog.includes("v0.145") ||
-  !settingsHtml.includes("v0.145") ||
-  !historyHtml.includes("v0.145")
+  !html.includes("v0.146") ||
+  !app.includes("v0.146｜") ||
+  !changelog.includes("v0.146") ||
+  !settingsHtml.includes("v0.146") ||
+  !historyHtml.includes("v0.146")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -555,7 +561,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.145"') ||
+  !html.includes('href="/styles.css?v=0.146"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -978,6 +984,19 @@ if (
   !styles.includes("width: min(46vw, 330px)")
 ) {
   throw new Error("学習中メニューの移動・音声・復習間隔の操作が揃っていません。");
+}
+if (
+  !studyMenuTriggerStyleBlock?.includes("right: auto") ||
+  !studyMenuTriggerStyleBlock.includes("left: 50%") ||
+  !studyMenuTriggerStyleBlock.includes("transform: translateX(-50%)") ||
+  !landscapeMenuTapAreaBlock?.includes("left: 50%") ||
+  !landscapeMenuTapAreaBlock.includes("width: calc(100% / 3)") ||
+  !landscapeMenuTapAreaBlock.includes("height: 20dvh") ||
+  !landscapeMenuTapAreaBlock.includes("transform: translateX(-50%)") ||
+  landscapeMenuTapAreaBlock.includes("width: 100%") ||
+  landscapeMenuTapAreaBlock.includes("left: 0")
+) {
+  throw new Error("学習中メニューを上部中央だけで開く操作範囲が揃っていません。");
 }
 if (
   !speechSegmentsBlock ||

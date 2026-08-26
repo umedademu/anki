@@ -4,8 +4,6 @@ import {
   ratingSoundMasterVolume,
   ratingSoundPatterns,
 } from "../public/rating-sound.js";
-import { createAudioOutput } from "../public/audio-output.js";
-import { createSpeechController } from "../public/speech.js";
 
 class FakeAudioParameter {
   events = [];
@@ -63,16 +61,10 @@ class FakeDynamicsCompressor extends FakeAudioNode {
 
 class FakeBufferSource extends FakeAudioNode {
   buffer = null;
-  playbackRate = new FakeAudioParameter();
   starts = [];
-  stops = [];
 
   start(time) {
     this.starts.push(time);
-  }
-
-  stop(time) {
-    this.stops.push(time);
   }
 
   addEventListener() {}
@@ -91,24 +83,7 @@ class FakeAudioContext {
     this.bufferSources = [];
     this.nextDecodeDuration = 0.8;
     this.resumeCount = 0;
-    this.listeners = new Map();
     FakeAudioContext.instances.push(this);
-  }
-
-  addEventListener(type, listener) {
-    const listeners = this.listeners.get(type) ?? new Set();
-    listeners.add(listener);
-    this.listeners.set(type, listeners);
-  }
-
-  removeEventListener(type, listener) {
-    this.listeners.get(type)?.delete(listener);
-  }
-
-  dispatch(type) {
-    for (const listener of this.listeners.get(type) ?? []) {
-      listener();
-    }
   }
 
   createOscillator() {
@@ -265,63 +240,7 @@ await assert.rejects(
 await player.close();
 assert.equal(context.state, "closed");
 
-const sharedAudioOutput = createAudioOutput({
-  AudioContextClass: FakeAudioContext,
-});
-const overlappingRatingPlayer = createRatingSoundPlayer({
-  audioOutput: sharedAudioOutput,
-});
-await overlappingRatingPlayer.setCustomSound(
-  "good",
-  Uint8Array.from([1, 2, 3]),
-);
-assert.equal(overlappingRatingPlayer.play("good"), true);
-const overlappingSpeechController = createSpeechController({
-  synthesis: null,
-  Utterance: null,
-  AudioPlayer: null,
-  audioOutput: sharedAudioOutput,
-  requestCloudAudio: async () => ({
-    type: "audio/mpeg",
-    size: 100,
-    arrayBuffer: async () => Uint8Array.from([4, 5, 6]).buffer,
-  }),
-  getSettings: () => ({
-    source: "cloud",
-    azureVoiceId: "ja-JP-NanamiNeural",
-    rate: 1,
-  }),
-});
-assert.equal(
-  overlappingSpeechController.speak([
-    { target: "question", text: "次の問題", language: "ja-JP" },
-  ]),
-  true,
-);
-await new Promise((resolve) => setTimeout(resolve, 0));
-const sharedContext = FakeAudioContext.instances.at(-1);
-assert.equal(FakeAudioContext.instances.length, 2);
-assert.equal(sharedContext.bufferSources.length, 2);
-const [ratingSource, speechSource] = sharedContext.bufferSources;
-assert.equal(ratingSource.starts.length, 1);
-assert.equal(speechSource.starts.length, 1);
-assert.equal(ratingSource.stops.length, 0);
-assert.equal(speechSource.stops.length, 0);
-const resumeCountBeforeInterruption = sharedContext.resumeCount;
-sharedContext.state = "interrupted";
-sharedContext.dispatch("statechange");
-await new Promise((resolve) => setTimeout(resolve, 0));
-assert.equal(sharedContext.state, "running");
-assert.equal(sharedContext.resumeCount, resumeCountBeforeInterruption + 1);
-overlappingSpeechController.stop();
-assert.equal(speechSource.stops.length, 1);
-assert.equal(ratingSource.stops.length, 0);
-await overlappingRatingPlayer.close();
-assert.equal(sharedContext.state, "running");
-await sharedAudioOutput.close();
-assert.equal(sharedContext.state, "closed");
-
 const silentPlayer = createRatingSoundPlayer({ AudioContextClass: null });
 assert.equal(silentPlayer.play("good"), false);
 
-console.log("4段階評価の効果音と読み上げの重ね再生テストに成功しました。");
+console.log("4段階評価の効果音テストに成功しました。");

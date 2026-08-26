@@ -113,10 +113,6 @@ const ratingSound = await readFile(
   path.join(projectRoot, "public", "rating-sound.js"),
   "utf8",
 );
-const audioOutput = await readFile(
-  path.join(projectRoot, "public", "audio-output.js"),
-  "utf8",
-);
 const cloudProgress = await readFile(
   path.join(projectRoot, "public", "cloud-progress.js"),
   "utf8",
@@ -274,11 +270,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.141") ||
-  !app.includes("v0.141｜") ||
-  !changelog.includes("v0.141") ||
-  !settingsHtml.includes("v0.141") ||
-  !historyHtml.includes("v0.141")
+  !html.includes("v0.140") ||
+  !app.includes("v0.140｜") ||
+  !changelog.includes("v0.140") ||
+  !settingsHtml.includes("v0.140") ||
+  !historyHtml.includes("v0.140")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -296,35 +292,6 @@ if (
   !ratingSound.includes("easy: freezePattern")
 ) {
   throw new Error("4段階評価ごとの効果音と、暗記・聞き流しへの接続が揃っていません。");
-}
-if (
-  !app.includes('import { createAudioOutput } from "./audio-output.js"') ||
-  !app.includes("createSpeechController({\n  requestCloudAudio: requestCloudSpeech,\n  audioOutput,") ||
-  !app.includes("createRatingSoundPlayer({ audioOutput })") ||
-  !speech.includes("function createSharedCloudPlayer(buffer)") ||
-  !speech.includes("audioOutput.decode(audio)") ||
-  !ratingSound.includes("resumeActiveRatingAudio") ||
-  !audioOutput.includes('["suspended", "interrupted"]')
-) {
-  throw new Error("評価音と次問題の読み上げを同じ音声出力へ重ねる処理が揃っていません。");
-}
-const ratingPlayPosition = rateCurrentQuestionBlock?.indexOf(
-  "ratingSoundPlayer.play(rating)",
-);
-const nextQuestionSpeechPosition = rateCurrentQuestionBlock?.indexOf(
-  "autoSpeakQuestion()",
-  ratingPlayPosition,
-);
-const waitPosition = rateCurrentQuestionBlock?.indexOf(
-  "await ",
-  ratingPlayPosition,
-);
-if (
-  ratingPlayPosition < 0 ||
-  nextQuestionSpeechPosition < ratingPlayPosition ||
-  (waitPosition >= 0 && waitPosition < nextQuestionSpeechPosition)
-) {
-  throw new Error("評価音から次問題の読み上げまでに不要な待ち時間があります。");
 }
 if (
   !settingsHtml.includes('id="rating-sound-settings"') ||
@@ -543,7 +510,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.141"') ||
+  !html.includes('href="/styles.css?v=0.140"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

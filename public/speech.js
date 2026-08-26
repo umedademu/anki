@@ -252,7 +252,6 @@ export function createSpeechController({
   createObjectUrl = (audio) => globalThis.URL.createObjectURL(audio),
   revokeObjectUrl = (url) => globalThis.URL.revokeObjectURL(url),
   requestCloudAudio = null,
-  audioOutput = null,
   getSettings = () => defaultSpeechSettings,
   getHistoryReadings = () => ({}),
   onTargetChange = () => {},
@@ -266,20 +265,11 @@ export function createSpeechController({
       typeof synthesis.cancel === "function" &&
       typeof Utterance === "function",
   );
-  const sharedCloudSupported = Boolean(
-    audioOutput &&
-      typeof audioOutput.getContext === "function" &&
-      typeof audioOutput.resume === "function" &&
-      typeof audioOutput.decode === "function",
-  );
-  const legacyCloudSupported = Boolean(
-    typeof AudioPlayer === "function" &&
-      typeof createObjectUrl === "function" &&
-      typeof revokeObjectUrl === "function",
-  );
   const cloudSupported = Boolean(
     typeof requestCloudAudio === "function" &&
-      (sharedCloudSupported || legacyCloudSupported),
+      typeof AudioPlayer === "function" &&
+      typeof createObjectUrl === "function" &&
+      typeof revokeObjectUrl === "function",
   );
   const supported = deviceSupported || cloudSupported;
   let generation = 0;
@@ -340,17 +330,6 @@ export function createSpeechController({
       : settings.azureVoiceId;
   }
 
-  async function prepareCloudAudio(audio) {
-    if (!sharedCloudSupported) {
-      return { audio, buffer: null };
-    }
-    try {
-      return { audio, buffer: await audioOutput.decode(audio) };
-    } catch {
-      return { audio, buffer: null };
-    }
-  }
-
   function loadCloudAudio(segment, settings) {
     const voice = cloudVoiceFor(segment, settings);
     const cacheKey = JSON.stringify([segment.text, voice, segment.language]);
@@ -363,7 +342,6 @@ export function createSpeechController({
 
     const request = Promise.resolve()
       .then(() => requestCloudAudio(segment.text, voice, segment.language))
-      .then(prepareCloudAudio)
       .catch((error) => {
         if (cloudAudioCache.get(cacheKey) === request) {
           cloudAudioCache.delete(cacheKey);
@@ -375,60 +353,6 @@ export function createSpeechController({
       cloudAudioCache.delete(cloudAudioCache.keys().next().value);
     }
     return request;
-  }
-
-  function createSharedCloudPlayer(buffer) {
-    let source = null;
-    let stopped = false;
-    let finished = false;
-    const player = {
-      playbackRate: 1,
-      onplaying: null,
-      onended: null,
-      onerror: null,
-      async play() {
-        const context = audioOutput.getContext();
-        if (!context || typeof context.createBufferSource !== "function") {
-          throw new Error("自然音声の共通再生先を利用できません。");
-        }
-        source = context.createBufferSource();
-        source.buffer = buffer;
-        const rate = Number(player.playbackRate);
-        const normalizedRate = Number.isFinite(rate) && rate > 0 ? rate : 1;
-        if (source.playbackRate?.setValueAtTime) {
-          source.playbackRate.setValueAtTime(normalizedRate, context.currentTime);
-        } else if (source.playbackRate) {
-          source.playbackRate.value = normalizedRate;
-        }
-        source.connect(context.destination);
-        const handleEnded = () => {
-          source?.disconnect?.();
-          source = null;
-          if (!stopped && !finished) {
-            finished = true;
-            player.onended?.();
-          }
-        };
-        source.addEventListener?.("ended", handleEnded, { once: true });
-        if (!("addEventListener" in source)) {
-          source.onended = handleEnded;
-        }
-        const resumePromise = audioOutput.resume();
-        source.start(context.currentTime);
-        player.onplaying?.();
-        await resumePromise;
-      },
-      pause() {
-        stopped = true;
-        finished = true;
-        try {
-          source?.stop?.();
-        } catch {}
-        source?.disconnect?.();
-        source = null;
-      },
-    };
-    return player;
   }
 
   function preload(segments) {
@@ -494,9 +418,7 @@ export function createSpeechController({
       audio.onerror = null;
       audio.onplaying = null;
       audio.pause?.();
-      if (audioUrl) {
-        revokeObjectUrl(audioUrl);
-      }
+      revokeObjectUrl(audioUrl);
     }
 
     function speakWithDevice(
@@ -615,20 +537,12 @@ export function createSpeechController({
         return;
       }
       try {
-        const preparedAudio = await loadCloudAudio(segment, settings);
+        const blob = await loadCloudAudio(segment, settings);
         if (ticket !== generation) {
           return;
         }
-        let audioUrl = "";
-        let audio = null;
-        if (preparedAudio.buffer && sharedCloudSupported) {
-          audio = createSharedCloudPlayer(preparedAudio.buffer);
-        } else if (legacyCloudSupported) {
-          audioUrl = createObjectUrl(preparedAudio.audio);
-          audio = new AudioPlayer(audioUrl);
-        } else {
-          throw new Error("自然音声を再生できません。");
-        }
+        const audioUrl = createObjectUrl(blob);
+        const audio = new AudioPlayer(audioUrl);
         activeAudio = audio;
         activeAudioUrl = audioUrl;
         audio.playbackRate = settings.rate;

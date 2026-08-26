@@ -3,7 +3,6 @@ import {
   normalizeRatingSoundKey,
   normalizeRatingSoundVolume,
 } from "./rating-sound-settings.js";
-import { createAudioOutput } from "./audio-output.js";
 
 const silenceGain = 0.0001;
 
@@ -297,37 +296,12 @@ export const ratingSoundPatterns = Object.freeze({
 export function createRatingSoundPlayer({
   AudioContextClass =
     globalThis.AudioContext ?? globalThis.webkitAudioContext ?? null,
-  audioOutput = null,
   initialVolume = 1,
 } = {}) {
-  const ownsAudioOutput = !audioOutput;
-  const output = audioOutput ?? createAudioOutput({ AudioContextClass });
   let audioContext = null;
   let outputNodes = null;
   let volume = normalizeRatingSoundVolume(initialVolume);
   const customBuffers = new Map();
-  const activeRatingSources = new Set();
-
-  function resumeActiveRatingAudio() {
-    if (
-      activeRatingSources.size > 0 &&
-      ["suspended", "interrupted"].includes(audioContext?.state)
-    ) {
-      void output.resume().catch(() => {});
-    }
-  }
-
-  function trackRatingSource(source, cleanup = () => {}) {
-    activeRatingSources.add(source);
-    source.addEventListener?.(
-      "ended",
-      () => {
-        activeRatingSources.delete(source);
-        cleanup();
-      },
-      { once: true },
-    );
-  }
 
   function applyOutputVolume(context) {
     if (!outputNodes) return;
@@ -341,7 +315,6 @@ export function createRatingSoundPlayer({
   function createOutputNodes(context) {
     const builtIn = context.createGain();
     const custom = context.createGain();
-    context.addEventListener?.("statechange", resumeActiveRatingAudio);
 
     if (typeof context.createDynamicsCompressor !== "function") {
       builtIn.connect(context.destination);
@@ -366,17 +339,13 @@ export function createRatingSoundPlayer({
   }
 
   function ensureAudioContext() {
-    const nextContext = output.getContext();
-    if (nextContext !== audioContext) {
-      audioContext?.removeEventListener?.(
-        "statechange",
-        resumeActiveRatingAudio,
-      );
-      audioContext = nextContext;
+    if (audioContext?.state === "closed") {
+      audioContext = null;
       outputNodes = null;
-      if (audioContext) {
-        createOutputNodes(audioContext);
-      }
+    }
+    if (!audioContext && typeof AudioContextClass === "function") {
+      audioContext = new AudioContextClass();
+      createOutputNodes(audioContext);
     }
     return audioContext;
   }
@@ -404,12 +373,16 @@ export function createRatingSoundPlayer({
     gain.gain.exponentialRampToValueAtTime(silenceGain, endTime);
     oscillator.connect(gain);
     gain.connect(outputNodes?.builtIn ?? context.destination);
-    trackRatingSource(oscillator, () => {
-      oscillator.disconnect?.();
-      gain.disconnect?.();
-    });
     oscillator.start(startTime);
     oscillator.stop(endTime + 0.02);
+    oscillator.addEventListener?.(
+      "ended",
+      () => {
+        oscillator.disconnect?.();
+        gain.disconnect?.();
+      },
+      { once: true },
+    );
   }
 
   function play(rating) {
@@ -423,16 +396,20 @@ export function createRatingSoundPlayer({
       if (!context) {
         return false;
       }
-      if (["suspended", "interrupted"].includes(context.state)) {
-        void output.resume().catch(() => {});
+      if (context.state === "suspended") {
+        void context.resume?.().catch?.(() => {});
       }
       const customBuffer = customBuffers.get(normalizedRating);
       if (customBuffer && typeof context.createBufferSource === "function") {
         const source = context.createBufferSource();
         source.buffer = customBuffer;
         source.connect(outputNodes?.custom ?? context.destination);
-        trackRatingSource(source, () => source.disconnect?.());
         source.start(context.currentTime + 0.005);
+        source.addEventListener?.(
+          "ended",
+          () => source.disconnect?.(),
+          { once: true },
+        );
         return true;
       }
       const baseTime = context.currentTime + 0.005;
@@ -441,13 +418,8 @@ export function createRatingSoundPlayer({
       }
       return true;
     } catch {
-      audioContext?.removeEventListener?.(
-        "statechange",
-        resumeActiveRatingAudio,
-      );
       audioContext = null;
       outputNodes = null;
-      activeRatingSources.clear();
       return false;
     }
   }
@@ -475,7 +447,7 @@ export function createRatingSoundPlayer({
     }
     let buffer;
     try {
-      buffer = await output.decode(source);
+      buffer = await context.decodeAudioData(source.slice(0));
     } catch {
       throw new Error("この端末で再生できるMP3・WAV・M4Aを選んでください。");
     }
@@ -508,15 +480,18 @@ export function createRatingSoundPlayer({
   }
 
   function close() {
-    audioContext?.removeEventListener?.(
-      "statechange",
-      resumeActiveRatingAudio,
-    );
+    const context = audioContext;
     audioContext = null;
     outputNodes = null;
     customBuffers.clear();
-    activeRatingSources.clear();
-    return ownsAudioOutput ? output.close() : Promise.resolve();
+    if (!context || context.state === "closed") {
+      return Promise.resolve();
+    }
+    try {
+      return Promise.resolve(context.close?.()).catch(() => {});
+    } catch {
+      return Promise.resolve();
+    }
   }
 
   return {

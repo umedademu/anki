@@ -929,11 +929,15 @@ body.is-study-menu-open {
 }
 
 .question-reading {
-  margin: -18px 0 22px;
-  color: #567060;
-  font-size: clamp(0.82rem, 1.8vw, 1rem);
-  font-weight: 700;
-  line-height: 1.5;
+  margin: -10px 0 16px;
+  padding: 20px 22px;
+  background: #f0f6f1;
+  border-left: 4px solid #4b8a64;
+  border-radius: 0 16px 16px 0;
+  color: #29362e;
+  font-size: clamp(1.05rem, 2vw, 1.18rem);
+  font-weight: 850;
+  line-height: 1.75;
 }
 
 .question-card.is-staged-term .question-spoken-block h2 {
@@ -2785,8 +2789,11 @@ body.is-listening.is-listening-answer-visible .page {
 
   .question-reading {
     margin: 0 0 4px;
-    font-size: 0.7rem;
-    line-height: 1.2;
+    padding: 5px 9px;
+    border-left-width: 3px;
+    border-radius: 0 8px 8px 0;
+    font-size: clamp(0.95rem, 2vw, 1rem);
+    line-height: 1.25;
   }
 
   .answer {

@@ -344,7 +344,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.170" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.171" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -357,12 +357,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.170") ||
-  !app.includes("v0.170｜") ||
-  !changelog.includes("v0.170") ||
-  !settingsHtml.includes("v0.170") ||
-  !historyHtml.includes("v0.170") ||
-  !analysisHtml.includes("v0.170")
+  !html.includes("v0.171") ||
+  !app.includes("v0.171｜") ||
+  !changelog.includes("v0.171") ||
+  !settingsHtml.includes("v0.171") ||
+  !historyHtml.includes("v0.171") ||
+  !analysisHtml.includes("v0.171")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -515,8 +515,11 @@ if (
   !analysisHtml.includes('id="analysis-subject"') ||
   !analysisHtml.includes('id="analysis-period"') ||
   !analysisHtml.includes('id="analysis-section-list"') ||
+  !analysisHtml.includes('id="analysis-legacy-section-list"') ||
   !analysisApp.includes("loadCloudRatingAnalysis") ||
   !analysisApp.includes("buildWeaknessSections") ||
+  !analysisApp.includes("buildLegacyAnalysis") ||
+  !analysisCore.includes("buildLegacyWeaknessSections") ||
   !analysisCore.includes("minimumRankedAnswerCount = 5") ||
   !analysisCore.includes("again: 100") ||
   !app.includes("createQuestionAnalysisSnapshot") ||
@@ -524,6 +527,7 @@ if (
   !cloudProgress.includes('cloudRequest(\n    `/v1/analysis?period=') ||
   !worker.includes('url.pathname === "/v1/analysis"') ||
   !worker.includes("analysis_json") ||
+  !worker.includes("legacyProgressRows") ||
   !studyActivityRatingsMigration.includes("ADD COLUMN rating") ||
   !studyActivityRatingsMigration.includes("ADD COLUMN analysis_json") ||
   !styles.includes(".analysis-section-list")
@@ -663,7 +667,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.170"') ||
+  !html.includes('href="/styles.css?v=0.171"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

@@ -1843,6 +1843,66 @@ body.is-listening.is-listening-answer-visible .page {
   gap: 20px;
 }
 
+.analysis-group {
+  display: grid;
+  padding: clamp(20px, 3.5vw, 32px);
+  gap: 18px;
+  background: rgb(245 248 244 / 78%);
+  border: 1px solid rgb(34 80 53 / 11%);
+  border-radius: 24px;
+}
+
+.analysis-legacy-group {
+  background: linear-gradient(145deg, rgb(239 246 239 / 92%), rgb(250 248 239 / 88%));
+}
+
+.analysis-exact-group {
+  background: rgb(244 247 245 / 84%);
+}
+
+.analysis-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.analysis-group-heading h2 {
+  margin: 0;
+  color: #1f4f36;
+  font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+}
+
+.analysis-group-heading .eyebrow {
+  margin-bottom: 6px;
+}
+
+.analysis-group-heading > span {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  color: #486655;
+  background: rgb(255 255 255 / 82%);
+  border: 1px solid rgb(34 80 53 / 10%);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 900;
+}
+
+.analysis-group-description,
+.analysis-group-empty {
+  margin: 0;
+  color: #66746c;
+  font-size: 0.8rem;
+  line-height: 1.7;
+}
+
+.analysis-group-empty {
+  padding: 16px 18px;
+  background: rgb(255 255 255 / 75%);
+  border: 1px solid rgb(34 80 53 / 9%);
+  border-radius: 13px;
+}
+
 .analysis-summary {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -1876,6 +1936,8 @@ body.is-listening.is-listening-answer-visible .page {
 .analysis-summary-item.is-hard { border-top-color: #d3a91e; }
 .analysis-summary-item.is-good { border-top-color: #2d7a4f; }
 .analysis-summary-item.is-easy { border-top-color: #286da8; }
+.analysis-summary-item.is-remembered { border-top-color: #4f8461; }
+.analysis-summary-item.is-unmastered { border-top-color: #b7802e; }
 
 .analysis-data-note {
   margin: 0;
@@ -1909,6 +1971,7 @@ body.is-listening.is-listening-answer-visible .page {
 }
 
 .analysis-section-heading h2,
+.analysis-section-heading h3,
 .analysis-method h2 {
   margin: 0;
   color: #23533a;
@@ -2007,6 +2070,10 @@ body.is-listening.is-listening-answer-visible .page {
   color: #68746d;
   font-size: 0.68rem;
   font-weight: 800;
+}
+
+.analysis-legacy-counts {
+  color: #9a3e35;
 }
 
 .analysis-rating-counts {
@@ -2789,6 +2856,12 @@ body.is-listening.is-listening-answer-visible .page {
 
   .analysis-summary-item:first-child {
     grid-column: 1 / -1;
+  }
+
+  .analysis-group-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .analysis-ranking > li {

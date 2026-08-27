@@ -1,31 +1,37 @@
 import {
+  buildLegacyWeaknessSections,
   buildWeaknessSections,
   calculateWeaknessScore,
+  createLegacyAnalysisRow,
   createQuestionAnalysisSnapshot,
   normalizeRatingAnalysis,
 } from "../public/analysis-core.js";
 
-const snapshot = createQuestionAnalysisSnapshot(
-  {
-    filterLabels: {
-      macroRegion: "大分類の地域",
-      regionDetail: "小分類の地域",
-      category: "カテゴリ",
-    },
+const subject = {
+  id: "world-history",
+  title: "世界史",
+  deckId: "deck-1",
+  datasetLabel: "Deck 1",
+  filterLabels: {
+    macroRegion: "大分類の地域",
+    regionDetail: "小分類の地域",
+    category: "カテゴリ",
   },
-  {
-    term: "十字軍",
-    category: "戦争",
-    geography: {
-      macroRegion: "ヨーロッパ・西アジア",
-      regionDetail: "東地中海",
-    },
+};
+const term = {
+  term: "十字軍",
+  category: "戦争",
+  geography: {
+    macroRegion: "ヨーロッパ・西アジア",
+    regionDetail: "東地中海",
   },
-  {
-    label: "時期",
-    prompt: "第1回十字軍が開始された年はいつか。",
-  },
-);
+};
+const question = {
+  id: "WH-000001-B01",
+  label: "時期",
+  prompt: "第1回十字軍が開始された年はいつか。",
+};
+const snapshot = createQuestionAnalysisSnapshot(subject, term, question);
 
 if (
   snapshot.dimensions.length !== 4 ||
@@ -39,6 +45,17 @@ const analysis = normalizeRatingAnalysis({
   periodDays: 30,
   ratedAnswerCount: "10",
   unratedAnswerCount: "2",
+  legacyProgressRows: [
+    {
+      datasetVersion: "world-history-v1",
+      questionId: "WH-000001-B01",
+      streak: 1,
+      attempts: 10,
+      rememberedCount: 6,
+      lastRating: "hard",
+      everMastered: false,
+    },
+  ],
   rows: [
     {
       subjectId: "world-history",
@@ -78,4 +95,28 @@ if (
   throw new Error("4段階評価から苦手度と上位項目を計算できませんでした。");
 }
 
-console.log("分析検証完了: 地域・カテゴリ・問題形式と4段階評価の集計を確認");
+const legacyRow = createLegacyAnalysisRow({
+  progress: analysis.legacyProgressRows[0],
+  subject,
+  deck: { id: "deck-1", datasetLabel: "Deck 1" },
+  term,
+  question,
+});
+const legacySections = buildLegacyWeaknessSections(
+  legacyRow ? [legacyRow] : [],
+  "world-history",
+);
+const legacyWestAsia = legacySections
+  .find((section) => section.key === "macroRegion")
+  ?.ranked.find((item) => item.name === "西アジア");
+if (
+  analysis.legacyProgressRows.length !== 1 ||
+  legacyWestAsia?.attempts !== 10 ||
+  legacyWestAsia.incorrectCount !== 4 ||
+  legacyWestAsia.incorrectRate !== 40 ||
+  legacyWestAsia.unmasteredQuestionCount !== 1
+) {
+  throw new Error("過去の回答回数から不正解率と未習得数を計算できませんでした。");
+}
+
+console.log("分析検証完了: 過去の不正解率と今後の4段階評価の集計を確認");

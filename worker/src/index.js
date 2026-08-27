@@ -1102,9 +1102,17 @@ async function readRatingAnalysis(env, periodDays) {
      FROM study_activity_events
      WHERE (rating IS NULL OR analysis_json IS NULL) ${periodCondition}`,
   );
-  const [rowsResult, unratedResult] = await Promise.all([
+  const legacyProgressStatement = env.DB.prepare(
+    `SELECT dataset_version, question_id, streak, attempts, remembered_count,
+       last_rating, last_answered_at, next_review_at, ever_mastered
+     FROM question_progress
+     WHERE attempts > 0
+     ORDER BY dataset_version, question_id`,
+  );
+  const [rowsResult, unratedResult, legacyProgressResult] = await Promise.all([
     (startStudyDate ? rowsStatement.bind(startStudyDate) : rowsStatement).all(),
     (startStudyDate ? unratedStatement.bind(startStudyDate) : unratedStatement).first(),
+    legacyProgressStatement.all(),
   ]);
   const rows = (rowsResult.results ?? []).map((row) => ({
     subjectId: row.subject_id,
@@ -1122,6 +1130,17 @@ async function readRatingAnalysis(env, periodDays) {
     ratedAnswerCount: rows.reduce((total, row) => total + row.answerCount, 0),
     unratedAnswerCount: Number(unratedResult?.answer_count) || 0,
     rows,
+    legacyProgressRows: (legacyProgressResult.results ?? []).map((row) => ({
+      datasetVersion: row.dataset_version,
+      questionId: row.question_id,
+      streak: Number(row.streak) || 0,
+      attempts: Number(row.attempts) || 0,
+      rememberedCount: Number(row.remembered_count) || 0,
+      lastRating: row.last_rating,
+      lastAnsweredAt: row.last_answered_at,
+      nextReviewAt: row.next_review_at,
+      everMastered: Boolean(row.ever_mastered),
+    })),
   };
 }
 

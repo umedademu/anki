@@ -131,12 +131,95 @@ function normalizeAnalysisRow(value) {
   };
 }
 
+function normalizeLegacyProgressRow(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const datasetVersion = limitedText(value.datasetVersion, 100);
+  const questionId = limitedText(value.questionId, 100);
+  const attempts = Math.min(
+    1_000_000_000,
+    Math.max(0, Number.parseInt(value.attempts, 10) || 0),
+  );
+  const rememberedCount = Math.min(
+    attempts,
+    Math.max(0, Number.parseInt(value.rememberedCount, 10) || 0),
+  );
+  const lastRating = limitedText(value.lastRating, 20);
+  if (
+    !datasetVersion ||
+    !analysisIdPattern.test(questionId) ||
+    attempts === 0
+  ) {
+    return null;
+  }
+  return {
+    datasetVersion,
+    questionId,
+    streak: Math.min(
+      1_000_000_000,
+      Math.max(0, Number.parseInt(value.streak, 10) || 0),
+    ),
+    attempts,
+    rememberedCount,
+    lastRating: analysisRatingValues.includes(lastRating) ? lastRating : null,
+    lastAnsweredAt: limitedText(value.lastAnsweredAt, 50) || null,
+    nextReviewAt: limitedText(value.nextReviewAt, 50) || null,
+    everMastered: Boolean(value.everMastered),
+  };
+}
+
+export function createLegacyAnalysisRow({
+  progress,
+  subject,
+  deck,
+  term,
+  question,
+}) {
+  const normalizedProgress = normalizeLegacyProgressRow(progress);
+  const analysis = createQuestionAnalysisSnapshot(subject, term, question);
+  const subjectId = limitedText(subject?.id, 100);
+  const subjectTitle = limitedText(subject?.title, 200);
+  const deckId = limitedText(deck?.id ?? subject?.deckId, 100);
+  const deckTitle = limitedText(
+    deck?.datasetLabel ?? deck?.difficultyLabel ?? subject?.datasetLabel,
+    200,
+  );
+  if (
+    !normalizedProgress ||
+    !analysisIdPattern.test(subjectId) ||
+    !subjectTitle ||
+    !analysisIdPattern.test(deckId) ||
+    !deckTitle ||
+    !analysis
+  ) {
+    return null;
+  }
+  const masteryTarget = Math.max(
+    1,
+    Number.parseInt(subject?.masteryTarget, 10) || 2,
+  );
+  return {
+    ...normalizedProgress,
+    subjectId,
+    subjectTitle,
+    deckId,
+    deckTitle,
+    analysis,
+    currentlyMastered: normalizedProgress.streak >= masteryTarget,
+  };
+}
+
 export function normalizeRatingAnalysis(value) {
   const source = value && typeof value === "object" && !Array.isArray(value)
     ? value
     : {};
   const rows = (Array.isArray(source.rows) ? source.rows : []).flatMap((row) => {
     const normalized = normalizeAnalysisRow(row);
+    return normalized ? [normalized] : [];
+  });
+  const legacyProgressRows = (
+    Array.isArray(source.legacyProgressRows) ? source.legacyProgressRows : []
+  ).flatMap((row) => {
+    const normalized = normalizeLegacyProgressRow(row);
     return normalized ? [normalized] : [];
   });
   const periodDays = source.periodDays == null
@@ -155,6 +238,7 @@ export function normalizeRatingAnalysis(value) {
       Math.max(0, Number.parseInt(source.unratedAnswerCount, 10) || 0),
     ),
     rows,
+    legacyProgressRows,
   };
 }
 
@@ -225,6 +309,71 @@ export function buildWeaknessSections(rows, subjectId = "") {
         .slice(0, 10),
       collecting: items
         .filter((item) => item.answerCount < minimumRankedAnswerCount)
+        .slice(0, 5),
+    };
+  });
+}
+
+export function buildLegacyWeaknessSections(rows, subjectId = "") {
+  const sectionMap = new Map();
+  for (const row of rows) {
+    if (subjectId && row.subjectId !== subjectId) continue;
+    const incorrectCount = Math.max(0, row.attempts - row.rememberedCount);
+    for (const dimension of row.analysis.dimensions) {
+      const sectionKey = `${dimension.key}\0${dimension.label}`;
+      if (!sectionMap.has(sectionKey)) {
+        sectionMap.set(sectionKey, {
+          key: dimension.key,
+          label: dimension.label,
+          items: new Map(),
+        });
+      }
+      const section = sectionMap.get(sectionKey);
+      for (const name of dimension.values) {
+        if (!section.items.has(name)) {
+          section.items.set(name, {
+            name,
+            attempts: 0,
+            incorrectCount: 0,
+            questionIds: new Set(),
+            unmasteredQuestionIds: new Set(),
+          });
+        }
+        const item = section.items.get(name);
+        item.attempts += row.attempts;
+        item.incorrectCount += incorrectCount;
+        item.questionIds.add(row.questionId);
+        if (!row.currentlyMastered) item.unmasteredQuestionIds.add(row.questionId);
+      }
+    }
+  }
+  return [...sectionMap.values()].map((section) => {
+    const items = [...section.items.values()]
+      .map((item) => ({
+        name: item.name,
+        attempts: item.attempts,
+        incorrectCount: item.incorrectCount,
+        rememberedCount: item.attempts - item.incorrectCount,
+        incorrectRate: item.attempts > 0
+          ? Math.round((item.incorrectCount / item.attempts) * 100)
+          : 0,
+        questionCount: item.questionIds.size,
+        unmasteredQuestionCount: item.unmasteredQuestionIds.size,
+      }))
+      .sort((left, right) =>
+        right.incorrectRate - left.incorrectRate ||
+        right.incorrectCount - left.incorrectCount ||
+        right.attempts - left.attempts ||
+        left.name.localeCompare(right.name, "ja"),
+      );
+    return {
+      key: section.key,
+      label: section.label,
+      ranked: items
+        .filter((item) => item.attempts >= minimumRankedAnswerCount)
+        .slice(0, 10),
+      collecting: items
+        .filter((item) => item.attempts < minimumRankedAnswerCount)
         .slice(0, 5),
     };
   });

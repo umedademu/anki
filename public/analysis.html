@@ -9,15 +9,15 @@
     />
     <title>Anki | 分析</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.170" />
+    <link rel="stylesheet" href="/styles.css?v=0.171" />
     <script src="/config.js" defer></script>
-    <script src="/analysis.js?v=0.170" type="module"></script>
+    <script src="/analysis.js?v=0.171" type="module"></script>
   </head>
   <body class="analysis-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.170</span>
+        <span class="app-version">v0.171</span>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/settings.html">設定</a>
@@ -27,10 +27,10 @@
 
     <main class="page analysis-page">
       <section class="analysis-heading">
-        <p class="eyebrow">4段階評価から自動集計</p>
+        <p class="eyebrow">これまでの学習記録から自動集計</p>
         <h1>苦手分野の分析</h1>
         <p>
-          不正解・難しい・正解・簡単の記録から、科目ごとに苦手な地域、分野、問題形式を表示します。
+          過去の不正解率と今後の4段階評価から、科目ごとに苦手な地域、分野、問題形式を表示します。
         </p>
       </section>
 
@@ -42,7 +42,7 @@
           </select>
         </label>
         <fieldset id="analysis-period" disabled>
-          <legend>集計期間</legend>
+          <legend>4段階評価の集計期間</legend>
           <label><input type="radio" name="period" value="30" checked />30日</label>
           <label><input type="radio" name="period" value="90" />90日</label>
           <label><input type="radio" name="period" value="all" />全期間</label>
@@ -54,13 +54,43 @@
       </section>
 
       <section class="analysis-results is-hidden" id="analysis-results">
-        <div class="analysis-summary" id="analysis-summary"></div>
-        <p class="analysis-data-note is-hidden" id="analysis-data-note"></p>
-        <div class="analysis-section-list" id="analysis-section-list"></div>
+        <section class="analysis-group analysis-legacy-group" id="analysis-legacy-group">
+          <div class="analysis-group-heading">
+            <div>
+              <p class="eyebrow">過去分を含む全期間</p>
+              <h2>これまでの学習から見た苦手分野</h2>
+            </div>
+            <span>正確な不正解率</span>
+          </div>
+          <p class="analysis-group-description">
+            問題ごとの総回答回数と不正解回数を現在の分類へ照合しています。過去の「難しい・正解・簡単」は区別せず、不正解以外としてまとめます。
+          </p>
+          <div class="analysis-summary analysis-legacy-summary" id="analysis-legacy-summary"></div>
+          <p class="analysis-data-note is-hidden" id="analysis-legacy-note"></p>
+          <p class="analysis-group-empty is-hidden" id="analysis-legacy-empty"></p>
+          <div class="analysis-section-list" id="analysis-legacy-section-list"></div>
+        </section>
+
+        <section class="analysis-group analysis-exact-group" id="analysis-exact-group">
+          <div class="analysis-group-heading">
+            <div>
+              <p class="eyebrow">v0.170以降</p>
+              <h2>4段階評価による詳細分析</h2>
+            </div>
+            <span>期間を切り替え可能</span>
+          </div>
+          <p class="analysis-group-description">
+            不正解・難しい・正解・簡単をそれぞれ集計し、評価の重さを反映した苦手度を表示します。
+          </p>
+          <div class="analysis-summary" id="analysis-summary"></div>
+          <p class="analysis-data-note is-hidden" id="analysis-data-note"></p>
+          <p class="analysis-group-empty is-hidden" id="analysis-exact-empty"></p>
+          <div class="analysis-section-list" id="analysis-section-list"></div>
+        </section>
         <section class="analysis-method">
-          <h2>苦手度について</h2>
+          <h2>分析方法について</h2>
           <p>
-            不正解を100、難しいを65、正解を20、簡単を0として平均しています。5回以上評価した項目だけを順位に含め、5回未満は参考値として表示します。
+            これまでの学習は不正解回数÷総回答回数を不正解率とし、4段階評価は不正解を100、難しいを65、正解を20、簡単を0として平均しています。どちらも5回以上回答した項目だけを順位に含め、5回未満は参考値として表示します。
           </p>
         </section>
       </section>

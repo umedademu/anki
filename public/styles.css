@@ -2518,6 +2518,7 @@ body.is-listening.is-listening-answer-visible .page {
     overflow: hidden;
   }
 
+  .page:has(.subject-panel:not(.is-hidden)),
   .page:has(.routine-video-panel:not(.is-hidden)),
   .page:has(.study-shell:not(.is-hidden) .completion-card:not(.is-hidden)) {
     overflow-y: auto;

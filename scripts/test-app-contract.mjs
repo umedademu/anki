@@ -189,6 +189,20 @@ const listeningPlaybackFeedbackBlock = app.match(
 const toggleListeningBlock = app.match(
   /function toggleListening\(\)[\s\S]*?async function returnToSetup/,
 )?.[0];
+const replaySpeechPartBlock = app.match(
+  /function replaySpeechPart\(target\)[\s\S]*?function toggleSpeechPart/,
+)?.[0];
+const replaySpeechPartSource = replaySpeechPartBlock?.replace(
+  /\n\nfunction toggleSpeechPart$/,
+  "",
+);
+const toggleSpeechPartBlock = app.match(
+  /function toggleSpeechPart\(target\)[\s\S]*?function toggleListening/,
+)?.[0];
+const toggleSpeechPartSource = toggleSpeechPartBlock?.replace(
+  /\n\nfunction toggleListening$/,
+  "",
+);
 const advanceListeningManuallyBlock = app.match(
   /function advanceListeningManually\(\)[\s\S]*?async function returnToSetup/,
 )?.[0];
@@ -272,6 +286,110 @@ function simulateListeningForwardStep(answerVisible) {
 
 const listeningForwardFromQuestion = simulateListeningForwardStep(false);
 const listeningForwardFromAnswer = simulateListeningForwardStep(true);
+
+function simulateSpeechPartToggle(initiallyEnabled) {
+  if (!toggleSpeechPartSource) return null;
+  const calls = [];
+  const state = {
+    speechParts: {
+      history: { question: initiallyEnabled, answer: true },
+    },
+    listeningPaused: true,
+    answerVisible: true,
+  };
+  runInNewContext(`${toggleSpeechPartSource}\ntoggleSpeechPart("question");`, {
+    isListeningMode: () => false,
+    queueSpeechPartsSave: () => Promise.resolve(),
+    replaySpeechPart(target) {
+      calls.push(`replay:${target}`);
+    },
+    showSpeechPartNotice(message) {
+      calls.push(`notice:${message}`);
+    },
+    speechController: { supported: true, currentTarget: "" },
+    speechPartKeyForTarget: () => "question",
+    speechPartSubjectKey: () => "history",
+    state,
+    stopListeningSequence() {
+      calls.push("stop");
+    },
+    updateSpeechButtons() {
+      calls.push("update");
+    },
+  });
+  return { calls, state };
+}
+
+function simulateSpeechPartReplay({ listeningPaused, answerVisible }) {
+  if (!replaySpeechPartSource) return null;
+  const calls = [];
+  let playbackOptions = null;
+  const state = {
+    answerVisible,
+    listeningPaused,
+    listeningPauseSeconds: 0,
+    listeningQuestionIntervalSeconds: 0,
+    listeningRunId: 4,
+    listeningTimer: null,
+  };
+  const listening = true;
+  const context = {
+    advanceListening(runId) {
+      calls.push(`advance:${runId}`);
+    },
+    isListeningMode: () => listening,
+    pauseListeningAfterSpeechFailure() {},
+    showSpeechPartNotice(message) {
+      calls.push(`notice:${message}`);
+    },
+    speakListeningAnswer(runId) {
+      calls.push(`answer:${runId}`);
+    },
+    speechController: {
+      speak(_segments, options) {
+        calls.push("speak");
+        playbackOptions = options;
+        return true;
+      },
+      unlock() {
+        calls.push("unlock");
+      },
+    },
+    speechSequenceForPart: () => [
+      { target: "answer", text: "回答", language: "ja-JP" },
+    ],
+    state,
+    stopListeningSequence() {
+      calls.push("stop");
+      state.listeningRunId += 1;
+    },
+    window: {
+      setTimeout(callback) {
+        calls.push("timer");
+        callback();
+        return 1;
+      },
+    },
+  };
+  runInNewContext(`${replaySpeechPartSource}\nreplaySpeechPart("answer");`, context);
+  playbackOptions?.onComplete();
+  return { calls, state };
+}
+
+const speechPartEnabled = simulateSpeechPartToggle(false);
+const speechPartDisabled = simulateSpeechPartToggle(true);
+const speechPartReplayWhilePaused = simulateSpeechPartReplay({
+  listeningPaused: true,
+  answerVisible: true,
+});
+const speechPartReplayFromQuestion = simulateSpeechPartReplay({
+  listeningPaused: false,
+  answerVisible: false,
+});
+const speechPartReplayFromAnswer = simulateSpeechPartReplay({
+  listeningPaused: false,
+  answerVisible: true,
+});
 const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
@@ -344,7 +462,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.172" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.173" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -357,12 +475,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.172") ||
-  !app.includes("v0.172｜") ||
-  !changelog.includes("v0.172") ||
-  !settingsHtml.includes("v0.172") ||
-  !historyHtml.includes("v0.172") ||
-  !analysisHtml.includes("v0.172")
+  !html.includes("v0.173") ||
+  !app.includes("v0.173｜") ||
+  !changelog.includes("v0.173") ||
+  !settingsHtml.includes("v0.173") ||
+  !historyHtml.includes("v0.173") ||
+  !analysisHtml.includes("v0.173")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -667,7 +785,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.172"') ||
+  !html.includes('href="/styles.css?v=0.173"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -791,6 +909,13 @@ if (
   !app.includes("prepareMnemonicSpeechText(yearMnemonic)") ||
   !speech.includes("export function prepareMnemonicSpeechText") ||
   !app.includes("function toggleSpeechPart(target)") ||
+  !app.includes("function replaySpeechPart(target)") ||
+  !app.includes("function speechSequenceForPart(target") ||
+  !app.includes("const enablesPart = !state.speechParts[subjectKey][partKey]") ||
+  !app.includes("if (enablesPart) {\n    replaySpeechPart(target);") ||
+  !app.includes("const continuesListening = isListeningMode() && !state.listeningPaused") ||
+  !app.includes("if (answerWasVisible) {\n          void advanceListening(runId);") ||
+  !app.includes("speakListeningAnswer(runId);") ||
   !app.includes('icon.textContent = enabled ? "🔊" : "🔇"') ||
   !html.includes('aria-pressed="true"') ||
   !html.includes('aria-pressed="false"') ||
@@ -801,6 +926,22 @@ if (
   !styles.includes(".speech-button")
 ) {
   throw new Error("問題・回答・解説の音声読み上げ操作が揃っていません。");
+}
+if (
+  !replaySpeechPartSource ||
+  !toggleSpeechPartSource ||
+  speechPartEnabled?.calls.join("|") !== "update|replay:question" ||
+  speechPartEnabled?.state.speechParts.history.question !== true ||
+  speechPartDisabled?.calls.join("|") !== "update" ||
+  speechPartDisabled?.state.speechParts.history.question !== false ||
+  speechPartReplayWhilePaused?.calls.join("|") !== "stop|unlock|speak" ||
+  speechPartReplayWhilePaused?.state.listeningPaused !== true ||
+  speechPartReplayFromQuestion?.calls.join("|") !==
+    "stop|unlock|speak|timer|answer:5" ||
+  speechPartReplayFromAnswer?.calls.join("|") !==
+    "stop|unlock|speak|timer|advance:5"
+) {
+  throw new Error("音声項目をONにした時だけ再生し、聞き流し状態へ正しく戻せません。");
 }
 if (
   !settingsHtml.includes('id="speech-source"') ||

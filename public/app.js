@@ -2519,11 +2519,11 @@ function updateSpeechButtons(activeTarget = speechController.currentTarget) {
       "aria-label",
       enabled
         ? `${label}の自動読み上げをOFFにする`
-        : `${label}の自動読み上げをONにする`,
+        : `${label}の自動読み上げをONにして再生する`,
     );
     button.title = enabled
       ? `${label}の自動読み上げ：ON`
-      : `${label}の自動読み上げ：OFF`;
+      : `${label}の自動読み上げ：OFF（押すとONにして再生）`;
     const icon = button.querySelector("span");
     if (icon) {
       icon.textContent = enabled ? "🔊" : "🔇";
@@ -3166,6 +3166,75 @@ function showSpeechPartNotice(message) {
   }, 2200);
 }
 
+function speechSequenceForPart(target, task = state.currentTask) {
+  const primarySegments = speechSegmentsFor(target, task);
+  if (target !== "answer" || !isClassicalChineseMeaningQuestion(task)) {
+    return applyClassicalChineseSpeechRules(primarySegments, task);
+  }
+  const meaningSegments = primarySegments.map((segment, index) =>
+    index === 0 ? { ...segment, text: `意味、${segment.text}` } : segment,
+  );
+  return applyClassicalChineseSpeechRules(
+    [...classicalChineseReadingSpeechSequence(task), ...meaningSegments],
+    task,
+  );
+}
+
+function replaySpeechPart(target) {
+  const segments = speechSequenceForPart(target);
+  if (segments.length === 0) {
+    return false;
+  }
+  const continuesListening = isListeningMode() && !state.listeningPaused;
+  const answerWasVisible = state.answerVisible;
+  if (isListeningMode()) {
+    stopListeningSequence();
+  } else {
+    speechController.stop();
+  }
+  const runId = state.listeningRunId;
+  speechController.unlock();
+  const started = speechController.speak(segments, {
+    onComplete: () => {
+      if (
+        !continuesListening ||
+        runId !== state.listeningRunId ||
+        state.listeningPaused ||
+        !isListeningMode()
+      ) {
+        return;
+      }
+      const waitSeconds = answerWasVisible
+        ? state.listeningQuestionIntervalSeconds
+        : state.listeningPauseSeconds;
+      state.listeningTimer = window.setTimeout(() => {
+        state.listeningTimer = null;
+        if (answerWasVisible) {
+          void advanceListening(runId);
+        } else {
+          speakListeningAnswer(runId);
+        }
+      }, waitSeconds * 1000);
+    },
+    onError: (error) => {
+      if (continuesListening) {
+        pauseListeningAfterSpeechFailure(runId, error);
+        return;
+      }
+      showSpeechPartNotice(`音声を再生できませんでした。${error.message}`);
+    },
+  });
+  if (!started) {
+    const error = new Error("この項目には再生できる音声がありません。");
+    if (continuesListening) {
+      pauseListeningAfterSpeechFailure(runId, error);
+    } else {
+      showSpeechPartNotice(error.message);
+    }
+  }
+  return started;
+}
+
 function toggleSpeechPart(target) {
   if (!speechController.supported) {
     return;
@@ -3175,9 +3244,10 @@ function toggleSpeechPart(target) {
   if (!partKey) {
     return;
   }
+  const enablesPart = !state.speechParts[subjectKey][partKey];
   const nextGroup = {
     ...state.speechParts[subjectKey],
-    [partKey]: !state.speechParts[subjectKey][partKey],
+    [partKey]: enablesPart,
   };
   if (!Object.values(nextGroup).some(Boolean)) {
     showSpeechPartNotice("読み上げ対象を1つ以上ONにしてください");
@@ -3190,7 +3260,9 @@ function toggleSpeechPart(target) {
   };
   updateSpeechButtons();
 
-  if (speechController.currentTarget || isListeningMode()) {
+  if (enablesPart) {
+    replaySpeechPart(target);
+  } else if (speechController.currentTarget || isListeningMode()) {
     const wasListening = isListeningMode() && !state.listeningPaused;
     const answerWasVisible = state.answerVisible;
     stopListeningSequence();
@@ -4695,7 +4767,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.172｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.173｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

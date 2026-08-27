@@ -3538,7 +3538,7 @@ function renderQuestion() {
 
   elements.contextCard.classList.toggle(
     "is-beginner-stage",
-    question.stage === "beginner",
+    question.stage === "beginner" && !stagedClassicalChineseMeaning,
   );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
@@ -4446,7 +4446,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.154｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.155｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

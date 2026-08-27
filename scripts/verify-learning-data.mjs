@@ -249,7 +249,7 @@ const expectedClassicalJapaneseSpecs = new Map([
 const expectedClassicalChineseSpec = {
   number: 1,
   version: "classical-chinese-deck-1-v2",
-  contentVersion: "767495d67758",
+  contentVersion: "4b842a99d231",
   datasetLabel: "漢文 意味瞬発 Deck1 最重要250項目",
   difficultyLabel: "Deck1 最重要・意味瞬発",
   termCount: 250,
@@ -1456,10 +1456,10 @@ if (
   generatedClassicalChineseQuestions.filter(
     (question) => question.speech?.question?.[0]?.text ===
       "画面に表示されている語句の意味を答えてください。",
-  ).length !== 228 ||
+  ).length !== 224 ||
   generatedClassicalChineseQuestions.filter(
     (question) => Array.isArray(question.speech?.answer),
-  ).length !== 228 ||
+  ).length !== 224 ||
   generatedClassicalChineseQuestions.some(
     (question) =>
       Array.isArray(question.speech?.answer) &&

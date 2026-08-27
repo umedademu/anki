@@ -311,7 +311,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.155" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.156" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -324,11 +324,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.155") ||
-  !app.includes("v0.155｜") ||
-  !changelog.includes("v0.155") ||
-  !settingsHtml.includes("v0.155") ||
-  !historyHtml.includes("v0.155")
+  !html.includes("v0.156") ||
+  !app.includes("v0.156｜") ||
+  !changelog.includes("v0.156") ||
+  !settingsHtml.includes("v0.156") ||
+  !historyHtml.includes("v0.156")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -570,7 +570,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.155"') ||
+  !html.includes('href="/styles.css?v=0.156"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -784,7 +784,9 @@ if (
 }
 if (
   !app.includes('elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode)') ||
-  !app.includes('elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm)') ||
+  !app.includes(
+    "(vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning",
+  ) ||
   !app.includes(
     'elements.stageName.classList.toggle(\n    "is-hidden",\n    vocabularyMode || stagedClassicalChineseMeaning,',
   ) ||
@@ -1164,10 +1166,17 @@ if (
     "stagedClassicalChineseMeaning && !showsClassicalChineseReading",
   ) ||
   !renderQuestionBlock.includes(
-    'question.stage === "beginner" && !stagedClassicalChineseMeaning',
+    "(vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning",
   ) ||
   !renderQuestionBlock.includes(
-    'elements.questionSpokenBlock.classList.toggle(',
+    "? term.term\n    : displayedQuestionPrompt",
+  ) ||
+  !renderQuestionBlock.includes(
+    'elements.questionReading.classList.toggle(',
+  ) ||
+  !styles.includes(".question-reading") ||
+  !styles.includes(
+    ".question-card.is-staged-term .question-spoken-block h2",
   )
 ) {
   throw new Error("漢文の暗記・聞き流しを語句、読み、意味の順に分ける処理が揃っていません。");

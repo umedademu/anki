@@ -928,6 +928,18 @@ body.is-study-menu-open {
   padding-right: 42px;
 }
 
+.question-reading {
+  margin: -18px 0 22px;
+  color: #567060;
+  font-size: clamp(0.82rem, 1.8vw, 1rem);
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.question-card.is-staged-term .question-spoken-block h2 {
+  padding-right: 0;
+}
+
 .speech-button {
   position: absolute;
   top: 9px;
@@ -2771,6 +2783,12 @@ body.is-listening.is-listening-answer-visible .page {
     line-height: 1.24;
   }
 
+  .question-reading {
+    margin: 0 0 4px;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+
   .answer {
     margin: 0 0 3px;
     padding: 5px 9px;
@@ -2868,7 +2886,8 @@ body.is-listening.is-listening-answer-visible .page {
     padding-right: 25px;
   }
 
-  .question-card.is-vocabulary h2 {
+  .question-card.is-vocabulary h2,
+  .question-card.is-staged-term h2 {
     font-size: clamp(1.35rem, 3.4vw, 1.62rem);
     line-height: 1.2;
   }

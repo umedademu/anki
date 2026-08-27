@@ -197,6 +197,7 @@ const elements = {
   questionNumber: document.querySelector("#question-number"),
   questionSpokenBlock: document.querySelector(".question-spoken-block"),
   questionText: document.querySelector("#question-text"),
+  questionReading: document.querySelector("#question-reading"),
   questionSpeech: document.querySelector("#question-speech"),
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
@@ -3533,16 +3534,23 @@ function renderQuestion() {
   elements.contextCard.classList.remove("is-hidden");
   elements.questionCard.classList.remove("is-hidden");
   elements.questionCard.classList.toggle("is-vocabulary", vocabularyMode);
+  elements.questionCard.classList.toggle(
+    "is-staged-term",
+    stagedClassicalChineseMeaning,
+  );
   elements.actionDock.classList.remove("is-hidden");
   updateSpeechButtons();
 
   elements.contextCard.classList.toggle(
     "is-beginner-stage",
-    question.stage === "beginner" && !stagedClassicalChineseMeaning,
+    question.stage === "beginner",
   );
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
-  elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm);
+  elements.contextCard.classList.toggle(
+    "is-hidden",
+    (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning,
+  );
   elements.stageName.classList.toggle(
     "is-hidden",
     vocabularyMode || stagedClassicalChineseMeaning,
@@ -3580,17 +3588,22 @@ function renderQuestion() {
     question,
     state.answerVisible,
   );
-  elements.questionSpokenBlock.classList.toggle(
-    "is-hidden",
-    stagedClassicalChineseMeaning,
-  );
+  elements.questionSpokenBlock.classList.remove("is-hidden");
   elements.questionSpeech.classList.toggle(
     "is-hidden",
     !speechController.supported || stagedClassicalChineseMeaning,
   );
   elements.questionText.textContent = stagedClassicalChineseMeaning
-    ? ""
+    ? term.term
     : displayedQuestionPrompt;
+  elements.questionReading.textContent =
+    stagedClassicalChineseMeaning && showsClassicalChineseReading
+      ? term.reading
+      : "";
+  elements.questionReading.classList.toggle(
+    "is-hidden",
+    !stagedClassicalChineseMeaning || !showsClassicalChineseReading,
+  );
   const answerDisplayText = getQuestionAnswerDisplayText(question);
   renderEmphasizedText(elements.answerText, answerDisplayText);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
@@ -3644,7 +3657,7 @@ function renderQuestion() {
   updateOverallProgress();
   setContentDensity(
     elements.questionCard,
-    stagedClassicalChineseMeaning ? "" : displayedQuestionPrompt,
+    stagedClassicalChineseMeaning ? term.term : displayedQuestionPrompt,
     answerDisplayText,
     explanation,
     yearMnemonic,
@@ -4446,7 +4459,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.155｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.156｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

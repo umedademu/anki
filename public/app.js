@@ -168,6 +168,7 @@ const elements = {
   ),
   setupShuffle: document.querySelector("#setup-shuffle"),
   selectionSummary: document.querySelector("#selection-summary"),
+  setupRoundProgress: document.querySelector("#setup-round-progress"),
   resumeStudy: document.querySelector("#resume-study"),
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
@@ -235,6 +236,7 @@ const elements = {
   completionEyebrow: document.querySelector("#completion-eyebrow"),
   completionTitle: document.querySelector("#completion-title"),
   completionMessage: document.querySelector("#completion-message"),
+  completionRoundProgress: document.querySelector("#completion-round-progress"),
   completionReturn: document.querySelector("#completion-return"),
   completionHome: document.querySelector("#completion-home"),
   routineResultSummary: document.querySelector("#routine-result-summary"),
@@ -283,6 +285,8 @@ const state = {
   sessionTasks: [],
   unseenQuestionIds: new Set(),
   retryQuestionIds: new Set(),
+  sessionRoundId: "",
+  completedRoundCount: 0,
   sessionStartedAt: null,
   activeSession: false,
   savedSessions: createEmptySavedSessions(),
@@ -446,6 +450,32 @@ function setSavedSessionForMode(_studyMode, session) {
     "listen-answer": session,
   };
   return session;
+}
+
+function setRoundProgress(roundProgress) {
+  state.completedRoundCount = Math.min(
+    1_000_000_000,
+    Math.max(0, Number.parseInt(roundProgress?.completedCount, 10) || 0),
+  );
+  updateRoundProgressDisplay();
+}
+
+function hasRoundInProgress() {
+  return state.activeSession || Boolean(savedSessionForMode());
+}
+
+function roundProgressText({ completed = false } = {}) {
+  const completedCount = state.completedRoundCount;
+  return completed || !hasRoundInProgress()
+    ? `${completedCount}周消化・次は${completedCount + 1}周目`
+    : `${completedCount}周消化・現在${completedCount + 1}周目`;
+}
+
+function updateRoundProgressDisplay() {
+  elements.setupRoundProgress.textContent = roundProgressText();
+  elements.completionRoundProgress.textContent = roundProgressText({
+    completed: !state.activeSession,
+  });
 }
 
 function supportsOneQuestionPerTerm() {
@@ -1206,6 +1236,7 @@ function captureActiveSession() {
   if (!state.activeSession || state.sessionTasks.length === 0) return null;
   return normalizeStudySession({
     schemaVersion: 1,
+    roundId: state.sessionRoundId,
     studyMode: state.studyMode,
     deckIds: state.activeDeckIds,
     selectedStage: state.selectedStage,
@@ -1381,6 +1412,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.retryQuestionIds = new Set(
     session.retryQuestionIds.filter((questionId) => taskByQuestionId.has(questionId)),
   );
+  state.sessionRoundId = session.roundId || createEventId();
   state.studyMode = session.studyMode;
   state.selectedStage = session.selectedStage;
   state.questionAmountMode = session.questionAmountMode;
@@ -1453,6 +1485,7 @@ function queueActiveStudyActivity(
         state.sessionDatasetVersion === sessionDatasetVersion
       ) {
         setSavedSessionForMode(studyMode, saved.session);
+        setRoundProgress(saved.roundProgress);
       }
       return saved.session;
     });
@@ -1953,6 +1986,7 @@ async function loadProgressFromCloud() {
   if (!getStoredAccessKey()) {
     state.progress = createEmptyProgress();
     state.savedSessions = createEmptySavedSessions();
+    setRoundProgress();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
@@ -1985,6 +2019,7 @@ async function loadProgressFromCloud() {
         );
   state.progress = mergeDeckProgress(deckCloudStates);
   state.savedSessions = sessionCloudState.sessions;
+  setRoundProgress(sessionCloudState.roundProgress);
   if (isCompletedListeningSession(state.savedSessions["listen-answer"])) {
     await deleteCloudStudySession(
       state.sessionDatasetVersion,
@@ -2181,11 +2216,13 @@ async function goBackOneStep() {
         {
           studyMode: "memorize",
           deleteActivityId: snapshot.studyActivityEventId,
+          deleteRoundId: snapshot.completedRoundId,
           sessionDatasetVersion: state.sessionDatasetVersion,
           routineRun: state.inRoutine ? state.routineRun : undefined,
         },
       );
       setSavedSessionForMode("memorize", saved.session);
+      setRoundProgress(saved.roundProgress);
     } catch (error) {
       const cloudState = await loadProgressFromCloud().catch(() => null);
       if (cloudState) {
@@ -2658,10 +2695,12 @@ async function goBackListeningOneStep() {
         captureActiveSession(),
         {
           sessionDatasetVersion: state.sessionDatasetVersion,
+          deleteRoundId: snapshot.completedRoundId,
           routineRun: state.inRoutine ? state.routineRun : undefined,
         },
       );
       setSavedSessionForMode("listen-answer", saved.session);
+      setRoundProgress(saved.roundProgress);
     } else {
       const remainingHistory = [...state.history];
       const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
@@ -2688,11 +2727,13 @@ async function goBackListeningOneStep() {
         {
           studyMode: "listen-answer",
           deleteActivityId: snapshot.studyActivityEventId,
+          deleteRoundId: snapshot.completedRoundId,
           sessionDatasetVersion: state.sessionDatasetVersion,
           routineRun: state.inRoutine ? state.routineRun : undefined,
         },
       );
       setSavedSessionForMode("listen-answer", saved.session);
+      setRoundProgress(saved.roundProgress);
     }
   } catch (error) {
     const cloudState = await loadProgressFromCloud().catch(() => null);
@@ -2777,6 +2818,9 @@ async function advanceListening(runId) {
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
     listeningPassComplete && state.retryQuestionIds.size === 0;
+  undoSnapshot.completedRoundId = sessionComplete
+    ? undoSnapshot.studySession?.roundId
+    : null;
   state.answerVisible = false;
   startNewStudyScreen();
   try {
@@ -3426,6 +3470,7 @@ function updateSetupPreview() {
   elements.cloudStatus.innerHTML = state.cloudReady
     ? "学習記録：Cloudflareに接続済み"
     : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
+  updateRoundProgressDisplay();
 }
 
 function formatInterval(seconds) {
@@ -3602,9 +3647,11 @@ function renderQuestion() {
   );
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
-  elements.questionNumber.textContent = `${
-    isListeningMode() ? "聞き流し" : "出題"
-  } ${state.answeredThisSession + 1}`;
+  elements.questionNumber.textContent = `${state.completedRoundCount}周消化｜${
+    state.completedRoundCount + 1
+  }周目｜${isListeningMode() ? "聞き流し" : "出題"} ${
+    state.answeredThisSession + 1
+  }`;
   updateStudyTimeDisplay();
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,
@@ -3704,6 +3751,7 @@ function renderCompletion() {
   elements.contextCard.classList.add("is-hidden");
   elements.questionCard.classList.add("is-hidden");
   elements.completionCard.classList.remove("is-hidden");
+  updateRoundProgressDisplay();
   const listening = isListeningMode();
   elements.completionReturn.classList.remove("is-hidden");
   elements.completionHome.classList.add("is-hidden");
@@ -3884,6 +3932,9 @@ async function rateListeningQuestion(rating) {
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
     listeningPassComplete && state.retryQuestionIds.size === 0;
+  snapshot.completedRoundId = sessionComplete
+    ? snapshot.studySession?.roundId
+    : null;
   if (sessionComplete) {
     state.activeSession = false;
     state.listeningPaused = true;
@@ -3905,11 +3956,13 @@ async function rateListeningQuestion(rating) {
       {
         studyMode: "listen-answer",
         activity,
+        completeRoundId: snapshot.completedRoundId,
         sessionDatasetVersion: state.sessionDatasetVersion,
         routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("listen-answer", saved.session);
+    setRoundProgress(saved.roundProgress);
   } catch (error) {
     restoreRatingUndoSnapshot(state.progress, snapshot);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
@@ -4017,11 +4070,14 @@ async function rateCurrentQuestion(rating) {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answerRevealedAt = 0;
-  if (
+  const sessionComplete =
     !state.currentTask &&
     state.unseenQuestionIds.size === 0 &&
-    state.retryQuestionIds.size === 0
-  ) {
+    state.retryQuestionIds.size === 0;
+  snapshot.completedRoundId = sessionComplete
+    ? snapshot.studySession?.roundId
+    : null;
+  if (sessionComplete) {
     state.activeSession = false;
   }
   startRoutineOvertimeIfNeeded(rating);
@@ -4050,11 +4106,13 @@ async function rateCurrentQuestion(rating) {
       {
         studyMode: "memorize",
         activity,
+        completeRoundId: snapshot.completedRoundId,
         sessionDatasetVersion: state.sessionDatasetVersion,
         routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
     setSavedSessionForMode("memorize", saved.session);
+    setRoundProgress(saved.roundProgress);
   } catch (error) {
     speechController.stop();
     restoreRatingUndoSnapshot(state.progress, snapshot);
@@ -4103,6 +4161,8 @@ async function resetAllProgress() {
   }
   state.progress = createEmptyProgress();
   state.savedSessions = createEmptySavedSessions();
+  state.sessionRoundId = "";
+  setRoundProgress();
   state.activeSession = false;
   state.sessionTasks = [];
   state.unseenQuestionIds = new Set();
@@ -4182,6 +4242,7 @@ async function beginStudy() {
     state.sessionTasks.map((task) => task.questionId),
   );
   state.retryQuestionIds = new Set();
+  state.sessionRoundId = createEventId();
   state.currentTask = state.queue.shift() ?? null;
   clearRoutineOvertime();
   state.answerVisible = false;
@@ -4430,6 +4491,7 @@ async function activateDecks(deckIds) {
   } catch (error) {
     state.progress = createEmptyProgress();
     state.savedSessions = createEmptySavedSessions();
+    setRoundProgress();
     state.reviewSettings = { ...defaultReviewSettings };
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
@@ -4448,6 +4510,7 @@ async function activateDecks(deckIds) {
   state.sessionTasks = [];
   state.unseenQuestionIds = new Set();
   state.retryQuestionIds = new Set();
+  state.sessionRoundId = "";
   state.sessionStartedAt = null;
   clearRoutineOvertime();
   state.activeSession = false;
@@ -4481,7 +4544,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.159｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.160｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

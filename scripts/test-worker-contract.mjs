@@ -24,6 +24,7 @@ import worker from "../worker/src/index.js";
 import {
   normalizeSetupPreferences as normalizeBrowserSetupPreferences,
   normalizeSharedSettings,
+  normalizeRoundProgress,
   normalizeStudyHistory,
   normalizeSpeechParts as normalizeBrowserSpeechParts,
   normalizeStudySession as normalizeBrowserStudySession,
@@ -55,6 +56,7 @@ if (
 }
 
 const studySessionInput = {
+  roundId: "round-1",
   studyMode: "memorize",
   deckIds: ["deck-1", "deck-2", "deck-1", "不正なデッキ"],
   selectedStage: "beginner",
@@ -92,6 +94,7 @@ for (const session of [
   normalizeBrowserStudySession(studySessionInput),
 ]) {
   if (
+    session.roundId !== "round-1" ||
     session.studyMode !== "memorize" ||
     session.deckIds.join(",") !== "deck-1,deck-2" ||
     session.tasks.length !== 2 ||
@@ -113,6 +116,13 @@ for (const session of [
   ) {
     throw new Error("Cloudflareへ保存する一周を正規化できませんでした。");
   }
+}
+
+if (
+  normalizeRoundProgress({ completedCount: "3" }).completedCount !== 3 ||
+  normalizeRoundProgress({ completedCount: -1 }).completedCount !== 0
+) {
+  throw new Error("完了した周回数を正しく整形できませんでした。");
 }
 
 const listeningSessionInput = {
@@ -150,6 +160,7 @@ const switchedStudySession = switchStudySessionMode(
 );
 if (
   switchedStudySession.studyMode !== "memorize" ||
+  switchedStudySession.roundId !== "round-1" ||
   switchedStudySession.currentTask.questionId !== "WH-Q-000001" ||
   switchedStudySession.queue[0].questionId !== "WH-Q-000002" ||
   switchedStudySession.answerVisible ||

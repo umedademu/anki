@@ -789,6 +789,19 @@ body.is-study-menu-open {
   text-align: center;
 }
 
+.round-progress-summary {
+  width: fit-content;
+  margin: 0 auto 18px;
+  padding: 7px 14px;
+  color: #2e6a49;
+  background: #edf7ee;
+  border: 1px solid rgb(46 106 73 / 18%);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1.3;
+}
+
 .cloud-status {
   margin: 20px 0 0;
   color: #9a3b32;
@@ -1474,6 +1487,12 @@ body.is-listening.is-listening-answer-visible .page {
 .error-panel p {
   color: #68746d;
   line-height: 1.7;
+}
+
+.completion-card .completion-round-progress {
+  margin: 20px auto 0;
+  color: #2e6a49;
+  line-height: 1.3;
 }
 
 .completion-return {
@@ -2663,6 +2682,12 @@ body.is-listening.is-listening-answer-visible .page {
   .selection-summary {
     margin: 5px 0 4px;
     font-size: 0.58rem;
+  }
+
+  .round-progress-summary {
+    margin-bottom: 5px;
+    padding: 3px 9px;
+    font-size: 0.55rem;
   }
 
   .cloud-status {

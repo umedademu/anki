@@ -108,6 +108,15 @@ const ratingSoundsMigration = await readFile(
   ),
   "utf8",
 );
+const studyRoundEventsMigration = await readFile(
+  path.join(
+    projectRoot,
+    "worker",
+    "migrations",
+    "0016_study_round_events.sql",
+  ),
+  "utf8",
+);
 const app = (
   await readFile(path.join(projectRoot, "public", "app.js"), "utf8")
 ).replaceAll("\r\n", "\n");
@@ -311,7 +320,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.159" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.160" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -324,11 +333,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.159") ||
-  !app.includes("v0.159｜") ||
-  !changelog.includes("v0.159") ||
-  !settingsHtml.includes("v0.159") ||
-  !historyHtml.includes("v0.159")
+  !html.includes("v0.160") ||
+  !app.includes("v0.160｜") ||
+  !changelog.includes("v0.160") ||
+  !settingsHtml.includes("v0.160") ||
+  !historyHtml.includes("v0.160")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -532,6 +541,28 @@ if (
   throw new Error("暗記・聞き流し共通の一周保存、はじめからの復習予定判定、切替再開、期限到来時の再出題が揃っていません。");
 }
 if (
+  !html.includes('id="setup-round-progress"') ||
+  !html.includes('id="completion-round-progress"') ||
+  !styles.includes(".round-progress-summary") ||
+  !app.includes("state.completedRoundCount + 1") ||
+  !app.includes("roundId: state.sessionRoundId") ||
+  !app.includes("completeRoundId: snapshot.completedRoundId") ||
+  !app.includes("deleteRoundId: snapshot.completedRoundId") ||
+  !cloudProgress.includes("normalizeRoundProgress") ||
+  !cloudProgress.includes("completeRoundId") ||
+  !cloudProgress.includes("deleteRoundId") ||
+  !worker.includes("studyRoundCompletionStatement") ||
+  !worker.includes("readRoundProgress") ||
+  !worker.includes("ON CONFLICT(dataset_version, round_id) DO NOTHING") ||
+  !worker.includes("deleteStudyRoundStatement") ||
+  !studyRoundEventsMigration.includes(
+    "CREATE TABLE IF NOT EXISTS study_round_events",
+  ) ||
+  !studyRoundEventsMigration.includes("PRIMARY KEY (dataset_version, round_id)")
+) {
+  throw new Error("暗記・聞き流し共通の周回数表示、完了保存、一手戻りが揃っていません。");
+}
+if (
   !html.includes("デッキ（複数選択可）") ||
   !styles.includes(".deck-filter-choice:has(input:checked)") ||
   !app.includes("function setDeckOptions(decks, selectedDeckIds)") ||
@@ -570,7 +601,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.159"') ||
+  !html.includes('href="/styles.css?v=0.160"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

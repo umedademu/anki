@@ -9,15 +9,15 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.159" />
+    <link rel="stylesheet" href="/styles.css?v=0.160" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.159" type="module"></script>
+    <script src="/app.js?v=0.160" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.159</span>
+        <span class="app-version">v0.160</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
@@ -27,13 +27,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.159｜科目別学習</p>
+        <p class="eyebrow">v0.160｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.159｜科目を選ぶ</p>
+        <p class="eyebrow">v0.160｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選んで学習するか、登録した動画をランダム再生できます。
@@ -61,7 +61,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.159｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.160｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -139,6 +139,9 @@
 
         <p class="cloud-status" id="cloud-status"></p>
         <p class="selection-summary" id="selection-summary"></p>
+        <p class="round-progress-summary" id="setup-round-progress">
+          0周消化・次は1周目
+        </p>
         <div class="setup-actions">
           <button class="primary-button setup-start is-hidden" id="resume-study" type="button">
             前回の続きから
@@ -576,6 +579,9 @@
           <h1 id="completion-title">すべての用語と問題を完全習得しました</h1>
           <p id="completion-message">
             今回選んだ範囲の問題をすべて習得済みです。最初から学び直す場合は、最初の画面で正誤記録を初期化してください。
+          </p>
+          <p class="round-progress-summary completion-round-progress" id="completion-round-progress">
+            0周消化・次は1周目
           </p>
           <dl class="routine-result-summary is-hidden" id="routine-result-summary">
             <div>

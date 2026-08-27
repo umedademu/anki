@@ -119,6 +119,15 @@ export function normalizeStudyHistory(value) {
   });
 }
 
+export function normalizeRoundProgress(value) {
+  return {
+    completedCount: Math.min(
+      1_000_000_000,
+      Math.max(0, Number.parseInt(value?.completedCount, 10) || 0),
+    ),
+  };
+}
+
 function normalizeStudySessionId(value) {
   const id = String(value ?? "");
   return studySessionIdPattern.test(id) ? id : "";
@@ -171,6 +180,7 @@ export function normalizeStudySession(value) {
     : null;
   return {
     schemaVersion: 1,
+    roundId: normalizeStudySessionId(source.roundId),
     studyMode: studyModes.has(source.studyMode) ? source.studyMode : "memorize",
     deckIds: [...new Set(
       (Array.isArray(source.deckIds) ? source.deckIds : [])
@@ -623,6 +633,7 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
   const payload = await cloudRequest(`/v1/state${query}`);
   return {
     progress: normalizeProgress(payload.progress ?? createEmptyProgress(), masteryTarget),
+    roundProgress: normalizeRoundProgress(payload.roundProgress),
     settings: normalizeSharedSettings(payload.settings),
     sessions: normalizeStudySessions(payload.sessions, payload.session),
     session: normalizeStudySession(payload.session),
@@ -710,6 +721,8 @@ export async function saveCloudStudyAnswer(
         studyMode: historyChange.studyMode ?? session?.studyMode ?? null,
         activity: historyChange.activity ?? null,
         deleteActivityId: historyChange.deleteActivityId ?? null,
+        completeRoundId: historyChange.completeRoundId ?? null,
+        deleteRoundId: historyChange.deleteRoundId ?? null,
         sessionDatasetVersion:
           historyChange.sessionDatasetVersion ?? datasetVersion,
         routineRun: historyChange.routineRun,
@@ -719,6 +732,7 @@ export async function saveCloudStudyAnswer(
   return {
     updatedAt: payload.updatedAt,
     session: normalizeStudySession(payload.session),
+    roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }
 
@@ -729,6 +743,7 @@ export async function saveCloudStudyActivity(
   {
     sessionDatasetVersion = datasetVersion,
     completeSession = false,
+    completeRoundId = completeSession ? session?.roundId : null,
     routineRun,
   } = {},
 ) {
@@ -741,6 +756,7 @@ export async function saveCloudStudyActivity(
         session,
         sessionDatasetVersion,
         completeSession,
+        completeRoundId,
         routineRun,
       }),
     },
@@ -749,6 +765,7 @@ export async function saveCloudStudyActivity(
     occurredAt: payload.occurredAt,
     studyDate: payload.studyDate,
     session: normalizeStudySession(payload.session),
+    roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }
 
@@ -777,18 +794,24 @@ export async function undoCloudStudyActivity(
   datasetVersion,
   eventId,
   session,
-  { sessionDatasetVersion = datasetVersion, routineRun } = {},
+  { sessionDatasetVersion = datasetVersion, deleteRoundId = null, routineRun } = {},
 ) {
   const payload = await cloudRequest(
     `/v1/study-activity/${encodeURIComponent(eventId)}/undo?dataset=${encodeURIComponent(datasetVersion)}`,
     {
       method: "PUT",
-      body: JSON.stringify({ session, sessionDatasetVersion, routineRun }),
+      body: JSON.stringify({
+        session,
+        sessionDatasetVersion,
+        deleteRoundId,
+        routineRun,
+      }),
     },
   );
   return {
     updatedAt: payload.updatedAt,
     session: normalizeStudySession(payload.session),
+    roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }
 

@@ -6,13 +6,13 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.159" />
+    <link rel="stylesheet" href="/styles.css?v=0.160" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.159</span>
+        <span class="app-version">v0.160</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
       </div>
@@ -24,6 +24,19 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading">
+          <h2>v0.160</h2>
+          <time datetime="2026-08-27">2026年8月27日</time>
+        </div>
+        <ul>
+          <li>選択したDeckの組合せごとに、完了した周回数と現在の周回を表示</li>
+          <li>周回数は暗記モードと聞き流しで共有し、一周を最後まで終えた時だけCloudflareへ加算</li>
+          <li>同じ完了処理の通信再送では二重加算せず、完了直後の一手戻りでは周回完了も取り消すよう対応</li>
+          <li>過去の周回数は推測せず、本版の公開後に完了した一周から記録を開始</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading">

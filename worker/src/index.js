@@ -105,6 +105,11 @@ const defaultSettings = {
 const ratingValues = new Set(["again", "hard", "good", "easy"]);
 const studyActivityIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 
+function normalizeStudyRoundId(value) {
+  const id = String(value ?? "");
+  return studyActivityIdPattern.test(id) ? id : "";
+}
+
 function corsHeaders(request, env) {
   const origin = request.headers.get("Origin");
   const headers = {
@@ -478,6 +483,7 @@ function normalizeStudySession(value) {
   const studyTimeEventId = String(source.studyTimeEventId ?? "");
   return {
     schemaVersion: 1,
+    roundId: normalizeStudyRoundId(source.roundId),
     studyMode: setupStudyModes.has(source.studyMode) ? source.studyMode : "memorize",
     deckIds: [...new Set(
       (Array.isArray(source.deckIds) ? source.deckIds : [])
@@ -922,6 +928,34 @@ function studyActivityStatement(env, activity, occurredAt) {
   );
 }
 
+function studyRoundCompletionStatement(
+  env,
+  datasetVersion,
+  roundId,
+  completedAt,
+) {
+  return env.DB.prepare(
+    `INSERT INTO study_round_events (dataset_version, round_id, completed_at)
+     VALUES (?, ?, ?)
+     ON CONFLICT(dataset_version, round_id) DO NOTHING`,
+  ).bind(datasetVersion, roundId, completedAt);
+}
+
+function deleteStudyRoundStatement(env, datasetVersion, roundId) {
+  return env.DB.prepare(
+    "DELETE FROM study_round_events WHERE dataset_version = ? AND round_id = ?",
+  ).bind(datasetVersion, roundId);
+}
+
+async function readRoundProgress(env, datasetVersion) {
+  const row = await env.DB.prepare(
+    `SELECT COUNT(*) AS completed_count
+     FROM study_round_events
+     WHERE dataset_version = ?`,
+  ).bind(datasetVersion).first();
+  return { completedCount: Number(row?.completed_count) || 0 };
+}
+
 function studyTimeStatement(env, timeEntry, occurredAt) {
   return env.DB.prepare(
     `INSERT INTO study_time_events (
@@ -1016,8 +1050,13 @@ async function readStudyHistory(env) {
 }
 
 async function readState(env, datasetVersion) {
-  const [progressRows, settingsRow, sharedSessionRow, legacySessionRows] =
-    await Promise.all([
+  const [
+    progressRows,
+    settingsRow,
+    sharedSessionRow,
+    legacySessionRows,
+    roundProgress,
+  ] = await Promise.all([
       env.DB.prepare(
         `SELECT question_id, streak, attempts, remembered_count, last_rating,
           last_answered_at, next_review_at, ever_mastered, updated_at
@@ -1043,6 +1082,7 @@ async function readState(env, datasetVersion) {
         `SELECT study_mode, session_json, updated_at
          FROM study_sessions_by_mode WHERE dataset_version = ?`,
       ).bind(datasetVersion).all(),
+      readRoundProgress(env, datasetVersion),
     ]);
   let newestUpdate = null;
   const questions = Object.fromEntries(
@@ -1084,6 +1124,7 @@ async function readState(env, datasetVersion) {
   };
   return {
     progress: { questions, updatedAt: newestUpdate },
+    roundProgress,
     settings: settingsRow
       ? {
           againSeconds: settingsRow.again_seconds,
@@ -1227,6 +1268,7 @@ async function handleRequest(request, env) {
           settings: (await readState(env, "__settings_only__")).settings,
           sessions: { memorize: null, "listen-answer": null },
           session: null,
+          roundProgress: { completedCount: 0 },
         };
     return json(
       request,
@@ -1416,6 +1458,9 @@ async function handleRequest(request, env) {
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const deleteRoundId = normalizeStudyRoundId(
+      body.deleteRoundId ?? eventId,
+    );
     const routineRun = body.routineRun === undefined
       ? undefined
       : normalizeStudyRoutineRun(body.routineRun);
@@ -1433,6 +1478,11 @@ async function handleRequest(request, env) {
       ).bind(eventId, datasetVersion),
       studySessionStatement(env, sessionDatasetVersion, session, updatedAt),
     ];
+    if (deleteRoundId) {
+      statements.push(
+        deleteStudyRoundStatement(env, sessionDatasetVersion, deleteRoundId),
+      );
+    }
     if (routineRun) {
       statements.push(studyRoutineRunStatement(env, routineRun, updatedAt));
     }
@@ -1441,6 +1491,7 @@ async function handleRequest(request, env) {
       ok: true,
       updatedAt,
       session: { ...session, updatedAt },
+      roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
 
@@ -1455,6 +1506,11 @@ async function handleRequest(request, env) {
       body.sessionDatasetVersion ?? datasetVersion,
     );
     const completeSession = body.completeSession === true;
+    const completeRoundId = completeSession
+      ? normalizeStudyRoundId(body.completeRoundId) ||
+        session?.roundId ||
+        activity.eventId
+      : "";
     const routineRun = body.routineRun === undefined
       ? undefined
       : normalizeStudyRoutineRun(body.routineRun);
@@ -1471,6 +1527,12 @@ async function handleRequest(request, env) {
     }
     if (completeSession) {
       statements.push(
+        studyRoundCompletionStatement(
+          env,
+          sessionDatasetVersion,
+          completeRoundId,
+          occurredAt,
+        ),
         ...deleteStudySessionStatements(env, sessionDatasetVersion),
       );
     } else if (session) {
@@ -1486,6 +1548,7 @@ async function handleRequest(request, env) {
       session: !completeSession && session
         ? { ...session, updatedAt: occurredAt }
         : null,
+      roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
 
@@ -1512,6 +1575,11 @@ async function handleRequest(request, env) {
     const deleteActivityId = body.deleteActivityId == null
       ? null
       : String(body.deleteActivityId);
+    const completeRoundId = normalizeStudyRoundId(body.completeRoundId) ||
+      (!session && activity ? activity.eventId : "");
+    const deleteRoundId = normalizeStudyRoundId(
+      body.deleteRoundId ?? deleteActivityId,
+    );
     const studyMode = body.studyMode ?? session?.studyMode ?? activity?.studyMode ?? "memorize";
     const routineRun = body.routineRun === undefined
       ? undefined
@@ -1536,6 +1604,9 @@ async function handleRequest(request, env) {
     }
     if (activity && deleteActivityId) {
       return json(request, env, { error: "日別学習記録の追加と取消は同時に行えません。" }, 400);
+    }
+    if (completeRoundId && deleteRoundId) {
+      return json(request, env, { error: "周回完了の追加と取消は同時に行えません。" }, 400);
     }
     const updatedAt = new Date().toISOString();
     const statements = [
@@ -1564,6 +1635,21 @@ async function handleRequest(request, env) {
         ),
       );
     }
+    if (completeRoundId) {
+      statements.push(
+        studyRoundCompletionStatement(
+          env,
+          sessionDatasetVersion,
+          completeRoundId,
+          updatedAt,
+        ),
+      );
+    }
+    if (deleteRoundId) {
+      statements.push(
+        deleteStudyRoundStatement(env, sessionDatasetVersion, deleteRoundId),
+      );
+    }
     if (routineRun) {
       statements.push(studyRoutineRunStatement(env, routineRun, updatedAt));
     }
@@ -1572,6 +1658,7 @@ async function handleRequest(request, env) {
       ok: true,
       updatedAt,
       session: session ? { ...session, updatedAt } : null,
+      roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
 
@@ -1634,6 +1721,9 @@ async function handleRequest(request, env) {
       ),
       env.DB.prepare(
         "DELETE FROM study_sessions_by_mode WHERE dataset_version = ?",
+      ).bind(datasetVersion),
+      env.DB.prepare(
+        "DELETE FROM study_round_events WHERE dataset_version = ?",
       ).bind(datasetVersion),
     ]);
     return json(request, env, { ok: true });

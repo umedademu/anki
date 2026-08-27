@@ -16,11 +16,13 @@ import {
   normalizeStudyTimeLimitSeconds,
 } from "./study-time.js";
 import {
+  defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineMultiplier,
   normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
@@ -58,6 +60,7 @@ export const defaultSetupPreferences = Object.freeze({
   subjects: Object.freeze({}),
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
+  routineMultiplier: defaultStudyRoutineMultiplier,
   routineVideos: defaultStudyRoutineVideos,
   routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
@@ -358,6 +361,7 @@ export function normalizeSetupPreferences(value) {
     subjects,
     routinePlan,
     routineRun,
+    routineMultiplier: normalizeStudyRoutineMultiplier(source.routineMultiplier),
     routineVideos,
     routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
       source.routineVideoShuffle,

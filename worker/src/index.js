@@ -1,4 +1,5 @@
 import {
+  defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
   defaultStudyRoutineVideos,
@@ -9,6 +10,7 @@ import {
   normalizeStudyRoutineVideoLibrary,
   normalizeStudyRoutineVideoShuffle,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineMultiplier,
   normalizeStudyRoutineOvertimeSeconds,
 } from "../../public/study-routine.js";
 import { normalizeRatingCounts } from "../../public/rating-results.js";
@@ -67,6 +69,7 @@ const defaultSetupPreferences = Object.freeze({
   subjects: Object.freeze({}),
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
+  routineMultiplier: defaultStudyRoutineMultiplier,
   routineVideos: defaultStudyRoutineVideos,
   routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
@@ -336,6 +339,7 @@ function normalizeSetupPreferences(value) {
     subjects,
     routinePlan,
     routineRun,
+    routineMultiplier: normalizeStudyRoutineMultiplier(source.routineMultiplier),
     routineVideos,
     routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
       source.routineVideoShuffle,
@@ -1291,6 +1295,13 @@ async function handleRequest(request, env) {
         : {}),
       ...(Object.hasOwn(patch, "routineRun")
         ? { routineRun: normalizeStudyRoutineRun(patch.routineRun) }
+        : {}),
+      ...(Object.hasOwn(patch, "routineMultiplier")
+        ? {
+            routineMultiplier: normalizeStudyRoutineMultiplier(
+              patch.routineMultiplier,
+            ),
+          }
         : {}),
       ...(Object.hasOwn(patch, "routineVideos")
         ? {

@@ -77,6 +77,7 @@ import {
   normalizeDeckSelection,
 } from "./deck-selection.js";
 import {
+  applyStudyRoutineMultiplier,
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
@@ -86,8 +87,11 @@ import {
   defaultStudyRoutineOvertimeSeconds,
   drawStudyRoutineVideo,
   normalizeStudyRoutineOvertimeSeconds,
+  normalizeStudyRoutineMultiplier,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
+  scaleStudyRoutinePlan,
+  scaledStudyRoutineQuestionTarget,
   studyRoutineTotals,
 } from "./study-routine.js";
 import { createRatingSoundPlayer } from "./rating-sound.js";
@@ -113,6 +117,10 @@ const elements = {
   routineDashboardSummary: document.querySelector("#routine-dashboard-summary"),
   routineDashboardProgress: document.querySelector("#routine-dashboard-progress"),
   routineDashboardList: document.querySelector("#routine-dashboard-list"),
+  routineMultiplier: document.querySelector("#routine-multiplier"),
+  routineMultiplierOutput: document.querySelector("#routine-multiplier-output"),
+  routineMultiplierNote: document.querySelector("#routine-multiplier-note"),
+  routineMultiplierStatus: document.querySelector("#routine-multiplier-status"),
   startRoutine: document.querySelector("#start-routine"),
   continueRoutine: document.querySelector("#continue-routine"),
   setupPanel: document.querySelector("#setup-panel"),
@@ -349,6 +357,7 @@ let studyMenuLastFocused = null;
 let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
+let routineMultiplierSaving = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -555,6 +564,28 @@ function routineItemSummary(item) {
     : `${item.questionTarget}問`;
 }
 
+function formatRoutineMultiplier(value) {
+  const multiplier = normalizeStudyRoutineMultiplier(value);
+  return `${Number.isInteger(multiplier)
+    ? multiplier
+    : multiplier.toFixed(2).replace(/0$/, "")}倍`;
+}
+
+function renderRoutineMultiplierControl(
+  value = state.setupPreferences.routineMultiplier,
+) {
+  const multiplier = normalizeStudyRoutineMultiplier(value);
+  const label = formatRoutineMultiplier(multiplier);
+  const exampleTarget = scaledStudyRoutineQuestionTarget(100, multiplier);
+  elements.routineMultiplier.value = String(multiplier);
+  elements.routineMultiplierOutput.value = label;
+  elements.routineMultiplierOutput.textContent = label;
+  elements.routineMultiplier.setAttribute("aria-valuetext", label);
+  elements.routineMultiplierNote.textContent = multiplier === 1
+    ? "登録した問題数どおりに進めます。動画の本数は変わりません。"
+    : `全科目の問題数を${label}にします（100問なら${exampleTarget}問）。動画の本数は変わりません。`;
+}
+
 function syncRoutinePreferences(preferences, studyDate = "") {
   state.setupPreferences = normalizeSetupPreferences(preferences);
   state.routineRun = normalizeStudyRoutineRun(state.setupPreferences.routineRun);
@@ -647,7 +678,13 @@ function startRoutineOvertimeIfNeeded(rating) {
 function renderRoutineDashboard() {
   const run = normalizeStudyRoutineRun(state.routineRun);
   const activeItem = currentStudyRoutineItem(run);
-  const plan = run?.items ?? state.setupPreferences.routinePlan;
+  const routineMultiplier = normalizeStudyRoutineMultiplier(
+    state.setupPreferences.routineMultiplier,
+  );
+  const plan = run?.items ?? scaleStudyRoutinePlan(
+    state.setupPreferences.routinePlan,
+    routineMultiplier,
+  );
   const totals = run
     ? studyRoutineTotals(run)
     : plan.reduce(
@@ -667,6 +704,8 @@ function renderRoutineDashboard() {
   );
   const connected = state.cloudConnected && Boolean(state.routineStudyDate);
 
+  renderRoutineMultiplierControl(routineMultiplier);
+  elements.routineMultiplier.disabled = !connected || routineMultiplierSaving;
   elements.startRoutine.disabled = !connected || plan.length === 0;
   elements.continueRoutine.disabled = !connected || !activeItem;
   elements.continueRoutine.classList.toggle("is-hidden", !activeItem);
@@ -708,7 +747,7 @@ function renderRoutineDashboard() {
     ? run.items.reduce(
         (sum, item) => sum + (item.kind === "video"
           ? item.completed ? 1 : 0
-          : item.completedCount / item.questionTarget),
+          : Math.min(1, item.completedCount / item.questionTarget)),
         0,
       )
     : 0;
@@ -745,6 +784,45 @@ async function persistRoutineRun(run) {
   const saved = await saveCloudStudyRoutine({ routineRun: run });
   syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
   return state.routineRun;
+}
+
+async function saveRoutineMultiplier() {
+  if (!state.cloudConnected || !state.routineStudyDate || routineMultiplierSaving) {
+    return;
+  }
+  const multiplier = normalizeStudyRoutineMultiplier(
+    elements.routineMultiplier.value,
+  );
+  const currentMultiplier = normalizeStudyRoutineMultiplier(
+    state.setupPreferences.routineMultiplier,
+  );
+  if (multiplier === currentMultiplier) {
+    renderRoutineMultiplierControl(currentMultiplier);
+    return;
+  }
+  const adjustedRun = state.routineRun
+    ? applyStudyRoutineMultiplier(state.routineRun, multiplier)
+    : null;
+  routineMultiplierSaving = true;
+  elements.routineMultiplier.disabled = true;
+  elements.routineMultiplierStatus.classList.remove("is-error");
+  elements.routineMultiplierStatus.textContent =
+    "学習量をCloudflareへ保存しています。";
+  try {
+    const saved = await saveCloudStudyRoutine({
+      routineMultiplier: multiplier,
+      ...(adjustedRun ? { routineRun: adjustedRun } : {}),
+    });
+    syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+    elements.routineMultiplierStatus.textContent =
+      `${formatRoutineMultiplier(multiplier)}で保存しました。`;
+  } catch (error) {
+    elements.routineMultiplierStatus.textContent = error.message;
+    elements.routineMultiplierStatus.classList.add("is-error");
+  } finally {
+    routineMultiplierSaving = false;
+    renderRoutineDashboard();
+  }
 }
 
 function restoreRoutineRun(run) {
@@ -1102,6 +1180,8 @@ async function startRoutineFromBeginning() {
     const run = createStudyRoutineRun(
       state.setupPreferences.routinePlan,
       state.routineStudyDate,
+      undefined,
+      state.setupPreferences.routineMultiplier,
     );
     await persistRoutineRun(run);
     await launchRoutineCurrentStep();
@@ -4542,7 +4622,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.162｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.163｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4736,6 +4816,12 @@ elements.startRoutine.addEventListener("click", () => {
 });
 elements.continueRoutine.addEventListener("click", () => {
   void continueRoutine();
+});
+elements.routineMultiplier.addEventListener("input", () => {
+  renderRoutineMultiplierControl(elements.routineMultiplier.value);
+});
+elements.routineMultiplier.addEventListener("change", () => {
+  void saveRoutineMultiplier();
 });
 elements.routineVideoComplete.addEventListener("click", () => {
   if (state.standaloneVideoMode) {

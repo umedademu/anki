@@ -14,6 +14,10 @@ const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 
 export const defaultStudyRoutineOvertimeSeconds = 10 * 60;
 export const maximumStudyRoutineOvertimeSeconds = 24 * 60 * 60;
+export const defaultStudyRoutineMultiplier = 1;
+export const minimumStudyRoutineMultiplier = 0.5;
+export const maximumStudyRoutineMultiplier = 3;
+export const studyRoutineMultiplierStep = 0.25;
 
 const defaultSubjects = [
   "world-history",
@@ -121,6 +125,28 @@ function normalizeQuestionTarget(value) {
     : 100;
 }
 
+export function normalizeStudyRoutineMultiplier(value) {
+  if (value == null || value === "") return defaultStudyRoutineMultiplier;
+  const parsed = Number(value);
+  if (!Number.isFinite(parsed)) return defaultStudyRoutineMultiplier;
+  const bounded = Math.min(
+    maximumStudyRoutineMultiplier,
+    Math.max(minimumStudyRoutineMultiplier, parsed),
+  );
+  return Number(
+    (Math.round(bounded / studyRoutineMultiplierStep) *
+      studyRoutineMultiplierStep).toFixed(2),
+  );
+}
+
+export function scaledStudyRoutineQuestionTarget(value, multiplier = 1) {
+  return normalizeQuestionTarget(
+    Math.round(
+      normalizeQuestionTarget(value) * normalizeStudyRoutineMultiplier(multiplier),
+    ),
+  );
+}
+
 function normalizeRoutineItem(value, index, usedIds) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const kind = value.kind === "video" ? "video" : "study";
@@ -162,6 +188,21 @@ export function normalizeStudyRoutinePlan(value, { fallbackToDefault = true } = 
     return normalized ? [normalized] : [];
   });
   return plan.length > 0 || !fallbackToDefault ? plan : cloneDefaultPlan();
+}
+
+export function scaleStudyRoutinePlan(plan, multiplier = 1) {
+  const normalizedMultiplier = normalizeStudyRoutineMultiplier(multiplier);
+  return normalizeStudyRoutinePlan(plan).map((item) =>
+    item.kind === "study"
+      ? {
+          ...item,
+          questionTarget: scaledStudyRoutineQuestionTarget(
+            item.questionTarget,
+            normalizedMultiplier,
+          ),
+        }
+      : { ...item },
+  );
 }
 
 export function normalizeStudyRoutineVideoLibrary(
@@ -272,6 +313,10 @@ export function normalizeStudyRoutineRun(value) {
   }
   const id = normalizeRoutineId(source.id);
   const studyDate = normalizeStudyDate(source.studyDate);
+  const routineMultiplier = normalizeStudyRoutineMultiplier(
+    source.routineMultiplier,
+  );
+  const hasStoredMultiplier = Object.hasOwn(source, "routineMultiplier");
   const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
   });
@@ -287,10 +332,24 @@ export function normalizeStudyRoutineRun(value) {
         studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
       };
     }
+    const baseQuestionTarget = Object.hasOwn(sourceItem, "baseQuestionTarget")
+      ? normalizeQuestionTarget(sourceItem.baseQuestionTarget)
+      : hasStoredMultiplier
+        ? normalizeQuestionTarget(
+            Math.round(
+              normalizeQuestionTarget(sourceItem.questionTarget) /
+                routineMultiplier,
+            ),
+          )
+        : normalizeQuestionTarget(sourceItem.questionTarget);
     return {
       ...item,
+      baseQuestionTarget,
+      questionTarget: hasStoredMultiplier
+        ? scaledStudyRoutineQuestionTarget(baseQuestionTarget, routineMultiplier)
+        : normalizeQuestionTarget(sourceItem.questionTarget),
       completedCount: Math.min(
-        item.questionTarget,
+        routineQuestionTargetLimit,
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
       overtimePending:
@@ -303,9 +362,10 @@ export function normalizeStudyRoutineRun(value) {
   if (!id || !studyDate || items.length === 0) return null;
   const firstIncompleteIndex = items.findIndex((item) => !routineItemComplete(item));
   return {
-    schemaVersion: 3,
+    schemaVersion: 4,
     id,
     studyDate,
+    routineMultiplier,
     currentIndex: firstIncompleteIndex < 0 ? items.length : firstIncompleteIndex,
     items,
   };
@@ -385,7 +445,13 @@ function createRoutineRunId() {
     `routine-${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 }
 
-export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()) {
+export function createStudyRoutineRun(
+  plan,
+  studyDate,
+  id = createRoutineRunId(),
+  multiplier = defaultStudyRoutineMultiplier,
+) {
+  const routineMultiplier = normalizeStudyRoutineMultiplier(multiplier);
   const items = normalizeStudyRoutinePlan(plan).map((item) =>
     item.kind === "video"
       ? {
@@ -398,17 +464,45 @@ export function createStudyRoutineRun(plan, studyDate, id = createRoutineRunId()
         }
       : {
           ...item,
+          baseQuestionTarget: item.questionTarget,
+          questionTarget: scaledStudyRoutineQuestionTarget(
+            item.questionTarget,
+            routineMultiplier,
+          ),
           completedCount: 0,
           studySeconds: 0,
           ratingCounts: createEmptyRatingCounts(),
         },
   );
   return normalizeStudyRoutineRun({
-    schemaVersion: 3,
+    schemaVersion: 4,
     id,
     studyDate,
+    routineMultiplier,
     currentIndex: 0,
     items,
+  });
+}
+
+export function applyStudyRoutineMultiplier(run, multiplier = 1) {
+  const normalized = normalizeStudyRoutineRun(run);
+  if (!normalized) return null;
+  const routineMultiplier = normalizeStudyRoutineMultiplier(multiplier);
+  return normalizeStudyRoutineRun({
+    ...normalized,
+    routineMultiplier,
+    items: normalized.items.map((item) =>
+      item.kind === "study"
+        ? {
+            ...item,
+            questionTarget: scaledStudyRoutineQuestionTarget(
+              item.baseQuestionTarget,
+              routineMultiplier,
+            ),
+            overtimePending: false,
+          }
+        : { ...item },
+    ),
   });
 }
 
@@ -432,7 +526,10 @@ export function studyRoutineTotals(run) {
   }
   return normalized.items.reduce(
     (totals, item) => ({
-      completed: totals.completed + (item.kind === "study" ? item.completedCount : 0),
+      completed: totals.completed +
+        (item.kind === "study"
+          ? Math.min(item.completedCount, item.questionTarget)
+          : 0),
       target: totals.target + (item.kind === "study" ? item.questionTarget : 0),
       studySeconds: totals.studySeconds + item.studySeconds,
       completedItems: totals.completedItems + (routineItemComplete(item) ? 1 : 0),
@@ -588,12 +685,12 @@ export function completeStudyRoutineVideo(run, studySeconds = 0) {
       : { ...candidate },
   );
   const currentIndex = Math.min(items.length, normalized.currentIndex + 1);
-  const next = { ...normalized, currentIndex, items };
+  const next = normalizeStudyRoutineRun({ ...normalized, currentIndex, items });
   return {
     run: next,
     changed: true,
     completedItem: items[normalized.currentIndex],
-    nextItem: items[currentIndex] ?? null,
+    nextItem: next.items[next.currentIndex] ?? null,
   };
 }
 
@@ -666,11 +763,11 @@ export function recordStudyRoutineQuestion(
   const currentIndex = completedItem
     ? Math.min(items.length, normalized.currentIndex + 1)
     : normalized.currentIndex;
-  const next = {
+  const next = normalizeStudyRoutineRun({
     ...normalized,
     currentIndex,
     items,
-  };
+  });
   return {
     run: next,
     changed:

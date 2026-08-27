@@ -1,4 +1,5 @@
 import {
+  applyStudyRoutineMultiplier,
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
@@ -12,10 +13,13 @@ import {
   drawStudyRoutineVideo,
   extractYouTubeVideoId,
   migrateLegacyStudyRoutineRun,
+  normalizeStudyRoutineMultiplier,
   normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
+  scaleStudyRoutinePlan,
+  scaledStudyRoutineQuestionTarget,
   studyRoutineTotals,
 } from "../public/study-routine.js";
 
@@ -25,6 +29,19 @@ if (
   normalizeStudyRoutineOvertimeSeconds(90_000) !== 86_400
 ) {
   throw new Error("目標達成後の復習猶予を安全な範囲へ整形できませんでした。");
+}
+if (
+  normalizeStudyRoutineMultiplier(0.74) !== 0.75 ||
+  normalizeStudyRoutineMultiplier(null) !== 1 ||
+  normalizeStudyRoutineMultiplier(0.1) !== 0.5 ||
+  normalizeStudyRoutineMultiplier(4) !== 3 ||
+  scaledStudyRoutineQuestionTarget(100, 0.5) !== 50 ||
+  scaledStudyRoutineQuestionTarget(100, 0.75) !== 75 ||
+  scaledStudyRoutineQuestionTarget(100, 2) !== 200 ||
+  scaledStudyRoutineQuestionTarget(100, 3) !== 300 ||
+  scaledStudyRoutineQuestionTarget(1, 0.5) !== 1
+) {
+  throw new Error("毎日のメニューの学習量を0.5倍から3倍へ調整できませんでした。");
 }
 if (
   countsTowardStudyRoutine("again") ||
@@ -110,6 +127,46 @@ if (
   normalizedPlan[1].questionTarget !== 80
 ) {
   throw new Error("メニューの科目・問題数・重複番号を安全に整形できませんでした。");
+}
+
+const scaledPlan = scaleStudyRoutinePlan(normalizedPlan, 0.75);
+if (
+  scaledPlan[0].questionTarget !== 75 ||
+  scaledPlan[1].questionTarget !== 60 ||
+  scaledPlan[2].kind !== "video"
+) {
+  throw new Error("登録メニュー全体へ同じ学習量を反映できませんでした。");
+}
+
+const partiallyCompletedRun = normalizeStudyRoutineRun({
+  schemaVersion: 4,
+  id: "multiplier-run",
+  studyDate: "2026-08-27",
+  routineMultiplier: 1,
+  items: [
+    {
+      id: "multiplier-study",
+      kind: "study",
+      subjectId: "world-history",
+      baseQuestionTarget: 100,
+      questionTarget: 100,
+      completedCount: 75,
+    },
+    { id: "multiplier-video", kind: "video" },
+  ],
+});
+const reducedRun = applyStudyRoutineMultiplier(partiallyCompletedRun, 0.5);
+const ambitiousRun = applyStudyRoutineMultiplier(reducedRun, 2);
+if (
+  reducedRun.items[0].questionTarget !== 50 ||
+  reducedRun.items[0].completedCount !== 75 ||
+  reducedRun.currentIndex !== 1 ||
+  studyRoutineTotals(reducedRun).completed !== 50 ||
+  ambitiousRun.items[0].questionTarget !== 200 ||
+  ambitiousRun.items[0].completedCount !== 75 ||
+  ambitiousRun.currentIndex !== 0
+) {
+  throw new Error("進行中メニューの件数を保ったまま学習量を変更できませんでした。");
 }
 
 const planWithAddedVideos = [

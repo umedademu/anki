@@ -174,10 +174,10 @@ dataset_label,item_id,importance_rank,difficulty_label,domain,unit,item,reading,
 | `reading` | 項目全体の訓読上の読み |
 | `aliases` | 異体字・別表記。なければ`なし` |
 | `item_type` | 再読文字、否定形、多義語、政治語などの具体的な種別 |
-| `rule_info` | 形・読み・意味・音声時機 |
+| `rule_info` | 形・読み・意味 |
 | `card_id` | `item_id-C01` |
 | `card_type` | `meaning` |
-| `focus` | 意味瞬発と音声時機 |
+| `focus` | `意味瞬発` |
 | `question` | 漢字・句形から意味を問う短い問題 |
 | `answer` | 模範回答 |
 | `accepted_answers` | 模範回答と許容する言い換え |
@@ -204,8 +204,8 @@ dataset_label,item_id,importance_rank,difficulty_label,domain,unit,item,reading,
 - `item`、問題、答えが重複していない
 - `domain`が3種類のいずれかである
 - `card_type`が全行`meaning`である
-- `rule_info`に形・読み・意味・音声時機がある
-- 音声時機が`出題時`か`解答後`のどちらかである
+- `rule_info`に形・読み・意味があり、`音声=`を含まない
+- `focus`が全行`意味瞬発`である
 - `accepted_answers`の先頭が模範回答と一致する
 - 出典URLがHTTPSである
 - すべてのセルが埋まり、不要欄は`なし`になっている

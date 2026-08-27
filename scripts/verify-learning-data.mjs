@@ -16,6 +16,7 @@ import {
   loadTermImageManifest,
   mergeTermImageManifests,
   parseCsv,
+  toClassicalChineseObjects,
   toClassicalJapaneseObjects,
 } from "./build-learning-data.mjs";
 import {
@@ -246,16 +247,42 @@ const expectedClassicalJapaneseSpecs = new Map([
   ],
 ]);
 
-const expectedClassicalChineseSpec = {
-  number: 1,
-  version: "classical-chinese-deck-1-v2",
-  contentVersion: "93a7f9c647a7",
-  datasetLabel: "漢文 意味瞬発 Deck1 最重要250項目",
-  difficultyLabel: "Deck1 最重要・意味瞬発",
-  termCount: 250,
-  questionCount: 250,
-  questionCounts: { beginner: 250, reverse: 0, integrated: 0 },
-};
+const expectedClassicalChineseSpecs = new Map([
+  [
+    "deck-1",
+    {
+      number: 1,
+      version: "classical-chinese-deck-1-v2",
+      contentVersion: "93a7f9c647a7",
+      datasetLabel: "漢文 意味瞬発 Deck1 最重要250項目",
+      difficultyLabel: "Deck1 最重要・意味瞬発",
+      termCount: 250,
+      questionCount: 250,
+      questionCounts: { beginner: 250, reverse: 0, integrated: 0 },
+      rankStart: 1,
+      unitCount: 135,
+      itemTypeCount: 61,
+      domainCounts: { 句法: 101, 再読文字: 9, 重要語: 140 },
+    },
+  ],
+  [
+    "deck-2",
+    {
+      number: 2,
+      version: "classical-chinese-deck-2-v1",
+      contentVersion: "5e80f6eec792",
+      datasetLabel: "漢文 意味瞬発 Deck2 共通テスト完成250項目",
+      difficultyLabel: "Deck2 共通テスト完成・意味瞬発",
+      termCount: 250,
+      questionCount: 250,
+      questionCounts: { beginner: 250, reverse: 0, integrated: 0 },
+      rankStart: 251,
+      unitCount: 162,
+      itemTypeCount: 49,
+      domainCounts: { 句法: 60, 重要語: 190 },
+    },
+  ],
+]);
 
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
@@ -1322,147 +1349,165 @@ if (
   throw new Error("古文単語Deck 1〜3の重複または通算順位が正しくありません。");
 }
 
+const expectedClassicalChineseTermCount = [
+  ...expectedClassicalChineseSpecs.values(),
+].reduce((sum, spec) => sum + spec.termCount, 0);
+const expectedClassicalChineseQuestionCount = [
+  ...expectedClassicalChineseSpecs.values(),
+].reduce((sum, spec) => sum + spec.questionCount, 0);
 if (
-  sourceClassicalChineseDecks.length !== 1 ||
+  sourceClassicalChineseDecks.length !== 2 ||
   !classicalChineseSubjectEntry ||
   classicalChineseSubjectEntry.defaultDeckId !== "deck-1" ||
   classicalChineseSubjectEntry.termUnitLabel !== "項目" ||
-  classicalChineseSubjectEntry.datasetLabel !== "大学受験漢文（国語）｜Deck 1" ||
-  classicalChineseSubjectEntry.termCount !== expectedClassicalChineseSpec.termCount ||
+  classicalChineseSubjectEntry.datasetLabel !==
+    "大学受験漢文（国語）｜Deck 1〜2" ||
+  classicalChineseSubjectEntry.termCount !== expectedClassicalChineseTermCount ||
   classicalChineseSubjectEntry.questionCount !==
-    expectedClassicalChineseSpec.questionCount ||
-  classicalChineseSubjectEntry.decks.length !== 1
+    expectedClassicalChineseQuestionCount ||
+  classicalChineseSubjectEntry.decks.length !== 2
 ) {
-  throw new Error("漢文Deck 1の科目一覧が正しくありません。");
+  throw new Error("漢文Deck 1〜2の科目一覧が正しくありません。");
 }
-const sourceClassicalChineseDeck = sourceClassicalChineseDecks[0];
-const classicalChineseDeckEntry = classicalChineseSubjectEntry.decks[0];
-const classicalChineseSubject = await readJson(classicalChineseDeckEntry.indexPath);
-const classicalChineseChunks = await Promise.all(
-  classicalChineseSubject.chunks.map((chunk) => readJson(chunk.path)),
-);
-const generatedClassicalChineseTerms = classicalChineseChunks.flatMap(
-  (chunk) => chunk.terms,
-);
-const generatedClassicalChineseQuestions = generatedClassicalChineseTerms.flatMap(
-  (term) => Object.values(term.stages).flat(),
-);
-const generatedClassicalChineseCounts = countQuestionsByStage(
-  generatedClassicalChineseTerms,
-);
-if (
-  classicalChineseDeckEntry.number !== expectedClassicalChineseSpec.number ||
-  classicalChineseDeckEntry.version !== expectedClassicalChineseSpec.version ||
-  classicalChineseDeckEntry.contentVersion !== expectedClassicalChineseSpec.contentVersion ||
-  classicalChineseDeckEntry.datasetLabel !== expectedClassicalChineseSpec.datasetLabel ||
-  classicalChineseDeckEntry.difficultyLabel !==
-    expectedClassicalChineseSpec.difficultyLabel ||
-  classicalChineseDeckEntry.termCount !== expectedClassicalChineseSpec.termCount ||
-  classicalChineseDeckEntry.questionCount !== expectedClassicalChineseSpec.questionCount ||
-  classicalChineseSubject.schemaVersion !== 3 ||
-  classicalChineseSubject.id !== "classical-chinese" ||
-  classicalChineseSubject.title !== "漢文（国語）" ||
-  classicalChineseSubject.learningType !== "cards" ||
-  classicalChineseSubject.termUnitLabel !== "項目" ||
-  classicalChineseSubject.deckId !== "deck-1" ||
-  classicalChineseSubject.deckNumber !== expectedClassicalChineseSpec.number ||
-  classicalChineseSubject.version !== expectedClassicalChineseSpec.version ||
-  classicalChineseSubject.contentVersion !== expectedClassicalChineseSpec.contentVersion ||
-  classicalChineseSubject.datasetLabel !== expectedClassicalChineseSpec.datasetLabel ||
-  classicalChineseSubject.difficultyLabel !==
-    expectedClassicalChineseSpec.difficultyLabel ||
-  classicalChineseSubject.sourceFile !== sourceClassicalChineseDeck.sourceFile ||
-  classicalChineseSubject.termCount !== expectedClassicalChineseSpec.termCount ||
-  classicalChineseSubject.questionCount !== expectedClassicalChineseSpec.questionCount ||
-  classicalChineseSubject.filterLabels.macroRegion !== "分野" ||
-  classicalChineseSubject.filterLabels.regionDetail !== "単元" ||
-  classicalChineseSubject.filterLabels.category !== "項目種別" ||
-  classicalChineseSubject.stageLabels.beginner !== "暗記カード" ||
-  classicalChineseSubject.availableStages.join(",") !== "beginner" ||
-  classicalChineseSubject.chunks.length !== 5 ||
-  classicalChineseSubject.chunks.some((chunk) => chunk.count !== 50) ||
-  classicalChineseChunks.some(
-    (chunk) =>
-      chunk.schemaVersion !== 3 ||
-      chunk.subjectId !== "classical-chinese" ||
-      chunk.deckId !== "deck-1",
-  ) ||
-  JSON.stringify(generatedClassicalChineseCounts) !==
-    JSON.stringify(expectedClassicalChineseSpec.questionCounts) ||
-  JSON.stringify(generatedClassicalChineseTerms) !==
-    JSON.stringify(expectedClassicalChineseTerms) ||
-  generatedClassicalChineseQuestions.some(
-    (question) =>
-      question.stage !== "beginner" ||
-      question.yearMnemonic !== "" ||
-      !question.label ||
-      !question.explanation ||
-      question.acceptedAnswers.includes(question.answer),
-  )
-) {
-  throw new Error("漢文Deck 1の生成内容・絞り込み・分割が元CSVと一致しません。");
+
+const generatedClassicalChineseTerms = [];
+const generatedClassicalChineseQuestions = [];
+for (const sourceClassicalChineseDeck of sourceClassicalChineseDecks) {
+  const spec = expectedClassicalChineseSpecs.get(sourceClassicalChineseDeck.id);
+  const classicalChineseDeckEntry = classicalChineseSubjectEntry.decks.find(
+    (deck) => deck.id === sourceClassicalChineseDeck.id,
+  );
+  if (!spec || !classicalChineseDeckEntry) {
+    throw new Error(`${sourceClassicalChineseDeck.id}の漢文仕様がありません。`);
+  }
+  const deckSourceRows = toClassicalChineseObjects(
+    parseCsv(sourceClassicalChineseDeck.sourceText),
+  );
+  const classicalChineseSubject = await readJson(
+    classicalChineseDeckEntry.indexPath,
+  );
+  const classicalChineseChunks = await Promise.all(
+    classicalChineseSubject.chunks.map((chunk) => readJson(chunk.path)),
+  );
+  const deckTerms = classicalChineseChunks.flatMap((chunk) => chunk.terms);
+  const deckQuestions = deckTerms.flatMap((term) =>
+    Object.values(term.stages).flat(),
+  );
+  generatedClassicalChineseTerms.push(...deckTerms);
+  generatedClassicalChineseQuestions.push(...deckQuestions);
+  const generatedClassicalChineseCounts = countQuestionsByStage(deckTerms);
+  const classicalChineseRanks = deckTerms
+    .map((term) => term.importanceRank)
+    .sort((left, right) => left - right);
+  const classicalChineseDomainCounts = deckTerms.reduce(
+    (counts, term) => ({
+      ...counts,
+      [term.classicalChinese.domain]:
+        (counts[term.classicalChinese.domain] ?? 0) + 1,
+    }),
+    {},
+  );
+
+  if (
+    classicalChineseDeckEntry.number !== spec.number ||
+    classicalChineseDeckEntry.version !== spec.version ||
+    classicalChineseDeckEntry.contentVersion !== spec.contentVersion ||
+    classicalChineseDeckEntry.datasetLabel !== spec.datasetLabel ||
+    classicalChineseDeckEntry.difficultyLabel !== spec.difficultyLabel ||
+    classicalChineseDeckEntry.termCount !== spec.termCount ||
+    classicalChineseDeckEntry.questionCount !== spec.questionCount ||
+    classicalChineseSubject.schemaVersion !== 3 ||
+    classicalChineseSubject.id !== "classical-chinese" ||
+    classicalChineseSubject.title !== "漢文（国語）" ||
+    classicalChineseSubject.learningType !== "cards" ||
+    classicalChineseSubject.termUnitLabel !== "項目" ||
+    classicalChineseSubject.deckId !== sourceClassicalChineseDeck.id ||
+    classicalChineseSubject.deckNumber !== spec.number ||
+    classicalChineseSubject.version !== spec.version ||
+    classicalChineseSubject.contentVersion !== spec.contentVersion ||
+    classicalChineseSubject.datasetLabel !== spec.datasetLabel ||
+    classicalChineseSubject.difficultyLabel !== spec.difficultyLabel ||
+    classicalChineseSubject.sourceFile !== sourceClassicalChineseDeck.sourceFile ||
+    classicalChineseSubject.termCount !== spec.termCount ||
+    classicalChineseSubject.questionCount !== spec.questionCount ||
+    classicalChineseSubject.filterLabels.macroRegion !== "分野" ||
+    classicalChineseSubject.filterLabels.regionDetail !== "単元" ||
+    classicalChineseSubject.filterLabels.category !== "項目種別" ||
+    classicalChineseSubject.stageLabels.beginner !== "暗記カード" ||
+    classicalChineseSubject.availableStages.join(",") !== "beginner" ||
+    classicalChineseSubject.chunks.length !== 5 ||
+    classicalChineseSubject.chunks.some((chunk) => chunk.count !== 50) ||
+    classicalChineseChunks.some(
+      (chunk) =>
+        chunk.schemaVersion !== 3 ||
+        chunk.subjectId !== "classical-chinese" ||
+        chunk.deckId !== sourceClassicalChineseDeck.id,
+    ) ||
+    JSON.stringify(generatedClassicalChineseCounts) !==
+      JSON.stringify(spec.questionCounts) ||
+    JSON.stringify(deckTerms) !== JSON.stringify(sourceClassicalChineseDeck.terms) ||
+    deckSourceRows.length !== spec.termCount ||
+    deckSourceRows.some(
+      (row) =>
+        row.card_type !== "meaning" ||
+        row.focus !== "意味瞬発" ||
+        row.rule_info.includes("音声="),
+    ) ||
+    deckQuestions.some(
+      (question) =>
+        question.stage !== "beginner" ||
+        question.yearMnemonic !== "" ||
+        !question.label ||
+        !question.explanation ||
+        question.acceptedAnswers.includes(question.answer) ||
+        question.type !== "meaning" ||
+        Array.isArray(question.speech?.question) ||
+        Array.isArray(question.speech?.answer) ||
+        question.focus !== "意味瞬発",
+    ) ||
+    new Set(deckTerms.map((term) => term.id)).size !== spec.termCount ||
+    new Set(deckTerms.map((term) => term.term)).size !== spec.termCount ||
+    new Set(deckQuestions.map((question) => question.id)).size !==
+      spec.questionCount ||
+    classicalChineseRanks.some(
+      (rank, index) => rank !== spec.rankStart + index,
+    ) ||
+    deckTerms.some((term) => !/^CC-\d{6}$/.test(term.id)) ||
+    deckQuestions.some((question) => !/^CC-\d{6}-C\d{2}$/.test(question.id)) ||
+    JSON.stringify(Object.entries(classicalChineseDomainCounts).sort()) !==
+      JSON.stringify(Object.entries(spec.domainCounts).sort()) ||
+    new Set(deckTerms.map((term) => term.classicalChinese.unit)).size !==
+      spec.unitCount ||
+    new Set(deckTerms.map((term) => term.classicalChinese.itemType)).size !==
+      spec.itemTypeCount ||
+    deckTerms.some(
+      (term) =>
+        term.geography.macroRegion !== term.classicalChinese.domain ||
+        term.geography.regionDetail !== term.classicalChinese.unit ||
+        term.category !== term.classicalChinese.itemType ||
+        term.classicalChinese.ruleInfo.includes("音声=") ||
+        term.speechReadings[term.term] !== term.reading,
+    )
+  ) {
+    throw new Error(
+      `漢文Deck ${spec.number}の生成内容・順位・分野・読み上げ情報が元CSVと一致しません。`,
+    );
+  }
 }
+
 const classicalChineseRanks = generatedClassicalChineseTerms
   .map((term) => term.importanceRank)
   .sort((left, right) => left - right);
-const classicalChineseDomainCounts = generatedClassicalChineseTerms.reduce(
-  (counts, term) => ({
-    ...counts,
-    [term.classicalChinese.domain]:
-      (counts[term.classicalChinese.domain] ?? 0) + 1,
-  }),
-  {},
-);
 if (
-  new Set(generatedClassicalChineseTerms.map((term) => term.id)).size !== 250 ||
-  new Set(generatedClassicalChineseTerms.map((term) => term.term)).size !== 250 ||
-  new Set(generatedClassicalChineseQuestions.map((question) => question.id)).size !==
-    250 ||
-  classicalChineseRanks.some((rank, index) => rank !== index + 1) ||
-  generatedClassicalChineseTerms.some((term) => !/^CC-\d{6}$/.test(term.id)) ||
-  generatedClassicalChineseQuestions.some(
-    (question) => !/^CC-\d{6}-C\d{2}$/.test(question.id),
-  ) ||
-  classicalChineseDomainCounts["句法"] !== 101 ||
-  classicalChineseDomainCounts["再読文字"] !== 9 ||
-  classicalChineseDomainCounts["重要語"] !== 140 ||
-  Object.keys(classicalChineseDomainCounts).length !== 3 ||
-  new Set(
-    generatedClassicalChineseTerms.map((term) => term.classicalChinese.unit),
-  ).size !== 135 ||
-  new Set(
-    generatedClassicalChineseTerms.map((term) => term.classicalChinese.itemType),
-  ).size !== 61 ||
-  generatedClassicalChineseTerms.some(
-    (term) =>
-      term.geography.macroRegion !== term.classicalChinese.domain ||
-      term.geography.regionDetail !== term.classicalChinese.unit ||
-      term.category !== term.classicalChinese.itemType ||
-      term.classicalChinese.ruleInfo.includes("音声=") ||
-      term.speechReadings[term.term] !== term.reading,
-  ) ||
-  generatedClassicalChineseQuestions.some(
-    (question) =>
-      ["term_from_meaning", "reading", "saidoku", "kakikudashi"].includes(
-        question.type,
-      ) && question.hideTermUntilAnswer !== true,
-  ) ||
-  generatedClassicalChineseQuestions.some(
-    (question) =>
-      ["reading", "saidoku"].includes(question.type) &&
-      (!Array.isArray(question.speech?.question) ||
-        question.speech.question.length !== 1 ||
-        question.speech.question[0].text.includes(question.answer)),
-  ) ||
-  generatedClassicalChineseQuestions.some(
-    (question) =>
-      question.type === "meaning" &&
-      (Array.isArray(question.speech?.question) ||
-        Array.isArray(question.speech?.answer) ||
-        question.focus !== "意味瞬発"),
-  )
+  new Set(generatedClassicalChineseTerms.map((term) => term.id)).size !==
+    expectedClassicalChineseTermCount ||
+  new Set(generatedClassicalChineseTerms.map((term) => term.term)).size !==
+    expectedClassicalChineseTermCount ||
+  new Set(generatedClassicalChineseQuestions.map((question) => question.id))
+    .size !== expectedClassicalChineseQuestionCount ||
+  classicalChineseRanks.some((rank, index) => rank !== index + 1)
 ) {
-  throw new Error("漢文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");
+  throw new Error("漢文Deck 1〜2の重複または通算順位が正しくありません。");
 }
 
 const generatedTermImages = await readJson("term-images.json");

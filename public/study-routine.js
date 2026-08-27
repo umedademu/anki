@@ -15,7 +15,7 @@ const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 export const defaultStudyRoutineOvertimeSeconds = 10 * 60;
 export const maximumStudyRoutineOvertimeSeconds = 24 * 60 * 60;
 export const defaultStudyRoutineMultiplier = 1;
-export const minimumStudyRoutineMultiplier = 0.5;
+export const minimumStudyRoutineMultiplier = 0.25;
 export const maximumStudyRoutineMultiplier = 3;
 export const studyRoutineMultiplierStep = 0.25;
 

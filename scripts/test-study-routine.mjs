@@ -33,15 +33,16 @@ if (
 if (
   normalizeStudyRoutineMultiplier(0.74) !== 0.75 ||
   normalizeStudyRoutineMultiplier(null) !== 1 ||
-  normalizeStudyRoutineMultiplier(0.1) !== 0.5 ||
+  normalizeStudyRoutineMultiplier(0.1) !== 0.25 ||
   normalizeStudyRoutineMultiplier(4) !== 3 ||
+  scaledStudyRoutineQuestionTarget(100, 0.25) !== 25 ||
   scaledStudyRoutineQuestionTarget(100, 0.5) !== 50 ||
   scaledStudyRoutineQuestionTarget(100, 0.75) !== 75 ||
   scaledStudyRoutineQuestionTarget(100, 2) !== 200 ||
   scaledStudyRoutineQuestionTarget(100, 3) !== 300 ||
   scaledStudyRoutineQuestionTarget(1, 0.5) !== 1
 ) {
-  throw new Error("毎日のメニューの学習量を0.5倍から3倍へ調整できませんでした。");
+  throw new Error("毎日のメニューの学習量を0.25倍から3倍へ調整できませんでした。");
 }
 if (
   countsTowardStudyRoutine("again") ||

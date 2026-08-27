@@ -508,7 +508,7 @@ function routineSubjectTitle(subjectId) {
 
 function routineItemTitle(item) {
   return item?.kind === "video"
-    ? item.videoTitle || "覚え歌をランダム再生"
+    ? item.videoTitle || "動画をランダム再生"
     : routineSubjectTitle(item?.subjectId);
 }
 
@@ -659,7 +659,7 @@ function renderRoutineDashboard() {
     elements.routineDashboardTitle.textContent =
       `${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」の途中です`;
     elements.routineDashboardSummary.textContent = activeItem.kind === "video"
-      ? "選ばれた覚え歌を視聴すると次へ進みます。"
+      ? "選ばれた動画を視聴すると次へ進みます。"
       : `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
   } else {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
@@ -777,7 +777,7 @@ function showRoutineStepCompletion(change) {
     `${totals.completed} / ${totals.target}問`;
   if (change.nextItem) {
     elements.completionMessage.textContent = change.nextItem.kind === "video"
-      ? "次は登録動画から重複なく選ばれた覚え歌を見ます。"
+      ? "次は登録動画から重複なく選ばれた1本を見ます。"
       : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
     elements.completionReturn.textContent = "次の学習内容を選ぶ";
     elements.completionHome.classList.remove("is-hidden");
@@ -872,7 +872,7 @@ function showRoutineVideoCompletion(change) {
   elements.completionEyebrow.textContent = change.nextItem
     ? "メニューの動画を完了"
     : "毎日のメニュー完了";
-  elements.completionTitle.textContent = "覚え歌を1本視聴しました";
+  elements.completionTitle.textContent = "動画を1本視聴しました";
   elements.routineResultPrimaryLabel.textContent = "視聴した動画";
   elements.routineResultQuestions.textContent = "1本";
   elements.routineResultTime.textContent =
@@ -881,7 +881,7 @@ function showRoutineVideoCompletion(change) {
     `${totals.completedItems} / ${totals.totalItems}項目`;
   if (change.nextItem) {
     elements.completionMessage.textContent = change.nextItem.kind === "video"
-      ? "次も登録動画から重複なく選ばれた覚え歌を見ます。"
+      ? "次も登録動画から重複なく選ばれた1本を見ます。"
       : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。`;
     elements.completionReturn.textContent = "次の学習内容へ進む";
     elements.completionHome.classList.remove("is-hidden");
@@ -954,9 +954,9 @@ async function showRoutineVideoStep() {
   state.activeSession = false;
   state.currentTask = null;
   state.queue = [];
-  elements.subjectName.textContent = "覚え歌";
+  elements.subjectName.textContent = "動画";
   elements.routineVideoEyebrow.textContent =
-    `毎日のメニュー ${state.routineRun.currentIndex + 1}／${state.routineRun.items.length}｜覚え歌`;
+    `毎日のメニュー ${state.routineRun.currentIndex + 1}／${state.routineRun.items.length}｜動画`;
   elements.routineVideoTitle.textContent = video.title;
   elements.routineVideoAuthor.textContent = video.authorName;
   elements.routineVideoMessage.textContent =
@@ -981,7 +981,7 @@ async function showRoutineVideoStep() {
 async function showStandaloneRandomVideo() {
   if (!state.cloudConnected) {
     throw new Error(
-      "設定ページでCloudflareへ接続すると、覚え歌をランダム再生できます。",
+      "設定ページでCloudflareへ接続すると、動画をランダム再生できます。",
     );
   }
   stopListeningSequence();
@@ -1007,8 +1007,8 @@ async function showStandaloneRandomVideo() {
   state.activeSession = false;
   state.currentTask = null;
   state.queue = [];
-  elements.subjectName.textContent = "覚え歌";
-  elements.routineVideoEyebrow.textContent = "科目選択｜覚え歌をランダム再生";
+  elements.subjectName.textContent = "動画";
+  elements.routineVideoEyebrow.textContent = "科目選択｜動画をランダム再生";
   elements.routineVideoTitle.textContent = draw.video.title;
   elements.routineVideoAuthor.textContent = draw.video.authorName;
   elements.routineVideoMessage.textContent =
@@ -4329,7 +4329,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.151｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.152｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4366,7 +4366,7 @@ function renderSubjectOptions() {
       button.className = "subject-choice random-video-choice";
       button.dataset.randomVideoAction = "play";
       const title = document.createElement("strong");
-      title.textContent = "覚え歌をランダム再生";
+      title.textContent = "動画をランダム再生";
       const description = document.createElement("small");
       description.textContent = "登録動画から重複なく1本を選んで再生する";
       button.append(title, description);

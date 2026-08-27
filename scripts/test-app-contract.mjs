@@ -321,13 +321,17 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.151") ||
-  !app.includes("v0.151｜") ||
-  !changelog.includes("v0.151") ||
-  !settingsHtml.includes("v0.151") ||
-  !historyHtml.includes("v0.151")
+  !html.includes("v0.152") ||
+  !app.includes("v0.152｜") ||
+  !changelog.includes("v0.152") ||
+  !settingsHtml.includes("v0.152") ||
+  !historyHtml.includes("v0.152")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+const obsoleteVideoLabel = "覚え歌";
+if ([html, app, settingsHtml, changelog].some((source) => source.includes(obsoleteVideoLabel))) {
+  throw new Error("画面に以前の動画の呼び方が残っています。");
 }
 const unusedOvertimeLabel = "\u30ed\u30b9\u30bf\u30a4\u30e0";
 if ([html, app, settingsHtml, changelog].some((source) => source.includes(unusedOvertimeLabel))) {
@@ -563,7 +567,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.151"') ||
+  !html.includes('href="/styles.css?v=0.152"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

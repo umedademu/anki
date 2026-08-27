@@ -528,7 +528,7 @@ function renderRoutineEditor() {
         const videoLabel = document.createElement("div");
         videoLabel.className = "routine-video-item-label";
         const title = document.createElement("strong");
-        title.textContent = "覚え歌をランダム再生";
+        title.textContent = "動画をランダム再生";
         const description = document.createElement("small");
         description.textContent = "一巡するまで同じ動画を重ねません";
         videoLabel.append(title, description);

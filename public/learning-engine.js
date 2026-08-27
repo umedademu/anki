@@ -127,6 +127,10 @@ export function shouldHideTerm(question, answerVisible) {
   return hidesUntilAnswer && !answerVisible;
 }
 
+export function usesStagedClassicalChineseMeaning(subjectId, question) {
+  return subjectId === "classical-chinese" && question?.focus === "意味瞬発";
+}
+
 const questionReadingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/g;
 
 export function getQuestionPromptForDisplay(question, answerVisible) {

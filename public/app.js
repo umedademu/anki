@@ -26,6 +26,7 @@ import {
   restoreRatingUndoSnapshot,
   shuffleTasks,
   shouldHideTerm,
+  usesStagedClassicalChineseMeaning,
 } from "./learning-engine.js";
 import {
   deleteCloudStudySession,
@@ -2573,10 +2574,7 @@ function isClassicalChineseMeaningQuestion(
   task = state.currentTask,
   question = questionForTask(task),
 ) {
-  return (
-    state.subject?.id === classicalChineseSubjectId &&
-    question?.type === "meaning"
-  );
+  return usesStagedClassicalChineseMeaning(state.subject?.id, question);
 }
 
 function classicalChineseReadingSpeechSequence(task = state.currentTask) {
@@ -4544,7 +4542,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.161｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.162｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

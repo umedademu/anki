@@ -30,6 +30,7 @@ import {
   restoreRatingUndoSnapshot,
   serializeProgress,
   shouldHideTerm,
+  usesStagedClassicalChineseMeaning,
 } from "../public/learning-engine.js";
 
 function makeRow({ termId, rank, term, sortYear, questionId, stage, questionType, question, answer }) {
@@ -105,6 +106,23 @@ if (
   }).join(",") !== "都市・生活圏"
 ) {
   throw new Error("地理の尺度名を一つの選択肢として扱えませんでした。");
+}
+
+if (
+  !usesStagedClassicalChineseMeaning("classical-chinese", {
+    type: "meaning",
+    focus: "意味瞬発",
+  }) ||
+  usesStagedClassicalChineseMeaning("classical-chinese", {
+    type: "meaning",
+    focus: "用語から定義",
+  }) ||
+  usesStagedClassicalChineseMeaning("earth-science-basics", {
+    type: "meaning",
+    focus: "意味瞬発",
+  })
+) {
+  throw new Error("漢文の意味瞬発カードだけを段階表示へ切り替えられませんでした。");
 }
 
 const masteryTarget = 2;

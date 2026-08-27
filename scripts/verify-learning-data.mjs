@@ -37,6 +37,11 @@ const splitMnemonicList = (value) =>
     .split("|")
     .map((mnemonic) => mnemonic.trim())
     .filter(Boolean);
+const countValues = (values) =>
+  values.reduce(
+    (counts, value) => ({ ...counts, [value]: (counts[value] ?? 0) + 1 }),
+    {},
+  );
 
 const expectedSpecs = new Map([
   [
@@ -297,6 +302,43 @@ const expectedClassicalChineseSpecs = new Map([
       unitCount: 144,
       itemTypeCount: 34,
       domainCounts: { 句法: 40, 重要語: 160 },
+    },
+  ],
+  [
+    "deck-4",
+    {
+      number: 4,
+      version: "classical-chinese-deck-4-v1",
+      contentVersion: "cd185da28b4d",
+      datasetLabel: "漢文 Deck4 漢文ルール 100項目",
+      difficultyLabel: "Deck4 漢文ルール・全範囲",
+      termCount: 100,
+      questionCount: 112,
+      questionCounts: { beginner: 112, reverse: 0, integrated: 0 },
+      sourceRowCount: 112,
+      rankStart: 701,
+      unitCount: 6,
+      itemTypeCount: 16,
+      domainCounts: { 再読文字: 13, 句法: 20, 置き字: 10, 訓読: 33, 返り点: 24 },
+      questionTypeCounts: {
+        construction: 15,
+        identification: 13,
+        kundoku_order: 23,
+        meaning: 12,
+        okurigana: 25,
+        saidoku: 12,
+        term_from_meaning: 12,
+      },
+      focusCounts: {
+        再読文字の規則: 12,
+        定義から用語: 12,
+        文法規則: 13,
+        書き下しの規則: 25,
+        機能語の働き: 15,
+        用語から定義: 12,
+        返り点の規則: 23,
+      },
+      standardRuleCards: true,
     },
   ],
 ]);
@@ -1373,18 +1415,18 @@ const expectedClassicalChineseQuestionCount = [
   ...expectedClassicalChineseSpecs.values(),
 ].reduce((sum, spec) => sum + spec.questionCount, 0);
 if (
-  sourceClassicalChineseDecks.length !== 3 ||
+  sourceClassicalChineseDecks.length !== 4 ||
   !classicalChineseSubjectEntry ||
   classicalChineseSubjectEntry.defaultDeckId !== "deck-1" ||
   classicalChineseSubjectEntry.termUnitLabel !== "項目" ||
   classicalChineseSubjectEntry.datasetLabel !==
-    "大学受験漢文（国語）｜Deck 1〜3" ||
+    "大学受験漢文（国語）｜Deck 1〜4" ||
   classicalChineseSubjectEntry.termCount !== expectedClassicalChineseTermCount ||
   classicalChineseSubjectEntry.questionCount !==
     expectedClassicalChineseQuestionCount ||
-  classicalChineseSubjectEntry.decks.length !== 3
+  classicalChineseSubjectEntry.decks.length !== 4
 ) {
-  throw new Error("漢文Deck 1〜3の科目一覧が正しくありません。");
+  throw new Error("漢文Deck 1〜4の科目一覧が正しくありません。");
 }
 
 const generatedClassicalChineseTerms = [];
@@ -1424,6 +1466,18 @@ for (const sourceClassicalChineseDeck of sourceClassicalChineseDecks) {
     }),
     {},
   );
+  const classicalChineseQuestionTypeCounts = countValues(
+    deckQuestions.map((question) => question.type),
+  );
+  const classicalChineseFocusCounts = countValues(
+    deckQuestions.map((question) => question.focus),
+  );
+  const expectedQuestionTypeCounts = spec.questionTypeCounts ?? {
+    meaning: spec.questionCount,
+  };
+  const expectedFocusCounts = spec.focusCounts ?? {
+    意味瞬発: spec.questionCount,
+  };
 
   if (
     classicalChineseDeckEntry.number !== spec.number ||
@@ -1463,25 +1517,36 @@ for (const sourceClassicalChineseDeck of sourceClassicalChineseDecks) {
     JSON.stringify(generatedClassicalChineseCounts) !==
       JSON.stringify(spec.questionCounts) ||
     JSON.stringify(deckTerms) !== JSON.stringify(sourceClassicalChineseDeck.terms) ||
-    deckSourceRows.length !== spec.termCount ||
-    deckSourceRows.some(
-      (row) =>
-        row.card_type !== "meaning" ||
-        row.focus !== "意味瞬発" ||
-        row.rule_info.includes("音声="),
-    ) ||
+    deckSourceRows.length !== (spec.sourceRowCount ?? spec.termCount) ||
+    deckSourceRows.some((row) => row.rule_info.includes("音声=")) ||
+    JSON.stringify(Object.entries(classicalChineseQuestionTypeCounts).sort()) !==
+      JSON.stringify(Object.entries(expectedQuestionTypeCounts).sort()) ||
+    JSON.stringify(Object.entries(classicalChineseFocusCounts).sort()) !==
+      JSON.stringify(Object.entries(expectedFocusCounts).sort()) ||
     deckQuestions.some(
       (question) =>
         question.stage !== "beginner" ||
         question.yearMnemonic !== "" ||
         !question.label ||
         !question.explanation ||
-        question.acceptedAnswers.includes(question.answer) ||
-        question.type !== "meaning" ||
-        Array.isArray(question.speech?.question) ||
-        Array.isArray(question.speech?.answer) ||
-        question.focus !== "意味瞬発",
+        question.acceptedAnswers.includes(question.answer),
     ) ||
+    (spec.standardRuleCards
+      ? deckQuestions.some(
+          (question) =>
+            question.label !== question.focus ||
+            question.hideTermUntilAnswer !== true ||
+            Array.isArray(question.speech?.question) ||
+            Array.isArray(question.speech?.answer) ||
+            question.focus === "意味瞬発",
+        )
+      : deckQuestions.some(
+          (question) =>
+            question.type !== "meaning" ||
+            Array.isArray(question.speech?.question) ||
+            Array.isArray(question.speech?.answer) ||
+            question.focus !== "意味瞬発",
+        )) ||
     new Set(deckTerms.map((term) => term.id)).size !== spec.termCount ||
     new Set(deckTerms.map((term) => term.term)).size !== spec.termCount ||
     new Set(deckQuestions.map((question) => question.id)).size !==
@@ -1524,7 +1589,7 @@ if (
     .size !== expectedClassicalChineseQuestionCount ||
   classicalChineseRanks.some((rank, index) => rank !== index + 1)
 ) {
-  throw new Error("漢文Deck 1〜3の重複または通算順位が正しくありません。");
+  throw new Error("漢文Deck 1〜4の重複または通算順位が正しくありません。");
 }
 
 const generatedTermImages = await readJson("term-images.json");

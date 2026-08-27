@@ -940,6 +940,7 @@ const stableDatasetVersions = new Map([
   ["classical-chinese:deck-1", "classical-chinese-deck-1-v2"],
   ["classical-chinese:deck-2", "classical-chinese-deck-2-v1"],
   ["classical-chinese:deck-3", "classical-chinese-deck-3-v1"],
+  ["classical-chinese:deck-4", "classical-chinese-deck-4-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -2788,9 +2789,10 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
     (answer) => answer !== row.answer,
   );
   const examplePrompt = classicalChineseExamplePrompt(row);
-  const needsSafeQuestionSpeech = ["reading", "saidoku"].includes(
-    row.card_type,
-  );
+  const meaningInstant = row.focus === "意味瞬発";
+  const needsSafeQuestionSpeech =
+    row.card_type === "reading" ||
+    (row.card_type === "saidoku" && row.focus !== "再読文字の規則");
   const speech = {};
   if (needsSafeQuestionSpeech || geographyValue(row.example_reading)) {
     speech.question = classicalChineseQuestionSpeech(row);
@@ -2800,7 +2802,7 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
     stage: "beginner",
     focus: row.focus,
     type: row.card_type,
-    label: classicalChineseCardTypeLabels[row.card_type],
+    label: meaningInstant ? classicalChineseCardTypeLabels[row.card_type] : row.focus,
     prompt: [row.question, examplePrompt].filter(Boolean).join("\n"),
     answer: row.answer,
     keywords: [...new Set([row.answer, ...acceptedAnswers])],
@@ -2809,12 +2811,11 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
     explanation: classicalChineseExplanation(row),
     yearMnemonic: "",
     source: { name: row.source_name, url: row.source_url },
-    hideTermUntilAnswer: [
-      "term_from_meaning",
-      "reading",
-      "saidoku",
-      "kakikudashi",
-    ].includes(row.card_type),
+    hideTermUntilAnswer:
+      !meaningInstant ||
+      ["term_from_meaning", "reading", "saidoku", "kakikudashi"].includes(
+        row.card_type,
+      ),
     ...(Object.keys(speech).length > 0 ? { speech } : {}),
   };
 }
@@ -3525,7 +3526,7 @@ export async function main() {
         id: classicalChineseSubjectId,
         title: classicalChineseSubjectTitle,
         catalogLabel: "大学受験漢文（国語）",
-        description: "重要語・句形・再読文字の意味を見てすぐ答える大学受験漢文",
+        description: "重要語・句形の意味と、訓読・返り点・書き下しの規則を覚える大学受験漢文",
         learningType: "cards",
         termUnitLabel: "項目",
         availableStages: ["beginner"],

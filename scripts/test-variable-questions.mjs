@@ -423,6 +423,69 @@ for (const [rating, expectedSeconds] of intervalChecks) {
   }
 }
 
+const restartTerms = [
+  {
+    id: "RESTART-TERM",
+    stages: {
+      beginner: [
+        { id: "RESTART-GOOD" },
+        { id: "RESTART-EASY" },
+        { id: "RESTART-UNANSWERED" },
+      ],
+      reverse: [],
+      integrated: [],
+    },
+  },
+];
+const restartProgress = createEmptyProgress();
+const restartReviewSettings = {
+  ...defaultReviewSettings,
+  goodSeconds: 2 * 24 * 60 * 60,
+  easySeconds: 6 * 24 * 60 * 60,
+};
+rateQuestion(
+  restartProgress,
+  "RESTART-GOOD",
+  "good",
+  masteryTarget,
+  restartReviewSettings,
+  startAt,
+);
+rateQuestion(
+  restartProgress,
+  "RESTART-EASY",
+  "easy",
+  masteryTarget,
+  restartReviewSettings,
+  startAt,
+);
+const immediateRestartQueue = createQuestionQueue(
+  restartTerms,
+  restartProgress,
+  masteryTarget,
+  "beginner",
+  startAt,
+);
+if (
+  immediateRestartQueue.length !== 1 ||
+  immediateRestartQueue[0].questionId !== "RESTART-UNANSWERED"
+) {
+  throw new Error("はじめからの出題で復習前の正解・簡単を除外できませんでした。");
+}
+const twoDaysLaterRestartQueue = createQuestionQueue(
+  restartTerms,
+  restartProgress,
+  masteryTarget,
+  "beginner",
+  new Date(startAt.getTime() + restartReviewSettings.goodSeconds * 1000),
+);
+if (
+  !twoDaysLaterRestartQueue.some((task) => task.questionId === "RESTART-GOOD") ||
+  twoDaysLaterRestartQueue.some((task) => task.questionId === "RESTART-EASY")
+) {
+  throw new Error("はじめからの出題で正解・簡単の復習日時を区別できませんでした。");
+}
+
 for (const question of terms[0].stages.beginner) {
   rateQuestion(progress, question.id, "easy", masteryTarget, defaultReviewSettings, startAt);
 }

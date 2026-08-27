@@ -1310,29 +1310,6 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
   return studyTimeSave;
 }
 
-function setupMatchesSession(session, selectedTerms) {
-  const filters = selectedFilters();
-  const selectedTermIds = new Set(selectedTerms.map((term) => term.id));
-  const sessionDeckIds = session?.deckIds?.length
-    ? session.deckIds
-    : state.activeDeckIds.length === 1
-      ? state.activeDeckIds
-      : [];
-  return (
-    session &&
-    sessionDeckIds.length === state.activeDeckIds.length &&
-    sessionDeckIds.every((deckId) => state.activeDeckIds.includes(deckId)) &&
-    session.selectedStage === elements.questionStyleFilter.value &&
-    session.questionAmountMode === selectedQuestionAmountMode() &&
-    session.shuffleEnabled === elements.setupShuffle.checked &&
-    session.filters.macroRegion === filters.macroRegion &&
-    session.filters.regionDetail === filters.regionDetail &&
-    session.filters.category === filters.category &&
-    session.termIds.length === selectedTermIds.size &&
-    session.termIds.every((termId) => selectedTermIds.has(termId))
-  );
-}
-
 function setSetupControlsFromSession(session) {
   setAvailableSelectValue(elements.macroRegionFilter, session.filters.macroRegion);
   updateRegionDetailOptions();
@@ -3282,7 +3259,6 @@ function updateSetupPreview() {
   );
   const savedSession = savedSessionForMode(studyMode);
   const hasSavedSession = Boolean(savedSession);
-  const restartsSavedSession = setupMatchesSession(savedSession, terms);
   elements.resumeStudy.classList.toggle("is-hidden", !hasSavedSession);
   elements.resumeStudy.disabled = !state.cloudReady || !hasSavedSession;
   elements.startStudy.disabled =
@@ -3290,7 +3266,7 @@ function updateSetupPreview() {
     !state.cloudReady ||
     (listening &&
       (!speechController.supported ||
-        (dueQuestions === 0 && !restartsSavedSession)));
+        dueQuestions === 0));
   elements.startStudy.textContent = hasSavedSession
     ? "はじめから"
     : listening
@@ -4025,7 +4001,7 @@ async function beginStudy() {
   if (
     savedSession &&
     !window.confirm(
-      "前回の一周を終了し、現在の条件ではじめから学習しますか？\n問題ごとの正誤記録と復習日時は消えません。",
+      "前回の一周を終了し、現在の条件で、未回答または復習時刻を迎えた問題をはじめから学習しますか？\n問題ごとの正誤記録と復習日時は消えません。",
     )
   ) {
     return;
@@ -4049,14 +4025,7 @@ async function beginStudy() {
   state.shuffleEnabled = elements.setupShuffle.checked;
   speechController.stop();
   clearPendingReviewTimer();
-  if (setupMatchesSession(savedSession, selectedTerms)) {
-    const validQuestionIds = new Set(state.questionById.keys());
-    state.queue = savedSession.tasks
-      .filter((task) => validQuestionIds.has(task.questionId))
-      .map(cloneTask);
-  } else {
-    buildQueue();
-  }
+  buildQueue();
   state.sessionTasks = state.queue.map(cloneTask);
   state.unseenQuestionIds = new Set(
     state.sessionTasks.map((task) => task.questionId),
@@ -4360,7 +4329,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.146｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.147｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

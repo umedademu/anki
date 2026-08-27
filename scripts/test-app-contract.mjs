@@ -321,11 +321,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.146") ||
-  !app.includes("v0.146｜") ||
-  !changelog.includes("v0.146") ||
-  !settingsHtml.includes("v0.146") ||
-  !historyHtml.includes("v0.146")
+  !html.includes("v0.147") ||
+  !app.includes("v0.147｜") ||
+  !changelog.includes("v0.147") ||
+  !settingsHtml.includes("v0.147") ||
+  !historyHtml.includes("v0.147")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -502,6 +502,8 @@ if (
   !app.includes("saveCloudStudySession") ||
   !app.includes("savedSessionForMode(studyMode)") ||
   !app.includes("switchStudySessionMode(") ||
+  !beginStudyBlock?.includes("buildQueue();") ||
+  beginStudyBlock?.includes("savedSession.tasks") ||
   !cloudProgress.includes("export function switchStudySessionMode") ||
   !cloudProgress.includes("modeChanged ? 0 : session.screenStudySeconds") ||
   !app.includes('memorize: session,\n    "listen-answer": session') ||
@@ -520,7 +522,7 @@ if (
   !worker.includes("function deleteStudySessionStatements") ||
   !worker.includes("legacySessionRows")
 ) {
-  throw new Error("暗記・聞き流し共通の一周保存、切替再開、期限到来時の再出題が揃っていません。");
+  throw new Error("暗記・聞き流し共通の一周保存、はじめからの復習予定判定、切替再開、期限到来時の再出題が揃っていません。");
 }
 if (
   !html.includes("デッキ（複数選択可）") ||
@@ -561,7 +563,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.146"') ||
+  !html.includes('href="/styles.css?v=0.147"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

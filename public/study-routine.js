@@ -293,9 +293,9 @@ export function normalizeStudyRoutineOvertimeSeconds(value) {
     : defaultStudyRoutineOvertimeSeconds;
 }
 
-function routineItemComplete(item) {
+function routineItemComplete(item, skipVideos = false) {
   return item.kind === "video"
-    ? item.completed === true
+    ? item.completed === true || skipVideos
     : item.completedCount >= item.questionTarget && !item.overtimePending;
 }
 
@@ -316,6 +316,7 @@ export function normalizeStudyRoutineRun(value) {
   const routineMultiplier = normalizeStudyRoutineMultiplier(
     source.routineMultiplier,
   );
+  const skipVideos = source.skipVideos === true;
   const hasStoredMultiplier = Object.hasOwn(source, "routineMultiplier");
   const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
@@ -360,12 +361,15 @@ export function normalizeStudyRoutineRun(value) {
     };
   });
   if (!id || !studyDate || items.length === 0) return null;
-  const firstIncompleteIndex = items.findIndex((item) => !routineItemComplete(item));
+  const firstIncompleteIndex = items.findIndex(
+    (item) => !routineItemComplete(item, skipVideos),
+  );
   return {
-    schemaVersion: 4,
+    schemaVersion: 5,
     id,
     studyDate,
     routineMultiplier,
+    skipVideos,
     currentIndex: firstIncompleteIndex < 0 ? items.length : firstIncompleteIndex,
     items,
   };
@@ -450,6 +454,7 @@ export function createStudyRoutineRun(
   studyDate,
   id = createRoutineRunId(),
   multiplier = defaultStudyRoutineMultiplier,
+  skipVideos = false,
 ) {
   const routineMultiplier = normalizeStudyRoutineMultiplier(multiplier);
   const items = normalizeStudyRoutinePlan(plan).map((item) =>
@@ -475,10 +480,11 @@ export function createStudyRoutineRun(
         },
   );
   return normalizeStudyRoutineRun({
-    schemaVersion: 4,
+    schemaVersion: 5,
     id,
     studyDate,
     routineMultiplier,
+    skipVideos: skipVideos === true,
     currentIndex: 0,
     items,
   });
@@ -506,6 +512,16 @@ export function applyStudyRoutineMultiplier(run, multiplier = 1) {
   });
 }
 
+export function applyStudyRoutineVideoSkip(run, skipVideos = false) {
+  const normalized = normalizeStudyRoutineRun(run);
+  return normalized
+    ? normalizeStudyRoutineRun({
+        ...normalized,
+        skipVideos: skipVideos === true,
+      })
+    : null;
+}
+
 export function currentStudyRoutineItem(run) {
   const normalized = normalizeStudyRoutineRun(run);
   return normalized?.items[normalized.currentIndex] ?? null;
@@ -521,6 +537,7 @@ export function studyRoutineTotals(run) {
       completedItems: 0,
       totalItems: 0,
       completedVideos: 0,
+      skippedVideos: 0,
       totalVideos: 0,
     };
   }
@@ -532,10 +549,13 @@ export function studyRoutineTotals(run) {
           : 0),
       target: totals.target + (item.kind === "study" ? item.questionTarget : 0),
       studySeconds: totals.studySeconds + item.studySeconds,
-      completedItems: totals.completedItems + (routineItemComplete(item) ? 1 : 0),
+      completedItems: totals.completedItems +
+        (routineItemComplete(item, normalized.skipVideos) ? 1 : 0),
       totalItems: totals.totalItems + 1,
       completedVideos: totals.completedVideos +
         (item.kind === "video" && item.completed ? 1 : 0),
+      skippedVideos: totals.skippedVideos +
+        (item.kind === "video" && normalized.skipVideos && !item.completed ? 1 : 0),
       totalVideos: totals.totalVideos + (item.kind === "video" ? 1 : 0),
     }),
     {
@@ -545,6 +565,7 @@ export function studyRoutineTotals(run) {
       completedItems: 0,
       totalItems: 0,
       completedVideos: 0,
+      skippedVideos: 0,
       totalVideos: 0,
     },
   );

@@ -1,5 +1,6 @@
 import {
   applyStudyRoutineMultiplier,
+  applyStudyRoutineVideoSkip,
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
@@ -169,6 +170,49 @@ if (
   ambitiousRun.currentIndex !== 0
 ) {
   throw new Error("進行中メニューの件数を保ったまま学習量を変更できませんでした。");
+}
+
+const skippedVideoRun = applyStudyRoutineVideoSkip(reducedRun, true);
+const restoredVideoRun = applyStudyRoutineVideoSkip(skippedVideoRun, false);
+const skippedVideoTotals = studyRoutineTotals(skippedVideoRun);
+if (
+  !skippedVideoRun.skipVideos ||
+  skippedVideoRun.currentIndex !== skippedVideoRun.items.length ||
+  skippedVideoRun.items[1].completed ||
+  skippedVideoTotals.completedItems !== 2 ||
+  skippedVideoTotals.completedVideos !== 0 ||
+  skippedVideoTotals.skippedVideos !== 1 ||
+  restoredVideoRun.skipVideos ||
+  restoredVideoRun.currentIndex !== 1 ||
+  restoredVideoRun.items[1].completed
+) {
+  throw new Error("動画を視聴済みにせず一括で飛ばし、未視聴動画を対象へ戻せませんでした。");
+}
+
+const skipBetweenStudiesRun = createStudyRoutineRun(
+  [
+    { id: "skip-first", kind: "study", subjectId: "world-history", questionTarget: 1 },
+    { id: "skip-video", kind: "video" },
+    { id: "skip-second", kind: "study", subjectId: "geography", questionTarget: 1 },
+  ],
+  "2026-08-27",
+  "skip-between-studies-run",
+  1,
+  true,
+);
+const skipBetweenStudiesChange = recordStudyRoutineQuestion(
+  skipBetweenStudiesRun,
+  "world-history",
+  "world-deck-1",
+  "skip-question-1",
+  0,
+  "good",
+);
+if (
+  skipBetweenStudiesChange.run.currentIndex !== 2 ||
+  currentStudyRoutineItem(skipBetweenStudiesChange.run)?.subjectId !== "geography"
+) {
+  throw new Error("動画の一括スキップ中に次の科目へ直接進めませんでした。");
 }
 
 const planWithAddedVideos = [
@@ -446,4 +490,4 @@ if (
   throw new Error("午前4時後に前回の続きへ引き継げませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 回答別加算・学習後動画・27本一巡・連続防止を確認");
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止を確認");

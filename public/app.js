@@ -78,6 +78,7 @@ import {
 } from "./deck-selection.js";
 import {
   applyStudyRoutineMultiplier,
+  applyStudyRoutineVideoSkip,
   assignStudyRoutineVideo,
   completeStudyRoutineVideo,
   continueStudyRoutineOnDate,
@@ -121,6 +122,7 @@ const elements = {
   routineMultiplierOutput: document.querySelector("#routine-multiplier-output"),
   routineMultiplierNote: document.querySelector("#routine-multiplier-note"),
   routineMultiplierStatus: document.querySelector("#routine-multiplier-status"),
+  routineSkipVideos: document.querySelector("#routine-skip-videos"),
   startRoutine: document.querySelector("#start-routine"),
   continueRoutine: document.querySelector("#continue-routine"),
   setupPanel: document.querySelector("#setup-panel"),
@@ -357,7 +359,7 @@ let studyMenuLastFocused = null;
 let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
-let routineMultiplierSaving = false;
+let routinePreferenceSaving = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -558,9 +560,9 @@ function routineItemTitle(item) {
     : routineSubjectTitle(item?.subjectId);
 }
 
-function routineItemSummary(item) {
+function routineItemSummary(item, skipVideos = false) {
   return item?.kind === "video"
-    ? "動画を1本見る"
+    ? skipVideos ? "動画をスキップ" : "動画を1本見る"
     : `${item.questionTarget}問`;
 }
 
@@ -681,6 +683,7 @@ function renderRoutineDashboard() {
   const routineMultiplier = normalizeStudyRoutineMultiplier(
     state.setupPreferences.routineMultiplier,
   );
+  const routineSkipVideos = state.setupPreferences.routineSkipVideos === true;
   const plan = run?.items ?? scaleStudyRoutinePlan(
     state.setupPreferences.routinePlan,
     routineMultiplier,
@@ -705,7 +708,9 @@ function renderRoutineDashboard() {
   const connected = state.cloudConnected && Boolean(state.routineStudyDate);
 
   renderRoutineMultiplierControl(routineMultiplier);
-  elements.routineMultiplier.disabled = !connected || routineMultiplierSaving;
+  elements.routineSkipVideos.checked = routineSkipVideos;
+  elements.routineMultiplier.disabled = !connected || routinePreferenceSaving;
+  elements.routineSkipVideos.disabled = !connected || routinePreferenceSaving;
   elements.startRoutine.disabled = !connected || plan.length === 0;
   elements.continueRoutine.disabled = !connected || !activeItem;
   elements.continueRoutine.classList.toggle("is-hidden", !activeItem);
@@ -724,8 +729,9 @@ function renderRoutineDashboard() {
       "設定ページでCloudflareへ接続すると、毎日のメニューを開始できます。";
   } else if (completed) {
     elements.routineDashboardTitle.textContent = "メニューをすべて完了しました";
-    elements.routineDashboardSummary.textContent =
-      `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
+    elements.routineDashboardSummary.textContent = routineSkipVideos
+      ? `${run.items.length}項目・${totals.target}問を完了し、動画${totals.totalVideos}本をスキップしました。`
+      : `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
   } else if (activeItem && previousDay) {
     elements.routineDashboardTitle.textContent = "新しい学習日になりました";
     elements.routineDashboardSummary.textContent = activeItem.kind === "video"
@@ -739,14 +745,15 @@ function renderRoutineDashboard() {
       : `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
   } else {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
-    elements.routineDashboardSummary.textContent =
-      `${plan.length}項目・合計${totals.target}問・動画${totals.totalVideos}本のメニューです。`;
+    elements.routineDashboardSummary.textContent = routineSkipVideos
+      ? `${plan.length}項目・合計${totals.target}問のメニューです。動画${totals.totalVideos}本はスキップします。`
+      : `${plan.length}項目・合計${totals.target}問・動画${totals.totalVideos}本のメニューです。`;
   }
 
   const completedUnits = run
     ? run.items.reduce(
         (sum, item) => sum + (item.kind === "video"
-          ? item.completed ? 1 : 0
+          ? item.completed || routineSkipVideos ? 1 : 0
           : Math.min(1, item.completedCount / item.questionTarget)),
         0,
       )
@@ -760,7 +767,7 @@ function renderRoutineDashboard() {
       const listItem = document.createElement("li");
       listItem.classList.toggle("is-current", index === 0 && Boolean(activeItem));
       listItem.textContent =
-        `${previewStart + index + 1}. ${routineItemTitle(item)} ${routineItemSummary(item)}`;
+        `${previewStart + index + 1}. ${routineItemTitle(item)} ${routineItemSummary(item, routineSkipVideos)}`;
       return listItem;
     }),
   );
@@ -787,7 +794,7 @@ async function persistRoutineRun(run) {
 }
 
 async function saveRoutineMultiplier() {
-  if (!state.cloudConnected || !state.routineStudyDate || routineMultiplierSaving) {
+  if (!state.cloudConnected || !state.routineStudyDate || routinePreferenceSaving) {
     return;
   }
   const multiplier = normalizeStudyRoutineMultiplier(
@@ -803,8 +810,9 @@ async function saveRoutineMultiplier() {
   const adjustedRun = state.routineRun
     ? applyStudyRoutineMultiplier(state.routineRun, multiplier)
     : null;
-  routineMultiplierSaving = true;
+  routinePreferenceSaving = true;
   elements.routineMultiplier.disabled = true;
+  elements.routineSkipVideos.disabled = true;
   elements.routineMultiplierStatus.classList.remove("is-error");
   elements.routineMultiplierStatus.textContent =
     "学習量をCloudflareへ保存しています。";
@@ -820,7 +828,42 @@ async function saveRoutineMultiplier() {
     elements.routineMultiplierStatus.textContent = error.message;
     elements.routineMultiplierStatus.classList.add("is-error");
   } finally {
-    routineMultiplierSaving = false;
+    routinePreferenceSaving = false;
+    renderRoutineDashboard();
+  }
+}
+
+async function saveRoutineVideoSkip() {
+  if (!state.cloudConnected || !state.routineStudyDate || routinePreferenceSaving) {
+    return;
+  }
+  const skipVideos = elements.routineSkipVideos.checked;
+  if (skipVideos === (state.setupPreferences.routineSkipVideos === true)) {
+    return;
+  }
+  const adjustedRun = state.routineRun
+    ? applyStudyRoutineVideoSkip(state.routineRun, skipVideos)
+    : null;
+  routinePreferenceSaving = true;
+  elements.routineMultiplier.disabled = true;
+  elements.routineSkipVideos.disabled = true;
+  elements.routineMultiplierStatus.classList.remove("is-error");
+  elements.routineMultiplierStatus.textContent =
+    "動画のスキップ設定をCloudflareへ保存しています。";
+  try {
+    const saved = await saveCloudStudyRoutine({
+      routineSkipVideos: skipVideos,
+      ...(adjustedRun ? { routineRun: adjustedRun } : {}),
+    });
+    syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+    elements.routineMultiplierStatus.textContent = skipVideos
+      ? "毎日のメニュー内の動画をすべてスキップします。"
+      : "未視聴の動画をメニューの対象に戻しました。";
+  } catch (error) {
+    elements.routineMultiplierStatus.textContent = error.message;
+    elements.routineMultiplierStatus.classList.add("is-error");
+  } finally {
+    routinePreferenceSaving = false;
     renderRoutineDashboard();
   }
 }
@@ -1182,6 +1225,7 @@ async function startRoutineFromBeginning() {
       state.routineStudyDate,
       undefined,
       state.setupPreferences.routineMultiplier,
+      state.setupPreferences.routineSkipVideos,
     );
     await persistRoutineRun(run);
     await launchRoutineCurrentStep();
@@ -4622,7 +4666,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.165｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.166｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4822,6 +4866,9 @@ elements.routineMultiplier.addEventListener("input", () => {
 });
 elements.routineMultiplier.addEventListener("change", () => {
   void saveRoutineMultiplier();
+});
+elements.routineSkipVideos.addEventListener("change", () => {
+  void saveRoutineVideoSkip();
 });
 elements.routineVideoComplete.addEventListener("click", () => {
   if (state.standaloneVideoMode) {

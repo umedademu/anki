@@ -70,6 +70,7 @@ const defaultSetupPreferences = Object.freeze({
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
   routineMultiplier: defaultStudyRoutineMultiplier,
+  routineSkipVideos: false,
   routineVideos: defaultStudyRoutineVideos,
   routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
@@ -340,6 +341,7 @@ function normalizeSetupPreferences(value) {
     routinePlan,
     routineRun,
     routineMultiplier: normalizeStudyRoutineMultiplier(source.routineMultiplier),
+    routineSkipVideos: source.routineSkipVideos === true,
     routineVideos,
     routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
       source.routineVideoShuffle,
@@ -1302,6 +1304,9 @@ async function handleRequest(request, env) {
               patch.routineMultiplier,
             ),
           }
+        : {}),
+      ...(Object.hasOwn(patch, "routineSkipVideos")
+        ? { routineSkipVideos: patch.routineSkipVideos === true }
         : {}),
       ...(Object.hasOwn(patch, "routineVideos")
         ? {

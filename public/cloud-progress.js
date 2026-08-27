@@ -61,6 +61,7 @@ export const defaultSetupPreferences = Object.freeze({
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
   routineMultiplier: defaultStudyRoutineMultiplier,
+  routineSkipVideos: false,
   routineVideos: defaultStudyRoutineVideos,
   routineVideoShuffle: defaultStudyRoutineVideoShuffle,
 });
@@ -362,6 +363,7 @@ export function normalizeSetupPreferences(value) {
     routinePlan,
     routineRun,
     routineMultiplier: normalizeStudyRoutineMultiplier(source.routineMultiplier),
+    routineSkipVideos: source.routineSkipVideos === true,
     routineVideos,
     routineVideoShuffle: normalizeStudyRoutineVideoShuffle(
       source.routineVideoShuffle,

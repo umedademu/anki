@@ -557,6 +557,45 @@ body.is-study-menu-open {
   line-height: 1.55;
 }
 
+.routine-video-skip-control {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 14px;
+  gap: 10px;
+  color: #315f43;
+  background: rgb(255 255 255 / 72%);
+  border: 1px solid rgb(34 80 53 / 12%);
+  border-radius: 14px;
+  cursor: pointer;
+}
+
+.routine-video-skip-control input {
+  width: 18px;
+  height: 18px;
+  margin: 2px 0 0;
+  accent-color: #34734c;
+}
+
+.routine-video-skip-control span {
+  display: grid;
+  gap: 3px;
+}
+
+.routine-video-skip-control strong {
+  font-size: 0.82rem;
+}
+
+.routine-video-skip-control small {
+  color: #637269;
+  font-size: 0.72rem;
+  line-height: 1.55;
+}
+
+.routine-video-skip-control:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
 .routine-multiplier-status {
   min-height: 1.2em;
   color: #34734c;

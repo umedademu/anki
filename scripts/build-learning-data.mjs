@@ -2810,7 +2810,7 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
   if (defersReadingUntilAnswer) {
     speech.question = [
       {
-        text: "画面に表示されている語句の意味を答えてください。",
+        text: "意味を答えよ。",
         language: "ja-JP",
       },
     ];

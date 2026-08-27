@@ -1455,7 +1455,7 @@ if (
   ) ||
   generatedClassicalChineseQuestions.filter(
     (question) => question.speech?.question?.[0]?.text ===
-      "画面に表示されている語句の意味を答えてください。",
+      "意味を答えよ。",
   ).length !== 224 ||
   generatedClassicalChineseQuestions.filter(
     (question) => Array.isArray(question.speech?.answer),

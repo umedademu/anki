@@ -107,6 +107,7 @@ import {
   createEmptyRatingCounts,
   normalizeRatingCounts,
 } from "./rating-results.js";
+import { createQuestionAnalysisSnapshot } from "./analysis-core.js";
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
@@ -1405,8 +1406,12 @@ function createStudyActivity(questionId, eventId = createEventId()) {
   };
 }
 
-function createRatingActivity(questionId) {
-  return createStudyActivity(questionId, state.studyTimeEventId || undefined);
+function createRatingActivity(term, question, rating) {
+  return {
+    ...createStudyActivity(question.id, state.studyTimeEventId || undefined),
+    rating,
+    analysis: createQuestionAnalysisSnapshot(state.subject, term, question),
+  };
 }
 
 function captureStudyTimeEntry() {
@@ -4046,7 +4051,7 @@ async function rateListeningQuestion(rating) {
   if (state.inRoutine) {
     snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
   }
-  const activity = createRatingActivity(question.id);
+  const activity = createRatingActivity(term, question, rating);
   snapshot.studyActivityEventId = activity.eventId;
   snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
   const historyBefore = [...state.history];
@@ -4188,7 +4193,7 @@ async function rateCurrentQuestion(rating) {
   if (state.inRoutine) {
     snapshot.routineRun = normalizeStudyRoutineRun(state.routineRun);
   }
-  const activity = createRatingActivity(question.id);
+  const activity = createRatingActivity(term, question, rating);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
@@ -4681,7 +4686,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.169｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.170｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

@@ -25,6 +25,18 @@ const historyApp = await readFile(
   path.join(projectRoot, "public", "history.js"),
   "utf8",
 );
+const analysisHtml = await readFile(
+  path.join(projectRoot, "public", "analysis.html"),
+  "utf8",
+);
+const analysisApp = await readFile(
+  path.join(projectRoot, "public", "analysis.js"),
+  "utf8",
+);
+const analysisCore = await readFile(
+  path.join(projectRoot, "public", "analysis-core.js"),
+  "utf8",
+);
 const speech = await readFile(
   path.join(projectRoot, "public", "speech.js"),
   "utf8",
@@ -114,6 +126,15 @@ const studyRoundEventsMigration = await readFile(
     "worker",
     "migrations",
     "0016_study_round_events.sql",
+  ),
+  "utf8",
+);
+const studyActivityRatingsMigration = await readFile(
+  path.join(
+    projectRoot,
+    "worker",
+    "migrations",
+    "0017_study_activity_ratings.sql",
   ),
   "utf8",
 );
@@ -323,7 +344,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.169" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.170" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -336,11 +357,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.169") ||
-  !app.includes("v0.169｜") ||
-  !changelog.includes("v0.169") ||
-  !settingsHtml.includes("v0.169") ||
-  !historyHtml.includes("v0.169")
+  !html.includes("v0.170") ||
+  !app.includes("v0.170｜") ||
+  !changelog.includes("v0.170") ||
+  !settingsHtml.includes("v0.170") ||
+  !historyHtml.includes("v0.170") ||
+  !analysisHtml.includes("v0.170")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -485,6 +507,29 @@ if (
 ) {
   throw new Error("午前4時区切りの日別学習記録または表示画面が揃っていません。");
 }
+
+if (
+  !html.includes('href="/analysis.html"') ||
+  !historyHtml.includes('href="/analysis.html"') ||
+  !settingsHtml.includes('href="/analysis.html"') ||
+  !analysisHtml.includes('id="analysis-subject"') ||
+  !analysisHtml.includes('id="analysis-period"') ||
+  !analysisHtml.includes('id="analysis-section-list"') ||
+  !analysisApp.includes("loadCloudRatingAnalysis") ||
+  !analysisApp.includes("buildWeaknessSections") ||
+  !analysisCore.includes("minimumRankedAnswerCount = 5") ||
+  !analysisCore.includes("again: 100") ||
+  !app.includes("createQuestionAnalysisSnapshot") ||
+  !app.includes("rating,") ||
+  !cloudProgress.includes('cloudRequest(\n    `/v1/analysis?period=') ||
+  !worker.includes('url.pathname === "/v1/analysis"') ||
+  !worker.includes("analysis_json") ||
+  !studyActivityRatingsMigration.includes("ADD COLUMN rating") ||
+  !studyActivityRatingsMigration.includes("ADD COLUMN analysis_json") ||
+  !styles.includes(".analysis-section-list")
+) {
+  throw new Error("4段階評価の保存または科目別の苦手分析ページが揃っていません。");
+}
 if (
   !html.match(
     /class="progress-summary"[^>]*>[\s\S]*?id="deck-progress-name"[\s\S]*?id="queue-progress"[\s\S]*?id="study-time"/,
@@ -519,8 +564,8 @@ if (
   !app.includes("function schedulePendingReview") ||
   !app.includes("function createRatingActivity") ||
   !app.includes("state.studyTimeEventId || undefined") ||
-  !rateCurrentQuestionBlock?.includes("createRatingActivity(question.id)") ||
-  !rateListeningQuestionBlock?.includes("createRatingActivity(question.id)") ||
+  !rateCurrentQuestionBlock?.includes("createRatingActivity(term, question, rating)") ||
+  !rateListeningQuestionBlock?.includes("createRatingActivity(term, question, rating)") ||
   !startRoutineOvertimeBlock?.includes("routineOvertimeReviewTasks(cutoffAt)") ||
   !startRoutineOvertimeBlock?.includes("state.queue = reviewTasks") ||
   startRoutineOvertimeBlock?.includes("enqueueDueSessionTasks()") ||
@@ -618,7 +663,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.169"') ||
+  !html.includes('href="/styles.css?v=0.170"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

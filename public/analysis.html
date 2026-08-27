@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Anki科目別学習アプリの4段階評価から苦手分野を確認する分析ページ"
+    />
+    <title>Anki | 分析</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css?v=0.170" />
+    <script src="/config.js" defer></script>
+    <script src="/analysis.js?v=0.170" type="module"></script>
+  </head>
+  <body class="analysis-body">
+    <header class="site-header">
+      <a class="brand" href="/">Anki</a>
+      <div class="header-meta">
+        <span class="app-version">v0.170</span>
+        <a class="header-link" href="/">学習画面</a>
+        <a class="header-link" href="/history.html">学習記録</a>
+        <a class="header-link" href="/settings.html">設定</a>
+        <a class="header-link" href="/changelog.html">更新情報</a>
+      </div>
+    </header>
+
+    <main class="page analysis-page">
+      <section class="analysis-heading">
+        <p class="eyebrow">4段階評価から自動集計</p>
+        <h1>苦手分野の分析</h1>
+        <p>
+          不正解・難しい・正解・簡単の記録から、科目ごとに苦手な地域、分野、問題形式を表示します。
+        </p>
+      </section>
+
+      <section class="analysis-controls" aria-label="分析条件">
+        <label>
+          <span>科目</span>
+          <select id="analysis-subject" disabled>
+            <option value="">記録を読み込み中</option>
+          </select>
+        </label>
+        <fieldset id="analysis-period" disabled>
+          <legend>集計期間</legend>
+          <label><input type="radio" name="period" value="30" checked />30日</label>
+          <label><input type="radio" name="period" value="90" />90日</label>
+          <label><input type="radio" name="period" value="all" />全期間</label>
+        </fieldset>
+      </section>
+
+      <section class="analysis-status" id="analysis-status" aria-live="polite">
+        Cloudflareから評価記録を読み込んでいます。
+      </section>
+
+      <section class="analysis-results is-hidden" id="analysis-results">
+        <div class="analysis-summary" id="analysis-summary"></div>
+        <p class="analysis-data-note is-hidden" id="analysis-data-note"></p>
+        <div class="analysis-section-list" id="analysis-section-list"></div>
+        <section class="analysis-method">
+          <h2>苦手度について</h2>
+          <p>
+            不正解を100、難しいを65、正解を20、簡単を0として平均しています。5回以上評価した項目だけを順位に含め、5回未満は参考値として表示します。
+          </p>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>

@@ -36,6 +36,7 @@ import {
   normalizeRatingSounds,
   normalizeRatingSoundVolume,
 } from "./rating-sound-settings.js";
+import { normalizeRatingAnalysis } from "./analysis-core.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
@@ -654,6 +655,14 @@ export async function loadCloudStudyHistory() {
     timeZone: "Asia/Tokyo",
     history: normalizeStudyHistory(payload.history),
   };
+}
+
+export async function loadCloudRatingAnalysis(period = 30) {
+  const normalizedPeriod = period === "all" ? "all" : Number(period) === 90 ? 90 : 30;
+  const payload = await cloudRequest(
+    `/v1/analysis?period=${encodeURIComponent(normalizedPeriod)}`,
+  );
+  return normalizeRatingAnalysis(payload);
 }
 
 export async function saveCloudQuestion(datasetVersion, questionId, record) {

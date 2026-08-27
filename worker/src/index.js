@@ -25,6 +25,7 @@ import {
   normalizeRatingSoundVolume,
   ratingSoundFileExtension,
 } from "../../public/rating-sound-settings.js";
+import { normalizeQuestionAnalysisSnapshot } from "../../public/analysis-core.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -396,6 +397,16 @@ export function normalizeStudyActivity(value, datasetVersion, eventId) {
   if (!setupStudyModes.has(value.studyMode)) {
     throw new Error("日別学習記録の学習方法が正しくありません。");
   }
+  const rating = value.rating == null ? null : String(value.rating);
+  if (rating && !ratingValues.has(rating)) {
+    throw new Error("日別学習記録の評価が正しくありません。");
+  }
+  const analysis = rating
+    ? normalizeQuestionAnalysisSnapshot(value.analysis)
+    : null;
+  if (rating && !analysis) {
+    throw new Error("日別学習記録の分析情報が正しくありません。");
+  }
   return {
     eventId: normalizedEventId,
     subjectId,
@@ -405,6 +416,8 @@ export function normalizeStudyActivity(value, datasetVersion, eventId) {
     datasetVersion: normalizeDatasetVersion(datasetVersion),
     studyMode: value.studyMode,
     questionId,
+    rating,
+    analysis,
   };
 }
 
@@ -917,8 +930,9 @@ function studyActivityStatement(env, activity, occurredAt) {
   return env.DB.prepare(
     `INSERT INTO study_activity_events (
       event_id, occurred_at, study_date, subject_id, subject_title,
-      deck_id, deck_title, dataset_version, study_mode, question_id
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      deck_id, deck_title, dataset_version, study_mode, question_id,
+      rating, analysis_json
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(event_id) DO NOTHING`,
   ).bind(
     activity.eventId,
@@ -931,6 +945,8 @@ function studyActivityStatement(env, activity, occurredAt) {
     activity.datasetVersion,
     activity.studyMode,
     activity.questionId,
+    activity.rating,
+    activity.analysis ? JSON.stringify(activity.analysis) : null,
   );
 }
 
@@ -1053,6 +1069,60 @@ async function readStudyHistory(env) {
     firstOccurredAt: row.first_occurred_at,
     lastOccurredAt: row.last_occurred_at,
   }));
+}
+
+function normalizeAnalysisPeriod(value) {
+  if (value === "all") return null;
+  const days = Number.parseInt(value, 10);
+  return days === 90 ? 90 : 30;
+}
+
+function analysisStartStudyDate(periodDays, now = new Date()) {
+  if (periodDays == null) return null;
+  const currentStudyDate = studyDateAtFourJst(now);
+  const currentDate = new Date(`${currentStudyDate}T12:00:00.000Z`);
+  currentDate.setUTCDate(currentDate.getUTCDate() - (periodDays - 1));
+  return currentDate.toISOString().slice(0, 10);
+}
+
+async function readRatingAnalysis(env, periodDays) {
+  const startStudyDate = analysisStartStudyDate(periodDays);
+  const periodCondition = startStudyDate ? "AND study_date >= ?" : "";
+  const rowsStatement = env.DB.prepare(
+    `SELECT subject_id, subject_title, deck_id, deck_title, dataset_version,
+       question_id, rating, analysis_json, COUNT(*) AS answer_count
+     FROM study_activity_events
+     WHERE rating IS NOT NULL AND analysis_json IS NOT NULL ${periodCondition}
+     GROUP BY subject_id, subject_title, deck_id, deck_title, dataset_version,
+       question_id, rating, analysis_json
+     ORDER BY subject_title, deck_title, question_id, rating`,
+  );
+  const unratedStatement = env.DB.prepare(
+    `SELECT COUNT(*) AS answer_count
+     FROM study_activity_events
+     WHERE (rating IS NULL OR analysis_json IS NULL) ${periodCondition}`,
+  );
+  const [rowsResult, unratedResult] = await Promise.all([
+    (startStudyDate ? rowsStatement.bind(startStudyDate) : rowsStatement).all(),
+    (startStudyDate ? unratedStatement.bind(startStudyDate) : unratedStatement).first(),
+  ]);
+  const rows = (rowsResult.results ?? []).map((row) => ({
+    subjectId: row.subject_id,
+    subjectTitle: row.subject_title,
+    deckId: row.deck_id,
+    deckTitle: row.deck_title,
+    datasetVersion: row.dataset_version,
+    questionId: row.question_id,
+    rating: row.rating,
+    analysis: row.analysis_json,
+    answerCount: Number(row.answer_count) || 0,
+  }));
+  return {
+    periodDays,
+    ratedAnswerCount: rows.reduce((total, row) => total + row.answerCount, 0),
+    unratedAnswerCount: Number(unratedResult?.answer_count) || 0,
+    rows,
+  };
 }
 
 async function readState(env, datasetVersion) {
@@ -1384,6 +1454,15 @@ async function handleRequest(request, env) {
       cutoffHour: 4,
       timeZone: "Asia/Tokyo",
       history: await readStudyHistory(env),
+    });
+  }
+
+  if (url.pathname === "/v1/analysis" && request.method === "GET") {
+    const periodDays = normalizeAnalysisPeriod(url.searchParams.get("period"));
+    return json(request, env, {
+      cutoffHour: 4,
+      timeZone: "Asia/Tokyo",
+      ...(await readRatingAnalysis(env, periodDays)),
     });
   }
 

@@ -179,6 +179,15 @@ const studyActivity = normalizeStudyActivity(
     deckTitle: "Deck 2 共通テスト基礎",
     studyMode: "listen-answer",
     questionId: "WH-Q-000001",
+    rating: "hard",
+    analysis: {
+      term: "十字軍",
+      question: "第1回十字軍が開始された年はいつか。",
+      dimensions: [
+        { key: "macroRegion", label: "大分類の地域", values: ["西アジア"] },
+        { key: "questionType", label: "問題形式", values: ["時期"] },
+      ],
+    },
   },
   "world-history-deck-2-v1",
   "study-event-1",
@@ -196,11 +205,28 @@ if (
   studyActivity.deckId !== "deck-2" ||
   studyActivity.studyMode !== "listen-answer" ||
   studyActivity.datasetVersion !== "world-history-deck-2-v1" ||
+  studyActivity.rating !== "hard" ||
+  studyActivity.analysis.dimensions[0].values[0] !== "西アジア" ||
   studyTimeEntry.studySeconds !== 90 ||
   studyDateAtFourJst("2026-08-22T18:59:59.999Z") !== "2026-08-22" ||
   studyDateAtFourJst("2026-08-22T19:00:00.000Z") !== "2026-08-23"
 ) {
   throw new Error("日別学習記録または午前4時の切替を処理できませんでした。");
+}
+
+for (const invalidActivity of [
+  { ...studyActivity, rating: "unknown" },
+  { ...studyActivity, analysis: null },
+]) {
+  let failed = false;
+  try {
+    normalizeStudyActivity(invalidActivity, "world-history-deck-2-v1", "study-event-2");
+  } catch {
+    failed = true;
+  }
+  if (!failed) {
+    throw new Error("不正な4段階評価または分析情報を拒否できませんでした。");
+  }
 }
 
 const browserHistory = normalizeStudyHistory([

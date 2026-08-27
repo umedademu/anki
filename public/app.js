@@ -999,7 +999,8 @@ async function createRoutineVideoPlayer(video) {
             elements.routineVideoMessage.textContent =
               "視聴が終わりました。別の動画を選ぶか、科目選択へ戻れます。";
           } else {
-            void completeCurrentRoutineVideo();
+            elements.routineVideoMessage.textContent =
+              "動画の再生が終わりました。「視聴を完了して次へ」を押してください。";
           }
         }
       },
@@ -1119,7 +1120,7 @@ async function showRoutineVideoStep() {
   elements.routineVideoTitle.textContent = video.title;
   elements.routineVideoAuthor.textContent = video.authorName;
   elements.routineVideoMessage.textContent =
-    "再生ボタンを押して動画を見てください。最後まで再生すると自動で完了します。";
+    "再生ボタンを押して動画を見てください。見終えたら視聴完了ボタンを押してください。";
   elements.routineVideoMessage.classList.remove("is-error");
   elements.routineVideoYoutubeLink.href =
     `https://www.youtube.com/watch?v=${video.youtubeId}`;
@@ -4767,7 +4768,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.173｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.174｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

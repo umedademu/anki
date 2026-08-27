@@ -252,6 +252,12 @@ const beginStudyBlock = app.match(
 const resumeStudyBlock = app.match(
   /async function resumeStudy\(\)[\s\S]*?async function activateDecks/,
 )?.[0];
+const createRoutineVideoPlayerBlock = app.match(
+  /async function createRoutineVideoPlayer\(video\)[\s\S]*?function showRoutineVideoCompletion/,
+)?.[0];
+const routineVideoCompleteClickBlock = app.match(
+  /elements\.routineVideoComplete\.addEventListener\("click"[\s\S]*?elements\.routineVideoHome\.addEventListener/,
+)?.[0];
 
 function simulateListeningForwardStep(answerVisible) {
   if (!advanceListeningManuallySource) return null;
@@ -462,7 +468,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.173" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.174" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -475,12 +481,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.173") ||
-  !app.includes("v0.173｜") ||
-  !changelog.includes("v0.173") ||
-  !settingsHtml.includes("v0.173") ||
-  !historyHtml.includes("v0.173") ||
-  !analysisHtml.includes("v0.173")
+  !html.includes("v0.174") ||
+  !app.includes("v0.174｜") ||
+  !changelog.includes("v0.174") ||
+  !settingsHtml.includes("v0.174") ||
+  !historyHtml.includes("v0.174") ||
+  !analysisHtml.includes("v0.174")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -604,6 +610,16 @@ if (
   !worker.includes("json_set(")
 ) {
   throw new Error("毎日の学習メニューの編集、進行、Cloudflare保存が揃っていません。");
+}
+if (
+  !createRoutineVideoPlayerBlock ||
+  createRoutineVideoPlayerBlock.includes("completeCurrentRoutineVideo()") ||
+  !createRoutineVideoPlayerBlock.includes(
+    "動画の再生が終わりました。「視聴を完了して次へ」を押してください。",
+  ) ||
+  !routineVideoCompleteClickBlock?.includes("void completeCurrentRoutineVideo();")
+) {
+  throw new Error("動画の視聴完了が利用者のボタン操作だけに限定されていません。");
 }
 if (
   !html.includes('href="/history.html"') ||
@@ -785,7 +801,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.173"') ||
+  !html.includes('href="/styles.css?v=0.174"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

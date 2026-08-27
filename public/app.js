@@ -3806,7 +3806,12 @@ function renderQuestion() {
     !stagedClassicalChineseMeaning || !showsClassicalChineseReading,
   );
   const answerDisplayText = getQuestionAnswerDisplayText(question);
-  renderEmphasizedText(elements.answerText, answerDisplayText);
+  renderEmphasizedText(
+    elements.answerText,
+    stagedClassicalChineseMeaning
+      ? `意味：${answerDisplayText}`
+      : answerDisplayText,
+  );
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
   elements.answerNote.classList.toggle(
     "is-hidden",
@@ -4676,7 +4681,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.168｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.169｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

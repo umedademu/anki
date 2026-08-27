@@ -3221,6 +3221,12 @@ function toggleListening() {
     state.listeningPaused = false;
     showListeningPlaybackFeedback("play");
     startStudyClock();
+    if (speechController.paused) {
+      if (speechController.resume()) {
+        return;
+      }
+      stopListeningSequence();
+    }
     if (state.answerVisible) {
       const runId = ++state.listeningRunId;
       speakListeningAnswer(runId);
@@ -3230,7 +3236,10 @@ function toggleListening() {
     return;
   }
   state.listeningPaused = true;
-  stopListeningSequence();
+  clearListeningTimer();
+  if (!speechController.pause()) {
+    stopListeningSequence();
+  }
   showListeningPlaybackFeedback("pause");
   void queueCurrentStudyTimeSave().catch((error) => {
     state.unlockMessage = error.message;
@@ -4686,7 +4695,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.171｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.172｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

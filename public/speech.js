@@ -283,6 +283,11 @@ export function createSpeechController({
   let activeAudioUrl = "";
   let sharedCloudAudio = null;
   let activeCloudCancel = null;
+  let playbackPaused = false;
+  let activePlaybackType = "";
+  let activePlaybackPause = null;
+  let activePlaybackResume = null;
+  let pausedContinuation = null;
   const cloudAudioCache = new Map();
   const cloudAudioCacheLimit = 12;
   const scheduleContinuation =
@@ -297,6 +302,11 @@ export function createSpeechController({
 
   function resetPlayback(cancelDevice = true) {
     generation += 1;
+    playbackPaused = false;
+    activePlaybackType = "";
+    activePlaybackPause = null;
+    activePlaybackResume = null;
+    pausedContinuation = null;
     if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
@@ -320,6 +330,69 @@ export function createSpeechController({
 
   function stop() {
     resetPlayback();
+  }
+
+  function pause() {
+    if (!currentTarget) {
+      return false;
+    }
+    if (playbackPaused) {
+      return true;
+    }
+    if (
+      activePlaybackType === "device" &&
+      typeof activePlaybackPause !== "function"
+    ) {
+      return false;
+    }
+    playbackPaused = true;
+    try {
+      activePlaybackPause?.();
+      return true;
+    } catch {
+      playbackPaused = false;
+      return false;
+    }
+  }
+
+  function resume() {
+    if (!playbackPaused) {
+      return false;
+    }
+    const hadPausedPlayback = Boolean(
+      currentTarget || activePlaybackResume || pausedContinuation,
+    );
+    playbackPaused = false;
+    try {
+      activePlaybackResume?.();
+    } catch {
+      return false;
+    }
+    if (pausedContinuation) {
+      const continuation = pausedContinuation;
+      pausedContinuation = null;
+      scheduleContinuation(() => {
+        if (!playbackPaused) {
+          continuation();
+        }
+      });
+    }
+    return hadPausedPlayback;
+  }
+
+  function clearPlaybackControls(pauseHandler, resumeHandler) {
+    const ownsControls =
+      activePlaybackPause === pauseHandler ||
+      activePlaybackResume === resumeHandler;
+    if (activePlaybackPause === pauseHandler) {
+      activePlaybackPause = null;
+    }
+    if (activePlaybackResume === resumeHandler) {
+      activePlaybackResume = null;
+    }
+    if (ownsControls) {
+      activePlaybackType = "";
+    }
   }
 
   function ensureCloudAudio() {
@@ -431,6 +504,10 @@ export function createSpeechController({
     function continueAfterPlayback(callback) {
       scheduleContinuation(() => {
         if (ticket === generation) {
+          if (playbackPaused) {
+            pausedContinuation = callback;
+            return;
+          }
           callback();
         }
       });
@@ -480,6 +557,7 @@ export function createSpeechController({
       if (ticket !== generation) {
         return;
       }
+      activePlaybackType = "device";
       if (!deviceSupported) {
         fail(new Error("端末音声を利用できません。"));
         return;
@@ -499,6 +577,7 @@ export function createSpeechController({
         utterance.voice = voice;
       }
       let finished = false;
+      let started = false;
       let startTimer = null;
       const clearStartTimer = () => {
         if (startTimer !== null) {
@@ -507,7 +586,29 @@ export function createSpeechController({
         }
       };
       const markStarted = () => {
+        started = true;
         clearStartTimer();
+      };
+      const armStartTimer = () => {
+        clearStartTimer();
+        if (playbackPaused || started) {
+          return;
+        }
+        const startTimeoutMs = Number(deviceStartTimeoutMs);
+        if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
+          startTimer = globalThis.setTimeout(
+            handleStartTimeout,
+            startTimeoutMs,
+          );
+        }
+      };
+      const pausePlayback = () => {
+        clearStartTimer();
+        synthesis.pause?.();
+      };
+      const resumePlayback = () => {
+        synthesis.resume?.();
+        armStartTimer();
       };
       const finish = () => {
         if (finished) {
@@ -515,6 +616,7 @@ export function createSpeechController({
         }
         markStarted();
         finished = true;
+        clearPlaybackControls(pausePlayback, resumePlayback);
         continueAfterPlayback(done);
       };
       const retryOrFail = (error) => {
@@ -528,6 +630,7 @@ export function createSpeechController({
         utterance.onend = null;
         utterance.onerror = null;
         synthesis.cancel();
+        clearPlaybackControls(pausePlayback, resumePlayback);
         if (retryCount < 1) {
           globalThis.setTimeout(() => {
             if (ticket === generation) {
@@ -564,15 +667,18 @@ export function createSpeechController({
       utterance.onend = finish;
       utterance.onerror = () =>
         retryOrFail(new Error("端末音声の再生中に問題が発生しました。"));
-      const startTimeoutMs = Number(deviceStartTimeoutMs);
-      if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
-        startTimer = globalThis.setTimeout(
-          handleStartTimeout,
-          startTimeoutMs,
-        );
-      }
+      const canPauseAndResume =
+        typeof synthesis.pause === "function" &&
+        typeof synthesis.resume === "function";
+      activePlaybackPause = canPauseAndResume ? pausePlayback : null;
+      activePlaybackResume = canPauseAndResume ? resumePlayback : null;
+      armStartTimer();
       try {
-        synthesis.resume?.();
+        if (playbackPaused) {
+          synthesis.pause?.();
+        } else {
+          synthesis.resume?.();
+        }
         synthesis.speak(utterance);
       } catch {
         retryOrFail(new Error("端末音声の再生を開始できませんでした。"));
@@ -580,6 +686,7 @@ export function createSpeechController({
     }
 
     async function speakWithCloud(segment, settings, done, fail) {
+      activePlaybackType = "cloud";
       if (!cloudSupported || ticket !== generation) {
         onFallback(new Error("Azure音声を利用できません。"));
         speakWithDevice(segment, settings, done, fail);
@@ -595,6 +702,7 @@ export function createSpeechController({
         activeAudio = audio;
         activeAudioUrl = audioUrl;
         let finished = false;
+        let playAttempt = 0;
         let startTimer = null;
         let playbackTimer = null;
         const clearStartTimer = () => {
@@ -631,6 +739,9 @@ export function createSpeechController({
             fallback(new Error("自然音声の再生が完了しませんでした。"));
           }, Math.max(minimumTimeoutMs, expectedTimeoutMs));
         };
+        const clearCloudControls = () => {
+          clearPlaybackControls(pausePlayback, resumePlayback);
+        };
         const finish = () => {
           if (finished) {
             return;
@@ -640,6 +751,7 @@ export function createSpeechController({
           if (activeCloudCancel === cancel) {
             activeCloudCancel = null;
           }
+          clearCloudControls();
           finishCloudAudio(audio, audioUrl);
           continueAfterPlayback(done);
         };
@@ -652,6 +764,7 @@ export function createSpeechController({
           if (activeCloudCancel === cancel) {
             activeCloudCancel = null;
           }
+          clearCloudControls();
           finishCloudAudio(audio, audioUrl);
           onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
           if (error?.name === "NotAllowedError") {
@@ -668,27 +781,75 @@ export function createSpeechController({
           }
           finished = true;
           clearPlaybackTimers();
+          playAttempt += 1;
+          clearCloudControls();
           finishCloudAudio(audio, audioUrl);
         };
+        const armStartTimer = () => {
+          clearStartTimer();
+          if (playbackPaused) {
+            return;
+          }
+          const startTimeoutMs = Number(cloudStartTimeoutMs);
+          if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
+            startTimer = globalThis.setTimeout(() => {
+              fallback(new Error("自然音声の再生を開始できませんでした。"));
+            }, startTimeoutMs);
+          }
+        };
+        const beginPlayback = () => {
+          if (finished || ticket !== generation || playbackPaused) {
+            return;
+          }
+          const attempt = ++playAttempt;
+          armStartTimer();
+          try {
+            Promise.resolve(audio.play()).catch((error) => {
+              if (
+                attempt === playAttempt &&
+                !playbackPaused &&
+                !finished &&
+                ticket === generation
+              ) {
+                fallback(error);
+              }
+            });
+          } catch (error) {
+            if (attempt === playAttempt && !playbackPaused) {
+              fallback(error);
+            }
+          }
+        };
+        const pausePlayback = () => {
+          playAttempt += 1;
+          clearPlaybackTimers();
+          audio.pause?.();
+        };
+        const resumePlayback = () => {
+          beginPlayback();
+        };
         activeCloudCancel = cancel;
-        audio.onplaying = armPlaybackTimer;
+        activePlaybackPause = pausePlayback;
+        activePlaybackResume = resumePlayback;
+        audio.onplaying = () => {
+          if (playbackPaused) {
+            audio.pause?.();
+            return;
+          }
+          armPlaybackTimer();
+        };
         audio.onended = finish;
         audio.onerror = fallback;
-        const startTimeoutMs = Number(cloudStartTimeoutMs);
-        if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
-          startTimer = globalThis.setTimeout(() => {
-            fallback(new Error("自然音声の再生を開始できませんでした。"));
-          }, startTimeoutMs);
-        }
         try {
           audio.src = audioUrl;
           audio.load?.();
           audio.defaultPlaybackRate = settings.rate;
           audio.playbackRate = settings.rate;
-          await audio.play();
         } catch (error) {
           fallback(error);
+          return;
         }
+        beginPlayback();
       } catch (error) {
         if (ticket !== generation) {
           return;
@@ -729,9 +890,14 @@ export function createSpeechController({
     get currentTarget() {
       return currentTarget;
     },
+    get paused() {
+      return playbackPaused;
+    },
     preload,
     speak,
     stop,
+    pause,
+    resume,
     unlock,
   };
 }

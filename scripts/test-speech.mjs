@@ -502,6 +502,60 @@ if (
   throw new Error("端末音声の再試行失敗を読み上げ完了として扱っています。");
 }
 
+let pausedDeviceUtterance = null;
+let pausedDeviceCompletions = 0;
+const pausedDeviceSynthesis = {
+  cancelCount: 0,
+  pauseCount: 0,
+  resumeCount: 0,
+  cancel() {
+    this.cancelCount += 1;
+  },
+  pause() {
+    this.pauseCount += 1;
+  },
+  resume() {
+    this.resumeCount += 1;
+  },
+  getVoices() {
+    return [];
+  },
+  speak(utterance) {
+    pausedDeviceUtterance = utterance;
+    utterance.onstart();
+  },
+};
+const pausedDeviceController = createSpeechController({
+  synthesis: pausedDeviceSynthesis,
+  Utterance: FakeUtterance,
+  getSettings: () => ({ source: "device", rate: 1 }),
+});
+pausedDeviceController.speak(
+  [{ target: "answer", text: "ニューディール政策" }],
+  { onComplete: () => pausedDeviceCompletions += 1 },
+);
+const deviceCancelCountBeforePause = pausedDeviceSynthesis.cancelCount;
+if (
+  !pausedDeviceController.pause() ||
+  !pausedDeviceController.paused ||
+  pausedDeviceSynthesis.pauseCount !== 1 ||
+  pausedDeviceSynthesis.cancelCount !== deviceCancelCountBeforePause
+) {
+  throw new Error("端末音声を読み上げ位置を失わずに一時停止できませんでした。");
+}
+if (
+  !pausedDeviceController.resume() ||
+  pausedDeviceController.paused ||
+  pausedDeviceSynthesis.resumeCount !== 2
+) {
+  throw new Error("端末音声を一時停止した位置から再開できませんでした。");
+}
+pausedDeviceUtterance.onend();
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (pausedDeviceCompletions !== 1) {
+  throw new Error("再開した端末音声を最後まで完了できませんでした。");
+}
+
 const hangingCloudFallbackSpoken = [];
 let hangingCloudCompletions = 0;
 class HangingCloudAudio {
@@ -728,6 +782,87 @@ if (
   revokedUrls.length !== 3
 ) {
   throw new Error("Azure音声を回答から解説へ順番に再生できませんでした。");
+}
+
+let pausedCloudAudio = null;
+let pausedCloudCompletions = 0;
+const pausedCloudRevokedUrls = [];
+class PausedCloudAudio {
+  constructor() {
+    this.src = "";
+    this.currentTime = 0;
+    this.playbackRate = 1;
+    this.playCount = 0;
+    this.pauseCount = 0;
+    this.onplaying = null;
+    this.onended = null;
+    this.onerror = null;
+    pausedCloudAudio = this;
+  }
+
+  async play() {
+    this.playCount += 1;
+    this.onplaying?.();
+  }
+
+  pause() {
+    this.pauseCount += 1;
+  }
+
+  load() {}
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
+  }
+}
+const pausedCloudController = createSpeechController({
+  synthesis: null,
+  Utterance: null,
+  AudioPlayer: PausedCloudAudio,
+  createObjectUrl: () => "blob:paused-cloud",
+  revokeObjectUrl: (url) => pausedCloudRevokedUrls.push(url),
+  requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+  getSettings: () => ({
+    source: "cloud",
+    azureVoiceId: "ja-JP-NanamiNeural",
+    rate: 1,
+  }),
+});
+pausedCloudController.speak(
+  [{ target: "answer", text: "ニューディール政策" }],
+  { onComplete: () => pausedCloudCompletions += 1 },
+);
+await new Promise((resolve) => setTimeout(resolve, 0));
+pausedCloudAudio.currentTime = 1.25;
+const pausedCloudSource = pausedCloudAudio.src;
+if (
+  !pausedCloudController.pause() ||
+  !pausedCloudController.paused ||
+  pausedCloudAudio.pauseCount !== 1 ||
+  pausedCloudAudio.currentTime !== 1.25 ||
+  pausedCloudAudio.src !== pausedCloudSource ||
+  pausedCloudRevokedUrls.length !== 0
+) {
+  throw new Error("自然音声の再生位置と音声本体を保持して一時停止できませんでした。");
+}
+if (
+  !pausedCloudController.resume() ||
+  pausedCloudController.paused ||
+  pausedCloudAudio.playCount !== 2 ||
+  pausedCloudAudio.currentTime !== 1.25 ||
+  pausedCloudAudio.src !== pausedCloudSource
+) {
+  throw new Error("自然音声を一時停止した位置から再開できませんでした。");
+}
+pausedCloudAudio.onended();
+await new Promise((resolve) => setTimeout(resolve, 0));
+if (
+  pausedCloudCompletions !== 1 ||
+  pausedCloudRevokedUrls.join("|") !== "blob:paused-cloud"
+) {
+  throw new Error("再開した自然音声を最後まで完了できませんでした。");
 }
 
 const preloadRequests = [];
@@ -970,5 +1105,5 @@ if (unsupported.supported || unsupported.speak([{ target: "question", text: "問
 }
 
 console.log(
-  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止を確認",
+  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開を確認",
 );

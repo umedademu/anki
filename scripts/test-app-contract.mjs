@@ -344,7 +344,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.171" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.172" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -357,12 +357,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.171") ||
-  !app.includes("v0.171｜") ||
-  !changelog.includes("v0.171") ||
-  !settingsHtml.includes("v0.171") ||
-  !historyHtml.includes("v0.171") ||
-  !analysisHtml.includes("v0.171")
+  !html.includes("v0.172") ||
+  !app.includes("v0.172｜") ||
+  !changelog.includes("v0.172") ||
+  !settingsHtml.includes("v0.172") ||
+  !historyHtml.includes("v0.172") ||
+  !analysisHtml.includes("v0.172")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -667,7 +667,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.171"') ||
+  !html.includes('href="/styles.css?v=0.172"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1190,12 +1190,18 @@ if (
   !speech.includes("const audio = ensureCloudAudio()") ||
   !speech.includes("audio.src = audioUrl") ||
   !speech.includes(
-    "audio.load?.();\n          audio.defaultPlaybackRate = settings.rate;\n          audio.playbackRate = settings.rate;\n          await audio.play();",
+    "audio.load?.();\n          audio.defaultPlaybackRate = settings.rate;\n          audio.playbackRate = settings.rate;",
   ) ||
+  !speech.includes("beginPlayback();") ||
   speech.includes("new AudioPlayer(audioUrl)") ||
-  !speech.includes("audio.onplaying = armPlaybackTimer") ||
+  !speech.includes("activePlaybackPause = pausePlayback") ||
+  !speech.includes("activePlaybackResume = resumePlayback") ||
+  !speech.includes("audio.onplaying = () =>") ||
   !speech.includes('error?.name === "NotAllowedError"') ||
   !app.includes("speechController.unlock()") ||
+  !app.includes("speechController.pause()") ||
+  !app.includes("speechController.resume()") ||
+  !speech.includes("get paused()") ||
   !speech.includes("utterance.onstart = markStarted") ||
   !speech.includes("utterance.onboundary = markStarted") ||
   !speech.includes("synthesis.resume?.()") ||

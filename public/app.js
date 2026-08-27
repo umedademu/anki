@@ -195,6 +195,7 @@ const elements = {
   progressBar: document.querySelector("#progress-bar"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
+  questionSpokenBlock: document.querySelector(".question-spoken-block"),
   questionText: document.querySelector("#question-text"),
   questionSpeech: document.querySelector("#question-speech"),
   answerPanel: document.querySelector("#answer-panel"),
@@ -284,6 +285,7 @@ const state = {
   activeSession: false,
   savedSessions: createEmptySavedSessions(),
   answerVisible: false,
+  classicalChineseReadingVisible: false,
   shuffleEnabled: false,
   listeningPauseSeconds: 0,
   listeningQuestionIntervalSeconds: 0,
@@ -378,6 +380,8 @@ async function syncRatingSoundSettings(settings = {}) {
 }
 
 const listeningModes = new Set(["listen-answer"]);
+const classicalChineseSubjectId = "classical-chinese";
+const classicalChineseListeningStepDelayMilliseconds = 1000;
 const oneQuestionPerTermMode = "one-per-term";
 const studyMenuReviewFields = {
   againSeconds: [elements.studyMenuAgainValue, elements.studyMenuAgainUnit],
@@ -1161,6 +1165,7 @@ function stopStudyClock({ capture = true, includeHidden = false } = {}) {
 
 function startNewStudyScreen() {
   stopStudyClock({ capture: false });
+  state.classicalChineseReadingVisible = false;
   state.screenStudySeconds = 0;
   state.studyTimeSavedSeconds = 0;
   state.studyTimeEventId = state.activeSession && state.currentTask
@@ -1580,6 +1585,9 @@ function vocabularySpeechPartKey(group) {
 }
 
 function currentQuestionSpeechEnabled(question = currentQuestion()) {
+  if (isClassicalChineseMeaningQuestion(state.currentTask, question)) {
+    return false;
+  }
   const settings = currentSpeechPartSettings();
   if (state.subject?.learningType !== "vocabulary") {
     return settings.question;
@@ -2498,11 +2506,19 @@ function answerSpeechSequence(task = state.currentTask) {
       },
     );
   }
-  return [
+  const answerSegments = [
     ...(settings.answer ? speechSegmentsFor("answer", task) : []),
     ...(settings.mnemonic ? speechSegmentsFor("mnemonic", task) : []),
     ...(settings.explanation ? speechSegmentsFor("overview", task) : []),
   ];
+  if (
+    settings.answer &&
+    isClassicalChineseMeaningQuestion(task) &&
+    !isListeningMode()
+  ) {
+    return [...classicalChineseReadingSpeechSequence(task), ...answerSegments];
+  }
+  return answerSegments;
 }
 
 function listeningQuestionSpeechSequence(task = state.currentTask) {
@@ -2512,11 +2528,32 @@ function listeningQuestionSpeechSequence(task = state.currentTask) {
     : [];
 }
 
+function isClassicalChineseMeaningQuestion(
+  task = state.currentTask,
+  question = questionForTask(task),
+) {
+  return (
+    state.subject?.id === classicalChineseSubjectId &&
+    question?.type === "meaning"
+  );
+}
+
+function classicalChineseReadingSpeechSequence(task = state.currentTask) {
+  const term = termForTask(task);
+  const reading = String(term?.reading ?? "").trim();
+  return reading
+    ? [{ target: "answer", text: reading, language: "ja-JP" }]
+    : [];
+}
+
 function preloadListeningTask(task) {
   if (!task) {
     return;
   }
   void speechController.preload([
+    ...(isClassicalChineseMeaningQuestion(task)
+      ? classicalChineseReadingSpeechSequence(task)
+      : []),
     ...listeningQuestionSpeechSequence(task),
     ...answerSpeechSequence(task),
   ]);
@@ -2782,15 +2819,24 @@ function speakListeningAnswer(runId) {
   ) {
     return;
   }
+  const includesDeferredClassicalChineseReading =
+    isClassicalChineseMeaningQuestion() &&
+    !state.classicalChineseReadingVisible;
   if (!state.answerVisible) {
     pushHistory({
       type: "reveal",
       currentTask: { ...state.currentTask },
     });
   }
+  state.classicalChineseReadingVisible = true;
   state.answerVisible = true;
   renderQuestion();
-  const segments = answerSpeechSequence();
+  const segments = [
+    ...(includesDeferredClassicalChineseReading
+      ? classicalChineseReadingSpeechSequence()
+      : []),
+    ...answerSpeechSequence(),
+  ];
   preloadListeningTask(state.queue[0]);
   const started = speechController.speak(segments, {
     onComplete: () => {
@@ -2809,6 +2855,40 @@ function speakListeningAnswer(runId) {
       state.listeningTimer = null;
       void advanceListening(runId);
     }, state.listeningQuestionIntervalSeconds * 1000);
+  }
+}
+
+function scheduleClassicalChineseListeningAnswer(runId) {
+  state.listeningTimer = window.setTimeout(() => {
+    state.listeningTimer = null;
+    speakListeningAnswer(runId);
+  }, classicalChineseListeningStepDelayMilliseconds);
+}
+
+function speakClassicalChineseListeningReading(runId) {
+  if (
+    runId !== state.listeningRunId ||
+    state.listeningPaused ||
+    !isListeningMode() ||
+    !state.currentTask
+  ) {
+    return;
+  }
+  state.classicalChineseReadingVisible = true;
+  renderQuestion();
+  const started = speechController.speak(
+    classicalChineseReadingSpeechSequence(),
+    {
+      onComplete: () => {
+        if (runId === state.listeningRunId) {
+          scheduleClassicalChineseListeningAnswer(runId);
+        }
+      },
+      onError: (error) => pauseListeningAfterSpeechFailure(runId, error),
+    },
+  );
+  if (!started) {
+    scheduleClassicalChineseListeningAnswer(runId);
   }
 }
 
@@ -2836,7 +2916,16 @@ function beginListeningQuestion() {
   clearListeningTimer();
   const runId = ++state.listeningRunId;
   state.answerVisible = false;
+  state.classicalChineseReadingVisible = false;
   renderQuestion();
+  if (isClassicalChineseMeaningQuestion()) {
+    preloadListeningTask(state.currentTask);
+    state.listeningTimer = window.setTimeout(() => {
+      state.listeningTimer = null;
+      speakClassicalChineseListeningReading(runId);
+    }, classicalChineseListeningStepDelayMilliseconds);
+    return;
+  }
   const questionSegments = listeningQuestionSpeechSequence();
   void speechController.preload(answerSpeechSequence());
   const started = speechController.speak(questionSegments, {
@@ -3379,7 +3468,9 @@ function configureSetup() {
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
   elements.listeningAnswerDescription.textContent =
-    "保存済みの読み上げ対象を繰り返し再生する";
+    state.subject?.id === classicalChineseSubjectId
+      ? "語句の1秒後に読み、さらに1秒後に意味を再生する"
+      : "保存済みの読み上げ対象を繰り返し再生する";
   for (const option of elements.studyModeOptions) {
     option.closest(".study-mode-choice")?.classList.remove("is-hidden");
     if (listeningModes.has(option.value)) {
@@ -3427,6 +3518,8 @@ function renderQuestion() {
     return;
   }
   const vocabularyMode = state.subject?.learningType === "vocabulary";
+  const stagedClassicalChineseMeaning =
+    isClassicalChineseMeaningQuestion(state.currentTask, question);
   state.routineCompletionAction = "";
   state.routineTransition = null;
   const currentDeckEntry = deckForQuestion(question.id)?.entry;
@@ -3450,7 +3543,10 @@ function renderQuestion() {
   const hidesTerm = shouldHideTerm(question, state.answerVisible);
   elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
   elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm);
-  elements.stageName.classList.toggle("is-hidden", vocabularyMode);
+  elements.stageName.classList.toggle(
+    "is-hidden",
+    vocabularyMode || stagedClassicalChineseMeaning,
+  );
   elements.stageName.textContent = vocabularyMode
     ? ""
     : questionStyleLabel(question.stage);
@@ -3459,11 +3555,21 @@ function renderQuestion() {
       ? ""
       : questionStyleLabel(question.stage)
     : term.term;
+  const showsClassicalChineseReading =
+    !stagedClassicalChineseMeaning ||
+    state.answerVisible ||
+    state.classicalChineseReadingVisible;
   elements.termReading.textContent = hidesTerm
     ? vocabularyMode
       ? "答えを表示すると単語と品詞を確認できます"
       : "問題文とは別の用語欄と読みは、回答を表示するまで表示されません"
-    : term.reading;
+    : showsClassicalChineseReading
+      ? term.reading
+      : "";
+  elements.termReading.classList.toggle(
+    "is-hidden",
+    stagedClassicalChineseMeaning && !showsClassicalChineseReading,
+  );
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
   elements.questionNumber.textContent = `${
@@ -3474,7 +3580,17 @@ function renderQuestion() {
     question,
     state.answerVisible,
   );
-  elements.questionText.textContent = displayedQuestionPrompt;
+  elements.questionSpokenBlock.classList.toggle(
+    "is-hidden",
+    stagedClassicalChineseMeaning,
+  );
+  elements.questionSpeech.classList.toggle(
+    "is-hidden",
+    !speechController.supported || stagedClassicalChineseMeaning,
+  );
+  elements.questionText.textContent = stagedClassicalChineseMeaning
+    ? ""
+    : displayedQuestionPrompt;
   const answerDisplayText = getQuestionAnswerDisplayText(question);
   renderEmphasizedText(elements.answerText, answerDisplayText);
   elements.answerPanel.classList.toggle("is-hidden", !state.answerVisible);
@@ -3528,7 +3644,7 @@ function renderQuestion() {
   updateOverallProgress();
   setContentDensity(
     elements.questionCard,
-    displayedQuestionPrompt,
+    stagedClassicalChineseMeaning ? "" : displayedQuestionPrompt,
     answerDisplayText,
     explanation,
     yearMnemonic,
@@ -4152,6 +4268,7 @@ async function resumeStudy() {
   }
   ensureCurrentStudyScreen();
   state.answerVisible = state.answerVisible && Boolean(state.currentTask);
+  state.classicalChineseReadingVisible = false;
   state.listeningPaused = false;
   clearListeningTimer();
   const resumesMemorizeScreenBeforeSave = !isListeningMode();
@@ -4329,7 +4446,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.153｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.154｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

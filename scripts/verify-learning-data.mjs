@@ -249,7 +249,7 @@ const expectedClassicalJapaneseSpecs = new Map([
 const expectedClassicalChineseSpec = {
   number: 1,
   version: "classical-chinese-deck-1-v2",
-  contentVersion: "4b842a99d231",
+  contentVersion: "93a7f9c647a7",
   datasetLabel: "漢文 意味瞬発 Deck1 最重要250項目",
   difficultyLabel: "Deck1 最重要・意味瞬発",
   termCount: 250,
@@ -1438,6 +1438,7 @@ if (
       term.geography.macroRegion !== term.classicalChinese.domain ||
       term.geography.regionDetail !== term.classicalChinese.unit ||
       term.category !== term.classicalChinese.itemType ||
+      term.classicalChinese.ruleInfo.includes("音声=") ||
       term.speechReadings[term.term] !== term.reading,
   ) ||
   generatedClassicalChineseQuestions.some(
@@ -1453,19 +1454,12 @@ if (
         question.speech.question.length !== 1 ||
         question.speech.question[0].text.includes(question.answer)),
   ) ||
-  generatedClassicalChineseQuestions.filter(
-    (question) => question.speech?.question?.[0]?.text ===
-      "意味を答えよ。",
-  ).length !== 224 ||
-  generatedClassicalChineseQuestions.filter(
-    (question) => Array.isArray(question.speech?.answer),
-  ).length !== 224 ||
   generatedClassicalChineseQuestions.some(
     (question) =>
-      Array.isArray(question.speech?.answer) &&
-      (question.speech.answer.length !== 2 ||
-        question.speech.answer[0].text !== question.answer ||
-        !question.speech.answer[1].text.startsWith("読みは、")),
+      question.type === "meaning" &&
+      (Array.isArray(question.speech?.question) ||
+        Array.isArray(question.speech?.answer) ||
+        question.focus !== "意味瞬発"),
   )
 ) {
   throw new Error("漢文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");

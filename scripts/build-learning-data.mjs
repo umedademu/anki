@@ -2758,21 +2758,6 @@ function classicalChineseQuestionSpeech(row) {
   ];
 }
 
-function classicalChineseAudioTiming(row, rowNumber) {
-  const audioEntries = geographyValue(row.rule_info)
-    .split(";")
-    .map((entry) => entry.trim())
-    .filter((entry) => entry.startsWith("音声="));
-  if (audioEntries.length > 1) {
-    throw new Error(`${rowNumber}行目の音声指定が重複しています。`);
-  }
-  const timing = audioEntries[0]?.slice("音声=".length) ?? "";
-  if (timing && !["出題時", "解答後"].includes(timing)) {
-    throw new Error(`${rowNumber}行目の音声指定が正しくありません: ${timing}`);
-  }
-  return timing;
-}
-
 function normalizeClassicalChineseQuestion(row, rowIndex) {
   const rowNumber = rowIndex + 2;
   if (!classicalChineseCardTypes.has(row.card_type)) {
@@ -2804,21 +2789,8 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
   const needsSafeQuestionSpeech = ["reading", "saidoku"].includes(
     row.card_type,
   );
-  const audioTiming = classicalChineseAudioTiming(row, rowNumber);
-  const defersReadingUntilAnswer = audioTiming === "解答後";
   const speech = {};
-  if (defersReadingUntilAnswer) {
-    speech.question = [
-      {
-        text: "意味を答えよ。",
-        language: "ja-JP",
-      },
-    ];
-    speech.answer = [
-      { text: row.answer, language: "ja-JP" },
-      { text: `読みは、${row.reading}。`, language: "ja-JP" },
-    ];
-  } else if (needsSafeQuestionSpeech || geographyValue(row.example_reading)) {
+  if (needsSafeQuestionSpeech || geographyValue(row.example_reading)) {
     speech.question = classicalChineseQuestionSpeech(row);
   }
   return {

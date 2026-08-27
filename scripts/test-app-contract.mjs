@@ -147,6 +147,9 @@ const listeningAnswerSpeechBlock = app.match(
 const listeningQuestionSpeechBlock = app.match(
   /function beginListeningQuestion\(\)[\s\S]*?function showSpeechPartNotice/,
 )?.[0];
+const renderQuestionBlock = app.match(
+  /function renderQuestion\(\)[\s\S]*?function renderCompletion/,
+)?.[0];
 const listeningPlaybackFeedbackBlock = app.match(
   /function hideListeningPlaybackFeedback\(\)[\s\S]*?function getConfig/,
 )?.[0];
@@ -321,11 +324,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.153") ||
-  !app.includes("v0.153｜") ||
-  !changelog.includes("v0.153") ||
-  !settingsHtml.includes("v0.153") ||
-  !historyHtml.includes("v0.153")
+  !html.includes("v0.154") ||
+  !app.includes("v0.154｜") ||
+  !changelog.includes("v0.154") ||
+  !settingsHtml.includes("v0.154") ||
+  !historyHtml.includes("v0.154")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -567,7 +570,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.153"') ||
+  !html.includes('href="/styles.css?v=0.154"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -782,7 +785,9 @@ if (
 if (
   !app.includes('elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode)') ||
   !app.includes('elements.contextCard.classList.toggle("is-hidden", vocabularyMode && hidesTerm)') ||
-  !app.includes('elements.stageName.classList.toggle("is-hidden", vocabularyMode)') ||
+  !app.includes(
+    'elements.stageName.classList.toggle(\n    "is-hidden",\n    vocabularyMode || stagedClassicalChineseMeaning,',
+  ) ||
   html.includes('id="question-axis"') ||
   app.includes("questionAxis") ||
   styles.includes(".axis-badge") ||
@@ -1133,6 +1138,36 @@ if (
   !styles.includes("padding-bottom: max(3px, env(safe-area-inset-bottom))")
 ) {
   throw new Error("聞き流しモード、読み上げ内容、回答待ち時間の構成が揃っていません。");
+}
+if (
+  !renderQuestionBlock ||
+  !answerSpeechSequenceBlock ||
+  !listeningAnswerSpeechBlock ||
+  !listeningQuestionSpeechBlock ||
+  !app.includes('const classicalChineseSubjectId = "classical-chinese"') ||
+  !app.includes("const classicalChineseListeningStepDelayMilliseconds = 1000") ||
+  !app.includes("function isClassicalChineseMeaningQuestion(") ||
+  !app.includes("function classicalChineseReadingSpeechSequence(") ||
+  !answerSpeechSequenceBlock.includes(
+    "return [...classicalChineseReadingSpeechSequence(task), ...answerSegments]",
+  ) ||
+  !listeningAnswerSpeechBlock.includes(
+    "function speakClassicalChineseListeningReading(runId)",
+  ) ||
+  !listeningAnswerSpeechBlock.includes(
+    "scheduleClassicalChineseListeningAnswer(runId)",
+  ) ||
+  !listeningQuestionSpeechBlock.includes(
+    "classicalChineseListeningStepDelayMilliseconds",
+  ) ||
+  !renderQuestionBlock.includes(
+    "stagedClassicalChineseMeaning && !showsClassicalChineseReading",
+  ) ||
+  !renderQuestionBlock.includes(
+    'elements.questionSpokenBlock.classList.toggle(',
+  )
+) {
+  throw new Error("漢文の暗記・聞き流しを語句、読み、意味の順に分ける処理が揃っていません。");
 }
 if (
   !listeningPlaybackFeedbackBlock ||

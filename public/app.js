@@ -54,6 +54,7 @@ import {
   createSpeechController,
   createVocabularyAutomaticAnswerSequence,
   createVocabularySpeechGroups,
+  prepareClassicalChineseSpeechText,
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
@@ -2512,21 +2513,23 @@ function answerSpeechSequence(task = state.currentTask) {
     ...(settings.mnemonic ? speechSegmentsFor("mnemonic", task) : []),
     ...(settings.explanation ? speechSegmentsFor("overview", task) : []),
   ];
-  if (
+  const sequence =
     settings.answer &&
     isClassicalChineseMeaningQuestion(task) &&
     !isListeningMode()
-  ) {
-    return [...classicalChineseReadingSpeechSequence(task), ...answerSegments];
-  }
-  return answerSegments;
+      ? [...classicalChineseReadingSpeechSequence(task), ...answerSegments]
+      : answerSegments;
+  return applyClassicalChineseSpeechRules(sequence, task);
 }
 
 function listeningQuestionSpeechSequence(task = state.currentTask) {
   const question = questionForTask(task);
-  return currentQuestionSpeechEnabled(question)
-    ? speechSegmentsFor("question", task)
-    : [];
+  return applyClassicalChineseSpeechRules(
+    currentQuestionSpeechEnabled(question)
+      ? speechSegmentsFor("question", task)
+      : [],
+    task,
+  );
 }
 
 function isClassicalChineseMeaningQuestion(
@@ -2543,8 +2546,27 @@ function classicalChineseReadingSpeechSequence(task = state.currentTask) {
   const term = termForTask(task);
   const reading = String(term?.reading ?? "").trim();
   return reading
-    ? [{ target: "answer", text: reading, language: "ja-JP" }]
+    ? [
+        {
+          target: "answer",
+          text: prepareClassicalChineseSpeechText(reading),
+          language: "ja-JP",
+        },
+      ]
     : [];
+}
+
+function applyClassicalChineseSpeechRules(
+  segments,
+  task = state.currentTask,
+) {
+  if (state.subject?.id !== classicalChineseSubjectId || !questionForTask(task)) {
+    return segments;
+  }
+  return segments.map((segment) => ({
+    ...segment,
+    text: prepareClassicalChineseSpeechText(segment.text),
+  }));
 }
 
 function preloadListeningTask(task) {
@@ -2566,7 +2588,7 @@ function autoSpeakQuestion() {
     !isListeningMode() &&
     currentQuestionSpeechEnabled()
   ) {
-    speechController.speak(speechSegmentsFor("question"));
+    speechController.speak(listeningQuestionSpeechSequence());
   }
 }
 
@@ -4459,7 +4481,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.157｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.158｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

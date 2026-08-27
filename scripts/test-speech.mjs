@@ -3,6 +3,7 @@ import {
   createVocabularySpeechGroups,
   createHistorySpeechReadings,
   createSpeechController,
+  prepareClassicalChineseSpeechText,
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   prepareSpeechText,
@@ -62,6 +63,13 @@ for (const [source, expected] of textChecks) {
 
 if (prepareSpeechText("battle", "en-US") !== "battle") {
   throw new Error("日本語の発音補正が英語の読み上げに混ざっています。");
+}
+
+if (
+  prepareClassicalChineseSpeechText("未〜・～べからず") !==
+  "未ナニナニ・ナニナニべからず"
+) {
+  throw new Error("漢文の波線をナニナニへ置き換えられませんでした。");
 }
 
 const historySpeechReadings = createHistorySpeechReadings([

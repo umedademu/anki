@@ -177,6 +177,10 @@ export function prepareVocabularyMeaningSpeechText(value) {
   return String(value ?? "").replace(/[〜～]/g, "");
 }
 
+export function prepareClassicalChineseSpeechText(value) {
+  return String(value ?? "").replace(/[〜～]/gu, "ナニナニ");
+}
+
 export function createVocabularySpeechGroups(term) {
   const beginnerQuestion = term?.stages?.beginner?.[0];
   if (!beginnerQuestion) {

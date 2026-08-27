@@ -31,18 +31,19 @@ if (
   throw new Error("目標達成後の復習猶予を安全な範囲へ整形できませんでした。");
 }
 if (
-  normalizeStudyRoutineMultiplier(0.74) !== 0.75 ||
+  normalizeStudyRoutineMultiplier(0.74) !== 0.7 ||
+  normalizeStudyRoutineMultiplier(0.76) !== 0.8 ||
   normalizeStudyRoutineMultiplier(null) !== 1 ||
-  normalizeStudyRoutineMultiplier(0.1) !== 0.25 ||
+  normalizeStudyRoutineMultiplier(0.01) !== 0.1 ||
   normalizeStudyRoutineMultiplier(4) !== 3 ||
-  scaledStudyRoutineQuestionTarget(100, 0.25) !== 25 ||
+  scaledStudyRoutineQuestionTarget(100, 0.1) !== 10 ||
   scaledStudyRoutineQuestionTarget(100, 0.5) !== 50 ||
-  scaledStudyRoutineQuestionTarget(100, 0.75) !== 75 ||
+  scaledStudyRoutineQuestionTarget(100, 0.8) !== 80 ||
   scaledStudyRoutineQuestionTarget(100, 2) !== 200 ||
   scaledStudyRoutineQuestionTarget(100, 3) !== 300 ||
   scaledStudyRoutineQuestionTarget(1, 0.5) !== 1
 ) {
-  throw new Error("毎日のメニューの学習量を0.25倍から3倍へ調整できませんでした。");
+  throw new Error("毎日のメニューの学習量を0.1倍から3倍へ0.1刻みで調整できませんでした。");
 }
 if (
   countsTowardStudyRoutine("again") ||
@@ -130,10 +131,10 @@ if (
   throw new Error("メニューの科目・問題数・重複番号を安全に整形できませんでした。");
 }
 
-const scaledPlan = scaleStudyRoutinePlan(normalizedPlan, 0.75);
+const scaledPlan = scaleStudyRoutinePlan(normalizedPlan, 0.7);
 if (
-  scaledPlan[0].questionTarget !== 75 ||
-  scaledPlan[1].questionTarget !== 60 ||
+  scaledPlan[0].questionTarget !== 70 ||
+  scaledPlan[1].questionTarget !== 56 ||
   scaledPlan[2].kind !== "video"
 ) {
   throw new Error("登録メニュー全体へ同じ学習量を反映できませんでした。");

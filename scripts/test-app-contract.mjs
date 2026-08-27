@@ -323,7 +323,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.167" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.168" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -336,11 +336,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.167") ||
-  !app.includes("v0.167｜") ||
-  !changelog.includes("v0.167") ||
-  !settingsHtml.includes("v0.167") ||
-  !historyHtml.includes("v0.167")
+  !html.includes("v0.168") ||
+  !app.includes("v0.168｜") ||
+  !changelog.includes("v0.168") ||
+  !settingsHtml.includes("v0.168") ||
+  !historyHtml.includes("v0.168")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -618,7 +618,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.167"') ||
+  !html.includes('href="/styles.css?v=0.168"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1198,6 +1198,10 @@ if (
   !app.includes("const classicalChineseListeningStepDelayMilliseconds = 1000") ||
   !app.includes("function isClassicalChineseMeaningQuestion(") ||
   !app.includes("function classicalChineseReadingSpeechSequence(") ||
+  !answerSpeechSequenceBlock.includes(
+    'text: `意味、${segment.text}`',
+  ) ||
+  !app.includes('prepareClassicalChineseSpeechText(`読み、${reading}。`)') ||
   !app.includes("function applyClassicalChineseSpeechRules(") ||
   !app.includes("prepareClassicalChineseSpeechText(segment.text)") ||
   !answerSpeechSequenceBlock.includes(

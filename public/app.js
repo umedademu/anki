@@ -2670,8 +2670,18 @@ function answerSpeechSequence(task = state.currentTask) {
       },
     );
   }
+  const primaryAnswerSegments = settings.answer
+    ? speechSegmentsFor("answer", task)
+    : [];
+  const labeledAnswerSegments = isClassicalChineseMeaningQuestion(task)
+    ? primaryAnswerSegments.map((segment, index) =>
+        index === 0
+          ? { ...segment, text: `意味、${segment.text}` }
+          : segment,
+      )
+    : primaryAnswerSegments;
   const answerSegments = [
-    ...(settings.answer ? speechSegmentsFor("answer", task) : []),
+    ...labeledAnswerSegments,
     ...(settings.mnemonic ? speechSegmentsFor("mnemonic", task) : []),
     ...(settings.explanation ? speechSegmentsFor("overview", task) : []),
   ];
@@ -2708,7 +2718,7 @@ function classicalChineseReadingSpeechSequence(task = state.currentTask) {
     ? [
         {
           target: "answer",
-          text: prepareClassicalChineseSpeechText(reading),
+          text: prepareClassicalChineseSpeechText(`読み、${reading}。`),
           language: "ja-JP",
         },
       ]
@@ -4666,7 +4676,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.167｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.168｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

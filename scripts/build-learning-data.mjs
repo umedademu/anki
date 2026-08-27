@@ -937,7 +937,7 @@ const stableDatasetVersions = new Map([
   ["classical-japanese:deck-1", "classical-japanese-word-deck-1-v1"],
   ["classical-japanese:deck-2", "classical-japanese-word-deck-2-v1"],
   ["classical-japanese:deck-3", "classical-japanese-word-deck-3-v1"],
-  ["classical-chinese:deck-1", "classical-chinese-deck-1-v1"],
+  ["classical-chinese:deck-1", "classical-chinese-deck-1-v2"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -2694,11 +2694,14 @@ export function toClassicalChineseObjects(rows) {
 }
 
 function classicalChineseExplanation(row) {
+  const visibleRuleInfo = geographyValue(row.rule_info)
+    .split(";")
+    .map((entry) => entry.trim())
+    .filter((entry) => entry && !entry.startsWith("音声="))
+    .join("／");
   return [
     geographyValue(row.explanation),
-    geographyValue(row.rule_info)
-      ? `句法情報：${row.rule_info.replaceAll(";", "／")}`
-      : "",
+    visibleRuleInfo ? `句法情報：${visibleRuleInfo}` : "",
     geographyValue(row.confusable_with) && geographyValue(row.distinction)
       ? `区別：${row.confusable_with}とは、${row.distinction}`
       : "",
@@ -2755,6 +2758,21 @@ function classicalChineseQuestionSpeech(row) {
   ];
 }
 
+function classicalChineseAudioTiming(row, rowNumber) {
+  const audioEntries = geographyValue(row.rule_info)
+    .split(";")
+    .map((entry) => entry.trim())
+    .filter((entry) => entry.startsWith("音声="));
+  if (audioEntries.length > 1) {
+    throw new Error(`${rowNumber}行目の音声指定が重複しています。`);
+  }
+  const timing = audioEntries[0]?.slice("音声=".length) ?? "";
+  if (timing && !["出題時", "解答後"].includes(timing)) {
+    throw new Error(`${rowNumber}行目の音声指定が正しくありません: ${timing}`);
+  }
+  return timing;
+}
+
 function normalizeClassicalChineseQuestion(row, rowIndex) {
   const rowNumber = rowIndex + 2;
   if (!classicalChineseCardTypes.has(row.card_type)) {
@@ -2786,6 +2804,23 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
   const needsSafeQuestionSpeech = ["reading", "saidoku"].includes(
     row.card_type,
   );
+  const audioTiming = classicalChineseAudioTiming(row, rowNumber);
+  const defersReadingUntilAnswer = audioTiming === "解答後";
+  const speech = {};
+  if (defersReadingUntilAnswer) {
+    speech.question = [
+      {
+        text: "画面に表示されている語句の意味を答えてください。",
+        language: "ja-JP",
+      },
+    ];
+    speech.answer = [
+      { text: row.answer, language: "ja-JP" },
+      { text: `読みは、${row.reading}。`, language: "ja-JP" },
+    ];
+  } else if (needsSafeQuestionSpeech || geographyValue(row.example_reading)) {
+    speech.question = classicalChineseQuestionSpeech(row);
+  }
   return {
     id: row.card_id,
     stage: "beginner",
@@ -2806,9 +2841,7 @@ function normalizeClassicalChineseQuestion(row, rowIndex) {
       "saidoku",
       "kakikudashi",
     ].includes(row.card_type),
-    ...(needsSafeQuestionSpeech || geographyValue(row.example_reading)
-      ? { speech: { question: classicalChineseQuestionSpeech(row) } }
-      : {}),
+    ...(Object.keys(speech).length > 0 ? { speech } : {}),
   };
 }
 
@@ -3518,7 +3551,7 @@ export async function main() {
         id: classicalChineseSubjectId,
         title: classicalChineseSubjectTitle,
         catalogLabel: "大学受験漢文（国語）",
-        description: "重要語・訓読・返り点・再読文字・句法の最重要事項を覚える大学受験漢文",
+        description: "重要語・句形・再読文字の意味を見てすぐ答える大学受験漢文",
         learningType: "cards",
         termUnitLabel: "項目",
         availableStages: ["beginner"],

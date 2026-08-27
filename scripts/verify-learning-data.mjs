@@ -248,13 +248,13 @@ const expectedClassicalJapaneseSpecs = new Map([
 
 const expectedClassicalChineseSpec = {
   number: 1,
-  version: "classical-chinese-deck-1-v1",
-  contentVersion: "e76c5585bdb9",
-  datasetLabel: "漢文_Deck1_最重要句法・語彙_250項目",
-  difficultyLabel: "Deck1_最重要句法・語彙",
+  version: "classical-chinese-deck-1-v2",
+  contentVersion: "767495d67758",
+  datasetLabel: "漢文 意味瞬発 Deck1 最重要250項目",
+  difficultyLabel: "Deck1 最重要・意味瞬発",
   termCount: 250,
-  questionCount: 500,
-  questionCounts: { beginner: 500, reverse: 0, integrated: 0 },
+  questionCount: 250,
+  questionCounts: { beginner: 250, reverse: 0, integrated: 0 },
 };
 
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
@@ -1417,24 +1417,22 @@ if (
   new Set(generatedClassicalChineseTerms.map((term) => term.id)).size !== 250 ||
   new Set(generatedClassicalChineseTerms.map((term) => term.term)).size !== 250 ||
   new Set(generatedClassicalChineseQuestions.map((question) => question.id)).size !==
-    500 ||
+    250 ||
   classicalChineseRanks.some((rank, index) => rank !== index + 1) ||
   generatedClassicalChineseTerms.some((term) => !/^CC-\d{6}$/.test(term.id)) ||
   generatedClassicalChineseQuestions.some(
     (question) => !/^CC-\d{6}-C\d{2}$/.test(question.id),
   ) ||
-  classicalChineseDomainCounts["句法"] !== 136 ||
-  classicalChineseDomainCounts["訓読"] !== 5 ||
+  classicalChineseDomainCounts["句法"] !== 101 ||
   classicalChineseDomainCounts["再読文字"] !== 9 ||
-  classicalChineseDomainCounts["重要語"] !== 90 ||
-  classicalChineseDomainCounts["置き字"] !== 4 ||
-  classicalChineseDomainCounts["返り点"] !== 6 ||
+  classicalChineseDomainCounts["重要語"] !== 140 ||
+  Object.keys(classicalChineseDomainCounts).length !== 3 ||
   new Set(
     generatedClassicalChineseTerms.map((term) => term.classicalChinese.unit),
-  ).size !== 98 ||
+  ).size !== 135 ||
   new Set(
     generatedClassicalChineseTerms.map((term) => term.classicalChinese.itemType),
-  ).size !== 74 ||
+  ).size !== 61 ||
   generatedClassicalChineseTerms.some(
     (term) =>
       term.geography.macroRegion !== term.classicalChinese.domain ||
@@ -1454,6 +1452,20 @@ if (
       (!Array.isArray(question.speech?.question) ||
         question.speech.question.length !== 1 ||
         question.speech.question[0].text.includes(question.answer)),
+  ) ||
+  generatedClassicalChineseQuestions.filter(
+    (question) => question.speech?.question?.[0]?.text ===
+      "画面に表示されている語句の意味を答えてください。",
+  ).length !== 228 ||
+  generatedClassicalChineseQuestions.filter(
+    (question) => Array.isArray(question.speech?.answer),
+  ).length !== 228 ||
+  generatedClassicalChineseQuestions.some(
+    (question) =>
+      Array.isArray(question.speech?.answer) &&
+      (question.speech.answer.length !== 2 ||
+        question.speech.answer[0].text !== question.answer ||
+        !question.speech.answer[1].text.startsWith("読みは、")),
   )
 ) {
   throw new Error("漢文Deck 1のID・重要度順位・分野・読み上げ情報が正しくありません。");

@@ -1621,7 +1621,7 @@ function showListeningPlaybackFeedback(feedback) {
   elements.listeningPlaybackFeedback.dataset.feedback = isPlayFeedback
     ? "play"
     : "pause";
-  elements.listeningPlaybackFeedback.textContent = isPlayFeedback ? "▶" : "Ⅱ";
+  elements.listeningPlaybackFeedback.textContent = isPlayFeedback ? "再生" : "Ⅱ";
   elements.listeningPlaybackFeedback.setAttribute(
     "aria-label",
     isPlayFeedback ? "再生" : "一時停止",
@@ -4329,7 +4329,7 @@ async function activateDecks(deckIds) {
   }`;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.149｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.150｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

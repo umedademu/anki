@@ -321,11 +321,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.149") ||
-  !app.includes("v0.149｜") ||
-  !changelog.includes("v0.149") ||
-  !settingsHtml.includes("v0.149") ||
-  !historyHtml.includes("v0.149")
+  !html.includes("v0.150") ||
+  !app.includes("v0.150｜") ||
+  !changelog.includes("v0.150") ||
+  !settingsHtml.includes("v0.150") ||
+  !historyHtml.includes("v0.150")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -563,7 +563,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.149"') ||
+  !html.includes('href="/styles.css?v=0.150"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1133,14 +1133,17 @@ if (
 if (
   !listeningPlaybackFeedbackBlock ||
   !toggleListeningBlock ||
-  !listeningPlaybackFeedbackBlock.includes('textContent = isPlayFeedback ? "▶" : "Ⅱ"') ||
+  !listeningPlaybackFeedbackBlock.includes('textContent = isPlayFeedback ? "再生" : "Ⅱ"') ||
+  listeningPlaybackFeedbackBlock.includes('"▶"') ||
   !listeningPlaybackFeedbackBlock.includes("}, 1000);") ||
   !toggleListeningBlock.includes('showListeningPlaybackFeedback("play")') ||
   !toggleListeningBlock.includes('showListeningPlaybackFeedback("pause")') ||
   toggleListeningBlock.includes("stopStudyClock();") ||
   !styles.includes("background: rgb(25 31 27 / 48%)") ||
   !styles.includes("top: 50%") ||
-  !styles.includes("left: 50%")
+  !styles.includes("left: 50%") ||
+  !styles.includes('.listening-playback-feedback[data-feedback="play"]::before') ||
+  !styles.includes("border-left: clamp(26px, 4.8vw, 42px) solid currentcolor")
 ) {
   throw new Error("聞き流しの一時停止・再開を示す中央の一時表示が揃っていません。");
 }

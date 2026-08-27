@@ -1228,7 +1228,17 @@ body.is-study-menu-open {
 }
 
 .listening-playback-feedback[data-feedback="play"] {
-  padding-left: 0.12em;
+  padding-left: clamp(4px, 0.9vw, 8px);
+  font-size: 0;
+}
+
+.listening-playback-feedback[data-feedback="play"]::before {
+  width: 0;
+  height: 0;
+  border-top: clamp(17px, 3vw, 28px) solid transparent;
+  border-bottom: clamp(17px, 3vw, 28px) solid transparent;
+  border-left: clamp(26px, 4.8vw, 42px) solid currentcolor;
+  content: "";
 }
 
 .action-dock,

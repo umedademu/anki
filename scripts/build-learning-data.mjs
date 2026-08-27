@@ -939,6 +939,7 @@ const stableDatasetVersions = new Map([
   ["classical-japanese:deck-3", "classical-japanese-word-deck-3-v1"],
   ["classical-chinese:deck-1", "classical-chinese-deck-1-v2"],
   ["classical-chinese:deck-2", "classical-chinese-deck-2-v1"],
+  ["classical-chinese:deck-3", "classical-chinese-deck-3-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {

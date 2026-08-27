@@ -282,6 +282,23 @@ const expectedClassicalChineseSpecs = new Map([
       domainCounts: { 句法: 60, 重要語: 190 },
     },
   ],
+  [
+    "deck-3",
+    {
+      number: 3,
+      version: "classical-chinese-deck-3-v1",
+      contentVersion: "f5a645ea12e3",
+      datasetLabel: "漢文 意味瞬発 Deck3 難関大向け200項目",
+      difficultyLabel: "Deck3 難関大向け・意味瞬発",
+      termCount: 200,
+      questionCount: 200,
+      questionCounts: { beginner: 200, reverse: 0, integrated: 0 },
+      rankStart: 501,
+      unitCount: 144,
+      itemTypeCount: 34,
+      domainCounts: { 句法: 40, 重要語: 160 },
+    },
+  ],
 ]);
 
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
@@ -1356,18 +1373,18 @@ const expectedClassicalChineseQuestionCount = [
   ...expectedClassicalChineseSpecs.values(),
 ].reduce((sum, spec) => sum + spec.questionCount, 0);
 if (
-  sourceClassicalChineseDecks.length !== 2 ||
+  sourceClassicalChineseDecks.length !== 3 ||
   !classicalChineseSubjectEntry ||
   classicalChineseSubjectEntry.defaultDeckId !== "deck-1" ||
   classicalChineseSubjectEntry.termUnitLabel !== "項目" ||
   classicalChineseSubjectEntry.datasetLabel !==
-    "大学受験漢文（国語）｜Deck 1〜2" ||
+    "大学受験漢文（国語）｜Deck 1〜3" ||
   classicalChineseSubjectEntry.termCount !== expectedClassicalChineseTermCount ||
   classicalChineseSubjectEntry.questionCount !==
     expectedClassicalChineseQuestionCount ||
-  classicalChineseSubjectEntry.decks.length !== 2
+  classicalChineseSubjectEntry.decks.length !== 3
 ) {
-  throw new Error("漢文Deck 1〜2の科目一覧が正しくありません。");
+  throw new Error("漢文Deck 1〜3の科目一覧が正しくありません。");
 }
 
 const generatedClassicalChineseTerms = [];
@@ -1435,7 +1452,7 @@ for (const sourceClassicalChineseDeck of sourceClassicalChineseDecks) {
     classicalChineseSubject.filterLabels.category !== "項目種別" ||
     classicalChineseSubject.stageLabels.beginner !== "暗記カード" ||
     classicalChineseSubject.availableStages.join(",") !== "beginner" ||
-    classicalChineseSubject.chunks.length !== 5 ||
+    classicalChineseSubject.chunks.length !== Math.ceil(spec.termCount / 50) ||
     classicalChineseSubject.chunks.some((chunk) => chunk.count !== 50) ||
     classicalChineseChunks.some(
       (chunk) =>
@@ -1507,7 +1524,7 @@ if (
     .size !== expectedClassicalChineseQuestionCount ||
   classicalChineseRanks.some((rank, index) => rank !== index + 1)
 ) {
-  throw new Error("漢文Deck 1〜2の重複または通算順位が正しくありません。");
+  throw new Error("漢文Deck 1〜3の重複または通算順位が正しくありません。");
 }
 
 const generatedTermImages = await readJson("term-images.json");

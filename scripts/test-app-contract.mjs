@@ -141,6 +141,9 @@ const landscapeMenuTapAreaBlock = styles.match(
 const answerLineBlock = html.match(
   /<div class="answer-line">[\s\S]*?<\/div>/,
 )?.[0];
+const routineMultiplierBlock = html.match(
+  /<input\s+id="routine-multiplier"[\s\S]*?\/>/,
+)?.[0];
 const speechSegmentsBlock = app.match(
   /function speechSegmentsFor\(target,[\s\S]*?function answerSpeechSequence\(/,
 )?.[0];
@@ -320,7 +323,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.166" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.167" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -333,11 +336,11 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.166") ||
-  !app.includes("v0.166｜") ||
-  !changelog.includes("v0.166") ||
-  !settingsHtml.includes("v0.166") ||
-  !historyHtml.includes("v0.166")
+  !html.includes("v0.167") ||
+  !app.includes("v0.167｜") ||
+  !changelog.includes("v0.167") ||
+  !settingsHtml.includes("v0.167") ||
+  !historyHtml.includes("v0.167")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -410,10 +413,9 @@ if (
   !html.includes('id="routine-video-panel"') ||
   !html.includes('id="routine-video-player-frame"') ||
   !html.includes('id="routine-video-complete"') ||
-  !html.includes('id="routine-multiplier"') ||
-  !html.includes('min="0.1"') ||
-  !html.includes('max="3"') ||
-  !html.includes('step="0.1"') ||
+  !routineMultiplierBlock?.includes('min="0.1"') ||
+  !routineMultiplierBlock.includes('max="3"') ||
+  !routineMultiplierBlock.includes('step="0.05"') ||
   !html.includes('id="routine-skip-videos"') ||
   !settingsHtml.includes('id="routine-editor"') ||
   !settingsHtml.includes('id="add-routine-item"') ||
@@ -616,7 +618,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.166"') ||
+  !html.includes('href="/styles.css?v=0.167"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

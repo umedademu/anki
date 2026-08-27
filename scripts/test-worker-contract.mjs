@@ -476,7 +476,7 @@ if (
   settings.speechParts.vocabulary.meaning ||
   !settings.speechParts.vocabulary.exampleEnglish ||
   settings.setupPreferences.lastSubjectId !== "world-history" ||
-  settings.setupPreferences.routineMultiplier !== 2.8 ||
+  settings.setupPreferences.routineMultiplier !== 2.75 ||
   !settings.setupPreferences.routineSkipVideos ||
   settings.setupPreferences.subjects["world-history"].lastDeckId !== "deck-2" ||
   settings.setupPreferences.subjects["world-history"].selectedDeckIds.join(",") !==
@@ -512,7 +512,7 @@ if (
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
-  browserSettings.setupPreferences.routineMultiplier !== 2.8 ||
+  browserSettings.setupPreferences.routineMultiplier !== 2.75 ||
   !browserSettings.setupPreferences.routineSkipVideos ||
   browserSettings.setupPreferences.subjects["world-history"].decks["deck-2"]
     .regionDetail !== "東アジア" ||

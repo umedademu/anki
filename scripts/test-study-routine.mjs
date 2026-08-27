@@ -32,19 +32,22 @@ if (
   throw new Error("目標達成後の復習猶予を安全な範囲へ整形できませんでした。");
 }
 if (
-  normalizeStudyRoutineMultiplier(0.74) !== 0.7 ||
-  normalizeStudyRoutineMultiplier(0.76) !== 0.8 ||
+  normalizeStudyRoutineMultiplier(0.72) !== 0.7 ||
+  normalizeStudyRoutineMultiplier(0.73) !== 0.75 ||
+  normalizeStudyRoutineMultiplier(0.76) !== 0.75 ||
+  normalizeStudyRoutineMultiplier(0.78) !== 0.8 ||
   normalizeStudyRoutineMultiplier(null) !== 1 ||
   normalizeStudyRoutineMultiplier(0.01) !== 0.1 ||
   normalizeStudyRoutineMultiplier(4) !== 3 ||
   scaledStudyRoutineQuestionTarget(100, 0.1) !== 10 ||
+  scaledStudyRoutineQuestionTarget(100, 0.15) !== 15 ||
   scaledStudyRoutineQuestionTarget(100, 0.5) !== 50 ||
-  scaledStudyRoutineQuestionTarget(100, 0.8) !== 80 ||
+  scaledStudyRoutineQuestionTarget(100, 0.75) !== 75 ||
   scaledStudyRoutineQuestionTarget(100, 2) !== 200 ||
   scaledStudyRoutineQuestionTarget(100, 3) !== 300 ||
   scaledStudyRoutineQuestionTarget(1, 0.5) !== 1
 ) {
-  throw new Error("毎日のメニューの学習量を0.1倍から3倍へ0.1刻みで調整できませんでした。");
+  throw new Error("毎日のメニューの学習量を0.1倍から3倍へ0.05刻みで調整できませんでした。");
 }
 if (
   countsTowardStudyRoutine("again") ||

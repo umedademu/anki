@@ -17,7 +17,7 @@ export const maximumStudyRoutineOvertimeSeconds = 24 * 60 * 60;
 export const defaultStudyRoutineMultiplier = 1;
 export const minimumStudyRoutineMultiplier = 0.1;
 export const maximumStudyRoutineMultiplier = 3;
-export const studyRoutineMultiplierStep = 0.1;
+export const studyRoutineMultiplierStep = 0.05;
 
 const defaultSubjects = [
   "world-history",

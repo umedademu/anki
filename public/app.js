@@ -196,6 +196,7 @@ const elements = {
   routineVideoHome: document.querySelector("#routine-video-home"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
+  subjectProgressName: document.querySelector("#subject-progress-name"),
   deckProgressName: document.querySelector("#deck-progress-name"),
   contextCard: document.querySelector("#context-card"),
   stageName: document.querySelector("#stage-name"),
@@ -4766,9 +4767,11 @@ async function activateDecks(deckIds) {
   elements.subjectName.textContent = `${state.subject.title}｜${
     deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
   }`;
+  elements.subjectProgressName.textContent = state.subject.title;
+  elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.174｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.175｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

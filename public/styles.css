@@ -988,13 +988,22 @@ body.is-study-menu-open {
   white-space: nowrap;
 }
 
+.subject-progress-name,
 .deck-progress-name {
-  min-width: 4.5em;
+  min-width: 0;
   max-width: min(30vw, 240px);
   overflow: hidden;
   color: #2e6a49;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.subject-progress-name {
+  max-width: min(18vw, 160px);
+}
+
+.deck-progress-name {
+  min-width: 4.5em;
 }
 
 .study-time {
@@ -2911,9 +2920,14 @@ body.is-listening.is-listening-answer-visible .page {
     letter-spacing: -0.02em;
   }
 
+  .question-heading .subject-progress-name,
   .question-heading .deck-progress-name {
     min-width: 0;
     max-width: 20vw;
+  }
+
+  .question-heading .subject-progress-name {
+    max-width: 15vw;
   }
 
   .action-dock.is-answer-visible .action-buttons {

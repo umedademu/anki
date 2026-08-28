@@ -213,6 +213,9 @@ const advanceListeningManuallySource = advanceListeningManuallyBlock?.replace(
 const studyClockBlock = app.match(
   /function canCountStudyTime\([\s\S]*?function startNewStudyScreen/,
 )?.[0];
+const subjectProgressStyleBlock = styles.match(
+  /\.subject-progress-name,\n\.deck-progress-name\s*\{[^}]*\}/,
+)?.[0];
 const deckProgressStyleBlock = styles.match(
   /\.deck-progress-name\s*\{[^}]*\}/,
 )?.[0];
@@ -468,7 +471,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.174" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.175" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -481,12 +484,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.174") ||
-  !app.includes("v0.174｜") ||
-  !changelog.includes("v0.174") ||
-  !settingsHtml.includes("v0.174") ||
-  !historyHtml.includes("v0.174") ||
-  !analysisHtml.includes("v0.174")
+  !html.includes("v0.175") ||
+  !app.includes("v0.175｜") ||
+  !changelog.includes("v0.175") ||
+  !settingsHtml.includes("v0.175") ||
+  !historyHtml.includes("v0.175") ||
+  !analysisHtml.includes("v0.175")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -801,7 +804,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.174"') ||
+  !html.includes('href="/styles.css?v=0.175"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1620,18 +1623,24 @@ if (
 }
 if (
   !html.match(
-    /class="progress-summary"[^>]*>[\s\S]*?id="deck-progress-name"[\s\S]*?id="overall-progress"[\s\S]*?id="queue-progress"/,
+    /class="progress-summary"[^>]*>[\s\S]*?id="subject-progress-name"[\s\S]*?id="deck-progress-name"[\s\S]*?id="overall-progress"[\s\S]*?id="queue-progress"/,
   ) ||
+  !app.includes('subjectProgressName: document.querySelector("#subject-progress-name")') ||
+  !app.includes("elements.subjectProgressName.textContent = state.subject.title") ||
+  !app.includes("elements.subjectProgressName.title = state.subject.title") ||
   !app.includes('deckProgressName: document.querySelector("#deck-progress-name")') ||
   !app.includes('elements.deckProgressName.textContent = currentDeckName.replaceAll("｜", " ")') ||
   !app.includes("elements.deckProgressName.title = currentDeckName") ||
+  !subjectProgressStyleBlock ||
+  !subjectProgressStyleBlock.includes("text-overflow: ellipsis") ||
+  subjectProgressStyleBlock.includes("font-size") ||
   !deckProgressStyleBlock ||
   !deckProgressStyleBlock.includes("text-overflow: ellipsis") ||
   !deckProgressStyleBlock.includes("white-space: nowrap") ||
   deckProgressStyleBlock.includes("font-size") ||
   !/\.progress-summary\s*\{[^}]*flex-wrap:\s*nowrap;/s.test(styles)
 ) {
-  throw new Error("デッキ名を進捗と同じ一行・同じ文字サイズで表示する構成が不足しています。");
+  throw new Error("科目名とデッキ名を進捗と同じ一行・同じ文字サイズで表示する構成が不足しています。");
 }
 if (
   styles.includes(

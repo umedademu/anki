@@ -206,6 +206,10 @@ const elements = {
   mindsetToggle: document.querySelector("#mindset-toggle"),
   mindsetNext: document.querySelector("#mindset-next"),
   mindsetHome: document.querySelector("#mindset-home"),
+  mindsetCompletionPanel: document.querySelector("#mindset-completion-panel"),
+  mindsetCompletionMessage: document.querySelector("#mindset-completion-message"),
+  mindsetRestart: document.querySelector("#mindset-restart"),
+  mindsetCompletionHome: document.querySelector("#mindset-completion-home"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
   subjectProgressName: document.querySelector("#subject-progress-name"),
@@ -2070,7 +2074,7 @@ function mindsetResumePosition(order = state.mindsetOrder) {
   );
   return {
     index: mindsetResumeStartIndex(order, lastCompletedItemId),
-    resumed: completedIndex >= 0,
+    resumed: completedIndex >= 0 && completedIndex < order.length - 1,
   };
 }
 
@@ -2126,14 +2130,6 @@ function renderMindsetPlayer() {
   );
 }
 
-function shuffleMindsetsForNextRound(previousId) {
-  const order = shuffleTasks(state.allTerms);
-  if (order.length > 1 && order[0]?.id === previousId) {
-    [order[0], order[1]] = [order[1], order[0]];
-  }
-  return order;
-}
-
 function scheduleNextMindset(runId) {
   const seconds = normalizeListeningQuestionIntervalSeconds(
     state.listeningQuestionIntervalSeconds,
@@ -2171,9 +2167,7 @@ function speakCurrentMindset() {
   state.mindsetSpeechComplete = false;
   state.mindsetMessage = "読み上げています。";
   renderMindsetPlayer();
-  const nextItem = state.mindsetOrder[
-    (state.mindsetIndex + 1) % state.mindsetOrder.length
-  ];
+  const nextItem = state.mindsetOrder[state.mindsetIndex + 1];
   if (nextItem) {
     void speechController.preload([
       { target: "mindset", language: "ja-JP", text: mindsetSpeechText(nextItem) },
@@ -2188,6 +2182,10 @@ function speakCurrentMindset() {
         void queueMindsetResumeSave(item.id).catch((error) => {
           console.warn("マインドセットの再生位置を保存できませんでした。", error);
         });
+        if (state.mindsetIndex === state.mindsetOrder.length - 1) {
+          showMindsetCompletion(state.mindsetOrder.length);
+          return;
+        }
         scheduleNextMindset(runId);
       },
       onError: (error) => {
@@ -2213,12 +2211,13 @@ function moveMindset(direction, { autoplay = false } = {}) {
   clearMindsetTimer();
   speechController.stop();
   if (direction > 0 && state.mindsetIndex === total - 1) {
-    const previousId = currentMindset()?.id ?? "";
-    state.mindsetOrder = shuffleMindsetsForNextRound(previousId);
-    state.mindsetIndex = 0;
-  } else {
-    state.mindsetIndex = (state.mindsetIndex + direction + total) % total;
+    void queueMindsetResumeSave(currentMindset()?.id).catch((error) => {
+      console.warn("マインドセットの再生位置を保存できませんでした。", error);
+    });
+    showMindsetCompletion(total);
+    return;
   }
+  state.mindsetIndex = (state.mindsetIndex + direction + total) % total;
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetMessage = "";
@@ -2293,12 +2292,14 @@ async function saveMindsetPlaybackSettings({ restartSpeech = false } = {}) {
   }
 }
 
-function showMindsetPlayer() {
+function showMindsetPlayer({ fromBeginning = false } = {}) {
   stopListeningSequence();
   speechController.stop();
   clearMindsetTimer();
   state.mindsetOrder = [...state.allTerms];
-  const resume = mindsetResumePosition(state.mindsetOrder);
+  const resume = fromBeginning
+    ? { index: 0, resumed: false }
+    : mindsetResumePosition(state.mindsetOrder);
   state.mindsetIndex = resume.index;
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
@@ -2319,6 +2320,15 @@ function showMindsetPlayer() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
+function showMindsetCompletion(total) {
+  elements.mindsetCompletionMessage.textContent =
+    `${total}件の言葉を最後まで聞き終えました。音声は停止しています。`;
+  elements.subjectName.textContent = "マインドセット｜一周完了";
+  showOnly(elements.mindsetCompletionPanel);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.requestAnimationFrame(() => elements.mindsetRestart.focus());
+}
+
 function showOnly(panel) {
   if (panel !== elements.studyShell && state.studyMenuOpen) {
     closeStudyMenu({ resumeStudy: false });
@@ -2337,7 +2347,8 @@ function showOnly(panel) {
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
   document.body.classList.toggle(
     "is-mindset-playing",
-    panel === elements.mindsetPlayerPanel,
+    panel === elements.mindsetPlayerPanel ||
+      panel === elements.mindsetCompletionPanel,
   );
   document.body.classList.toggle(
     "is-listening",
@@ -2349,6 +2360,7 @@ function showOnly(panel) {
     elements.setupPanel,
     elements.routineVideoPanel,
     elements.mindsetPlayerPanel,
+    elements.mindsetCompletionPanel,
     elements.studyShell,
     elements.errorPanel,
   ].forEach((candidate) =>
@@ -5092,7 +5104,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.178｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.179｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5325,6 +5337,12 @@ elements.mindsetNext.addEventListener("click", () => {
   moveMindset(1, { autoplay: true });
 });
 elements.mindsetHome.addEventListener("click", () => {
+  void returnToSubjectSelection();
+});
+elements.mindsetRestart.addEventListener("click", () => {
+  showMindsetPlayer({ fromBeginning: true });
+});
+elements.mindsetCompletionHome.addEventListener("click", () => {
   void returnToSubjectSelection();
 });
 elements.mindsetSpeechRate.addEventListener(

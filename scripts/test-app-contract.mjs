@@ -471,7 +471,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.178" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.179" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -484,12 +484,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.178") ||
-  !app.includes("v0.178｜") ||
-  !changelog.includes("v0.178") ||
-  !settingsHtml.includes("v0.178") ||
-  !historyHtml.includes("v0.178") ||
-  !analysisHtml.includes("v0.178")
+  !html.includes("v0.179") ||
+  !app.includes("v0.179｜") ||
+  !changelog.includes("v0.179") ||
+  !settingsHtml.includes("v0.179") ||
+  !historyHtml.includes("v0.179") ||
+  !analysisHtml.includes("v0.179")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -498,12 +498,18 @@ if (
   !html.includes('id="mindset-toggle"') ||
   !html.includes('id="mindset-speech-rate"') ||
   !html.includes('id="mindset-interval-seconds"') ||
+  !html.includes('id="mindset-completion-panel"') ||
+  !html.includes('id="mindset-restart"') ||
+  !html.includes('id="mindset-completion-home"') ||
   !app.includes('const mindsetLearningType = "mindset"') ||
-  !app.includes("function showMindsetPlayer()") ||
+  !app.includes("function showMindsetPlayer(") ||
   !app.includes("function speakCurrentMindset()") ||
   !app.includes("function mindsetSpeechText(") ||
   !app.includes("function mindsetResumePosition(") ||
   !app.includes("function queueMindsetResumeSave(") ||
+  !app.includes("function showMindsetCompletion(") ||
+  !app.includes("showMindsetCompletion(state.mindsetOrder.length)") ||
+  !app.includes("showMindsetPlayer({ fromBeginning: true })") ||
   !app.includes("void queueMindsetResumeSave(item.id)") ||
   !app.includes("前回の続きです。再生ボタンを押すと、この言葉から読み上げます。") ||
   !cloudProgress.includes("export function mindsetResumeStartIndex(") ||
@@ -512,11 +518,17 @@ if (
   !app.includes("text: mindsetSpeechText(nextItem)") ||
   !app.includes("text: mindsetSpeechText(item)") ||
   !app.includes('target: "mindset", language: "ja-JP"') ||
-  !app.includes("shuffleMindsetsForNextRound") ||
   !styles.includes(".mindset-player-panel") ||
-  !styles.includes(".mindset-card")
+  !styles.includes(".mindset-card") ||
+  !styles.includes(".mindset-completion-panel")
 ) {
   throw new Error("マインドセットの音声聞き流し画面と連続再生処理が揃っていません。");
+}
+if (
+  app.includes("shuffleMindsetsForNextRound") ||
+  app.includes("(state.mindsetIndex + 1) % state.mindsetOrder.length")
+) {
+  throw new Error("マインドセットが一周後も自動で繰り返されます。");
 }
 const obsoleteVideoLabel = "覚え歌";
 if ([html, app, settingsHtml, changelog].some((source) => source.includes(obsoleteVideoLabel))) {
@@ -829,7 +841,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.178"') ||
+  !html.includes('href="/styles.css?v=0.179"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

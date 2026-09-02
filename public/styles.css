@@ -360,6 +360,11 @@ body.is-study-menu-open {
   padding: clamp(28px, 6vw, 52px);
 }
 
+.mindset-completion-panel {
+  width: min(100%, 720px);
+  margin: auto;
+}
+
 .subject-panel h1,
 .setup-panel h1,
 .routine-video-panel h1,

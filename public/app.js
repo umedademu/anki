@@ -2057,6 +2057,10 @@ function mindsetContent(item = currentMindset()) {
   return String(item?.content ?? item?.term ?? "").trim();
 }
 
+function mindsetSpeechText(item = currentMindset()) {
+  return mindsetContent(item).replace(/=/g, "イコール");
+}
+
 function renderMindsetPlayer() {
   const item = currentMindset();
   const total = state.mindsetOrder.length;
@@ -2133,11 +2137,11 @@ function speakCurrentMindset() {
   ];
   if (nextItem) {
     void speechController.preload([
-      { target: "mindset", language: "ja-JP", text: mindsetContent(nextItem) },
+      { target: "mindset", language: "ja-JP", text: mindsetSpeechText(nextItem) },
     ]);
   }
   const started = speechController.speak(
-    [{ target: "mindset", language: "ja-JP", text: content }],
+    [{ target: "mindset", language: "ja-JP", text: mindsetSpeechText(item) }],
     {
       onComplete: () => {
         if (runId !== state.mindsetRunId || state.mindsetPaused) return;
@@ -5043,7 +5047,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.176｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.177｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

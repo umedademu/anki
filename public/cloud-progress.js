@@ -59,6 +59,7 @@ export const defaultSetupPreferences = Object.freeze({
   schemaVersion: 1,
   lastSubjectId: "",
   subjects: Object.freeze({}),
+  mindsetResume: Object.freeze({ lastCompletedItemId: "" }),
   routinePlan: defaultStudyRoutinePlan,
   routineRun: null,
   routineMultiplier: defaultStudyRoutineMultiplier,
@@ -291,6 +292,17 @@ function normalizeSetupSelection(value) {
   return String(value ?? "").trim().slice(0, 200);
 }
 
+function normalizeMindsetResume(value) {
+  const source = value && typeof value === "object" && !Array.isArray(value)
+    ? value
+    : {};
+  return {
+    lastCompletedItemId: normalizeSetupPreferenceId(
+      source.lastCompletedItemId,
+    ),
+  };
+}
+
 export function normalizeSetupPreferences(value) {
   let source = value;
   if (typeof source === "string") {
@@ -361,6 +373,7 @@ export function normalizeSetupPreferences(value) {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
     subjects,
+    mindsetResume: normalizeMindsetResume(source.mindsetResume),
     routinePlan,
     routineRun,
     routineMultiplier: normalizeStudyRoutineMultiplier(source.routineMultiplier),
@@ -371,6 +384,14 @@ export function normalizeSetupPreferences(value) {
       routineVideos,
     ),
   };
+}
+
+export function mindsetResumeStartIndex(items, lastCompletedItemId) {
+  if (!Array.isArray(items) || items.length === 0) return 0;
+  const completedIndex = items.findIndex(
+    (item) => item?.id === lastCompletedItemId,
+  );
+  return completedIndex >= 0 ? (completedIndex + 1) % items.length : 0;
 }
 
 function normalizeSpeechPartGroup(value, defaults) {

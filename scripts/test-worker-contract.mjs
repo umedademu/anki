@@ -22,6 +22,7 @@ import {
 } from "../public/rating-sound-settings.js";
 import worker from "../worker/src/index.js";
 import {
+  mindsetResumeStartIndex,
   normalizeSetupPreferences as normalizeBrowserSetupPreferences,
   normalizeSharedSettings,
   normalizeRoundProgress,
@@ -442,6 +443,7 @@ const settings = normalizeSettings({
   setupPreferences: {
     schemaVersion: 1,
     lastSubjectId: "world-history",
+    mindsetResume: { lastCompletedItemId: "MS-000053" },
     routineMultiplier: 2.75,
     routineSkipVideos: true,
     subjects: {
@@ -504,6 +506,7 @@ if (
   settings.setupPreferences.lastSubjectId !== "world-history" ||
   settings.setupPreferences.routineMultiplier !== 2.75 ||
   !settings.setupPreferences.routineSkipVideos ||
+  settings.setupPreferences.mindsetResume.lastCompletedItemId !== "MS-000053" ||
   settings.setupPreferences.subjects["world-history"].lastDeckId !== "deck-2" ||
   settings.setupPreferences.subjects["world-history"].selectedDeckIds.join(",") !==
     "deck-2,deck-3" ||
@@ -540,6 +543,8 @@ if (
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
   browserSettings.setupPreferences.routineMultiplier !== 2.75 ||
   !browserSettings.setupPreferences.routineSkipVideos ||
+  browserSettings.setupPreferences.mindsetResume.lastCompletedItemId !==
+    "MS-000053" ||
   browserSettings.setupPreferences.subjects["world-history"].decks["deck-2"]
     .regionDetail !== "東アジア" ||
   browserSettings.setupPreferences.routineVideos[0].youtubeId !== "HfOoVw-ef_o"
@@ -549,6 +554,7 @@ if (
 
 const invalidSetupPreferences = {
   lastSubjectId: "world-history",
+  mindsetResume: { lastCompletedItemId: "不正な項目" },
   subjects: {
     "world-history": {
       lastDeckId: "deck-2",
@@ -571,6 +577,7 @@ for (const normalized of [
   if (
     normalized.routineMultiplier !== 1 ||
     normalized.routineSkipVideos ||
+    normalized.mindsetResume.lastCompletedItemId !== "" ||
     normalized.subjects["world-history"].studyMode !== "memorize" ||
     normalized.subjects["world-history"].selectedDeckIds[0] !== "deck-2" ||
     deck.macroRegion.length !== 200 ||
@@ -579,6 +586,20 @@ for (const normalized of [
   ) {
     throw new Error("開始前の保存値を安全な範囲へ補正できませんでした。");
   }
+}
+
+const mindsetItems = [
+  { id: "MS-000001" },
+  { id: "MS-000002" },
+  { id: "MS-000003" },
+];
+if (
+  mindsetResumeStartIndex(mindsetItems, "MS-000001") !== 1 ||
+  mindsetResumeStartIndex(mindsetItems, "MS-000003") !== 0 ||
+  mindsetResumeStartIndex(mindsetItems, "MS-999999") !== 0 ||
+  mindsetResumeStartIndex([], "MS-000001") !== 0
+) {
+  throw new Error("マインドセットを前回の次の言葉から再開できませんでした。");
 }
 
 const legacyRoutinePreferences = {

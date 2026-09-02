@@ -33,6 +33,7 @@ import {
   getStoredAccessKey,
   importCloudProgress,
   loadCloudState,
+  mindsetResumeStartIndex,
   normalizeListeningPauseSeconds,
   normalizeListeningQuestionIntervalSeconds,
   normalizeSetupPreferences,
@@ -2061,6 +2062,44 @@ function mindsetSpeechText(item = currentMindset()) {
   return mindsetContent(item).replace(/=/g, "イコール");
 }
 
+function mindsetResumePosition(order = state.mindsetOrder) {
+  const lastCompletedItemId =
+    state.setupPreferences.mindsetResume?.lastCompletedItemId ?? "";
+  const completedIndex = order.findIndex(
+    (item) => item.id === lastCompletedItemId,
+  );
+  return {
+    index: mindsetResumeStartIndex(order, lastCompletedItemId),
+    resumed: completedIndex >= 0,
+  };
+}
+
+function queueMindsetResumeSave(completedItemId) {
+  const itemId = String(completedItemId ?? "");
+  if (
+    !getStoredAccessKey() ||
+    !state.allTerms.some((item) => item.id === itemId)
+  ) {
+    return Promise.resolve(null);
+  }
+  const saveVersion = ++setupPreferenceSaveVersion;
+  const setupPreferences = normalizeSetupPreferences({
+    ...state.setupPreferences,
+    mindsetResume: { lastCompletedItemId: itemId },
+  });
+  state.setupPreferences = setupPreferences;
+  setupPreferenceSave = setupPreferenceSave
+    .catch(() => {})
+    .then(async () => {
+      const saved = await saveCloudSettings({ setupPreferences });
+      if (saveVersion === setupPreferenceSaveVersion) {
+        syncRoutinePreferences(saved.setupPreferences);
+      }
+      return saved;
+    });
+  return setupPreferenceSave;
+}
+
 function renderMindsetPlayer() {
   const item = currentMindset();
   const total = state.mindsetOrder.length;
@@ -2146,6 +2185,9 @@ function speakCurrentMindset() {
       onComplete: () => {
         if (runId !== state.mindsetRunId || state.mindsetPaused) return;
         state.mindsetSpeechComplete = true;
+        void queueMindsetResumeSave(item.id).catch((error) => {
+          console.warn("マインドセットの再生位置を保存できませんでした。", error);
+        });
         scheduleNextMindset(runId);
       },
       onError: (error) => {
@@ -2256,11 +2298,14 @@ function showMindsetPlayer() {
   speechController.stop();
   clearMindsetTimer();
   state.mindsetOrder = [...state.allTerms];
-  state.mindsetIndex = 0;
+  const resume = mindsetResumePosition(state.mindsetOrder);
+  state.mindsetIndex = resume.index;
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetMessage = speechController.supported
-    ? "再生ボタンを押すと、音声で順番に読み上げます。"
+    ? resume.resumed
+      ? "前回の続きです。再生ボタンを押すと、この言葉から読み上げます。"
+      : "再生ボタンを押すと、音声で順番に読み上げます。"
     : "この端末では音声を再生できません。";
   const settings = loadSpeechSettings();
   elements.mindsetSpeechRate.value = String(settings.rate);
@@ -5047,7 +5092,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.177｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.178｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

@@ -471,7 +471,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.177" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.178" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -484,12 +484,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.177") ||
-  !app.includes("v0.177｜") ||
-  !changelog.includes("v0.177") ||
-  !settingsHtml.includes("v0.177") ||
-  !historyHtml.includes("v0.177") ||
-  !analysisHtml.includes("v0.177")
+  !html.includes("v0.178") ||
+  !app.includes("v0.178｜") ||
+  !changelog.includes("v0.178") ||
+  !settingsHtml.includes("v0.178") ||
+  !historyHtml.includes("v0.178") ||
+  !analysisHtml.includes("v0.178")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -502,6 +502,12 @@ if (
   !app.includes("function showMindsetPlayer()") ||
   !app.includes("function speakCurrentMindset()") ||
   !app.includes("function mindsetSpeechText(") ||
+  !app.includes("function mindsetResumePosition(") ||
+  !app.includes("function queueMindsetResumeSave(") ||
+  !app.includes("void queueMindsetResumeSave(item.id)") ||
+  !app.includes("前回の続きです。再生ボタンを押すと、この言葉から読み上げます。") ||
+  !cloudProgress.includes("export function mindsetResumeStartIndex(") ||
+  !cloudProgress.includes("mindsetResume: normalizeMindsetResume(") ||
   !app.includes('.replace(/=/g, "イコール")') ||
   !app.includes("text: mindsetSpeechText(nextItem)") ||
   !app.includes("text: mindsetSpeechText(item)") ||
@@ -823,7 +829,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.177"') ||
+  !html.includes('href="/styles.css?v=0.178"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

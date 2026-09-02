@@ -197,6 +197,7 @@ const elements = {
   routineVideoHome: document.querySelector("#routine-video-home"),
   mindsetPlayerPanel: document.querySelector("#mindset-player-panel"),
   mindsetPosition: document.querySelector("#mindset-position"),
+  mindsetStudyTime: document.querySelector("#mindset-study-time"),
   mindsetText: document.querySelector("#mindset-text"),
   mindsetPlaybackStatus: document.querySelector("#mindset-playback-status"),
   mindsetSpeechRate: document.querySelector("#mindset-speech-rate"),
@@ -208,6 +209,7 @@ const elements = {
   mindsetHome: document.querySelector("#mindset-home"),
   mindsetCompletionPanel: document.querySelector("#mindset-completion-panel"),
   mindsetCompletionMessage: document.querySelector("#mindset-completion-message"),
+  mindsetCompletionTime: document.querySelector("#mindset-completion-time"),
   mindsetRestart: document.querySelector("#mindset-restart"),
   mindsetCompletionHome: document.querySelector("#mindset-completion-home"),
   cloudStatus: document.querySelector("#cloud-status"),
@@ -362,6 +364,8 @@ const state = {
   mindsetTimer: null,
   mindsetRunId: 0,
   mindsetMessage: "",
+  mindsetStudySeconds: 0,
+  mindsetScreenStudySeconds: 0,
 };
 
 const historyLimit = 200;
@@ -377,6 +381,8 @@ let studySessionSaveVersion = 0;
 let pendingReviewTimer = null;
 let studyClockTimer = null;
 let studyClockLastTick = 0;
+let mindsetStudyClockTimer = null;
+let mindsetStudyClockLastTick = 0;
 let studyTimeSave = Promise.resolve();
 let listeningTouchStart = null;
 let suppressNextListeningClick = false;
@@ -1281,6 +1287,80 @@ async function continueRoutine() {
 
 function updateStudyTimeDisplay() {
   elements.studyTime.textContent = formatStudyDuration(state.studySeconds);
+}
+
+function updateMindsetStudyTimeDisplay() {
+  elements.mindsetStudyTime.textContent = formatStudyDuration(
+    state.mindsetStudySeconds,
+  );
+}
+
+function canCountMindsetStudyTime({ includeHidden = false } = {}) {
+  return (
+    !elements.mindsetPlayerPanel.classList.contains("is-hidden") &&
+    Boolean(currentMindset()) &&
+    (includeHidden || !document.hidden) &&
+    state.mindsetScreenStudySeconds < state.studyTimeLimitSeconds
+  );
+}
+
+function tickMindsetStudyClock(
+  now = window.performance.now(),
+  { includeHidden = false } = {},
+) {
+  if (!canCountMindsetStudyTime({ includeHidden })) {
+    mindsetStudyClockLastTick = now;
+    return;
+  }
+  const elapsedSeconds = Math.floor((now - mindsetStudyClockLastTick) / 1000);
+  if (elapsedSeconds < 1) return;
+  mindsetStudyClockLastTick += elapsedSeconds * 1000;
+  const next = addStudySeconds(
+    state.mindsetStudySeconds,
+    state.mindsetScreenStudySeconds,
+    elapsedSeconds,
+    state.studyTimeLimitSeconds,
+  );
+  state.mindsetStudySeconds = next.totalSeconds;
+  state.mindsetScreenStudySeconds = next.screenSeconds;
+  updateMindsetStudyTimeDisplay();
+  if (state.mindsetScreenStudySeconds >= state.studyTimeLimitSeconds) {
+    stopMindsetStudyClock({ capture: false });
+  }
+}
+
+function startMindsetStudyClock() {
+  if (
+    mindsetStudyClockTimer !== null ||
+    !currentMindset() ||
+    state.mindsetScreenStudySeconds >= state.studyTimeLimitSeconds
+  ) {
+    updateMindsetStudyTimeDisplay();
+    return;
+  }
+  mindsetStudyClockLastTick = window.performance.now();
+  mindsetStudyClockTimer = window.setInterval(
+    () => tickMindsetStudyClock(),
+    250,
+  );
+  updateMindsetStudyTimeDisplay();
+}
+
+function stopMindsetStudyClock({ capture = true, includeHidden = false } = {}) {
+  if (capture && mindsetStudyClockTimer !== null) {
+    tickMindsetStudyClock(window.performance.now(), { includeHidden });
+  }
+  if (mindsetStudyClockTimer !== null) {
+    window.clearInterval(mindsetStudyClockTimer);
+    mindsetStudyClockTimer = null;
+  }
+}
+
+function startNewMindsetStudyScreen() {
+  stopMindsetStudyClock();
+  state.mindsetScreenStudySeconds = 0;
+  updateMindsetStudyTimeDisplay();
+  startMindsetStudyClock();
 }
 
 function canCountStudyTime({ includeHidden = false } = {}) {
@@ -2218,6 +2298,7 @@ function moveMindset(direction, { autoplay = false } = {}) {
     return;
   }
   state.mindsetIndex = (state.mindsetIndex + direction + total) % total;
+  startNewMindsetStudyScreen();
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetMessage = "";
@@ -2296,6 +2377,9 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
   stopListeningSequence();
   speechController.stop();
   clearMindsetTimer();
+  stopMindsetStudyClock();
+  state.mindsetStudySeconds = 0;
+  state.mindsetScreenStudySeconds = 0;
   state.mindsetOrder = [...state.allTerms];
   const resume = fromBeginning
     ? { index: 0, resumed: false }
@@ -2321,8 +2405,12 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
 }
 
 function showMindsetCompletion(total) {
+  stopMindsetStudyClock();
   elements.mindsetCompletionMessage.textContent =
     `${total}件の言葉を最後まで聞き終えました。音声は停止しています。`;
+  elements.mindsetCompletionTime.textContent = formatStudyDuration(
+    state.mindsetStudySeconds,
+  );
   elements.subjectName.textContent = "マインドセット｜一周完了";
   showOnly(elements.mindsetCompletionPanel);
   window.scrollTo({ top: 0, behavior: "smooth" });
@@ -2339,6 +2427,7 @@ function showOnly(panel) {
   if (panel !== elements.studyShell && panel !== elements.mindsetPlayerPanel) {
     speechController.stop();
     stopStudyClock();
+    stopMindsetStudyClock();
     hideListeningPlaybackFeedback();
   }
   if (panel !== elements.routineVideoPanel && routineVideoPlayer) {
@@ -2368,6 +2457,8 @@ function showOnly(panel) {
   );
   if (panel === elements.studyShell) {
     startStudyClock();
+  } else if (panel === elements.mindsetPlayerPanel) {
+    startMindsetStudyClock();
   }
 }
 
@@ -5104,7 +5195,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.179｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.180｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5700,18 +5791,21 @@ window.addEventListener("resize", () => {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     stopStudyClock({ includeHidden: true });
+    stopMindsetStudyClock({ includeHidden: true });
     void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
     if (!isListeningMode()) {
       speechController.stop();
     }
   } else {
     startStudyClock();
+    startMindsetStudyClock();
   }
 });
 
 window.addEventListener("pagehide", () => {
   stopMindsetPlayback();
   stopStudyClock({ includeHidden: true });
+  stopMindsetStudyClock({ includeHidden: true });
   void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
   void ratingSoundPlayer.close();
 });

@@ -471,7 +471,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.179" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.180" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -484,12 +484,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.179") ||
-  !app.includes("v0.179｜") ||
-  !changelog.includes("v0.179") ||
-  !settingsHtml.includes("v0.179") ||
-  !historyHtml.includes("v0.179") ||
-  !analysisHtml.includes("v0.179")
+  !html.includes("v0.180") ||
+  !app.includes("v0.180｜") ||
+  !changelog.includes("v0.180") ||
+  !settingsHtml.includes("v0.180") ||
+  !historyHtml.includes("v0.180") ||
+  !analysisHtml.includes("v0.180")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -498,7 +498,9 @@ if (
   !html.includes('id="mindset-toggle"') ||
   !html.includes('id="mindset-speech-rate"') ||
   !html.includes('id="mindset-interval-seconds"') ||
+  !html.includes('id="mindset-study-time"') ||
   !html.includes('id="mindset-completion-panel"') ||
+  !html.includes('id="mindset-completion-time"') ||
   !html.includes('id="mindset-restart"') ||
   !html.includes('id="mindset-completion-home"') ||
   !app.includes('const mindsetLearningType = "mindset"') ||
@@ -508,6 +510,10 @@ if (
   !app.includes("function mindsetResumePosition(") ||
   !app.includes("function queueMindsetResumeSave(") ||
   !app.includes("function showMindsetCompletion(") ||
+  !app.includes("function tickMindsetStudyClock(") ||
+  !app.includes("function startNewMindsetStudyScreen(") ||
+  !app.includes("state.mindsetScreenStudySeconds < state.studyTimeLimitSeconds") ||
+  !app.includes("state.mindsetStudySeconds") ||
   !app.includes("showMindsetCompletion(state.mindsetOrder.length)") ||
   !app.includes("showMindsetPlayer({ fromBeginning: true })") ||
   !app.includes("void queueMindsetResumeSave(item.id)") ||
@@ -841,7 +847,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.179"') ||
+  !html.includes('href="/styles.css?v=0.180"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

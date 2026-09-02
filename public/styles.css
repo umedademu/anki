@@ -491,10 +491,33 @@ body.is-study-menu-open {
 }
 
 .mindset-position,
+.mindset-study-time,
 .mindset-playback-status {
   margin: 0;
   color: #687b70;
   font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.mindset-progress-summary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.mindset-progress-summary p {
+  margin: 0;
+}
+
+.mindset-study-time span,
+.mindset-completion-time strong {
+  color: #2d6a49;
+  font-variant-numeric: tabular-nums;
+}
+
+.mindset-completion-time {
+  margin: 20px 0 0;
   font-weight: 800;
 }
 

@@ -102,12 +102,18 @@ p {
   padding: 28px 0 calc(126px + env(safe-area-inset-bottom));
 }
 
-body.is-studying .site-header {
+body.is-studying .site-header,
+body.is-mindset-playing .site-header {
   display: none;
 }
 
 body.is-studying .page {
   padding-top: 56px;
+}
+
+body.is-mindset-playing .page {
+  min-height: 100dvh;
+  padding-top: clamp(18px, 5vh, 52px);
 }
 
 .study-shell {
@@ -337,6 +343,7 @@ body.is-study-menu-open {
 .subject-panel,
 .setup-panel,
 .routine-video-panel,
+.mindset-player-panel,
 .completion-card,
 .loading-panel,
 .error-panel {
@@ -348,7 +355,8 @@ body.is-study-menu-open {
 
 .subject-panel,
 .setup-panel,
-.routine-video-panel {
+.routine-video-panel,
+.mindset-player-panel {
   padding: clamp(28px, 6vw, 52px);
 }
 
@@ -427,6 +435,134 @@ body.is-study-menu-open {
   align-items: center;
   justify-content: center;
   text-decoration: none;
+}
+
+.mindset-player-panel {
+  display: grid;
+  width: min(100%, 940px);
+  min-height: min(720px, calc(100dvh - 100px));
+  margin: 0 auto;
+  gap: clamp(16px, 3vw, 26px);
+  background:
+    radial-gradient(circle at 50% 10%, rgb(118 164 127 / 16%), transparent 24rem),
+    rgb(255 255 255 / 94%);
+}
+
+.mindset-player-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.mindset-player-heading h1,
+.mindset-player-heading p {
+  margin: 0;
+}
+
+.mindset-player-heading h1 {
+  margin-top: 6px;
+  color: #1e3527;
+  font-size: clamp(1.25rem, 3vw, 1.8rem);
+}
+
+.mindset-card {
+  display: grid;
+  min-height: 330px;
+  padding: clamp(28px, 7vw, 72px);
+  place-content: center;
+  gap: 24px;
+  background: linear-gradient(145deg, #eef6ef, #fbfaf4);
+  border: 1px solid rgb(41 101 67 / 16%);
+  border-radius: 24px;
+  box-shadow: inset 0 1px rgb(255 255 255 / 70%);
+  text-align: center;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.mindset-player-panel.is-speaking .mindset-card {
+  border-color: rgb(41 112 74 / 42%);
+  box-shadow: 0 14px 42px rgb(41 90 57 / 10%);
+}
+
+.mindset-position,
+.mindset-playback-status {
+  margin: 0;
+  color: #687b70;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.mindset-position {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+}
+
+.mindset-text {
+  max-width: 760px;
+  margin: 0 auto;
+  color: #193624;
+  font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-size: clamp(1.45rem, 4.2vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+}
+
+.mindset-playback-status {
+  min-height: 1.6em;
+  line-height: 1.6;
+}
+
+.mindset-settings {
+  display: grid;
+  padding: 14px 18px;
+  align-items: center;
+  grid-template-columns: auto minmax(160px, 1fr) auto;
+  gap: 12px 18px;
+  background: #f4f7f2;
+  border: 1px solid rgb(34 80 53 / 12%);
+  border-radius: 16px;
+}
+
+.mindset-settings > label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #3f5949;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.mindset-settings output {
+  color: #2d6a49;
+  font-variant-numeric: tabular-nums;
+}
+
+.mindset-settings input[type="range"] {
+  width: 100%;
+}
+
+.mindset-settings .seconds-input input {
+  width: 74px;
+  min-height: 38px;
+  padding: 7px;
+  border: 1px solid rgb(42 91 61 / 24%);
+  border-radius: 10px;
+  font: inherit;
+}
+
+.mindset-controls {
+  display: grid;
+  width: min(100%, 620px);
+  margin: 0 auto;
+  grid-template-columns: 1fr minmax(160px, 1.35fr) 1fr;
+  gap: 10px;
+}
+
+.mindset-controls button {
+  min-height: 52px;
 }
 
 .setup-description,
@@ -2756,6 +2892,7 @@ body.is-listening.is-listening-answer-visible .page {
   .subject-panel,
   .setup-panel,
   .routine-video-panel,
+  .mindset-player-panel,
   .completion-card,
   .loading-panel,
   .error-panel {
@@ -2773,6 +2910,39 @@ body.is-listening.is-listening-answer-visible .page {
   .app-version,
   .header-link {
     font-size: 0.64rem;
+  }
+
+  .mindset-player-panel {
+    min-height: calc(100dvh - 36px);
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .mindset-player-heading {
+    align-items: flex-start;
+  }
+
+  .mindset-player-heading .secondary-button {
+    min-height: 38px;
+    padding: 7px 10px;
+    font-size: 0.68rem;
+  }
+
+  .mindset-card {
+    min-height: 290px;
+    padding: 24px 18px;
+    gap: 18px;
+    border-radius: 18px;
+  }
+
+  .mindset-settings {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .mindset-controls {
+    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+    gap: 7px;
   }
 
   .header-link {
@@ -3102,6 +3272,84 @@ body.is-listening.is-listening-answer-visible .page {
 
   body.is-studying .page {
     padding-top: max(3px, env(safe-area-inset-top));
+  }
+
+  body.is-mindset-playing .page {
+    min-height: 0;
+    padding-top: max(3px, env(safe-area-inset-top));
+  }
+
+  .mindset-player-panel {
+    height: 100%;
+    min-height: 0;
+    padding: 8px 12px;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    gap: 6px;
+    border-radius: 10px;
+    box-shadow: none;
+  }
+
+  .mindset-player-heading h1 {
+    margin-top: 1px;
+    font-size: 0.9rem;
+  }
+
+  .mindset-player-heading .eyebrow {
+    font-size: 0.5rem;
+  }
+
+  .mindset-player-heading .secondary-button {
+    min-height: 28px;
+    padding: 3px 9px;
+    font-size: 0.58rem;
+  }
+
+  .mindset-card {
+    min-height: 0;
+    padding: 8px 24px;
+    gap: 5px;
+    overflow: auto;
+    border-radius: 9px;
+  }
+
+  .mindset-position,
+  .mindset-playback-status {
+    font-size: 0.55rem;
+  }
+
+  .mindset-text {
+    font-size: clamp(1.05rem, 3.6vw, 1.75rem);
+    line-height: 1.4;
+  }
+
+  .mindset-settings {
+    padding: 4px 8px;
+    grid-template-columns: auto minmax(120px, 1fr) auto;
+    gap: 5px 10px;
+    border-radius: 8px;
+  }
+
+  .mindset-settings > label {
+    font-size: 0.58rem;
+  }
+
+  .mindset-settings .seconds-input input {
+    width: 58px;
+    min-height: 28px;
+    padding: 3px 5px;
+    border-radius: 6px;
+  }
+
+  .mindset-controls {
+    width: min(100%, 520px);
+    gap: 5px;
+  }
+
+  .mindset-controls button {
+    min-height: 32px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-size: 0.62rem;
   }
 
   body.is-listening .page,

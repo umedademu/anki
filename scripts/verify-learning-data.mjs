@@ -11,6 +11,7 @@ import {
   loadEnglishDecks,
   loadGeographyDecks,
   loadJapaneseHistoryDecks,
+  loadMindsetDecks,
   loadPoliticsEconomicsDecks,
   loadSourceDecks,
   loadTermImageManifest,
@@ -372,6 +373,10 @@ const {
   decks: sourceClassicalChineseDecks,
   terms: expectedClassicalChineseTerms,
 } = await loadClassicalChineseDecks();
+const {
+  decks: sourceMindsetDecks,
+  terms: expectedMindsetTerms,
+} = await loadMindsetDecks();
 const sourceDeckById = new Map(sourceDecks.map((deck) => [deck.id, deck]));
 if (
   sourceDecks.length !== 3 ||
@@ -383,12 +388,12 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 9 ||
+  catalog.subjects.length !== 10 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese"
+    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
 ) {
   throw new Error(
-    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文の科目一覧が正しくありません。",
+    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(
@@ -417,6 +422,9 @@ const classicalJapaneseSubjectEntry = catalog.subjects.find(
 );
 const classicalChineseSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "classical-chinese",
+);
+const mindsetSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "mindset",
 );
 if (
   subjectEntry.id !== "world-history" ||
@@ -1592,6 +1600,48 @@ if (
   throw new Error("漢文Deck 1〜4の重複または通算順位が正しくありません。");
 }
 
+if (
+  sourceMindsetDecks.length !== 1 ||
+  !mindsetSubjectEntry ||
+  mindsetSubjectEntry.learningType !== "mindset" ||
+  mindsetSubjectEntry.defaultDeckId !== "deck-1" ||
+  mindsetSubjectEntry.termUnitLabel !== "件" ||
+  mindsetSubjectEntry.datasetLabel !== "マインドセット集｜Deck 1" ||
+  mindsetSubjectEntry.termCount !== 115 ||
+  mindsetSubjectEntry.questionCount !== 0 ||
+  mindsetSubjectEntry.decks.length !== 1
+) {
+  throw new Error("マインドセット科目の一覧が正しくありません。");
+}
+const mindsetDeckEntry = mindsetSubjectEntry.decks[0];
+const mindsetSubject = await readJson(mindsetDeckEntry.indexPath);
+const mindsetChunks = await Promise.all(
+  mindsetSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedMindsetTerms = mindsetChunks.flatMap((chunk) => chunk.terms);
+if (
+  mindsetSubject.id !== "mindset" ||
+  mindsetSubject.learningType !== "mindset" ||
+  mindsetSubject.version !== "mindset-deck-1-v1" ||
+  mindsetSubject.version !== sourceMindsetDecks[0].version ||
+  mindsetSubject.contentVersion !== sourceMindsetDecks[0].contentVersion ||
+  mindsetSubject.termCount !== expectedMindsetTerms.length ||
+  mindsetSubject.questionCount !== 0 ||
+  mindsetSubject.availableStages.length !== 0 ||
+  generatedMindsetTerms.length !== expectedMindsetTerms.length ||
+  new Set(generatedMindsetTerms.map((term) => term.id)).size !== 115 ||
+  new Set(generatedMindsetTerms.map((term) => term.content)).size !== 115 ||
+  generatedMindsetTerms.some(
+    (term, index) =>
+      term.id !== expectedMindsetTerms[index].id ||
+      term.content !== expectedMindsetTerms[index].content ||
+      term.term !== term.content ||
+      Object.values(term.stages).some((questions) => questions.length !== 0),
+  )
+) {
+  throw new Error("マインドセット115件の生成内容が元データと一致しません。");
+}
+
 const generatedTermImages = await readJson("term-images.json");
 const expectedTermImages = mergeTermImageManifests([
   await loadTermImageManifest(expectedTerms),
@@ -2206,5 +2256,5 @@ if (duplicateMnemonicYearQuestion) {
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、漢文${generatedClassicalChineseTerms.length}項目・${generatedClassicalChineseQuestions.length}問、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、漢文${generatedClassicalChineseTerms.length}項目・${generatedClassicalChineseQuestions.length}問、マインドセット${generatedMindsetTerms.length}件、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

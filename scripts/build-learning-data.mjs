@@ -70,6 +70,12 @@ const classicalChineseSourceDirectory = path.join(
   "source",
   "classical-chinese",
 );
+const mindsetSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "mindset",
+);
 const outputRoot = path.join(projectRoot, "public", "data");
 const termImageManifestPath = path.join(sourceDirectory, "term-images.json");
 const termImageSourceDirectory = path.join(sourceDirectory, "term-images");
@@ -99,6 +105,8 @@ const classicalJapaneseSubjectId = "classical-japanese";
 const classicalJapaneseSubjectTitle = "古文（国語）";
 const classicalChineseSubjectId = "classical-chinese";
 const classicalChineseSubjectTitle = "漢文（国語）";
+const mindsetSubjectId = "mindset";
+const mindsetSubjectTitle = "マインドセット";
 const chunkSize = 50;
 const schemaVersion = 3;
 const masteryTarget = 2;
@@ -941,6 +949,7 @@ const stableDatasetVersions = new Map([
   ["classical-chinese:deck-2", "classical-chinese-deck-2-v1"],
   ["classical-chinese:deck-3", "classical-chinese-deck-3-v1"],
   ["classical-chinese:deck-4", "classical-chinese-deck-4-v1"],
+  ["mindset:deck-1", "mindset-deck-1-v1"],
 ]);
 
 function datasetVersion(subjectId, deckId) {
@@ -960,6 +969,71 @@ function deckNumberFromLabel(datasetLabel, sourcePath) {
 
 export async function loadSourceDecks() {
   return loadHistoryDecks(await findSourcePaths(), subjectId);
+}
+
+export async function loadMindsetDecks() {
+  const sourcePath = path.join(mindsetSourceDirectory, "mindsets.json");
+  const sourceText = await readFile(sourcePath, "utf8");
+  const source = JSON.parse(sourceText);
+  if (source?.schemaVersion !== 1 || !Array.isArray(source.items)) {
+    throw new Error("マインドセットの元データ形式が正しくありません。");
+  }
+  const terms = source.items.map((item, index) => {
+    const id = String(item?.id ?? "").trim();
+    const content = String(item?.content ?? "").trim();
+    if (!/^MS-\d{6}$/.test(id) || !content) {
+      throw new Error(`マインドセット${index + 1}件目の番号または内容が正しくありません。`);
+    }
+    return {
+      id,
+      datasetLabel: source.datasetLabel,
+      importanceRank: index + 1,
+      difficultyLabel: "Deck 1｜音声聞き流し",
+      category: "",
+      subunit: "",
+      term: content,
+      content,
+      reading: "",
+      aliases: [],
+      prerequisiteIds: [],
+      era: "",
+      geography: {
+        macroRegion: "",
+        regionDetail: "",
+        scale: "",
+        splitMacroRegion: false,
+      },
+      chronology: { displayPeriod: "", sortYear: index + 1 },
+      referenceYear: "",
+      speechReadings: {},
+      integratedAsExplanation: false,
+      stages: { beginner: [], reverse: [], integrated: [] },
+      source: { name: "マインドセット集", url: "" },
+    };
+  });
+  if (
+    terms.length === 0 ||
+    new Set(terms.map((term) => term.id)).size !== terms.length ||
+    new Set(terms.map((term) => term.content)).size !== terms.length
+  ) {
+    throw new Error("マインドセットの番号または内容が重複しています。");
+  }
+  const deck = {
+    id: "deck-1",
+    number: 1,
+    sourcePath,
+    sourceText,
+    sourceFile: path.basename(sourcePath),
+    version: datasetVersion(mindsetSubjectId, "deck-1"),
+    contentVersion: sourceVersion(sourceText),
+    datasetLabel: String(source.datasetLabel ?? "").trim(),
+    difficultyLabel: "Deck 1｜音声聞き流し",
+    terms,
+  };
+  if (!deck.datasetLabel) {
+    throw new Error("マインドセットのデッキ名がありません。");
+  }
+  return { decks: [deck], terms };
 }
 
 async function loadHistoryDecks(sourcePaths, historySubjectId) {
@@ -3238,6 +3312,7 @@ export async function main() {
     earthScienceData,
     classicalJapaneseData,
     classicalChineseData,
+    mindsetData,
   ] = await Promise.all([
     loadSourceDecks(),
     loadJapaneseHistoryDecks(),
@@ -3248,6 +3323,7 @@ export async function main() {
     loadEarthScienceDecks(),
     loadClassicalJapaneseDecks(),
     loadClassicalChineseDecks(),
+    loadMindsetDecks(),
   ]);
   const [
     worldTermImageManifest,
@@ -3302,6 +3378,7 @@ export async function main() {
     ...earthScienceData.decks,
     ...classicalJapaneseData.decks,
     ...classicalChineseData.decks,
+    ...mindsetData.decks,
   ];
   const version = createHash("sha256")
     .update(
@@ -3542,6 +3619,20 @@ export async function main() {
       },
       classicalChineseData.decks,
     ),
+    writeSubjectData(
+      {
+        id: mindsetSubjectId,
+        title: mindsetSubjectTitle,
+        catalogLabel: "マインドセット集",
+        description: "問いや評価を挟まず、言葉を音声で繰り返し聞き流す",
+        learningType: "mindset",
+        termUnitLabel: "件",
+        availableStages: [],
+        filterLabels: {},
+        stageLabels: {},
+      },
+      mindsetData.decks,
+    ),
   ]);
 
   await writeJson(path.join(outputRoot, "index.json"), {
@@ -3566,7 +3657,7 @@ export async function main() {
     classicalChineseData.terms,
   );
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問、古文${classicalJapaneseData.decks.length}デッキ・${classicalJapaneseData.terms.length}項目・${Object.values(classicalJapaneseCounts).reduce((sum, count) => sum + count, 0)}問、漢文${classicalChineseData.decks.length}デッキ・${classicalChineseData.terms.length}項目・${Object.values(classicalChineseCounts).reduce((sum, count) => sum + count, 0)}問を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問、古文${classicalJapaneseData.decks.length}デッキ・${classicalJapaneseData.terms.length}項目・${Object.values(classicalJapaneseCounts).reduce((sum, count) => sum + count, 0)}問、漢文${classicalChineseData.decks.length}デッキ・${classicalChineseData.terms.length}項目・${Object.values(classicalChineseCounts).reduce((sum, count) => sum + count, 0)}問、マインドセット${mindsetData.terms.length}件を生成しました。`,
   );
 }
 

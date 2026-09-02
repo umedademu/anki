@@ -471,7 +471,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.175" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.176" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -484,14 +484,29 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.175") ||
-  !app.includes("v0.175｜") ||
-  !changelog.includes("v0.175") ||
-  !settingsHtml.includes("v0.175") ||
-  !historyHtml.includes("v0.175") ||
-  !analysisHtml.includes("v0.175")
+  !html.includes("v0.176") ||
+  !app.includes("v0.176｜") ||
+  !changelog.includes("v0.176") ||
+  !settingsHtml.includes("v0.176") ||
+  !historyHtml.includes("v0.176") ||
+  !analysisHtml.includes("v0.176")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
+}
+if (
+  !html.includes('id="mindset-player-panel"') ||
+  !html.includes('id="mindset-toggle"') ||
+  !html.includes('id="mindset-speech-rate"') ||
+  !html.includes('id="mindset-interval-seconds"') ||
+  !app.includes('const mindsetLearningType = "mindset"') ||
+  !app.includes("function showMindsetPlayer()") ||
+  !app.includes("function speakCurrentMindset()") ||
+  !app.includes('target: "mindset", language: "ja-JP"') ||
+  !app.includes("shuffleMindsetsForNextRound") ||
+  !styles.includes(".mindset-player-panel") ||
+  !styles.includes(".mindset-card")
+) {
+  throw new Error("マインドセットの音声聞き流し画面と連続再生処理が揃っていません。");
 }
 const obsoleteVideoLabel = "覚え歌";
 if ([html, app, settingsHtml, changelog].some((source) => source.includes(obsoleteVideoLabel))) {
@@ -804,7 +819,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.175"') ||
+  !html.includes('href="/styles.css?v=0.176"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

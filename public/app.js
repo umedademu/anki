@@ -194,6 +194,17 @@ const elements = {
   routineVideoComplete: document.querySelector("#routine-video-complete"),
   routineVideoYoutubeLink: document.querySelector("#routine-video-youtube-link"),
   routineVideoHome: document.querySelector("#routine-video-home"),
+  mindsetPlayerPanel: document.querySelector("#mindset-player-panel"),
+  mindsetPosition: document.querySelector("#mindset-position"),
+  mindsetText: document.querySelector("#mindset-text"),
+  mindsetPlaybackStatus: document.querySelector("#mindset-playback-status"),
+  mindsetSpeechRate: document.querySelector("#mindset-speech-rate"),
+  mindsetSpeechRateOutput: document.querySelector("#mindset-speech-rate-output"),
+  mindsetIntervalSeconds: document.querySelector("#mindset-interval-seconds"),
+  mindsetPrevious: document.querySelector("#mindset-previous"),
+  mindsetToggle: document.querySelector("#mindset-toggle"),
+  mindsetNext: document.querySelector("#mindset-next"),
+  mindsetHome: document.querySelector("#mindset-home"),
   cloudStatus: document.querySelector("#cloud-status"),
   subjectName: document.querySelector("#subject-name"),
   subjectProgressName: document.querySelector("#subject-progress-name"),
@@ -339,6 +350,13 @@ const state = {
   answerRevealedAt: 0,
   studyMenuOpen: false,
   resumeListeningAfterMenu: false,
+  mindsetOrder: [],
+  mindsetIndex: 0,
+  mindsetPaused: true,
+  mindsetSpeechComplete: false,
+  mindsetTimer: null,
+  mindsetRunId: 0,
+  mindsetMessage: "",
 };
 
 const historyLimit = 200;
@@ -401,6 +419,7 @@ async function syncRatingSoundSettings(settings = {}) {
 
 const listeningModes = new Set(["listen-answer"]);
 const classicalChineseSubjectId = "classical-chinese";
+const mindsetLearningType = "mindset";
 const classicalChineseListeningStepDelayMilliseconds = 1000;
 const oneQuestionPerTermMode = "one-per-term";
 const studyMenuReviewFields = {
@@ -2006,11 +2025,259 @@ async function loadQuestionImages() {
   }
 }
 
+function isMindsetMode() {
+  return state.subject?.learningType === mindsetLearningType;
+}
+
+function clearMindsetTimer() {
+  if (state.mindsetTimer !== null) {
+    window.clearTimeout(state.mindsetTimer);
+    state.mindsetTimer = null;
+  }
+}
+
+function stopMindsetPlayback({ reset = false } = {}) {
+  state.mindsetRunId += 1;
+  clearMindsetTimer();
+  speechController.stop();
+  state.mindsetPaused = true;
+  state.mindsetSpeechComplete = false;
+  state.mindsetMessage = "";
+  if (reset) {
+    state.mindsetOrder = [];
+    state.mindsetIndex = 0;
+  }
+}
+
+function currentMindset() {
+  return state.mindsetOrder[state.mindsetIndex] ?? null;
+}
+
+function mindsetContent(item = currentMindset()) {
+  return String(item?.content ?? item?.term ?? "").trim();
+}
+
+function renderMindsetPlayer() {
+  const item = currentMindset();
+  const total = state.mindsetOrder.length;
+  elements.mindsetPosition.textContent = total
+    ? `${state.mindsetIndex + 1} / ${total}`
+    : "0 / 0";
+  elements.mindsetText.textContent = mindsetContent(item);
+  elements.mindsetPlaybackStatus.textContent = state.mindsetMessage ||
+    (state.mindsetPaused
+      ? "再生ボタンを押すと、音声で順番に読み上げます。"
+      : "読み上げています。");
+  elements.mindsetToggle.textContent = state.mindsetPaused
+    ? state.mindsetSpeechComplete
+      ? "次を再生"
+      : "再生"
+    : "一時停止";
+  const disabled = !item || !speechController.supported;
+  elements.mindsetToggle.disabled = disabled;
+  elements.mindsetPrevious.disabled = !item;
+  elements.mindsetNext.disabled = !item;
+  elements.mindsetPlayerPanel.classList.toggle(
+    "is-speaking",
+    !state.mindsetPaused && !state.mindsetSpeechComplete,
+  );
+}
+
+function shuffleMindsetsForNextRound(previousId) {
+  const order = shuffleTasks(state.allTerms);
+  if (order.length > 1 && order[0]?.id === previousId) {
+    [order[0], order[1]] = [order[1], order[0]];
+  }
+  return order;
+}
+
+function scheduleNextMindset(runId) {
+  const seconds = normalizeListeningQuestionIntervalSeconds(
+    state.listeningQuestionIntervalSeconds,
+  );
+  state.mindsetMessage = seconds > 0
+    ? `${seconds}秒後に次の言葉へ進みます。`
+    : "次の言葉へ進みます。";
+  renderMindsetPlayer();
+  state.mindsetTimer = window.setTimeout(() => {
+    state.mindsetTimer = null;
+    if (
+      runId === state.mindsetRunId &&
+      !state.mindsetPaused &&
+      isMindsetMode()
+    ) {
+      moveMindset(1, { autoplay: true });
+    }
+  }, seconds * 1000);
+}
+
+function speakCurrentMindset() {
+  const item = currentMindset();
+  const content = mindsetContent(item);
+  if (!item || !content || !speechController.supported) {
+    state.mindsetPaused = true;
+    state.mindsetMessage = "この端末では音声を再生できません。";
+    renderMindsetPlayer();
+    return;
+  }
+  clearMindsetTimer();
+  speechController.stop();
+  speechController.unlock();
+  const runId = ++state.mindsetRunId;
+  state.mindsetPaused = false;
+  state.mindsetSpeechComplete = false;
+  state.mindsetMessage = "読み上げています。";
+  renderMindsetPlayer();
+  const nextItem = state.mindsetOrder[
+    (state.mindsetIndex + 1) % state.mindsetOrder.length
+  ];
+  if (nextItem) {
+    void speechController.preload([
+      { target: "mindset", language: "ja-JP", text: mindsetContent(nextItem) },
+    ]);
+  }
+  const started = speechController.speak(
+    [{ target: "mindset", language: "ja-JP", text: content }],
+    {
+      onComplete: () => {
+        if (runId !== state.mindsetRunId || state.mindsetPaused) return;
+        state.mindsetSpeechComplete = true;
+        scheduleNextMindset(runId);
+      },
+      onError: (error) => {
+        if (runId !== state.mindsetRunId) return;
+        state.mindsetPaused = true;
+        state.mindsetSpeechComplete = false;
+        state.mindsetMessage = `${error.message} 再生ボタンを押してやり直してください。`;
+        renderMindsetPlayer();
+      },
+    },
+  );
+  if (!started) {
+    state.mindsetPaused = true;
+    state.mindsetMessage = "音声を開始できませんでした。再生ボタンを押してやり直してください。";
+    renderMindsetPlayer();
+  }
+}
+
+function moveMindset(direction, { autoplay = false } = {}) {
+  const total = state.mindsetOrder.length;
+  if (!total) return;
+  state.mindsetRunId += 1;
+  clearMindsetTimer();
+  speechController.stop();
+  if (direction > 0 && state.mindsetIndex === total - 1) {
+    const previousId = currentMindset()?.id ?? "";
+    state.mindsetOrder = shuffleMindsetsForNextRound(previousId);
+    state.mindsetIndex = 0;
+  } else {
+    state.mindsetIndex = (state.mindsetIndex + direction + total) % total;
+  }
+  state.mindsetPaused = true;
+  state.mindsetSpeechComplete = false;
+  state.mindsetMessage = "";
+  renderMindsetPlayer();
+  if (autoplay) {
+    speakCurrentMindset();
+  }
+}
+
+function toggleMindsetPlayback() {
+  if (!currentMindset() || !speechController.supported) return;
+  speechController.unlock();
+  if (!state.mindsetPaused) {
+    state.mindsetPaused = true;
+    clearMindsetTimer();
+    if (!speechController.pause() && speechController.currentTarget) {
+      speechController.stop();
+      state.mindsetSpeechComplete = false;
+    }
+    state.mindsetMessage = "一時停止中です。";
+    renderMindsetPlayer();
+    return;
+  }
+  if (state.mindsetSpeechComplete) {
+    moveMindset(1, { autoplay: true });
+    return;
+  }
+  if (speechController.paused) {
+    state.mindsetPaused = false;
+    state.mindsetMessage = "読み上げています。";
+    if (speechController.resume()) {
+      renderMindsetPlayer();
+      return;
+    }
+  }
+  speakCurrentMindset();
+}
+
+function updateMindsetSpeechRateOutput() {
+  elements.mindsetSpeechRateOutput.value =
+    `${Number(elements.mindsetSpeechRate.value).toFixed(2)}倍`;
+}
+
+async function saveMindsetPlaybackSettings({ restartSpeech = false } = {}) {
+  const wasPlaying = !state.mindsetPaused;
+  const settings = normalizeSpeechSettings({
+    ...loadSpeechSettings(),
+    rate: Number(elements.mindsetSpeechRate.value),
+  });
+  state.listeningQuestionIntervalSeconds =
+    normalizeListeningQuestionIntervalSeconds(
+      elements.mindsetIntervalSeconds.value,
+    );
+  elements.mindsetIntervalSeconds.value = String(
+    state.listeningQuestionIntervalSeconds,
+  );
+  saveSpeechSettings(settings);
+  updateMindsetSpeechRateOutput();
+  if (restartSpeech && wasPlaying) {
+    speakCurrentMindset();
+  }
+  if (!getStoredAccessKey()) return;
+  try {
+    const saved = await saveCloudSettings({
+      ...settings,
+      listeningQuestionIntervalSeconds: state.listeningQuestionIntervalSeconds,
+    });
+    saveSpeechSettings(saved);
+  } catch (error) {
+    state.mindsetMessage = `設定をCloudflareへ保存できませんでした。${error.message}`;
+    renderMindsetPlayer();
+  }
+}
+
+function showMindsetPlayer() {
+  stopListeningSequence();
+  speechController.stop();
+  clearMindsetTimer();
+  state.mindsetOrder = [...state.allTerms];
+  state.mindsetIndex = 0;
+  state.mindsetPaused = true;
+  state.mindsetSpeechComplete = false;
+  state.mindsetMessage = speechController.supported
+    ? "再生ボタンを押すと、音声で順番に読み上げます。"
+    : "この端末では音声を再生できません。";
+  const settings = loadSpeechSettings();
+  elements.mindsetSpeechRate.value = String(settings.rate);
+  elements.mindsetIntervalSeconds.value = String(
+    state.listeningQuestionIntervalSeconds,
+  );
+  updateMindsetSpeechRateOutput();
+  elements.subjectName.textContent = "マインドセット｜Deck 1";
+  showOnly(elements.mindsetPlayerPanel);
+  renderMindsetPlayer();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 function showOnly(panel) {
   if (panel !== elements.studyShell && state.studyMenuOpen) {
     closeStudyMenu({ resumeStudy: false });
   }
-  if (panel !== elements.studyShell) {
+  if (panel !== elements.mindsetPlayerPanel && state.mindsetOrder.length > 0) {
+    stopMindsetPlayback({ reset: true });
+  }
+  if (panel !== elements.studyShell && panel !== elements.mindsetPlayerPanel) {
     speechController.stop();
     stopStudyClock();
     hideListeningPlaybackFeedback();
@@ -2020,6 +2287,10 @@ function showOnly(panel) {
   }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
   document.body.classList.toggle(
+    "is-mindset-playing",
+    panel === elements.mindsetPlayerPanel,
+  );
+  document.body.classList.toggle(
     "is-listening",
     panel === elements.studyShell && isListeningMode(),
   );
@@ -2028,6 +2299,7 @@ function showOnly(panel) {
     elements.subjectPanel,
     elements.setupPanel,
     elements.routineVideoPanel,
+    elements.mindsetPlayerPanel,
     elements.studyShell,
     elements.errorPanel,
   ].forEach((candidate) =>
@@ -4771,7 +5043,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.175｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.176｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -4798,7 +5070,9 @@ function renderSubjectOptions() {
       const title = document.createElement("strong");
       title.textContent = subject.title;
       const description = document.createElement("small");
-      description.textContent = `${subject.description}（${subject.termCount}${termUnitLabel(subject)}・${subject.questionCount}問）`;
+      description.textContent = subject.learningType === mindsetLearningType
+        ? `${subject.description}（${subject.termCount}${termUnitLabel(subject)}）`
+        : `${subject.description}（${subject.termCount}${termUnitLabel(subject)}・${subject.questionCount}問）`;
       button.append(title, description);
       return button;
     }),
@@ -4945,7 +5219,11 @@ elements.subjectOptions.addEventListener("click", (event) => {
     .catch(() => {})
     .then(() => activateSubject(button.dataset.subjectId))
     .then(() => {
-      showOnly(elements.setupPanel);
+      if (isMindsetMode()) {
+        showMindsetPlayer();
+      } else {
+        showOnly(elements.setupPanel);
+      }
       queueVisibleSetupPreferenceSave();
     })
     .catch((error) => {
@@ -4989,6 +5267,26 @@ elements.routineVideoComplete.addEventListener("click", () => {
 });
 elements.routineVideoHome.addEventListener("click", () => {
   showSubjectSelection();
+});
+elements.mindsetPrevious.addEventListener("click", () => {
+  moveMindset(-1, { autoplay: true });
+});
+elements.mindsetToggle.addEventListener("click", toggleMindsetPlayback);
+elements.mindsetNext.addEventListener("click", () => {
+  moveMindset(1, { autoplay: true });
+});
+elements.mindsetHome.addEventListener("click", () => {
+  void returnToSubjectSelection();
+});
+elements.mindsetSpeechRate.addEventListener(
+  "input",
+  updateMindsetSpeechRateOutput,
+);
+elements.mindsetSpeechRate.addEventListener("change", () => {
+  void saveMindsetPlaybackSettings({ restartSpeech: true });
+});
+elements.mindsetIntervalSeconds.addEventListener("change", () => {
+  void saveMindsetPlaybackSettings();
 });
 
 elements.deckFilter.addEventListener("change", () => {
@@ -5239,6 +5537,22 @@ elements.studyShell.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (!elements.mindsetPlayerPanel.classList.contains("is-hidden")) {
+    if (event.target.closest("button, a, input, textarea, select") || event.repeat) {
+      return;
+    }
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      moveMindset(-1, { autoplay: true });
+    } else if (event.key === "ArrowRight") {
+      event.preventDefault();
+      moveMindset(1, { autoplay: true });
+    } else if (event.key === " " || event.key === "Enter") {
+      event.preventDefault();
+      toggleMindsetPlayback();
+    }
+    return;
+  }
   if (state.studyMenuOpen) {
     if (event.key === "Escape") {
       event.preventDefault();
@@ -5329,6 +5643,7 @@ document.addEventListener("visibilitychange", () => {
 });
 
 window.addEventListener("pagehide", () => {
+  stopMindsetPlayback();
   stopStudyClock({ includeHidden: true });
   void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
   void ratingSoundPlayer.close();

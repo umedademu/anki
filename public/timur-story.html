@@ -6,14 +6,14 @@
     <meta name="description" content="地図と短い物語でたどるティムールの生涯。クリックで進む13場面の歴史紙芝居。" />
     <title>ティムールの遠征｜地図でたどる世界史</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/timur-story.css?v=0.181" />
-    <script src="/timur-story.js?v=0.181" type="module"></script>
+    <link rel="stylesheet" href="/timur-story.css?v=0.182" />
+    <script src="/timur-story.js?v=0.182" type="module"></script>
   </head>
   <body>
     <header class="story-header">
       <a href="/" class="home-link">← 科目選択へ</a>
       <span class="series-name">地図でたどる世界史 <span class="experiment">試作</span></span>
-      <span class="version">v0.181</span>
+      <span class="version">v0.182</span>
     </header>
     <main class="story-shell">
       <div class="introduction">
@@ -34,7 +34,7 @@
         <div class="map-panel">
           <div class="map-heading">
             <p id="map-heading">舞台は、中央アジア</p>
-            <button type="button" id="replay" class="replay-button" aria-label="この場面の動きをもう一度見る">↻ 動きをもう一度</button>
+            <button type="button" id="replay" class="replay-button" aria-label="この場面の地図と人物の動きをもう一度見る">↻ 動きをもう一度</button>
           </div>
           <div class="map-viewport">
             <svg id="story-map" viewBox="0 65 865 575" role="img" aria-labelledby="map-title map-description">
@@ -68,6 +68,7 @@
             <span><i class="legend-plan"></i>実現しなかった計画</span>
           </div>
           <p class="map-caption" id="map-caption">色は地域の位置、矢印は移動の方向を示す概略図です。厳密な国境・領土・行軍路ではありません。</p>
+          <figure class="character-theater" id="character-theater" aria-labelledby="theater-title" aria-describedby="theater-description"></figure>
         </div>
 
         <article class="narrative" id="narrative" aria-live="polite" aria-atomic="true">
@@ -96,6 +97,7 @@
         <span>歴史の紙芝居・実験室</span>
         <details>
           <summary>地図と説明について</summary>
+          <p>人物は、衣装と色で見分ける約3頭身のドット絵です。表情・動き・吹き出しは理解を助けるための演出で、実際の肖像や発言の再現ではありません。「模式」とした人物は、各勢力を代表するイメージです。結婚の場面のチンギス＝ハンは祖先として表示しています。</p>
           <p>提示された文章をもとに、ティムール本人の生涯を13場面に再構成しました。北方・イラン・コーカサスへの遠征は時期が重なるため、地域ごとに整理しています。地図の色は注目地域を示し、すべてを同じ方法で支配したという意味ではありません。</p>
           <p>地形は <a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth の公開地図データ</a>を簡略化しています。現代の国境は表示していません。中央アジアの湖は過去の大きな湖形を含む概略です。</p>
           <p>年次・地名の確認：<a href="https://www.metmuseum.org/essays/the-art-of-the-timurid-period-ca-1370-1507" target="_blank" rel="noreferrer">メトロポリタン美術館「ティムール朝の時代」</a>、<a href="https://www.iranicaonline.org/articles/otrar/" target="_blank" rel="noreferrer">イラン百科事典「オトラル」</a>。</p>

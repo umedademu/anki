@@ -40,7 +40,7 @@ h1 { margin: 0; font-size: clamp(28px, 3.2vw, 44px); letter-spacing: .09em; line
 .map-heading p { margin: 0; font-size: 12px; font-weight: 700; }
 .replay-button { border: 0; border-bottom: 1px solid #bac7c6; padding: 6px 0; color: #536c72; font-size: 11px; background: none; white-space: nowrap; }
 .map-viewport { position: relative; margin: auto 0; }
-#story-map { display: block; width: 100%; height: clamp(300px, 40vh, 420px); overflow: hidden; }
+#story-map { display: block; width: 100%; height: clamp(240px, 31vh, 310px); overflow: hidden; }
 .north-mark { position: absolute; top: 14px; left: 20px; text-align: center; font-size: 11px; color: #6e8488; line-height: 1.5; }
 .map-legend { display: flex; flex-wrap: wrap; gap: 9px 16px; padding: 8px 20px 0; font-size: 10px; color: #4a666c; }
 .map-legend span { display: inline-flex; align-items: center; gap: 5px; }
@@ -87,6 +87,60 @@ progress::-moz-progress-bar { background: var(--copper); }
 .story-footer summary { cursor: pointer; text-align: right; }
 .story-footer p { line-height: 1.9; }
 .no-script { padding: 20px; background: #f1deca; }
+
+/* 人物劇は地名を隠さないよう、地図の下の独立した舞台に置く。 */
+.character-theater { margin: 0; border-top: 1px solid #aabbb7; background: #f1e9d8; }
+.theater-heading { display: flex; align-items: baseline; gap: 10px; padding: 11px 16px 10px; color: #415558; font-size: 12px; font-weight: 700; }
+.theater-eyebrow { flex: 0 0 auto; padding: 3px 5px; color: #f8eed8; background: #415b65; font-size: 9px; letter-spacing: .04em; }
+.theater-set { position: relative; isolation: isolate; padding: 11px 18px 12px; overflow: hidden; border-top: 2px solid #c0cac0; }
+.theater-backdrop { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; }
+.theater-cast { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 88px; max-width: 580px; margin: auto; }
+.theater-cast[data-count="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.theater-character { --direction: 1; min-width: 0; text-align: center; }
+.theater-character.character-1 { --direction: -1; }
+.character-speech { position: relative; display: grid; min-height: 35px; padding: 5px 7px; background: #fffaf0; border: 2px solid #52656a; box-shadow: 2px 2px 0 #90a8aa; color: #394c53; font-size: 11px; font-weight: 700; line-height: 1.5; }
+.character-speech::after { content: ""; position: absolute; bottom: -6px; left: calc(50% - 3px); width: 7px; height: 6px; background: #fffaf0; border-right: 2px solid #52656a; border-bottom: 2px solid #52656a; }
+.character-speech > span { grid-area: 1 / 1; align-self: center; overflow-wrap: anywhere; }
+.character-figure { position: relative; height: 160px; display: flex; align-items: end; justify-content: center; }
+.character-motion { position: relative; width: 104px; height: 156px; flex-shrink: 0; }
+.pixel-person { display: block; width: 100%; height: 100%; overflow: visible; }
+.character-shadow { position: absolute; bottom: 3px; left: calc(50% - 32px); width: 64px; height: 8px; background: #67533742; clip-path: polygon(10% 0, 90% 0, 90% 25%, 100% 25%, 100% 75%, 90% 75%, 90% 100%, 10% 100%, 10% 75%, 0 75%, 0 25%, 10% 25%); }
+.character-name { position: relative; display: inline-block; min-height: 22px; max-width: 100%; padding: 3px 7px; color: #fff8e9; background: #3a515b; border-bottom: 2px solid #263e45; font-size: 10px; line-height: 1.5; font-weight: 700; overflow-wrap: anywhere; }
+.theater-event { position: absolute; left: 50%; top: 89px; display: flex; width: 116px; align-items: center; flex-direction: column; gap: 8px; transform: translateX(-50%); pointer-events: none; }
+.theater-event svg { width: 46px; height: 46px; }
+.theater-event > span { padding: 4px 6px; color: #5b4335; background: #fcf1d9ed; box-shadow: 2px 2px 0 #b2a284; font-size: 10px; font-weight: 700; text-align: center; }
+.ancestor-line { display: flex; align-items: center; justify-content: center; gap: 10px; border-top: 1px dashed #c9b997; padding: 3px 12px; color: #725b43; font-size: 10px; line-height: 1.7; }
+.ancestor-line .pixel-person { width: 33px; height: 50px; background: #dfd1b3; border: 2px solid #aa9270; }
+.captive-bars { position: absolute; width: 87px; height: 127px; bottom: 4px; left: calc(50% - 34px); border: 5px solid #546873; border-bottom-width: 7px; background: #8da6ae16; display: flex; justify-content: space-around; box-shadow: 2px 2px 0 #dae0d3; }
+.captive-bars i { width: 4px; height: 100%; background: #647987; box-shadow: 2px 0 0 #b3c4c5; }
+.captive-bars::after { content: ""; position: absolute; top: 67%; width: 100%; height: 4px; background: #546873; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.expression-before, .speech-before { opacity: 0; animation: reaction-before 1.35s step-end both; }
+.expression-after, .speech-after { opacity: 1; animation: reaction-after 1.35s step-end both; }
+.theater-event { animation: event-enter 1.8s steps(3, end) both; }
+.pose-advance .character-motion { animation: pixel-advance 1.7s steps(4, end) both; }
+.pose-advance .pixel-foot-left { animation: pixel-step .3s steps(2, end) 5; }
+.pose-advance .pixel-foot-right { animation: pixel-step .3s steps(2, end) .15s 5; }
+.pose-recoil .character-motion { animation: pixel-recoil 1.5s steps(3, end) .4s both; }
+.pose-approach .character-motion { animation: pixel-approach 1.6s steps(4, end) both; }
+.pose-offer .pixel-arm-right { transform-box: fill-box; transform-origin: center top; animation: pixel-offer 1.6s steps(3, end) both; }
+.pose-ill .character-motion { transform-origin: center bottom; animation: pixel-ill 2s steps(4, end) both; }
+.action-marriage .theater-event svg { animation: pixel-heart .5s steps(2, end) 1.4s 3; }
+.action-gift .theater-event { animation: give-scroll 1.8s steps(5, end) both; }
+.action-plan .theater-event { animation: none; }
+.captive-bars { animation: capture-bars 1.65s step-end both; }
+@keyframes reaction-before { from { opacity: 1; } to { opacity: 0; } }
+@keyframes reaction-after { from { opacity: 0; } to { opacity: 1; } }
+@keyframes pixel-advance { 0% { transform: translateX(calc(var(--direction) * -9px)); } 45% { transform: translateX(calc(var(--direction) * 7px)) translateY(-3px); } 75% { transform: translateX(calc(var(--direction) * 17px)); } 100% { transform: translateX(calc(var(--direction) * 10px)); } }
+@keyframes pixel-step { 50% { transform: translateY(-2px); } }
+@keyframes pixel-recoil { 0%, 35% { transform: translateX(0); } 55% { transform: translateX(calc(var(--direction) * -13px)) rotate(calc(var(--direction) * 5deg)); } 100% { transform: translateX(calc(var(--direction) * -8px)); } }
+@keyframes pixel-approach { from { transform: translateX(calc(var(--direction) * -6px)); } to { transform: translateX(calc(var(--direction) * 10px)); } }
+@keyframes pixel-offer { 50%, 100% { transform: rotate(-30deg); } }
+@keyframes pixel-ill { from { transform: translateY(0); } to { transform: translateY(4px) rotate(-7deg); } }
+@keyframes event-enter { 0%, 45% { opacity: 0; transform: translateX(-50%) translateY(7px); } 75% { opacity: 1; transform: translateX(-50%) translateY(-3px); } 100% { opacity: 1; transform: translateX(-50%); } }
+@keyframes pixel-heart { 50% { transform: translateY(-4px) scale(1.12); } }
+@keyframes give-scroll { 0% { opacity: 0; transform: translateX(-80%); } 30% { opacity: 1; } 100% { opacity: 1; transform: translateX(-30%); } }
+@keyframes capture-bars { 0% { opacity: 0; } 100% { opacity: 1; } }
 
 /* 地名は輪郭を付け、地形や矢印の上でも読めるようにする。 */
 #story-map text { font-family: "Yu Gothic", "Meiryo", sans-serif; paint-order: stroke; stroke: #f4f0e6; stroke-width: 5px; stroke-linejoin: round; fill: #596d6b; font-size: 17px; }
@@ -154,6 +208,21 @@ progress::-moz-progress-bar { background: var(--copper); }
   #story-map.overview .place-label, #story-map.overview .capital-label, #story-map.overview .region-label { font-size: 40px; }
   .map-legend { font-size: 9px; gap: 8px 12px; }
   .map-caption { font-size: 9px; margin-top: 8px; margin-bottom: 12px; }
+  .theater-heading { font-size: 11px; padding: 10px 12px; gap: 7px; }
+  .theater-set { padding: 10px 9px; }
+  .theater-cast { gap: 42px; }
+  .character-speech { min-height: 40px; font-size: 10px; padding: 4px; }
+  .character-figure { height: 140px; }
+  .character-motion { width: 92px; height: 138px; }
+  .character-name { font-size: 9px; padding: 3px 4px; }
+  .theater-event { width: 78px; top: 89px; gap: 6px; }
+  .theater-event svg { width: 32px; height: 32px; }
+  .theater-event > span { font-size: 9px; padding: 3px; }
+  .theater-cast[data-count="3"] { gap: 7px; }
+  .theater-cast[data-count="3"] .character-motion { width: 74px; height: 111px; }
+  .theater-cast[data-count="3"] .character-figure { height: 115px; }
+  .theater-cast[data-count="3"] .character-speech { font-size: 9px; }
+  .captive-bars { width: 77px; height: 112px; left: calc(50% - 29px); border-width: 4px; }
   .north-mark { left: 12px; top: 8px; font-size: 9px; }
   .narrative { padding: 22px; }
   .scene-kicker { margin-top: 18px; }

@@ -102,17 +102,6 @@ p {
   padding: 28px 0 calc(126px + env(safe-area-inset-bottom));
 }
 
-.experimental-story-link {
-  margin: 18px 0 0;
-  font-size: 0.72rem;
-  line-height: 1.8;
-}
-
-.experimental-story-link a {
-  color: #63736a;
-  text-underline-offset: 3px;
-}
-
 body.is-studying .site-header,
 body.is-mindset-playing .site-header {
   display: none;

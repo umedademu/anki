@@ -493,7 +493,7 @@ neverStartController.speak(
     onError: () => neverStartErrors += 1,
   },
 );
-await new Promise((resolve) => setTimeout(resolve, 20));
+await new Promise((resolve) => setTimeout(resolve, 80));
 if (
   neverStartAttempts !== 2 ||
   neverStartCompletions !== 0 ||

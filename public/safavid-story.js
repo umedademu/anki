@@ -1,4 +1,4 @@
-import {places,zones,scenes} from "./safavid-scenes.js?v=0.185";
+import {places,zones,scenes} from "./safavid-scenes.js?v=0.186";
 
 const NS="http://www.w3.org/2000/svg";
 const project=([lon,lat])=>[(lon-20)*12,(58-lat)*15];
@@ -87,6 +87,24 @@ function drawMap(scene){
     for(const [tx,ty,text,color] of [[mid,43,"バザール","#a98443"],[mid-80,101,"王宮","#96728b"],[mid+80,101,"モスク","#4d858b"],[mid,164,"王のモスク","#4d858b"]])city.append(svg("text",{x:tx,y:ty,"text-anchor":"middle",fill:color,class:"plan-building"},text));
     const [px,py]=toScreen(places.isfahan.point);map.insertBefore(svg("line",{x1:width/2,y1:cy+186,x2:px,y2:py,stroke:"#6f9389","stroke-dasharray":"3 3"}),city);
   }
+  const imageCache=new Set();
+  function preload(key){if(!key||imageCache.has(key))return;imageCache.add(key);const img=new Image();img.src=`/images/safavid/${key}.png`;}
+  const root=byId("map-characters");
+  if(root){root.replaceChildren();root.dataset.scene=scene.id;root.dataset.phase="loading";}
+  const small=matchMedia("(max-width: 740px)").matches;
+  const items=(root?[...(scene.props??[]),...(scene.actors??[])]:[]).map(item=>{
+    const node=document.createElement("div");
+    node.className=`safavid-map-item${item.kind==="prop"?" is-prop":""}${item.compact?" is-compact":""}`;
+    node.dataset.name=item.name;
+    const size=item.kind==="prop"?(item.size??76):item.compact?(small?44:54):(small?54:70);
+    node.style.setProperty("--item-width",`${size}px`);
+    node.style.setProperty("--item-height",`${item.kind==="prop"?size:size*1.5}px`);
+    node.innerHTML=`<span class="safavid-connector"></span><div class="safavid-figure"><span class="safavid-bubble"></span><img src="/images/safavid/${item.image}.png" width="${item.kind==="prop"?192:128}" height="192" alt="${item.name}" draggable="false"><span class="safavid-name">${item.name}</span></div>`;
+    root.append(node);
+    preload(item.image);
+    if(item.afterImage)preload(item.afterImage);
+    return {item,node,figure:node.querySelector(".safavid-figure"),image:node.querySelector("img"),bubble:node.querySelector(".safavid-bubble"),connector:node.firstElementChild};
+  });
   let frame=0,cancelled=false;
   const update=p=>{
     map.dataset.progress=p.toFixed(3);map.dataset.phase=p>=1?"complete":"moving";
@@ -100,6 +118,31 @@ function drawMap(scene){
       path.setAttribute("opacity",opacity);dot.setAttribute("opacity",q>0&&q<1?opacity:0);head.setAttribute("opacity",q>0?opacity:0);
       dot.setAttribute("cx",at.x);dot.setAttribute("cy",at.y);dot.dataset.progress=q.toFixed(3);
       head.setAttribute("transform",`translate(${at.x},${at.y}) rotate(${Math.atan2(at.y-prev.y,at.x-prev.x)*180/Math.PI})`);
+    }
+    for(const {item,node,figure,image,bubble,connector} of items){
+      let pos;
+      const moving=item.route!==undefined&&p<1;
+      if(item.route!==undefined&&routeNodes[item.route]){
+        const {route,path,length}=routeNodes[item.route];
+        const q=clamp((p-(route.start??0))/((route.end??1)-(route.start??0)));
+        const at=path.getPointAtLength(q*length);
+        pos=[at.x,at.y];
+      }else{
+        const rawPoint=typeof item.at==="string"?places[item.at]?.point??[0,0]:item.at;
+        pos=toScreen(rawPoint);
+      }
+      const arrival=item.route===undefined?1:clamp((p-.78)/.22);
+      const offset=(item.offset??[0,0]).map(v=>v*arrival);
+      node.hidden=p<(item.from??0);
+      node.style.transform=`translate(${pos[0]}px,${pos[1]}px)`;
+      figure.style.transform=`translate(calc(-50% + ${offset[0]}px),${offset[1]}px)`;
+      connector.style.width=`${Math.hypot(...offset)}px`;
+      connector.style.transform=`rotate(${Math.atan2(offset[1],offset[0])}rad)`;
+      const changed=p>=1;
+      const key=changed&&item.afterImage?item.afterImage:item.image;
+      if(node.dataset.image!==key){image.src=`/images/safavid/${key}.png`;node.dataset.image=key;}
+      node.classList.toggle("is-walking",Boolean(moving&&!reduced.matches));
+      bubble.textContent=changed&&item.bubble?item.bubble:"";
     }
     if(ring){ring.setAttribute("r",8+7*Math.sin(p*Math.PI));ring.setAttribute("opacity",.45+.45*p);}
     if(city)city.setAttribute("opacity",String(.3+.7*p));

@@ -22,14 +22,27 @@ export const characterScenes = {
   north: expedition("north", "sarai", actor("トクタミシュ", "tokhtamysh-angry", [47.2, 47.2], { afterImage: "tokhtamysh-worried", side: -1 }), "サマルカンド → カスピ海の北へ", "トクタミシュを破り、北方の勢力を弱める", "勢力が弱まる"),
   iran: expedition("iran", "isfahan", actor("イランの諸勢力（模式）", "ruler-calm", [51.68, 32.65], { afterImage: "ruler-worried", side: -1 }), "サマルカンド → イランへ", "イランの諸勢力を倒し、支配下へ", "支配下へ"),
   caucasus: expedition("caucasus", "georgia", actor("現地の勢力（模式）", "ruler-calm", [44.8, 41.7], { afterImage: "ruler-worried", side: -1 }), "イラン → 黒海とカスピ海の間へ", "アルメニア・グルジアにも進出", "ここにも軍が！"),
-  delhi: expedition("india", "delhi", actor("トゥグルク朝（模式）", "ruler-calm", [77.21, 28.61], { afterImage: "ruler-worried", side: 1 }), "サマルカンド → 西北インドへ", "1398年、デリーを占領。略奪で王朝に打撃", "王朝に打撃"),
+  delhi: {
+    action: "march", routeKeys: ["india"], destination: "delhi",
+    before: "サマルカンド → 西北インドへ", after: "1398年、デリーを占領。略奪で王朝に打撃", result: "王朝に打撃",
+    cast: [
+      actor("ティムール", "timur-march", capital, { travel: true }),
+      actor("トゥグルク朝（模式）", "ruler-calm", [77.21, 28.61], { afterImage: "ruler-worried", side: 0.7 }),
+      actor("インドの戦象", "war-elephant", [77.21, 28.61], { side: 1.8 })
+    ],
+  },
   syria: {
     action: "march", routeKeys: ["syria", "baghdad"], destination: "baghdad", before: "サマルカンド → ダマスクス → バグダード", after: "二つの町を占領。大きな被害が生まれた", result: "町に被害が…",
     cast: [actor("ティムール", "timur-march", capital, { travel: true }), actor("シリアの勢力（模式）", "ruler-calm", [36.29, 33.51], { side: -1, afterImage: "ruler-worried", reactAt: .41, until: .5 }), actor("イラクの勢力（模式）", "ruler-calm", [44.37, 33.31], { side: 1, afterImage: "ruler-worried", from: .5, reactAt: .91 })],
   },
   ankara: {
-    ...expedition("ankara", "ankara", actor("バヤジット1世", "bayezid-angry", [32.86, 39.93], { afterImage: "bayezid-sad", side: -1 }), "バグダード方面 → アンカラへ", "1402年、アンカラで勝利。バヤジット1世は捕虜に", "敗北 → 捕虜"),
-    action: "capture",
+    action: "capture", routeKeys: ["ankara"], destination: "ankara",
+    before: "バグダード方面 → アンカラへ", after: "1402年、アンカラで勝利。バヤジット1世は捕虜に", result: "敗北 → 捕虜",
+    cast: [
+      actor("ティムール", "timur-march", capital, { travel: true }),
+      actor("バヤジット1世", "bayezid-angry", [32.86, 39.93], { afterImage: "bayezid-sad", side: -1 }),
+      actor("ティムール軍騎兵", "timur-cavalry", [32.86, 39.93], { side: -2.1 })
+    ],
   },
   return: {
     action: "gift", before: "アンカラでの勝利後、領地を返す", after: "アナトリアの旧支配者へ返還。バルカンへは進まない", result: "領地を返還",

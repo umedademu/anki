@@ -93,7 +93,7 @@ progress::-moz-progress-bar { background: var(--copper); }
 .map-characters { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .map-actor { position: absolute; left: 0; top: 0; will-change: transform; }
 .map-person { position: absolute; bottom: 0; width: 72px; transform: translateX(-50%); text-align: center; }
-.map-person-image { display: block; width: 72px; height: 108px; image-rendering: pixelated; filter: drop-shadow(1px 2px 0 #263e4933); }
+.map-person-image { display: block; width: 72px; height: 108px; image-rendering: pixelated; object-fit: contain; filter: drop-shadow(1px 2px 0 #263e4933); }
 .map-person-name { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); display: block; margin-top: 3px; width: 99px; padding: 2px 3px; color: #fffaf0; background: #304d55eb; border-radius: 2px; font-size: 10px; line-height: 1.4; font-weight: 700; }
 .map-speech { position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 115px; padding: 4px 7px; border: 1px solid #b39a75; border-radius: 4px; background: #fff9e9; color: #754d36; font-size: 11px; line-height: 1.4; font-weight: 700; }
 .map-speech:empty { display: none; }

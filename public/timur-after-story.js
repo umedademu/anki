@@ -1,4 +1,4 @@
-import { locations, zones, scenes } from "./timur-after-scenes.js?v=0.184";
+import { locations, zones, scenes } from "./timur-after-scenes.js?v=0.185";
 
 const NS = "http://www.w3.org/2000/svg";
 const project = ([lon, lat]) => [(lon - 20) * 12, (58 - lat) * 15];

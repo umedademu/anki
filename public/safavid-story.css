@@ -1,0 +1,35 @@
+.safavid-story { --copper:#a95342; }
+.safavid-story .story-stage { grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr); }
+.safavid-story .map-panel { background:#e9eeea; }
+.safavid-story #story-map { height:430px; }
+.safavid-story #scene-title { white-space:pre-line; }
+.map-focus { margin:13px 20px 0; color:#915440; font-size:11px; letter-spacing:.04em; }
+.safavid-story .map-viewport { margin:0; }
+.safavid-story #story-map text { font-size:11px; stroke-width:4px; font-weight:600; }
+.safavid-story #story-map .safavid-water { font-size:10px; fill:#76999e; stroke:#e6eded; font-weight:400; }
+.safavid-story #story-map .safavid-capital { fill:#216c70; }
+.safavid-story #story-map .safavid-city { fill:#3b575c; }
+.safavid-story #story-map .safavid-country { font-size:12px; fill:#855846; }
+.safavid-regions polygon { stroke-dasharray:4 3; }
+.safavid-regions.is-fractured polygon { stroke-dasharray:2 7; stroke-width:2; }
+.safavid-story #story-map .plan-heading { font-size:10px; fill:#62766a; stroke:none; }
+.safavid-story #story-map .plan-building { font-size:11px; stroke:none; }
+.safavid-story #story-map .plan-center { font-size:11px; fill:#8a7042; stroke:none; }
+.safavid-story .map-action-status { font-size:11px; left:10px; right:10px; bottom:4px; padding:8px 7px; background:#fbf8eced; }
+.map-facts { list-style:none; padding:0; margin:14px 17px 3px; display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.map-facts li { padding:10px; border-top:2px solid #b4bfb0; color:#566b5d; background:#f7f6ed; font-size:11px; line-height:1.7; }
+.legend-rival { width:18px; border-top:2px solid #5c7886; }
+.legend-move { width:18px; border-top:2px solid #54866b; }
+.legend-trade { width:18px; border-top:2px dotted #b0882f; }
+.safavid-story .map-legend { gap:9px 13px; }
+@media(max-width:1000px) { .safavid-story .story-stage { grid-template-columns:minmax(0,1.2fr) minmax(280px,1fr); } }
+@media(max-width:740px) {
+  .safavid-story .story-stage { grid-template-columns:1fr; }
+  .safavid-story #story-map { height:370px; }
+  .safavid-story .map-heading p { font-size:10px; line-height:1.7; }
+  .map-focus { margin:10px 14px 0; font-size:10px; }
+  .map-facts { margin:11px 12px 3px; gap:7px; }
+  .map-facts li { font-size:10px; padding:8px; }
+  .safavid-story .map-action-status { font-size:10px; line-height:1.6; }
+  .safavid-story .story-series-links { font-size:10px; line-height:1.6; gap:8px 14px; }
+}

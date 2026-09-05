@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="サファヴィー朝の建国、アッバース1世の再建、イスファハーンの繁栄、次の王朝まで。地図と矢印でたどる20場面の紙芝居。" />
+  <title>サファヴィー朝｜地図でたどる世界史</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/timur-story.css?v=0.185" />
+  <link rel="stylesheet" href="/safavid-story.css?v=0.185" />
+  <script src="/safavid-story.js?v=0.185" type="module"></script>
+</head>
+<body class="safavid-story">
+  <header class="story-header"><a href="/" class="home-link">← 科目選択へ</a><span class="series-name">地図でたどる世界史 <span class="experiment">試作</span></span><span class="version">v0.185</span></header>
+  <main class="story-shell">
+    <div class="introduction"><div><p class="eyebrow">信仰から建国へ。改革から繁栄へ。</p><h1>サファヴィー朝</h1></div><p class="intro-note">ひとつの地図、20の場面。<br />「次へ」を押して、歴史をたどろう。</p></div>
+    <nav class="story-series-links" aria-label="ほかの紙芝居"><a href="/timur-story.html">ティムールの遠征</a><a href="/timur-after-story.html">ティムールの、その後</a><a href="/safavid-story.html" aria-current="page">サファヴィー朝</a></nav>
+    <nav class="chapter-nav" aria-label="物語の章">
+      <button type="button" data-chapter="0"><span>一</span> 建国と苦戦</button><button type="button" data-chapter="6"><span>二</span> 改革と繁栄</button><button type="button" data-chapter="14"><span>三</span> 衰退と次の王朝</button>
+    </nav>
+    <section class="story-stage" aria-label="地図と物語">
+      <div class="map-panel">
+        <div class="map-heading"><p id="map-heading">イラン北西部に注目</p><button type="button" id="replay" class="replay-button" aria-label="この場面の地図の動きをもう一度見る">↻ 動きをもう一度</button></div>
+        <p id="map-focus" class="map-focus"></p>
+        <div class="map-viewport"><svg id="story-map" viewBox="0 0 640 430" role="img" aria-labelledby="map-title map-description"><title id="map-title">サファヴィー朝の地図</title><desc id="map-description">イランと周辺地域、都市の位置を示します。</desc></svg><span class="north-mark" aria-hidden="true">北<br />↑</span><p id="map-status" class="map-action-status"></p></div>
+        <div class="map-legend" aria-label="地図の凡例"><span><i class="legend-capital"></i>都</span><span><i class="legend-region"></i>注目地域</span><span><i class="legend-route"></i>進軍</span><span><i class="legend-rival"></i>相手の進軍</span><span><i class="legend-move"></i>移動</span><span><i class="legend-trade"></i>交易</span></div>
+        <ul id="map-facts" class="map-facts" aria-label="地図の見どころ"></ul>
+        <p class="map-caption">色は注目地域、矢印は進む方向の概略です。厳密な国境・領土・行軍路ではありません。都市の点を位置の基準にしてください。</p>
+      </div>
+      <article id="narrative" class="narrative" aria-live="polite" aria-atomic="true">
+        <div class="scene-meta"><span id="scene-number">01 / 20</span><span id="scene-year">15世紀後半</span></div><p id="scene-kicker" class="scene-kicker"></p><h2 id="scene-title"></h2><div id="scene-body" class="scene-body"></div><div class="takeaway"><span class="takeaway-label">ここをつかもう</span><p id="scene-takeaway"></p></div><p id="scene-note" class="scene-note"></p>
+      </article>
+    </section>
+    <div class="story-controls"><button type="button" id="previous" class="previous-button" disabled>← 前へ</button><div class="progress-block"><label for="story-progress" id="progress-label">1 / 20</label><progress id="story-progress" max="20" value="1">1 / 20</progress></div><button type="button" id="next" class="next-button">次へ →</button></div>
+    <nav id="scene-nav" class="scene-nav" aria-label="好きな場面へ移動"></nav>
+    <p class="interaction-hint">自分のペースで進めます。パソコンでは ← → キーでも移動できます。音声はありません。</p>
+    <noscript><p class="no-script">この紙芝居を見るには、ブラウザーで JavaScript を有効にしてください。</p></noscript>
+    <footer class="story-footer"><span>歴史の紙芝居・実験室</span><details><summary>地図と説明について</summary>
+      <p>添付された教科書3枚のサファヴィー朝の説明をもとに、20場面へ再構成しました。国教化は建国時に始まること、首都陥落と王朝交代の年が異なることを補足しています。写真に見出しだけがあるオスマン帝国の次節は含めていません。</p>
+      <p>色は注目地域の模式図です。現在の国境や、各時点の最大領域ではありません。王の広場の小図も配置の概略です。基図は前の紙芝居と同じ<a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noreferrer">Natural Earth の公開地図</a>を使用しています。</p>
+      <p>内容の確認：<a href="https://www.iranicaonline.org/articles/safavids/" target="_blank" rel="noreferrer">イラン百科事典・サファヴィー朝</a>、<a href="https://www.iranicaonline.org/articles/abbas-i/" target="_blank" rel="noreferrer">アッバース1世</a>、<a href="https://www.metmuseum.org/essays/the-art-of-the-safavids-before-1600" target="_blank" rel="noreferrer">メトロポリタン美術館</a>、<a href="https://whc.unesco.org/en/list/115/" target="_blank" rel="noreferrer">ユネスコ・イスファハーンの広場</a>。</p>
+      <p>後半の確認：<a href="https://www.iranicaonline.org/articles/nader-shah/" target="_blank" rel="noreferrer">ナーディル＝シャー</a>、<a href="https://www.iranicaonline.org/articles/afsharids-dynasty/" target="_blank" rel="noreferrer">アフシャール朝</a>、<a href="https://www.iranicaonline.org/articles/dorrani-1/" target="_blank" rel="noreferrer">ドゥッラーニー朝</a>、<a href="https://www.iranicaonline.org/articles/zand-dynasty/" target="_blank" rel="noreferrer">カージャール朝への交代</a>。</p>
+    </details></footer>
+  </main>
+</body>
+</html>

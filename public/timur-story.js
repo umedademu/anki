@@ -1,4 +1,4 @@
-import { renderCharacterTheater } from "./timur-characters.js?v=0.182";
+import { characterCamera, characterScenes, renderMapCharacters } from "./timur-characters.js?v=0.183";
 
 const scenes = [
   {
@@ -180,11 +180,12 @@ const routes = {
 const elements = Object.fromEntries([
   "story-map", "map-heading", "map-title", "map-description", "map-regions", "map-labels", "map-routes", "map-places", "map-annotations",
   "narrative", "scene-number", "scene-year", "scene-kicker", "scene-title", "scene-body", "scene-takeaway", "scene-note",
-  "previous", "next", "replay", "story-progress", "progress-label", "scene-nav", "character-theater",
+  "previous", "next", "replay", "story-progress", "progress-label", "scene-nav", "map-characters",
 ].map((id) => [id, document.getElementById(id)]));
 const mobile = window.matchMedia("(max-width: 740px)");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 let sceneIndex = 0;
+let stopCharacters = () => {};
 
 function svgElement(tag, attributes = {}, text) {
   const element = document.createElementNS(svgNamespace, tag);
@@ -201,7 +202,7 @@ function mapText(point, text, className = "region-label", extra = {}) {
 function drawPlace(key, scene) {
   const place = places[key];
   const [x, y] = project(place.point);
-  const [left, top, width, height] = mobile.matches ? scene.mobileCamera : scene.camera;
+  const { x: left, y: top, width, height } = elements["story-map"].viewBox.baseVal;
   if (x < left || x > left + width || y < top || y > top + height) return;
   const capital = key === "samarkand";
   const active = !capital || scene.capitalActive;
@@ -211,11 +212,18 @@ function drawPlace(key, scene) {
     ? svgElement("path", { d: `M${x},${y - 8} l8,8 -8,8 -8,-8 Z`, class: "capital-dot" })
     : svgElement("circle", { cx: x, cy: y, r: 6, class: `place-dot${active ? " active" : ""}` }));
   const summaryAnkara = scene.summary && mobile.matches && key === "ankara";
-  const offset = summaryAnkara ? [15, 30] : scene.summary && key === "otrar" ? [10, -20] : place.offset;
+  const scale = elements["story-map"].clientWidth / width;
+  const definition = characterScenes[scene.characters];
+  const hasPerson = definition.cast.some((item) => !item.travel && item.point[0] === place.point[0] && item.point[1] === place.point[1]) || definition.destination === key;
+  const offset = hasPerson ? [0, (mobile.matches ? 45 : 48) / scale] : summaryAnkara ? [15, 30] : [...place.offset];
+  if (scene.characters === "syria" && key === "damascus") offset[0] = -10 / scale;
+  if (scene.characters === "syria" && key === "baghdad") offset[0] = 10 / scale;
+  if (capital && scene.regions.includes("ming")) { offset[0] = 0; offset[1] = (mobile.matches ? 66 : 48) / scale; }
   group.append(svgElement("text", {
     x: x + offset[0], y: y + offset[1],
     class: capital ? "capital-label" : `place-label${active ? " active" : ""}`,
-    "text-anchor": summaryAnkara ? "start" : place.anchor ?? "start",
+    "text-anchor": scene.characters === "syria" && key === "damascus" ? "end" : scene.characters === "syria" && key === "baghdad" ? "start" : hasPerson ? "middle" : summaryAnkara ? "start" : place.anchor ?? "start",
+    style: `font-size:${(mobile.matches ? 10.5 : 12) / scale}px`,
   }, place.label));
   elements["map-places"].append(group);
 }
@@ -228,21 +236,13 @@ function drawRoute(key, scene) {
   if (route.planned) path.removeAttribute("pathLength");
   if (route.delay) path.style.animationDelay = `${route.delay}s`;
   elements["map-routes"].append(path);
-  if (!route.planned && !reducedMotion.matches && !scene.summary) {
-    const traveler = svgElement("circle", { r: 5, class: "arrival", opacity: 0 });
-    const motion = svgElement("animateMotion", { path: d, dur: "1.2s", begin: `${route.delay ?? 0}s`, fill: "freeze" });
-    const visibility = svgElement("animate", { attributeName: "opacity", values: "0;1;1;0", keyTimes: "0;0.02;0.96;1", dur: "1.2s", begin: `${route.delay ?? 0}s`, fill: "freeze" });
-    traveler.append(motion, visibility);
-    elements["map-routes"].append(traveler);
-    // ページを開いてから何分経っても、その場面で動き始める。
-    motion.beginElementAt(route.delay ?? 0);
-    visibility.beginElementAt(route.delay ?? 0);
-  }
 }
 
 function renderMap(scene) {
+  stopCharacters();
   ["map-regions", "map-labels", "map-routes", "map-places", "map-annotations"].forEach((id) => elements[id].replaceChildren());
-  elements["story-map"].setAttribute("viewBox", (mobile.matches ? scene.mobileCamera : scene.camera).join(" "));
+  const map = elements["story-map"];
+  map.setAttribute("viewBox", characterCamera(scene, routes, project, map.clientWidth, map.clientHeight, mobile.matches).join(" "));
   elements["story-map"].classList.toggle("eastward", scene.regions.includes("ming"));
   elements["story-map"].classList.toggle("overview", Boolean(scene.summary));
   elements["map-heading"].textContent = scene.mapHeading;
@@ -257,7 +257,8 @@ function renderMap(scene) {
   }
   for (const key of scene.labels) {
     const label = labels[key];
-    elements["map-labels"].append(mapText(label.point, label.text, "region-label active"));
+    const point = mobile.matches && key === "central" ? [77, 55] : label.point;
+    elements["map-labels"].append(mapText(point, label.text, "region-label active"));
   }
   for (const key of scene.routes ?? []) drawRoute(key, scene);
   drawPlace("samarkand", scene);
@@ -270,11 +271,11 @@ function renderMap(scene) {
   if (scene.stop) {
     const [x,y] = project(places.otrar.point);
     elements["map-annotations"].append(svgElement("path", { d: `M${x - 7},${y - 8} l14,16 m0,-16 l-14,16`, fill: "none", stroke: "#a6422c", "stroke-width": 4 }));
-    elements["map-annotations"].append(mapText([81,49], "1405年、ここで病死", "map-callout"));
   }
   if (scene.summary && mobile.matches) {
     elements["map-labels"].replaceChildren(mapText(labels.ming.point, labels.ming.text, "region-label active"));
   }
+  stopCharacters = renderMapCharacters(elements["map-characters"], scene, { map, routes, project, reducedMotion: reducedMotion.matches });
 }
 
 function renderScene({ moveToStage = false } = {}) {
@@ -302,7 +303,6 @@ function renderScene({ moveToStage = false } = {}) {
     else button.removeAttribute("aria-current");
   });
   renderMap(scene);
-  renderCharacterTheater(elements["character-theater"], scene.characters);
   elements.narrative.classList.remove("scene-enter");
   void elements.narrative.offsetWidth;
   elements.narrative.classList.add("scene-enter");
@@ -330,7 +330,6 @@ elements.previous.addEventListener("click", () => goTo(sceneIndex - 1));
 elements.next.addEventListener("click", () => goTo(sceneIndex === scenes.length - 1 ? 0 : sceneIndex + 1));
 elements.replay.addEventListener("click", () => {
   renderMap(scenes[sceneIndex]);
-  renderCharacterTheater(elements["character-theater"], scenes[sceneIndex].characters);
 });
 document.querySelectorAll("[data-chapter]").forEach((button) => button.addEventListener("click", () => goTo(Number(button.dataset.chapter))));
 document.addEventListener("keydown", (event) => {
@@ -341,7 +340,14 @@ document.addEventListener("keydown", (event) => {
     goTo(sceneIndex + (event.key === "ArrowRight" ? 1 : -1));
   }
 });
-mobile.addEventListener("change", () => renderMap(scenes[sceneIndex]));
+let mapSize = "";
+new ResizeObserver(() => {
+  const map = elements["story-map"];
+  const size = `${map.clientWidth},${map.clientHeight}`;
+  if (size === mapSize) return;
+  mapSize = size;
+  renderMap(scenes[sceneIndex]);
+}).observe(elements["story-map"]);
 reducedMotion.addEventListener("change", () => renderMap(scenes[sceneIndex]));
 // 独立した無音のページ。学習用の音声・設定・履歴は読み込まない。
 renderScene();

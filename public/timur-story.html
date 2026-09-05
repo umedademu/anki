@@ -6,14 +6,14 @@
     <meta name="description" content="地図と短い物語でたどるティムールの生涯。クリックで進む13場面の歴史紙芝居。" />
     <title>ティムールの遠征｜地図でたどる世界史</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/timur-story.css?v=0.182" />
-    <script src="/timur-story.js?v=0.182" type="module"></script>
+    <link rel="stylesheet" href="/timur-story.css?v=0.183" />
+    <script src="/timur-story.js?v=0.183" type="module"></script>
   </head>
   <body>
     <header class="story-header">
       <a href="/" class="home-link">← 科目選択へ</a>
       <span class="series-name">地図でたどる世界史 <span class="experiment">試作</span></span>
-      <span class="version">v0.182</span>
+      <span class="version">v0.183</span>
     </header>
     <main class="story-shell">
       <div class="introduction">
@@ -59,6 +59,7 @@
               <g id="map-places"></g>
               <g id="map-annotations"></g>
             </svg>
+            <div id="map-characters" class="map-characters" role="group" aria-label="地図上の登場人物"></div>
             <span class="north-mark" aria-hidden="true">北<br />↑</span>
           </div>
           <div class="map-legend" aria-label="地図の凡例">
@@ -68,7 +69,6 @@
             <span><i class="legend-plan"></i>実現しなかった計画</span>
           </div>
           <p class="map-caption" id="map-caption">色は地域の位置、矢印は移動の方向を示す概略図です。厳密な国境・領土・行軍路ではありません。</p>
-          <figure class="character-theater" id="character-theater" aria-labelledby="theater-title" aria-describedby="theater-description"></figure>
         </div>
 
         <article class="narrative" id="narrative" aria-live="polite" aria-atomic="true">

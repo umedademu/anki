@@ -1,4 +1,4 @@
-import {places,zones,scenes} from "./safavid-scenes.js?v=0.186";
+import {places,zones,scenes} from "./safavid-scenes.js?v=0.187";
 
 const NS="http://www.w3.org/2000/svg";
 const project=([lon,lat])=>[(lon-20)*12,(58-lat)*15];

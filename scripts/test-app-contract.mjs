@@ -403,6 +403,15 @@ const generationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "world-history-csv-generation.md"),
   "utf8",
 );
+const sourceMdGenerationPrompt = await readFile(
+  path.join(
+    projectRoot,
+    "docs",
+    "prompts",
+    "world-history-source-md-csv-generation.md",
+  ),
+  "utf8",
+);
 const englishGenerationPrompt = await readFile(
   path.join(projectRoot, "docs", "prompts", "english-vocabulary-csv-generation.md"),
   "utf8",
@@ -471,7 +480,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.189" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.190" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -484,12 +493,12 @@ if (
   !html.includes('id="question-style-filter"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.189") ||
-  !app.includes("v0.189｜") ||
-  !changelog.includes("v0.189") ||
-  !settingsHtml.includes("v0.189") ||
-  !historyHtml.includes("v0.189") ||
-  !analysisHtml.includes("v0.189")
+  !html.includes("v0.190") ||
+  !app.includes("v0.190｜") ||
+  !changelog.includes("v0.190") ||
+  !settingsHtml.includes("v0.190") ||
+  !historyHtml.includes("v0.190") ||
+  !analysisHtml.includes("v0.190")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -847,7 +856,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.189"') ||
+  !html.includes('href="/styles.css?v=0.190"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -888,6 +897,32 @@ if (
   !generationPrompt.includes("同じ年・同じ出来事")
 ) {
   throw new Error("問題集生成用プロンプトの読み仮名・語呂合わせ規則が不足しています。");
+}
+if (
+  !sourceMdGenerationPrompt.includes(
+    "# 添付MD資料準拠・世界史三段階学習用CSV生成プロンプト",
+  ) ||
+  !sourceMdGenerationPrompt.includes(
+    "添付されたMDファイルを十分に習得した学習者なら、その資料の記述だけを根拠に答えられる",
+  ) ||
+  !sourceMdGenerationPrompt.includes(
+    "資料外の知識がなければ答えられない問題にはなっていない",
+  ) ||
+  !sourceMdGenerationPrompt.includes("添付されたすべてのMDファイルを最後まで読み") ||
+  !sourceMdGenerationPrompt.includes(
+    "添付されたMDファイルだけを、用語選定と問題・回答作成の情報源として使用してください",
+  ) ||
+  !sourceMdGenerationPrompt.includes(
+    "添付資料にない語呂を外部から追加したり独自作成したりしない",
+  ) ||
+  !sourceMdGenerationPrompt.includes(
+    "dataset_label\nterm_id\nimportance_rank\ndifficulty_label\ncategory\nterm\nreading\naliases\nera\nmacro_region\nregion_detail\ndisplay_period\nsort_year\nquestion_id\nstage\nfocus\nquestion_type\nquestion\nanswer\nkeywords\naccepted_answers\nanswer_note\nyear_mnemonic\nsource_name\nsource_url",
+  ) ||
+  sourceMdGenerationPrompt.includes("https://www.y-history.net/") ||
+  sourceMdGenerationPrompt.includes("https://goroawase-master.com/") ||
+  sourceMdGenerationPrompt.includes("https://adx50150.wixsite.com/sekaishi-goro")
+) {
+  throw new Error("添付MD資料準拠の世界史生成プロンプトに必要な範囲制限がありません。");
 }
 if (
   !englishGenerationPrompt.includes("1英単語につき1行、全10列") ||

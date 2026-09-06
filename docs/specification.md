@@ -14,7 +14,7 @@
 
 ## 提供形態
 
-- 現在のアプリバージョンは`v0.189`とする
+- 現在のアプリバージョンは`v0.190`とする
 - パソコンやスマートフォンのブラウザーで利用するWebアプリ
 - WebアプリはVercelの`https://anki-ume.vercel.app`で公開する
 - 更新情報は`/changelog.html`で公開する
@@ -570,6 +570,9 @@ v0.189で、ティムールの遠征・ティムールの、その後・サフ�
 ### 世界史
 
 - 保存場所：`data/source/world-history`内のDeck別CSV
+- 一般的な世界史資料から作成する場合は`docs/prompts/world-history-csv-generation.md`を使用する
+- 添付されたMD資料だけを学習範囲にする場合は`docs/prompts/world-history-source-md-csv-generation.md`を使用し、資料を習得すれば答えられる内容だけを出題する
+- 添付MD資料準拠の生成では、資料外の知識を必要とする問題、資料にない関連情報の補完、外部で取得した語呂合わせを禁止する
 - 文字コード：UTF-8 BOM付き
 - Deckごとに1ファイルを使用し、`importance_rank`はシリーズ全体の累計順位（Deck 1は1〜400、Deck 2は401〜800）とする
 - 1行を1問として扱う

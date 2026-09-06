@@ -20,6 +20,16 @@ function applyFixedJapaneseSpeechReadings(value) {
   return text;
 }
 
+function applyDynastySpeechReadings(value, additionalReadings = {}) {
+  let text = value;
+  for (const [written, reading] of readingEntries(additionalReadings)) {
+    if (written.endsWith("朝") && reading.endsWith("ちょう")) {
+      text = text.replaceAll(written, reading);
+    }
+  }
+  return text.replace(/([\p{Script=Katakana}ー＝・])朝/gu, "$1ちょう");
+}
+
 function readingEntries(additionalReadings = {}) {
   const entries =
     additionalReadings instanceof Map
@@ -72,9 +82,12 @@ export function prepareSpeechText(
   }
 
   return applyFixedJapaneseSpeechReadings(
-    text
-      .replace(annotatedReadingPattern, (_, __, reading) => reading)
-      .replace(remainingReadingPattern, ""),
+    applyDynastySpeechReadings(
+      text
+        .replace(annotatedReadingPattern, (_, __, reading) => reading)
+        .replace(remainingReadingPattern, ""),
+      additionalReadings,
+    ),
   )
     .replace(/[\r\n]+/g, "。")
     .replace(/[|]/g, "、")

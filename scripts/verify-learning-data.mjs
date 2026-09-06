@@ -14,6 +14,7 @@ import {
   loadMindsetDecks,
   loadPoliticsEconomicsDecks,
   loadSourceDecks,
+  loadWorldHistorySDecks,
   loadTermImageManifest,
   mergeTermImageManifests,
   parseCsv,
@@ -106,6 +107,18 @@ const expectedSpecs = new Map([
     },
   ],
 ]);
+
+const expectedWorldHistorySSpec = {
+  number: 1,
+  version: "world-history-s-deck-1-v1",
+  contentVersion: "0ff585664544",
+  datasetLabel: "イスラーム世界：形成・専制帝国・文化（150用語）",
+  difficultyLabel: "大学受験・基礎〜標準",
+  termCount: 150,
+  questionCount: 1099,
+  questionCounts: { beginner: 679, reverse: 270, integrated: 150 },
+  mnemonicCount: 91,
+};
 
 const expectedEnglishSpecs = new Map([
   [
@@ -346,6 +359,10 @@ const expectedClassicalChineseSpecs = new Map([
 
 const { decks: sourceDecks, terms: expectedTerms } = await loadSourceDecks();
 const {
+  decks: sourceWorldHistorySDecks,
+  terms: expectedWorldHistorySTerms,
+} = await loadWorldHistorySDecks();
+const {
   decks: sourceJapaneseDecks,
   terms: expectedJapaneseTerms,
 } = await loadJapaneseHistoryDecks();
@@ -388,16 +405,19 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 10 ||
+  catalog.subjects.length !== 11 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
+    "world-history,world-history-s,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
 ) {
   throw new Error(
-    "世界史・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
+    "世界史・世界史S・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",
+);
+const worldHistorySSubjectEntry = catalog.subjects.find(
+  (subject) => subject.id === "world-history-s",
 );
 const englishSubjectEntry = catalog.subjects.find(
   (subject) => subject.id === "english-vocabulary",
@@ -643,6 +663,92 @@ if (
   subjectEntry.questionCount !== 7582
 ) {
   throw new Error("Deck 1〜Deck 3の総件数または統合索引が一致しません。");
+}
+
+if (
+  sourceWorldHistorySDecks.length !== 1 ||
+  !worldHistorySSubjectEntry ||
+  worldHistorySSubjectEntry.defaultDeckId !== "deck-1" ||
+  worldHistorySSubjectEntry.datasetLabel !== "世界史S｜Deck 1" ||
+  worldHistorySSubjectEntry.termCount !== expectedWorldHistorySSpec.termCount ||
+  worldHistorySSubjectEntry.questionCount !==
+    expectedWorldHistorySSpec.questionCount ||
+  worldHistorySSubjectEntry.decks.length !== 1
+) {
+  throw new Error("世界史S Deck 1の科目一覧が正しくありません。");
+}
+const sourceWorldHistorySDeck = sourceWorldHistorySDecks[0];
+const worldHistorySDeckEntry = worldHistorySSubjectEntry.decks[0];
+const worldHistorySSubject = await readJson(worldHistorySDeckEntry.indexPath);
+const worldHistorySChunks = await Promise.all(
+  worldHistorySSubject.chunks.map((chunk) => readJson(chunk.path)),
+);
+const generatedWorldHistorySTerms = worldHistorySChunks.flatMap(
+  (chunk) => chunk.terms,
+);
+const generatedWorldHistorySQuestions = generatedWorldHistorySTerms.flatMap(
+  (term) => Object.values(term.stages).flat(),
+);
+const generatedWorldHistorySCounts = countQuestionsByStage(
+  generatedWorldHistorySTerms,
+);
+const worldHistorySRanks = generatedWorldHistorySTerms
+  .map((term) => term.importanceRank)
+  .sort((left, right) => left - right);
+if (
+  worldHistorySDeckEntry.number !== expectedWorldHistorySSpec.number ||
+  worldHistorySDeckEntry.version !== expectedWorldHistorySSpec.version ||
+  worldHistorySDeckEntry.contentVersion !==
+    expectedWorldHistorySSpec.contentVersion ||
+  worldHistorySDeckEntry.datasetLabel !==
+    expectedWorldHistorySSpec.datasetLabel ||
+  worldHistorySDeckEntry.difficultyLabel !==
+    expectedWorldHistorySSpec.difficultyLabel ||
+  worldHistorySDeckEntry.termCount !== expectedWorldHistorySSpec.termCount ||
+  worldHistorySDeckEntry.questionCount !==
+    expectedWorldHistorySSpec.questionCount ||
+  worldHistorySSubject.schemaVersion !== 3 ||
+  worldHistorySSubject.id !== "world-history-s" ||
+  worldHistorySSubject.learningType !== "history" ||
+  worldHistorySSubject.deckId !== "deck-1" ||
+  worldHistorySSubject.deckNumber !== expectedWorldHistorySSpec.number ||
+  worldHistorySSubject.version !== expectedWorldHistorySSpec.version ||
+  worldHistorySSubject.contentVersion !==
+    expectedWorldHistorySSpec.contentVersion ||
+  worldHistorySSubject.datasetLabel !== expectedWorldHistorySSpec.datasetLabel ||
+  worldHistorySSubject.difficultyLabel !==
+    expectedWorldHistorySSpec.difficultyLabel ||
+  worldHistorySSubject.termCount !== expectedWorldHistorySSpec.termCount ||
+  worldHistorySSubject.questionCount !== expectedWorldHistorySSpec.questionCount ||
+  JSON.stringify(worldHistorySSubject.questionCounts) !==
+    JSON.stringify(expectedWorldHistorySSpec.questionCounts) ||
+  JSON.stringify(generatedWorldHistorySCounts) !==
+    JSON.stringify(expectedWorldHistorySSpec.questionCounts) ||
+  JSON.stringify(generatedWorldHistorySTerms) !==
+    JSON.stringify(expectedWorldHistorySTerms) ||
+  worldHistorySSubject.chunks.length !== 3 ||
+  worldHistorySSubject.chunks.some((chunk) => chunk.count !== 50) ||
+  worldHistorySChunks.some(
+    (chunk) =>
+      chunk.schemaVersion !== 3 ||
+      chunk.subjectId !== "world-history-s" ||
+      chunk.deckId !== "deck-1",
+  ) ||
+  generatedWorldHistorySTerms.some((term) => !/^WHS-\d{6}$/.test(term.id)) ||
+  generatedWorldHistorySQuestions.some(
+    (question) => !/^WHS-\d{6}-(?:B|R|I)\d{2}$/.test(question.id),
+  ) ||
+  generatedWorldHistorySQuestions.some(
+    (question) => !question.source.name || question.source.url !== "",
+  ) ||
+  generatedWorldHistorySQuestions.filter((question) => question.yearMnemonic)
+    .length !== expectedWorldHistorySSpec.mnemonicCount ||
+  new Set(generatedWorldHistorySTerms.map((term) => term.id)).size !== 150 ||
+  new Set(generatedWorldHistorySQuestions.map((question) => question.id)).size !==
+    1099 ||
+  worldHistorySRanks.some((rank, index) => rank !== index + 1)
+) {
+  throw new Error("世界史S Deck 1の元CSV・識別番号・件数が一致しません。");
 }
 
 if (
@@ -2153,7 +2259,11 @@ if (
   throw new Error("既存のDeck 1画像割り当てが変更されています。");
 }
 
-const contextRequiredQuestions = [...generatedTerms, ...generatedJapaneseTerms].flatMap((term) =>
+const contextRequiredQuestions = [
+  ...generatedTerms,
+  ...generatedWorldHistorySTerms,
+  ...generatedJapaneseTerms,
+].flatMap((term) =>
   term.stages.beginner
     .filter((question) => question.type !== "identify")
     .map((question) => ({ term: term.term, question })),
@@ -2178,7 +2288,7 @@ const correctedPrompts = new Map([
   ],
 ]);
 if (
-  contextRequiredQuestions.length !== 3200 ||
+  contextRequiredQuestions.length !== 3729 ||
   contextRequiredQuestions.some(
     ({ term, question }) => !question.prompt.includes(term),
   ) ||
@@ -2193,13 +2303,25 @@ if (
 
 const readingPattern = /\([ぁ-ゖー]+(?:[・\s][ぁ-ゖー]+)*\)/;
 if (
-  [...generatedQuestions, ...generatedJapaneseQuestions].some((question) =>
+  [
+    ...generatedQuestions,
+    ...generatedWorldHistorySQuestions,
+    ...generatedJapaneseQuestions,
+  ].some((question) =>
     readingPattern.test(getQuestionPromptForDisplay(question, false)),
   ) ||
-  [...generatedQuestions, ...generatedJapaneseQuestions].some(
+  [
+    ...generatedQuestions,
+    ...generatedWorldHistorySQuestions,
+    ...generatedJapaneseQuestions,
+  ].some(
     (question) => getQuestionPromptForDisplay(question, true) !== question.prompt,
   ) ||
-  [...generatedQuestions, ...generatedJapaneseQuestions].some((question) =>
+  [
+    ...generatedQuestions,
+    ...generatedWorldHistorySQuestions,
+    ...generatedJapaneseQuestions,
+  ].some((question) =>
     [...question.keywords, ...question.acceptedAnswers].some((value) =>
       readingPattern.test(value),
     ),
@@ -2242,6 +2364,7 @@ if (
 
 const duplicateMnemonicYearQuestion = [
   ...generatedQuestions,
+  ...generatedWorldHistorySQuestions,
   ...generatedJapaneseQuestions,
 ].find((question) => {
   const dates = splitMnemonicList(question.yearMnemonic).map((mnemonic) =>
@@ -2256,5 +2379,5 @@ if (duplicateMnemonicYearQuestion) {
 }
 
 console.log(
-  `検証完了: 世界史1200用語・7582問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、漢文${generatedClassicalChineseTerms.length}項目・${generatedClassicalChineseQuestions.length}問、マインドセット${generatedMindsetTerms.length}件、語呂合わせ${[...generatedQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
+  `検証完了: 世界史1200用語・7582問、世界史S${generatedWorldHistorySTerms.length}語・${generatedWorldHistorySQuestions.length}問、日本史${generatedJapaneseTerms.length}語・${generatedJapaneseQuestions.length}問、英単語${generatedEnglishTerms.length}語・${generatedEnglishQuestions.length}問、地理${generatedGeographyTerms.length}項目・${generatedGeographyQuestions.length}問、政治・経済${generatedPoliticsEconomicsTerms.length}項目・${generatedPoliticsEconomicsQuestions.length}問、生物基礎${generatedBiologyTerms.length}項目・${generatedBiologyQuestions.length}問、地学基礎${generatedEarthScienceTerms.length}項目・${generatedEarthScienceQuestions.length}問、古文${generatedClassicalJapaneseTerms.length}項目・${generatedClassicalJapaneseQuestions.length}問、漢文${generatedClassicalChineseTerms.length}項目・${generatedClassicalChineseQuestions.length}問、マインドセット${generatedMindsetTerms.length}件、語呂合わせ${[...generatedQuestions, ...generatedWorldHistorySQuestions, ...generatedJapaneseQuestions].filter((question) => question.yearMnemonic).length}問・関連画像${generatedTermImages.assets.length}点`,
 );

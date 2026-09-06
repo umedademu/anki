@@ -6,6 +6,12 @@ import { fileURLToPath } from "node:url";
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(scriptDirectory, "..");
 const sourceDirectory = path.join(projectRoot, "data", "source", "world-history");
+const worldHistorySSourceDirectory = path.join(
+  projectRoot,
+  "data",
+  "source",
+  "world-history-s",
+);
 const englishSourceDirectory = path.join(
   projectRoot,
   "data",
@@ -89,6 +95,8 @@ const japaneseTermImageSourceDirectory = path.join(
 );
 const subjectId = "world-history";
 const subjectTitle = "世界史";
+const worldHistorySSubjectId = "world-history-s";
+const worldHistorySSubjectTitle = "世界史S";
 const japaneseSubjectId = "japanese-history";
 const japaneseSubjectTitle = "日本史";
 const englishSubjectId = "english-vocabulary";
@@ -648,9 +656,13 @@ function normalizeSource(row) {
   return { name: row.source_name, url: row.source_url };
 }
 
-export function normalizeQuestion(row, rowIndex) {
+export function normalizeQuestion(
+  row,
+  rowIndex,
+  { allowMissingSourceUrl = false } = {},
+) {
   const rowNumber = rowIndex + 2;
-  [
+  const requiredFields = [
     ...requiredTermFields,
     "question_id",
     "stage",
@@ -660,8 +672,11 @@ export function normalizeQuestion(row, rowIndex) {
     "answer",
     "keywords",
     "source_name",
-    "source_url",
-  ].forEach((fieldName) => assertRequiredText(row, fieldName, rowNumber));
+  ];
+  if (!allowMissingSourceUrl) requiredFields.push("source_url");
+  requiredFields.forEach((fieldName) =>
+    assertRequiredText(row, fieldName, rowNumber),
+  );
 
   if (!allowedStages.includes(row.stage)) {
     throw new Error(`${rowNumber}行目のstageが正しくありません: ${row.stage}`);
@@ -680,7 +695,7 @@ export function normalizeQuestion(row, rowIndex) {
   if (row.stage === "beginner" && row.question_type === "reverse") {
     throw new Error(`${rowNumber}行目の短答問題に段階と異なる種類が設定されています。`);
   }
-  if (!/^https:\/\//.test(row.source_url)) {
+  if (row.source_url && !/^https:\/\//.test(row.source_url)) {
     throw new Error(`${rowNumber}行目のsource_urlはhttpsのURLにしてください。`);
   }
   assertBalancedBold(row.answer, "answer", rowNumber);
@@ -714,7 +729,7 @@ function assertSameTermData(firstRow, row, rowNumber) {
   }
 }
 
-export function groupTerms(rows) {
+export function groupTerms(rows, { allowMissingSourceUrl = false } = {}) {
   const groups = [];
   const groupById = new Map();
   const questionIds = new Set();
@@ -744,7 +759,9 @@ export function groupTerms(rows) {
 
     const stages = Object.fromEntries(allowedStages.map((stage) => [stage, []]));
     termRows.forEach(({ row, rowIndex }) => {
-      stages[row.stage].push(normalizeQuestion(row, rowIndex));
+      stages[row.stage].push(
+        normalizeQuestion(row, rowIndex, { allowMissingSourceUrl }),
+      );
     });
     if (stages.beginner.length === 0 || stages.reverse.length === 0) {
       throw new Error(`${firstRow.term}に短答または逆一問一答がありません。`);
@@ -934,6 +951,7 @@ const stableDatasetVersions = new Map([
   ["world-history:deck-1", "0836119c5d45"],
   ["world-history:deck-2", "8acba0d50165"],
   ["world-history:deck-3", "7edfff4529a4"],
+  ["world-history-s:deck-1", "world-history-s-deck-1-v1"],
   ["japanese-history:deck-1", "jh-455fb6def169"],
   ["english-vocabulary:deck-1", "en-6984fb69efaf"],
   ["english-vocabulary:deck-2", "en-abb710688392"],
@@ -969,6 +987,50 @@ function deckNumberFromLabel(datasetLabel, sourcePath) {
 
 export async function loadSourceDecks() {
   return loadHistoryDecks(await findSourcePaths(), subjectId);
+}
+
+export async function loadWorldHistorySDecks() {
+  const sourcePaths = await findHistorySourcePaths(
+    worldHistorySSourceDirectory,
+    "世界史S",
+  );
+  if (sourcePaths.length !== 1) {
+    throw new Error(
+      `世界史Sの元CSVは1ファイルにしてください（現在${sourcePaths.length}ファイル）。`,
+    );
+  }
+  const sourcePath = sourcePaths[0];
+  const sourceText = await readFile(sourcePath, "utf8");
+  const terms = groupTerms(toObjects(parseCsv(sourceText)), {
+    allowMissingSourceUrl: true,
+  });
+  const datasetLabels = new Set(terms.map((term) => term.datasetLabel));
+  if (datasetLabels.size !== 1) {
+    throw new Error("世界史Sのデッキ名がファイル内で統一されていません。");
+  }
+  const questions = terms.flatMap((term) => Object.values(term.stages).flat());
+  if (
+    terms.some((term) => !/^WHS-\d{6}$/.test(term.id)) ||
+    questions.some(
+      (question) => !/^WHS-\d{6}-(?:B|R|I)\d{2}$/.test(question.id),
+    )
+  ) {
+    throw new Error("世界史Sの用語IDまたは問題IDが専用形式ではありません。");
+  }
+  validateTerms(terms);
+  const deck = {
+    id: "deck-1",
+    number: 1,
+    sourcePath,
+    sourceText,
+    sourceFile: path.basename(sourcePath),
+    version: datasetVersion(worldHistorySSubjectId, "deck-1"),
+    contentVersion: sourceVersion(sourceText),
+    datasetLabel: terms[0].datasetLabel,
+    difficultyLabel: "大学受験・基礎〜標準",
+    terms,
+  };
+  return { decks: [deck], terms };
 }
 
 export async function loadMindsetDecks() {
@@ -3304,6 +3366,7 @@ async function writeSubjectData(definition, decks) {
 export async function main() {
   const [
     worldHistoryData,
+    worldHistorySData,
     japaneseHistoryData,
     englishData,
     geographyData,
@@ -3315,6 +3378,7 @@ export async function main() {
     mindsetData,
   ] = await Promise.all([
     loadSourceDecks(),
+    loadWorldHistorySDecks(),
     loadJapaneseHistoryDecks(),
     loadEnglishDecks(),
     loadGeographyDecks(),
@@ -3370,6 +3434,7 @@ export async function main() {
 
   const allDecks = [
     ...worldHistoryData.decks,
+    ...worldHistorySData.decks,
     ...japaneseHistoryData.decks,
     ...englishData.decks,
     ...geographyData.decks,
@@ -3456,6 +3521,27 @@ export async function main() {
         },
       },
       worldHistoryData.decks,
+    ),
+    writeSubjectData(
+      {
+        id: worldHistorySSubjectId,
+        title: worldHistorySSubjectTitle,
+        catalogLabel: "世界史S",
+        description: "イスラーム世界の形成・諸帝国・文化を三段階で学ぶ大学受験世界史",
+        learningType: "history",
+        filterLabels: {
+          macroRegion: "大分類の地域",
+          regionDetail: "小分類の地域",
+          category: "カテゴリ",
+        },
+        stageLabels: {
+          all: "三段階すべて",
+          beginner: "通常の一問一答",
+          reverse: "逆一問一答",
+          integrated: "統合説明",
+        },
+      },
+      worldHistorySData.decks,
     ),
     writeSubjectData(
       {
@@ -3642,6 +3728,7 @@ export async function main() {
   });
 
   const worldCounts = countQuestionsByStage(worldHistoryData.terms);
+  const worldSCounts = countQuestionsByStage(worldHistorySData.terms);
   const japaneseCounts = countQuestionsByStage(japaneseHistoryData.terms);
   const englishCounts = countQuestionsByStage(englishData.terms);
   const geographyCounts = countQuestionsByStage(geographyData.terms);
@@ -3657,7 +3744,7 @@ export async function main() {
     classicalChineseData.terms,
   );
   console.log(
-    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問、古文${classicalJapaneseData.decks.length}デッキ・${classicalJapaneseData.terms.length}項目・${Object.values(classicalJapaneseCounts).reduce((sum, count) => sum + count, 0)}問、漢文${classicalChineseData.decks.length}デッキ・${classicalChineseData.terms.length}項目・${Object.values(classicalChineseCounts).reduce((sum, count) => sum + count, 0)}問、マインドセット${mindsetData.terms.length}件を生成しました。`,
+    `世界史${worldHistoryData.decks.length}デッキ・${worldHistoryData.terms.length}語・${Object.values(worldCounts).reduce((sum, count) => sum + count, 0)}問、世界史S${worldHistorySData.decks.length}デッキ・${worldHistorySData.terms.length}語・${Object.values(worldSCounts).reduce((sum, count) => sum + count, 0)}問、日本史${japaneseHistoryData.decks.length}デッキ・${japaneseHistoryData.terms.length}語・${Object.values(japaneseCounts).reduce((sum, count) => sum + count, 0)}問、英単語${englishData.decks.length}デッキ・${englishData.terms.length}語・${Object.values(englishCounts).reduce((sum, count) => sum + count, 0)}問、地理${geographyData.decks.length}デッキ・${geographyData.terms.length}項目・${Object.values(geographyCounts).reduce((sum, count) => sum + count, 0)}問、政治・経済${politicsEconomicsData.decks.length}デッキ・${politicsEconomicsData.terms.length}項目・${Object.values(politicsEconomicsCounts).reduce((sum, count) => sum + count, 0)}問、生物基礎${biologyData.decks.length}デッキ・${biologyData.terms.length}項目・${Object.values(biologyCounts).reduce((sum, count) => sum + count, 0)}問、地学基礎${earthScienceData.decks.length}デッキ・${earthScienceData.terms.length}項目・${Object.values(earthScienceCounts).reduce((sum, count) => sum + count, 0)}問、古文${classicalJapaneseData.decks.length}デッキ・${classicalJapaneseData.terms.length}項目・${Object.values(classicalJapaneseCounts).reduce((sum, count) => sum + count, 0)}問、漢文${classicalChineseData.decks.length}デッキ・${classicalChineseData.terms.length}項目・${Object.values(classicalChineseCounts).reduce((sum, count) => sum + count, 0)}問、マインドセット${mindsetData.terms.length}件を生成しました。`,
   );
 }
 

@@ -1713,7 +1713,7 @@ if (
   mindsetSubjectEntry.defaultDeckId !== "deck-1" ||
   mindsetSubjectEntry.termUnitLabel !== "件" ||
   mindsetSubjectEntry.datasetLabel !== "マインドセット集｜Deck 1" ||
-  mindsetSubjectEntry.termCount !== 115 ||
+  mindsetSubjectEntry.termCount !== 116 ||
   mindsetSubjectEntry.questionCount !== 0 ||
   mindsetSubjectEntry.decks.length !== 1
 ) {
@@ -1735,8 +1735,8 @@ if (
   mindsetSubject.questionCount !== 0 ||
   mindsetSubject.availableStages.length !== 0 ||
   generatedMindsetTerms.length !== expectedMindsetTerms.length ||
-  new Set(generatedMindsetTerms.map((term) => term.id)).size !== 115 ||
-  new Set(generatedMindsetTerms.map((term) => term.content)).size !== 115 ||
+  new Set(generatedMindsetTerms.map((term) => term.id)).size !== 116 ||
+  new Set(generatedMindsetTerms.map((term) => term.content)).size !== 116 ||
   generatedMindsetTerms.some(
     (term, index) =>
       term.id !== expectedMindsetTerms[index].id ||
@@ -1745,7 +1745,7 @@ if (
       Object.values(term.stages).some((questions) => questions.length !== 0),
   )
 ) {
-  throw new Error("マインドセット115件の生成内容が元データと一致しません。");
+  throw new Error("マインドセット116件の生成内容が元データと一致しません。");
 }
 
 const generatedTermImages = await readJson("term-images.json");

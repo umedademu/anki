@@ -6,8 +6,8 @@ import {
 } from "./speech-settings.js";
 
 const annotatedReadingPattern =
-  /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー0-9０-９]+)\(([\p{Script=Hiragana}ー・\s]+)\)/gu;
-const remainingReadingPattern = /\([\p{Script=Hiragana}ー・\s]+\)/gu;
+  /([\p{Script=Han}\p{Script=Katakana}\p{Script=Latin}々ヶー0-9０-９]+)[(（]([\p{Script=Hiragana}ー・\s]+)[)）]/gu;
+const remainingReadingPattern = /[(（][\p{Script=Hiragana}ー・\s]+[)）]/gu;
 const fixedJapaneseSpeechReadings = Object.freeze({
   "戦い": "たたかい",
 });

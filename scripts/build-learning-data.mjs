@@ -1,3 +1,4 @@
+import { createAnswerMap } from "./create-answer-map.mjs";
 import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -1097,12 +1098,16 @@ export async function loadWorldHistorySODecks() {
     if (!question || !/^subjects\/world-history-so\/maps\/[a-z0-9-]+\.svg$/.test(map.path)) {
       throw new Error("世界史SOの地図の問題文・保存先を確認してください。");
     }
-    question.questionMap = { path: map.path, alt: map.alt };
+    question.questionMap = {
+      path: map.path, alt: map.alt,
+      answerPath: map.path.replace(/\.svg$/, "-answer.svg"),
+      answerAlt: "地図の解答。" + question.answer.replaceAll("\n", "。"),
+    };
   }
   return { terms, decks: [{
     id: "deck-1", number: 1, sourcePath, sourceText,
     sourceFile: path.basename(sourcePath), version: "world-history-so-deck-1-v1",
-    contentVersion: sourceVersion(sourceText + mapsText), datasetLabel: terms[0].datasetLabel,
+    contentVersion: sourceVersion(sourceText + mapsText + JSON.stringify(terms)), datasetLabel: terms[0].datasetLabel,
     difficultyLabel: "一問一答", terms,
   }] };
 }
@@ -3344,6 +3349,11 @@ export async function writeSubjectData(definition, decks) {
     await mkdir(path.join(outputRoot, "subjects/world-history-so/maps"), { recursive: true });
     await cp(path.join(projectRoot, "data/source/world-history-so/maps"),
       path.join(outputRoot, "subjects/world-history-so/maps"), { recursive: true });
+    for (const question of decks.flatMap((deck) => deck.terms.flatMap((term) => term.stages.beginner))) {
+      if (!question.questionMap) continue;
+      const svg = await readFile(path.join(outputRoot, question.questionMap.path), "utf8");
+      await writeFile(path.join(outputRoot, question.questionMap.answerPath), createAnswerMap(svg, question.answer));
+    }
   }
   const deckEntries = [];
   for (const deck of decks) {

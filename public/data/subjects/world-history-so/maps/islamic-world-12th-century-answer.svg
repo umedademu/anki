@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 590" role="img" aria-labelledby="title desc">
+  <title id="title">地図の解答</title>
+  <desc id="desc">① ムワッヒド朝。② ルーム=セルジューク朝。③ アイユーブ朝。④ バグダード。⑤ アッバース朝カリフ領。⑥ ホラズム朝。⑦ カラ=キタイ（西遼）。⑧ ゴール朝</desc>
+  <defs>
+    <pattern id="turk" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="#fff8f4"/><circle cx="2.5" cy="2.5" r="1.8" fill="#a15a5b"/><circle cx="7.5" cy="7.5" r="1.8" fill="#a15a5b"/></pattern>
+    <pattern id="berber" width="7" height="7" patternUnits="userSpaceOnUse"><rect width="7" height="7" fill="#fff8f4"/><path d="M0 2H7" stroke="#d77677" stroke-width="2.8"/></pattern>
+    <pattern id="mongol" width="25" height="18" patternUnits="userSpaceOnUse"><rect width="25" height="18" fill="#faf9f4"/><path d="M2 4H13M15 12H24M0 12H5" stroke="#50534a" stroke-width="3.3"/></pattern>
+  </defs>
+  <rect width="940" height="590" fill="#faf9f4"/>
+  <!-- 海岸線・湖・領域は添付された12世紀の図から描き起こす。 -->
+  <g fill="#d4d5cd" stroke="#50534a" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M29 65L122 61Q137 80 131 105Q130 120 116 115Q93 105 75 116L68 138L62 167L65 181L81 182L91 190Q112 190 126 170L139 141L146 131L159 126L160 115Q179 108 190 111L201 104Q208 100 212 119L228 133Q246 147 247 163Q262 158 254 146L264 151Q245 125 225 101Q219 94 235 83L240 95L245 92Q253 106 265 113Q276 121 278 136Q282 164 293 169L309 169L312 180L304 188L287 176L300 170Q298 148 310 140L329 145L345 135Q341 115 347 94L351 84Q366 71 376 73L383 77L376 86L385 85L388 96L402 85Q390 80 398 74L417 61L432 57L418 82Q416 90 433 97Q451 109 452 126Q455 144 430 137L403 133L385 131L371 140L358 139Q339 144 333 158Q324 175 340 190Q350 199 361 189L370 192L379 188L391 185L398 194L391 217L387 248L369 251L355 253L336 246L321 245L308 237L295 241Q277 232 276 243L275 255Q261 266 244 252L235 241L224 241L207 230L202 217L208 208L200 206L212 190L196 192L184 197L164 193Q147 194 136 201L113 216Q98 223 92 211L54 251L32 291Z"/>
+    <path d="M365 270L376 294L384 316L391 337L399 356L409 374L415 397L429 420L446 449L462 476L465 488Q477 499 488 490L511 484L532 480Q549 475 539 516H900V335L881 344L866 349L863 374Q861 383 849 389L830 407Q808 420 802 441L804 460L791 483L779 511L769 508L763 498L757 483L757 464Q746 442 736 421Q727 402 729 352L719 364Q713 370 706 359L699 352Q695 348 707 340Q720 331 718 326Q709 318 694 324L686 319L679 322L670 318L647 321L622 316L608 316L596 308L584 310L572 294L557 279L547 288L552 302L559 316L564 331L572 328L577 345Q587 350 596 341L605 337Q617 347 611 363L596 383L580 404L566 413L553 422L528 433L476 460L462 421L449 398L439 370L426 347L415 325L404 302L397 282L389 266L388 291L373 268L377 291Z"/>
+    <path d="M221 180L241 175L241 190Q231 194 221 180Z"/>
+    <path d="M196 139L203 122Q211 125 202 140Z"/>
+    <path d="M192 160L196 145Q205 144 201 162L197 171Q191 171 192 160Z"/>
+    <path d="M311 208Q323 204 331 212Q322 218 311 208Z"/>
+    <path d="M378 207Q382 198 391 197Q391 210 378 207Z"/>
+    <path d="M507 59Q530 46 538 57Q541 67 533 76L521 81Q515 93 525 100L537 110L541 124L552 120L556 129L555 140L539 140Q539 150 551 153L554 173Q554 192 539 192Q521 190 514 177L504 160L502 141Q488 117 489 94Q489 74 507 59Z"/>
+    <path d="M583 65Q590 56 599 68L599 85Q593 104 580 101Q570 100 576 86Z"/>
+    <path d="M694 72Q690 58 700 53L730 49Q732 53 715 58L696 76Z"/>
+  </g>
+  <g fill="none" stroke="#777a70" stroke-width="1.8" stroke-linecap="round">
+    <path d="M258 66L260 86Q260 94 280 96L292 98L297 107L326 102L339 92L347 88"/>
+    <path d="M599 66L617 74L635 90L649 99"/>
+    <path d="M381 350L382 373L389 393L391 416L395 444L408 463"/>
+    <path d="M390 415L407 435L411 452"/>
+  </g>
+  <g stroke-linejoin="round" stroke-width="3.5">
+    <g fill="url(#berber)" stroke="#cf6062">
+      <path d="M69 145Q84 139 94 151L99 165L110 177L117 153Q123 135 140 138L134 158L125 175L113 190L92 197L80 186L66 183L62 168Z"/>
+      <path d="M42 286L53 253L91 212Q98 223 113 216L136 201Q147 194 164 193L184 197L201 192L201 210L203 221L212 231L225 241L235 241L246 254Q263 265 275 256L270 280Q257 285 242 279L216 266L188 253L153 249L124 252L94 262L71 273Z"/>
+    </g>
+    <path d="M360 157Q367 143 387 145L405 145L425 149L443 148L459 151L471 149L480 157L495 149Q503 144 510 149L503 164L502 182L503 194L489 203L475 205L452 204L441 196L443 181L408 181L382 184L365 182L351 180Z" fill="url(#turk)" stroke="#a15a5b"/>
+    <path d="M510 149L503 164L502 182L503 194L489 203L475 205L486 224L504 248L531 259L555 272L579 285Q590 282 601 264L614 241L607 226L594 210L615 191L635 183L655 173L628 160L605 147L592 126L581 111Q570 101 562 113L554 122L553 139L539 140Q539 150 551 153L554 173Q554 192 539 192Q521 190 514 177L504 160Z" fill="url(#turk)" stroke="#a15a5b"/>
+    <path d="M635 112L653 96Q671 80 692 77L709 57L733 54L764 55L790 62L809 78L831 84L853 101L862 117L870 129L866 148L851 155L833 157L820 174L801 181L780 191L758 191L739 184L706 178L698 166L679 166L655 173L628 160L605 147L592 126L593 108L612 113L621 119Z" fill="url(#mongol)" stroke="#50534a"/>
+  </g>
+  <!-- 無地の領域も境界線を残し、指示線で空欄と対応させる。 -->
+  <g fill="none" stroke="#50534a" stroke-width="2.8" stroke-linejoin="round">
+    <path d="M275 256L270 280L291 284L305 290L316 295L320 308L338 310L349 326L362 348L386 364L409 374L415 366L425 352L420 335L408 312L397 282L388 264L370 252L356 258"/>
+    <path d="M475 205L464 208L454 219L451 237L460 256L479 271L493 281L504 298L522 305L525 289L513 271L504 248L486 224"/>
+    <path d="M614 241L620 254L638 263L665 271L694 279L722 284L747 283L772 278L800 279L826 286Q846 292 851 307Q856 322 837 335Q817 349 797 345L772 337L750 323L723 316L695 307L665 299L651 291"/>
+  </g>
+  <g fill="none" stroke="#777a70" stroke-width="1.6"><path d="M459 184L465 204L470 221L478 236L489 251L500 264"/><path d="M476 183L481 201L486 215L497 233L509 247L521 258"/></g>
+  <circle cx="482" cy="236" r="9" fill="#cd595c" stroke="#383c37" stroke-width="2.5"/>
+  <g font-family="'Yu Gothic','Meiryo',sans-serif" fill="#292d29">
+    <rect x="34" y="18" width="106" height="45" fill="#faf9f4" stroke="#50534a" stroke-width="2.5"/><text x="87" y="50" text-anchor="middle" font-size="29">12世紀</text>
+    <g fill="#fffefa" stroke="#44483f" stroke-width="2">
+      <rect x="24" y="181" width="205" height="39" rx="3"/>
+      <rect x="171" y="22" width="302" height="42" rx="3"/>
+      <rect x="184" y="310" width="196" height="40" rx="3"/>
+      <rect x="362" y="250" width="160" height="39" rx="3"/>
+      <rect x="410" y="308" width="207" height="44" rx="3"/>
+      <rect x="463" y="183" width="183" height="39" rx="3"/>
+      <rect x="596" y="111" width="292" height="42" rx="3"/>
+      <rect x="640" y="251" width="173" height="41" rx="3"/>
+    </g>
+    <g fill="none" stroke="#50534a" stroke-width="2.4"><path d="M314 65L401 151"/><path d="M343 350Q365 372 409 377"/><path d="M471 250L478 244"/><path d="M514 308L505 286"/></g>
+    <g font-size="29" text-anchor="middle" font-weight="700"><text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="126.5" y="208.9">① ムワッヒド朝</tspan></text><text text-anchor="middle" font-size="23" fill="#145c42"><tspan x="322" y="51.05">② ルーム=セルジューク朝</tspan></text><text text-anchor="middle" font-size="23" fill="#145c42"><tspan x="282" y="338.05">③ アイユーブ朝</tspan></text><text text-anchor="middle" font-size="21" fill="#145c42"><tspan x="442" y="276.85">④ バグダード</tspan></text><text text-anchor="middle" font-size="16" fill="#145c42"><tspan x="513.5" y="326.8">⑤ アッバース朝</tspan><tspan x="513.5" y="344.40000000000003">カリフ領</tspan></text><text text-anchor="middle" font-size="25" fill="#145c42"><tspan x="554.5" y="211.25">⑥ ホラズム朝</tspan></text><text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="742" y="140.4">⑦ カラ=キタイ（西遼）</tspan></text><text text-anchor="middle" font-size="28" fill="#145c42"><tspan x="726.5" y="281.3">⑧ ゴール朝</tspan></text></g>
+    <text x="817" y="280" font-size="19">※</text>
+    <rect x="536" y="467" width="375" height="42" fill="#faf9f4"/><text x="540" y="496" font-size="23">※イラン系、トルコ系諸説ある</text>
+    <rect x="0" y="517" width="940" height="73" fill="#faf9f4"/>
+    <g font-size="29">
+      <rect x="49" y="529" width="58" height="39" fill="url(#turk)" stroke="#a15a5b" stroke-width="3.5"/><text x="116" y="559">トルコ系</text>
+      <rect x="254" y="529" width="58" height="39" fill="url(#berber)" stroke="#cf6062" stroke-width="3.5"/><text x="321" y="559">ベルベル人</text>
+      <rect x="492" y="529" width="58" height="39" fill="url(#mongol)" stroke="#50534a" stroke-width="3.5"/><text x="559" y="559">モンゴル系</text>
+    </g>
+  </g>
+</svg>

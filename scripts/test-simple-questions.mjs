@@ -1,4 +1,5 @@
 import assert from "node:assert/strict";
+import { createAnswerMap } from "./create-answer-map.mjs";
 import { runInNewContext } from "node:vm";
 import { readFile } from "node:fs/promises";
 import { loadWorldHistorySODecks, parseCsv, parseSimpleQuestions } from "./build-learning-data.mjs";
@@ -85,7 +86,13 @@ for (const [index, mapQuestion] of maps.entries()) {
   }
   for (const number of "①②③④⑤⑥⑦⑧".slice(0, names.length)) assert.ok(svg.includes(number));
   assert.ok(!/<image|<script|href=/i.test(svg));
+  const answerSvg = await readFile(new URL(`../public/data/${mapQuestion.questionMap.answerPath}`, import.meta.url), "utf8");
+  assert.equal(answerSvg, createAnswerMap(svg, mapQuestion.answer));
+  const visibleAnswers = [...answerSvg.matchAll(/<tspan[^>]*>(.*?)<\/tspan>/g)].map((match) => match[1]).join("");
+  for (const name of names) assert.ok(visibleAnswers.includes(name), name);
+  assert.ok(!/<image|<script|href=/i.test(answerSvg));
   const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
+  assert.ok(app.includes("renderQuestionMap(question, state.answerVisible)"));
   const renderMap = app.slice(app.indexOf("function renderQuestionMap("), app.indexOf("function renderQuestionImage("));
   const element = { hidden: true, src: "", alt: "", classList: { toggle(name, value) { element.hidden = value; } }, removeAttribute(name) { delete this[name]; } };
   const context = { elements: { questionMap: element }, getDataUrl: (path) => "https://example.r2.dev/" + path };
@@ -93,9 +100,20 @@ for (const [index, mapQuestion] of maps.entries()) {
   context.renderMap(mapQuestion);
   assert.equal(element.hidden, false);
   assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.path);
+  context.renderMap(mapQuestion, true);
+  assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.answerPath);
+  assert.equal(element.alt, mapQuestion.questionMap.answerAlt);
+  context.renderMap(mapQuestion, false);
+  assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.path);
+  assert.equal(element.alt, mapQuestion.questionMap.alt);
+  context.renderMap({ questionMap: { path: mapQuestion.questionMap.path, alt: "旧形式" } }, true);
+  assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.path);
   context.renderMap(terms[0].stages.beginner[0]);
   assert.equal(element.hidden, true);
   assert.equal(element.src, undefined);
   assert.equal(element.alt, "");
 }
-console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答・13世紀の５回答、答えの非表示、出題時の地図表示、通常問題への切替を確認しました。");
+console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答・13世紀の５回答、答えの非表示、解答地図への切替、伏せた地図への復帰、通常問題への切替を確認しました。");
+
+assert.throws(() => createAnswerMap("<svg></svg>", "① 答え"));
+assert.throws(() => createAnswerMap("<svg></svg>", "番号なし"));

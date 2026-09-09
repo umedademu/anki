@@ -71,12 +71,13 @@ const publishAndVerify = async (key) => {
 for (const term of source.terms) {
   for (const question of term.stages.beginner) {
     if (!question.questionMap) continue;
-    const key = question.questionMap.path;
-    await put(key);
-    const response = await fetch(`${baseUrl}/${key}?so=${Date.now()}`, { cache: "no-store" });
-    assert.ok(response.ok, "地図をCloudflareから取得できません。");
-    assert.equal(await response.text(), await readFile(path.join(output, key), "utf8"));
-    console.log(`登録・照合済み: ${key}`);
+    for (const key of [question.questionMap.path, question.questionMap.answerPath].filter(Boolean)) {
+      await put(key);
+      const response = await fetch(`${baseUrl}/${key}?so=${Date.now()}`, { cache: "no-store" });
+      assert.ok(response.ok, "地図をCloudflareから取得できません。");
+      assert.equal(await response.text(), await readFile(path.join(output, key), "utf8"));
+      console.log(`登録・照合済み: ${key}`);
+    }
   }
 }
 for (const chunk of index.chunks) await publishAndVerify(chunk.path);

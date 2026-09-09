@@ -3842,12 +3842,13 @@ function renderTermTags(term, question, visible) {
   elements.termTags.classList.toggle("is-hidden", !visible || tags.length === 0);
 }
 
-function renderQuestionMap(question) {
+function renderQuestionMap(question, answerVisible = false) {
   const map = question.questionMap;
   elements.questionMap.classList.toggle("is-hidden", !map);
   if (map) {
-    elements.questionMap.src = getDataUrl(map.path);
-    elements.questionMap.alt = map.alt;
+    const showsAnswer = answerVisible && Boolean(map.answerPath);
+    elements.questionMap.src = getDataUrl(showsAnswer ? map.answerPath : map.path);
+    elements.questionMap.alt = showsAnswer ? map.answerAlt : map.alt;
   } else {
     elements.questionMap.removeAttribute("src");
     elements.questionMap.alt = "";
@@ -4401,7 +4402,7 @@ function renderQuestion() {
     elements.termOverviewText,
     explanation,
   );
-  renderQuestionMap(question);
+  renderQuestionMap(question, state.answerVisible);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
@@ -5295,7 +5296,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.209｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.210｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

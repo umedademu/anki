@@ -3,5 +3,10 @@
     "prompt": "地図上の空欄①〜⑤をすべて埋めなさい。（９世紀のイスラーム世界）",
     "path": "subjects/world-history-so/maps/islamic-world-9th-century.svg",
     "alt": "９世紀のイスラーム世界。地図上の５か所を①〜⑤で示した穴埋め地図。"
+  },
+  {
+    "prompt": "地図上の空欄①〜⑦をすべて埋めなさい。（10世紀のイスラーム世界）",
+    "path": "subjects/world-history-so/maps/islamic-world-10th-century.svg",
+    "alt": "10世紀のイスラーム世界。地図上の７か所を①〜⑦で示した穴埋め地図。"
   }
 ]

@@ -66,28 +66,33 @@ console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追
 
 // 地図の問題面から答えが漏れず、次の通常問題へ図が残らないことを確認する。
 const maps = terms.flatMap((term) => term.stages.beginner).filter((question) => question.questionMap);
-assert.equal(maps.length, 1);
-const mapQuestion = maps[0];
-const names = ["後ウマイヤ朝", "イドリース朝", "アッバース朝", "バグダード", "サーマーン朝"];
-assert.equal(mapQuestion.answer, names.map((name, i) => "①②③④⑤"[i] + " " + name).join("\n"));
-const svg = await readFile(new URL(`../public/data/${mapQuestion.questionMap.path}`, import.meta.url), "utf8");
-for (const name of names) {
-  assert.ok(!svg.includes(name));
-  assert.ok(!mapQuestion.questionMap.alt.includes(name));
-  assert.ok(!mapQuestion.prompt.includes(name));
+assert.equal(maps.length, 2);
+const expectedMaps = [
+  ["後ウマイヤ朝", "イドリース朝", "アッバース朝", "バグダード", "サーマーン朝"],
+  ["後ウマイヤ朝", "ファーティマ朝", "アッバース朝", "バグダード", "ブワイフ朝", "サーマーン朝", "カラ=ハン朝"],
+];
+for (const [index, mapQuestion] of maps.entries()) {
+  const names = expectedMaps[index];
+  assert.equal(mapQuestion.answer, names.map((name, i) => "①②③④⑤⑥⑦"[i] + " " + name).join("\n"));
+  const svg = await readFile(new URL(`../public/data/${mapQuestion.questionMap.path}`, import.meta.url), "utf8");
+  for (const name of names) {
+    assert.ok(!svg.includes(name));
+    assert.ok(!mapQuestion.questionMap.alt.includes(name));
+    assert.ok(!mapQuestion.prompt.includes(name));
+  }
+  for (const number of "①②③④⑤⑥⑦".slice(0, names.length)) assert.ok(svg.includes(number));
+  assert.ok(!/<image|<script|href=/i.test(svg));
+  const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
+  const renderMap = app.slice(app.indexOf("function renderQuestionMap("), app.indexOf("function renderQuestionImage("));
+  const element = { hidden: true, src: "", alt: "", classList: { toggle(name, value) { element.hidden = value; } }, removeAttribute(name) { delete this[name]; } };
+  const context = { elements: { questionMap: element }, getDataUrl: (path) => "https://example.r2.dev/" + path };
+  runInNewContext(renderMap + ";this.renderMap = renderQuestionMap;", context);
+  context.renderMap(mapQuestion);
+  assert.equal(element.hidden, false);
+  assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.path);
+  context.renderMap(terms[0].stages.beginner[0]);
+  assert.equal(element.hidden, true);
+  assert.equal(element.src, undefined);
+  assert.equal(element.alt, "");
 }
-for (const number of "①②③④⑤") assert.ok(svg.includes(number));
-assert.ok(!/<image|<script|href=/i.test(svg));
-const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
-const renderMap = app.slice(app.indexOf("function renderQuestionMap("), app.indexOf("function renderQuestionImage("));
-const element = { hidden: true, src: "", alt: "", classList: { toggle(name, value) { element.hidden = value; } }, removeAttribute(name) { delete this[name]; } };
-const context = { elements: { questionMap: element }, getDataUrl: (path) => "https://example.r2.dev/" + path };
-runInNewContext(renderMap + ";this.renderMap = renderQuestionMap;", context);
-context.renderMap(mapQuestion);
-assert.equal(element.hidden, false);
-assert.equal(element.src, "https://example.r2.dev/" + mapQuestion.questionMap.path);
-context.renderMap(terms[0].stages.beginner[0]);
-assert.equal(element.hidden, true);
-assert.equal(element.src, undefined);
-assert.equal(element.alt, "");
-console.log("地図の５回答、答えの非表示、出題時の地図表示、通常問題への切替を確認しました。");
+console.log("９世紀の５回答・10世紀の７回答、答えの非表示、出題時の地図表示、通常問題への切替を確認しました。");

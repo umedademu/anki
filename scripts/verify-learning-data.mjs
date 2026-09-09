@@ -405,12 +405,12 @@ if (
 const catalog = await readJson("index.json");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 11 ||
+  catalog.subjects.length !== 12 ||
   catalog.subjects.map((subject) => subject.id).join(",") !==
-    "world-history,world-history-s,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
+    "world-history,world-history-s,world-history-so,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
 ) {
   throw new Error(
-    "世界史・世界史S・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
+    "世界史・世界史S・世界史SO・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
   );
 }
 const subjectEntry = catalog.subjects.find(

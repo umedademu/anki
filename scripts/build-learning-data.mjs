@@ -1033,6 +1033,71 @@ export async function loadWorldHistorySDecks() {
   return { decks: [deck], terms };
 }
 
+export const worldHistorySODefinition = {
+  id: "world-history-so",
+  title: "世界史SO",
+  catalogLabel: "世界史SO",
+  description: "問題・回答・解説でシンプルに覚える世界史の一問一答",
+  learningType: "cards",
+  simpleQuestions: true,
+  termUnitLabel: "項目",
+  availableStages: ["beginner"],
+  filterLabels: { category: "カテゴリ" },
+  stageLabels: { all: "すべての問題", beginner: "一問一答" },
+};
+
+export function parseSimpleQuestions(sourceText, defaultCategory = "") {
+  const rows = parseCsv(sourceText.replace(/^\uFEFF/, ""));
+  const headers = rows[0]?.map((value) => value.trim());
+  if (!headers || ![3, 4].includes(headers.length) ||
+      headers[0] !== "問題" || headers[1] !== "回答" ||
+      !["解説", "説明"].includes(headers[2]) ||
+      (headers.length === 4 && headers[3] !== "カテゴリ") || rows.length < 2) {
+    throw new Error("一問一答CSVは「問題,回答,解説（または説明）」と任意の4列目「カテゴリ」にしてください。");
+  }
+  const ids = new Set();
+  return rows.slice(1).map((cells, index) => {
+    const [prompt, answer, explanation] = cells;
+    const category = (cells[3] ?? defaultCategory).trim();
+    if (cells.length !== headers.length || !prompt?.trim() || !answer?.trim() || !category) {
+      throw new Error(`一問一答CSVの${index + 2}行目の列数・問題・回答・カテゴリを確認してください。`);
+    }
+    // 並べ替え、追記、回答・解説・カテゴリの修正で既存の学習履歴を切らない。
+    const id = `WHSO-${createHash("sha256").update(prompt.trim()).digest("hex").slice(0, 20)}`;
+    if (ids.has(id)) throw new Error(`一問一答CSVの問題が重複しています: ${prompt}`);
+    ids.add(id);
+    return {
+      id, datasetLabel: "世界史SO｜Deck 1｜自作一問一答",
+      importanceRank: index + 1, difficultyLabel: "一問一答", category,
+      term: prompt, reading: "", aliases: [], era: "",
+      geography: { macroRegion: "", macroRegions: [], regionDetail: "" },
+      chronology: { displayPeriod: "", sortYear: index + 1 },
+      stages: {
+        beginner: [{
+          id: `${id}-B01`, stage: "beginner", focus: "一問一答",
+          type: "short_answer", label: "一問一答", prompt, answer,
+          explanation, keywords: [], acceptedAnswers: [], answerNote: "",
+          yearMnemonic: "", source: { name: "利用者作成CSV", url: "" },
+          hideTermUntilAnswer: true,
+        }],
+        reverse: [], integrated: [],
+      },
+    };
+  });
+}
+
+export async function loadWorldHistorySODecks() {
+  const sourcePath = path.join(projectRoot, "data", "source", "world-history-so", "questions.csv");
+  const sourceText = await readFile(sourcePath, "utf8");
+  const terms = parseSimpleQuestions(sourceText);
+  return { terms, decks: [{
+    id: "deck-1", number: 1, sourcePath, sourceText,
+    sourceFile: path.basename(sourcePath), version: "world-history-so-deck-1-v1",
+    contentVersion: sourceVersion(sourceText), datasetLabel: terms[0].datasetLabel,
+    difficultyLabel: "一問一答", terms,
+  }] };
+}
+
 export async function loadMindsetDecks() {
   const sourcePath = path.join(mindsetSourceDirectory, "mindsets.json");
   const sourceText = await readFile(sourcePath, "utf8");
@@ -3265,7 +3330,7 @@ export function mergeTermImageManifests(manifests) {
   };
 }
 
-async function writeSubjectData(definition, decks) {
+export async function writeSubjectData(definition, decks) {
   const deckEntries = [];
   for (const deck of decks) {
     const basePath =
@@ -3305,6 +3370,7 @@ async function writeSubjectData(definition, decks) {
       id: definition.id,
       title: definition.title,
       learningType: definition.learningType,
+      ...(definition.simpleQuestions ? { simpleQuestions: true } : {}),
       termUnitLabel: definition.termUnitLabel ?? "語",
       filterLabels: definition.filterLabels,
       stageLabels: definition.stageLabels,
@@ -3367,6 +3433,7 @@ export async function main() {
   const [
     worldHistoryData,
     worldHistorySData,
+    worldHistorySOData,
     japaneseHistoryData,
     englishData,
     geographyData,
@@ -3379,6 +3446,7 @@ export async function main() {
   ] = await Promise.all([
     loadSourceDecks(),
     loadWorldHistorySDecks(),
+    loadWorldHistorySODecks(),
     loadJapaneseHistoryDecks(),
     loadEnglishDecks(),
     loadGeographyDecks(),
@@ -3435,6 +3503,7 @@ export async function main() {
   const allDecks = [
     ...worldHistoryData.decks,
     ...worldHistorySData.decks,
+    ...worldHistorySOData.decks,
     ...japaneseHistoryData.decks,
     ...englishData.decks,
     ...geographyData.decks,
@@ -3543,6 +3612,7 @@ export async function main() {
       },
       worldHistorySData.decks,
     ),
+    writeSubjectData(worldHistorySODefinition, worldHistorySOData.decks),
     writeSubjectData(
       {
         id: japaneseSubjectId,
@@ -3729,6 +3799,7 @@ export async function main() {
 
   const worldCounts = countQuestionsByStage(worldHistoryData.terms);
   const worldSCounts = countQuestionsByStage(worldHistorySData.terms);
+  console.log(`世界史SO ${worldHistorySOData.terms.length}問の一問一答を生成しました。`);
   const japaneseCounts = countQuestionsByStage(japaneseHistoryData.terms);
   const englishCounts = countQuestionsByStage(englishData.terms);
   const geographyCounts = countQuestionsByStage(geographyData.terms);

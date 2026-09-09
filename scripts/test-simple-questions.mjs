@@ -1,0 +1,64 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { loadWorldHistorySODecks, parseCsv, parseSimpleQuestions } from "./build-learning-data.mjs";
+import {
+  createEmptyProgress, createQuestionQueue, filterTermsBySelection,
+  getQuestionAnswerDisplayText, getQuestionExplanation, rateQuestion,
+  serializeProgress, deserializeProgress,
+} from "../public/learning-engine.js";
+
+const { terms, decks } = await loadWorldHistorySODecks();
+const sourceRows = parseCsv(decks[0].sourceText).slice(1);
+assert.equal(terms.length, sourceRows.length);
+assert.equal(new Set(terms.map((term) => term.id)).size, terms.length);
+for (const [index, term] of terms.entries()) {
+  assert.equal(term.stages.beginner.length, 1);
+  assert.deepEqual(term.stages.reverse, []);
+  assert.deepEqual(term.stages.integrated, []);
+  const question = term.stages.beginner[0];
+  assert.deepEqual([question.prompt, question.answer, question.explanation, term.category], sourceRows[index]);
+  assert.equal(getQuestionAnswerDisplayText(question), sourceRows[index][1]);
+  assert.equal(getQuestionExplanation(term, question), sourceRows[index][2].trim());
+}
+const sample = '\uFEFF問題,回答,説明,カテゴリ\n"問,1","答""1","説明\n続き",イスラーム世界\n問2,答2,,中国史\n';
+const parsed = parseSimpleQuestions(sample);
+assert.equal(parsed[0].stages.beginner[0].prompt, "問,1");
+assert.equal(parsed[0].stages.beginner[0].answer, '答"1');
+assert.equal(parsed[0].stages.beginner[0].explanation, "説明\n続き");
+assert.equal(filterTermsBySelection(parsed, { category: "中国史" }).length, 1);
+const edited = parseSimpleQuestions("問題,回答,解説,カテゴリ\n問2,修正答,追記,欧州史\n問3,答3,,欧州史\n");
+assert.equal(edited[0].id, parsed[1].id);
+assert.equal(parseSimpleQuestions("問題,回答,解説\n問,答,説明", "イスラーム世界")[0].category, "イスラーム世界");
+for (const csv of [
+  "問題,回答,解説\n問,答,説明",
+  "問題,回答,解説,カテゴリ\n問,,説明,分類",
+  "問題,回答,解説,カテゴリ\n問,答,説明,分類,余分",
+  "問題,回答,解説,カテゴリ\n問,答,,分類\n問,別答,,別分類",
+  '問題,回答,解説,カテゴリ\n"閉じない,答,説明,分類',
+]) assert.throws(() => parseSimpleQuestions(csv));
+
+const progress = createEmptyProgress();
+const queue = createQuestionQueue(terms, progress, 2);
+assert.equal(queue.length, terms.length);
+assert.ok(queue.every((task) => task.stage === "beginner"));
+const firstId = terms[0].stages.beginner[0].id;
+rateQuestion(progress, firstId, "good", 2);
+assert.equal(createQuestionQueue(terms, progress, 2).length, terms.length - 1);
+assert.equal(deserializeProgress(serializeProgress(progress)).questions[firstId].lastRating, "good");
+
+const catalog = JSON.parse(await readFile(new URL("../public/data/index.json", import.meta.url), "utf8"));
+const entry = catalog.subjects.find((subject) => subject.id === "world-history-so");
+assert.equal(entry.title, "世界史SO");
+assert.equal(entry.questionCount, terms.length);
+const subject = JSON.parse(await readFile(new URL(`../public/data/${entry.indexPath}`, import.meta.url), "utf8"));
+assert.equal(subject.simpleQuestions, true);
+assert.equal(subject.version, "world-history-so-deck-1-v1");
+assert.deepEqual(subject.availableStages, ["beginner"]);
+const generated = [];
+for (const chunk of subject.chunks) {
+  const data = JSON.parse(await readFile(new URL(`../public/data/${chunk.path}`, import.meta.url), "utf8"));
+  assert.equal(data.subjectId, "world-history-so");
+  generated.push(...data.terms);
+}
+assert.deepEqual(generated, terms);
+console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追記時の識別番号、出題・評価・復習、CSVの異常検知を確認しました。`);

@@ -523,7 +523,7 @@ function updateRoundProgressDisplay() {
 }
 
 function supportsOneQuestionPerTerm() {
-  return state.subject?.learningType !== "vocabulary";
+  return state.subject?.learningType !== "vocabulary" && !state.subject?.simpleQuestions;
 }
 
 function termUnitLabel(subject = state.subject) {
@@ -4103,6 +4103,8 @@ function updateSetupPreview() {
               }）`
       : questionAmountMode === oneQuestionPerTermMode
         ? `${terms.length}${termUnitLabel()}・今回${dueQuestions}問（1項目につき1問・最大${terms.length}問）`
+      : state.subject?.simpleQuestions
+        ? `${questions}問（一問一答）`
       : selectedStage
         ? `${terms.length}${termUnitLabel()}・${questions}問（${questionStyleLabel(selectedStage)}）`
         : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
@@ -4159,6 +4161,9 @@ function configureSetup() {
     if (text) label.textContent = text;
   }
   setQuestionStyleOptions();
+  elements.questionStyleFilter.closest(".setup-field").classList.toggle(
+    "is-hidden", Boolean(state.subject?.simpleQuestions),
+  );
   elements.questionAmountField.classList.toggle(
     "is-hidden",
     !supportsOneQuestionPerTerm(),
@@ -4260,7 +4265,7 @@ function renderQuestion() {
   elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
   elements.contextCard.classList.toggle(
     "is-hidden",
-    (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning,
+    (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning || Boolean(state.subject?.simpleQuestions),
   );
   elements.stageName.classList.toggle(
     "is-hidden",
@@ -5195,7 +5200,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.193｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.194｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

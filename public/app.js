@@ -4527,7 +4527,6 @@ function applyQuestionRating(term, question, rating) {
     return;
   }
   if (stageAfter === "complete") {
-    state.unlockMessage = `${term.term}を完全習得しました。`;
     return;
   }
   addTasksToActiveSession(
@@ -5200,7 +5199,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.196｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.197｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

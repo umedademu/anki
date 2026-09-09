@@ -9,15 +9,15 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.203" />
+    <link rel="stylesheet" href="/styles.css?v=0.204" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.203" type="module"></script>
+    <script src="/app.js?v=0.204" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.203</span>
+        <span class="app-version">v0.204</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
         <a class="header-link" href="/settings.html">設定</a>
@@ -28,13 +28,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.203｜科目別学習</p>
+        <p class="eyebrow">v0.204｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.203｜科目を選ぶ</p>
+        <p class="eyebrow">v0.204｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選んで学習するか、登録した動画をランダム再生できます。
@@ -92,7 +92,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.203｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.204｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
@@ -675,20 +675,6 @@
         </nav>
 
         <nav class="listening-dock is-hidden" id="listening-dock" aria-label="聞き流し操作">
-          <div class="listening-navigation-buttons">
-            <button class="secondary-button" id="listening-back-action" type="button">
-              戻る
-              <small>一手前へ</small>
-            </button>
-            <button class="secondary-button" id="listening-toggle-action" type="button">
-              一時停止・再生
-              <small>同じ位置から</small>
-            </button>
-            <button class="primary-button" id="listening-next-action" type="button">
-              進む
-              <small>一手先へ</small>
-            </button>
-          </div>
           <div class="rating-buttons listening-rating-buttons is-hidden" id="listening-rating-buttons">
             <button class="rating-action rating-incorrect" id="listening-incorrect-action" type="button" data-rating="again">
               <span>× 不正解</span>
@@ -705,6 +691,20 @@
             <button class="rating-action rating-easy" id="listening-easy-action" type="button" data-rating="easy">
               <span>◎ 簡単</span>
               <small>6日後</small>
+            </button>
+          </div>
+          <div class="listening-navigation-buttons">
+            <button class="secondary-button" id="listening-back-action" type="button">
+              戻る
+              <small>一手前へ</small>
+            </button>
+            <button class="secondary-button" id="listening-toggle-action" type="button">
+              一時停止・再生
+              <small>同じ位置から</small>
+            </button>
+            <button class="primary-button" id="listening-next-action" type="button">
+              進む
+              <small>一手先へ</small>
             </button>
           </div>
         </nav>

@@ -1090,10 +1090,19 @@ export async function loadWorldHistorySODecks() {
   const sourcePath = path.join(projectRoot, "data", "source", "world-history-so", "questions.csv");
   const sourceText = await readFile(sourcePath, "utf8");
   const terms = parseSimpleQuestions(sourceText);
+  const mapsText = await readFile(path.join(path.dirname(sourcePath), "question-maps.json"), "utf8");
+  const maps = JSON.parse(mapsText);
+  for (const map of maps) {
+    const question = terms.flatMap((term) => term.stages.beginner).find((question) => question.prompt === map.prompt);
+    if (!question || !/^subjects\/world-history-so\/maps\/[a-z0-9-]+\.svg$/.test(map.path)) {
+      throw new Error("世界史SOの地図の問題文・保存先を確認してください。");
+    }
+    question.questionMap = { path: map.path, alt: map.alt };
+  }
   return { terms, decks: [{
     id: "deck-1", number: 1, sourcePath, sourceText,
     sourceFile: path.basename(sourcePath), version: "world-history-so-deck-1-v1",
-    contentVersion: sourceVersion(sourceText), datasetLabel: terms[0].datasetLabel,
+    contentVersion: sourceVersion(sourceText + mapsText), datasetLabel: terms[0].datasetLabel,
     difficultyLabel: "一問一答", terms,
   }] };
 }
@@ -3331,6 +3340,11 @@ export function mergeTermImageManifests(manifests) {
 }
 
 export async function writeSubjectData(definition, decks) {
+  if (definition.id === "world-history-so") {
+    await mkdir(path.join(outputRoot, "subjects/world-history-so/maps"), { recursive: true });
+    await cp(path.join(projectRoot, "data/source/world-history-so/maps"),
+      path.join(outputRoot, "subjects/world-history-so/maps"), { recursive: true });
+  }
   const deckEntries = [];
   for (const deck of decks) {
     const basePath =

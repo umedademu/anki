@@ -53,7 +53,7 @@ const put = (key) => new Promise((resolve, reject) => {
   const child = spawn(process.execPath, [
     path.join(root, "node_modules", "wrangler", "bin", "wrangler.js"),
     "r2", "object", "put", `anki-world-history/${key}`,
-    "--file", path.join(output, key), "--content-type", "application/json; charset=utf-8",
+    "--file", path.join(output, key), "--content-type", key.endsWith(".svg") ? "image/svg+xml" : "application/json; charset=utf-8",
     "--cache-control", "no-cache", "--remote", "--force",
   ], { cwd: root, stdio: ["ignore", "pipe", "pipe"] });
   let log = "";
@@ -68,6 +68,17 @@ const publishAndVerify = async (key) => {
   console.log(`登録・照合済み: ${key}`);
 };
 // 新科目の参照先を先に揃え、現在のCloudflare索引にその科目だけを追加する。
+for (const term of source.terms) {
+  for (const question of term.stages.beginner) {
+    if (!question.questionMap) continue;
+    const key = question.questionMap.path;
+    await put(key);
+    const response = await fetch(`${baseUrl}/${key}?so=${Date.now()}`, { cache: "no-store" });
+    assert.ok(response.ok, "地図をCloudflareから取得できません。");
+    assert.equal(await response.text(), await readFile(path.join(output, key), "utf8"));
+    console.log(`登録・照合済み: ${key}`);
+  }
+}
 for (const chunk of index.chunks) await publishAndVerify(chunk.path);
 await publishAndVerify(entry.indexPath);
 assert.deepEqual(await fetchJson("index.json"), original, "作業中に科目一覧が変わりました。再実行してください。");

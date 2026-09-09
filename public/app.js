@@ -232,6 +232,7 @@ const elements = {
   questionNumber: document.querySelector("#question-number"),
   questionSpokenBlock: document.querySelector(".question-spoken-block"),
   questionText: document.querySelector("#question-text"),
+  questionMap: document.querySelector("#question-map"),
   questionReading: document.querySelector("#question-reading"),
   questionSpeech: document.querySelector("#question-speech"),
   answerPanel: document.querySelector("#answer-panel"),
@@ -3841,6 +3842,18 @@ function renderTermTags(term, question, visible) {
   elements.termTags.classList.toggle("is-hidden", !visible || tags.length === 0);
 }
 
+function renderQuestionMap(question) {
+  const map = question.questionMap;
+  elements.questionMap.classList.toggle("is-hidden", !map);
+  if (map) {
+    elements.questionMap.src = getDataUrl(map.path);
+    elements.questionMap.alt = map.alt;
+  } else {
+    elements.questionMap.removeAttribute("src");
+    elements.questionMap.alt = "";
+  }
+}
+
 function renderQuestionImage(question, visible) {
   const image = state.questionImages.get(question.id);
   const showsImage = visible && Boolean(image);
@@ -4388,6 +4401,7 @@ function renderQuestion() {
     elements.termOverviewText,
     explanation,
   );
+  renderQuestionMap(question);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
@@ -5281,7 +5295,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.204｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.205｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

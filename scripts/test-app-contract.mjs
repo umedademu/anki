@@ -481,7 +481,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.215" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.216" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -492,14 +492,20 @@ if (
   !html.includes('id="start-study"') ||
   !html.includes('id="deck-filter"') ||
   !html.includes('id="question-style-filter"') ||
+  !html.includes('id="setup-review-shared"') ||
+  !html.includes('id="setup-review-custom"') ||
+  !html.includes('id="setup-again-value"') ||
+  !html.includes('id="setup-hard-value"') ||
+  !html.includes('id="setup-good-value"') ||
+  !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.215") ||
-  !app.includes("v0.215｜") ||
-  !changelog.includes("v0.215") ||
-  !settingsHtml.includes("v0.215") ||
-  !historyHtml.includes("v0.215") ||
-  !analysisHtml.includes("v0.215")
+  !html.includes("v0.216") ||
+  !app.includes("v0.216｜") ||
+  !changelog.includes("v0.216") ||
+  !settingsHtml.includes("v0.216") ||
+  !historyHtml.includes("v0.216") ||
+  !analysisHtml.includes("v0.216")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -857,7 +863,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.215"') ||
+  !html.includes('href="/styles.css?v=0.216"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1332,10 +1338,14 @@ if (
   !app.includes("state.sharedReviewSettings = normalizeReviewSettings(saved)") ||
   !app.includes("resolveSubjectReviewSettings(") ||
   !app.includes("reviewSettings: usesCustomSettings ? reviewSettings : null") ||
+  !app.includes("function fillSetupReviewSettings()") ||
+  !app.includes("function captureSetupReviewPreference()") ||
+  !app.includes("saveSetupReviewPreference()") ||
   !cloudProgress.includes("normalizeSubjectReviewSettings(") ||
   !worker.includes("normalizeSubjectReviewSettings(") ||
   !styles.includes(".study-menu-trigger {") ||
   !styles.includes(".study-menu-layer {") ||
+  !styles.includes(".setup-review-settings {") ||
   !styles.includes("width: min(46vw, 330px)")
 ) {
   throw new Error("学習中メニューの移動・音声・復習間隔の操作が揃っていません。");
@@ -1785,5 +1795,5 @@ if (
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
 }
 console.log(
-  "画面構成検証完了: 4段階評価・開始前全項目・Cloudflare共通設定を確認",
+  "画面構成検証完了: 4段階評価・開始前全項目・Cloudflare共通設定と教科別設定を確認",
 );

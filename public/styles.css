@@ -973,6 +973,47 @@ body.is-study-menu-open {
   gap: 18px;
 }
 
+.setup-review-settings {
+  display: grid;
+  margin-top: 24px;
+  padding: 18px;
+  grid-template-columns: minmax(210px, 0.8fr) minmax(0, 1.2fr);
+  gap: 12px 16px;
+  background: #f4f7f2;
+  border: 1px solid rgb(34 80 53 / 12%);
+  border-radius: 16px;
+}
+
+.setup-review-heading {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.setup-review-heading h2 {
+  margin: 0;
+  color: #2b5039;
+  font-size: 0.9rem;
+}
+
+.setup-review-heading p {
+  margin: 0;
+  color: #6d7b72;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.setup-review-scope {
+  margin: 0;
+}
+
+.setup-review-interval-list {
+  align-self: stretch;
+}
+
 .setup-field {
   display: grid;
   gap: 8px;
@@ -3025,6 +3066,19 @@ body.is-listening.is-listening-answer-visible .page {
     grid-template-columns: 1fr;
   }
 
+  .setup-review-settings {
+    grid-template-columns: 1fr;
+  }
+
+  .setup-review-heading {
+    display: grid;
+    gap: 4px;
+  }
+
+  .setup-review-heading p {
+    text-align: left;
+  }
+
   .study-mode-options {
     grid-template-columns: 1fr;
   }
@@ -3468,6 +3522,57 @@ body.is-listening.is-listening-answer-visible .page {
     margin-top: 6px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
+  }
+
+  .setup-review-settings {
+    margin-top: 6px;
+    padding: 6px;
+    grid-template-columns: minmax(175px, 0.7fr) minmax(0, 1.3fr);
+    gap: 4px 7px;
+    border-radius: 8px;
+  }
+
+  .setup-review-heading {
+    gap: 7px;
+  }
+
+  .setup-review-heading h2 {
+    font-size: 0.6rem;
+  }
+
+  .setup-review-heading p {
+    font-size: 0.48rem;
+  }
+
+  .setup-review-settings .study-menu-review-scope {
+    margin: 0;
+    padding: 4px 6px;
+    gap: 3px;
+  }
+
+  .setup-review-settings .study-menu-review-scope legend,
+  .setup-review-settings .study-menu-review-scope label,
+  .setup-review-settings .study-menu-review-scope p {
+    font-size: 0.5rem;
+  }
+
+  .setup-review-settings .study-menu-interval-list {
+    gap: 4px;
+  }
+
+  .setup-review-settings .study-menu-interval {
+    padding: 4px;
+    grid-template-columns: minmax(58px, 1fr) minmax(40px, 0.48fr) minmax(56px, 0.62fr);
+    gap: 3px;
+    border-radius: 6px;
+    font-size: 0.55rem;
+  }
+
+  .setup-review-settings .study-menu-interval input,
+  .setup-review-settings .study-menu-interval select {
+    min-height: 28px;
+    padding: 3px 5px;
+    border-radius: 6px;
   }
 
   .study-mode-picker {

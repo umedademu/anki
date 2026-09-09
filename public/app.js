@@ -190,6 +190,17 @@ const elements = {
     "#listening-answer-description",
   ),
   setupShuffle: document.querySelector("#setup-shuffle"),
+  setupReviewShared: document.querySelector("#setup-review-shared"),
+  setupReviewCustom: document.querySelector("#setup-review-custom"),
+  setupReviewScopeNote: document.querySelector("#setup-review-scope-note"),
+  setupAgainValue: document.querySelector("#setup-again-value"),
+  setupAgainUnit: document.querySelector("#setup-again-unit"),
+  setupHardValue: document.querySelector("#setup-hard-value"),
+  setupHardUnit: document.querySelector("#setup-hard-unit"),
+  setupGoodValue: document.querySelector("#setup-good-value"),
+  setupGoodUnit: document.querySelector("#setup-good-unit"),
+  setupEasyValue: document.querySelector("#setup-easy-value"),
+  setupEasyUnit: document.querySelector("#setup-easy-unit"),
   selectionSummary: document.querySelector("#selection-summary"),
   setupRoundProgress: document.querySelector("#setup-round-progress"),
   resumeStudy: document.querySelector("#resume-study"),
@@ -406,6 +417,7 @@ let listeningTouchStart = null;
 let suppressNextListeningClick = false;
 let studyMenuLastFocused = null;
 let studyMenuCustomReviewDraft = null;
+let setupCustomReviewDraft = null;
 let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
@@ -457,6 +469,12 @@ const studyMenuReviewFields = {
   hardSeconds: [elements.studyMenuHardValue, elements.studyMenuHardUnit],
   goodSeconds: [elements.studyMenuGoodValue, elements.studyMenuGoodUnit],
   easySeconds: [elements.studyMenuEasyValue, elements.studyMenuEasyUnit],
+};
+const setupReviewFields = {
+  againSeconds: [elements.setupAgainValue, elements.setupAgainUnit],
+  hardSeconds: [elements.setupHardValue, elements.setupHardUnit],
+  goodSeconds: [elements.setupGoodValue, elements.setupGoodUnit],
+  easySeconds: [elements.setupEasyValue, elements.setupEasyUnit],
 };
 const vocabularySpeechLabels = {
   word: "英語",
@@ -1944,10 +1962,10 @@ function currentSubjectReviewSettings() {
     ?.reviewSettings ?? null;
 }
 
-function fillStudyMenuReviewFields(settings) {
+function fillReviewFields(fields, settings) {
   const reviewSettings = normalizeReviewSettings(settings);
   for (const [key, [valueInput, unitSelect]] of Object.entries(
-    studyMenuReviewFields,
+    fields,
   )) {
     const unit = chooseStudyMenuIntervalUnit(reviewSettings[key]);
     unitSelect.value = String(unit);
@@ -1955,10 +1973,10 @@ function fillStudyMenuReviewFields(settings) {
   }
 }
 
-function readStudyMenuReviewFields() {
+function readReviewFields(fields) {
   return normalizeReviewSettings(
     Object.fromEntries(
-      Object.entries(studyMenuReviewFields).map(
+      Object.entries(fields).map(
         ([key, [valueInput, unitSelect]]) => [
           key,
           Number(valueInput.value) * Number(unitSelect.value),
@@ -1968,6 +1986,21 @@ function readStudyMenuReviewFields() {
   );
 }
 
+function setReviewFieldsDisabled(fields, disabled) {
+  for (const [valueInput, unitSelect] of Object.values(fields)) {
+    valueInput.disabled = disabled;
+    unitSelect.disabled = disabled;
+  }
+}
+
+function fillStudyMenuReviewFields(settings) {
+  fillReviewFields(studyMenuReviewFields, settings);
+}
+
+function readStudyMenuReviewFields() {
+  return readReviewFields(studyMenuReviewFields);
+}
+
 function updateStudyMenuReviewScope() {
   const usesCustomSettings = elements.studyMenuReviewCustom.checked;
   fillStudyMenuReviewFields(
@@ -1975,12 +2008,7 @@ function updateStudyMenuReviewScope() {
       ? studyMenuCustomReviewDraft ?? state.sharedReviewSettings
       : state.sharedReviewSettings,
   );
-  for (const [valueInput, unitSelect] of Object.values(
-    studyMenuReviewFields,
-  )) {
-    valueInput.disabled = !usesCustomSettings;
-    unitSelect.disabled = !usesCustomSettings;
-  }
+  setReviewFieldsDisabled(studyMenuReviewFields, !usesCustomSettings);
   const subjectTitle = state.subject?.title ?? "この教科";
   elements.studyMenuReviewScopeNote.textContent = usesCustomSettings
     ? `${subjectTitle}だけに、この4つの時間を適用します。`
@@ -2106,6 +2134,7 @@ async function saveStudyMenuSettings() {
       state.sharedReviewSettings,
       currentSubjectReviewSettings(),
     );
+    fillSetupReviewSettings();
     state.listeningQuestionIntervalSeconds =
       normalizeListeningQuestionIntervalSeconds(
         saved.listeningQuestionIntervalSeconds,
@@ -2123,6 +2152,65 @@ async function saveStudyMenuSettings() {
   } finally {
     elements.studyMenuSave.disabled = false;
   }
+}
+
+function fillSetupReviewFields(settings) {
+  fillReviewFields(setupReviewFields, settings);
+}
+
+function readSetupReviewFields() {
+  return readReviewFields(setupReviewFields);
+}
+
+function updateSetupReviewScope() {
+  const usesCustomSettings = elements.setupReviewCustom.checked;
+  fillSetupReviewFields(
+    usesCustomSettings
+      ? setupCustomReviewDraft ?? state.sharedReviewSettings
+      : state.sharedReviewSettings,
+  );
+  setReviewFieldsDisabled(setupReviewFields, !usesCustomSettings);
+  const subjectTitle = state.subject?.title ?? "この教科";
+  elements.setupReviewScopeNote.textContent = usesCustomSettings
+    ? `${subjectTitle}だけに、この4つの時間を適用します。`
+    : "設定画面で保存した全教科共通の時間を適用します。";
+}
+
+function fillSetupReviewSettings() {
+  const customSettings = currentSubjectReviewSettings();
+  setupCustomReviewDraft = normalizeReviewSettings(
+    customSettings ?? state.sharedReviewSettings,
+  );
+  elements.setupReviewCustom.checked = Boolean(customSettings);
+  elements.setupReviewShared.checked = !customSettings;
+  updateSetupReviewScope();
+}
+
+function captureSetupReviewPreference() {
+  const preferences = captureSetupPreferences();
+  const currentSubject = preferences.subjects[state.activeSubjectId];
+  const usesCustomSettings = elements.setupReviewCustom.checked;
+  const reviewSettings = readSetupReviewFields();
+  return normalizeSetupPreferences({
+    ...preferences,
+    subjects: {
+      ...preferences.subjects,
+      [state.activeSubjectId]: {
+        ...currentSubject,
+        reviewSettings: usesCustomSettings ? reviewSettings : null,
+      },
+    },
+  });
+}
+
+function saveSetupReviewPreference() {
+  state.setupPreferences = captureSetupReviewPreference();
+  state.reviewSettings = resolveSubjectReviewSettings(
+    state.sharedReviewSettings,
+    currentSubjectReviewSettings(),
+  );
+  updateRatingIntervals();
+  queueVisibleSetupPreferenceSave();
 }
 
 function getConfig() {
@@ -2931,6 +3019,10 @@ function queueSetupPreferenceSave() {
       if (saveVersion === setupPreferenceSaveVersion) {
         state.shuffleEnabled = saved.shuffleEnabled;
         syncRoutinePreferences(saved.setupPreferences);
+        state.reviewSettings = resolveSubjectReviewSettings(
+          state.sharedReviewSettings,
+          currentSubjectReviewSettings(),
+        );
         elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
       }
       return saved;
@@ -3875,6 +3967,7 @@ async function returnToSetup() {
     }
   }
   showOnly(elements.setupPanel);
+  fillSetupReviewSettings();
   updateSetupPreview();
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -4100,6 +4193,7 @@ function applySetupPreferences() {
   for (const option of elements.studyModeOptions) {
     option.checked = option.value === restoredMode;
   }
+  fillSetupReviewSettings();
 }
 
 function activeStages() {
@@ -5379,7 +5473,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.215｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.216｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5679,6 +5773,26 @@ elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
   queueVisibleSetupPreferenceSave();
 });
+elements.setupReviewShared.addEventListener("change", () => {
+  if (!elements.setupReviewShared.checked) return;
+  setupCustomReviewDraft = readSetupReviewFields();
+  updateSetupReviewScope();
+  saveSetupReviewPreference();
+});
+elements.setupReviewCustom.addEventListener("change", () => {
+  if (!elements.setupReviewCustom.checked) return;
+  updateSetupReviewScope();
+  saveSetupReviewPreference();
+});
+for (const [valueInput, unitSelect] of Object.values(setupReviewFields)) {
+  for (const control of [valueInput, unitSelect]) {
+    control.addEventListener("change", () => {
+      if (!elements.setupReviewCustom.checked) return;
+      setupCustomReviewDraft = readSetupReviewFields();
+      saveSetupReviewPreference();
+    });
+  }
+}
 elements.startStudy.addEventListener("click", () => void beginStudy());
 elements.resumeStudy.addEventListener("click", () => void resumeStudy());
 elements.homeLink.addEventListener("click", (event) => {

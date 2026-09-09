@@ -3848,3 +3848,7 @@ body.is-listening.is-listening-answer-visible .page {
     }
   }
 }
+
+.question-limit-field { max-width: 360px; margin: 16px 0; }
+.question-limit-field input { width: 100%; min-height: 44px; padding: 10px 14px; border: 1px solid rgb(34 80 53 / 18%); border-radius: 13px; background: #fff; color: #26372c; font: inherit; }
+.question-limit-field small { color: #68766b; font-size: 0.78rem; line-height: 1.6; }

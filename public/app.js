@@ -183,6 +183,8 @@ const elements = {
   selectionSummary: document.querySelector("#selection-summary"),
   setupRoundProgress: document.querySelector("#setup-round-progress"),
   resumeStudy: document.querySelector("#resume-study"),
+  questionLimit: document.querySelector("#question-limit"),
+  questionLimitField: document.querySelector("#question-limit-field"),
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
   changeSubject: document.querySelector("#change-subject"),
@@ -347,6 +349,10 @@ const state = {
   selectedStage: "",
   questionAmountMode: "all",
   answeredThisSession: 0,
+  questionLimit: null,
+  questionLimitStart: 0,
+  questionLimitRatings: createEmptyRatingCounts(),
+  questionLimitSeconds: 0,
   ratingCounts: createEmptyRatingCounts(),
   studySeconds: 0,
   screenStudySeconds: 0,
@@ -1404,6 +1410,7 @@ function tickStudyClock(
 
 function startStudyClock() {
   if (
+    hasReachedQuestionLimit() ||
     studyClockTimer !== null ||
     !state.activeSession ||
     !state.currentTask ||
@@ -2641,6 +2648,11 @@ function pushHistory(entry) {
 }
 
 function renderActionControls() {
+  if (hasReachedQuestionLimit()) {
+    elements.actionDock.classList.add("is-hidden");
+    elements.listeningDock.classList.add("is-hidden");
+    return;
+  }
   const hasQuestion = Boolean(state.currentTask);
   const listening = isListeningMode();
   const canGoBack = state.history.length > 0;
@@ -2682,6 +2694,7 @@ function renderActionControls() {
 }
 
 function revealCurrentAnswer() {
+  if (hasReachedQuestionLimit()) return;
   if (
     isListeningMode() ||
     !state.currentTask ||
@@ -3184,6 +3197,7 @@ function preloadListeningTask(task) {
 
 function autoSpeakQuestion() {
   if (
+    !hasReachedQuestionLimit() &&
     speechController.supported &&
     !isListeningMode() &&
     currentQuestionSpeechEnabled()
@@ -3200,6 +3214,7 @@ function autoSpeakAnswerAndOverview() {
 }
 
 async function goBackListeningOneStep() {
+  if (hasReachedQuestionLimit()) return;
   if (!isListeningMode() || state.saving) {
     return;
   }
@@ -3330,6 +3345,7 @@ async function goBackListeningOneStep() {
 }
 
 async function advanceListening(runId) {
+  if (hasReachedQuestionLimit()) return;
   if (
     runId !== state.listeningRunId ||
     state.listeningPaused ||
@@ -3414,6 +3430,8 @@ async function advanceListening(runId) {
     return;
   }
   state.saving = false;
+  if (sessionComplete) state.activeSession = false;
+  if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
     if (sessionComplete) {
       state.activeSession = false;
@@ -3540,6 +3558,7 @@ function pauseListeningAfterSpeechFailure(runId, error = null) {
 }
 
 function beginListeningQuestion() {
+  if (showQuestionLimitCompletion()) return;
   if (state.listeningPaused || !isListeningMode() || !state.currentTask) {
     return;
   }
@@ -3711,6 +3730,7 @@ function toggleSpeechPart(target) {
 }
 
 function toggleListening() {
+  if (hasReachedQuestionLimit()) return;
   if (!isListeningMode() || !state.currentTask || state.saving) {
     return;
   }
@@ -3745,6 +3765,7 @@ function toggleListening() {
 }
 
 function advanceListeningManually() {
+  if (hasReachedQuestionLimit()) return;
   if (!isListeningMode() || !state.currentTask || state.saving) {
     return;
   }
@@ -3758,6 +3779,8 @@ function advanceListeningManually() {
 }
 
 async function returnToSetup() {
+  if (state.saving) return;
+  elements.questionLimit.value = "";
   stopListeningSequence();
   stopStudyClock();
   clearPendingReviewTimer();
@@ -4034,6 +4057,7 @@ function updateRegionDetailOptions(resetSelection = false) {
 }
 
 function updateSetupPreview() {
+  elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine);
   const terms = filterTermsBySelection(state.allTerms, selectedFilters());
   const selectedStage = elements.questionStyleFilter.value;
   const studyMode = selectedStudyMode();
@@ -4228,6 +4252,7 @@ function updateOverallProgress() {
 }
 
 function renderQuestion() {
+  if (showQuestionLimitCompletion()) return;
   const term = currentTerm();
   const question = currentQuestion();
   if (!term || !question) {
@@ -4372,6 +4397,9 @@ function renderQuestion() {
   elements.queueProgress.textContent = isListeningMode()
     ? `一巡の残り ${state.queue.length + 1}問`
     : `この回の残り ${state.queue.length + 1}問`;
+  if (state.questionLimit !== null && !state.inRoutine) {
+    elements.queueProgress.textContent = `今回の学習 ${state.answeredThisSession - state.questionLimitStart}／${state.questionLimit}問`;
+  }
   renderRoutineSetupContext();
   elements.unlockNotice.textContent = state.unlockMessage;
   elements.unlockNotice.classList.toggle("is-hidden", !state.unlockMessage);
@@ -4535,6 +4563,7 @@ function applyQuestionRating(term, question, rating) {
 }
 
 async function rateListeningQuestion(rating) {
+  if (hasReachedQuestionLimit()) return;
   const term = currentTerm();
   const question = currentQuestion();
   if (!term || !question || !state.answerVisible || state.saving) {
@@ -4634,6 +4663,7 @@ async function rateListeningQuestion(rating) {
 
   pushHistory(snapshot);
   state.saving = false;
+  if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
     if (sessionComplete) {
       setSavedSessionForMode("listen-answer", null);
@@ -4668,6 +4698,7 @@ async function rateListeningQuestion(rating) {
 }
 
 async function rateCurrentQuestion(rating) {
+  if (hasReachedQuestionLimit()) return;
   if (isListeningMode()) {
     await rateListeningQuestion(rating);
     return;
@@ -4782,6 +4813,7 @@ async function rateCurrentQuestion(rating) {
   }
   state.saving = false;
   pushHistory(snapshot);
+  if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
     showRoutineStepCompletion(routineChange);
     return;
@@ -4845,7 +4877,54 @@ async function resetAllProgress() {
   elements.cloudStatus.textContent = "学習記録をCloudflare上で初期化しました。";
 }
 
+function validateQuestionLimit() {
+  return state.inRoutine || elements.questionLimit.reportValidity();
+}
+
+function initializeQuestionLimit() {
+  state.questionLimit = !state.inRoutine && elements.questionLimit.value !== ""
+    ? Number(elements.questionLimit.value) : null;
+  state.questionLimitStart = state.answeredThisSession;
+  state.questionLimitRatings = { ...state.ratingCounts };
+  state.questionLimitSeconds = state.studySeconds;
+}
+
+function hasReachedQuestionLimit() {
+  return !state.inRoutine && state.questionLimit !== null &&
+    state.answeredThisSession - state.questionLimitStart >= state.questionLimit;
+}
+
+function showQuestionLimitCompletion() {
+  if (!hasReachedQuestionLimit()) return false;
+  if (state.saving) return true;
+  stopListeningSequence();
+  stopStudyClock();
+  clearPendingReviewTimer();
+  state.listeningPaused = true;
+  state.routineCompletionAction = "";
+  elements.contextCard.classList.add("is-hidden");
+  elements.questionCard.classList.add("is-hidden");
+  elements.actionDock.classList.add("is-hidden");
+  elements.listeningDock.classList.add("is-hidden");
+  elements.completionCard.classList.remove("is-hidden");
+  elements.completionReturn.classList.remove("is-hidden");
+  elements.completionReturn.textContent = "開始画面に戻る";
+  elements.completionHome.classList.add("is-hidden");
+  elements.routineResultSummary.classList.add("is-hidden");
+  elements.completionEyebrow.textContent = "指定した問題数を完了";
+  elements.completionTitle.textContent = `${state.questionLimit}問の学習を完了しました`;
+  elements.completionMessage.textContent = `学習時間は${formatStudyDuration(state.studySeconds - state.questionLimitSeconds)}です。${state.activeSession ? "残りの問題は、開始画面の「前回の続きから」で再開できます。" : ""}`;
+  elements.queueProgress.textContent = `今回の学習 ${state.questionLimit}／${state.questionLimit}問`;
+  renderRatingResult(Object.fromEntries(Object.entries(state.ratingCounts).map(
+    ([rating, count]) => [rating, Math.max(0, count - (state.questionLimitRatings[rating] ?? 0))],
+  )));
+  updateRoundProgressDisplay();
+  updateOverallProgress();
+  return true;
+}
+
 async function beginStudy() {
+  if (!validateQuestionLimit()) return;
   if (startingStudy) {
     return;
   }
@@ -4912,6 +4991,7 @@ async function beginStudy() {
   state.pendingListeningActivity = null;
   state.sessionStartedAt = new Date().toISOString();
   state.activeSession = state.sessionTasks.length > 0;
+  initializeQuestionLimit();
   startNewStudyScreen();
   clearListeningTimer();
   const startsMemorizeScreenBeforeSave = !isListeningMode();
@@ -4965,6 +5045,7 @@ async function beginStudy() {
 }
 
 async function resumeStudy() {
+  if (!validateQuestionLimit()) return;
   const requestedStudyMode = selectedStudyMode();
   const savedStudySession = savedSessionForMode(requestedStudyMode);
   const studyMode = activeRoutineItem()?.overtimePending
@@ -4995,6 +5076,7 @@ async function resumeStudy() {
     updateSetupPreview();
     return;
   }
+  initializeQuestionLimit();
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
   if (!state.currentTask) {
@@ -5199,7 +5281,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.202｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.203｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5639,6 +5721,7 @@ elements.studyShell.addEventListener("pointercancel", () => {
 });
 
 elements.studyShell.addEventListener("click", (event) => {
+  if (hasReachedQuestionLimit()) return;
   if (suppressNextListeningClick) {
     suppressNextListeningClick = false;
     return;
@@ -5699,6 +5782,7 @@ elements.studyShell.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (hasReachedQuestionLimit() && !elements.studyShell.classList.contains("is-hidden")) return;
   if (!elements.mindsetPlayerPanel.classList.contains("is-hidden")) {
     if (event.target.closest("button, a, input, textarea, select") || event.repeat) {
       return;

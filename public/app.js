@@ -22,6 +22,7 @@ import {
   isQuestionDue,
   learningStages,
   normalizeReviewSettings,
+  resolveSubjectReviewSettings,
   rateQuestion,
   restoreRatingUndoSnapshot,
   shuffleTasks,
@@ -150,6 +151,15 @@ const elements = {
   ),
   studyMenuQuestionIntervalSeconds: document.querySelector(
     "#study-menu-question-interval-seconds",
+  ),
+  studyMenuReviewShared: document.querySelector(
+    "#study-menu-review-shared",
+  ),
+  studyMenuReviewCustom: document.querySelector(
+    "#study-menu-review-custom",
+  ),
+  studyMenuReviewScopeNote: document.querySelector(
+    "#study-menu-review-scope-note",
   ),
   studyMenuAgainValue: document.querySelector("#study-menu-again-value"),
   studyMenuAgainUnit: document.querySelector("#study-menu-again-unit"),
@@ -309,6 +319,7 @@ const state = {
   questionById: new Map(),
   questionImages: new Map(),
   progress: createEmptyProgress(),
+  sharedReviewSettings: { ...defaultReviewSettings },
   reviewSettings: { ...defaultReviewSettings },
   cloudReady: false,
   cloudConnected: false,
@@ -394,6 +405,7 @@ let studyTimeSave = Promise.resolve();
 let listeningTouchStart = null;
 let suppressNextListeningClick = false;
 let studyMenuLastFocused = null;
+let studyMenuCustomReviewDraft = null;
 let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
@@ -1927,16 +1939,60 @@ function chooseStudyMenuIntervalUnit(seconds) {
   return 1;
 }
 
+function currentSubjectReviewSettings() {
+  return state.setupPreferences.subjects[state.activeSubjectId]
+    ?.reviewSettings ?? null;
+}
+
+function fillStudyMenuReviewFields(settings) {
+  const reviewSettings = normalizeReviewSettings(settings);
+  for (const [key, [valueInput, unitSelect]] of Object.entries(
+    studyMenuReviewFields,
+  )) {
+    const unit = chooseStudyMenuIntervalUnit(reviewSettings[key]);
+    unitSelect.value = String(unit);
+    valueInput.value = String(reviewSettings[key] / unit);
+  }
+}
+
+function readStudyMenuReviewFields() {
+  return normalizeReviewSettings(
+    Object.fromEntries(
+      Object.entries(studyMenuReviewFields).map(
+        ([key, [valueInput, unitSelect]]) => [
+          key,
+          Number(valueInput.value) * Number(unitSelect.value),
+        ],
+      ),
+    ),
+  );
+}
+
+function updateStudyMenuReviewScope() {
+  const usesCustomSettings = elements.studyMenuReviewCustom.checked;
+  fillStudyMenuReviewFields(
+    usesCustomSettings
+      ? studyMenuCustomReviewDraft ?? state.sharedReviewSettings
+      : state.sharedReviewSettings,
+  );
+  for (const [valueInput, unitSelect] of Object.values(
+    studyMenuReviewFields,
+  )) {
+    valueInput.disabled = !usesCustomSettings;
+    unitSelect.disabled = !usesCustomSettings;
+  }
+  const subjectTitle = state.subject?.title ?? "この教科";
+  elements.studyMenuReviewScopeNote.textContent = usesCustomSettings
+    ? `${subjectTitle}だけに、この4つの時間を適用します。`
+    : "設定画面で保存した全教科共通の時間を適用します。";
+}
+
 function updateStudyMenuSpeechRateOutput() {
   elements.studyMenuSpeechRateOutput.value =
     `${Number(elements.studyMenuSpeechRate.value).toFixed(2)}倍`;
 }
 
 function fillStudyMenuSettings(settings = {}) {
-  const reviewSettings = normalizeReviewSettings({
-    ...state.reviewSettings,
-    ...settings,
-  });
   const speechSettings = normalizeSpeechSettings({
     ...loadSpeechSettings(),
     ...settings,
@@ -1948,38 +2004,42 @@ function fillStudyMenuSettings(settings = {}) {
         state.listeningQuestionIntervalSeconds,
     ),
   );
-  for (const [key, [valueInput, unitSelect]] of Object.entries(
-    studyMenuReviewFields,
-  )) {
-    const unit = chooseStudyMenuIntervalUnit(reviewSettings[key]);
-    unitSelect.value = String(unit);
-    valueInput.value = String(reviewSettings[key] / unit);
-  }
+  const customSettings = currentSubjectReviewSettings();
+  studyMenuCustomReviewDraft = normalizeReviewSettings(
+    customSettings ?? state.sharedReviewSettings,
+  );
+  elements.studyMenuReviewCustom.checked = Boolean(customSettings);
+  elements.studyMenuReviewShared.checked = !customSettings;
+  updateStudyMenuReviewScope();
   updateStudyMenuSpeechRateOutput();
 }
 
 function readStudyMenuSettings() {
-  const reviewSettings = normalizeReviewSettings(
-    Object.fromEntries(
-      Object.entries(studyMenuReviewFields).map(
-        ([key, [valueInput, unitSelect]]) => [
-          key,
-          Number(valueInput.value) * Number(unitSelect.value),
-        ],
-      ),
-    ),
-  );
+  const usesCustomSettings = elements.studyMenuReviewCustom.checked;
+  const reviewSettings = readStudyMenuReviewFields();
+  const preferences = captureSetupPreferences();
+  const currentSubject = preferences.subjects[state.activeSubjectId];
+  const setupPreferences = normalizeSetupPreferences({
+    ...preferences,
+    subjects: {
+      ...preferences.subjects,
+      [state.activeSubjectId]: {
+        ...currentSubject,
+        reviewSettings: usesCustomSettings ? reviewSettings : null,
+      },
+    },
+  });
   const speechSettings = normalizeSpeechSettings({
     ...loadSpeechSettings(),
     rate: Number(elements.studyMenuSpeechRate.value),
   });
   return {
-    ...reviewSettings,
     ...speechSettings,
     listeningQuestionIntervalSeconds:
       normalizeListeningQuestionIntervalSeconds(
         elements.studyMenuQuestionIntervalSeconds.value,
       ),
+    setupPreferences,
   };
 }
 
@@ -2040,7 +2100,12 @@ async function saveStudyMenuSettings() {
   setStudyMenuStatus("Cloudflareへ保存しています。");
   try {
     const saved = await saveCloudSettings(readStudyMenuSettings());
-    state.reviewSettings = normalizeReviewSettings(saved);
+    state.sharedReviewSettings = normalizeReviewSettings(saved);
+    syncRoutinePreferences(saved.setupPreferences);
+    state.reviewSettings = resolveSubjectReviewSettings(
+      state.sharedReviewSettings,
+      currentSubjectReviewSettings(),
+    );
     state.listeningQuestionIntervalSeconds =
       normalizeListeningQuestionIntervalSeconds(
         saved.listeningQuestionIntervalSeconds,
@@ -2048,7 +2113,11 @@ async function saveStudyMenuSettings() {
     saveSpeechSettings(saved);
     fillStudyMenuSettings(saved);
     updateRatingIntervals();
-    setStudyMenuStatus("設定をCloudflareへ保存し、この学習から反映しました。");
+    setStudyMenuStatus(
+      currentSubjectReviewSettings()
+        ? "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
+        : "全教科共通の設定を使うようCloudflareへ保存しました。",
+    );
   } catch (error) {
     setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
   } finally {
@@ -2551,7 +2620,12 @@ async function loadProgressFromCloud() {
     state.progress = createEmptyProgress();
     state.savedSessions = createEmptySavedSessions();
     setRoundProgress();
-    state.reviewSettings = { ...defaultReviewSettings };
+    state.sharedReviewSettings = { ...defaultReviewSettings };
+    syncRoutinePreferences(normalizeSetupPreferences());
+    state.reviewSettings = resolveSubjectReviewSettings(
+      state.sharedReviewSettings,
+      currentSubjectReviewSettings(),
+    );
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
@@ -2562,7 +2636,6 @@ async function loadProgressFromCloud() {
       ratingSoundVolume: defaultRatingSoundVolume,
       ratingSounds: normalizeRatingSounds(),
     });
-    syncRoutinePreferences(normalizeSetupPreferences());
     state.cloudConnected = false;
     return;
   }
@@ -2590,7 +2663,17 @@ async function loadProgressFromCloud() {
     );
     setSavedSessionForMode("listen-answer", null);
   }
-  state.reviewSettings = normalizeReviewSettings(sessionCloudState.settings);
+  state.sharedReviewSettings = normalizeReviewSettings(
+    sessionCloudState.settings,
+  );
+  syncRoutinePreferences(
+    sessionCloudState.settings.setupPreferences,
+    sessionCloudState.studyDate,
+  );
+  state.reviewSettings = resolveSubjectReviewSettings(
+    state.sharedReviewSettings,
+    currentSubjectReviewSettings(),
+  );
   state.shuffleEnabled = sessionCloudState.settings.shuffleEnabled;
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     sessionCloudState.settings.listeningPauseSeconds,
@@ -2606,10 +2689,6 @@ async function loadProgressFromCloud() {
     sessionCloudState.settings.studyTimeLimitSeconds,
   );
   state.speechParts = normalizeSpeechParts(sessionCloudState.settings.speechParts);
-  syncRoutinePreferences(
-    sessionCloudState.settings.setupPreferences,
-    sessionCloudState.studyDate,
-  );
   saveSpeechSettings(sessionCloudState.settings);
   await syncRatingSoundSettings(sessionCloudState.settings);
 
@@ -5242,14 +5321,18 @@ async function activateDecks(deckIds) {
     state.progress = createEmptyProgress();
     state.savedSessions = createEmptySavedSessions();
     setRoundProgress();
-    state.reviewSettings = { ...defaultReviewSettings };
+    state.sharedReviewSettings = { ...defaultReviewSettings };
+    syncRoutinePreferences(normalizeSetupPreferences());
+    state.reviewSettings = resolveSubjectReviewSettings(
+      state.sharedReviewSettings,
+      currentSubjectReviewSettings(),
+    );
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
     state.studyRoutineOvertimeSeconds = defaultStudyRoutineOvertimeSeconds;
     state.studyTimeLimitSeconds = defaultStudyTimeLimitSeconds;
     state.speechParts = normalizeSpeechParts();
-    syncRoutinePreferences(normalizeSetupPreferences());
     state.cloudReady = false;
     state.cloudError = error.message;
   }
@@ -5296,7 +5379,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.212｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.213｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5621,6 +5704,25 @@ elements.studyMenuSpeechRate.addEventListener(
   "input",
   updateStudyMenuSpeechRateOutput,
 );
+elements.studyMenuReviewShared.addEventListener("change", () => {
+  if (!elements.studyMenuReviewShared.checked) return;
+  studyMenuCustomReviewDraft = readStudyMenuReviewFields();
+  updateStudyMenuReviewScope();
+});
+elements.studyMenuReviewCustom.addEventListener("change", () => {
+  if (elements.studyMenuReviewCustom.checked) {
+    updateStudyMenuReviewScope();
+  }
+});
+for (const [valueInput, unitSelect] of Object.values(studyMenuReviewFields)) {
+  for (const control of [valueInput, unitSelect]) {
+    control.addEventListener("change", () => {
+      if (elements.studyMenuReviewCustom.checked) {
+        studyMenuCustomReviewDraft = readStudyMenuReviewFields();
+      }
+    });
+  }
+}
 elements.studyMenuSettings.addEventListener("submit", (event) => {
   event.preventDefault();
   void saveStudyMenuSettings();

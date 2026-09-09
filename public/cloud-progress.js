@@ -3,6 +3,7 @@ import {
   defaultReviewSettings,
   normalizeProgress,
   normalizeReviewSettings,
+  normalizeSubjectReviewSettings,
 } from "./learning-engine.js";
 import { normalizeRatingCounts } from "./rating-results.js";
 import {
@@ -359,6 +360,9 @@ export function normalizeSetupPreferences(value) {
       studyMode: studyModes.has(rawSubject.studyMode)
         ? rawSubject.studyMode
         : "memorize",
+      reviewSettings: normalizeSubjectReviewSettings(
+        rawSubject.reviewSettings,
+      ),
       decks,
     };
   }

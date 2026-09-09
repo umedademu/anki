@@ -41,6 +41,18 @@ export function normalizeReviewSettings(value) {
   );
 }
 
+export function normalizeSubjectReviewSettings(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return null;
+  }
+  return normalizeReviewSettings(value);
+}
+
+export function resolveSubjectReviewSettings(sharedSettings, subjectSettings) {
+  return normalizeSubjectReviewSettings(subjectSettings) ??
+    normalizeReviewSettings(sharedSettings);
+}
+
 function emptyQuestionRecord() {
   return {
     streak: 0,

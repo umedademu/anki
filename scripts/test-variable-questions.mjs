@@ -26,7 +26,9 @@ import {
   getTermStage,
   isQuestionDue,
   isQuestionMastered,
+  normalizeSubjectReviewSettings,
   rateQuestion,
+  resolveSubjectReviewSettings,
   restoreRatingUndoSnapshot,
   serializeProgress,
   shouldHideTerm,
@@ -429,6 +431,31 @@ const intervalChecks = [
   ["good", 12 * 60 * 60],
   ["easy", 6 * 24 * 60 * 60],
 ];
+
+const sharedReviewSettings = {
+  againSeconds: 90,
+  hardSeconds: 2 * 60 * 60,
+  goodSeconds: 18 * 60 * 60,
+  easySeconds: 8 * 24 * 60 * 60,
+};
+const customReviewSettings = normalizeSubjectReviewSettings({
+  againSeconds: 5 * 60,
+  hardSeconds: 6 * 60 * 60,
+  goodSeconds: 24 * 60 * 60,
+  easySeconds: 14 * 24 * 60 * 60,
+});
+if (
+  normalizeSubjectReviewSettings(null) !== null ||
+  resolveSubjectReviewSettings(sharedReviewSettings, null).goodSeconds !==
+    18 * 60 * 60 ||
+  resolveSubjectReviewSettings(
+    sharedReviewSettings,
+    customReviewSettings,
+  ).goodSeconds !== 24 * 60 * 60
+) {
+  throw new Error("教科ごとの復習間隔と全教科共通の復習間隔を切り替えられませんでした。");
+}
+
 for (const [rating, expectedSeconds] of intervalChecks) {
   const checkProgress = createEmptyProgress();
   rateQuestion(checkProgress, `Q-${rating}`, rating, masteryTarget, defaultReviewSettings, startAt);

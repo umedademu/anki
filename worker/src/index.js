@@ -26,6 +26,7 @@ import {
   ratingSoundFileExtension,
 } from "../../public/rating-sound-settings.js";
 import { normalizeQuestionAnalysisSnapshot } from "../../public/analysis-core.js";
+import { normalizeSubjectReviewSettings } from "../../public/learning-engine.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -337,6 +338,9 @@ function normalizeSetupPreferences(value) {
       studyMode: setupStudyModes.has(rawSubject.studyMode)
         ? rawSubject.studyMode
         : "memorize",
+      reviewSettings: normalizeSubjectReviewSettings(
+        rawSubject.reviewSettings,
+      ),
       decks,
     };
   }

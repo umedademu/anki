@@ -451,6 +451,12 @@ const settings = normalizeSettings({
         lastDeckId: "deck-2",
         selectedDeckIds: ["deck-2", "deck-3", "deck-2", "不正なデッキ"],
         studyMode: "listen-answer",
+        reviewSettings: {
+          againSeconds: 300,
+          hardSeconds: 21600,
+          goodSeconds: 86400,
+          easySeconds: 1209600,
+        },
         decks: {
           "deck-2": {
             macroRegion: "アジア",
@@ -511,6 +517,8 @@ if (
   settings.setupPreferences.subjects["world-history"].selectedDeckIds.join(",") !==
     "deck-2,deck-3" ||
   settings.setupPreferences.subjects["world-history"].studyMode !== "listen-answer" ||
+  settings.setupPreferences.subjects["world-history"].reviewSettings.goodSeconds !==
+    86400 ||
   settings.setupPreferences.subjects["world-history"].decks["deck-2"].questionAmountMode !==
     "one-per-term" ||
   settings.setupPreferences.routineVideos.length !== 1 ||
@@ -541,6 +549,8 @@ if (
   browserSettings.speechParts.history.mnemonic ||
   browserSettings.speechParts.vocabulary.exampleJapanese ||
   browserSettings.setupPreferences.subjects["world-history"].selectedDeckIds.length !== 2 ||
+  browserSettings.setupPreferences.subjects["world-history"].reviewSettings.easySeconds !==
+    1209600 ||
   browserSettings.setupPreferences.routineMultiplier !== 2.75 ||
   !browserSettings.setupPreferences.routineSkipVideos ||
   browserSettings.setupPreferences.mindsetResume.lastCompletedItemId !==

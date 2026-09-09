@@ -5,6 +5,7 @@ import {
   createTermQuestionQueue,
   defaultReviewSettings,
   deserializeProgress,
+  enqueueRetryTasksImmediately,
   enqueueUniqueTasks,
   filterTermsBySelection,
   getMacroRegionTags,
@@ -407,7 +408,6 @@ let listeningPlaybackFeedbackTimer = null;
 let startingStudy = false;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
-let pendingReviewTimer = null;
 let studyClockTimer = null;
 let studyClockLastTick = 0;
 let mindsetStudyClockTimer = null;
@@ -586,13 +586,6 @@ function selectedQuestionAmountMode() {
 function usesOneQuestionPerTerm() {
   return state.questionAmountMode === oneQuestionPerTermMode &&
     supportsOneQuestionPerTerm();
-}
-
-function clearPendingReviewTimer() {
-  if (pendingReviewTimer !== null) {
-    window.clearTimeout(pendingReviewTimer);
-    pendingReviewTimer = null;
-  }
 }
 
 function cloneTask(task) {
@@ -1152,7 +1145,6 @@ async function completeCurrentRoutineVideo() {
 async function showRoutineVideoStep() {
   stopListeningSequence();
   stopStudyClock();
-  clearPendingReviewTimer();
   const assignment = assignStudyRoutineVideo(
     state.routineRun,
     state.setupPreferences.routineVideos,
@@ -1214,7 +1206,6 @@ async function showStandaloneRandomVideo() {
   }
   stopListeningSequence();
   stopStudyClock();
-  clearPendingReviewTimer();
   destroyRoutineVideoPlayer();
   showOnly(elements.loadingPanel);
   const draw = drawStudyRoutineVideo(
@@ -1821,45 +1812,35 @@ function enqueueDueSessionTasks(now = new Date()) {
   state.queue = [...dueTasks.map(cloneTask), ...state.queue];
 }
 
-function nextPendingRetryAt() {
-  return [...state.retryQuestionIds].reduce((earliest, questionId) => {
-    const nextReviewAt = Date.parse(
-      state.progress.questions[questionId]?.nextReviewAt ?? "",
-    );
-    if (!Number.isFinite(nextReviewAt)) return earliest;
-    return earliest === null ? nextReviewAt : Math.min(earliest, nextReviewAt);
-  }, null);
-}
-
-function schedulePendingReview() {
-  clearPendingReviewTimer();
+function enqueuePendingRetryTasksImmediately() {
   if (
     !state.activeSession ||
     isListeningMode() ||
-    state.currentTask ||
     state.retryQuestionIds.size === 0
   ) {
     return;
   }
-  const nextReviewAt = nextPendingRetryAt();
-  if (nextReviewAt === null) return;
-  const waitMilliseconds = Math.max(0, nextReviewAt - Date.now());
-  pendingReviewTimer = window.setTimeout(() => {
-    pendingReviewTimer = null;
-    enqueueDueSessionTasks();
-    state.currentTask = state.queue.shift() ?? null;
-    if (state.currentTask) {
-      state.answerVisible = false;
-      startNewStudyScreen();
-      void queueActiveSessionSave().catch((error) => {
-        state.unlockMessage = error.message;
-      });
-      renderQuestion();
-      autoSpeakQuestion();
-    } else {
-      schedulePendingReview();
-    }
-  }, Math.min(waitMilliseconds, 2_147_000_000));
+  state.queue = enqueueRetryTasksImmediately(
+    state.queue,
+    state.sessionTasks,
+    state.retryQuestionIds,
+    state.currentTask ? [state.currentTask.questionId] : [],
+  );
+}
+
+function showPendingRetryImmediately() {
+  if (state.currentTask || state.retryQuestionIds.size === 0) return false;
+  enqueuePendingRetryTasksImmediately();
+  state.currentTask = state.queue.shift() ?? null;
+  if (!state.currentTask) return false;
+  state.answerVisible = false;
+  startNewStudyScreen();
+  void queueActiveSessionSave().catch((error) => {
+    state.unlockMessage = error.message;
+  });
+  renderQuestion();
+  autoSpeakQuestion();
+  return true;
 }
 
 function speechPartSubjectKey() {
@@ -3955,7 +3936,6 @@ async function returnToSetup() {
   elements.questionLimit.value = "";
   stopListeningSequence();
   stopStudyClock();
-  clearPendingReviewTimer();
   state.listeningPaused = false;
   state.pendingListeningActivity = null;
   if (state.activeSession) {
@@ -3975,7 +3955,6 @@ async function returnToSetup() {
 async function returnToSubjectSelection() {
   stopListeningSequence();
   stopStudyClock();
-  clearPendingReviewTimer();
   state.listeningPaused = false;
   state.pendingListeningActivity = null;
   if (state.activeSession) {
@@ -4664,16 +4643,11 @@ function renderCompletion() {
   }
   elements.completionEyebrow.textContent = "全段階完了";
   if (state.activeSession && state.retryQuestionIds.size > 0) {
-    const nextReviewAt = nextPendingRetryAt();
+    if (showPendingRetryImmediately()) return;
     elements.completionTitle.textContent =
-      "不正解だった問題の再出題を待っています";
-    elements.completionMessage.textContent = nextReviewAt
-      ? `${new Intl.DateTimeFormat("ja-JP", {
-          dateStyle: "medium",
-          timeStyle: "short",
-        }).format(new Date(nextReviewAt))}以降に、この一周の続きとして再出題します。アプリを閉じても進行状況は保存されます。`
-      : "復習時刻を確認できませんでした。開始画面へ戻って、前回の続きから再開してください。";
-    schedulePendingReview();
+      "不正解だった問題を再出題できませんでした";
+    elements.completionMessage.textContent =
+      "開始画面へ戻り、前回の続きから再開してください。";
     renderActionControls();
     updateOverallProgress();
     return;
@@ -4939,6 +4913,7 @@ async function rateCurrentQuestion(rating) {
   state.currentTask = null;
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
+  enqueuePendingRetryTasksImmediately();
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answerRevealedAt = 0;
@@ -5042,7 +5017,6 @@ async function resetAllProgress() {
   state.retryQuestionIds = new Set();
   state.sessionStartedAt = null;
   clearRoutineOvertime();
-  clearPendingReviewTimer();
   state.activeDeckIds.forEach((deckId) => {
     const deck = state.loadedDecks.get(deckId);
     if (deck) clearLegacyProgress(deck);
@@ -5087,7 +5061,6 @@ function showQuestionLimitCompletion() {
   if (state.saving) return true;
   stopListeningSequence();
   stopStudyClock();
-  clearPendingReviewTimer();
   state.listeningPaused = true;
   state.routineCompletionAction = "";
   elements.contextCard.classList.add("is-hidden");
@@ -5155,7 +5128,6 @@ async function beginStudy() {
   state.studyMode = studyMode;
   state.shuffleEnabled = elements.setupShuffle.checked;
   speechController.stop();
-  clearPendingReviewTimer();
   buildQueue();
   state.sessionTasks = state.queue.map(cloneTask);
   state.unseenQuestionIds = new Set(
@@ -5247,7 +5219,6 @@ async function resumeStudy() {
   startingStudy = true;
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
-  clearPendingReviewTimer();
   speechController.stop();
   if (!restoreActiveSession(savedSession)) {
     await deleteCloudStudySession(state.sessionDatasetVersion).catch(() => {});
@@ -5267,6 +5238,7 @@ async function resumeStudy() {
   initializeQuestionLimit();
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
+  enqueuePendingRetryTasksImmediately();
   if (!state.currentTask) {
     state.currentTask = state.queue.shift() ?? null;
   }
@@ -5441,7 +5413,6 @@ async function activateDecks(deckIds) {
   state.sessionStartedAt = null;
   clearRoutineOvertime();
   state.activeSession = false;
-  clearPendingReviewTimer();
   state.answerVisible = false;
   state.answeredThisSession = 0;
   state.ratingCounts = createEmptyRatingCounts();
@@ -5473,7 +5444,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.216｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.217｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

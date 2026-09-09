@@ -16,7 +16,8 @@ let resultRatings;
 let rejectSave = false;
 const context = {
   state, elements, console,
-  stopListeningSequence() { state.listeningPaused = true; }, stopStudyClock() {}, clearPendingReviewTimer() {},
+  stopListeningSequence() { state.listeningPaused = true; }, stopStudyClock() {},
+  enqueuePendingRetryTasksImmediately() {},
   formatStudyDuration: value => String(value),
   renderRatingResult(value) { results++; resultRatings = value; },
   updateRoundProgressDisplay() {}, updateOverallProgress() {},

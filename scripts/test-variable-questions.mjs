@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import {
   groupTerms,
   requiredHeaders,
@@ -10,6 +11,7 @@ import {
   createTermQuestionQueue,
   defaultReviewSettings,
   deserializeProgress,
+  enqueueRetryTasksImmediately,
   enqueueUniqueTasks,
   filterTermsBySelection,
   getIntegratedExplanationQuestion,
@@ -34,6 +36,20 @@ import {
   shouldHideTerm,
   usesStagedClassicalChineseMeaning,
 } from "../public/learning-engine.js";
+
+const retryTaskA = { termId: "A", questionId: "A-B01", stage: "beginner" };
+const unseenTask = { termId: "B", questionId: "B-B01", stage: "beginner" };
+const retryTaskC = { termId: "C", questionId: "C-B01", stage: "beginner" };
+assert.deepEqual(
+  enqueueRetryTasksImmediately(
+    [unseenTask],
+    [retryTaskA, unseenTask, retryTaskC],
+    new Set([retryTaskA.questionId, unseenTask.questionId, retryTaskC.questionId]),
+    [retryTaskC.questionId],
+  ).map((task) => task.questionId),
+  [unseenTask.questionId, retryTaskA.questionId],
+  "不正解の問題は未出題問題の後ろへすぐ追加し、重複と現在表示中の問題を除く",
+);
 
 function makeRow({ termId, rank, term, sortYear, questionId, stage, questionType, question, answer }) {
   return {
@@ -618,5 +634,5 @@ if (overall.masteredQuestions < 3 || overall.totalTerms !== 2) {
 }
 
 console.log(
-  "四段階復習検証完了: 復習間隔・段階追加・期限判定・一手戻し・旧記録移行を確認",
+  "四段階復習検証完了: 復習間隔・不正解の即時再出題・段階追加・期限判定・一手戻し・旧記録移行を確認",
 );

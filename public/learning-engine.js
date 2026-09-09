@@ -633,6 +633,21 @@ export function enqueueUniqueTasks(queue, tasks, blockedQuestionIds = []) {
   return [...queue, ...uniqueTasks];
 }
 
+export function enqueueRetryTasksImmediately(
+  queue,
+  sessionTasks,
+  retryQuestionIds,
+  blockedQuestionIds = [],
+) {
+  const retries = retryQuestionIds instanceof Set
+    ? retryQuestionIds
+    : new Set(retryQuestionIds ?? []);
+  const retryTasks = sessionTasks
+    .filter((task) => retries.has(task.questionId))
+    .map((task) => ({ ...task }));
+  return enqueueUniqueTasks(queue, retryTasks, blockedQuestionIds);
+}
+
 export function getNextDueAt(
   terms,
   progress,

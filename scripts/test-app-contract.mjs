@@ -238,7 +238,10 @@ const startRoutineOvertimeBlock = app.match(
   /function startRoutineOvertimeIfNeeded\(rating\)[\s\S]*?function renderRoutineDashboard/,
 )?.[0];
 const enqueueDueSessionTasksBlock = app.match(
-  /function enqueueDueSessionTasks\(now = new Date\(\)\)[\s\S]*?function nextPendingRetryAt/,
+  /function enqueueDueSessionTasks\(now = new Date\(\)\)[\s\S]*?function enqueuePendingRetryTasksImmediately/,
+)?.[0];
+const enqueuePendingRetryTasksBlock = app.match(
+  /function enqueuePendingRetryTasksImmediately\(\)[\s\S]*?function showPendingRetryImmediately/,
 )?.[0];
 const renderCompletionBlock = app.match(
   /function renderCompletion\(\)[\s\S]*?function buildQueue/,
@@ -481,7 +484,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.216" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.217" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -500,12 +503,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.216") ||
-  !app.includes("v0.216｜") ||
-  !changelog.includes("v0.216") ||
-  !settingsHtml.includes("v0.216") ||
-  !historyHtml.includes("v0.216") ||
-  !analysisHtml.includes("v0.216")
+  !html.includes("v0.217") ||
+  !app.includes("v0.217｜") ||
+  !changelog.includes("v0.217") ||
+  !settingsHtml.includes("v0.217") ||
+  !historyHtml.includes("v0.217") ||
+  !analysisHtml.includes("v0.217")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -761,7 +764,7 @@ if (
   !html.includes('id="completion-return"') ||
   !app.includes("async function resumeStudy()") ||
   !app.includes("function enqueueDueSessionTasks") ||
-  !app.includes("function schedulePendingReview") ||
+  !app.includes("function enqueuePendingRetryTasksImmediately") ||
   !app.includes("function createRatingActivity") ||
   !app.includes("state.studyTimeEventId || undefined") ||
   !rateCurrentQuestionBlock?.includes("createRatingActivity(term, question, rating)") ||
@@ -770,7 +773,12 @@ if (
   !startRoutineOvertimeBlock?.includes("state.queue = reviewTasks") ||
   startRoutineOvertimeBlock?.includes("enqueueDueSessionTasks()") ||
   !enqueueDueSessionTasksBlock?.includes("if (routineOvertimeCutoffAt() !== null) return;") ||
+  !enqueuePendingRetryTasksBlock?.includes("enqueueRetryTasksImmediately(") ||
+  enqueuePendingRetryTasksBlock?.includes("isQuestionDue(") ||
+  !rateCurrentQuestionBlock?.includes("enqueuePendingRetryTasksImmediately();") ||
+  !resumeStudyBlock?.includes("enqueuePendingRetryTasksImmediately();") ||
   !renderCompletionBlock ||
+  renderCompletionBlock?.includes("不正解だった問題の再出題を待っています") ||
   renderCompletionBlock?.includes("hasPendingRoutineOvertimeReview()") ||
   !app.includes("const waitsForMemorizeRetry") ||
   !app.includes("deferCompletion: hasPendingRoutineOvertimeReview()") ||
@@ -863,7 +871,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.216"') ||
+  !html.includes('href="/styles.css?v=0.217"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

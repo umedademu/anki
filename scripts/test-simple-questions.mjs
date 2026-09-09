@@ -66,12 +66,13 @@ console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追
 
 // 地図の問題面から答えが漏れず、次の通常問題へ図が残らないことを確認する。
 const maps = terms.flatMap((term) => term.stages.beginner).filter((question) => question.questionMap);
-assert.equal(maps.length, 4);
+assert.equal(maps.length, 5);
 const expectedMaps = [
   ["後ウマイヤ朝", "イドリース朝", "アッバース朝", "バグダード", "サーマーン朝"],
   ["後ウマイヤ朝", "ファーティマ朝", "アッバース朝", "バグダード", "ブワイフ朝", "サーマーン朝", "カラ=ハン朝"],
   ["ムラービト朝", "ファーティマ朝", "セルジューク朝", "カラ=ハン朝", "ガズナ朝"],
   ["ムワッヒド朝", "ルーム=セルジューク朝", "アイユーブ朝", "バグダード", "アッバース朝カリフ領", "ホラズム朝", "カラ=キタイ（西遼）", "ゴール朝"],
+  ["ナスル朝", "マムルーク朝", "イル=ハン国", "チャガタイ=ハン国", "奴隷王朝"],
 ];
 for (const [index, mapQuestion] of maps.entries()) {
   const names = expectedMaps[index];
@@ -97,4 +98,4 @@ for (const [index, mapQuestion] of maps.entries()) {
   assert.equal(element.src, undefined);
   assert.equal(element.alt, "");
 }
-console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答、答えの非表示、出題時の地図表示、通常問題への切替を確認しました。");
+console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答・13世紀の５回答、答えの非表示、出題時の地図表示、通常問題への切替を確認しました。");

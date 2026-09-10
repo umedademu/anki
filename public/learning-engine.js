@@ -53,6 +53,20 @@ export function resolveSubjectReviewSettings(sharedSettings, subjectSettings) {
     normalizeReviewSettings(sharedSettings);
 }
 
+export function rescheduleReviewProgress(progress, reviewSettings) {
+  const settings = normalizeReviewSettings(reviewSettings);
+  for (const record of Object.values(progress.questions)) {
+    if (!record || !ratingValues.includes(record.lastRating)) continue;
+    const answeredAt = Date.parse(record.lastAnsweredAt ?? "");
+    if (!Number.isFinite(answeredAt)) continue;
+    const dueAt = new Date(answeredAt + settings[ratingSettingKeys[record.lastRating]] * 1000);
+    if (!Number.isFinite(dueAt.getTime())) continue;
+    // 復習予定だけを更新し、回答時刻や回数は変更しない。
+    record.nextReviewAt = dueAt.toISOString();
+  }
+  return progress;
+}
+
 function emptyQuestionRecord() {
   return {
     streak: 0,
@@ -742,7 +756,7 @@ export function createRatingUndoSnapshot({
   };
 }
 
-export function restoreRatingUndoSnapshot(progress, snapshot) {
+export function restoreRatingUndoSnapshot(progress, snapshot, reviewSettings) {
   if (!snapshot || snapshot.type !== "rating" || !snapshot.questionId) {
     return null;
   }
@@ -752,6 +766,7 @@ export function restoreRatingUndoSnapshot(progress, snapshot) {
     delete progress.questions[snapshot.questionId];
   }
   progress.updatedAt = snapshot.previousUpdatedAt ?? null;
+  if (reviewSettings) rescheduleReviewProgress(progress, reviewSettings);
   return {
     queue: snapshot.queue.map((task) => cloneTask(task)),
     currentTask: cloneTask(snapshot.currentTask),

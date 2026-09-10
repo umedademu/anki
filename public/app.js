@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice } from "./original-session.js?v=0.223";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.223";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice } from "./original-session.js?v=0.224";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.224";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -27,6 +27,7 @@ import {
   normalizeReviewSettings,
   resolveSubjectReviewSettings,
   rateQuestion,
+  rescheduleReviewProgress,
   restoreRatingUndoSnapshot,
   shuffleTasks,
   shouldHideTerm,
@@ -54,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.223";
+} from "./original-session.js?v=0.224";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -1715,6 +1716,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.pendingListeningActivity = null;
   state.answerRevealedAt = 0;
   if (updateControls) setSetupControlsFromSession(session);
+  refreshPendingReviewTasks();
   return true;
 }
 
@@ -1840,6 +1842,35 @@ function enqueuePendingRetryTasksImmediately() {
   );
 }
 
+function refreshPendingReviewTasks(now = new Date()) {
+  if (!state.activeSession) return;
+  const cutoffAt = routineOvertimeCutoffAt();
+  const reviewAt = cutoffAt === null ? now : new Date(cutoffAt);
+  const staysPending = (questionId) =>
+    (!isListeningMode() && state.retryQuestionIds.has(questionId)) ||
+    isQuestionDue(state.progress, questionId, reviewAt);
+  state.queue = state.queue.filter((task) => staysPending(task.questionId));
+  for (const questionId of state.unseenQuestionIds) {
+    if (questionId !== state.currentTask?.questionId && !staysPending(questionId)) {
+      state.unseenQuestionIds.delete(questionId);
+    }
+  }
+  if (cutoffAt !== null) return;
+
+  // 開始時には期限前だった問題も、設定変更で期限を迎えれば今回の対象に加える。
+  const knownTerms = new Set(state.sessionTasks.map((task) => task.termId));
+  const newReviewTasks = (usesOneQuestionPerTerm()
+    ? createTermQuestionQueue
+    : createQuestionQueue)(
+    state.terms, state.progress, state.subject.masteryTarget, state.selectedStage, now,
+  ).filter((task) =>
+    state.progress.questions[task.questionId]?.lastAnsweredAt &&
+    (!usesOneQuestionPerTerm() || !knownTerms.has(task.termId)),
+  );
+  addTasksToActiveSession(newReviewTasks);
+  enqueueDueSessionTasks(now);
+}
+
 function showPendingRetryImmediately() {
   if (state.currentTask || state.retryQuestionIds.size === 0) return false;
   enqueuePendingRetryTasksImmediately();
@@ -1950,6 +1981,14 @@ function chooseStudyMenuIntervalUnit(seconds) {
   return 1;
 }
 
+function applyReviewSettings() {
+  state.reviewSettings = resolveSubjectReviewSettings(
+    state.sharedReviewSettings,
+    currentSubjectReviewSettings(),
+  );
+  rescheduleReviewProgress(state.progress, state.reviewSettings);
+}
+
 function currentSubjectReviewSettings() {
   return state.setupPreferences.subjects[state.activeSubjectId]
     ?.reviewSettings ?? null;
@@ -2006,6 +2045,7 @@ function updateStudyMenuReviewScope() {
   elements.studyMenuReviewScopeNote.textContent = usesCustomSettings
     ? `${subjectTitle}だけに、この4つの時間を適用します。`
     : "設定画面で保存した全教科共通の時間を適用します。";
+  elements.studyMenuReviewScopeNote.textContent += "回答済みの問題も、最後の回答時刻を基準に復習予定を更新します。";
 }
 
 function updateStudyMenuSpeechRateOutput() {
@@ -2123,10 +2163,7 @@ async function saveStudyMenuSettings() {
     const saved = await saveCloudSettings(readStudyMenuSettings());
     state.sharedReviewSettings = normalizeReviewSettings(saved);
     syncRoutinePreferences(saved.setupPreferences);
-    state.reviewSettings = resolveSubjectReviewSettings(
-      state.sharedReviewSettings,
-      currentSubjectReviewSettings(),
-    );
+    applyReviewSettings();
     fillSetupReviewSettings();
     state.listeningQuestionIntervalSeconds =
       normalizeListeningQuestionIntervalSeconds(
@@ -2135,6 +2172,8 @@ async function saveStudyMenuSettings() {
     saveSpeechSettings(saved);
     fillStudyMenuSettings(saved);
     updateRatingIntervals();
+    refreshPendingReviewTasks();
+    if (state.activeSession) await queueActiveSessionSave();
     setStudyMenuStatus(
       currentSubjectReviewSettings()
         ? isOriginalSession() ? "オリジナルの復習間隔をこのブラウザーに保存しました。" : "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
@@ -2167,6 +2206,7 @@ function updateSetupReviewScope() {
   elements.setupReviewScopeNote.textContent = usesCustomSettings
     ? `${subjectTitle}だけに、この4つの時間を適用します。`
     : "設定画面で保存した全教科共通の時間を適用します。";
+  elements.setupReviewScopeNote.textContent += "回答済みの問題も、最後の回答時刻を基準に復習予定を更新します。";
 }
 
 function fillSetupReviewSettings() {
@@ -2198,11 +2238,9 @@ function captureSetupReviewPreference() {
 
 function saveSetupReviewPreference() {
   state.setupPreferences = captureSetupReviewPreference();
-  state.reviewSettings = resolveSubjectReviewSettings(
-    state.sharedReviewSettings,
-    currentSubjectReviewSettings(),
-  );
+  applyReviewSettings();
   updateRatingIntervals();
+  updateSetupPreview();
   queueVisibleSetupPreferenceSave();
 }
 
@@ -2782,10 +2820,7 @@ async function loadProgressFromCloud() {
     setRoundProgress();
     state.sharedReviewSettings = { ...defaultReviewSettings };
     syncRoutinePreferences(normalizeSetupPreferences());
-    state.reviewSettings = resolveSubjectReviewSettings(
-      state.sharedReviewSettings,
-      currentSubjectReviewSettings(),
-    );
+    applyReviewSettings();
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
@@ -2830,10 +2865,7 @@ async function loadProgressFromCloud() {
     sessionCloudState.settings.setupPreferences,
     sessionCloudState.studyDate,
   );
-  state.reviewSettings = resolveSubjectReviewSettings(
-    state.sharedReviewSettings,
-    currentSubjectReviewSettings(),
-  );
+  applyReviewSettings();
   state.shuffleEnabled = sessionCloudState.settings.shuffleEnabled;
   state.listeningPauseSeconds = normalizeListeningPauseSeconds(
     sessionCloudState.settings.listeningPauseSeconds,
@@ -2871,6 +2903,7 @@ async function loadProgressFromCloud() {
     }
     clearLegacyProgress(deck);
   }
+  rescheduleReviewProgress(state.progress, state.reviewSettings);
   state.cloudReady = true;
   state.cloudConnected = true;
   return {
@@ -2995,7 +3028,7 @@ async function goBackOneStep() {
     const forwardStudySeconds = state.studySeconds;
     state.history.pop();
     const remainingHistory = [...state.history];
-    const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
+    const restored = restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
     if (!restored) {
       state.saving = false;
       startStudyClock();
@@ -3020,7 +3053,7 @@ async function goBackOneStep() {
       const saved = await saveCloudStudyAnswer(
         datasetVersionForQuestion(snapshot.questionId),
         snapshot.questionId,
-        snapshot.previousQuestionRecord,
+        state.progress.questions[snapshot.questionId] ?? null,
         captureActiveSession(),
         {
           studyMode: "memorize",
@@ -3090,11 +3123,11 @@ function queueSetupPreferenceSave() {
       const saved = await saveCloudSettings(patch);
       if (saveVersion === setupPreferenceSaveVersion) {
         state.shuffleEnabled = saved.shuffleEnabled;
+        state.sharedReviewSettings = normalizeReviewSettings(saved);
         syncRoutinePreferences(saved.setupPreferences);
-        state.reviewSettings = resolveSubjectReviewSettings(
-          state.sharedReviewSettings,
-          currentSubjectReviewSettings(),
-        );
+        applyReviewSettings();
+        updateRatingIntervals();
+        updateSetupPreview();
         elements.cloudStatus.textContent = isOriginalSession() ? "今回の開始設定を反映しました。" : "開始設定をCloudflareへ共有しました。";
       }
       return saved;
@@ -3525,7 +3558,7 @@ async function goBackListeningOneStep() {
       setRoundProgress(saved.roundProgress);
     } else {
       const remainingHistory = [...state.history];
-      const restored = restoreRatingUndoSnapshot(state.progress, snapshot);
+      const restored = restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
       if (
         !restored ||
         !restoreActiveSession(snapshot.studySession, { updateControls: false })
@@ -3544,7 +3577,7 @@ async function goBackListeningOneStep() {
         snapshot.studyActivityDatasetVersion ??
           datasetVersionForQuestion(snapshot.questionId),
         snapshot.questionId,
-        snapshot.previousQuestionRecord,
+        state.progress.questions[snapshot.questionId] ?? null,
         captureActiveSession(),
         {
           studyMode: "listen-answer",
@@ -4907,7 +4940,7 @@ async function rateListeningQuestion(rating) {
     setSavedSessionForMode("listen-answer", saved.session);
     setRoundProgress(saved.roundProgress);
   } catch (error) {
-    restoreRatingUndoSnapshot(state.progress, snapshot);
+    restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
     if (Object.hasOwn(snapshot, "routineRun")) {
       restoreRoutineRun(snapshot.routineRun);
@@ -5061,7 +5094,7 @@ async function rateCurrentQuestion(rating) {
     setRoundProgress(saved.roundProgress);
   } catch (error) {
     speechController.stop();
-    restoreRatingUndoSnapshot(state.progress, snapshot);
+    restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
     if (Object.hasOwn(snapshot, "routineRun")) {
       restoreRoutineRun(snapshot.routineRun);
@@ -5335,6 +5368,7 @@ async function resumeStudy() {
     return;
   }
   initializeQuestionLimit();
+  refreshPendingReviewTasks();
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
   enqueuePendingRetryTasksImmediately();
@@ -5489,10 +5523,7 @@ async function activateDecks(deckIds) {
     setRoundProgress();
     state.sharedReviewSettings = { ...defaultReviewSettings };
     syncRoutinePreferences(normalizeSetupPreferences());
-    state.reviewSettings = resolveSubjectReviewSettings(
-      state.sharedReviewSettings,
-      currentSubjectReviewSettings(),
-    );
+    applyReviewSettings();
     state.shuffleEnabled = false;
     state.listeningPauseSeconds = 0;
     state.listeningQuestionIntervalSeconds = 0;
@@ -5544,7 +5575,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.223｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.224｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

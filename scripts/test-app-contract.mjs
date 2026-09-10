@@ -241,7 +241,7 @@ const enqueueDueSessionTasksBlock = app.match(
   /function enqueueDueSessionTasks\(now = new Date\(\)\)[\s\S]*?function enqueuePendingRetryTasksImmediately/,
 )?.[0];
 const enqueuePendingRetryTasksBlock = app.match(
-  /function enqueuePendingRetryTasksImmediately\(\)[\s\S]*?function showPendingRetryImmediately/,
+  /^function enqueuePendingRetryTasksImmediately\(\)[\s\S]*?^}/m,
 )?.[0];
 const renderCompletionBlock = app.match(
   /function renderCompletion\(\)[\s\S]*?function buildQueue/,
@@ -484,7 +484,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.223" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.224" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -503,12 +503,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.223") ||
-  !app.includes("v0.223｜") ||
-  !changelog.includes("v0.223") ||
-  !settingsHtml.includes("v0.223") ||
-  !historyHtml.includes("v0.223") ||
-  !analysisHtml.includes("v0.223")
+  !html.includes("v0.224") ||
+  !app.includes("v0.224｜") ||
+  !changelog.includes("v0.224") ||
+  !settingsHtml.includes("v0.224") ||
+  !historyHtml.includes("v0.224") ||
+  !analysisHtml.includes("v0.224")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -871,7 +871,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.223"') ||
+  !html.includes('href="/styles.css?v=0.224"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1662,7 +1662,7 @@ if (
   !rateListeningQuestionBlock.includes('studyMode: "listen-answer"') ||
   !rateListeningQuestionBlock.includes("activity,") ||
   !rateListeningQuestionBlock.includes('setSavedSessionForMode("listen-answer", saved.session)') ||
-  !rateListeningQuestionBlock.includes("restoreRatingUndoSnapshot(state.progress, snapshot)") ||
+  !rateListeningQuestionBlock.includes("restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings)") ||
   !rateListeningQuestionBlock.includes("const resumesFromPause = state.listeningPaused") ||
   !rateListeningQuestionBlock.includes("state.listeningPaused = false") ||
   !rateListeningQuestionBlock.includes("if (resumesFromPause)") ||

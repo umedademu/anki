@@ -1,5 +1,8 @@
 import * as cloud from "./cloud-progress.js";
-import { createEmptyProgress, normalizeSubjectReviewSettings } from "./learning-engine.js";
+import {
+  createEmptyProgress, normalizeSubjectReviewSettings,
+  rescheduleReviewProgress, resolveSubjectReviewSettings,
+} from "./learning-engine.js";
 export * from "./cloud-progress.js";
 
 let temporary = null;
@@ -49,9 +52,15 @@ function result(store, session, change = {}) {
     roundProgress: { completedCount: store.rounds.size },
   };
 }
+function refreshOriginalReviewSchedule(store) {
+  rescheduleReviewProgress(store.progress, resolveSubjectReviewSettings(
+    store.settings, store.settings.setupPreferences.subjects.original?.reviewSettings,
+  ));
+}
 export async function loadCloudState(masteryTarget, version) {
   const store = memory(version);
   if (!store) return cloud.loadCloudState(masteryTarget, version);
+  refreshOriginalReviewSchedule(store);
   return {
     progress: copy(store.progress), settings: copy(store.settings),
     session: copy(store.session), sessions: cloud.normalizeStudySessions(null, store.session),
@@ -78,6 +87,7 @@ export async function saveCloudSettings(settings) {
     }
   }
   temporary.settings = next;
+  refreshOriginalReviewSchedule(temporary);
   return copy(temporary.settings);
 }
 export async function saveCloudStudySession(version, session) {
@@ -95,6 +105,7 @@ export async function saveCloudStudyAnswer(version, questionId, record, session,
   if (record) store.progress.questions[questionId] = copy(record);
   else delete store.progress.questions[questionId];
   store.progress.updatedAt = new Date().toISOString();
+  refreshOriginalReviewSchedule(store);
   return result(store, session, change);
 }
 export async function saveCloudStudyActivity(version, activity, session, change = {}) {

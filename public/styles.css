@@ -4021,3 +4021,24 @@ body.is-listening.is-listening-answer-visible .page {
 
 /* 問題の地図は回答を開く前から表示する。 */
 .question-map { display: block; width: 100%; height: auto; margin: 18px auto 8px; background: #faf9f4; border-radius: 8px; }
+
+.original-panel textarea {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #b8c7bd;
+  border-radius: 12px;
+  font: inherit;
+  resize: vertical;
+  tab-size: 4;
+}
+.original-panel [data-original="status"],
+.original-text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.original-text { font-size: 1.2rem; line-height: 1.9; }
+.original-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.original-exit { margin-top: 28px; }
+.original-panel .shuffle-choice { margin-bottom: 18px; }

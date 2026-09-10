@@ -1,3 +1,4 @@
+import { createOriginalStudy } from "./original-study.js";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -2563,7 +2564,12 @@ function showMindsetCompletion(total) {
   window.requestAnimationFrame(() => elements.mindsetRestart.focus());
 }
 
+const originalPanel = document.querySelector("#original-panel");
+const originalStudy = createOriginalStudy(originalPanel, showSubjectSelection);
+window.addEventListener("pagehide", () => originalStudy.clear());
+
 function showOnly(panel) {
+  if (panel !== originalPanel) originalStudy.clear();
   if (panel !== elements.studyShell && state.studyMenuOpen) {
     closeStudyMenu({ resumeStudy: false });
   }
@@ -2590,6 +2596,7 @@ function showOnly(panel) {
     panel === elements.studyShell && isListeningMode(),
   );
   [
+    originalPanel,
     elements.loadingPanel,
     elements.subjectPanel,
     elements.setupPanel,
@@ -5444,7 +5451,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.217｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.218｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5463,6 +5470,18 @@ async function activateDecks(deckIds) {
 
 function renderSubjectOptions() {
   elements.subjectOptions.replaceChildren(
+    (() => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "subject-choice";
+      button.dataset.originalStudy = "true";
+      const title = document.createElement("strong");
+      title.textContent = "オリジナル";
+      const description = document.createElement("small");
+      description.textContent = "問題・回答・解説を貼り付けて、今回だけ学習する";
+      button.append(title, description);
+      return button;
+    })(),
     ...state.subjectEntries.map((subject) => {
       const button = document.createElement("button");
       button.type = "button";
@@ -5600,6 +5619,15 @@ async function start() {
 }
 
 elements.subjectOptions.addEventListener("click", (event) => {
+  if (event.target.closest("button[data-original-study]")) {
+    state.inRoutine = false;
+    state.activeSession = false;
+    stopListeningSequence();
+    elements.subjectName.textContent = "オリジナル";
+    showOnly(originalPanel);
+    originalStudy.open();
+    return;
+  }
   const randomVideoButton = event.target.closest(
     "button[data-random-video-action='play']",
   );

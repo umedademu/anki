@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
+import { runInNewContext } from "node:vm";
 import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy } from "../public/original-study.js";
 import * as session from "../public/original-session.js";
 import { createQuestionQueue, getQuestionExplanation, rateQuestion } from "../public/learning-engine.js";
@@ -80,7 +81,35 @@ const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8")
 const html = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
 assert.ok(app.includes('return { entry, ...originalDeck }'));
 assert.ok(app.includes('showOnly(elements.setupPanel)'));
-assert.ok(app.includes('source: "device"'));
+// 実際のアプリの音声設定取得と読み上げ初期化を、音を出さずに検査する。
+const storedVoiceSettings = { source: "cloud", azureVoiceId: "ja-JP-AoiNeural", englishAzureVoiceId: "en-US-GuyNeural", rate: 1.35 };
+const settingsFunction = app.slice(app.indexOf("function loadSpeechSettings() {"), app.indexOf("function saveSpeechSettings(settings) {"));
+const controllerStart = app.indexOf("const speechController = createSpeechController({");
+const controllerEnd = app.indexOf("\n});", controllerStart) + 4;
+assert.ok(controllerStart >= 0 && controllerEnd > controllerStart);
+const cloudAudio = () => { throw new Error("実際の音声は生成しない"); };
+const controller = runInNewContext(`${settingsFunction}\n${app.slice(controllerStart, controllerEnd)}\nspeechController;`, {
+  createSpeechController: (options) => options,
+  requestCloudSpeech: cloudAudio,
+  originalSettings: session.originalSettings,
+  isOriginalSession: session.isOriginalSession,
+  loadStoredSpeechSettings: () => storedVoiceSettings,
+  updateSpeechButtons() {},
+});
+assert.equal(controller.requestCloudAudio, cloudAudio);
+assert.equal(controller.getSettings().source, "cloud");
+session.beginOriginalSession(storedVoiceSettings);
+for (const [key, expected] of Object.entries(storedVoiceSettings)) {
+  assert.equal(controller.getSettings()[key], expected, `オリジナルの音声設定: ${key}`);
+}
+await session.saveCloudSettings({ rate: 1.7 });
+assert.equal(controller.getSettings().rate, 1.7);
+assert.equal(controller.getSettings().source, "cloud");
+await session.saveCloudSettings({ source: "device" });
+assert.equal(controller.getSettings().source, "device");
+session.endOriginalSession();
+assert.equal(controller.getSettings().source, "cloud");
+assert.equal(controller.getSettings().rate, 1.35);
 assert.equal((html.match(/data-rating=/g) ?? []).length, 8);
 assert.ok(!html.includes('data-original="ratings"'));
 assert.ok(!html.includes('data-original="study"'));

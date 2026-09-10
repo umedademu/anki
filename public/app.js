@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.219";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.219";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.220";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.220";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -54,7 +54,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.219";
+} from "./original-session.js?v=0.220";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -436,8 +436,7 @@ let youtubePlayerApiPromise = null;
 let routinePreferenceSaving = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
-  getSettings: () => isOriginalSession()
-    ? { ...loadSpeechSettings(), source: "device" } : loadSpeechSettings(),
+  getSettings: loadSpeechSettings,
   getHistoryReadings: () => state.historySpeechReadings,
   onTargetChange: updateSpeechButtons,
 });
@@ -4433,7 +4432,7 @@ function configureSetup() {
     ? "変更は今回の学習だけに適用されます。"
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
   elements.studyStop.querySelector("small").textContent = temporary ? "今回の続きは保持" : "この一周を保存";
-  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・設定は今回だけ保持し、トップへ戻るかページを離れると消えます。音声は端末音声を使います。";
+  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・設定は今回だけ保持し、トップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -5539,7 +5538,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.219｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.220｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

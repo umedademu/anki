@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.220";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.220";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.221";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.221";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -54,7 +54,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.220";
+} from "./original-session.js?v=0.221";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -2646,6 +2646,12 @@ window.addEventListener("pagehide", () => {
   }
 });
 
+window.addEventListener("pageshow", (event) => {
+  if (event.persisted && !originalPanel.classList.contains("is-hidden")) {
+    originalStudy.open();
+  }
+});
+
 function showOnly(panel) {
   if (panel !== originalPanel) originalStudy.clear();
   if (panel !== elements.studyShell && state.studyMenuOpen) {
@@ -4391,7 +4397,7 @@ function updateSetupPreview() {
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
-    ? isOriginalSession() ? "今回だけの学習：問題・評価は保存しません" : "学習記録：Cloudflareに接続済み"
+    ? isOriginalSession() ? "問題はこのブラウザーに保存・評価は今回だけ保持" : "学習記録：Cloudflareに接続済み"
     : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
   updateRoundProgressDisplay();
 }
@@ -4432,7 +4438,7 @@ function configureSetup() {
     ? "変更は今回の学習だけに適用されます。"
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
   elements.studyStop.querySelector("small").textContent = temporary ? "今回の続きは保持" : "この一周を保存";
-  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・設定は今回だけ保持し、トップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
+  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題はこのブラウザーに保存します。評価・途中状態・今回の設定はトップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -5538,7 +5544,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.220｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.221｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5565,7 +5571,7 @@ function renderSubjectOptions() {
       const title = document.createElement("strong");
       title.textContent = "オリジナル";
       const description = document.createElement("small");
-      description.textContent = "問題・回答・解説を貼り付けて、今回だけ学習する";
+      description.textContent = "問題・回答・解説を貼り付けて学習する。入力はこの端末に保存";
       button.append(title, description);
       return button;
     })(),

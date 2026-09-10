@@ -42,8 +42,12 @@ export function createOriginalDeck(questions, version) {
   };
 }
 
-// 入力だけを担当し、出題・音声・評価は他教科と同じ画面に渡す。
-export function createOriginalStudy(panel, onExit, onStart) {
+export const originalQuestionsStorageKey = "anki-original-questions:v1";
+
+// 入力だけを端末に保存し、出題・音声・評価は他教科と同じ画面に渡す。
+export function createOriginalStudy(
+  panel, onExit, onStart, getStorage = () => window.localStorage,
+) {
   const find = (name) => panel.querySelector(`[data-original="${name}"]`);
   const input = find("input");
   let starting = false;
@@ -55,7 +59,29 @@ export function createOriginalStudy(panel, onExit, onStart) {
     find("start").disabled = starting || result.errors.length > 0 || !result.questions.length;
     return result;
   }
-  input.addEventListener("input", validate);
+  function saveInput() {
+    try {
+      const storage = getStorage();
+      if (input.value) storage.setItem(originalQuestionsStorageKey, input.value);
+      else storage.removeItem(originalQuestionsStorageKey);
+      find("storage-status").textContent = input.value
+        ? "このブラウザーに自動保存しました。" : "保存した問題はありません。";
+    } catch {
+      find("storage-status").textContent = "端末に保存できませんでした。保存容量やブラウザーの設定を確認してください。今回の入力は、画面を離れる前にコピーして控えてください。";
+    }
+  }
+  input.addEventListener("input", () => { validate(); saveInput(); });
+  find("delete").addEventListener("click", () => {
+    if (starting) return;
+    try {
+      getStorage().removeItem(originalQuestionsStorageKey);
+      clear();
+      find("storage-status").textContent = "保存した問題を削除しました。";
+      input.focus();
+    } catch {
+      find("storage-status").textContent = "保存した問題を削除できませんでした。ブラウザーの設定を確認して、もう一度お試しください。";
+    }
+  });
   find("exit").addEventListener("click", onExit);
   find("start").addEventListener("click", async () => {
     if (starting) return;
@@ -67,6 +93,23 @@ export function createOriginalStudy(panel, onExit, onStart) {
     catch (error) { find("status").textContent = error.message; }
     finally { starting = false; find("start").disabled = false; }
   });
-  function clear() { input.value = ""; validate(); }
-  return { clear, open() { clear(); input.focus(); } };
+  // 画面を閉じるときの片付けでは、保存済みの入力を削除しない。
+  function clear() {
+    input.value = "";
+    find("storage-status").textContent = "";
+    validate();
+  }
+  return { clear, open() {
+    clear();
+    try {
+      input.value = getStorage().getItem(originalQuestionsStorageKey) ?? "";
+      find("storage-status").textContent = input.value
+        ? "このブラウザーに保存した問題を復元しました。" : "入力すると、このブラウザーに自動保存します。";
+    } catch {
+      find("storage-status").textContent = "保存した問題を読み込めませんでした。ブラウザーの設定を確認してください。";
+    }
+    validate();
+    input.focus();
+  } };
+
 }

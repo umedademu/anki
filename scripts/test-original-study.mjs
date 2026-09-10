@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
-import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy } from "../public/original-study.js";
+import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy, originalQuestionsStorageKey } from "../public/original-study.js";
 import * as session from "../public/original-session.js";
 import { createQuestionQueue, getQuestionExplanation, rateQuestion } from "../public/learning-engine.js";
 
@@ -17,7 +17,7 @@ assert.equal(invalid.errors.length, 4);
 assert.equal(parseOriginalQuestions(Array(10001).fill("問\t答").join("\n")).errors.length, 1);
 assert.ok(invalid.errors.every((error, index) => error.startsWith(`${index + 1}行目`)));
 
-// オリジナルの全操作で通信と端末保存が発生しないことを確認。
+// 評価・途中状態の操作で通信と端末保存が発生しないことを確認。
 const previousFetch = globalThis.fetch;
 globalThis.fetch = () => { throw new Error("一時学習の通信は禁止"); };
 globalThis.window = { localStorage: {
@@ -66,8 +66,15 @@ function node(name) {
     setAttribute() {}, focus() {}, addEventListener(event, handler) { this.handlers[event] = handler; } });
   return nodes.get(name);
 }
+const storedInput = new Map([["unrelated-setting", "keep"]]);
+const storage = {
+  getItem: (key) => storedInput.get(key) ?? null,
+  setItem: (key, value) => storedInput.set(key, value),
+  removeItem: (key) => storedInput.delete(key),
+};
+const panel = { querySelector: (selector) => node(selector.match(/"([^"]+)"/)[1]) };
 let received = null;
-const input = createOriginalStudy({ querySelector: (selector) => node(selector.match(/"([^"]+)"/)[1]) }, () => {}, async (questions) => { received = questions; });
+const input = createOriginalStudy(panel, () => {}, async (questions) => { received = questions; }, () => storage);
 input.open();
 assert.equal(node("start").disabled, true);
 node("input").value = "問題\t回答\t解説";
@@ -76,6 +83,53 @@ await node("start").handlers.click();
 assert.equal(received[0].explanation, "解説");
 input.clear();
 assert.equal(node("input").value, "");
+assert.equal(storedInput.get(originalQuestionsStorageKey), "問題\t回答\t解説");
+input.open();
+assert.equal(node("input").value, "問題\t回答\t解説");
+assert.equal(node("start").disabled, false);
+// 新しい画面の作成後も、入力途中の文字列をそのまま復元する。
+const draft = "問1\t答1\r\n\r\n問2\t答2\t解説2\n入力途中";
+node("input").value = draft;
+node("input").handlers.input();
+assert.equal(node("start").disabled, true);
+const reloaded = createOriginalStudy(panel, () => {}, async () => {}, () => storage);
+reloaded.open();
+assert.equal(node("input").value, draft);
+assert.equal(node("start").disabled, true);
+node("delete").handlers.click();
+assert.equal(storedInput.has(originalQuestionsStorageKey), false);
+assert.equal(node("input").value, "");
+assert.equal(node("start").disabled, true);
+assert.equal(storedInput.get("unrelated-setting"), "keep");
+reloaded.open();
+assert.equal(node("input").value, "");
+node("input").value = "問\t答";
+node("input").handlers.input();
+node("input").value = "";
+node("input").handlers.input();
+assert.equal(storedInput.has(originalQuestionsStorageKey), false);
+
+const unavailable = createOriginalStudy(panel, () => {}, async () => {}, () => { throw new Error("禁止"); });
+unavailable.open();
+assert.match(node("storage-status").textContent, /読み込めません/);
+node("input").value = "問\t答";
+node("input").handlers.input();
+assert.match(node("storage-status").textContent, /保存できません/);
+assert.equal(node("start").disabled, false);
+node("delete").handlers.click();
+assert.equal(node("input").value, "問\t答");
+assert.match(node("storage-status").textContent, /削除できません/);
+
+storedInput.set(originalQuestionsStorageKey, "保存済み\t答");
+const full = createOriginalStudy(panel, () => {}, async () => {}, () => ({
+  ...storage, setItem() { throw new Error("容量不足"); },
+}));
+full.open();
+node("input").value = "新しい問\t答";
+node("input").handlers.input();
+assert.match(node("storage-status").textContent, /保存できません/);
+assert.equal(storedInput.get(originalQuestionsStorageKey), "保存済み\t答");
+assert.equal(node("input").value, "新しい問\t答");
 
 const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
 const html = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
@@ -114,4 +168,4 @@ assert.equal((html.match(/data-rating=/g) ?? []).length, 8);
 assert.ok(!html.includes('data-original="ratings"'));
 assert.ok(!html.includes('data-original="study"'));
 globalThis.fetch = previousFetch;
-console.log("オリジナル検証完了: 入力、共通出題・復習、一手戻し用記録、音声方針、通信・保存の分離、終了後の破棄を確認");
+console.log("オリジナル検証完了: 端末保存・復元・削除・保存失敗、共通出題と音声設定、学習記録の分離を確認");

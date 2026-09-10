@@ -1,15 +1,35 @@
 import * as cloud from "./cloud-progress.js";
-import { createEmptyProgress } from "./learning-engine.js";
+import { createEmptyProgress, normalizeSubjectReviewSettings } from "./learning-engine.js";
 export * from "./cloud-progress.js";
 
 let temporary = null;
 const copy = (value) => structuredClone(value);
 export const isOriginalSession = () => temporary !== null;
 export const originalSettings = () => temporary ? copy(temporary.settings) : null;
-export function beginOriginalSession(settings) {
+export const originalReviewStorageKey = "anki-original-review:v1";
+export const originalReviewStorageNotice = () => temporary?.reviewStorageNotice ?? "";
+export function beginOriginalSession(settings, getStorage = () => window.localStorage) {
+  const normalized = cloud.normalizeSharedSettings(settings);
+  let reviewStorageNotice = "";
+  try {
+    const raw = getStorage().getItem(originalReviewStorageKey);
+    if (raw !== null) {
+      const saved = JSON.parse(raw);
+      const review = normalizeSubjectReviewSettings(saved?.reviewSettings);
+      if (saved?.schemaVersion !== 1 || !Object.hasOwn(saved, "reviewSettings") ||
+          (saved.reviewSettings !== null && (!review || Object.keys(review).some(
+            (key) => saved.reviewSettings[key] !== review[key],
+          )))) throw new Error("復習間隔の形式が不正です");
+      normalized.setupPreferences.subjects.original = {
+        ...normalized.setupPreferences.subjects.original, reviewSettings: review,
+      };
+    }
+  } catch {
+    reviewStorageNotice = "保存した復習間隔を復元できませんでした。ブラウザーの設定を確認し、復習間隔を設定し直してください。";
+  }
   temporary = {
     version: `original-${crypto.randomUUID()}`,
-    settings: cloud.normalizeSharedSettings(settings),
+    settings: normalized, getStorage, reviewStorageNotice,
     progress: createEmptyProgress(), session: null, rounds: new Set(),
   };
   return temporary.version;
@@ -44,7 +64,20 @@ export async function saveCloudSettings(settings) {
     if (settings.setupPreferences?.subjects?.original) throw new Error("今回の設定は終了しています。");
     return cloud.saveCloudSettings(settings);
   }
-  temporary.settings = cloud.normalizeSharedSettings({ ...temporary.settings, ...copy(settings) });
+  const next = cloud.normalizeSharedSettings({ ...temporary.settings, ...copy(settings) });
+  const review = next.setupPreferences.subjects.original?.reviewSettings ?? null;
+  const previousReview = temporary.settings.setupPreferences.subjects.original?.reviewSettings ?? null;
+  if (JSON.stringify(review) !== JSON.stringify(previousReview)) {
+    try {
+      temporary.getStorage().setItem(originalReviewStorageKey, JSON.stringify({
+        schemaVersion: 1, reviewSettings: review,
+      }));
+      temporary.reviewStorageNotice = "";
+    } catch {
+      throw new Error("復習間隔をこのブラウザーに保存できませんでした。保存容量やブラウザーの設定を確認して、もう一度設定してください。");
+    }
+  }
+  temporary.settings = next;
   return copy(temporary.settings);
 }
 export async function saveCloudStudySession(version, session) {

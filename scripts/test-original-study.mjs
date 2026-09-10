@@ -131,6 +131,53 @@ assert.match(node("storage-status").textContent, /保存できません/);
 assert.equal(storedInput.get(originalQuestionsStorageKey), "保存済み\t答");
 assert.equal(node("input").value, "新しい問\t答");
 
+// 復習間隔は問題の内容・学習回・問題削除と独立して保存する。
+const reviewData = new Map();
+const reviewStorage = {
+  getItem: (key) => reviewData.get(key) ?? null,
+  setItem: (key, value) => reviewData.set(key, value),
+  removeItem: (key) => reviewData.delete(key),
+};
+const customReview = { againSeconds: 25, hardSeconds: 120, goodSeconds: 600, easySeconds: 3600 };
+const reviewPatch = (reviewSettings) => ({ setupPreferences: { subjects: { original: { reviewSettings } } } });
+const firstReviewVersion = session.beginOriginalSession({}, () => reviewStorage);
+await session.saveCloudSettings(reviewPatch(customReview));
+assert.deepEqual(JSON.parse(reviewData.get(session.originalReviewStorageKey)).reviewSettings, customReview);
+const savedReviewText = reviewData.get(session.originalReviewStorageKey);
+await session.saveCloudSettings({ rate: 1.4 });
+assert.equal(reviewData.get(session.originalReviewStorageKey), savedReviewText);
+await session.resetCloudProgress(firstReviewVersion);
+assert.equal(reviewData.get(session.originalReviewStorageKey), savedReviewText);
+session.endOriginalSession();
+reviewData.set(originalQuestionsStorageKey, "別の問題\t別の回答");
+const secondReviewVersion = session.beginOriginalSession({}, () => reviewStorage);
+assert.notEqual(firstReviewVersion, secondReviewVersion);
+assert.deepEqual(session.originalSettings().setupPreferences.subjects.original.reviewSettings, customReview);
+reviewStorage.removeItem(originalQuestionsStorageKey);
+session.endOriginalSession();
+session.beginOriginalSession({}, () => reviewStorage);
+assert.deepEqual(session.originalSettings().setupPreferences.subjects.original.reviewSettings, customReview);
+await session.saveCloudSettings(reviewPatch(null));
+session.endOriginalSession();
+session.beginOriginalSession(reviewPatch(customReview), () => reviewStorage);
+assert.equal(session.originalSettings().setupPreferences.subjects.original.reviewSettings, null);
+session.endOriginalSession();
+
+const brokenStorage = { ...reviewStorage, setItem() { throw new Error("容量不足"); } };
+session.beginOriginalSession({}, () => brokenStorage);
+await assert.rejects(session.saveCloudSettings(reviewPatch(customReview)), /保存できません/);
+assert.equal(session.originalSettings().setupPreferences.subjects.original.reviewSettings, null);
+session.endOriginalSession();
+reviewData.set(session.originalReviewStorageKey, "壊れた内容");
+session.beginOriginalSession({}, () => reviewStorage);
+assert.match(session.originalReviewStorageNotice(), /復元できません/);
+await session.saveCloudSettings(reviewPatch(customReview));
+assert.equal(session.originalReviewStorageNotice(), "");
+session.endOriginalSession();
+session.beginOriginalSession({}, () => { throw new Error("利用不可"); });
+assert.match(session.originalReviewStorageNotice(), /復元できません/);
+session.endOriginalSession();
+
 const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
 const html = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
 assert.ok(app.includes('return { entry, ...originalDeck }'));

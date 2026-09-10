@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.222";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.222";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice } from "./original-session.js?v=0.223";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.223";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -54,7 +54,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.222";
+} from "./original-session.js?v=0.223";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -2137,8 +2137,8 @@ async function saveStudyMenuSettings() {
     updateRatingIntervals();
     setStudyMenuStatus(
       currentSubjectReviewSettings()
-        ? isOriginalSession() ? "今回の復習間隔を反映しました。" : "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
-        : isOriginalSession() ? "全教科共通の復習間隔を今回の学習に適用しました。" : "全教科共通の設定を使うようCloudflareへ保存しました。",
+        ? isOriginalSession() ? "オリジナルの復習間隔をこのブラウザーに保存しました。" : "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
+        : isOriginalSession() ? "全教科共通の復習間隔を使う設定を反映しました。" : "全教科共通の設定を使うようCloudflareへ保存しました。",
     );
   } catch (error) {
     setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
@@ -4435,10 +4435,10 @@ function updateRatingIntervals() {
 function configureSetup() {
   const temporary = isOriginalSession();
   document.querySelector(".setup-review-heading p").textContent = temporary
-    ? "変更は今回の学習だけに適用されます。"
+    ? `個別の復習間隔はこのブラウザーに保存し、問題を変えても引き継ぎます。${originalReviewStorageNotice()}`
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
   elements.studyStop.querySelector("small").textContent = temporary ? "今回の続きは保持" : "この一周を保存";
-  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題はこのブラウザーに保存します。評価・途中状態・今回の設定はトップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
+  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題はこのブラウザーに保存します。個別の復習間隔も問題に関係なく保存します。評価・途中状態・その他の今回の設定はトップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -5544,7 +5544,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.222｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.223｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

@@ -1,77 +1,88 @@
 import assert from "node:assert/strict";
-import { parseOriginalQuestions, createOriginalStudy } from "../public/original-study.js";
+import { readFile } from "node:fs/promises";
+import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy } from "../public/original-study.js";
+import * as session from "../public/original-session.js";
+import { createQuestionQueue, getQuestionExplanation, rateQuestion } from "../public/learning-engine.js";
 
-assert.deepEqual(parseOriginalQuestions("\uFEFF問1\t答1\r\n\r\n問2\t答2\t解説\r問3\t答3\t"), {
-  questions: [
-    { prompt: "問1", answer: "答1", explanation: "" },
-    { prompt: "問2", answer: "答2", explanation: "解説" },
-    { prompt: "問3", answer: "答3", explanation: "" },
-  ], errors: [],
-});
+const parsed = parseOriginalQuestions("\uFEFF問1\t答1\r\n\r\n問2\t答2\t解説\r問3\t答3\t");
+assert.deepEqual(parsed, { questions: [
+  { prompt: "問1", answer: "答1", explanation: "" },
+  { prompt: "問2", answer: "答2", explanation: "解説" },
+  { prompt: "問3", answer: "答3", explanation: "" },
+], errors: [] });
 assert.equal(parseOriginalQuestions(" \n\t\n").questions.length, 0);
 const invalid = parseOriginalQuestions("問題だけ\n問\t\n\t答\n問\t答\t説明\t余分");
 assert.equal(invalid.errors.length, 4);
+assert.equal(parseOriginalQuestions(Array(10001).fill("問\t答").join("\n")).errors.length, 1);
 assert.ok(invalid.errors.every((error, index) => error.startsWith(`${index + 1}行目`)));
 
-// 保存・音声の窓口を一切渡さずに、入力から再出題・破棄までを確認する。
+// オリジナルの全操作で通信と端末保存が発生しないことを確認。
+const previousFetch = globalThis.fetch;
+globalThis.fetch = () => { throw new Error("一時学習の通信は禁止"); };
+globalThis.window = { localStorage: {
+  getItem() { throw new Error("読み込み禁止"); }, setItem() { throw new Error("保存禁止"); },
+} };
+const version = session.beginOriginalSession({ goodSeconds: 30 });
+const deck = createOriginalDeck(parsed.questions, version);
+assert.equal(deck.subject.learningType, "history");
+let saved = await session.loadCloudState(2, version);
+const queue = createQuestionQueue(deck.terms, saved.progress, 2);
+assert.equal(queue.length, 3);
+assert.equal(getQuestionExplanation(deck.terms[1], deck.terms[1].stages.beginner[0]), "解説");
+const questionId = deck.terms[0].stages.beginner[0].id;
+rateQuestion(saved.progress, questionId, "good", 2, { goodSeconds: 30 });
+await session.saveCloudStudyAnswer(version, questionId, saved.progress.questions[questionId], null, { completeRoundId: "round-1" });
+await session.saveCloudStudyAnswer(version, questionId, saved.progress.questions[questionId], null, { completeRoundId: "round-1" });
+saved = await session.loadCloudState(2, version);
+assert.equal(saved.roundProgress.completedCount, 1);
+assert.equal(createQuestionQueue(deck.terms, saved.progress, 2).length, 2);
+saved.progress.questions = {};
+assert.ok((await session.loadCloudState(2, version)).progress.questions[questionId]);
+await session.saveCloudStudyAnswer(version, questionId, null, null, { deleteRoundId: "round-1" });
+assert.equal((await session.loadCloudState(2, version)).roundProgress.completedCount, 0);
+assert.equal(createQuestionQueue(deck.terms, (await session.loadCloudState(2, version)).progress, 2).length, 3);
+await session.saveCloudSettings({ goodSeconds: 12, setupPreferences: { lastSubjectId: "original", subjects: { original: { selectedDeckIds: ["deck-1"], studyMode: "memorize", decks: {} } } } });
+assert.equal(session.originalSettings().goodSeconds, 12);
+await session.saveCloudStudySession(version, null);
+await session.saveCloudStudyActivity(version, { eventId: "event-1" }, null, { completeRoundId: "round-2", completeSession: true });
+await session.undoCloudStudyActivity(version, "event-1", null, { deleteRoundId: "round-2" });
+await session.saveCloudStudyTime(version, { eventId: "time-1", studySeconds: 10 }, null);
+await session.deleteCloudStudySession(version);
+await session.resetCloudProgress(version);
+assert.deepEqual((await session.loadCloudState(2, version)).progress.questions, {});
+session.endOriginalSession();
+assert.equal(session.originalSettings(), null);
+await assert.rejects(session.saveCloudStudySession(version, null), /終了/);
+await assert.rejects(session.saveCloudSettings({ setupPreferences: { subjects: { original: {} } } }), /終了/);
+const nextVersion = session.beginOriginalSession({});
+assert.notEqual(nextVersion, version);
+assert.equal(session.originalSettings().goodSeconds, 43200);
+session.endOriginalSession();
+
 const nodes = new Map();
 function node(name) {
-  if (!nodes.has(name)) {
-    const classes = new Set();
-    nodes.set(name, {
-      value: "", textContent: "", checked: false, disabled: false, handlers: {},
-      classList: {
-        add: (value) => classes.add(value), remove: (value) => classes.delete(value),
-        contains: (value) => classes.has(value),
-        toggle(value, enabled) { enabled ? classes.add(value) : classes.delete(value); },
-      },
-      setAttribute() {}, focus() {},
-      querySelector: () => ({ focus() {} }),
-      addEventListener(event, handler) { this.handlers[event] = handler; },
-    });
-  }
+  if (!nodes.has(name)) nodes.set(name, { value: "", textContent: "", disabled: false, handlers: {},
+    setAttribute() {}, focus() {}, addEventListener(event, handler) { this.handlers[event] = handler; } });
   return nodes.get(name);
 }
-const panel = { querySelector: (selector) => node(selector.match(/"([^"]+)"/)[1]) };
-let exited = false;
-const study = createOriginalStudy(panel, () => { exited = true; study.clear(); });
-const click = (name) => node(name).handlers.click();
-const rate = (rating) => node("ratings").handlers.click({ target: { closest: () => ({ dataset: { originalRating: String(rating) } }) } });
-study.open();
+let received = null;
+const input = createOriginalStudy({ querySelector: (selector) => node(selector.match(/"([^"]+)"/)[1]) }, () => {}, async (questions) => { received = questions; });
+input.open();
 assert.equal(node("start").disabled, true);
-node("input").value = "<b>問1</b>\t答1\t解説1\n問2\t答2";
+node("input").value = "問題\t回答\t解説";
 node("input").handlers.input();
-assert.equal(node("status").textContent, "2問を読み込みました。");
-click("start");
-assert.equal(node("prompt").textContent, "<b>問1</b>");
-assert.equal(node("answer").textContent, "");
-rate(2); // 回答を見る前には評価できない。
-assert.equal(node("prompt").textContent, "<b>問1</b>");
-click("reveal");
-assert.equal(node("explanation").textContent, "解説1");
-rate(0);
-assert.equal(node("prompt").textContent, "問2");
-click("reveal");
-assert.equal(node("explanation-area").classList.contains("is-hidden"), true);
-rate(1);
-assert.equal(node("prompt").textContent, "<b>問1</b>");
-click("reveal"); rate(3);
-assert.equal(node("completion").classList.contains("is-hidden"), false);
-assert.match(node("result").textContent, /不正解 1回・難しい 1回・正解 0回・簡単 1回/);
-click("again");
-assert.equal(node("prompt").textContent, "<b>問1</b>");
-click("reveal"); rate(2); click("reveal"); rate(2);
-assert.match(node("result").textContent, /正解 2回/);
-click("edit");
-assert.equal(node("setup").classList.contains("is-hidden"), false);
-node("input").value = "不正な行";
-node("input").handlers.input();
-assert.equal(node("start").disabled, true);
-click("start");
-assert.equal(node("setup").classList.contains("is-hidden"), false);
-click("exit");
-assert.ok(exited);
+await node("start").handlers.click();
+assert.equal(received[0].explanation, "解説");
+input.clear();
 assert.equal(node("input").value, "");
-assert.equal(node("answer").textContent, "");
-assert.equal(node("result").textContent, "");
-console.log("オリジナル問題検証完了: 列数・空欄・混在・安全な文字表示・評価・再出題・再挑戦・入力破棄を確認");
+
+const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
+const html = await readFile(new URL("../public/index.html", import.meta.url), "utf8");
+assert.ok(app.includes('return { entry, ...originalDeck }'));
+assert.ok(app.includes('showOnly(elements.setupPanel)'));
+assert.ok(app.includes('source: "device"'));
+assert.equal((html.match(/data-rating=/g) ?? []).length, 8);
+assert.ok(!html.includes('data-original="ratings"'));
+assert.ok(!html.includes('data-original="study"'));
+globalThis.fetch = previousFetch;
+console.log("オリジナル検証完了: 入力、共通出題・復習、一手戻し用記録、音声方針、通信・保存の分離、終了後の破棄を確認");

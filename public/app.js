@@ -1,4 +1,5 @@
-import { createOriginalStudy } from "./original-study.js";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.219";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.219";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -53,7 +54,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./cloud-progress.js";
+} from "./original-session.js?v=0.219";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -65,9 +66,9 @@ import {
   vocabularySpeechLayoutByStage,
 } from "./speech.js";
 import {
-  loadSpeechSettings,
+  loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
-  saveSpeechSettings,
+  saveSpeechSettings as saveStoredSpeechSettings,
 } from "./speech-settings.js";
 import {
   addStudySeconds,
@@ -112,6 +113,16 @@ import {
   normalizeRatingCounts,
 } from "./rating-results.js";
 import { createQuestionAnalysisSnapshot } from "./analysis-core.js";
+
+function loadSpeechSettings() {
+  return originalSettings() ?? loadStoredSpeechSettings();
+}
+function saveSpeechSettings(settings) {
+  if (!isOriginalSession()) saveStoredSpeechSettings(settings);
+}
+
+let originalDeck = null;
+let originalPreviousSettings = null;
 
 const elements = {
   homeLink: document.querySelector("#home-link"),
@@ -425,7 +436,8 @@ let youtubePlayerApiPromise = null;
 let routinePreferenceSaving = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
-  getSettings: loadSpeechSettings,
+  getSettings: () => isOriginalSession()
+    ? { ...loadSpeechSettings(), source: "device" } : loadSpeechSettings(),
   getHistoryReadings: () => state.historySpeechReadings,
   onTargetChange: updateSpeechButtons,
 });
@@ -2107,7 +2119,7 @@ function closeStudyMenu({ resumeStudy = true } = {}) {
 
 async function saveStudyMenuSettings() {
   elements.studyMenuSave.disabled = true;
-  setStudyMenuStatus("Cloudflareへ保存しています。");
+  setStudyMenuStatus(isOriginalSession() ? "今回の設定を反映しています。" : "Cloudflareへ保存しています。");
   try {
     const saved = await saveCloudSettings(readStudyMenuSettings());
     state.sharedReviewSettings = normalizeReviewSettings(saved);
@@ -2126,8 +2138,8 @@ async function saveStudyMenuSettings() {
     updateRatingIntervals();
     setStudyMenuStatus(
       currentSubjectReviewSettings()
-        ? "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
-        : "全教科共通の設定を使うようCloudflareへ保存しました。",
+        ? isOriginalSession() ? "今回の復習間隔を反映しました。" : "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
+        : isOriginalSession() ? "全教科共通の復習間隔を今回の学習に適用しました。" : "全教科共通の設定を使うようCloudflareへ保存しました。",
     );
   } catch (error) {
     setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
@@ -2565,8 +2577,75 @@ function showMindsetCompletion(total) {
 }
 
 const originalPanel = document.querySelector("#original-panel");
-const originalStudy = createOriginalStudy(originalPanel, showSubjectSelection);
-window.addEventListener("pagehide", () => originalStudy.clear());
+const originalStudy = createOriginalStudy(originalPanel, returnToSubjectSelection, async (questions) => {
+  await Promise.allSettled([setupPreferenceSave, studySessionSave, studyTimeSave]);
+  const settings = getStoredAccessKey()
+    ? await loadCloudState().then((saved) => saved.settings).catch(() => null) : null;
+  originalPreviousSettings = {
+    setupPreferences: state.setupPreferences, sharedReviewSettings: state.sharedReviewSettings,
+    reviewSettings: state.reviewSettings,
+    speechParts: state.speechParts, shuffleEnabled: state.shuffleEnabled,
+    listeningPauseSeconds: state.listeningPauseSeconds,
+    listeningQuestionIntervalSeconds: state.listeningQuestionIntervalSeconds,
+    studyTimeLimitSeconds: state.studyTimeLimitSeconds,
+    studyRoutineOvertimeSeconds: state.studyRoutineOvertimeSeconds,
+    cloudReady: state.cloudReady, cloudConnected: state.cloudConnected,
+  };
+  const version = beginOriginalSession(settings ?? {
+    ...loadSpeechSettings(), ...state.sharedReviewSettings,
+    ...originalPreviousSettings,
+  });
+  originalDeck = createOriginalDeck(questions, version);
+  state.activeSubjectId = "original";
+  state.deckEntries = [{ id: "deck-1", datasetLabel: "オリジナル｜今回の問題", title: "今回の問題" }];
+  setDeckOptions(state.deckEntries, ["deck-1"]);
+  try {
+    await activateDecks(["deck-1"]);
+    showOnly(elements.setupPanel);
+  } catch (error) {
+    discardOriginalSession();
+    throw error;
+  }
+});
+function discardOriginalSession() {
+  if (!isOriginalSession()) return;
+  speechController.stop();
+  endOriginalSession();
+  originalDeck = null;
+  for (const element of [elements.questionText, elements.answerText, elements.termOverviewText, elements.termTitle, elements.termReading]) {
+    element.textContent = "";
+  }
+  Object.assign(state, originalPreviousSettings);
+  originalPreviousSettings = null;
+  state.progress = createEmptyProgress();
+  state.savedSessions = createEmptySavedSessions();
+  state.loadedDecks.clear();
+  state.questionDeckById.clear();
+  state.termDeckById.clear();
+  state.termById.clear();
+  state.questionById.clear();
+  state.allTerms = [];
+  state.terms = [];
+  state.history = [];
+  state.sessionTasks = [];
+  state.historySpeechReadings = {};
+  state.subject = null;
+  state.activeSubjectId = "";
+  state.activeDeckIds = [];
+  state.sessionDatasetVersion = "";
+  state.activeSession = false;
+  state.currentTask = null;
+  state.queue = [];
+  setRoundProgress();
+}
+
+window.addEventListener("pagehide", () => {
+  originalStudy.clear();
+  if (isOriginalSession()) {
+    stopStudyClock();
+    showSubjectSelection();
+  }
+});
 
 function showOnly(panel) {
   if (panel !== originalPanel) originalStudy.clear();
@@ -2692,7 +2771,7 @@ function clearLegacyProgress(deck) {
 async function loadProgressFromCloud() {
   state.cloudReady = false;
   state.cloudError = "";
-  if (!getStoredAccessKey()) {
+  if (!getStoredAccessKey() && !isOriginalSession()) {
     state.progress = createEmptyProgress();
     state.savedSessions = createEmptySavedSessions();
     setRoundProgress();
@@ -2768,7 +2847,7 @@ async function loadProgressFromCloud() {
   saveSpeechSettings(sessionCloudState.settings);
   await syncRatingSoundSettings(sessionCloudState.settings);
 
-  for (const deck of loadedDecks) {
+  for (const deck of isOriginalSession() ? [] : loadedDecks) {
     const legacyProgress = readLegacyProgress(deck);
     const missingLegacyQuestions = Object.fromEntries(
       Object.entries(legacyProgress.questions).filter(
@@ -3011,7 +3090,7 @@ function queueSetupPreferenceSave() {
           state.sharedReviewSettings,
           currentSubjectReviewSettings(),
         );
-        elements.cloudStatus.textContent = "開始設定をCloudflareへ共有しました。";
+        elements.cloudStatus.textContent = isOriginalSession() ? "今回の開始設定を反映しました。" : "開始設定をCloudflareへ共有しました。";
       }
       return saved;
     });
@@ -3960,6 +4039,8 @@ async function returnToSetup() {
 }
 
 async function returnToSubjectSelection() {
+  if (state.saving) return;
+  await Promise.allSettled([setupPreferenceSave]);
   stopListeningSequence();
   stopStudyClock();
   state.listeningPaused = false;
@@ -4311,7 +4392,7 @@ function updateSetupPreview() {
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
-    ? "学習記録：Cloudflareに接続済み"
+    ? isOriginalSession() ? "今回だけの学習：問題・評価は保存しません" : "学習記録：Cloudflareに接続済み"
     : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
   updateRoundProgressDisplay();
 }
@@ -4347,6 +4428,12 @@ function updateRatingIntervals() {
 }
 
 function configureSetup() {
+  const temporary = isOriginalSession();
+  document.querySelector(".setup-review-heading p").textContent = temporary
+    ? "変更は今回の学習だけに適用されます。"
+    : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
+  elements.studyStop.querySelector("small").textContent = temporary ? "今回の続きは保持" : "この一周を保存";
+  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・設定は今回だけ保持し、トップへ戻るかページを離れると消えます。音声は端末音声を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -5026,7 +5113,7 @@ async function resetAllProgress() {
   clearRoutineOvertime();
   state.activeDeckIds.forEach((deckId) => {
     const deck = state.loadedDecks.get(deckId);
-    if (deck) clearLegacyProgress(deck);
+    if (deck && !isOriginalSession()) clearLegacyProgress(deck);
   });
   state.answeredThisSession = 0;
   state.ratingCounts = createEmptyRatingCounts();
@@ -5043,7 +5130,7 @@ async function resetAllProgress() {
   state.saving = false;
   elements.resetProgress.disabled = false;
   updateSetupPreview();
-  elements.cloudStatus.textContent = "学習記録をCloudflare上で初期化しました。";
+  elements.cloudStatus.textContent = isOriginalSession() ? "今回の学習記録を初期化しました。" : "学習記録をCloudflare上で初期化しました。";
 }
 
 function validateQuestionLimit() {
@@ -5321,6 +5408,7 @@ async function activateDecks(deckIds) {
 
   const loaded = await Promise.all(
     deckEntries.map(async (entry) => {
+      if (state.activeSubjectId === "original" && originalDeck) return { entry, ...originalDeck };
       const subject = await fetchJson(entry.indexPath);
       const chunks = await Promise.all(
         subject.chunks.map((chunk) => fetchJson(chunk.path)),
@@ -5451,7 +5539,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.218｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.219｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5512,6 +5600,7 @@ function renderSubjectOptions() {
 }
 
 function showSubjectSelection() {
+  discardOriginalSession();
   stopListeningSequence();
   state.inRoutine = false;
   state.standaloneVideoMode = false;

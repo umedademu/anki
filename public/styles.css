@@ -4033,12 +4033,8 @@ body.is-listening.is-listening-answer-visible .page {
   resize: vertical;
   tab-size: 4;
 }
-.original-panel [data-original="status"],
-.original-text {
+.original-panel [data-original="status"] {
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
-.original-text { font-size: 1.2rem; line-height: 1.9; }
-.original-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
 .original-exit { margin-top: 28px; }
-.original-panel .shuffle-choice { margin-bottom: 18px; }

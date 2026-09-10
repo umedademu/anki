@@ -43,8 +43,9 @@ export function createOriginalDeck(questions, version) {
 }
 
 export const originalQuestionsStorageKey = "anki-original-questions:v1";
+export const originalProgressStorageKey = "anki-original-progress:v1";
 
-// 入力だけを端末に保存し、出題・音声・評価は他教科と同じ画面に渡す。
+// 入力を端末に保存し、出題・音声・評価は他教科と同じ画面に渡す。
 export function createOriginalStudy(
   panel, onExit, onStart, getStorage = () => window.localStorage,
 ) {
@@ -63,7 +64,10 @@ export function createOriginalStudy(
     try {
       const storage = getStorage();
       if (input.value) storage.setItem(originalQuestionsStorageKey, input.value);
-      else storage.removeItem(originalQuestionsStorageKey);
+      else {
+        storage.removeItem(originalProgressStorageKey);
+        storage.removeItem(originalQuestionsStorageKey);
+      }
       find("storage-status").textContent = input.value
         ? "このブラウザーに自動保存しました。" : "保存した問題はありません。";
     } catch {
@@ -74,9 +78,10 @@ export function createOriginalStudy(
   find("delete").addEventListener("click", () => {
     if (starting) return;
     try {
+      getStorage().removeItem(originalProgressStorageKey);
       getStorage().removeItem(originalQuestionsStorageKey);
       clear();
-      find("storage-status").textContent = "保存した問題を削除しました。";
+      find("storage-status").textContent = "保存した問題と学習記録を削除しました。復習間隔の設定は残ります。";
       input.focus();
     } catch {
       find("storage-status").textContent = "保存した問題を削除できませんでした。ブラウザーの設定を確認して、もう一度お試しください。";
@@ -88,10 +93,11 @@ export function createOriginalStudy(
     const parsed = validate();
     if (parsed.errors.length || !parsed.questions.length) return;
     starting = true;
+    input.disabled = true;
     find("start").disabled = true;
     try { await onStart(parsed.questions); }
     catch (error) { find("status").textContent = error.message; }
-    finally { starting = false; find("start").disabled = false; }
+    finally { starting = false; input.disabled = false; find("start").disabled = false; }
   });
   // 画面を閉じるときの片付けでは、保存済みの入力を削除しない。
   function clear() {

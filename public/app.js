@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice } from "./original-session.js?v=0.224";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.224";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.225";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.225";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.224";
+} from "./original-session.js?v=0.225";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -2628,10 +2628,10 @@ const originalStudy = createOriginalStudy(originalPanel, returnToSubjectSelectio
     studyRoutineOvertimeSeconds: state.studyRoutineOvertimeSeconds,
     cloudReady: state.cloudReady, cloudConnected: state.cloudConnected,
   };
-  const version = beginOriginalSession(settings ?? {
+  const version = await beginOriginalSession(settings ?? {
     ...loadSpeechSettings(), ...state.sharedReviewSettings,
     ...originalPreviousSettings,
-  });
+  }, questions);
   originalDeck = createOriginalDeck(questions, version);
   state.activeSubjectId = "original";
   state.deckEntries = [{ id: "deck-1", datasetLabel: "オリジナル｜今回の問題", title: "今回の問題" }];
@@ -2676,10 +2676,21 @@ function discardOriginalSession() {
   setRoundProgress();
 }
 
+function saveOriginalBeforeHide() {
+  if (!isOriginalSession() || !state.activeSession || state.saving) return;
+  try {
+    saveOriginalSessionSnapshot(state.sessionDatasetVersion, captureActiveSession());
+  } catch (error) {
+    state.unlockMessage = error.message;
+    elements.cloudStatus.textContent = error.message;
+  }
+}
+
 window.addEventListener("pagehide", () => {
   originalStudy.clear();
   if (isOriginalSession()) {
-    stopStudyClock();
+    stopStudyClock({ includeHidden: true });
+    saveOriginalBeforeHide();
     showSubjectSelection();
   }
 });
@@ -4068,6 +4079,10 @@ async function returnToSetup() {
       await queueActiveSessionSave();
     } catch (error) {
       state.unlockMessage = error.message;
+      if (isOriginalSession()) {
+        renderQuestion();
+        return;
+      }
     }
   }
   showOnly(elements.setupPanel);
@@ -4089,6 +4104,10 @@ async function returnToSubjectSelection() {
       await queueActiveSessionSave();
     } catch (error) {
       state.unlockMessage = error.message;
+      if (isOriginalSession()) {
+        renderQuestion();
+        return;
+      }
     }
   }
   showSubjectSelection();
@@ -4430,7 +4449,7 @@ function updateSetupPreview() {
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
-    ? isOriginalSession() ? "問題はこのブラウザーに保存・評価は今回だけ保持" : "学習記録：Cloudflareに接続済み"
+    ? isOriginalSession() ? "問題・学習記録：このブラウザーに保存" : "学習記録：Cloudflareに接続済み"
     : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
   updateRoundProgressDisplay();
 }
@@ -4470,8 +4489,8 @@ function configureSetup() {
   document.querySelector(".setup-review-heading p").textContent = temporary
     ? `個別の復習間隔はこのブラウザーに保存し、問題を変えても引き継ぎます。${originalReviewStorageNotice()}`
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
-  elements.studyStop.querySelector("small").textContent = temporary ? "今回の続きは保持" : "この一周を保存";
-  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題はこのブラウザーに保存します。個別の復習間隔も問題に関係なく保存します。評価・途中状態・その他の今回の設定はトップへ戻るかページを離れると消えます。音声は他教科と同じ設定を使います。";
+  elements.studyStop.querySelector("small").textContent = temporary ? "続きは端末に保存" : "この一周を保存";
+  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・復習予定・学習途中の状態をこのブラウザーに保存し、閉じた後も引き継ぎます。問題・回答・解説や並びを変更して学習を始めると、学習記録を新しくします。個別の復習間隔は引き継ぎます。音声は他教科と同じ設定を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -4517,6 +4536,10 @@ function configureSetup() {
     }
   }
   applySetupPreferences();
+  if (temporary) {
+    const savedSession = state.savedSessions.memorize;
+    if (savedSession) setSetupControlsFromSession(savedSession);
+  }
   [
     elements.questionSpeech,
     elements.answerSpeech,
@@ -5168,7 +5191,7 @@ async function resetAllProgress() {
   state.saving = false;
   elements.resetProgress.disabled = false;
   updateSetupPreview();
-  elements.cloudStatus.textContent = isOriginalSession() ? "今回の学習記録を初期化しました。" : "学習記録をCloudflare上で初期化しました。";
+  elements.cloudStatus.textContent = isOriginalSession() ? "このブラウザーの学習記録を初期化しました。" : "学習記録をCloudflare上で初期化しました。";
 }
 
 function validateQuestionLimit() {
@@ -5575,7 +5598,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.224｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.225｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5602,7 +5625,7 @@ function renderSubjectOptions() {
       const title = document.createElement("strong");
       title.textContent = "オリジナル";
       const description = document.createElement("small");
-      description.textContent = "問題・回答・解説を貼り付けて学習する。入力はこの端末に保存";
+      description.textContent = "問題・回答・解説を貼り付けて学習する。問題と学習記録はこの端末に保存";
       button.append(title, description);
       return button;
     })(),
@@ -6234,6 +6257,7 @@ window.addEventListener("resize", () => {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     stopStudyClock({ includeHidden: true });
+    saveOriginalBeforeHide();
     stopMindsetStudyClock({ includeHidden: true });
     void queueCurrentStudyTimeSave({ keepalive: true }).catch(() => {});
     if (!isListeningMode()) {

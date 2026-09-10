@@ -1,8 +1,9 @@
 import * as cloud from "./cloud-progress.js";
 import {
-  createEmptyProgress, normalizeSubjectReviewSettings,
+  createEmptyProgress, normalizeProgress, normalizeSubjectReviewSettings,
   rescheduleReviewProgress, resolveSubjectReviewSettings,
 } from "./learning-engine.js";
+import { originalProgressStorageKey } from "./original-study.js";
 export * from "./cloud-progress.js";
 
 let temporary = null;
@@ -11,7 +12,27 @@ export const isOriginalSession = () => temporary !== null;
 export const originalSettings = () => temporary ? copy(temporary.settings) : null;
 export const originalReviewStorageKey = "anki-original-review:v1";
 export const originalReviewStorageNotice = () => temporary?.reviewStorageNotice ?? "";
-export function beginOriginalSession(settings, getStorage = () => window.localStorage) {
+export async function beginOriginalSession(settings, questions, getStorage = () => window.localStorage) {
+  const content = JSON.stringify(questions.map(({ prompt, answer, explanation }) => [prompt, answer, explanation ?? ""]));
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(content));
+  const fingerprint = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+  let storageValue;
+  let saved;
+  try {
+    storageValue = getStorage().getItem(originalProgressStorageKey);
+    saved = storageValue === null ? null : JSON.parse(storageValue);
+    if (storageValue !== null && (!saved || saved.schemaVersion !== 1 || !/^[a-f0-9]{64}$/.test(saved.fingerprint) ||
+        !/^original-[a-f0-9-]{36}$/.test(saved.version) ||
+        !saved.progress?.questions || typeof saved.progress.questions !== "object" ||
+        Array.isArray(saved.progress.questions) || !Array.isArray(saved.rounds) ||
+        saved.rounds.some((id) => typeof id !== "string") ||
+        (saved.session != null && !cloud.normalizeStudySession(saved.session)))) {
+      throw new Error("学習記録の形式が不正です");
+    }
+  } catch {
+    throw new Error("オリジナルの学習記録を読み込めませんでした。保存内容は変更していません。ブラウザーの設定を確認してください。");
+  }
+  const restored = saved?.fingerprint === fingerprint ? saved : null;
   const normalized = cloud.normalizeSharedSettings(settings);
   let reviewStorageNotice = "";
   try {
@@ -30,18 +51,50 @@ export function beginOriginalSession(settings, getStorage = () => window.localSt
   } catch {
     reviewStorageNotice = "保存した復習間隔を復元できませんでした。ブラウザーの設定を確認し、復習間隔を設定し直してください。";
   }
-  temporary = {
-    version: `original-${crypto.randomUUID()}`,
+  const store = {
+    version: restored?.version ?? `original-${crypto.randomUUID()}`,
+    fingerprint, storageValue,
     settings: normalized, getStorage, reviewStorageNotice,
-    progress: createEmptyProgress(), session: null, rounds: new Set(),
+    progress: normalizeProgress(restored?.progress),
+    session: cloud.normalizeStudySession(restored?.session),
+    rounds: new Set((restored?.rounds ?? []).filter((id) => typeof id === "string")),
   };
-  return temporary.version;
+  refreshOriginalReviewSchedule(store);
+  persist(store);
+  temporary = store;
+  return store.version;
 }
 export function endOriginalSession() { temporary = null; }
 function memory(version) {
   if (!String(version).startsWith("original-")) return null;
-  if (!temporary || temporary.version !== version) throw new Error("今回の問題は終了しています。もう一度貼り付けてください。");
+  if (!temporary || temporary.version !== version) throw new Error("今回の学習は終了しています。オリジナルを開き直してください。");
+  assertCurrentStorage(temporary);
   return temporary;
+}
+function assertCurrentStorage(store) {
+  let current;
+  try { current = store.getStorage().getItem(originalProgressStorageKey); }
+  catch { throw new Error("学習記録を読み込めませんでした。ブラウザーの設定を確認してください。"); }
+  if (current !== store.storageValue) {
+    throw new Error("別の画面でオリジナルの問題や学習記録が変更されました。再読み込みしてから再開してください。");
+  }
+}
+function persist(store) {
+  assertCurrentStorage(store);
+  const serialized = JSON.stringify({
+    schemaVersion: 1, fingerprint: store.fingerprint, version: store.version,
+    progress: store.progress, session: store.session, rounds: [...store.rounds],
+  });
+  try { store.getStorage().setItem(originalProgressStorageKey, serialized); }
+  catch { throw new Error("学習記録をこのブラウザーに保存できませんでした。保存容量やブラウザーの設定を確認して、もう一度お試しください。"); }
+  store.storageValue = serialized;
+}
+function changeStoredProgress(store, change) {
+  const next = { ...store, progress: copy(store.progress), session: copy(store.session), rounds: new Set(store.rounds) };
+  const response = change(next);
+  persist(next);
+  Object.assign(store, next);
+  return response;
 }
 function result(store, session, change = {}) {
   store.session = cloud.normalizeStudySession(copy(session));
@@ -73,6 +126,7 @@ export async function saveCloudSettings(settings) {
     if (settings.setupPreferences?.subjects?.original) throw new Error("今回の設定は終了しています。");
     return cloud.saveCloudSettings(settings);
   }
+  assertCurrentStorage(temporary);
   const next = cloud.normalizeSharedSettings({ ...temporary.settings, ...copy(settings) });
   const review = next.setupPreferences.subjects.original?.reviewSettings ?? null;
   const previousReview = temporary.settings.setupPreferences.subjects.original?.reviewSettings ?? null;
@@ -92,45 +146,55 @@ export async function saveCloudSettings(settings) {
 }
 export async function saveCloudStudySession(version, session) {
   const store = memory(version);
-  return store ? result(store, session).session : cloud.saveCloudStudySession(version, session);
+  return store ? changeStoredProgress(store, (next) => result(next, session).session) : cloud.saveCloudStudySession(version, session);
+}
+// ページを閉じる直前にも、通信待ちなしで現在位置を保存する。
+export function saveOriginalSessionSnapshot(version, session) {
+  const store = memory(version);
+  if (!store) return;
+  changeStoredProgress(store, (next) => result(next, session));
 }
 export async function deleteCloudStudySession(version) {
   const store = memory(version);
   if (!store) return cloud.deleteCloudStudySession(version);
-  store.session = null;
+  changeStoredProgress(store, (next) => { next.session = null; });
 }
 export async function saveCloudStudyAnswer(version, questionId, record, session, change = {}) {
   const store = memory(version);
   if (!store) return cloud.saveCloudStudyAnswer(version, questionId, record, session, change);
-  if (record) store.progress.questions[questionId] = copy(record);
-  else delete store.progress.questions[questionId];
-  store.progress.updatedAt = new Date().toISOString();
-  refreshOriginalReviewSchedule(store);
-  return result(store, session, change);
+  return changeStoredProgress(store, (next) => {
+    if (record) next.progress.questions[questionId] = copy(record);
+    else delete next.progress.questions[questionId];
+    next.progress.updatedAt = new Date().toISOString();
+    refreshOriginalReviewSchedule(next);
+    return result(next, session, change);
+  });
 }
 export async function saveCloudStudyActivity(version, activity, session, change = {}) {
   const store = memory(version);
   if (!store) return cloud.saveCloudStudyActivity(version, activity, session, change);
-  return result(store, change.completeSession ? null : session, {
+  return changeStoredProgress(store, (next) => result(next, change.completeSession ? null : session, {
     ...change, completeRoundId: change.completeRoundId ?? (change.completeSession ? session?.roundId : null),
-  });
+  }));
 }
 export async function saveCloudStudyTime(version, entry, session, options) {
   const store = memory(version);
-  return store ? result(store, session) : cloud.saveCloudStudyTime(version, entry, session, options);
+  return store ? changeStoredProgress(store, (next) => result(next, session)) : cloud.saveCloudStudyTime(version, entry, session, options);
 }
 export async function undoCloudStudyActivity(version, eventId, session, change = {}) {
   const store = memory(version);
-  return store ? result(store, session, change) : cloud.undoCloudStudyActivity(version, eventId, session, change);
+  return store ? changeStoredProgress(store, (next) => result(next, session, change)) : cloud.undoCloudStudyActivity(version, eventId, session, change);
 }
 export async function resetCloudProgress(version) {
   const store = memory(version);
   if (!store) return cloud.resetCloudProgress(version);
-  store.progress = createEmptyProgress();
-  store.session = null;
-  store.rounds.clear();
+  changeStoredProgress(store, (next) => {
+    next.progress = createEmptyProgress();
+    next.session = null;
+    next.rounds.clear();
+  });
 }
 export async function importCloudProgress(version, progress) {
-  if (memory(version)) throw new Error("今回だけの問題には過去の記録を取り込みません。");
+  if (memory(version)) throw new Error("オリジナルには通常教科の記録を取り込みません。");
   return cloud.importCloudProgress(version, progress);
 }

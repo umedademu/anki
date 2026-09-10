@@ -71,7 +71,7 @@ globalThis.fetch = () => { throw new Error("オリジナルの学習記録を送
 try {
   const data = new Map();
   const storage = { getItem: (key) => data.get(key) ?? null, setItem: (key, value) => data.set(key, value) };
-  const version = original.beginOriginalSession(day, () => storage);
+  const version = await original.beginOriginalSession(day, ratings.map((rating) => ({ prompt: rating, answer: rating })), () => storage);
   for (const rating of ratings) await original.saveCloudStudyAnswer(version, rating, before.questions[rating], null);
   const patch = (reviewSettings) => ({ setupPreferences: { subjects: { original: { reviewSettings } } } });
   await original.saveCloudSettings(patch(minute));
@@ -83,7 +83,7 @@ try {
   await original.saveCloudSettings({ ...minute, ...patch(null) });
   state = await original.loadCloudState(2, version);
   for (const rating of ratings) assert.equal(state.progress.questions[rating].nextReviewAt, dueAt.toISOString());
-  assert.deepEqual([...data.keys()], [original.originalReviewStorageKey]);
+  assert.deepEqual([...data.keys()], ["anki-original-progress:v1", original.originalReviewStorageKey]);
 } finally {
   original.endOriginalSession();
   globalThis.fetch = previousFetch;

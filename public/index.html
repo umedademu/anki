@@ -9,15 +9,15 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.224" />
+    <link rel="stylesheet" href="/styles.css?v=0.225" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.224" type="module"></script>
+    <script src="/app.js?v=0.225" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.224</span>
+        <span class="app-version">v0.225</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
         <a class="header-link" href="/settings.html">設定</a>
@@ -28,13 +28,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.224｜科目別学習</p>
+        <p class="eyebrow">v0.225｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.224｜科目を選ぶ</p>
+        <p class="eyebrow">v0.225｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選んで学習するか、登録した動画をランダム再生できます。
@@ -94,14 +94,14 @@
       <section class="setup-panel original-panel is-hidden" id="original-panel">
         <p class="eyebrow">オリジナル｜この端末に保存</p>
         <h1>貼り付けた問題で学習する</h1>
-        <p>貼り付けた問題・回答・解説は、このブラウザーに自動保存します。別の端末とは共有されません。評価や途中の学習状態は、科目選択へ戻るかページを離れると消えます。</p>
+        <p>問題・回答・解説と、評価・復習予定・学習途中の状態を、このブラウザーに保存します。閉じた後も、同じ問題なら記録を引き継ぎます。内容や並びを変更して学習を始めると記録を新しくします。別の端末とは共有されません。</p>
         <div data-original="setup">
           <label for="original-input"><strong>問題・回答・解説を貼り付け</strong></label>
           <p id="original-help">1行に1問、タブ区切りで「問題・回答」または「問題・回答・解説」を入力してください。2列と3列の混在も使えます。空行は無視します。見出しや区切り線は不要です。</p>
           <textarea id="original-input" data-original="input" rows="10" autocomplete="off" spellcheck="false" aria-describedby="original-help original-status" placeholder="ここに問題と回答を貼り付けてください"></textarea>
           <p id="original-status" data-original="status" role="status"></p>
           <p data-original="storage-status" role="status"></p>
-          <p>ブラウザーの保存データを消すと問題も消えます。音声は他教科と同じ方式で生成・再利用します。</p>
+          <p>ブラウザーの保存データを消すと問題や学習記録も消えます。音声は他教科と同じ方式で生成・再利用します。</p>
           <button type="button" class="secondary-button" data-original="delete">保存した問題を削除</button>
           <button type="button" class="primary-button" data-original="start" disabled>学習設定へ進む</button>
         </div>
@@ -109,7 +109,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.224｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.225｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。

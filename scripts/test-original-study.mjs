@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
-import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy, originalQuestionsStorageKey } from "../public/original-study.js";
+import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy, originalQuestionsStorageKey, originalProgressStorageKey } from "../public/original-study.js";
 import * as session from "../public/original-session.js";
 import { createQuestionQueue, getQuestionExplanation, rateQuestion } from "../public/learning-engine.js";
 
@@ -17,13 +17,16 @@ assert.equal(invalid.errors.length, 4);
 assert.equal(parseOriginalQuestions(Array(10001).fill("問\t答").join("\n")).errors.length, 1);
 assert.ok(invalid.errors.every((error, index) => error.startsWith(`${index + 1}行目`)));
 
-// 評価・途中状態の操作で通信と端末保存が発生しないことを確認。
+// 評価・途中状態は端末だけに保存し、通信しないことを確認。
 const previousFetch = globalThis.fetch;
 globalThis.fetch = () => { throw new Error("一時学習の通信は禁止"); };
+const localData = new Map();
 globalThis.window = { localStorage: {
-  getItem() { throw new Error("読み込み禁止"); }, setItem() { throw new Error("保存禁止"); },
+  getItem: (key) => localData.get(key) ?? null,
+  setItem: (key, value) => localData.set(key, value),
+  removeItem: (key) => localData.delete(key),
 } };
-const version = session.beginOriginalSession({ goodSeconds: 30 });
+const version = await session.beginOriginalSession({ goodSeconds: 30 }, parsed.questions);
 const deck = createOriginalDeck(parsed.questions, version);
 assert.equal(deck.subject.learningType, "history");
 let saved = await session.loadCloudState(2, version);
@@ -55,8 +58,9 @@ session.endOriginalSession();
 assert.equal(session.originalSettings(), null);
 await assert.rejects(session.saveCloudStudySession(version, null), /終了/);
 await assert.rejects(session.saveCloudSettings({ setupPreferences: { subjects: { original: {} } } }), /終了/);
-const nextVersion = session.beginOriginalSession({});
-assert.notEqual(nextVersion, version);
+const nextVersion = await session.beginOriginalSession({}, parsed.questions);
+assert.equal(nextVersion, version);
+assert.deepEqual((await session.loadCloudState(2, nextVersion)).progress.questions, {});
 assert.equal(session.originalSettings().goodSeconds, 43200);
 session.endOriginalSession();
 
@@ -96,7 +100,9 @@ const reloaded = createOriginalStudy(panel, () => {}, async () => {}, () => stor
 reloaded.open();
 assert.equal(node("input").value, draft);
 assert.equal(node("start").disabled, true);
+storedInput.set(originalProgressStorageKey, "削除対象の学習記録");
 node("delete").handlers.click();
+assert.equal(storedInput.has(originalProgressStorageKey), false);
 assert.equal(storedInput.has(originalQuestionsStorageKey), false);
 assert.equal(node("input").value, "");
 assert.equal(node("start").disabled, true);
@@ -131,6 +137,15 @@ assert.match(node("storage-status").textContent, /保存できません/);
 assert.equal(storedInput.get(originalQuestionsStorageKey), "保存済み\t答");
 assert.equal(node("input").value, "新しい問\t答");
 
+const failedStart = createOriginalStudy(panel, () => {}, async () => {
+  throw new Error("学習記録を読み込めませんでした。");
+}, () => storage);
+failedStart.open();
+await node("start").handlers.click();
+assert.match(node("status").textContent, /学習記録を読み込めません/);
+assert.equal(node("input").disabled, false);
+assert.equal(node("start").disabled, false);
+
 // 復習間隔は問題の内容・学習回・問題削除と独立して保存する。
 const reviewData = new Map();
 const reviewStorage = {
@@ -140,7 +155,7 @@ const reviewStorage = {
 };
 const customReview = { againSeconds: 25, hardSeconds: 120, goodSeconds: 600, easySeconds: 3600 };
 const reviewPatch = (reviewSettings) => ({ setupPreferences: { subjects: { original: { reviewSettings } } } });
-const firstReviewVersion = session.beginOriginalSession({}, () => reviewStorage);
+const firstReviewVersion = await session.beginOriginalSession({}, parsed.questions, () => reviewStorage);
 await session.saveCloudSettings(reviewPatch(customReview));
 assert.deepEqual(JSON.parse(reviewData.get(session.originalReviewStorageKey)).reviewSettings, customReview);
 const savedReviewText = reviewData.get(session.originalReviewStorageKey);
@@ -150,32 +165,34 @@ await session.resetCloudProgress(firstReviewVersion);
 assert.equal(reviewData.get(session.originalReviewStorageKey), savedReviewText);
 session.endOriginalSession();
 reviewData.set(originalQuestionsStorageKey, "別の問題\t別の回答");
-const secondReviewVersion = session.beginOriginalSession({}, () => reviewStorage);
-assert.notEqual(firstReviewVersion, secondReviewVersion);
+const secondReviewVersion = await session.beginOriginalSession({}, parsed.questions, () => reviewStorage);
+assert.equal(firstReviewVersion, secondReviewVersion);
 assert.deepEqual(session.originalSettings().setupPreferences.subjects.original.reviewSettings, customReview);
 reviewStorage.removeItem(originalQuestionsStorageKey);
 session.endOriginalSession();
-session.beginOriginalSession({}, () => reviewStorage);
+await session.beginOriginalSession({}, parsed.questions, () => reviewStorage);
 assert.deepEqual(session.originalSettings().setupPreferences.subjects.original.reviewSettings, customReview);
 await session.saveCloudSettings(reviewPatch(null));
 session.endOriginalSession();
-session.beginOriginalSession(reviewPatch(customReview), () => reviewStorage);
+await session.beginOriginalSession(reviewPatch(customReview), parsed.questions, () => reviewStorage);
 assert.equal(session.originalSettings().setupPreferences.subjects.original.reviewSettings, null);
 session.endOriginalSession();
 
-const brokenStorage = { ...reviewStorage, setItem() { throw new Error("容量不足"); } };
-session.beginOriginalSession({}, () => brokenStorage);
+const brokenStorage = { ...reviewStorage, setItem(key, value) {
+  if (key === session.originalReviewStorageKey) throw new Error("容量不足");
+  reviewStorage.setItem(key, value);
+} };
+await session.beginOriginalSession({}, parsed.questions, () => brokenStorage);
 await assert.rejects(session.saveCloudSettings(reviewPatch(customReview)), /保存できません/);
 assert.equal(session.originalSettings().setupPreferences.subjects.original.reviewSettings, null);
 session.endOriginalSession();
 reviewData.set(session.originalReviewStorageKey, "壊れた内容");
-session.beginOriginalSession({}, () => reviewStorage);
+await session.beginOriginalSession({}, parsed.questions, () => reviewStorage);
 assert.match(session.originalReviewStorageNotice(), /復元できません/);
 await session.saveCloudSettings(reviewPatch(customReview));
 assert.equal(session.originalReviewStorageNotice(), "");
 session.endOriginalSession();
-session.beginOriginalSession({}, () => { throw new Error("利用不可"); });
-assert.match(session.originalReviewStorageNotice(), /復元できません/);
+await assert.rejects(session.beginOriginalSession({}, parsed.questions, () => { throw new Error("利用不可"); }), /読み込めません/);
 session.endOriginalSession();
 
 const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
@@ -199,7 +216,7 @@ const controller = runInNewContext(`${settingsFunction}\n${app.slice(controllerS
 });
 assert.equal(controller.requestCloudAudio, cloudAudio);
 assert.equal(controller.getSettings().source, "cloud");
-session.beginOriginalSession(storedVoiceSettings);
+await session.beginOriginalSession(storedVoiceSettings, parsed.questions);
 for (const [key, expected] of Object.entries(storedVoiceSettings)) {
   assert.equal(controller.getSettings()[key], expected, `オリジナルの音声設定: ${key}`);
 }

@@ -23,5 +23,10 @@
     "prompt": "地図上の空欄①〜⑤をすべて埋めなさい。（13世紀のイスラーム世界）",
     "path": "subjects/world-history-so/maps/islamic-world-13th-century.svg",
     "alt": "13世紀のイスラーム世界。地図上の５か所を①〜⑤で示した穴埋め地図。"
+  },
+  {
+    "prompt": "地図上の空欄①〜⑩をすべて埋めなさい。（14〜15世紀のイスラーム世界）",
+    "path": "subjects/world-history-so/maps/islamic-world-14th-15th-century.svg",
+    "alt": "14〜15世紀のイスラーム世界。地図上の10か所を①〜⑩で示した穴埋め地図。"
   }
 ]

@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 650" role="img" aria-labelledby="title desc">
+  <title id="title">地図の解答</title>
+  <desc id="desc">① コンスタンティノープル（ビザンツ帝国）。② オスマン朝。③ アンカラの戦い（1402年）。④ カイロ。⑤ マムルーク朝。⑥ メッカ。⑦ サマルカンド。⑧ ティムール朝。⑨ ヘラート。⑩ トゥグルク朝</desc>
+  <defs>
+    <pattern id="vertical" width="9" height="9" patternUnits="userSpaceOnUse">
+      <rect width="9" height="9" fill="#e2e1d8"/>
+      <path d="M2 0V9M6 0V9" stroke="#62645d" stroke-width="1.6"/>
+    </pattern>
+    <pattern id="diagonal" width="11" height="11" patternUnits="userSpaceOnUse" patternTransform="rotate(-18)">
+      <rect width="11" height="11" fill="#e3e2da"/>
+      <path d="M2 0V11M7 0V11" stroke="#666860" stroke-width="1.7"/>
+    </pattern>
+    <pattern id="printDots" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="8" height="8" fill="#e8aaa6"/>
+      <circle cx="2" cy="2" r="0.7" fill="#cf6868" opacity=".45"/>
+      <circle cx="6" cy="6" r="0.7" fill="#cf6868" opacity=".45"/>
+    </pattern>
+  </defs>
+  <rect width="1120" height="650" fill="#faf9f4"/>
+
+  <!-- 添付図をもとに、地中海東部から北インドまでの海岸線と国境を描き起こす。 -->
+  <g fill="#d8d9d2" stroke="#454942" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 93L120 87Q135 91 141 109L139 136Q137 150 126 145L106 136L89 144L79 162L75 183L83 195L103 198L121 207L143 202L160 186L171 164L183 151L202 147L215 154L228 151L236 135L248 120L265 114L280 120L292 137L312 147L330 142L345 128L362 126L383 135L399 126L413 112L431 104L450 108L461 121L479 125L492 117L511 114L527 121L541 134L558 140L575 132L594 119L613 111L629 116L646 131L662 141L681 140L700 126L721 116L744 112L767 119L787 131L809 132L832 124L858 123L881 132L907 141L938 143L970 139L1001 144L1036 160L1062 183L1084 211L1097 239L1099 278L1090 306L1077 326L1064 342L1044 352L1028 350L1015 339L1004 326L985 320L968 327L954 345L941 366L922 376L897 374L874 365L851 356L828 357L807 371L792 388L771 395L746 389L725 378L707 371L687 373L669 385L651 398L631 401L608 394L591 381L575 363L555 350L536 348L516 356L497 365L474 363L455 350L438 335L420 330L402 337L386 349L367 350L350 342L333 331L313 324L294 327L276 341L257 350L235 347L219 335L204 318L185 307L164 308L144 316L124 316L107 304L95 287L85 270L68 258L49 255L30 263Z"/>
+    <path d="M159 333L171 357L183 383L191 413L197 448L207 482L217 521L231 552L250 566L273 561L294 548L318 536L339 531L364 536L386 548L410 551L431 542L449 525L470 510L493 499L521 488L545 475L566 459L582 440L592 420L587 400L574 382L558 368L539 363L518 368L496 379L476 385L457 379L438 365L420 351L402 350L385 360L368 374L353 390L338 408L324 421L311 418L303 401L296 381L282 368L264 366L249 379L239 400L233 423L224 434L214 426L211 401L205 375L192 352L177 337Z"/>
+    <path d="M789 388L808 402L829 417L847 433L859 453L866 477L872 505L883 534L896 563L909 578L922 567L933 545L942 522L947 494L954 469L968 446L983 428L993 408L988 388L973 375L955 370L935 378L917 390L896 397L874 397L853 389L833 381L813 379Z"/>
+    <path d="M214 175Q225 166 236 172Q243 181 235 191Q223 197 214 187Z"/>
+    <path d="M185 144Q192 130 199 143L198 160Q189 166 185 154Z"/>
+    <path d="M175 178Q181 164 188 176L187 193Q178 198 175 187Z"/>
+  </g>
+
+  <!-- 勢力範囲。遠征を表す矢印は置かない。 -->
+  <g stroke-linejoin="round">
+    <path d="M38 164L77 159L104 168L128 179L151 183L176 175L201 166L225 171L244 187L267 197L292 194L315 201L338 217L348 238L338 256L317 265L292 261L271 250L251 246L232 252L211 265L188 272L165 268L145 257L126 247L102 246L81 253L59 247L42 228Z" fill="url(#vertical)" stroke="#4e514b" stroke-width="3.4"/>
+    <path d="M42 276L70 264L101 262L126 271L149 287L166 305L178 329L188 352L195 379L199 414L205 448L216 482L226 514L239 537L255 544L271 532L280 510L288 482L295 452L306 426L322 409L337 406L350 420L361 441L373 463L389 479L409 491L430 492L445 481L451 461L447 438L438 416L426 395L409 379L390 369L369 366L351 373L335 387L320 401L306 397L297 378L288 357L274 344L255 342L237 350L221 363L207 359L199 337L190 315L175 296L155 284L130 279L105 279L81 288L61 298Z" fill="url(#diagonal)" stroke="#555851" stroke-width="3.4"/>
+    <path d="M324 204L353 190L381 185L404 193L425 207L445 214L468 211L489 196L510 178L533 164L559 159L584 164L607 173L629 177L650 169L671 155L694 145L721 145L746 151L771 161L797 164L822 157L850 149L880 148L911 154L944 166L977 181L1009 199L1034 219L1049 241L1044 263L1031 283L1015 297L995 305L973 302L950 292L927 285L905 288L885 298L868 314L852 334L833 349L812 358L791 357L772 348L753 339L734 340L716 354L700 374L682 393L660 407L634 412L609 406L585 394L565 379L545 365L525 362L505 370L486 381L465 382L446 372L429 356L414 338L395 326L374 324L354 331L339 342L324 338L315 321L311 300L315 279L325 260L332 241Z" fill="url(#printDots)" stroke="#c44e54" stroke-width="4"/>
+    <path d="M798 349L819 337L842 335L865 344L887 360L905 379L923 391L944 392L964 385L982 390L998 408L1015 432L1037 456L1059 478L1081 501L1093 526L1083 537L1059 536L1032 529L1004 519L979 510L955 507L934 511L913 518L892 519L874 507L862 489L850 469L833 453L814 443L797 430L787 411L785 389Z" fill="#dedfd8" fill-opacity=".72" stroke="#343833" stroke-width="4" stroke-dasharray="2 11" stroke-linecap="round"/>
+  </g>
+
+  <!-- 海と湖を上から抜いて輪郭を整える。 -->
+  <g fill="#faf9f4" stroke="#454942" stroke-width="3" stroke-linejoin="round">
+    <path d="M126 206Q151 201 173 205L197 213L222 209L246 204L268 207L289 219L307 229L324 226L341 216L350 224L339 239L318 250L294 249L273 241L251 237L231 243L211 254L188 260L165 256L145 246L124 238L102 238L82 246L63 239L52 226L70 219L95 217Z"/>
+    <path d="M493 126Q510 111 526 119L538 137L536 160L525 181L511 196L499 210L487 205L480 188L478 167L482 145Z"/>
+    <path d="M581 127Q592 115 603 125L608 145L602 162L592 172L580 166L575 150Z"/>
+    <path d="M694 141Q700 128 713 124L735 124L727 134L708 140L697 151Z"/>
+  </g>
+
+  <!-- 国境・河川・都市。 -->
+  <g fill="none" stroke="#74776f" stroke-width="1.8" stroke-linecap="round">
+    <path d="M267 115L269 136L282 145L302 146L314 157L336 154L353 142L369 135"/>
+    <path d="M609 116L624 126L642 140L659 149"/>
+    <path d="M300 451L305 474L309 499L319 521L331 536"/>
+    <path d="M316 487L329 502L338 525"/>
+  </g>
+  <g fill="#41463f" stroke="#faf9f4" stroke-width="2">
+    <circle cx="184" cy="211" r="9"/>
+    <circle cx="181" cy="402" r="9"/>
+    <circle cx="306" cy="506" r="9"/>
+    <circle cx="746" cy="231" r="9"/>
+    <circle cx="702" cy="343" r="9"/>
+  </g>
+  <g fill="none" stroke="#c44e54" stroke-width="5" stroke-linecap="round">
+    <path d="M269 260L287 280M287 260L269 280"/>
+  </g>
+
+  <g font-family="'Yu Gothic','Meiryo',sans-serif" fill="#292d29">
+    <rect x="28" y="20" width="155" height="48" fill="#faf9f4" stroke="#50534a" stroke-width="2.5"/>
+    <text x="105.5" y="54" text-anchor="middle" font-size="29">14〜15世紀</text>
+    <g fill="none" stroke="#464a43" stroke-width="2.2" stroke-linecap="round">
+      <path d="M184 202L196 119"/>
+      <path d="M279 270L312 292"/>
+      <path d="M181 411L159 427"/>
+      <path d="M306 515L320 533"/>
+      <path d="M746 222L746 191"/>
+      <path d="M702 352L703 367"/>
+    </g>
+    <g fill="#fffefa" stroke="#44483f" stroke-width="2.2">
+      <rect x="18" y="74" width="397" height="49" rx="4"/>
+      <rect x="65" y="217" width="184" height="49" rx="4"/>
+      <rect x="19" y="282" width="306" height="61" rx="4"/>
+      <rect x="72" y="420" width="139" height="47" rx="4"/>
+      <rect x="47" y="470" width="201" height="50" rx="4"/>
+      <rect x="258" y="532" width="127" height="46" rx="4"/>
+      <rect x="648" y="172" width="198" height="50" rx="4"/>
+      <rect x="622" y="260" width="188" height="51" rx="4"/>
+      <rect x="626" y="365" width="155" height="48" rx="4"/>
+      <rect x="834" y="446" width="211" height="51" rx="4"/>
+    </g>
+    <g font-size="29" text-anchor="middle" font-weight="700">
+      <text text-anchor="middle" font-size="18" fill="#145c42"><tspan x="216.5" y="104.8">① コンスタンティノープル（ビザンツ帝国）</tspan></text>
+      <text text-anchor="middle" font-size="25" fill="#145c42"><tspan x="157" y="250.25">② オスマン朝</tspan></text>
+      <text text-anchor="middle" font-size="20" fill="#145c42"><tspan x="172" y="319.5">③ アンカラの戦い（1402年）</tspan></text>
+      <text text-anchor="middle" font-size="26" fill="#145c42"><tspan x="141.5" y="452.6">④ カイロ</tspan></text>
+      <text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="147.5" y="503.4">⑤ マムルーク朝</tspan></text>
+      <text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="321.5" y="563.4">⑥ メッカ</tspan></text>
+      <text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="747" y="205.4">⑦ サマルカンド</tspan></text>
+      <text text-anchor="middle" font-size="22" fill="#145c42"><tspan x="716" y="293.2">⑧ ティムール朝</tspan></text>
+      <text text-anchor="middle" font-size="24" fill="#145c42"><tspan x="703.5" y="397.4">⑨ ヘラート</tspan></text>
+      <text text-anchor="middle" font-size="25" fill="#145c42"><tspan x="939.5" y="480.25">⑩ トゥグルク朝</tspan></text>
+    </g>
+  </g>
+</svg>

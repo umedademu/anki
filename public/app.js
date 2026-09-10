@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.221";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.221";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings } from "./original-session.js?v=0.222";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.222";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -54,7 +54,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.221";
+} from "./original-session.js?v=0.222";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -5544,7 +5544,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.221｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.222｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

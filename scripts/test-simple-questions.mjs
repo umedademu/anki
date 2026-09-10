@@ -67,24 +67,26 @@ console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追
 
 // 地図の問題面から答えが漏れず、次の通常問題へ図が残らないことを確認する。
 const maps = terms.flatMap((term) => term.stages.beginner).filter((question) => question.questionMap);
-assert.equal(maps.length, 5);
+assert.equal(maps.length, 6);
 const expectedMaps = [
   ["後ウマイヤ朝", "イドリース朝", "アッバース朝", "バグダード", "サーマーン朝"],
   ["後ウマイヤ朝", "ファーティマ朝", "アッバース朝", "バグダード", "ブワイフ朝", "サーマーン朝", "カラ=ハン朝"],
   ["ムラービト朝", "ファーティマ朝", "セルジューク朝", "カラ=ハン朝", "ガズナ朝"],
   ["ムワッヒド朝", "ルーム=セルジューク朝", "アイユーブ朝", "バグダード", "アッバース朝カリフ領", "ホラズム朝", "カラ=キタイ（西遼）", "ゴール朝"],
   ["ナスル朝", "マムルーク朝", "イル=ハン国", "チャガタイ=ハン国", "奴隷王朝"],
+  ["コンスタンティノープル（ビザンツ帝国）", "オスマン朝", "アンカラの戦い（1402年）", "カイロ", "マムルーク朝", "メッカ", "サマルカンド", "ティムール朝", "ヘラート", "トゥグルク朝"],
 ];
+const mapNumbers = "①②③④⑤⑥⑦⑧⑨⑩";
 for (const [index, mapQuestion] of maps.entries()) {
   const names = expectedMaps[index];
-  assert.equal(mapQuestion.answer, names.map((name, i) => "①②③④⑤⑥⑦⑧"[i] + " " + name).join("\n"));
+  assert.equal(mapQuestion.answer, names.map((name, i) => mapNumbers[i] + " " + name).join("\n"));
   const svg = await readFile(new URL(`../public/data/${mapQuestion.questionMap.path}`, import.meta.url), "utf8");
   for (const name of names) {
     assert.ok(!svg.includes(name));
     assert.ok(!mapQuestion.questionMap.alt.includes(name));
     assert.ok(!mapQuestion.prompt.includes(name));
   }
-  for (const number of "①②③④⑤⑥⑦⑧".slice(0, names.length)) assert.ok(svg.includes(number));
+  for (const number of mapNumbers.slice(0, names.length)) assert.ok(svg.includes(number));
   assert.ok(!/<image|<script|href=/i.test(svg));
   const answerSvg = await readFile(new URL(`../public/data/${mapQuestion.questionMap.answerPath}`, import.meta.url), "utf8");
   assert.equal(answerSvg, createAnswerMap(svg, mapQuestion.answer));
@@ -113,7 +115,7 @@ for (const [index, mapQuestion] of maps.entries()) {
   assert.equal(element.src, undefined);
   assert.equal(element.alt, "");
 }
-console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答・13世紀の５回答、答えの非表示、解答地図への切替、伏せた地図への復帰、通常問題への切替を確認しました。");
+console.log("９世紀の５回答・10世紀の７回答・11世紀の５回答・12世紀の８回答・13世紀の５回答・14〜15世紀の10回答、答えの非表示、解答地図への切替、伏せた地図への復帰、通常問題への切替を確認しました。");
 
 assert.throws(() => createAnswerMap("<svg></svg>", "① 答え"));
 assert.throws(() => createAnswerMap("<svg></svg>", "番号なし"));

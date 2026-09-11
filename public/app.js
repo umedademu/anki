@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.229";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.229";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.230";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.230";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.229";
+} from "./original-session.js?v=0.230";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -419,6 +419,8 @@ let speechPartsSaveVersion = 0;
 let speechPartNoticeTimer = null;
 let listeningPlaybackFeedbackTimer = null;
 let startingStudy = false;
+let deckSelectionUpdating = false;
+let pendingDeckSelection = null;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
 let studyClockTimer = null;
@@ -4410,8 +4412,9 @@ function updateSetupPreview() {
   const savedSession = savedSessionForMode(studyMode);
   const hasSavedSession = Boolean(savedSession);
   elements.resumeStudy.classList.toggle("is-hidden", !hasSavedSession);
-  elements.resumeStudy.disabled = !state.cloudReady || !hasSavedSession;
+  elements.resumeStudy.disabled = deckSelectionUpdating || !state.cloudReady || !hasSavedSession;
   elements.startStudy.disabled =
+    deckSelectionUpdating ||
     terms.length === 0 ||
     !state.cloudReady ||
     (listening &&
@@ -5256,7 +5259,7 @@ function showQuestionLimitCompletion() {
 
 async function beginStudy() {
   if (!validateQuestionLimit()) return;
-  if (startingStudy) {
+  if (startingStudy || deckSelectionUpdating) {
     return;
   }
   const selectedTerms = filterTermsBySelection(
@@ -5385,7 +5388,7 @@ async function resumeStudy() {
     savedStudySession,
     studyMode,
   );
-  if (startingStudy || !savedSession || !state.cloudReady) return;
+  if (startingStudy || deckSelectionUpdating || !savedSession || !state.cloudReady) return;
   startingStudy = true;
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
@@ -5470,7 +5473,7 @@ async function resumeStudy() {
   startingStudy = false;
 }
 
-async function activateDecks(deckIds) {
+async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   const selected = new Set(deckIds);
   const deckEntries = state.deckEntries.filter((deck) => selected.has(deck.id));
   if (deckEntries.length === 0) {
@@ -5479,9 +5482,11 @@ async function activateDecks(deckIds) {
   const loadToken = state.deckLoadToken + 1;
   state.deckLoadToken = loadToken;
   const deckInputs = [...elements.deckFilter.querySelectorAll("input")];
-  deckInputs.forEach((input) => {
-    input.disabled = true;
-  });
+  if (!keepDeckSelection) {
+    deckInputs.forEach((input) => {
+      input.disabled = true;
+    });
+  }
 
   const loaded = await Promise.all(
     deckEntries.map(async (entry) => {
@@ -5600,10 +5605,12 @@ async function activateDecks(deckIds) {
   elements.macroRegionFilter.value = "";
   elements.regionDetailFilter.value = "";
   elements.categoryFilter.value = "";
-  deckInputs.forEach((input) => {
-    input.checked = state.activeDeckIds.includes(input.value);
-    input.disabled = false;
-  });
+  if (!keepDeckSelection) {
+    deckInputs.forEach((input) => {
+      input.checked = state.activeDeckIds.includes(input.value);
+      input.disabled = false;
+    });
+  }
   const deckNames = deckEntries.map(deckDisplayLabel);
   const shortDeckNames = deckNames.map((name) => name.split("｜")[0]);
   elements.subjectName.textContent = `${state.subject.title}｜${
@@ -5613,7 +5620,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.229｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.230｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5887,28 +5894,69 @@ elements.mindsetIntervalSeconds.addEventListener("change", () => {
   void saveMindsetPlaybackSettings();
 });
 
-elements.deckFilter.addEventListener("change", () => {
+async function updateDeckSelection(deckIds) {
+  pendingDeckSelection = deckIds;
+  document.querySelector("#deck-selection-summary").textContent =
+    `${deckIds.length} / ${state.deckEntries.length} 選択中`;
+  if (deckSelectionUpdating) return;
+
+  deckSelectionUpdating = true;
+  elements.startStudy.disabled = true;
+  elements.resumeStudy.disabled = true;
+  elements.setupPanel.setAttribute("aria-busy", "true");
+  // デッキは続けて選べるようにし、読み込み中に他の設定や科目が変わるのを防ぐ。
+  const protectedControls = new Map(
+    [
+      ...elements.setupPanel.querySelectorAll("input, select, button"),
+      ...document.querySelectorAll(".site-header a"),
+    ]
+      .filter((control) => !elements.deckFilter.contains(control))
+      .map((control) => [control, control.inert]),
+  );
+  protectedControls.forEach((_, control) => {
+    control.inert = true;
+  });
+  let failure = null;
+  try {
+    await setupPreferenceSave.catch(() => {});
+    while (pendingDeckSelection) {
+      const next = pendingDeckSelection;
+      pendingDeckSelection = null;
+      elements.cloudStatus.textContent = "選択したデッキを反映しています。";
+      try {
+        // 同時に複数の読み込みを反映せず、途中で変更された選択は次にまとめて処理する。
+        await activateDecks(next, { keepDeckSelection: true });
+        if (state.cloudError) throw new Error(state.cloudError);
+        failure = null;
+      } catch (error) {
+        failure = error;
+        state.cloudReady = false;
+      }
+    }
+    if (!failure && state.cloudReady) queueVisibleSetupPreferenceSave();
+  } finally {
+    deckSelectionUpdating = false;
+    protectedControls.forEach((inert, control) => {
+      control.inert = inert;
+    });
+    elements.setupPanel.removeAttribute("aria-busy");
+    updateSetupPreview();
+    if (failure) {
+      elements.cloudStatus.textContent = `デッキを反映できませんでした。選び直して再試行してください。${failure.message}`;
+    }
+  }
+}
+
+elements.deckFilter.addEventListener("change", (event) => {
   const deckIds = selectedDeckIds();
   if (deckIds.length === 0) {
-    const fallback = state.activeDeckIds[0] ?? state.deckEntries[0]?.id;
-    const input = elements.deckFilter.querySelector(`input[value="${fallback}"]`);
-    if (input) input.checked = true;
+    event.target.checked = true;
     elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
     return;
   }
-  showOnly(elements.loadingPanel);
-  void setupPreferenceSave
-    .catch(() => {})
-    .then(() => activateDecks(deckIds))
-    .then(() => {
-      showOnly(elements.setupPanel);
-      queueVisibleSetupPreferenceSave();
-    })
-    .catch((error) => {
-      elements.errorMessage.textContent = error.message;
-      showOnly(elements.errorPanel);
-    });
+  void updateDeckSelection(deckIds);
 });
+
 elements.macroRegionFilter.addEventListener("change", () => {
   updateRegionDetailOptions(true);
   updateSetupPreview();

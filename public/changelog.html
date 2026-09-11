@@ -6,13 +6,17 @@
     <meta name="description" content="Anki科目別学習アプリの更新情報" />
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.225" />
+    <meta name="theme-color" content="#f3f5f0" />
+    <script src="/theme.js?v=0.228"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.228" />
+    <link rel="stylesheet" href="/theme.css?v=0.228" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.227</span>
+        <span class="app-version">v0.228</span>
+        <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
         <a class="header-link" href="/">学習画面へ戻る</a>
@@ -27,17 +31,22 @@
       </section>
 
       <article class="release-card">
+        <div class="release-heading"><h2>v0.228</h2><time datetime="2026-09-11">2026年9月11日</time></div>
+        <ul><li>ライトモードとダークモードを切り替えられるようにしました。各ページ上部、設定ページ、学習中のメニューから変更できます。</li><li>選んだ配色はこのブラウザーに保存し、ページ移動や次回の起動後も引き継ぎます。問題・回答・設定・学習記録などの配色が切り替わり、地図や写真は元の色を保ちます。</li></ul>
+      </article>
+
+      <article class="release-card">
         <div class="release-heading"><h2>v0.227</h2><time datetime="2026-09-11">2026年9月11日</time></div>
         <ul><li>世界史SOに自作問題63問を追加し、地図6問を含む計174問を教材の章構成に合わせて10個のデッキへ整理しました。元ファイルの番号に頼らず、問題の内容で分類しています。</li><li>既存問題の習熟度・評価・復習予定を新しいデッキへ引き継ぎます。過去の学習時間・回答件数はそのまま残り、新しいデッキでは一周を新しく開始します。</li></ul>
       </article>
 
       <article class="release-card">
-        <div class="release-heading"><h2>v0.227</h2><time datetime="2026-09-11">2026年9月11日</time></div>
+        <div class="release-heading"><h2>v0.226</h2><time datetime="2026-09-11">2026年9月11日</time></div>
         <ul><li>オリジナルの学習時間もCloudflareへ保存し、「学習記録」で日別・暗記・聞き流し別に確認できるようにしました。ほかの科目と同じ1問ごとの時間上限を適用します。問題を削除しても保存済みの時間は残ります。保存には設定ページのアクセスキーが必要です。</li></ul>
       </article>
 
       <article class="release-card">
-        <div class="release-heading"><h2>v0.226</h2><time datetime="2026-09-11">2026年9月11日</time></div>
+        <div class="release-heading"><h2>v0.225</h2><time datetime="2026-09-11">2026年9月11日</time></div>
         <ul><li>オリジナルの評価・復習予定・学習途中の状態・完了した周回数を、このブラウザーに保存するようにしました。同じ問題なら、トップへ戻った後や再読み込み、翌日の学習でも引き継ぎます。閉じている間も実際の時刻で復習期限を判定します。</li><li>問題・回答・解説や並びを変更して学習を始めると学習記録を新しくします。復習間隔の設定は引き継ぎます。学習記録はCloudflareへ送りません。</li></ul>
       </article>
 

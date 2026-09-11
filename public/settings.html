@@ -6,7 +6,10 @@
     <meta name="description" content="Anki科目別学習アプリの復習・学習時間・音声設定" />
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.227" />
+    <meta name="theme-color" content="#f3f5f0" />
+    <script src="/theme.js?v=0.228"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.228" />
+    <link rel="stylesheet" href="/theme.css?v=0.228" />
     <script src="/config.js" defer></script>
     <script src="/settings.js" type="module"></script>
   </head>
@@ -14,7 +17,8 @@
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.227</span>
+        <span class="app-version">v0.228</span>
+        <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
         <a class="header-link" href="/changelog.html">更新情報</a>
@@ -27,6 +31,12 @@
         <p class="eyebrow">設定</p>
         <h1>復習・学習時間・音声</h1>
         <p>復習間隔、学習時間、日本語・英語の読み上げ、4段階評価の効果音を設定します。</p>
+      </section>
+
+      <section class="settings-card">
+        <h2>画面の配色</h2>
+        <p class="settings-description">ライトモードとダークモードを切り替えます。選んだ配色はこのブラウザーに保存し、次回も引き継ぎます。</p>
+        <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
       </section>
 
       <section class="settings-card">

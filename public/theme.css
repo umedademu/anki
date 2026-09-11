@@ -1,0 +1,94 @@
+/* ライトモードは既存の配色を使用し、暗い配色だけをここで定義する。 */
+:root[data-theme="dark"] {
+  --theme-scheme: dark;
+  --theme-page: #121c17;
+  --theme-page-transparent: rgb(18 28 23 / 0%);
+  --theme-surface: #1b2721;
+  --theme-surface-glass: rgb(27 39 33 / 95%);
+  --theme-surface-subtle: #23372b;
+  --theme-surface-warning: #3b3322;
+  --theme-surface-danger: #3e2927;
+  --theme-surface-info: #223241;
+  --theme-track: #34463c;
+  --theme-tint: rgb(142 217 173 / 12%);
+  --theme-text: #e7eee9;
+  --theme-muted: #acbcb1;
+  --theme-accent: #8ed9ad;
+  --theme-danger: #ffaba4;
+  --theme-warning: #eacb70;
+  --theme-info: #97c6ee;
+  --theme-border: #42544a;
+  --theme-border-accent: #86c7a0;
+  --theme-reflection: rgb(255 255 255 / 10%);
+}
+
+.header-meta {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.site-header {
+  gap: 10px;
+  padding-block: 8px;
+}
+
+.theme-toggle {
+  min-height: 36px;
+  color: var(--theme-accent, #245c3e);
+  background: var(--theme-surface, #fff);
+  border: 1px solid var(--theme-border, #b8c7bd);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  background: var(--theme-surface-subtle, #edf7ee);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid var(--theme-accent, #245c3e);
+  outline-offset: 3px;
+}
+
+.study-theme-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  font-size: 0.85rem;
+}
+
+.original-panel textarea {
+  color: var(--theme-text, #26372c);
+  background: var(--theme-surface, #fff);
+}
+
+:root[data-theme="dark"] input::placeholder,
+:root[data-theme="dark"] textarea::placeholder {
+  color: var(--theme-muted);
+  opacity: 1;
+}
+
+:root[data-theme="dark"] a:not([class]) {
+  color: var(--theme-info);
+}
+
+:root[data-theme="dark"] ::selection {
+  color: #121c17;
+  background: #8ed9ad;
+}
+
+/* 横向きの小画面でも、学習外のページでは配色操作へアクセスできる。 */
+@media (orientation: landscape) and (max-height: 600px) {
+  body:not(.is-studying):not(.is-mindset-playing) .site-header {
+    display: flex;
+  }
+
+  html:has(body:not(.is-studying):not(.is-mindset-playing)),
+  body:not(.is-studying):not(.is-mindset-playing) {
+    height: auto;
+    overflow: auto;
+  }
+}

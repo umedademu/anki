@@ -1,0 +1,880 @@
+{
+  "schemaVersion": 1,
+  "legacyVersion": "world-history-so-deck-1-v1",
+  "chapters": [
+    {
+      "number": 1,
+      "title": "イスラーム成立",
+      "reference": "islam-origin-story.html"
+    },
+    {
+      "number": 2,
+      "title": "ウマイヤ・アッバース",
+      "reference": "umayyad-abbasid-story.html"
+    },
+    {
+      "number": 3,
+      "title": "イスラーム世界の分裂と三カリフ",
+      "reference": "regional-dynasties-story.html"
+    },
+    {
+      "number": 4,
+      "title": "トルコ人の台頭とセルジューク朝",
+      "reference": "seljuq-story.html"
+    },
+    {
+      "number": 5,
+      "title": "西方・エジプト・北インドの諸王朝",
+      "reference": "western-dynasties-story.html"
+    },
+    {
+      "number": 6,
+      "title": "アフリカの諸王国と交易",
+      "reference": "african-kingdoms-story.html"
+    },
+    {
+      "number": 7,
+      "title": "ティムールの遠征とその後",
+      "reference": "timur-story.html"
+    },
+    {
+      "number": 8,
+      "title": "サファヴィー",
+      "reference": "safavid-story.html"
+    },
+    {
+      "number": 9,
+      "title": "オスマン帝国 — 建国とバルカン進出",
+      "reference": "ottoman-story.html"
+    },
+    {
+      "number": 10,
+      "title": "オスマン帝国 — 都の征服とイスラーム世界への拡大",
+      "reference": "ottoman-expansion-story.html"
+    },
+    {
+      "number": 11,
+      "title": "オスマン帝国 — 最盛期とその後",
+      "reference": "ottoman-height-story.html"
+    },
+    {
+      "number": 12,
+      "title": "ムガル",
+      "reference": "mughal-story.html"
+    },
+    {
+      "number": 13,
+      "title": "イスラーム文化",
+      "reference": "islamic-culture-story.html"
+    }
+  ],
+  "questions": [
+    {
+      "prompt": "灌漑とは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-09b2458bd360ce58d220-B01"
+    },
+    {
+      "prompt": "砂漠地帯の遊牧民の事を何という？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-31412f7a33dea77c76e1-B01"
+    },
+    {
+      "prompt": "6世紀以降メッカが栄えた理由は？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-22676836bab881830c61-B01"
+    },
+    {
+      "prompt": "ムハンマドが最初の啓示を受けた場所は？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-34a939e6814c964ead9b-B01"
+    },
+    {
+      "prompt": "ラマダーンとは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-f2bea1ec039c2174541b-B01"
+    },
+    {
+      "prompt": "ムハンマドは何家の人物？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-162a411a2ea4c538706c-B01"
+    },
+    {
+      "prompt": "メディナでムハンマドがつくったイスラームの信仰共同体は？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-d577cb413338d451a14a-B01"
+    },
+    {
+      "prompt": "初代正統カリフは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-2d95f1baaf12f9efc4c8-B01"
+    },
+    {
+      "prompt": "アラブの大征服が成功しやすかった理由は？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-0fda719aba6b3b2f75b6-B01"
+    },
+    {
+      "prompt": "第2代正統カリフは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-131f2b5fcbd802789b62-B01"
+    },
+    {
+      "prompt": "ウマルは何をやったか？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-452380b3a486839949c8-B01"
+    },
+    {
+      "prompt": "正統カリフ時代、イスラーム軍がササン朝に決定的勝利を収めた戦いは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-e9fbba3b5a19bca6d21a-B01"
+    },
+    {
+      "prompt": "アラブの大征服の際、征服地に建設された軍営都市を何というか？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-bf8f758d0a4ca309a193-B01"
+    },
+    {
+      "prompt": "啓典の民とは何か？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-9cbd0fe65b8923f84e77-B01"
+    },
+    {
+      "prompt": "3代目正統カリフは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-d5be8be1d0bd289b31d6-B01"
+    },
+    {
+      "prompt": "ウスマーンは何をやったか？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-74f7a40213bcf5b5e6e0-B01"
+    },
+    {
+      "prompt": "ウスマーンが暗殺された理由について説明しなさい",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-3461b88742b5449b7429-B01"
+    },
+    {
+      "prompt": "4代目正統カリフは？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-dcd7c4a0f5353cc8822b-B01"
+    },
+    {
+      "prompt": "アリーは正統カリフ政権の政治拠点をどこからどこへ移したか？",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-9b34d6383784e7e5ee28-B01"
+    },
+    {
+      "prompt": "ウマイヤ朝の都は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-7919c2ff7925ec3c2c72-B01"
+    },
+    {
+      "prompt": "正統カリフを4人答えなさい",
+      "chapter": 1,
+      "legacyQuestionId": "WHSO-25792f5ed7ccbb74bff6-B01"
+    },
+    {
+      "prompt": "イスラム史において最も多い王朝は何系？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-d48e8fa8e51856cb6993-B01"
+    },
+    {
+      "prompt": "イスラム史における代表的なイラン系王朝を3つ答えなさい",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-01b54bb680a4ebcd0e4e-B01"
+    },
+    {
+      "prompt": "アブド=アルマリクについて説明しなさい",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-0431b59dbb32268bdb29-B01"
+    },
+    {
+      "prompt": "アリー支持派の拠点となった都市はどこか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-7ab5f92648ccea590325-B01"
+    },
+    {
+      "prompt": "スンナとはどういう意味？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-0cbb56cc53a55287a112-B01"
+    },
+    {
+      "prompt": "スンナ派、シーア派にとってイマームとはどういう存在か？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-3c2face231efb76e2c79-B01"
+    },
+    {
+      "prompt": "アブド=アルマリクは何語を公用語にしたか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-8d1333bfb3d8e7ede9aa-B01"
+    },
+    {
+      "prompt": "アブド＝アルマリクは貨幣を何に統一したか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-84cccdf63beb1eae4451-B01"
+    },
+    {
+      "prompt": "ワリード1世について説明せよ",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-7e3a33fde3e7769ca4c0-B01"
+    },
+    {
+      "prompt": "ウマイヤ朝がジブラルタル海峡を渡って滅ぼした王国は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-23981f26f5342d36539c-B01"
+    },
+    {
+      "prompt": "ウマイヤ朝軍がカール＝マルテル率いるフランク軍に敗れた戦いは？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-807a850d76bbe0c594cd-B01"
+    },
+    {
+      "prompt": "アターとは何か説明しなさい",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-9619c22b8f168d2436b2-B01"
+    },
+    {
+      "prompt": "マワーリーとは何か説明しなさい",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-fa8c0761fbb010305e90-B01"
+    },
+    {
+      "prompt": "アッバース革命の拠点となった地域は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-66789d771cf902ef1de4-B01"
+    },
+    {
+      "prompt": "アッバース朝の初代カリフは？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-846fa50296f043f019d1-B01"
+    },
+    {
+      "prompt": "アッバース朝がシーア派を弾圧した理由は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-5397ecce0c0bc83a2487-B01"
+    },
+    {
+      "prompt": "アッバース朝はジズヤとハラージュの課税対象をどのように改めたか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-89bd16eb082e09565d1f-B01"
+    },
+    {
+      "prompt": "アッバース朝の2代目カリフは？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-7ae9b851a7146acd0934-B01"
+    },
+    {
+      "prompt": "マンスールがティグリス川流域に建設した都は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-fd1618c65c7e228b9763-B01"
+    },
+    {
+      "prompt": "駅伝制について説明せよ",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-0cef2eee989f980ced4c-B01"
+    },
+    {
+      "prompt": "アッバース朝における宰相を何というか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-7cdc4ae5b9fa34a9d577-B01"
+    },
+    {
+      "prompt": "アッバース朝における中央官庁を総称して何というか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-48d64ccba9c2bb2754ae-B01"
+    },
+    {
+      "prompt": "イスラム教における神の教えに基づいた行動規範を何というか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-6adbf9c98f5d8497e5c5-B01"
+    },
+    {
+      "prompt": "アッバース朝の5代目カリフは？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-9d041c7fe61139d560cc-B01"
+    },
+    {
+      "prompt": "中国でアッバース朝の人々は何と呼ばれたか？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-591ab149e881a7c4bdc4-B01"
+    },
+    {
+      "prompt": "アッバース朝におけるギリシア語の文献をアラビア語へ翻訳した場は？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-6fa0490c7cbe1f225b81-B01"
+    },
+    {
+      "prompt": "アッバース朝の第7代カリフは？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-f1284d07554e62bddbef-B01"
+    },
+    {
+      "prompt": "タラス河畔の戦いはどことどこの戦い？",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-c1f21f306cc60a10b1c8-B01"
+    },
+    {
+      "prompt": "9世紀後半、イスラーム世界とトルコ人との接触が深まるきっかけとなった出来事は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-e30f09d6268b10f2a6d8-B01"
+    },
+    {
+      "prompt": "奴隷出身の軍人を何というか？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-94fc33d08b2477bcbe1d-B01"
+    },
+    {
+      "prompt": "オスマン帝国で、スルタン直属の常備歩兵軍団を何というか？",
+      "chapter": 9,
+      "legacyQuestionId": "WHSO-04943d4e394324bcbc6a-B01"
+    },
+    {
+      "prompt": "アッバース朝のカリフを4人答えなさい",
+      "chapter": 2,
+      "legacyQuestionId": "WHSO-862a2f8233045251e748-B01"
+    },
+    {
+      "prompt": "後ウマイヤ朝の建国者は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-748e591167fdfd0c9879-B01"
+    },
+    {
+      "prompt": "後ウマイヤ朝の都は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-e77b75cac11c8b051c3a-B01"
+    },
+    {
+      "prompt": "後ウマイヤ朝のアブド＝アッラフマーン1世が名乗った称号は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-8e2195661f1dcd569d03-B01"
+    },
+    {
+      "prompt": "カリフとアミールとイマームの違いは？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-ee6557007254140e5e42-B01"
+    },
+    {
+      "prompt": "ファーティマ朝はどのような経緯で建国されたか説明しなさい",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-5b7d8b04058aeff0ca21-B01"
+    },
+    {
+      "prompt": "ファーティマ朝がエジプト征服後に首都とした都市は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-e53adb8ba60bbfe8cd87-B01"
+    },
+    {
+      "prompt": "三カリフ鼎立時代の3つのカリフ政権を、その拠点とともに答えなさい",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-49f7192320a9c571ddf0-B01"
+    },
+    {
+      "prompt": "ファーティマ朝がカイロに建設した、イスラーム教学の中心となった学院は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-92846ace5ef0e1e9a486-B01"
+    },
+    {
+      "prompt": "アズハル学院について説明しなさい",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-04153c7752b8a5d473d4-B01"
+    },
+    {
+      "prompt": "「バグダード入城」について説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-f419e223a5c2cc8763c4-B01"
+    },
+    {
+      "prompt": "マラーズギルドの戦いについて説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-eec5ab4dfa5a51e3aad2-B01"
+    },
+    {
+      "prompt": "マラーズギルドの戦いで東ローマ帝国を破ったセルジューク朝のスルタンは？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-270397706f01cd8280bc-B01"
+    },
+    {
+      "prompt": "セルジューク朝の全盛期のスルタン",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-ec5b66bb8e31225daf68-B01"
+    },
+    {
+      "prompt": "セルジューク朝の全盛期を支え、ニザーミーヤ学院を建設した名宰相は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-e1ed66e4d806e51ca35e-B01"
+    },
+    {
+      "prompt": "セルジューク朝がスンナ派教学の振興のため、各地に建設した学院は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-1b2b6fb16f25a7c5b6ae-B01"
+    },
+    {
+      "prompt": "セルジューク朝でイクター制を整備した人物は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-41f2125f42e8d6d963c3-B01"
+    },
+    {
+      "prompt": "ルーム=セルジューク朝について説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-10aef1a74879e6a8bf83-B01"
+    },
+    {
+      "prompt": "ホラズム=シャー朝について説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-8af8aafdee40368dc706-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑤をすべて埋めなさい。（９世紀のイスラーム世界）",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-fafcacb6e9bb08d8d042-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑦をすべて埋めなさい。（10世紀のイスラーム世界）",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-db42eed8dbc9196e1421-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑤をすべて埋めなさい。（11世紀のイスラーム世界）",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-6fbed8cff9d974f716cb-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑧をすべて埋めなさい。（12世紀のイスラーム世界）",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-cc51b4b650e02b5a48f2-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑤をすべて埋めなさい。（13世紀のイスラーム世界）",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-2c440d912c196b130eec-B01"
+    },
+    {
+      "prompt": "地図上の空欄①〜⑩をすべて埋めなさい。（14〜15世紀のイスラーム世界）",
+      "chapter": 7,
+      "legacyQuestionId": "WHSO-3f62aa34a3c6dd47ceeb-B01"
+    },
+    {
+      "prompt": "ホラーサーン地方でセルジューク朝を建国し、1055年にバグダードへ入城してアッバース朝カリフからスルタンの称号を受けた人物は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-582436b298546d42ed01-B01"
+    },
+    {
+      "prompt": "アッバース朝が滅びた経緯は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-ec64b2335bb3a95528e6-B01"
+    },
+    {
+      "prompt": "イル＝ハン国の都は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-5361f2c1de7c8aeffede-B01"
+    },
+    {
+      "prompt": "イル＝ハン国でイスラームを国教とした君主は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-6acb47c0a9ed6aa90878-B01"
+    },
+    {
+      "prompt": "ガザン＝ハンがイラン統治のために登用したイラン人宰相は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-4f471944905494126207-B01"
+    },
+    {
+      "prompt": "イラン系最初のイスラーム王朝は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-2c9e5cd2e7b90765b7eb-B01"
+    },
+    {
+      "prompt": "サッファール朝はなぜ滅びた？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-ba1b36446fa537834ea0-B01"
+    },
+    {
+      "prompt": "南イラクで黒人奴隷が起こし、アッバース朝の混乱を深めた反乱は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-c9424d0fb53557c88d73-B01"
+    },
+    {
+      "prompt": "ブワイフ朝はどのような政権か？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-b88b049ec21bb3fa0122-B01"
+    },
+    {
+      "prompt": "ブワイフ朝がバグダードに入った際、アッバース朝の財政難から何が起こった？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-aa23bdbcb6cba942fd31-B01"
+    },
+    {
+      "prompt": "サーマーン朝の都は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-3e00c52b305b2d31a98a-B01"
+    },
+    {
+      "prompt": "最初のトルコ系イスラーム王朝は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-70c910bb9fbf03b6a9cc-B01"
+    },
+    {
+      "prompt": "カラ＝キタイについて説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-57c2e554d9285ec7267f-B01"
+    },
+    {
+      "prompt": "カラ＝ハン朝が建国された経緯を説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-c4f829d0a815b50963a2-B01"
+    },
+    {
+      "prompt": "サーマーン朝は何に滅ぼされたか？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-10e1caadc9d619414a44-B01"
+    },
+    {
+      "prompt": "ガズナ朝を建てた人物は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-db7cdb1828f39c79ffd3-B01"
+    },
+    {
+      "prompt": "インドがイスラーム化するきっかけとなった出来事は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-60f50a6d3cf484ed1637-B01"
+    },
+    {
+      "prompt": "マラーズギルドの戦いは何につながった？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-9922dacdf016ce5a7d1b-B01"
+    },
+    {
+      "prompt": "マリク＝シャーについて説明しなさい",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-eadfe38a43afd65d4daf-B01"
+    },
+    {
+      "prompt": "『統治の書』の著者は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-855d45f3f734c792c5fb-B01"
+    },
+    {
+      "prompt": "12世紀前半、イラク北部の総督から自立してできた王朝は？",
+      "chapter": 4,
+      "legacyQuestionId": "WHSO-90b17a71029c28480173-B01"
+    },
+    {
+      "prompt": "レコンキスタとは何か説明しなさい",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-be7d687d72bcec31b66a-B01"
+    },
+    {
+      "prompt": "ムラービト朝は、どのような宗教的背景のもとで成立した？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-b9d1cd1659e9d19996c0-B01"
+    },
+    {
+      "prompt": "ムラービト朝は、何に対抗するためにモロッコで建国された？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-8cee1f6d71f38bc654fb-B01"
+    },
+    {
+      "prompt": "ムラービト朝は、なぜ都マラケシュを繁栄させることができた？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-8ad1ece16379ed1ba1d5-B01"
+    },
+    {
+      "prompt": "ムラービト朝について、「成立・対外進出・経済」の3点から説明しなさい。",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-dee5b7af1a68c89a7518-B01"
+    },
+    {
+      "prompt": "ムワッヒド朝はどのような経緯で成立した？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-b5bc88b209aa2b8f59f3-B01"
+    },
+    {
+      "prompt": "レコンキスタで追い詰められ、1492年まで存続したイスラーム王朝は？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-b461e0c1f422c2881d00-B01"
+    },
+    {
+      "prompt": "スペイン王国はどのように成立し、1492年に何をした？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-3804cdc37b3dc9c4da5a-B01"
+    },
+    {
+      "prompt": "ナスル朝の都は？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-89741586a3d1a24d64ad-B01"
+    },
+    {
+      "prompt": "ナスル朝がグラナダに建てた、イスラーム建築の傑作として知られる宮殿は？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-5456dd86f6fcfc5e7be1-B01"
+    },
+    {
+      "prompt": "後ウマイヤ朝で、929年にカリフを称して「西カリフ国」を成立させた君主は？",
+      "chapter": 3,
+      "legacyQuestionId": "WHSO-013aeb1cf7369f568500-B01"
+    },
+    {
+      "prompt": "アイユーブ朝が成立した経緯は？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-e4dd94aa0f6bc77e0e52-B01"
+    },
+    {
+      "prompt": "アルハンブラ宮殿はどの王朝がどこに建てた？",
+      "chapter": 5,
+      "legacyQuestionId": "WHSO-84d07419bad259326b3c-B01"
+    },
+    {
+      "prompt": "クシュ王国について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "アクスム王国について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "単性論派について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "コプト派について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "マリ王国について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "トンブクトゥについて説明しなさい。",
+      "chapter": 6
+    },
+    {
+      "prompt": "マンサ=ムーサについて説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "マリ王国に代わって西アフリカで勢力を広げ、トンブクトゥをイスラーム教学の中心として発展させた国家は？",
+      "chapter": 6
+    },
+    {
+      "prompt": "ソンガイ王国について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "チャド湖周辺に成立した黒人イスラーム国家は？",
+      "chapter": 6
+    },
+    {
+      "prompt": "アフリカ東岸でインド洋交易をやっていたムスリム商人が定住したことで、どのような都市が発展した？",
+      "chapter": 6
+    },
+    {
+      "prompt": "スワヒリ語はどのように成立した？",
+      "chapter": 6
+    },
+    {
+      "prompt": "スワヒリ文化について説明しなさい。",
+      "chapter": 6
+    },
+    {
+      "prompt": "アフリカ東岸では、ムスリム商人の活動によって何が起こった？",
+      "chapter": 6
+    },
+    {
+      "prompt": "鄭和の艦隊とヴァスコ＝ダ＝ガマの双方が立ち寄った東アフリカの港市は？",
+      "chapter": 6
+    },
+    {
+      "prompt": "モノモタパ王国について説明しなさい",
+      "chapter": 6
+    },
+    {
+      "prompt": "ティムール朝はどのような経緯で成立した？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムールがカスピ海北岸へ進出して攻撃し、大きな打撃を与えたモンゴル系国家は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "トゥグルク朝が衰退した理由を説明しなさい。",
+      "chapter": 7
+    },
+    {
+      "prompt": "1402年、ティムール軍がオスマン朝のバヤジット1世を破って捕虜とし、オスマン朝を一時混乱に陥れた戦いは？",
+      "chapter": 7
+    },
+    {
+      "prompt": "アンカラの戦いについて説明しなさい。",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムールがアンカラの戦い後、オスマン朝のバルカン支配を奪おうとしなかった理由を説明しなさい。",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムールの対明遠征には、彼のどのような政治的自己認識が表れているか説明しなさい。",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムールの死後、シャー＝ルフが本拠地とし、ティムール朝の都となった都市は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムールの死後に実権を握り、ヘラートを都として明・オスマン帝国との関係修復や交易・文化の保護を進めた人物は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "シャー＝ルフからサマルカンドの統治を任された人物は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムール朝期のサマルカンドで作られ、当時もっとも精密とされた天文学上の成果は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムール死後、ティムール朝の対外政策はどのように変化した？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ティムール朝の文化が、モンゴル系王朝の文化を受け継いでいたことを示す具体例は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ウズベク人とは何か説明しなさい。",
+      "chapter": 7
+    },
+    {
+      "prompt": "トルコ化したモンゴル系部族を起源とし、ティムール朝を滅ぼす勢力となった中央アジアの遊牧民は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ウズベク人のシャイバーニーがブハラを拠点に建て、ティムール朝を滅ぼした王朝は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "ウズベク人のシャイバーニーが拠点とし、シャイバーン朝を建てた都市は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "3ハン国とは何か説明しなさい",
+      "chapter": 7
+    },
+    {
+      "prompt": "シャイバーニーが建てたブハラ＝ハン国とは別に、別のウズベク人部族が建てたハン国は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "18世紀にブハラ＝ハン国から分かれて成立したハン国は？",
+      "chapter": 7
+    },
+    {
+      "prompt": "カザフ=ハン国が成立した経緯について説明しなさい",
+      "chapter": 7
+    },
+    {
+      "prompt": "サファヴィー朝について説明しなさい。",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝建国時に、イスマーイール1世を軍事的に支えたトルコ系遊牧民は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "キジルバシュについて説明しなさい。",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝の君主が、イラン民族を結集してオスマン帝国に対抗するために名乗った伝統的な君主称号は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "チャルディラーンの戦いについて説明しなさい。",
+      "chapter": 8
+    },
+    {
+      "prompt": "1514年、セリム1世率いるオスマン帝国軍がサファヴィー朝を破り、東アナトリア方面で優位に立った戦いは？",
+      "chapter": 10
+    },
+    {
+      "prompt": "チャルディラーンの戦いでサファヴィー朝を破り、東アナトリアを獲得したオスマン帝国のスルタンは？",
+      "chapter": 10
+    },
+    {
+      "prompt": "サファヴィー朝の第5代君主は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世について説明しなさい。",
+      "chapter": 8
+    },
+    {
+      "prompt": "ゴラームとは何か説明しなさい。",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世がキジルバシュへの依存を減らしてゴラームを重用したのはなぜ？",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝がポルトガルをホルムズ島から追い出す際、イギリスが協力したのはなぜ？",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝で、交易路の整備とともに増設された宿泊施設は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世が遷都し、「世界の半分」と称賛されるほど繁栄したサファヴィー朝の都は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世時代のイスファハーンで、王宮・モスク・マドラサが集められた都市中心部の広場は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世がイスファハーンに建てた、青や黄色のタイル装飾で知られるイスラーム建築は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世時代のイスファハーンで国際商業を活発化させたキリスト教徒の商人集団は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "アッバース1世時代、ヨーロッパ人がイスファハーンに求めて来た代表的な商品は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "18世紀に入るとサファヴィー朝の各地で経済が悪化し始めたのは何故？",
+      "chapter": 8
+    },
+    {
+      "prompt": "18世紀、サファヴィー朝衰退期にイスファハーンを占領した民族は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝を滅ぼし、アフシャール朝を建てたトルコ系アフシャール人の君主は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "サファヴィー朝滅亡後、アフガン人が自立して建てた王朝は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "18世紀末、テヘランを都にガージャール朝を建ててイランを統一した人物は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "18世紀末、アーガー＝ムハンマドがテヘランを都に建て、イランを統一した王朝は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "ガージャール朝が都とした都市は？",
+      "chapter": 8
+    },
+    {
+      "prompt": "ナーディル＝シャーがサファヴィー朝を滅ぼした後に建てた王朝は？",
+      "chapter": 8
+    }
+  ]
+}

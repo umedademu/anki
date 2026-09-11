@@ -6,7 +6,7 @@
     "build:data": "node scripts/build-learning-data.mjs",
     "preview:data:world-history-so": "node scripts/publish-world-history-so.mjs",
     "publish:data:world-history-so": "node scripts/publish-world-history-so.mjs --apply",
-    "postcheck": "node --check scripts/publish-world-history-so.mjs && node scripts/test-simple-questions.mjs",
+    "postcheck": "node --check scripts/publish-world-history-so.mjs && node scripts/test-simple-questions.mjs && node scripts/test-world-history-so-chapters.mjs",
     "prepare:images:japanese": "node scripts/prepare-question-images.mjs --subject japanese-history",
     "apply:images:japanese": "node scripts/apply-image-overrides.mjs --subject japanese-history",
     "optimize:images:japanese": "node scripts/optimize-question-images.mjs --subject japanese-history",

@@ -1,0 +1,1354 @@
+[
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 1,
+    "originalPrompt": "灌漑とは？",
+    "prompt": "灌漑とは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 2,
+    "originalPrompt": "砂漠地帯の遊牧民の事を何という？",
+    "prompt": "砂漠地帯の遊牧民の事を何という？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 3,
+    "originalPrompt": "6世紀以降メッカが栄えた理由は？",
+    "prompt": "6世紀以降メッカが栄えた理由は？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 4,
+    "originalPrompt": "ムハンマドが最初の啓示を受けた場所は？",
+    "prompt": "ムハンマドが最初の啓示を受けた場所は？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 5,
+    "originalPrompt": "ラマダーンとは？",
+    "prompt": "ラマダーンとは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 6,
+    "originalPrompt": "ムハンマドは何家の人物？",
+    "prompt": "ムハンマドは何家の人物？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 7,
+    "originalPrompt": "メディナでムハンマドがつくったイスラームの信仰共同体は？",
+    "prompt": "メディナでムハンマドがつくったイスラームの信仰共同体は？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 8,
+    "originalPrompt": "初代正統カリフは？",
+    "prompt": "初代正統カリフは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 9,
+    "originalPrompt": "アラブの大征服が成功しやすかった理由は？",
+    "prompt": "アラブの大征服が成功しやすかった理由は？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 10,
+    "originalPrompt": "第2代正統カリフは？",
+    "prompt": "第2代正統カリフは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 11,
+    "originalPrompt": "ウマルは何をやったか？",
+    "prompt": "ウマルは何をやったか？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 12,
+    "originalPrompt": "正統カリフ時代、イスラーム軍がササン朝に決定的勝利を収めた戦いは？",
+    "prompt": "正統カリフ時代、イスラーム軍がササン朝に決定的勝利を収めた戦いは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 13,
+    "originalPrompt": "アラブの大征服の際、征服地に建設された軍営都市を何というか？",
+    "prompt": "アラブの大征服の際、征服地に建設された軍営都市を何というか？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 14,
+    "originalPrompt": "啓典の民とは何か？",
+    "prompt": "啓典の民とは何か？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 15,
+    "originalPrompt": "3代目正統カリフは？",
+    "prompt": "3代目正統カリフは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 16,
+    "originalPrompt": "ウスマーンは何をやったか？",
+    "prompt": "ウスマーンは何をやったか？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 17,
+    "originalPrompt": "ウスマーンが暗殺された理由について説明しなさい",
+    "prompt": "ウスマーンが暗殺された理由について説明しなさい",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 18,
+    "originalPrompt": "4代目正統カリフは？",
+    "prompt": "4代目正統カリフは？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 19,
+    "originalPrompt": "アリーは正統カリフ政権の政治拠点をどこからどこへ移したか？",
+    "prompt": "アリーは正統カリフ政権の政治拠点をどこからどこへ移したか？",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 20,
+    "originalPrompt": "ウマイヤ朝の都は？",
+    "prompt": "ウマイヤ朝の都は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_01.md",
+    "line": 21,
+    "originalPrompt": "正統カリフを4人答えなさい",
+    "prompt": "正統カリフを4人答えなさい",
+    "chapter": 1,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 1,
+    "originalPrompt": "イスラム史において最も多い王朝は何系？",
+    "prompt": "イスラム史において最も多い王朝は何系？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 2,
+    "originalPrompt": "イスラム史における代表的なイラン系王朝を3つ答えなさい",
+    "prompt": "イスラム史における代表的なイラン系王朝を3つ答えなさい",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 3,
+    "originalPrompt": "アブド=アルマリクについて説明しなさい",
+    "prompt": "アブド=アルマリクについて説明しなさい",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 4,
+    "originalPrompt": "アリー支持派の拠点となった都市はどこか？",
+    "prompt": "アリー支持派の拠点となった都市はどこか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 5,
+    "originalPrompt": "スンナとはどういう意味？",
+    "prompt": "スンナとはどういう意味？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 6,
+    "originalPrompt": "スンナ派、シーア派にとってイマームとはどういう存在か？",
+    "prompt": "スンナ派、シーア派にとってイマームとはどういう存在か？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 7,
+    "originalPrompt": "アブド=アルマリクは何語を公用語にしたか？",
+    "prompt": "アブド=アルマリクは何語を公用語にしたか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 8,
+    "originalPrompt": "アブド＝アルマリクは貨幣を何に統一したか？",
+    "prompt": "アブド＝アルマリクは貨幣を何に統一したか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 9,
+    "originalPrompt": "ワリード1世について説明せよ",
+    "prompt": "ワリード1世について説明せよ",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 10,
+    "originalPrompt": "ウマイヤ朝がジブラルタル海峡を渡って滅ぼした王国は？",
+    "prompt": "ウマイヤ朝がジブラルタル海峡を渡って滅ぼした王国は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 11,
+    "originalPrompt": "ウマイヤ朝軍がカール＝マルテル率いるフランク軍に敗れた戦いは？",
+    "prompt": "ウマイヤ朝軍がカール＝マルテル率いるフランク軍に敗れた戦いは？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 12,
+    "originalPrompt": "アターとは何か説明しなさい",
+    "prompt": "アターとは何か説明しなさい",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 13,
+    "originalPrompt": "マワーリーとは何か説明しなさい",
+    "prompt": "マワーリーとは何か説明しなさい",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 14,
+    "originalPrompt": "アッバース革命の拠点となった地域は？",
+    "prompt": "アッバース革命の拠点となった地域は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 15,
+    "originalPrompt": "アッバース朝の初代カリフは？",
+    "prompt": "アッバース朝の初代カリフは？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 16,
+    "originalPrompt": "アッバース朝がシーア派を弾圧した理由は？",
+    "prompt": "アッバース朝がシーア派を弾圧した理由は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 17,
+    "originalPrompt": "アッバース朝はジズヤとハラージュの課税対象をどのように改めたか？",
+    "prompt": "アッバース朝はジズヤとハラージュの課税対象をどのように改めたか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 18,
+    "originalPrompt": "アッバース朝の2代目カリフは？",
+    "prompt": "アッバース朝の2代目カリフは？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 19,
+    "originalPrompt": "マンスールがティグリス川流域に建設した都は？",
+    "prompt": "マンスールがティグリス川流域に建設した都は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 20,
+    "originalPrompt": "駅伝制について説明せよ",
+    "prompt": "駅伝制について説明せよ",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 21,
+    "originalPrompt": "アッバース朝における宰相を何というか？",
+    "prompt": "アッバース朝における宰相を何というか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 22,
+    "originalPrompt": "アッバース朝における中央官庁を総称して何というか？",
+    "prompt": "アッバース朝における中央官庁を総称して何というか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 23,
+    "originalPrompt": "イスラム教における神の教えに基づいた行動規範を何というか？",
+    "prompt": "イスラム教における神の教えに基づいた行動規範を何というか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 24,
+    "originalPrompt": "アッバース朝の5代目カリフは？",
+    "prompt": "アッバース朝の5代目カリフは？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 25,
+    "originalPrompt": "中国でアッバース朝の人々は何と呼ばれたか？",
+    "prompt": "中国でアッバース朝の人々は何と呼ばれたか？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 26,
+    "originalPrompt": "アッバース朝におけるギリシア語の文献をアラビア語へ翻訳した場は？",
+    "prompt": "アッバース朝におけるギリシア語の文献をアラビア語へ翻訳した場は？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 27,
+    "originalPrompt": "アッバース朝の第7第カリフは？",
+    "prompt": "アッバース朝の第7代カリフは？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 28,
+    "originalPrompt": "タラス河畔の戦いはどことどこの戦い？",
+    "prompt": "タラス河畔の戦いはどことどこの戦い？",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 29,
+    "originalPrompt": "9世紀後半、イスラーム世界とトルコ人との接触が深まるきっかけとなった出来事は？",
+    "prompt": "9世紀後半、イスラーム世界とトルコ人との接触が深まるきっかけとなった出来事は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 30,
+    "originalPrompt": "奴隷出身の軍人を何というか？",
+    "prompt": "奴隷出身の軍人を何というか？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 31,
+    "originalPrompt": "オスマン帝国で、スルタン直属の常備歩兵軍団を何というか？",
+    "prompt": "オスマン帝国で、スルタン直属の常備歩兵軍団を何というか？",
+    "chapter": 9,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_02.md",
+    "line": 32,
+    "originalPrompt": "アッバース朝のカリフを4人答えなさい",
+    "prompt": "アッバース朝のカリフを4人答えなさい",
+    "chapter": 2,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 1,
+    "originalPrompt": "後ウマイヤ朝の建国者は？",
+    "prompt": "後ウマイヤ朝の建国者は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 2,
+    "originalPrompt": "後ウマイヤ朝の都は？",
+    "prompt": "後ウマイヤ朝の都は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 3,
+    "originalPrompt": "後ウマイヤ朝のアブド＝アッラフマーン1世が名乗った称号は？",
+    "prompt": "後ウマイヤ朝のアブド＝アッラフマーン1世が名乗った称号は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 4,
+    "originalPrompt": "カリフとアミールとイマームの違いは？",
+    "prompt": "カリフとアミールとイマームの違いは？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 5,
+    "originalPrompt": "ファーティマ朝はどのような経緯で建国されたか説明しなさい",
+    "prompt": "ファーティマ朝はどのような経緯で建国されたか説明しなさい",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 6,
+    "originalPrompt": "ファーティマ朝がエジプト征服後に首都とした都市は？",
+    "prompt": "ファーティマ朝がエジプト征服後に首都とした都市は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 7,
+    "originalPrompt": "三カリフ鼎立時代の3つのカリフ政権を、その拠点とともに答えなさい",
+    "prompt": "三カリフ鼎立時代の3つのカリフ政権を、その拠点とともに答えなさい",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 8,
+    "originalPrompt": "ファーティマ朝がカイロに建設した、イスラーム教学の中心となった学院は？",
+    "prompt": "ファーティマ朝がカイロに建設した、イスラーム教学の中心となった学院は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 9,
+    "originalPrompt": "アズハル学院について説明しなさい",
+    "prompt": "アズハル学院について説明しなさい",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 10,
+    "originalPrompt": "「バグダード入城」について説明しなさい",
+    "prompt": "「バグダード入城」について説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 11,
+    "originalPrompt": "マラーズギルドの戦いについて説明しなさい",
+    "prompt": "マラーズギルドの戦いについて説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 12,
+    "originalPrompt": "マラーズギルドの戦いで東ローマ帝国を破ったセルジューク朝のスルタンは？",
+    "prompt": "マラーズギルドの戦いで東ローマ帝国を破ったセルジューク朝のスルタンは？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 13,
+    "originalPrompt": "セルジューク朝の全盛期のスルタン",
+    "prompt": "セルジューク朝の全盛期のスルタン",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 14,
+    "originalPrompt": "セルジューク朝の全盛期を支え、ニザーミーヤ学院を建設した名宰相は？",
+    "prompt": "セルジューク朝の全盛期を支え、ニザーミーヤ学院を建設した名宰相は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 15,
+    "originalPrompt": "セルジューク朝がスンナ派教学の振興のため、各地に建設した学院は？",
+    "prompt": "セルジューク朝がスンナ派教学の振興のため、各地に建設した学院は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 16,
+    "originalPrompt": "セルジューク朝でイクター制を整備した人物は？",
+    "prompt": "セルジューク朝でイクター制を整備した人物は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 17,
+    "originalPrompt": "ルーム=セルジューク朝について説明しなさい",
+    "prompt": "ルーム=セルジューク朝について説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 18,
+    "originalPrompt": "ホラズム=シャー朝について説明しなさい",
+    "prompt": "ホラズム=シャー朝について説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 20,
+    "originalPrompt": "ホラーサーン地方でセルジューク朝を建国し、1055年にバグダードへ入城してアッバース朝カリフからスルタンの称号を受けた人物は？",
+    "prompt": "ホラーサーン地方でセルジューク朝を建国し、1055年にバグダードへ入城してアッバース朝カリフからスルタンの称号を受けた人物は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 21,
+    "originalPrompt": "アッバース朝が滅びた経緯は？",
+    "prompt": "アッバース朝が滅びた経緯は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 22,
+    "originalPrompt": "イル=ハン国の都は？",
+    "prompt": "イル＝ハン国の都は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 23,
+    "originalPrompt": "イル＝ハン国でイスラームを国教とした君主は？",
+    "prompt": "イル＝ハン国でイスラームを国教とした君主は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 24,
+    "originalPrompt": "ガザン＝ハンがイラン統治のために登用したイラン人宰相は？",
+    "prompt": "ガザン＝ハンがイラン統治のために登用したイラン人宰相は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 25,
+    "originalPrompt": "イラン系最初のイスラーム王朝は？",
+    "prompt": "イラン系最初のイスラーム王朝は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 26,
+    "originalPrompt": "サッファール朝は何故滅びた？",
+    "prompt": "サッファール朝はなぜ滅びた？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 27,
+    "originalPrompt": "南イラクで黒人奴隷が起こし、アッバース朝の混乱を深めた反乱は？",
+    "prompt": "南イラクで黒人奴隷が起こし、アッバース朝の混乱を深めた反乱は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 28,
+    "originalPrompt": "ブワイフ朝はどのような政権か？",
+    "prompt": "ブワイフ朝はどのような政権か？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_03.md",
+    "line": 29,
+    "originalPrompt": "ブワイフ朝がバグダードに入った際、アッバース朝の財政難から何が起こった？",
+    "prompt": "ブワイフ朝がバグダードに入った際、アッバース朝の財政難から何が起こった？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 1,
+    "originalPrompt": "サーマーン朝の都は？",
+    "prompt": "サーマーン朝の都は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 2,
+    "originalPrompt": "最初のトルコ系イスラーム王朝は？",
+    "prompt": "最初のトルコ系イスラーム王朝は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 3,
+    "originalPrompt": "カラ=キタイについて説明しなさい",
+    "prompt": "カラ＝キタイについて説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 4,
+    "originalPrompt": "カラ=ハン朝が建国された経緯を説明しなさい",
+    "prompt": "カラ＝ハン朝が建国された経緯を説明しなさい",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 5,
+    "originalPrompt": "サーマーン朝は何に滅ぼされたか？",
+    "prompt": "サーマーン朝は何に滅ぼされたか？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 6,
+    "originalPrompt": "ガズナ朝を建てた人物は？",
+    "prompt": "ガズナ朝を建てた人物は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 7,
+    "originalPrompt": "インドがイスラーム化したきっかけは？",
+    "prompt": "インドがイスラーム化するきっかけとなった出来事は？",
+    "chapter": 4,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 8,
+    "originalPrompt": "マラーズギルドの戦いは何につながった？",
+    "prompt": "マラーズギルドの戦いは何につながった？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 9,
+    "originalPrompt": "セルジューク朝の全盛期の君主は？",
+    "prompt": "セルジューク朝の全盛期のスルタン",
+    "chapter": 4,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 10,
+    "originalPrompt": "マリク=シャーについて説明せよ",
+    "prompt": "マリク＝シャーについて説明しなさい",
+    "chapter": 4,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 11,
+    "originalPrompt": "「統治の書」の著者は？",
+    "prompt": "『統治の書』の著者は？",
+    "chapter": 4,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_04.md",
+    "line": 12,
+    "originalPrompt": "11世紀末、イラク北部の総督から自立してできた王朝は？",
+    "prompt": "12世紀前半、イラク北部の総督から自立してできた王朝は？",
+    "chapter": 4,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 1,
+    "originalPrompt": "レコンキスタとは何なのか説明しなさい",
+    "prompt": "レコンキスタとは何か説明しなさい",
+    "chapter": 5,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 2,
+    "originalPrompt": "ムラービト朝は、どのような宗教的背景のもとで成立した？",
+    "prompt": "ムラービト朝は、どのような宗教的背景のもとで成立した？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 3,
+    "originalPrompt": "ムラービト朝は、何に対抗するためにモロッコで建国された？",
+    "prompt": "ムラービト朝は、何に対抗するためにモロッコで建国された？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 4,
+    "originalPrompt": "ムラービト朝は、なぜ都マラケシュを繁栄させることができた？",
+    "prompt": "ムラービト朝は、なぜ都マラケシュを繁栄させることができた？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 5,
+    "originalPrompt": "ムラービト朝について、「成立・対外進出・経済」の3点から説明しなさい。",
+    "prompt": "ムラービト朝について、「成立・対外進出・経済」の3点から説明しなさい。",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 6,
+    "originalPrompt": "ワッヒド朝はどのような経緯で成立した？",
+    "prompt": "ムワッヒド朝はどのような経緯で成立した？",
+    "chapter": 5,
+    "status": "表記・同義のため既存へ対応"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 7,
+    "originalPrompt": "レコンキスタで追い詰められ、1492年まで存続したイスラーム王朝は？",
+    "prompt": "レコンキスタで追い詰められ、1492年まで存続したイスラーム王朝は？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 8,
+    "originalPrompt": "スペイン王国はどのように成立し、1492年に何をした？",
+    "prompt": "スペイン王国はどのように成立し、1492年に何をした？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 9,
+    "originalPrompt": "ナスル朝の都は？",
+    "prompt": "ナスル朝の都は？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 10,
+    "originalPrompt": "ナスル朝がグラナダに建てた、イスラーム建築の傑作として知られる宮殿は？",
+    "prompt": "ナスル朝がグラナダに建てた、イスラーム建築の傑作として知られる宮殿は？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 11,
+    "originalPrompt": "アルハンブラ宮殿はどの王朝がどこに建てた？",
+    "prompt": "アルハンブラ宮殿はどの王朝がどこに建てた？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 12,
+    "originalPrompt": "後ウマイヤ朝で、929年にカリフを称して「西カリフ国」を成立させた君主は？",
+    "prompt": "後ウマイヤ朝で、929年にカリフを称して「西カリフ国」を成立させた君主は？",
+    "chapter": 3,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_05.md",
+    "line": 13,
+    "originalPrompt": "アイユーブ朝 が成立した経緯は？",
+    "prompt": "アイユーブ朝が成立した経緯は？",
+    "chapter": 5,
+    "status": "既存"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 1,
+    "originalPrompt": "クシュ王国について説明しなさい",
+    "prompt": "クシュ王国について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 2,
+    "originalPrompt": "アクスム王国について説明しなさい",
+    "prompt": "アクスム王国について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 3,
+    "originalPrompt": "単性論派について説明しなさい",
+    "prompt": "単性論派について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 4,
+    "originalPrompt": "コプト派について説明しなさい",
+    "prompt": "コプト派について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 5,
+    "originalPrompt": "マリ王国について説明しなさい",
+    "prompt": "マリ王国について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 6,
+    "originalPrompt": "トンブクトゥについて説明しなさい。",
+    "prompt": "トンブクトゥについて説明しなさい。",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 7,
+    "originalPrompt": "マンサ=ムーサについて説明しなさい",
+    "prompt": "マンサ=ムーサについて説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 8,
+    "originalPrompt": "マリ王国を滅ぼし、トンブクトゥをイスラーム教学の中心として発展させた黒人イスラーム国家は？",
+    "prompt": "マリ王国に代わって西アフリカで勢力を広げ、トンブクトゥをイスラーム教学の中心として発展させた国家は？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 9,
+    "originalPrompt": "ソンガイ王国について説明しなさい",
+    "prompt": "ソンガイ王国について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 10,
+    "originalPrompt": "チャド湖周辺に成立した黒人イスラーム国家は？",
+    "prompt": "チャド湖周辺に成立した黒人イスラーム国家は？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 11,
+    "originalPrompt": "アフリカ東岸でインド洋交易をやっていたムスリム商人が定住したことで、どのような都市が発展した？",
+    "prompt": "アフリカ東岸でインド洋交易をやっていたムスリム商人が定住したことで、どのような都市が発展した？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 12,
+    "originalPrompt": "スワヒリ語はどのように成立した？",
+    "prompt": "スワヒリ語はどのように成立した？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 13,
+    "originalPrompt": "スワヒリ文化について説明しなさい。",
+    "prompt": "スワヒリ文化について説明しなさい。",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 14,
+    "originalPrompt": "アフリカ東岸では、ムスリム商人の活動によって何が起こった？",
+    "prompt": "アフリカ東岸では、ムスリム商人の活動によって何が起こった？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 15,
+    "originalPrompt": "鄭和の艦隊とヴァスコ＝ダ＝ガマの双方が立ち寄った東アフリカの港市は？",
+    "prompt": "鄭和の艦隊とヴァスコ＝ダ＝ガマの双方が立ち寄った東アフリカの港市は？",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_06.md",
+    "line": 16,
+    "originalPrompt": "モノモタパ王国について説明しなさい",
+    "prompt": "モノモタパ王国について説明しなさい",
+    "chapter": 6,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 1,
+    "originalPrompt": "ティムール朝はどのような経緯で成立した？",
+    "prompt": "ティムール朝はどのような経緯で成立した？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 2,
+    "originalPrompt": "ティムールがカスピ海北岸へ進出して攻撃し、大きな打撃を与えたモンゴル系国家は？",
+    "prompt": "ティムールがカスピ海北岸へ進出して攻撃し、大きな打撃を与えたモンゴル系国家は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 3,
+    "originalPrompt": "トゥグルク朝が衰退した理由を説明しなさい。",
+    "prompt": "トゥグルク朝が衰退した理由を説明しなさい。",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 4,
+    "originalPrompt": "1402年、ティムール軍がオスマン朝のバヤジット1世を破って捕虜とし、オスマン朝を一時混乱に陥れた戦いは？",
+    "prompt": "1402年、ティムール軍がオスマン朝のバヤジット1世を破って捕虜とし、オスマン朝を一時混乱に陥れた戦いは？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 5,
+    "originalPrompt": "アンカラの戦いについて説明しなさい。",
+    "prompt": "アンカラの戦いについて説明しなさい。",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 6,
+    "originalPrompt": "ティムールがアンカラの戦い後、オスマン朝のバルカン支配を奪おうとしなかった理由を説明しなさい。",
+    "prompt": "ティムールがアンカラの戦い後、オスマン朝のバルカン支配を奪おうとしなかった理由を説明しなさい。",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 7,
+    "originalPrompt": "ティムールの対明遠征には、彼のどのような政治的自己認識が表れているか説明しなさい。",
+    "prompt": "ティムールの対明遠征には、彼のどのような政治的自己認識が表れているか説明しなさい。",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 8,
+    "originalPrompt": "ティムールの死後、シャー＝ルフが本拠地とし、ティムール朝の都となった都市は？",
+    "prompt": "ティムールの死後、シャー＝ルフが本拠地とし、ティムール朝の都となった都市は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 9,
+    "originalPrompt": "ティムールの死後に実権を握り、ヘラートを都として明・オスマン帝国との関係修復や交易・文化の保護を進めた人物は？",
+    "prompt": "ティムールの死後に実権を握り、ヘラートを都として明・オスマン帝国との関係修復や交易・文化の保護を進めた人物は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 10,
+    "originalPrompt": "シャー＝ルフからサマルカンドの統治を任された人物は？",
+    "prompt": "シャー＝ルフからサマルカンドの統治を任された人物は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 11,
+    "originalPrompt": "ティムール朝期のサマルカンドで作られ、当時もっとも精密とされた天文学上の成果は？",
+    "prompt": "ティムール朝期のサマルカンドで作られ、当時もっとも精密とされた天文学上の成果は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 12,
+    "originalPrompt": "ティムール死後、ティムール朝の対外政策はどのように変化した？",
+    "prompt": "ティムール死後、ティムール朝の対外政策はどのように変化した？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 13,
+    "originalPrompt": "ティムール朝の文化が、モンゴル系王朝の文化を受け継いでいたことを示す具体例は？",
+    "prompt": "ティムール朝の文化が、モンゴル系王朝の文化を受け継いでいたことを示す具体例は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 14,
+    "originalPrompt": "ウズベク人とは何か説明しなさい。",
+    "prompt": "ウズベク人とは何か説明しなさい。",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 15,
+    "originalPrompt": "トルコ化したモンゴル系部族を起源とし、ティムール朝を滅ぼす勢力となった中央アジアの遊牧民は？",
+    "prompt": "トルコ化したモンゴル系部族を起源とし、ティムール朝を滅ぼす勢力となった中央アジアの遊牧民は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 16,
+    "originalPrompt": "ウズベク人のシャイバーニーがブハラを拠点に建て、ティムール朝を滅ぼした王朝は？",
+    "prompt": "ウズベク人のシャイバーニーがブハラを拠点に建て、ティムール朝を滅ぼした王朝は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 17,
+    "originalPrompt": "ウズベク人のシャイバーニーが拠点とし、シャイバーン朝を建てた都市は？",
+    "prompt": "ウズベク人のシャイバーニーが拠点とし、シャイバーン朝を建てた都市は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 18,
+    "originalPrompt": "3ハン国とは何か説明しなさい",
+    "prompt": "3ハン国とは何か説明しなさい",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 19,
+    "originalPrompt": "シャイバーニーが建てたブハラ＝ハン国とは別に、別のウズベク人部族が建てたハン国は？",
+    "prompt": "シャイバーニーが建てたブハラ＝ハン国とは別に、別のウズベク人部族が建てたハン国は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 20,
+    "originalPrompt": "18世紀にブハラ＝ハン国から分かれて成立したハン国は？",
+    "prompt": "18世紀にブハラ＝ハン国から分かれて成立したハン国は？",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_07.md",
+    "line": 21,
+    "originalPrompt": "カザフ=ハン国が成立した経緯について説明しなさい",
+    "prompt": "カザフ=ハン国が成立した経緯について説明しなさい",
+    "chapter": 7,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 1,
+    "originalPrompt": "サファヴィー朝について説明しなさい。",
+    "prompt": "サファヴィー朝について説明しなさい。",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 2,
+    "originalPrompt": "サファヴィー朝建国時に、イスマーイール1世を軍事的に支えたトルコ系遊牧民は？",
+    "prompt": "サファヴィー朝建国時に、イスマーイール1世を軍事的に支えたトルコ系遊牧民は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 3,
+    "originalPrompt": "キジルバシュについて説明しなさい。",
+    "prompt": "キジルバシュについて説明しなさい。",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 4,
+    "originalPrompt": "サファヴィー朝の君主が、イラン民族を結集してオスマン帝国に対抗するために名乗った伝統的な君主称号は？",
+    "prompt": "サファヴィー朝の君主が、イラン民族を結集してオスマン帝国に対抗するために名乗った伝統的な君主称号は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 5,
+    "originalPrompt": "チャルディラーンの戦いについて説明しなさい。",
+    "prompt": "チャルディラーンの戦いについて説明しなさい。",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 6,
+    "originalPrompt": "1514年、セリム1世率いるオスマン帝国軍がサファヴィー朝を破り、東アナトリア方面で優位に立った戦いは？",
+    "prompt": "1514年、セリム1世率いるオスマン帝国軍がサファヴィー朝を破り、東アナトリア方面で優位に立った戦いは？",
+    "chapter": 10,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 7,
+    "originalPrompt": "チャルディラーンの戦いでサファヴィー朝を破り、東アナトリアを獲得したオスマン帝国のスルタンは？",
+    "prompt": "チャルディラーンの戦いでサファヴィー朝を破り、東アナトリアを獲得したオスマン帝国のスルタンは？",
+    "chapter": 10,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 8,
+    "originalPrompt": "サファヴィー朝の第5代君主は？",
+    "prompt": "サファヴィー朝の第5代君主は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 9,
+    "originalPrompt": "アッバース1世について説明しなさい。",
+    "prompt": "アッバース1世について説明しなさい。",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 10,
+    "originalPrompt": "ゴラームとは何か説明しなさい。",
+    "prompt": "ゴラームとは何か説明しなさい。",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 11,
+    "originalPrompt": "アッバース1世がキジルバシュへの依存を減らしてゴラームを重用したのはなぜ？",
+    "prompt": "アッバース1世がキジルバシュへの依存を減らしてゴラームを重用したのはなぜ？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 12,
+    "originalPrompt": "サファヴィー朝がポルトガルをホルムズ島から追い出す際、イギリスが協力したのはなぜ？",
+    "prompt": "サファヴィー朝がポルトガルをホルムズ島から追い出す際、イギリスが協力したのはなぜ？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 13,
+    "originalPrompt": "サファヴィー朝で、交易路の整備とともに増設された宿泊施設は？",
+    "prompt": "サファヴィー朝で、交易路の整備とともに増設された宿泊施設は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 14,
+    "originalPrompt": "アッバース1世が遷都し、「世界の半分」と称賛されるほど繁栄したサファヴィー朝の都は？",
+    "prompt": "アッバース1世が遷都し、「世界の半分」と称賛されるほど繁栄したサファヴィー朝の都は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 15,
+    "originalPrompt": "アッバース1世時代のイスファハーンで、王宮・モスク・マドラサが集められた都市中心部の広場は？",
+    "prompt": "アッバース1世時代のイスファハーンで、王宮・モスク・マドラサが集められた都市中心部の広場は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 16,
+    "originalPrompt": "アッバース1世がイスファハーンに建てた、青や黄色のタイル装飾で知られるイスラーム建築は？",
+    "prompt": "アッバース1世がイスファハーンに建てた、青や黄色のタイル装飾で知られるイスラーム建築は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 17,
+    "originalPrompt": "アッバース1世時代のイスファハーンで国際商業を活発化させたキリスト教徒の商人集団は？",
+    "prompt": "アッバース1世時代のイスファハーンで国際商業を活発化させたキリスト教徒の商人集団は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 18,
+    "originalPrompt": "アッバース1世時代、ヨーロッパ人がイスファハーンに求めて来た代表的な商品は？",
+    "prompt": "アッバース1世時代、ヨーロッパ人がイスファハーンに求めて来た代表的な商品は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 19,
+    "originalPrompt": "18世紀に入るとサファヴィー朝の各地で経済が悪化し始めたのは何故？",
+    "prompt": "18世紀に入るとサファヴィー朝の各地で経済が悪化し始めたのは何故？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 20,
+    "originalPrompt": "18世紀、サファヴィー朝衰退期にイスファハーンを占領した民族は？",
+    "prompt": "18世紀、サファヴィー朝衰退期にイスファハーンを占領した民族は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 21,
+    "originalPrompt": "サファヴィー朝を滅ぼし、アフシャール朝を建てたトルコ系アフシャール人の君主は？",
+    "prompt": "サファヴィー朝を滅ぼし、アフシャール朝を建てたトルコ系アフシャール人の君主は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 22,
+    "originalPrompt": "サファヴィー朝滅亡後、アフガン人が自立して建てた王朝は？",
+    "prompt": "サファヴィー朝滅亡後、アフガン人が自立して建てた王朝は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 23,
+    "originalPrompt": "18世紀末、テヘランを都にガージャール朝を建ててイランを統一した人物は？",
+    "prompt": "18世紀末、テヘランを都にガージャール朝を建ててイランを統一した人物は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 24,
+    "originalPrompt": "18世紀末、アーガー＝ムハンマドがテヘランを都に建て、イランを統一した王朝は？",
+    "prompt": "18世紀末、アーガー＝ムハンマドがテヘランを都に建て、イランを統一した王朝は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 25,
+    "originalPrompt": "ガージャール朝が都とした都市は？",
+    "prompt": "ガージャール朝が都とした都市は？",
+    "chapter": 8,
+    "status": "追加"
+  },
+  {
+    "source": "SekaishiSO/QA_08.md",
+    "line": 26,
+    "originalPrompt": "ナーディル＝シャーがサファヴィー朝を滅ぼした後に建てた王朝は？",
+    "prompt": "ナーディル＝シャーがサファヴィー朝を滅ぼした後に建てた王朝は？",
+    "chapter": 8,
+    "status": "追加"
+  }
+]

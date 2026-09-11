@@ -1104,12 +1104,33 @@ export async function loadWorldHistorySODecks() {
       answerAlt: "地図の解答。" + question.answer.replaceAll("\n", "。"),
     };
   }
-  return { terms, decks: [{
-    id: "deck-1", number: 1, sourcePath, sourceText,
-    sourceFile: path.basename(sourcePath), version: "world-history-so-deck-1-v1",
-    contentVersion: sourceVersion(sourceText + mapsText + JSON.stringify(terms)), datasetLabel: terms[0].datasetLabel,
-    difficultyLabel: "一問一答", terms,
-  }] };
+  const chapterText = await readFile(path.join(path.dirname(sourcePath), "chapters.json"), "utf8");
+  const classification = JSON.parse(chapterText);
+  const assignments = new Map(classification.questions.map((item) => [item.prompt, item]));
+  if (assignments.size !== terms.length || classification.questions.length !== terms.length) {
+    throw new Error("世界史SOの章分類に不足または重複があります。");
+  }
+  const assigned = new Set();
+  const decks = classification.chapters.flatMap((chapter) => {
+    const chapterTerms = terms.filter((term) => assignments.get(term.stages.beginner[0].prompt)?.chapter === chapter.number);
+    if (!chapterTerms.length) return [];
+    const datasetLabel = `世界史SO｜${String(chapter.number).padStart(2, "0")} ${chapter.title}`;
+    for (const term of chapterTerms) {
+      assigned.add(term.id);
+      term.datasetLabel = datasetLabel;
+      const question = term.stages.beginner[0];
+      const legacyId = assignments.get(question.prompt).legacyQuestionId;
+      if (legacyId && legacyId !== question.id) throw new Error("既存問題の識別番号が変わっています。");
+    }
+    return [{
+      id: `deck-${chapter.number}`, number: chapter.number, sourcePath, sourceText,
+      sourceFile: path.basename(sourcePath), version: `world-history-so-chapter-${String(chapter.number).padStart(2, "0")}-v1`,
+      contentVersion: sourceVersion(JSON.stringify(chapterTerms)), datasetLabel,
+      difficultyLabel: chapter.title, terms: chapterTerms,
+    }];
+  });
+  if (assigned.size !== terms.length) throw new Error("世界史SOに章を割り当てていない問題があります。");
+  return { terms, decks, classification };
 }
 
 export async function loadMindsetDecks() {
@@ -3358,7 +3379,9 @@ export async function writeSubjectData(definition, decks) {
   const deckEntries = [];
   for (const deck of decks) {
     const basePath =
-      deck.number === 1
+      definition.id === "world-history-so"
+        ? `subjects/${definition.id}/${deck.id}/${deck.contentVersion}`
+      : deck.number === 1
         ? `subjects/${definition.id}`
         : `subjects/${definition.id}/${deck.id}`;
     const chunks = [];

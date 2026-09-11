@@ -54,15 +54,18 @@ assert.equal(entry.title, "世界史SO");
 assert.equal(entry.questionCount, terms.length);
 const subject = JSON.parse(await readFile(new URL(`../public/data/${entry.indexPath}`, import.meta.url), "utf8"));
 assert.equal(subject.simpleQuestions, true);
-assert.equal(subject.version, "world-history-so-deck-1-v1");
+assert.equal(subject.version, decks[0].version);
 assert.deepEqual(subject.availableStages, ["beginner"]);
 const generated = [];
-for (const chunk of subject.chunks) {
-  const data = JSON.parse(await readFile(new URL(`../public/data/${chunk.path}`, import.meta.url), "utf8"));
-  assert.equal(data.subjectId, "world-history-so");
-  generated.push(...data.terms);
+for (const deck of entry.decks) {
+  const deckIndex = JSON.parse(await readFile(new URL(`../public/data/${deck.indexPath}`, import.meta.url), "utf8"));
+  for (const chunk of deckIndex.chunks) {
+    const data = JSON.parse(await readFile(new URL(`../public/data/${chunk.path}`, import.meta.url), "utf8"));
+    assert.equal(data.subjectId, "world-history-so");
+    generated.push(...data.terms);
+  }
 }
-assert.deepEqual(generated, terms);
+assert.deepEqual(generated, decks.flatMap((deck) => deck.terms));
 console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追記時の識別番号、出題・評価・復習、CSVの異常検知を確認しました。`);
 
 // 地図の問題面から答えが漏れず、次の通常問題へ図が残らないことを確認する。

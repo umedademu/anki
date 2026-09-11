@@ -4,6 +4,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { migrateSOProgress } from "./world-history-so-progress.mjs";
 import { loadWorldHistorySODecks, worldHistorySODefinition, writeSubjectData } from "./build-learning-data.mjs";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -22,16 +23,26 @@ assert.equal(original.schemaVersion, 3);
 assert.ok(original.subjects.length > 0);
 const source = await loadWorldHistorySODecks();
 const entry = await writeSubjectData(worldHistorySODefinition, source.decks);
-const index = JSON.parse(await readFile(path.join(output, entry.indexPath), "utf8"));
+const indexes = await Promise.all(entry.decks.map(async (deck) => JSON.parse(await readFile(path.join(output, deck.indexPath), "utf8"))));
 const previous = original.subjects.find((subject) => subject.id === subjectId);
 if (previous) {
-  const previousIndex = await fetchJson(previous.indexPath);
-  assert.equal(previousIndex.version, index.version, "既存の学習履歴版を維持してください。");
-  const currentIds = new Set(source.terms.map((term) => term.id));
-  for (const chunk of previousIndex.chunks) {
-    const oldChunk = await fetchJson(chunk.path);
-    assert.ok(oldChunk.terms.every((term) => currentIds.has(term.id)),
-      "既存問題の削除または問題文変更を検出しました。識別番号の移行を先に検討してください。");
+  const current = new Map(source.decks.flatMap((deck) => deck.terms.map((term) => [term.id, { term, version: deck.version }])));
+  const legacyIds = new Set(source.classification.questions.map((item) => item.legacyQuestionId).filter(Boolean));
+  for (const deck of previous.decks ?? [previous]) {
+    const previousIndex = await fetchJson(deck.indexPath);
+    for (const chunk of previousIndex.chunks) {
+      const oldChunk = await fetchJson(chunk.path);
+      for (const term of oldChunk.terms) {
+        const next = current.get(term.id);
+        assert.ok(next, "既存問題の削除または問題文変更を検出しました。");
+        for (const question of term.stages.beginner) {
+          assert.ok(next.term.stages.beginner.some((item) => item.id === question.id), "問題の識別番号が変わっています。");
+          assert.ok(previousIndex.version === next.version ||
+            (previousIndex.version === source.classification.legacyVersion && legacyIds.has(question.id)),
+            "履歴版の変更には明示的な引継ぎ対象が必要です。");
+        }
+      }
+    }
   }
 }
 const subjects = original.subjects.filter((subject) => subject.id !== subjectId);
@@ -43,7 +54,7 @@ const catalog = {
 assert.deepEqual(catalog.subjects.filter((s) => s.id !== subjectId),
   original.subjects.filter((s) => s.id !== subjectId));
 console.log(`世界史SO ${source.terms.length}問、カテゴリ: ${[...new Set(source.terms.map((term) => term.category))].join("、")}`);
-console.log(`既存${original.subjects.filter((s) => s.id !== subjectId).length}科目と画像・音声・学習履歴は変更しません。`);
+console.log(`既存${original.subjects.filter((s) => s.id !== subjectId).length}科目と画像・音声は維持し、世界史SOの習熟度だけ新デッキへ引き継ぎます。`);
 if (!process.argv.includes("--apply")) {
   console.log("予行表示のみです。登録するには --apply を付けてください。");
   process.exit(0);
@@ -72,6 +83,8 @@ for (const term of source.terms) {
   for (const question of term.stages.beginner) {
     if (!question.questionMap) continue;
     for (const key of [question.questionMap.path, question.questionMap.answerPath].filter(Boolean)) {
+      const existingMap = await fetch(`${baseUrl}/${key}?so=${Date.now()}`, { cache: "no-store" });
+      if (existingMap.ok && await existingMap.text() === await readFile(path.join(output, key), "utf8")) continue;
       await put(key);
       const response = await fetch(`${baseUrl}/${key}?so=${Date.now()}`, { cache: "no-store" });
       assert.ok(response.ok, "地図をCloudflareから取得できません。");
@@ -80,8 +93,11 @@ for (const term of source.terms) {
     }
   }
 }
-for (const chunk of index.chunks) await publishAndVerify(chunk.path);
-await publishAndVerify(entry.indexPath);
+for (const index of indexes) {
+  for (const chunk of index.chunks) await publishAndVerify(chunk.path);
+}
+for (const deck of entry.decks) await publishAndVerify(deck.indexPath);
+await migrateSOProgress(source.decks, source.classification);
 assert.deepEqual(await fetchJson("index.json"), original, "作業中に科目一覧が変わりました。再実行してください。");
 await writeFile(path.join(output, "index.json"), JSON.stringify(catalog) + "\n");
 await publishAndVerify("index.json");

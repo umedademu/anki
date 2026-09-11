@@ -968,6 +968,7 @@ body.is-study-menu-open {
 
 .setup-grid {
   display: grid;
+  align-items: start;
   margin-top: 30px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 18px;
@@ -1016,6 +1017,8 @@ body.is-study-menu-open {
 
 .setup-field {
   display: grid;
+  min-width: 0;
+  align-content: start;
   gap: 8px;
 }
 
@@ -1028,55 +1031,96 @@ body.is-study-menu-open {
 }
 
 .deck-picker-field {
+  grid-column: 1 / -1;
   min-width: 0;
   margin: 0;
   padding: 0;
   border: 0;
 }
 
-.deck-filter-options {
+.deck-picker-field > legend {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.deck-picker-heading {
   display: flex;
-  min-height: 50px;
-  padding: 7px;
-  align-items: stretch;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 16px;
+}
+
+.deck-selection-summary {
+  color: var(--theme-muted, #68746d);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.deck-filter-options {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  padding: 8px;
   gap: 6px;
   background: var(--theme-surface, #fff);
   border: 1px solid var(--theme-border, rgb(34 80 53 / 18%));
-  border-radius: 13px;
+  border-radius: 14px;
 }
 
 .deck-filter-choice {
   display: flex;
   min-width: 0;
-  padding: 7px 10px;
+  min-height: 52px;
+  padding: 12px 14px;
   align-items: center;
-  flex: 1 1 0;
-  gap: 7px;
-  color: var(--theme-muted, #526359);
-  background: var(--theme-surface-subtle, #f4f7f2);
+  gap: 12px;
+  color: var(--theme-text, #26372c);
+  background: var(--theme-surface, #f4f7f2);
+  border: 1px solid transparent;
   border-radius: 9px;
   cursor: pointer;
+}
+
+.deck-filter-choice:hover {
+  border-color: var(--theme-border-accent, #82aa8c);
 }
 
 .deck-filter-choice:has(input:checked) {
   color: var(--theme-accent, #245f3f);
   background: var(--theme-surface-subtle, #e5f1e8);
-  box-shadow: inset 0 0 0 1px rgb(43 103 71 / 22%);
+  border-color: var(--theme-border-accent, #82aa8c);
+}
+
+.deck-filter-choice:focus-within {
+  outline: 2px solid var(--theme-accent, #245f3f);
+  outline-offset: 1px;
 }
 
 .deck-filter-choice input {
-  width: 17px;
-  height: 17px;
+  width: 19px;
+  height: 19px;
   margin: 0;
   flex: 0 0 auto;
   accent-color: #2b6747;
 }
 
-.deck-filter-choice span {
+.deck-filter-name {
+  flex: 1 1 auto;
   min-width: 0;
+  overflow-wrap: anywhere;
+  font-size: 0.84rem;
+  font-weight: 750;
+  line-height: 1.6;
+}
+
+.deck-filter-count {
+  flex: 0 0 auto;
+  color: var(--theme-muted, #68746d);
   font-size: 0.72rem;
-  font-weight: 850;
-  line-height: 1.25;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .setup-field select {

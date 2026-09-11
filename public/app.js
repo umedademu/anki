@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.228";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.228";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.229";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.229";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.228";
+} from "./original-session.js?v=0.229";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -4239,6 +4239,8 @@ function deckDisplayLabel(deck) {
 
 function setDeckOptions(decks, selectedDeckIds) {
   const selected = new Set(selectedDeckIds);
+  document.querySelector("#deck-selection-summary").textContent =
+    `${decks.filter((deck) => selected.has(deck.id)).length} / ${decks.length} 選択中`;
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
       const label = document.createElement("label");
@@ -4249,8 +4251,15 @@ function setDeckOptions(decks, selectedDeckIds) {
       input.value = deck.id;
       input.checked = selected.has(deck.id);
       const text = document.createElement("span");
+      text.className = "deck-filter-name";
       text.textContent = deckDisplayLabel(deck).replaceAll("｜", " ");
       label.append(input, text);
+      if (Number.isInteger(deck.questionCount)) {
+        const count = document.createElement("small");
+        count.className = "deck-filter-count";
+        count.textContent = `${deck.questionCount.toLocaleString("ja-JP")}問`;
+        label.append(count);
+      }
       return label;
     }),
   );
@@ -5604,7 +5613,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.228｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.229｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

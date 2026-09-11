@@ -83,7 +83,19 @@ try {
   assert.equal(loaded.progress.questions[questionId], undefined);
   const listening = { ...studySession, studyMode: "listen-answer" };
   await api.saveCloudStudySession(version, listening);
+  {
+    const previousWindow = globalThis.window;
+    const rejectFetch = globalThis.fetch;
+    globalThis.window = { ANKI_CONFIG: { progressApiBaseUrl: "https://test.invalid" }, localStorage: { ...previousWindow?.localStorage, getItem: (key) => key === "anki-cloud-access-key:v1" ? "test-key" : previousWindow?.localStorage.getItem(key) } };
+    globalThis.fetch = async (url, options) => {
+      assert.ok(url.includes("/v1/study-time/"));
+      assert.equal(JSON.parse(options.body).session, null);
+      return Response.json({ updatedAt: new Date().toISOString(), studyDate: "2026-09-11", session: null });
+    };
+    try {
   await api.saveCloudStudyTime(version, { studySeconds: 40 }, { ...listening, studySeconds: 40 });
+    } finally { globalThis.window = previousWindow; globalThis.fetch = rejectFetch; }
+  }
   api.endOriginalSession();
   api = await reload();
   await api.beginOriginalSession(settings, questions, () => storage);

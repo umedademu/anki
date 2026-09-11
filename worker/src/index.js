@@ -1542,6 +1542,15 @@ async function handleRequest(request, env) {
         400,
       );
     }
+    // オリジナルは日別時間だけを保存し、途中状態は端末から送信しない。
+    if (/^original-[a-f0-9-]{36}$/.test(datasetVersion) &&
+        timeEntry.subjectId === "original" && body.session === null) {
+      const updatedAt = new Date().toISOString();
+      await env.DB.batch([studyTimeStatement(env, timeEntry, updatedAt)]);
+      return json(request, env, {
+        ok: true, updatedAt, studyDate: studyDateAtFourJst(updatedAt), session: null,
+      });
+    }
     const session = normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,

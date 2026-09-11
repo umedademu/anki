@@ -50,7 +50,19 @@ assert.equal(session.originalSettings().goodSeconds, 12);
 await session.saveCloudStudySession(version, null);
 await session.saveCloudStudyActivity(version, { eventId: "event-1" }, null, { completeRoundId: "round-2", completeSession: true });
 await session.undoCloudStudyActivity(version, "event-1", null, { deleteRoundId: "round-2" });
+  {
+    const previousWindow = globalThis.window;
+    const rejectFetch = globalThis.fetch;
+    globalThis.window = { ANKI_CONFIG: { progressApiBaseUrl: "https://test.invalid" }, localStorage: { ...previousWindow?.localStorage, getItem: (key) => key === "anki-cloud-access-key:v1" ? "test-key" : previousWindow?.localStorage.getItem(key) } };
+    globalThis.fetch = async (url, options) => {
+      assert.ok(url.includes("/v1/study-time/"));
+      assert.equal(JSON.parse(options.body).session, null);
+      return Response.json({ updatedAt: new Date().toISOString(), studyDate: "2026-09-11", session: null });
+    };
+    try {
 await session.saveCloudStudyTime(version, { eventId: "time-1", studySeconds: 10 }, null);
+    } finally { globalThis.window = previousWindow; globalThis.fetch = rejectFetch; }
+  }
 await session.deleteCloudStudySession(version);
 await session.resetCloudProgress(version);
 assert.deepEqual((await session.loadCloudState(2, version)).progress.questions, {});

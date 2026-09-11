@@ -9,15 +9,15 @@
     />
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="/styles.css?v=0.225" />
+    <link rel="stylesheet" href="/styles.css?v=0.226" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.225" type="module"></script>
+    <script src="/app.js?v=0.226" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.225</span>
+        <span class="app-version">v0.226</span>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
         <a class="header-link" href="/settings.html">設定</a>
@@ -28,13 +28,13 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel" id="loading-panel">
-        <p class="eyebrow">v0.225｜科目別学習</p>
+        <p class="eyebrow">v0.226｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
 
       <section class="subject-panel is-hidden" id="subject-panel">
-        <p class="eyebrow">v0.225｜科目を選ぶ</p>
+        <p class="eyebrow">v0.226｜科目を選ぶ</p>
         <h1>学習する科目を選ぶ</h1>
         <p class="setup-description">
           科目を選んで学習するか、登録した動画をランダム再生できます。
@@ -101,7 +101,7 @@
           <textarea id="original-input" data-original="input" rows="10" autocomplete="off" spellcheck="false" aria-describedby="original-help original-status" placeholder="ここに問題と回答を貼り付けてください"></textarea>
           <p id="original-status" data-original="status" role="status"></p>
           <p data-original="storage-status" role="status"></p>
-          <p>ブラウザーの保存データを消すと問題や学習記録も消えます。音声は他教科と同じ方式で生成・再利用します。</p>
+          <p>ブラウザーの保存データを消すと問題や復習記録も消えます。学習時間はCloudflareへ保存し、「学習記録」で確認できます（アクセスキーが必要です）。音声は他教科と同じ方式で生成・再利用します。</p>
           <button type="button" class="secondary-button" data-original="delete">保存した問題を削除</button>
           <button type="button" class="primary-button" data-original="start" disabled>学習設定へ進む</button>
         </div>
@@ -109,7 +109,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.225｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.226｜学習を始める</p>
         <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
         <p class="setup-description" id="setup-description">
           すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。

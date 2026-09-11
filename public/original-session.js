@@ -179,7 +179,11 @@ export async function saveCloudStudyActivity(version, activity, session, change 
 }
 export async function saveCloudStudyTime(version, entry, session, options) {
   const store = memory(version);
-  return store ? changeStoredProgress(store, (next) => result(next, session)) : cloud.saveCloudStudyTime(version, entry, session, options);
+  if (!store) return cloud.saveCloudStudyTime(version, entry, session, options);
+  // 日別の時間だけを共有し、問題本文や一周の途中状態は端末に保持する。
+  const saved = await cloud.saveCloudStudyTime(version, entry, null, options);
+  const local = changeStoredProgress(store, (next) => result(next, session));
+  return { ...local, updatedAt: saved.updatedAt, studyDate: saved.studyDate };
 }
 export async function undoCloudStudyActivity(version, eventId, session, change = {}) {
   const store = memory(version);

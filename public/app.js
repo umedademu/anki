@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.225";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.225";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.226";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.226";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.225";
+} from "./original-session.js?v=0.226";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -2691,6 +2691,12 @@ window.addEventListener("pagehide", () => {
   if (isOriginalSession()) {
     stopStudyClock({ includeHidden: true });
     saveOriginalBeforeHide();
+    const entry = captureStudyTimeEntry();
+    if (entry && entry.studySeconds > state.studyTimeSavedSeconds) {
+      void saveCloudStudyTime(state.sessionDatasetVersion, entry, captureActiveSession(), {
+        keepalive: true,
+      }).catch(() => {});
+    }
     showSubjectSelection();
   }
 });
@@ -4449,7 +4455,7 @@ function updateSetupPreview() {
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
-    ? isOriginalSession() ? "問題・学習記録：このブラウザーに保存" : "学習記録：Cloudflareに接続済み"
+    ? isOriginalSession() ? "問題・復習記録：このブラウザーに保存／学習時間：Cloudflareへ保存" : "学習記録：Cloudflareに接続済み"
     : '学習記録：未接続　<a href="/settings.html">設定ページでアクセスキーを登録</a>';
   updateRoundProgressDisplay();
 }
@@ -5598,7 +5604,7 @@ async function activateDecks(deckIds) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.225｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.226｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

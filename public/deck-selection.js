@@ -19,7 +19,12 @@ export function createSessionDatasetVersion(
   if (deckIds.length === 1) {
     return datasetVersions.get(deckIds[0]) ?? "";
   }
-  const datasetVersion = `mix-${subjectId}-${[...deckIds].sort().join("-")}`;
+  const sortedIds = [...deckIds].sort();
+  let datasetVersion = `mix-${subjectId}-${sortedIds.join("-")}`;
+  // 既存の保存先は維持し、長すぎる数値デッキの組合せだけ短縮する。
+  if (datasetVersion.length > 100 && sortedIds.every((id) => /^deck-[1-9]\d*$/.test(id))) {
+    datasetVersion = `mix-${subjectId}-decks-${sortedIds.map((id) => id.slice(5)).join("-")}`;
+  }
   if (!/^[A-Za-z0-9_-]{1,100}$/.test(datasetVersion)) {
     throw new Error("選択したデッキの組合せが多すぎます。");
   }

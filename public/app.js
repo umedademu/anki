@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.235";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.235";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.236";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.236";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.235";
+} from "./original-session.js?v=0.236";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -5620,7 +5620,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.235｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.236｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5646,9 +5646,7 @@ function renderSubjectOptions() {
       button.dataset.originalStudy = "true";
       const title = document.createElement("strong");
       title.textContent = "オリジナル";
-      const description = document.createElement("small");
-      description.textContent = "問題・回答・解説を貼り付けて学習する。問題と学習記録はこの端末に保存";
-      button.append(title, description);
+      button.append(title);
       return button;
     })(),
     ...state.subjectEntries.map((subject) => {
@@ -5658,11 +5656,7 @@ function renderSubjectOptions() {
       button.dataset.subjectId = subject.id;
       const title = document.createElement("strong");
       title.textContent = subject.title;
-      const description = document.createElement("small");
-      description.textContent = subject.learningType === mindsetLearningType
-        ? `${subject.description}（${subject.termCount}${termUnitLabel(subject)}）`
-        : `${subject.description}（${subject.termCount}${termUnitLabel(subject)}・${subject.questionCount}問）`;
-      button.append(title, description);
+      button.append(title);
       return button;
     }),
     (() => {
@@ -5672,9 +5666,7 @@ function renderSubjectOptions() {
       button.dataset.randomVideoAction = "play";
       const title = document.createElement("strong");
       title.textContent = "動画をランダム再生";
-      const description = document.createElement("small");
-      description.textContent = "登録動画から重複なく1本を選んで再生する";
-      button.append(title, description);
+      button.append(title);
       return button;
     })(),
   );

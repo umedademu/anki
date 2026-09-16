@@ -648,263 +648,81 @@ body.is-study-menu-open {
   line-height: 1.7;
 }
 
-/* --- 科目選択セクションヘッダー --- */
-.subject-section-header {
+.subject-divider {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 36px;
-  padding-top: 24px;
-  border-top: 1px solid var(--theme-border, rgb(34 80 53 / 12%));
-}
-
-.subject-section-title-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.subject-section-title {
-  margin: 0;
-  color: var(--theme-text, #1e3527);
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: 0.02em;
-}
-
-.subject-section-desc {
-  margin: 0;
-  color: var(--theme-muted, #66736b);
-  font-size: 0.85rem;
-  line-height: 1.5;
-}
-
-/* --- 科目ジャンル絞り込みフィルター --- */
-.subject-filter-nav {
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding: 4px 2px 8px;
-  scrollbar-width: thin;
-  -webkit-overflow-scrolling: touch;
-}
-
-.subject-filter-nav::-webkit-scrollbar {
-  height: 4px;
-}
-
-.subject-filter-nav::-webkit-scrollbar-thumb {
-  background: var(--theme-border, #cbd5e1);
-  border-radius: 9999px;
-}
-
-.subject-filter-chip {
-  display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 7px 15px;
+  justify-content: center;
+  gap: 16px;
+  margin: 36px 0 20px;
+  color: var(--theme-muted, #778179);
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--theme-muted, #556b5d);
-  background: var(--theme-surface-subtle, #f4f7f2);
-  border: 1px solid var(--theme-border, rgb(34 80 53 / 15%));
-  border-radius: 9999px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.15s ease;
+  text-align: center;
 }
 
-.subject-filter-chip:hover {
-  background: var(--theme-surface, #e8efe9);
-  color: var(--theme-text, #1e3527);
-  border-color: var(--theme-border, rgb(34 80 53 / 30%));
+.subject-divider::before,
+.subject-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--theme-border, rgb(34 80 53 / 14%));
 }
 
-.subject-filter-chip.is-active {
-  background: var(--theme-text, #24442f);
-  color: var(--theme-surface, #ffffff);
-  border-color: var(--theme-text, #24442f);
-  box-shadow: 0 3px 8px rgb(36 68 47 / 20%);
-}
-
-.subject-filter-chip .filter-count {
-  font-size: 0.72rem;
-  opacity: 0.8;
-  font-weight: 600;
-}
-
-.subject-filter-chip.is-active .filter-count {
-  opacity: 0.9;
-}
-
-/* --- 科目カード一覧グリッド --- */
 .subject-options {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 16px;
-  margin-top: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
 }
 
-/* --- 科目カード --- */
 .subject-choice {
   position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 164px;
-  padding: 20px 22px;
-  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 84px;
+  padding: 18px 22px;
   color: var(--theme-text, #24442f);
   background: var(--theme-surface, #ffffff);
   border: 1px solid var(--theme-border, rgb(34 80 53 / 14%));
-  border-left: 5px solid var(--card-accent, #4a7a5b);
-  border-radius: 18px;
-  box-shadow: 0 4px 14px rgb(20 40 30 / 4%);
+  border-radius: 16px;
+  box-shadow: 0 3px 12px rgb(20 40 30 / 4%);
   cursor: pointer;
   text-align: left;
-  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background-color 0.16s ease;
 }
 
 .subject-choice:hover,
 .subject-choice:focus-visible {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 24px rgb(20 40 30 / 9%);
-  border-color: var(--card-accent, var(--theme-border, rgb(34 80 53 / 35%)));
+  transform: translateY(-2px);
+  background: var(--theme-surface, #ffffff);
+  border-color: var(--theme-border-accent, #478c65);
+  box-shadow: 0 8px 20px rgb(20 40 30 / 8%);
   outline: none;
 }
 
 .subject-choice:active {
-  transform: translateY(-1px);
+  transform: translateY(0);
 }
 
-/* カテゴリ別アクセントカラー定義 */
-.subject-choice.category-history {
-  --card-accent: #c25e19;
-}
-.subject-choice.category-english {
-  --card-accent: #2563eb;
-}
-.subject-choice.category-social {
-  --card-accent: #0d9488;
-}
-.subject-choice.category-science {
-  --card-accent: #16a34a;
-}
-.subject-choice.category-japanese {
-  --card-accent: #7c3aed;
-}
-.subject-choice.category-other {
-  --card-accent: #64748b;
-}
-.subject-choice.random-video-choice {
-  --card-accent: #d97706;
-  background: linear-gradient(135deg, var(--theme-surface, #ffffff), var(--theme-surface-warning, #fdf8eb));
-}
-
-/* カードヘッダー（バッジ・メタ情報） */
-.subject-choice-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.subject-category-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 3px 8px;
-  font-size: 0.72rem;
+.subject-choice strong {
+  font-size: 1.18rem;
   font-weight: 700;
-  border-radius: 6px;
-  background: var(--badge-bg, #f1f5f2);
-  color: var(--badge-color, #274b35);
-}
-
-.badge-history {
-  background: #fef3c7;
-  color: #92400e;
-}
-.badge-english {
-  background: #dbeafe;
-  color: #1e40af;
-}
-.badge-social {
-  background: #ccfbf1;
-  color: #115e59;
-}
-.badge-science {
-  background: #dcfce7;
-  color: #166534;
-}
-.badge-japanese {
-  background: #ede9fe;
-  color: #5b21b6;
-}
-.badge-other {
-  background: #f1f5f9;
-  color: #475569;
-}
-.badge-video {
-  background: #ffedd5;
-  color: #9a3412;
-}
-
-.subject-meta-tag {
-  font-size: 0.73rem;
-  font-weight: 600;
-  color: var(--theme-muted, #728277);
-  white-space: nowrap;
-}
-
-/* カードボディ（タイトル・説明文） */
-.subject-choice-body {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-}
-
-.subject-choice-title {
-  font-size: 1.22rem;
-  font-weight: 800;
-  color: var(--theme-text, #1e3527);
   line-height: 1.35;
+  letter-spacing: 0.01em;
 }
 
-.subject-choice-desc {
-  margin: 0;
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: var(--theme-muted, #66736b);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.random-video-choice {
+  color: var(--theme-warning, #92400e);
+  background: linear-gradient(135deg, var(--theme-surface, #ffffff), var(--theme-surface-warning, #fff8e6));
+  border-color: var(--theme-warning, rgb(180 83 9 / 24%));
 }
 
-/* カードフッター（誘導アクション） */
-.subject-choice-footer {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-top: 10px;
-  border-top: 1px dashed var(--theme-border, rgb(34 80 53 / 10%));
+.random-video-choice:hover,
+.random-video-choice:focus-visible {
+  border-color: var(--theme-warning, rgb(180 83 9 / 45%));
+  box-shadow: 0 8px 20px rgb(180 83 9 / 12%);
 }
-
-.subject-choice-action {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--card-accent, var(--theme-accent, #245c3e));
-  transition: gap 0.15s ease;
-}
-
-.subject-choice:hover .subject-choice-action {
-  gap: 8px;
-}
-
 .routine-dashboard {
   display: grid;
   margin-top: 24px;

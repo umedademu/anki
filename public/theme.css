@@ -120,65 +120,23 @@
 :root[data-theme="dark"] .subject-choice {
   background: var(--theme-surface);
   border-color: var(--theme-border);
-  box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
 }
 
-:root[data-theme="dark"] .subject-choice:hover {
-  box-shadow: 0 10px 28px rgb(0 0 0 / 45%);
+:root[data-theme="dark"] .subject-choice:hover,
+:root[data-theme="dark"] .subject-choice:focus-visible {
+  border-color: var(--theme-accent);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 40%);
 }
 
 :root[data-theme="dark"] .subject-choice.random-video-choice {
-  background: linear-gradient(135deg, var(--theme-surface), #2d2312);
+  background: linear-gradient(135deg, var(--theme-surface), #261d10);
+  border-color: rgb(251 191 36 / 25%);
 }
 
-/* 科目絞り込みチップ */
-:root[data-theme="dark"] .subject-filter-chip {
-  background: var(--theme-surface-subtle);
-  color: var(--theme-muted);
-  border-color: var(--theme-border);
-}
-
-:root[data-theme="dark"] .subject-filter-chip:hover {
-  background: var(--theme-surface);
-  color: var(--theme-text);
-  border-color: var(--theme-border-accent);
-}
-
-:root[data-theme="dark"] .subject-filter-chip.is-active {
-  background: var(--theme-accent);
-  color: #0f1411;
-  border-color: var(--theme-accent);
-  box-shadow: 0 3px 10px rgb(110 231 183 / 25%);
-}
-
-/* 教科バッジ */
-:root[data-theme="dark"] .badge-history {
-  background: #3b2006;
-  color: #fde68a;
-}
-:root[data-theme="dark"] .badge-english {
-  background: #172554;
-  color: #bfdbfe;
-}
-:root[data-theme="dark"] .badge-social {
-  background: #113632;
-  color: #99f6e4;
-}
-:root[data-theme="dark"] .badge-science {
-  background: #113721;
-  color: #bbf7d0;
-}
-:root[data-theme="dark"] .badge-japanese {
-  background: #2e1053;
-  color: #ddd6fe;
-}
-:root[data-theme="dark"] .badge-other {
-  background: #1e293b;
-  color: #e2e8f0;
-}
-:root[data-theme="dark"] .badge-video {
-  background: #431407;
-  color: #fed7aa;
+:root[data-theme="dark"] .subject-choice.random-video-choice:hover,
+:root[data-theme="dark"] .subject-choice.random-video-choice:focus-visible {
+  border-color: var(--theme-warning);
 }
 
 /* 問題編集画面（表形式）のダークモード最適化 */

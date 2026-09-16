@@ -130,7 +130,6 @@ const elements = {
   loadingPanel: document.querySelector("#loading-panel"),
   subjectPanel: document.querySelector("#subject-panel"),
   subjectOptions: document.querySelector("#subject-options"),
-  subjectFilterNav: document.querySelector("#subject-filter-nav"),
   routineDashboard: document.querySelector("#routine-dashboard"),
   routineDashboardTitle: document.querySelector("#routine-dashboard-title"),
   routineDashboardSummary: document.querySelector("#routine-dashboard-summary"),
@@ -5623,7 +5622,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.241｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.242｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5640,235 +5639,40 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   }
 }
 
-const SUBJECT_CATEGORIES = [
-  { id: "all", label: "すべて" },
-  { id: "history", label: "歴史" },
-  { id: "english", label: "英語" },
-  { id: "social", label: "地理・公民" },
-  { id: "science", label: "理科基礎" },
-  { id: "japanese", label: "国語" },
-  { id: "other", label: "その他" },
-];
-
-let activeSubjectFilter = "all";
-
-function getSubjectCategoryInfo(subjectId) {
-  if (
-    subjectId.startsWith("world-history") ||
-    subjectId.startsWith("japanese-history") ||
-    subjectId.includes("history")
-  ) {
-    return { id: "history", label: "歴史" };
-  }
-  if (subjectId.includes("english") || subjectId.includes("vocab")) {
-    return { id: "english", label: "英語" };
-  }
-  if (
-    subjectId.includes("geography") ||
-    subjectId.includes("politics") ||
-    subjectId.includes("civics") ||
-    subjectId.includes("economics")
-  ) {
-    return { id: "social", label: "地理・公民" };
-  }
-  if (
-    subjectId.includes("biology") ||
-    subjectId.includes("earth") ||
-    subjectId.includes("science")
-  ) {
-    return { id: "science", label: "理科基礎" };
-  }
-  if (
-    subjectId.includes("classical") ||
-    subjectId.includes("japanese") ||
-    subjectId.includes("kokugo")
-  ) {
-    return { id: "japanese", label: "国語" };
-  }
-  return { id: "other", label: "その他" };
-}
-
-function formatSubjectMeta(subject) {
-  const parts = [];
-  const deckCount = Array.isArray(subject.decks) ? subject.decks.length : 0;
-  if (deckCount > 1) {
-    parts.push(`${deckCount}デッキ`);
-  } else if (deckCount === 1) {
-    parts.push("1デッキ");
-  }
-
-  if (typeof subject.termCount === "number" && subject.termCount > 0) {
-    const unit = subject.termUnitLabel || "語";
-    parts.push(`${subject.termCount.toLocaleString()}${unit}`);
-  } else if (typeof subject.questionCount === "number" && subject.questionCount > 0) {
-    parts.push(`${subject.questionCount.toLocaleString()}問`);
-  }
-  return parts.join(" ・ ");
-}
-
-function createSubjectChoiceCard({
-  dataset,
-  extraClasses = "",
-  category = "other",
-  categoryLabel = "その他",
-  metaLabel = "",
-  title,
-  description = "",
-  actionLabel = "学習を始める",
-}) {
-  const button = document.createElement("button");
-  button.type = "button";
-  button.className = `subject-choice category-${category} ${extraClasses}`.trim();
-  button.dataset.category = category;
-  for (const [key, value] of Object.entries(dataset)) {
-    button.dataset[key] = value;
-  }
-
-  const header = document.createElement("div");
-  header.className = "subject-choice-header";
-
-  const badge = document.createElement("span");
-  badge.className = `subject-category-badge badge-${category}`;
-  badge.textContent = categoryLabel;
-  header.append(badge);
-
-  if (metaLabel) {
-    const meta = document.createElement("span");
-    meta.className = "subject-meta-tag";
-    meta.textContent = metaLabel;
-    header.append(meta);
-  }
-
-  const body = document.createElement("div");
-  body.className = "subject-choice-body";
-
-  const strongTitle = document.createElement("strong");
-  strongTitle.className = "subject-choice-title";
-  strongTitle.textContent = title;
-  body.append(strongTitle);
-
-  if (description) {
-    const desc = document.createElement("p");
-    desc.className = "subject-choice-desc";
-    desc.textContent = description;
-    body.append(desc);
-  }
-
-  const footer = document.createElement("div");
-  footer.className = "subject-choice-footer";
-
-  const action = document.createElement("span");
-  action.className = "subject-choice-action";
-  action.textContent = actionLabel;
-  footer.append(action);
-
-  button.append(header, body, footer);
-  return button;
-}
-
-function applySubjectFilter(filter) {
-  activeSubjectFilter = filter;
-  const cards = elements.subjectOptions?.querySelectorAll(".subject-choice") ?? [];
-  cards.forEach((card) => {
-    const match = filter === "all" || card.dataset.category === filter;
-    card.hidden = !match;
-  });
-
-  if (elements.subjectFilterNav) {
-    const chips = elements.subjectFilterNav.querySelectorAll(".subject-filter-chip");
-    chips.forEach((chip) => {
-      const isActive = chip.dataset.filter === filter;
-      chip.classList.toggle("is-active", isActive);
-      chip.setAttribute("aria-selected", isActive ? "true" : "false");
-    });
-  }
-}
-
-function renderSubjectFilterNav(counts) {
-  if (!elements.subjectFilterNav) return;
-
-  elements.subjectFilterNav.replaceChildren(
-    ...SUBJECT_CATEGORIES.map((cat) => {
-      const count = cat.id === "all" ? counts.total : (counts[cat.id] || 0);
+function renderSubjectOptions() {
+  elements.subjectOptions.replaceChildren(
+    (() => {
       const button = document.createElement("button");
       button.type = "button";
-      button.className = `subject-filter-chip ${cat.id === activeSubjectFilter ? "is-active" : ""}`.trim();
-      button.dataset.filter = cat.id;
-      button.setAttribute("role", "tab");
-      button.setAttribute("aria-selected", cat.id === activeSubjectFilter ? "true" : "false");
-
-      const labelSpan = document.createElement("span");
-      labelSpan.className = "filter-label";
-      labelSpan.textContent = cat.label;
-
-      const countBadge = document.createElement("span");
-      countBadge.className = "filter-count";
-      countBadge.textContent = `(${count})`;
-
-      button.append(labelSpan, countBadge);
-      return button;
-    }),
-  );
-}
-
-function renderSubjectOptions() {
-  const categoryCounts = { total: 0 };
-  for (const cat of SUBJECT_CATEGORIES) {
-    categoryCounts[cat.id] = 0;
-  }
-
-  const cards = [
-    createSubjectChoiceCard({
-      dataset: { originalStudy: "true" },
-      extraClasses: "choice-original",
-      category: "other",
-      categoryLabel: "自由入力",
-      metaLabel: "問題貼り付け",
-      title: "オリジナル",
-      description: "手持ちの問題・回答・解説を貼り付けて、この端末で直接演習します。",
-      actionLabel: "問題を読み込む →",
-    }),
-    ...state.subjectEntries.map((subject) => {
-      const catInfo = getSubjectCategoryInfo(subject.id);
-      const metaLabel = formatSubjectMeta(subject);
-      const isMindset = subject.id === "mindset" || subject.learningType === "mindset";
-      categoryCounts[catInfo.id] = (categoryCounts[catInfo.id] || 0) + 1;
-      categoryCounts.total += 1;
-      return createSubjectChoiceCard({
-        dataset: { subjectId: subject.id },
-        extraClasses: isMindset ? "choice-mindset" : "",
-        category: catInfo.id,
-        categoryLabel: catInfo.label,
-        metaLabel,
-        title: subject.title,
-        description: subject.description || "",
-        actionLabel: isMindset ? "聞き流す →" : "学習を始める →",
-      });
-    }),
-    (() => {
-      const button = createSubjectChoiceCard({
-        dataset: {},
-        extraClasses: "random-video-choice choice-video",
-        category: "other",
-        categoryLabel: "動画視聴",
-        metaLabel: "ランダム再生",
-        title: "動画をランダム再生",
-        description: "登録した学習動画や解説動画をランダムに1本選んで視聴します。",
-        actionLabel: "再生する →",
-      });
-      button.dataset.randomVideoAction = "play";
+      button.className = "subject-choice";
+      button.dataset.originalStudy = "true";
+      const title = document.createElement("strong");
+      title.textContent = "オリジナル";
+      button.append(title);
       return button;
     })(),
-  ];
-
-  categoryCounts.other = (categoryCounts.other || 0) + 2;
-  categoryCounts.total += 2;
-
-  elements.subjectOptions.replaceChildren(...cards);
-  renderSubjectFilterNav(categoryCounts);
-  applySubjectFilter(activeSubjectFilter);
+    ...state.subjectEntries.map((subject) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "subject-choice";
+      button.dataset.subjectId = subject.id;
+      const title = document.createElement("strong");
+      title.textContent = subject.title;
+      button.append(title);
+      return button;
+    }),
+    (() => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "subject-choice random-video-choice";
+      button.dataset.randomVideoAction = "play";
+      const title = document.createElement("strong");
+      title.textContent = "動画をランダム再生";
+      button.append(title);
+      return button;
+    })(),
+  );
 }
-
 function showSubjectSelection() {
   discardOriginalSession();
   stopListeningSequence();
@@ -6040,12 +5844,6 @@ elements.subjectOptions.addEventListener("click", (event) => {
       elements.errorMessage.textContent = error.message;
       showOnly(elements.errorPanel);
     });
-});
-
-elements.subjectFilterNav?.addEventListener("click", (event) => {
-  const chip = event.target.closest("button[data-filter]");
-  if (!chip) return;
-  applySubjectFilter(chip.dataset.filter);
 });
 document.addEventListener(
   "click",

@@ -80,6 +80,59 @@
   background: #8ed9ad;
 }
 
+:root[data-theme="dark"] .subject-choice {
+  background: var(--theme-surface, #1b2721);
+  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
+}
+
+:root[data-theme="dark"] .subject-choice:hover {
+  box-shadow: 0 10px 24px rgb(0 0 0 / 40%);
+}
+
+:root[data-theme="dark"] .subject-choice.random-video-choice {
+  background: linear-gradient(135deg, var(--theme-surface, #1b2721), var(--theme-surface-warning, #3b3322));
+}
+
+:root[data-theme="dark"] .subject-filter-chip {
+  background: var(--theme-surface-subtle, #23372b);
+  color: var(--theme-muted, #acbcb1);
+}
+
+:root[data-theme="dark"] .subject-filter-chip.is-active {
+  background: var(--theme-accent, #8ed9ad);
+  color: #121c17;
+  border-color: var(--theme-accent, #8ed9ad);
+}
+
+:root[data-theme="dark"] .badge-history {
+  background: #452205;
+  color: #fcd34d;
+}
+:root[data-theme="dark"] .badge-english {
+  background: #172554;
+  color: #93c5fd;
+}
+:root[data-theme="dark"] .badge-social {
+  background: #133936;
+  color: #5eead4;
+}
+:root[data-theme="dark"] .badge-science {
+  background: #143823;
+  color: #86efac;
+}
+:root[data-theme="dark"] .badge-japanese {
+  background: #2e1b4d;
+  color: #c4b5fd;
+}
+:root[data-theme="dark"] .badge-other {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+:root[data-theme="dark"] .badge-video {
+  background: #431f08;
+  color: #fdba74;
+}
+
 /* 横向きの小画面でも、学習外のページでは配色操作へアクセスできる。 */
 @media (orientation: landscape) and (max-height: 600px) {
   body:not(.is-studying):not(.is-mindset-playing) .site-header {

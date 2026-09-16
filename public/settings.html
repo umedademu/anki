@@ -7,17 +7,17 @@
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.233"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.233" />
-    <link rel="stylesheet" href="/theme.css?v=0.233" />
+    <script src="/theme.js?v=0.234"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.234" />
+    <link rel="stylesheet" href="/theme.css?v=0.234" />
     <script src="/config.js" defer></script>
-    <script src="/settings.js" type="module"></script>
+    <script src="/settings.js?v=0.234" type="module"></script>
   </head>
   <body class="settings-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.233</span>
+        <span class="app-version">v0.234</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
@@ -53,8 +53,22 @@
         </button>
       </section>
 
-      <section class="settings-card" id="study-routine-settings">
-        <h2>毎日の学習メニュー</h2>
+      <section class="settings-card" id="learning-menu-links">
+        <h2>学習メニュー・動画</h2>
+        <p class="settings-description">毎日の学習内容や、ランダム再生する動画を編集します。</p>
+        <div class="routine-editor-actions">
+          <a class="secondary-button" href="#study-routine-settings">毎日の学習メニューを編集</a>
+          <a class="secondary-button" href="#routine-video-settings">ランダム動画を編集</a>
+        </div>
+      </section>
+
+      <nav class="settings-subpage-navigation" aria-label="設定内の移動" hidden>
+        <a class="secondary-button" href="#learning-menu-links">設定へ戻る</a>
+        <a class="header-link" href="#access-key">接続設定へ</a>
+      </nav>
+
+      <section class="settings-card" id="study-routine-settings" data-settings-subpage hidden>
+        <h2 tabindex="-1">毎日の学習メニュー</h2>
         <p class="settings-description">
           科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。デッキや学習方法は、それぞれの科目を始める直前に選びます。進行中のメニューには次に1番から始めるまで変更を反映しません。
         </p>
@@ -99,8 +113,10 @@
           <p class="settings-status" id="routine-overtime-status" role="status"></p>
         </form>
 
-        <section class="routine-video-settings" aria-labelledby="routine-video-settings-title">
-          <h3 id="routine-video-settings-title">ランダム再生する動画</h3>
+      </section>
+
+      <section class="settings-card" id="routine-video-settings" data-settings-subpage hidden aria-labelledby="routine-video-settings-title">
+          <h2 id="routine-video-settings-title" tabindex="-1">ランダム再生する動画</h2>
           <p class="settings-description">
             一巡するまで同じ動画を重ねず、全動画を見終えたら順番を混ぜ直します。URLを登録すると題名を自動取得します。
           </p>
@@ -122,7 +138,6 @@
           </form>
           <div class="routine-video-list" id="routine-video-list" aria-label="登録動画"></div>
           <p class="settings-status" id="routine-video-status" role="status"></p>
-        </section>
       </section>
 
       <form class="settings-card" id="study-time-settings-form">

@@ -1084,3 +1084,33 @@ if (getStoredAccessKey()) {
 } else {
   setStatus("アクセスキーを入力して、Cloudflareへの接続を確認してください。");
 }
+
+// 入力欄を作り直さず、設定一覧と編集画面の表示だけを切り替える。
+function showSettingsPage() {
+  const page = document.querySelector(".settings-page");
+  const subpages = [...page.querySelectorAll("[data-settings-subpage]")];
+  const activePage = subpages.find((section) => location.hash === "#" + section.id);
+  for (const section of page.children) {
+    if (section.id === "settings-status") continue;
+    section.hidden = section.matches(".settings-subpage-navigation")
+      ? !activePage
+      : section.hasAttribute("data-settings-subpage")
+        ? section !== activePage
+        : Boolean(activePage);
+  }
+  document.title = activePage
+    ? "Anki | 設定 | " + activePage.querySelector("h2").textContent
+    : "Anki | 設定";
+  if (activePage) {
+    window.scrollTo(0, 0);
+    activePage.querySelector("h2").focus({ preventScroll: true });
+  } else if (location.hash === "#learning-menu-links") {
+    const link = page.querySelector("#learning-menu-links a");
+    link.focus();
+  } else if (location.hash === "#access-key") {
+    elements.accessKey.focus();
+  }
+}
+
+window.addEventListener("hashchange", showSettingsPage);
+showSettingsPage();

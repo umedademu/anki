@@ -4082,3 +4082,19 @@ body.is-listening.is-listening-answer-visible .page {
   overflow-wrap: anywhere;
 }
 .original-exit { margin-top: 28px; }
+
+.settings-page > [hidden] {
+  display: none !important;
+}
+
+.settings-subpage-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+#learning-menu-links a {
+  text-decoration: none;
+  text-align: center;
+}

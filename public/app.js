@@ -5623,7 +5623,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.240｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.241｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

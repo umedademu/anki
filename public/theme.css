@@ -1,25 +1,25 @@
-/* ライトモードは既存の配色を使用し、暗い配色だけをここで定義する。 */
+/* ライトモードは既存の配色を使用し、暗い配色（ダークモード）をここで定義する。 */
 :root[data-theme="dark"] {
   --theme-scheme: dark;
-  --theme-page: #121c17;
-  --theme-page-transparent: rgb(18 28 23 / 0%);
-  --theme-surface: #1b2721;
-  --theme-surface-glass: rgb(27 39 33 / 95%);
-  --theme-surface-subtle: #23372b;
-  --theme-surface-warning: #3b3322;
-  --theme-surface-danger: #3e2927;
-  --theme-surface-info: #223241;
-  --theme-track: #34463c;
-  --theme-tint: rgb(142 217 173 / 12%);
-  --theme-text: #e7eee9;
-  --theme-muted: #acbcb1;
-  --theme-accent: #8ed9ad;
-  --theme-danger: #ffaba4;
-  --theme-warning: #eacb70;
-  --theme-info: #97c6ee;
-  --theme-border: #42544a;
-  --theme-border-accent: #86c7a0;
-  --theme-reflection: rgb(255 255 255 / 10%);
+  --theme-page: #0f1411;
+  --theme-page-transparent: rgb(15 20 17 / 0%);
+  --theme-surface: #181f1b;
+  --theme-surface-glass: rgb(24 31 27 / 95%);
+  --theme-surface-subtle: #222c26;
+  --theme-surface-warning: #2d2410;
+  --theme-surface-danger: #331818;
+  --theme-surface-info: #142436;
+  --theme-track: #29352e;
+  --theme-tint: rgb(110 231 183 / 7%);
+  --theme-text: #f2f6f3;
+  --theme-muted: #9eb1a5;
+  --theme-accent: #6ee7b7;
+  --theme-danger: #f87171;
+  --theme-warning: #fbbf24;
+  --theme-info: #60a5fa;
+  --theme-border: #2d3b32;
+  --theme-border-accent: #6ee7b7;
+  --theme-reflection: rgb(255 255 255 / 8%);
 }
 
 .header-meta {
@@ -50,6 +50,17 @@
   outline-offset: 3px;
 }
 
+:root[data-theme="dark"] .theme-toggle {
+  color: var(--theme-accent);
+  background: var(--theme-surface-subtle);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] .theme-toggle:hover {
+  background: var(--theme-surface);
+  border-color: var(--theme-border-accent);
+}
+
 .study-theme-controls {
   display: flex;
   flex-wrap: wrap;
@@ -65,6 +76,12 @@
   background: var(--theme-surface, #fff);
 }
 
+:root[data-theme="dark"] .original-panel textarea {
+  color: var(--theme-text);
+  background: var(--theme-surface-subtle);
+  border-color: var(--theme-border);
+}
+
 :root[data-theme="dark"] input::placeholder,
 :root[data-theme="dark"] textarea::placeholder {
   color: var(--theme-muted);
@@ -76,61 +93,142 @@
 }
 
 :root[data-theme="dark"] ::selection {
-  color: #121c17;
-  background: #8ed9ad;
+  color: #0f1411;
+  background: #6ee7b7;
 }
 
+/* メインパネル・カードの影 */
+:root[data-theme="dark"] .context-card,
+:root[data-theme="dark"] .question-card,
+:root[data-theme="dark"] .subject-panel,
+:root[data-theme="dark"] .setup-panel,
+:root[data-theme="dark"] .completion-card,
+:root[data-theme="dark"] .routine-video-panel,
+:root[data-theme="dark"] .mindset-player-panel,
+:root[data-theme="dark"] .loading-panel,
+:root[data-theme="dark"] .error-panel {
+  box-shadow: 0 18px 55px rgb(0 0 0 / 38%);
+}
+
+/* 毎日の学習メニュー */
+:root[data-theme="dark"] .routine-dashboard {
+  background: linear-gradient(135deg, #17221b, #19231d);
+  border-color: var(--theme-border);
+}
+
+/* 科目選択カード */
 :root[data-theme="dark"] .subject-choice {
-  background: var(--theme-surface, #1b2721);
-  box-shadow: 0 4px 14px rgb(0 0 0 / 25%);
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 30%);
 }
 
 :root[data-theme="dark"] .subject-choice:hover {
-  box-shadow: 0 10px 24px rgb(0 0 0 / 40%);
+  box-shadow: 0 10px 28px rgb(0 0 0 / 45%);
 }
 
 :root[data-theme="dark"] .subject-choice.random-video-choice {
-  background: linear-gradient(135deg, var(--theme-surface, #1b2721), var(--theme-surface-warning, #3b3322));
+  background: linear-gradient(135deg, var(--theme-surface), #2d2312);
 }
 
+/* 科目絞り込みチップ */
 :root[data-theme="dark"] .subject-filter-chip {
-  background: var(--theme-surface-subtle, #23372b);
-  color: var(--theme-muted, #acbcb1);
+  background: var(--theme-surface-subtle);
+  color: var(--theme-muted);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] .subject-filter-chip:hover {
+  background: var(--theme-surface);
+  color: var(--theme-text);
+  border-color: var(--theme-border-accent);
 }
 
 :root[data-theme="dark"] .subject-filter-chip.is-active {
-  background: var(--theme-accent, #8ed9ad);
-  color: #121c17;
-  border-color: var(--theme-accent, #8ed9ad);
+  background: var(--theme-accent);
+  color: #0f1411;
+  border-color: var(--theme-accent);
+  box-shadow: 0 3px 10px rgb(110 231 183 / 25%);
 }
 
+/* 教科バッジ */
 :root[data-theme="dark"] .badge-history {
-  background: #452205;
-  color: #fcd34d;
+  background: #3b2006;
+  color: #fde68a;
 }
 :root[data-theme="dark"] .badge-english {
   background: #172554;
-  color: #93c5fd;
+  color: #bfdbfe;
 }
 :root[data-theme="dark"] .badge-social {
-  background: #133936;
-  color: #5eead4;
+  background: #113632;
+  color: #99f6e4;
 }
 :root[data-theme="dark"] .badge-science {
-  background: #143823;
-  color: #86efac;
+  background: #113721;
+  color: #bbf7d0;
 }
 :root[data-theme="dark"] .badge-japanese {
-  background: #2e1b4d;
-  color: #c4b5fd;
+  background: #2e1053;
+  color: #ddd6fe;
 }
 :root[data-theme="dark"] .badge-other {
   background: #1e293b;
-  color: #cbd5e1;
+  color: #e2e8f0;
 }
 :root[data-theme="dark"] .badge-video {
-  background: #431f08;
-  color: #fdba74;
+  background: #431407;
+  color: #fed7aa;
+}
+
+/* 問題編集画面（表形式）のダークモード最適化 */
+:root[data-theme="dark"] .editor-toolbar {
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] .editor-toolbar input,
+:root[data-theme="dark"] .editor-toolbar select {
+  background: var(--theme-surface-subtle);
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] .editor-table-scroll {
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] #question-table th,
+:root[data-theme="dark"] #question-table td {
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] #question-table th,
+:root[data-theme="dark"] #question-table th.number-column,
+:root[data-theme="dark"] #question-table td.number-column {
+  background: #1b241e;
+}
+
+:root[data-theme="dark"] #question-table textarea,
+:root[data-theme="dark"] #question-table select {
+  color: var(--theme-text);
+}
+
+:root[data-theme="dark"] #question-table textarea:focus,
+:root[data-theme="dark"] #question-table select:focus {
+  background: #202d24;
+}
+
+:root[data-theme="dark"] #question-table .row-delete {
+  background: var(--theme-surface-subtle);
+  border-color: var(--theme-border);
+}
+
+:root[data-theme="dark"] #editor-confirm {
+  background: var(--theme-surface);
+  border-color: var(--theme-border);
+  color: var(--theme-text);
 }
 
 /* 横向きの小画面でも、学習外のページでは配色操作へアクセスできる。 */

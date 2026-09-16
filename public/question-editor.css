@@ -25,7 +25,6 @@
 #question-table th.number-column { z-index: 3; }
 #question-table tbody th.number-column { top: auto; z-index: 1; padding: 14px 5px; font-size: .75rem; color: var(--theme-muted, #63736a); }
 #question-table .number-column { width: 46px; }
-#question-table .status-column { width: 114px; }
 #question-table .deck-column { width: 172px; }
 #question-table .prompt-column { width: 310px; }
 #question-table .answer-column { width: 270px; }
@@ -39,9 +38,6 @@
 #question-table select { min-height: 44px; padding: 12px 5px; font-size: .78rem; }
 #question-table textarea:focus, #question-table select:focus { outline: 2px solid var(--theme-border-accent, #478c65); outline-offset: -2px; background: var(--theme-surface-subtle, #f4f9f4); }
 #question-table [aria-invalid="true"] { background: var(--theme-surface-danger, #fff3ee); }
-#question-table tr.is-pending td.status-column { color: var(--theme-warning, #946000); }
-#question-table tr.is-failed td.status-column { color: var(--theme-danger, #a33232); }
-#question-table td.status-column { padding: 14px 8px; font-size: .75rem; line-height: 1.6; color: var(--theme-muted, #63736a); }
 #question-table .row-delete { display: block; width: auto; margin: 10px auto; padding: 7px 8px; color: var(--theme-danger, #a33232); border: 1px solid var(--theme-border, #d8e2da); border-radius: 6px; background: var(--theme-surface, #fff); cursor: pointer; font-size: .75rem; }
 .editor-pagination { display: flex; align-items: center; justify-content: center; gap: 24px; margin-top: 16px; font-size: .85rem; }
 #editor-empty { padding: 20px; }

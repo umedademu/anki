@@ -48,11 +48,6 @@ function updateStatus() {
 
 function updateRowStatus(row) {
   if (!row.element) return;
-  const saving = state.operation?.row === row;
-  row.element.classList.toggle("is-pending", pending(row));
-  row.element.classList.toggle("is-failed", Boolean(state.error && saving));
-  row.element.querySelector(".row-status").textContent = saving ? (state.error ? "保存できません" : "保存中…")
-    : pending(row) ? rowProblem(row) || "保存待ち" : "保存済み";
   row.element.querySelector(".row-delete").disabled = Boolean(state.loading || state.running || state.paused || state.error);
   for (const input of row.element.querySelectorAll("[data-field]")) {
     input.disabled = state.loading;
@@ -139,8 +134,7 @@ function stageOptions(row, select) {
 function createRow(row) {
   const tr = document.createElement("tr"); tr.dataset.rowKey = row.key;
   const number = document.createElement("th"); number.scope = "row"; number.className = "number-column";
-  const status = document.createElement("td"); status.className = "status-column row-status";
-  tr.append(number, status);
+  tr.append(number);
   for (const field of ["targetDeckId", ...fields]) {
     const cell = document.createElement("td");
     cell.className = field === "targetDeckId" ? "deck-column" : ["prompt", "answer", "explanation", "category"].includes(field) ? `${field}-column` : "detail-column";

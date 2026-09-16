@@ -4094,7 +4094,8 @@ body.is-listening.is-listening-answer-visible .page {
   gap: 16px;
 }
 
-#learning-menu-links a {
+#learning-menu-links a,
+#random-video-link a {
   text-decoration: none;
   text-align: center;
 }

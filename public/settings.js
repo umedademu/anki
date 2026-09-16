@@ -1102,10 +1102,12 @@ function showSettingsPage() {
     ? "Anki | 設定 | " + activePage.querySelector("h2").textContent
     : "Anki | 設定";
   if (activePage) {
+    page.querySelector(".settings-subpage-navigation a").hash =
+      activePage.id === "routine-video-settings" ? "random-video-link" : "learning-menu-links";
     window.scrollTo(0, 0);
     activePage.querySelector("h2").focus({ preventScroll: true });
-  } else if (location.hash === "#learning-menu-links") {
-    const link = page.querySelector("#learning-menu-links a");
+  } else if (["#learning-menu-links", "#random-video-link"].includes(location.hash)) {
+    const link = page.querySelector(location.hash + " a");
     link.focus();
   } else if (location.hash === "#access-key") {
     elements.accessKey.focus();

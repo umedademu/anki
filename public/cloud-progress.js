@@ -541,7 +541,7 @@ export async function cloudRequest(path, options = {}) {
     if (response.status === 401) {
       throw new Error("Cloudflareのアクセスキーが正しくありません。");
     }
-    throw new Error(payload.error || `Cloudflareへの保存に失敗しました（${response.status}）。`);
+    throw Object.assign(new Error(payload.error || `Cloudflareへの保存に失敗しました（${response.status}）。`), { status: response.status });
   }
   return payload;
 }

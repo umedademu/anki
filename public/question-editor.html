@@ -5,18 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anki | 問題を編集</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <script src="/theme.js?v=0.237"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.237" />
-    <link rel="stylesheet" href="/theme.css?v=0.237" />
-    <link rel="stylesheet" href="/question-editor.css?v=0.237" />
+    <script src="/theme.js?v=0.238"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.238" />
+    <link rel="stylesheet" href="/theme.css?v=0.238" />
+    <link rel="stylesheet" href="/question-editor.css?v=0.238" />
     <script src="/config.js" defer></script>
-    <script src="/question-editor.js?v=0.237" type="module"></script>
+    <script src="/question-editor.js?v=0.238" type="module"></script>
   </head>
   <body>
-    <header class="site-header">
+    <header class="site-header editor-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.237</span>
+        <span class="app-version">v0.238</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/settings.html">設定</a>
         <a class="header-link" id="return-to-study" href="/">開始画面へ戻る</a>
@@ -27,60 +27,52 @@
         <div><p class="eyebrow" id="editor-subject">問題の管理</p><h1>問題を編集</h1></div>
         <button class="secondary-button" id="reload-editor" type="button">再読込</button>
       </div>
-      <p class="editor-intro">問題を選んで編集するか、新しい問題を追加してください。保存した内容は、ほかの端末にも反映されます。</p>
-      <div class="editor-notice" role="status" aria-live="polite">
+      <p class="editor-intro">セルを直接編集できます。入力を止めるか、別のセルへ移ると自動保存します。Tabキーで次のセルへ移動できます。</p>
+      <section class="editor-toolbar" aria-label="表示する問題">
+        <label>デッキ<select id="editor-deck" disabled><option>読込中</option></select></label>
+        <label class="editor-search-field">検索<input id="editor-search" type="search" placeholder="問題文・回答・用語で検索" maxlength="200" disabled /></label>
+        <label>分類<select id="editor-category" disabled><option value="">すべての分類</option></select></label>
+        <button class="primary-button" id="add-question" type="button" disabled>＋ 行を追加</button>
+      </section>
+      <div class="editor-table-meta">
+        <span id="editor-count" class="editor-muted"></span>
+        <label class="editor-columns-toggle"><input id="show-details" type="checkbox" />詳細列を表示</label>
+      </div>
+      <div class="editor-notice" aria-live="polite" role="status">
         <span id="editor-status">問題を読み込んでいます。</span>
+        <button class="secondary-button" id="retry-save" type="button" hidden>保存を再試行</button>
         <button class="secondary-button" id="undo-delete" type="button" hidden>削除を元に戻す</button>
       </div>
-      <div class="editor-layout" id="editor-layout">
-        <section class="editor-list-panel" aria-label="問題一覧">
-          <div class="editor-filters">
-            <label>デッキ<select id="editor-deck" disabled><option>読込中</option></select></label>
-            <label>問題を検索<input id="editor-search" type="search" placeholder="問題文・回答・用語で検索" maxlength="200" disabled /></label>
-            <label>分類<select id="editor-category" disabled><option value="">すべての分類</option></select></label>
-            <button class="primary-button" id="add-question" type="button" disabled>＋ 問題を追加</button>
-          </div>
-          <p id="editor-count" class="editor-muted"></p>
-          <div id="question-list" class="question-list"></div>
-          <div class="editor-pagination">
-            <button class="secondary-button" id="previous-page" type="button" disabled>前へ</button>
-            <span id="page-position"></span>
-            <button class="secondary-button" id="next-page" type="button" disabled>次へ</button>
-          </div>
-        </section>
-        <section class="editor-form-panel" aria-label="問題の入力">
-          <p id="editor-placeholder" class="editor-muted">一覧から問題を選ぶと、ここで編集できます。</p>
-          <form id="question-form" hidden>
-            <div class="editor-form-heading"><h2 id="form-title" tabindex="-1">問題を編集</h2><button class="secondary-button" id="close-form" type="button">一覧へ戻る</button></div>
-            <fieldset id="editor-fields">
-              <label>所属デッキ<select name="targetDeckId" id="target-deck" required></select></label>
-              <label>問題文<span class="editor-required">必須</span><textarea name="prompt" rows="4" maxlength="20000" required></textarea></label>
-              <label>回答<span class="editor-required">必須</span><textarea name="answer" rows="3" maxlength="20000" required></textarea></label>
-              <label>解説<textarea name="explanation" rows="4" maxlength="20000"></textarea></label>
-              <p id="explanation-help" class="editor-muted" hidden></p>
-              <details id="editor-details">
-                <summary>詳細設定</summary>
-                <p id="shared-term-note" class="editor-muted"></p>
-                <label>用語・見出し<input name="term" maxlength="500" /></label>
-                <label><span id="category-label">分類</span><input name="category" maxlength="500" list="category-suggestions" /></label>
-                <datalist id="category-suggestions"></datalist>
-                <label id="macro-region-field"><span id="macro-region-label">大分類</span><input name="macroRegion" maxlength="500" /></label>
-                <label id="region-detail-field"><span id="region-detail-label">小分類</span><input name="regionDetail" maxlength="500" /></label>
-                <label>問題形式<select name="stage" id="question-stage"></select></label>
-                <label>別の正答（１行に１つ）<textarea name="acceptedAnswers" rows="2" maxlength="20000"></textarea></label>
-                <label>回答の補足<textarea name="answerNote" rows="3" maxlength="20000"></textarea></label>
-                <label>語呂合わせ<textarea name="yearMnemonic" rows="2" maxlength="20000"></textarea></label>
-              </details>
-              <div class="editor-save-actions">
-                <button class="primary-button" type="submit" id="save-question">保存</button>
-                <button class="secondary-button" id="cancel-edit" type="button">キャンセル</button>
-                <span id="dirty-status" class="editor-muted" role="status"></span>
-              </div>
-              <div class="editor-delete-actions"><button class="secondary-button editor-danger" id="delete-question" type="button">この問題を削除</button></div>
-            </fieldset>
-          </form>
-        </section>
+      <div class="editor-table-scroll" id="editor-table-scroll" tabindex="0" role="region" aria-label="問題の編集表。横にスクロールできます。">
+        <table id="question-table">
+          <caption class="editor-visually-hidden">問題を１行ずつ表示します。各セルを編集すると自動保存します。</caption>
+          <thead><tr>
+            <th scope="col" class="number-column">行</th>
+            <th scope="col" class="status-column">保存状態</th>
+            <th scope="col" class="deck-column">デッキ</th>
+            <th scope="col" class="prompt-column">問題文 <small>必須</small></th>
+            <th scope="col" class="answer-column">回答 <small>必須</small></th>
+            <th scope="col" class="explanation-column">解説</th>
+            <th scope="col" class="category-column">分類</th>
+            <th scope="col" class="detail-column">用語・見出し</th>
+            <th scope="col" class="detail-column">問題形式</th>
+            <th scope="col" class="detail-column" id="macro-region-label">大分類</th>
+            <th scope="col" class="detail-column" id="region-detail-label">小分類</th>
+            <th scope="col" class="detail-column">別の正答<br /><small>１行に１つ</small></th>
+            <th scope="col" class="detail-column">回答の補足</th>
+            <th scope="col" class="detail-column">語呂合わせ</th>
+            <th scope="col" class="action-column">操作</th>
+          </tr></thead>
+          <tbody id="question-rows"></tbody>
+        </table>
+        <p id="editor-empty" class="editor-muted" hidden>該当する問題はありません。絞り込みを変更するか、行を追加してください。</p>
       </div>
+      <div class="editor-pagination">
+        <button class="secondary-button" id="previous-page" type="button" disabled>前へ</button>
+        <span id="page-position"></span>
+        <button class="secondary-button" id="next-page" type="button" disabled>次へ</button>
+      </div>
+      <p class="editor-help">表は左右にスクロールできます。用語と分類は、同じ用語に属する問題にも反映されます。新しい行はデッキ・問題文・回答がそろうと保存します。</p>
       <dialog id="editor-confirm">
         <form method="dialog">
           <h2 id="confirm-title"></h2><p id="confirm-message"></p>

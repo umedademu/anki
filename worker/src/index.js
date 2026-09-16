@@ -27,6 +27,7 @@ import {
 } from "../../public/rating-sound-settings.js";
 import { normalizeQuestionAnalysisSnapshot } from "../../public/analysis-core.js";
 import { normalizeSubjectReviewSettings } from "../../public/learning-engine.js";
+import { loadEditableSubject, mutateEditableSubject } from "./question-editor.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -1351,6 +1352,18 @@ async function handleRequest(request, env) {
     return json(request, env, { error: "認証に失敗しました。" }, 401);
   }
 
+  if (url.pathname === "/v1/question-editor") {
+    if (request.method === "GET") {
+      return json(request, env, await loadEditableSubject(env, url.searchParams.get("subject")));
+    }
+    if (request.method === "POST") {
+      const body = await request.text();
+      if (new TextEncoder().encode(body).length > 180000) throw new Error("入力内容が長すぎます。");
+      return json(request, env, await mutateEditableSubject(env, JSON.parse(body)));
+    }
+    return json(request, env, { error: "この操作には対応していません。" }, 405);
+  }
+
   if (url.pathname === "/v1/speech" && request.method === "POST") {
     return handleSpeech(request, env);
   }
@@ -1889,7 +1902,7 @@ export default {
     try {
       return await handleRequest(request, env);
     } catch (error) {
-      return json(request, env, { error: error.message || "処理に失敗しました。" }, 400);
+      return json(request, env, { error: error.message || "処理に失敗しました。" }, error.status ?? 400);
     }
   },
 };

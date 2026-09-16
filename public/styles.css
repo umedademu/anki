@@ -16,6 +16,11 @@ html {
   box-sizing: border-box;
 }
 
+.setup-title-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.setup-title-row h1 { flex: 1; }
+.setup-title-row a { width: auto; flex-shrink: 0; text-decoration: none; white-space: nowrap; }
+.setup-title-row a[hidden] { display: none; }
+
 body {
   min-width: 320px;
   min-height: 100vh;

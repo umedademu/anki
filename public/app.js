@@ -1,5 +1,5 @@
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.236";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.236";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.237";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.237";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -55,7 +55,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.236";
+} from "./original-session.js?v=0.237";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -3266,8 +3266,8 @@ function updateSpeechButtons(activeTarget = speechController.currentTarget) {
   }
 }
 
-function vocabularySpeechGroups(term = currentTerm()) {
-  return createVocabularySpeechGroups(term);
+function vocabularySpeechGroups(term = currentTerm(), question = currentQuestion()) {
+  return createVocabularySpeechGroups(term, question);
 }
 
 function vocabularySpeechLayout(question = currentQuestion()) {
@@ -3311,7 +3311,7 @@ function speechSegmentsFor(target, task = state.currentTask) {
   }
   const yearMnemonic = getQuestionYearMnemonic(term, question);
   if (state.subject?.learningType === "vocabulary") {
-    const groups = vocabularySpeechGroups(term);
+    const groups = vocabularySpeechGroups(term, question);
     const layout = vocabularySpeechLayout(question);
     const group = target.startsWith("vocabulary-")
       ? target.slice("vocabulary-".length)
@@ -3407,6 +3407,7 @@ function answerSpeechSequence(task = state.currentTask) {
         ),
         exampleEnglish: settings.exampleEnglish,
         exampleJapanese: settings.exampleJapanese,
+        question,
       },
     );
   }
@@ -4504,6 +4505,7 @@ function updateRatingIntervals() {
 
 function configureSetup() {
   const temporary = isOriginalSession();
+  document.getElementById("edit-questions").hidden = temporary || isMindsetMode();
   document.querySelector(".setup-review-heading p").textContent = temporary
     ? `個別の復習間隔はこのブラウザーに保存し、問題を変えても引き継ぎます。${originalReviewStorageNotice()}`
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
@@ -5620,7 +5622,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.236｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.237｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5773,12 +5775,34 @@ async function start() {
       });
       state.cloudConnected = false;
     }
-    showSubjectSelection();
+    const returnParams = new URLSearchParams(window.location.search);
+    const returnSubject = returnParams.get("subject");
+    if (returnSubject && state.subjectEntries.some((subject) => subject.id === returnSubject && subject.learningType !== mindsetLearningType)) {
+      await activateSubject(returnSubject);
+      state.inRoutine = returnParams.get("routine") === "1" && Boolean(currentStudyRoutineItem(state.routineRun)?.subjectId === returnSubject);
+      showOnly(elements.setupPanel);
+      renderRoutineSetupContext();
+      updateSetupPreview();
+      window.history.replaceState(null, "", window.location.pathname);
+    } else {
+      showSubjectSelection();
+    }
   } catch (error) {
     elements.errorMessage.textContent = error.message;
     showOnly(elements.errorPanel);
   }
 }
+
+document.getElementById("edit-questions").addEventListener("click", async (event) => {
+  event.preventDefault();
+  if (deckSelectionUpdating || !state.activeSubjectId || isOriginalSession()) return;
+  stopListeningSequence();
+  const params = new URLSearchParams({ subject: state.activeSubjectId });
+  for (const deckId of state.activeDeckIds) params.append("deck", deckId);
+  if (state.inRoutine) params.set("routine", "1");
+  try { await queueSetupPreferenceSave(); } catch { /* 編集画面側で接続状況を案内する。 */ }
+  window.location.assign(`/question-editor.html?${params}`);
+});
 
 elements.subjectOptions.addEventListener("click", (event) => {
   if (event.target.closest("button[data-original-study]")) {

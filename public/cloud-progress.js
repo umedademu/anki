@@ -515,7 +515,7 @@ export function clearStoredAccessKey() {
   }
 }
 
-async function cloudRequest(path, options = {}) {
+export async function cloudRequest(path, options = {}) {
   const accessKey = getStoredAccessKey();
   if (!accessKey) {
     throw new Error("設定ページでCloudflareのアクセスキーを登録してください。");

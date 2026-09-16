@@ -194,8 +194,18 @@ export function prepareClassicalChineseSpeechText(value) {
   return String(value ?? "").replace(/[〜～]/gu, "ナニナニ");
 }
 
-export function createVocabularySpeechGroups(term) {
+export function createVocabularySpeechGroups(term, currentQuestion = null) {
   const beginnerQuestion = term?.stages?.beginner?.[0];
+  if (currentQuestion?.editorModified) {
+    const groups = createVocabularySpeechGroups(term);
+    const layout = vocabularySpeechLayoutByStage[currentQuestion.stage];
+    if (layout) for (const [side, text] of [["question", currentQuestion.prompt], ["answer", currentQuestion.answer]]) {
+      const group = layout[side];
+      groups[group] = { target: `vocabulary-${group}`, text: group === "meaning" ? prepareVocabularyMeaningSpeechText(text) : text,
+        language: group === "word" || group === "example-english" ? "en-US" : "ja-JP" };
+    }
+    return groups;
+  }
   if (!beginnerQuestion) {
     return {};
   }
@@ -243,13 +253,14 @@ export function createVocabularyAutomaticAnswerSequence(
     answer = true,
     exampleEnglish = false,
     exampleJapanese = false,
+    question = null,
   } = {},
 ) {
   const layout = vocabularySpeechLayoutByStage[stage];
   if (!layout) {
     return [];
   }
-  const groups = createVocabularySpeechGroups(term);
+  const groups = createVocabularySpeechGroups(term, question);
   const supplementalGroups = [
     ...(exampleEnglish ? ["example-english"] : []),
     ...(exampleJapanese ? ["example-japanese"] : []),

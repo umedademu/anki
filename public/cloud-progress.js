@@ -194,6 +194,7 @@ export function normalizeStudySession(value) {
         .map(normalizeStudySessionId)
         .filter(Boolean),
     )].slice(0, 100),
+    excludeTimeQuestions: source.excludeTimeQuestions !== false,
     selectedStage: questionStyles.has(source.selectedStage) ? source.selectedStage : "",
     questionAmountMode: questionAmountModes.has(source.questionAmountMode)
       ? source.questionAmountMode
@@ -336,6 +337,7 @@ export function normalizeSetupPreferences(value) {
         macroRegion: normalizeSetupSelection(rawDeck.macroRegion),
         regionDetail: normalizeSetupSelection(rawDeck.regionDetail),
         category: normalizeSetupSelection(rawDeck.category),
+        excludeTimeQuestions: rawDeck.excludeTimeQuestions !== false,
         questionStyle: questionStyles.has(rawDeck.questionStyle)
           ? rawDeck.questionStyle
           : "",

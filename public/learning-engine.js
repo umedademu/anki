@@ -438,16 +438,13 @@ export function isStageMastered(term, stage, progress, masteryTarget) {
 }
 
 export function isStageUnlocked(term, stage, progress, masteryTarget) {
-  if (stage === "beginner") {
-    return true;
-  }
-  if (stage === "reverse") {
-    return isStageMastered(term, "beginner", progress, masteryTarget);
-  }
-  if (stage === "integrated") {
-    return isStageMastered(term, "reverse", progress, masteryTarget);
-  }
-  return false;
+  const stageIndex = learningStages.indexOf(stage);
+  if (stageIndex < 0) return false;
+  // 除外で空になった段階は飛ばし、直前の問題がある段階の習得を確認する。
+  const previousStage = learningStages.slice(0, stageIndex).findLast(
+    (previous) => (term.stages[previous]?.length ?? 0) > 0,
+  );
+  return !previousStage || isStageMastered(term, previousStage, progress, masteryTarget);
 }
 
 export function getTermStage(term, progress, masteryTarget) {

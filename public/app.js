@@ -1,3 +1,4 @@
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.243";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
 import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.239";
 import {
@@ -196,6 +197,8 @@ const elements = {
   categoryField: document.querySelector("#category-field"),
   categoryLabel: document.querySelector("#category-label"),
   categoryFilter: document.querySelector("#category-filter"),
+  excludeTimeQuestions: document.querySelector("#exclude-time-questions"),
+  timeQuestionField: document.querySelector("#time-question-field"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
   questionAmountField: document.querySelector("#question-amount-field"),
   questionAmountFilter: document.querySelector("#question-amount-filter"),
@@ -383,6 +386,7 @@ const state = {
   pendingListeningActivity: null,
   listeningTimer: null,
   listeningRunId: 0,
+  excludeTimeQuestions: true,
   selectedStage: "",
   questionAmountMode: "all",
   answeredThisSession: 0,
@@ -1515,6 +1519,7 @@ function captureActiveSession() {
     roundId: state.sessionRoundId,
     studyMode: state.studyMode,
     deckIds: state.activeDeckIds,
+    excludeTimeQuestions: state.excludeTimeQuestions,
     selectedStage: state.selectedStage,
     questionAmountMode: state.questionAmountMode,
     shuffleEnabled: state.shuffleEnabled,
@@ -1638,6 +1643,7 @@ function setSetupControlsFromSession(session) {
   for (const option of elements.studyModeOptions) {
     option.checked = option.value === session.studyMode;
   }
+  elements.excludeTimeQuestions.checked = session.excludeTimeQuestions;
   elements.setupShuffle.checked = session.shuffleEnabled;
 }
 
@@ -1656,7 +1662,10 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
     return false;
   }
   const termIds = new Set(session.termIds);
-  const terms = state.allTerms.filter((term) => termIds.has(term.id));
+  const terms = filterTimeQuestions(
+    state.allTerms.filter((term) => termIds.has(term.id)),
+    supportsTimeQuestionExclusion() && session.excludeTimeQuestions,
+  );
   if (terms.length === 0) return false;
   setStudyTerms(terms);
   const taskByQuestionId = new Map(
@@ -1694,12 +1703,20 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   );
   state.sessionRoundId = session.roundId || createEventId();
   state.studyMode = session.studyMode;
+  state.excludeTimeQuestions = session.excludeTimeQuestions;
   state.selectedStage = session.selectedStage;
   state.questionAmountMode = session.questionAmountMode;
   state.shuffleEnabled = session.shuffleEnabled;
   state.answeredThisSession = session.answeredCount;
   state.ratingCounts = normalizeRatingCounts(session.ratingCounts);
   state.studySeconds = session.studySeconds;
+  // 現在の問題が除外されたら、その画面の計時を次の問題へ持ち越さない。
+  if (session.currentTask && !currentTask) {
+    session.screenStudySeconds = 0;
+    session.savedScreenStudySeconds = 0;
+    session.studyTimeEventId = "";
+    session.answerVisible = false;
+  }
   state.screenStudySeconds = Math.min(
     session.screenStudySeconds,
     state.studyTimeLimitSeconds,
@@ -3184,6 +3201,7 @@ function captureSetupPreferences() {
             deckId,
             {
               ...selectedFilters(),
+              excludeTimeQuestions: elements.excludeTimeQuestions.checked,
               questionStyle: elements.questionStyleFilter.value,
               questionAmountMode: selectedQuestionAmountMode(),
             },
@@ -4317,6 +4335,7 @@ function applySetupPreferences() {
   const preferences = normalizeSetupPreferences(state.setupPreferences);
   const subject = preferences.subjects[state.activeSubjectId];
   const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
+  elements.excludeTimeQuestions.checked = deck.excludeTimeQuestions !== false;
   setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
@@ -4385,9 +4404,27 @@ function updateRegionDetailOptions(resetSelection = false) {
   elements.regionDetailFilter.disabled = false;
 }
 
+function supportsTimeQuestionExclusion() {
+  return state.activeSubjectId !== "original" &&
+    state.subject?.learningType !== "vocabulary" &&
+    hasTimeQuestions(state.allTerms);
+}
+
+function selectedTimeQuestionExclusion() {
+  return supportsTimeQuestionExclusion() && elements.excludeTimeQuestions.checked;
+}
+
+function selectedStudyTerms() {
+  return filterTimeQuestions(
+    filterTermsBySelection(state.allTerms, selectedFilters()),
+    selectedTimeQuestionExclusion(),
+  );
+}
+
 function updateSetupPreview() {
   elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine);
-  const terms = filterTermsBySelection(state.allTerms, selectedFilters());
+  elements.timeQuestionField.classList.toggle("is-hidden", !supportsTimeQuestionExclusion());
+  const terms = selectedStudyTerms();
   const selectedStage = elements.questionStyleFilter.value;
   const studyMode = selectedStudyMode();
   const listening = listeningModes.has(studyMode);
@@ -4417,6 +4454,7 @@ function updateSetupPreview() {
   elements.startStudy.disabled =
     deckSelectionUpdating ||
     terms.length === 0 ||
+    questions === 0 ||
     !state.cloudReady ||
     (listening &&
       (!speechController.supported ||
@@ -4443,7 +4481,7 @@ function updateSetupPreview() {
     elements.resumeStudy.textContent = "前回の続きから";
   }
   elements.selectionSummary.textContent =
-    terms.length === 0
+    terms.length === 0 || questions === 0
       ? `条件に合う${termUnitLabel()}がありません。選択を変更してください。`
       : listening && !speechController.supported
         ? "この端末では音声読み上げを利用できません。"
@@ -5264,10 +5302,7 @@ async function beginStudy() {
   if (startingStudy || deckSelectionUpdating) {
     return;
   }
-  const selectedTerms = filterTermsBySelection(
-    state.allTerms,
-    selectedFilters(),
-  );
+  const selectedTerms = selectedStudyTerms();
   if (selectedTerms.length === 0 || !state.cloudReady) {
     updateSetupPreview();
     return;
@@ -5297,6 +5332,7 @@ async function beginStudy() {
     return;
   }
 
+  state.excludeTimeQuestions = selectedTimeQuestionExclusion();
   setStudyTerms(selectedTerms);
   state.selectedStage = elements.questionStyleFilter.value;
   state.questionAmountMode = selectedQuestionAmountMode();
@@ -5395,6 +5431,23 @@ async function resumeStudy() {
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
   speechController.stop();
+  try {
+    await queueSetupPreferenceSave();
+  } catch (error) {
+    startingStudy = false;
+    updateSetupPreview();
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
+    return;
+  }
+  savedSession.excludeTimeQuestions = selectedTimeQuestionExclusion();
+  const eligibleIds = new Set(filterTimeQuestions(state.allTerms, savedSession.excludeTimeQuestions)
+    .flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)));
+  if (!savedSession.tasks.some((task) => eligibleIds.has(task.questionId))) {
+    startingStudy = false;
+    updateSetupPreview();
+    elements.cloudStatus.textContent = "現在の条件では再開できる問題がありません。除外をオフにするか、はじめから開始してください。";
+    return;
+  }
   if (!restoreActiveSession(savedSession)) {
     await deleteCloudStudySession(state.sessionDatasetVersion).catch(() => {});
     setSavedSessionForMode(studyMode, null);
@@ -5622,7 +5675,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.242｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.243｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5982,6 +6035,7 @@ for (const control of [
   elements.categoryFilter,
   elements.questionStyleFilter,
   elements.questionAmountFilter,
+  elements.excludeTimeQuestions,
 ]) {
   control.addEventListener("change", () => {
     updateSetupPreview();

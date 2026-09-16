@@ -315,6 +315,7 @@ function normalizeSetupPreferences(value) {
         macroRegion: normalizeSetupSelection(rawDeck.macroRegion),
         regionDetail: normalizeSetupSelection(rawDeck.regionDetail),
         category: normalizeSetupSelection(rawDeck.category),
+        excludeTimeQuestions: rawDeck.excludeTimeQuestions !== false,
         questionStyle: setupQuestionStyles.has(rawDeck.questionStyle)
           ? rawDeck.questionStyle
           : "",
@@ -527,6 +528,7 @@ function normalizeStudySession(value) {
         .map(normalizeSetupPreferenceId)
         .filter(Boolean),
     )].slice(0, 100),
+    excludeTimeQuestions: source.excludeTimeQuestions !== false,
     selectedStage: setupQuestionStyles.has(source.selectedStage)
       ? source.selectedStage
       : "",

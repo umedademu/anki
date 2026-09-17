@@ -748,9 +748,19 @@ body.is-study-menu-open {
   line-height: 1.65;
 }
 
+.routine-controls-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: stretch;
+  gap: 10px;
+}
+
 .routine-multiplier-control {
   display: grid;
-  padding: 12px 14px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+  padding: 10px 12px;
   gap: 8px;
   background: var(--theme-surface-glass, rgb(255 255 255 / 72%));
   border: 1px solid var(--theme-border, rgb(34 80 53 / 12%));
@@ -780,6 +790,8 @@ body.is-study-menu-open {
 
 .routine-multiplier-control input[type="range"] {
   width: 100%;
+  min-width: 0;
+  margin: 0;
   accent-color: #34734c;
   cursor: pointer;
 }
@@ -797,8 +809,9 @@ body.is-study-menu-open {
 
 .routine-video-skip-control {
   display: flex;
-  align-items: flex-start;
-  padding: 12px 14px;
+  align-items: center;
+  padding: 10px 12px;
+  white-space: nowrap;
   gap: 10px;
   color: var(--theme-accent, #315f43);
   background: var(--theme-surface-glass, rgb(255 255 255 / 72%));
@@ -810,7 +823,8 @@ body.is-study-menu-open {
 .routine-video-skip-control input {
   width: 18px;
   height: 18px;
-  margin: 2px 0 0;
+  flex-shrink: 0;
+  margin: 0;
   accent-color: #34734c;
 }
 
@@ -3006,6 +3020,45 @@ body.is-listening.is-listening-answer-visible .page {
 }
 
 @media (max-width: 560px) {
+  .routine-controls-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 6px;
+  }
+
+  .routine-multiplier-control {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .routine-multiplier-heading {
+    flex-wrap: wrap;
+    gap: 4px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+  }
+
+  .routine-multiplier-heading output {
+    min-width: 0;
+    padding: 3px 5px;
+    font-size: 0.72rem;
+  }
+
+  .routine-video-skip-control {
+    min-width: 0;
+    padding: 8px;
+    gap: 6px;
+    white-space: normal;
+  }
+
+  .routine-video-skip-control span {
+    min-width: 0;
+  }
+
+  .routine-video-skip-control strong {
+    font-size: 0.72rem;
+  }
+
   .answer-note {
     flex-basis: 42%;
     max-width: 42%;

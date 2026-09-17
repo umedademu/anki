@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.246"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.246" />
-    <link rel="stylesheet" href="/theme.css?v=0.246" />
+    <script src="/theme.js?v=0.247"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.247" />
+    <link rel="stylesheet" href="/theme.css?v=0.247" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.246" type="module"></script>
+    <script src="/app.js?v=0.247" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.246</span>
+        <span class="app-version">v0.247</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
@@ -32,7 +32,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.246｜科目別学習</p>
+        <p class="eyebrow">v0.247｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -43,26 +43,28 @@
           <p class="eyebrow">毎日の学習メニュー</p>
           <h2 id="routine-dashboard-title">今日の順番で学習する</h2>
           <p class="routine-dashboard-summary" id="routine-dashboard-summary"></p>
-          <label class="routine-multiplier-control" for="routine-multiplier">
-            <span class="routine-multiplier-heading">
-              <strong>今日の学習量</strong>
-              <output id="routine-multiplier-output" for="routine-multiplier">1倍</output>
-            </span>
-            <input
-              id="routine-multiplier"
-              type="range"
-              min="0.1"
-              max="3"
-              step="0.05"
-              value="1"
-            />
-          </label>
-          <label class="routine-video-skip-control" for="routine-skip-videos">
-            <input id="routine-skip-videos" type="checkbox" />
-            <span>
-              <strong>今日は動画をスキップ</strong>
-            </span>
-          </label>
+          <div class="routine-controls-row">
+            <label class="routine-multiplier-control" for="routine-multiplier">
+              <span class="routine-multiplier-heading">
+                <strong>今日の学習量</strong>
+                <output id="routine-multiplier-output" for="routine-multiplier">1倍</output>
+              </span>
+              <input
+                id="routine-multiplier"
+                type="range"
+                min="0.1"
+                max="3"
+                step="0.05"
+                value="1"
+              />
+            </label>
+            <label class="routine-video-skip-control" for="routine-skip-videos">
+              <input id="routine-skip-videos" type="checkbox" />
+              <span>
+                <strong>今日は動画をスキップ</strong>
+              </span>
+            </label>
+          </div>
           <p
             class="routine-multiplier-status"
             id="routine-multiplier-status"
@@ -107,7 +109,7 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.246｜学習を始める</p>
+        <p class="eyebrow" id="setup-eyebrow">v0.247｜学習を始める</p>
         <div class="setup-title-row">
           <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
           <a class="secondary-button" id="edit-questions" href="/question-editor.html">問題を編集</a>

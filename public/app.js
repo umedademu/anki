@@ -1,7 +1,7 @@
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.246";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.246";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.247";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.247";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.246";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.247";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -5643,7 +5643,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.246｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.247｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

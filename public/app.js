@@ -1,8 +1,8 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.253";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.253";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.253";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.254";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.254";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.254";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.253";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.254";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -186,6 +186,8 @@ const elements = {
   errorMessage: document.querySelector("#error-message"),
   retryButton: document.querySelector("#retry-button"),
   deckFilter: document.querySelector("#deck-filter"),
+  chapterField: document.querySelector("#chapter-field"),
+  chapterFilter: document.querySelector("#chapter-filter"),
   macroRegionField: document.querySelector("#macro-region-field"),
   macroRegionLabel: document.querySelector("#macro-region-label"),
   macroRegionFilter: document.querySelector("#macro-region-filter"),
@@ -619,7 +621,7 @@ function cloneTask(task) {
 }
 
 function selectedDeckIds() {
-  return [...elements.deckFilter.querySelectorAll('input[name="deck-filter"]:checked')]
+  return [...elements.setupPanel.querySelectorAll('input[name="deck-filter"]:checked')]
     .map((input) => input.value)
     .filter((deckId) => state.deckEntries.some((deck) => deck.id === deckId));
 }
@@ -4225,6 +4227,8 @@ function deckDisplayLabel(deck) {
 function setDeckOptions(decks, selectedIds) {
   const selected = new Set(selectedIds);
   const groupedChapters = state.activeSubjectId === "world-history-so";
+  elements.chapterFilter.replaceChildren();
+  elements.chapterField.classList.toggle("is-hidden", !groupedChapters);
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
       const label = document.createElement("label");
@@ -4285,14 +4289,15 @@ function setDeckOptions(decks, selectedIds) {
     actions.append(selectAll);
     menu.append(actions, choices);
     details.append(summary, menu);
-    elements.deckFilter.append(deckChoice, details);
+    elements.deckFilter.append(deckChoice);
+    elements.chapterFilter.append(details);
     updateChapterSelectionSummary();
   }
 }
 
 // 保存先は従来の章別番号を維持し、既存の履歴と選択設定を引き継ぐ。
 function updateChapterSelectionSummary() {
-  const summary = elements.deckFilter.querySelector("#chapter-selection-summary");
+  const summary = elements.chapterFilter.querySelector("#chapter-selection-summary");
   if (!summary) return;
   const count = selectedDeckIds().length;
   summary.textContent = count === state.deckEntries.length
@@ -5580,7 +5585,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   }
   const loadToken = state.deckLoadToken + 1;
   state.deckLoadToken = loadToken;
-  const deckInputs = [...elements.deckFilter.querySelectorAll('input[name="deck-filter"]')];
+  const deckInputs = [...elements.setupPanel.querySelectorAll('input[name="deck-filter"]')];
   if (!keepDeckSelection) {
     deckInputs.forEach((input) => {
       input.disabled = true;
@@ -6122,7 +6127,7 @@ async function updateDeckSelection(deckIds) {
       ...elements.setupPanel.querySelectorAll("input, select, button"),
       ...document.querySelectorAll(".site-header a"),
     ]
-      .filter((control) => !elements.deckFilter.contains(control))
+      .filter((control) => !elements.deckFilter.contains(control) && !elements.chapterFilter.contains(control))
       .map((control) => [control, control.inert]),
   );
   protectedControls.forEach((_, control) => {
@@ -6159,7 +6164,7 @@ async function updateDeckSelection(deckIds) {
   }
 }
 
-elements.deckFilter.addEventListener("change", (event) => {
+function handleDeckOrChapterSelection(event) {
   if (event.target.name === "chapter-deck-filter") {
     // 他科目と同じく、最後の一つのデッキは解除できない。
     event.target.checked = true;
@@ -6175,7 +6180,9 @@ elements.deckFilter.addEventListener("change", (event) => {
   }
   updateChapterSelectionSummary();
   void updateDeckSelection(deckIds);
-});
+}
+elements.deckFilter.addEventListener("change", handleDeckOrChapterSelection);
+elements.chapterFilter.addEventListener("change", handleDeckOrChapterSelection);
 
 elements.macroRegionFilter.addEventListener("change", () => {
   updateRegionDetailOptions(true);

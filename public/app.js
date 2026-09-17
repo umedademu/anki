@@ -1,7 +1,7 @@
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.247";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.247";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.248";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.248";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.247";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.248";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -143,9 +143,7 @@ const elements = {
   startRoutine: document.querySelector("#start-routine"),
   continueRoutine: document.querySelector("#continue-routine"),
   setupPanel: document.querySelector("#setup-panel"),
-  setupEyebrow: document.querySelector("#setup-eyebrow"),
   setupTitle: document.querySelector("#setup-title"),
-  setupDescription: document.querySelector("#setup-description"),
   routineSetupBanner: document.querySelector("#routine-setup-banner"),
   routineSetupTitle: document.querySelector("#routine-setup-title"),
   routineSetupProgress: document.querySelector("#routine-setup-progress"),
@@ -202,13 +200,9 @@ const elements = {
   questionAmountField: document.querySelector("#question-amount-field"),
   questionAmountFilter: document.querySelector("#question-amount-filter"),
   studyModeOptions: document.querySelectorAll('input[name="study-mode"]'),
-  listeningAnswerDescription: document.querySelector(
-    "#listening-answer-description",
-  ),
   setupShuffle: document.querySelector("#setup-shuffle"),
   setupReviewShared: document.querySelector("#setup-review-shared"),
   setupReviewCustom: document.querySelector("#setup-review-custom"),
-  setupReviewScopeNote: document.querySelector("#setup-review-scope-note"),
   setupAgainValue: document.querySelector("#setup-again-value"),
   setupAgainUnit: document.querySelector("#setup-again-unit"),
   setupHardValue: document.querySelector("#setup-hard-value"),
@@ -2215,11 +2209,6 @@ function updateSetupReviewScope() {
       : state.sharedReviewSettings,
   );
   setReviewFieldsDisabled(setupReviewFields, !usesCustomSettings);
-  const subjectTitle = state.subject?.title ?? "この教科";
-  elements.setupReviewScopeNote.textContent = usesCustomSettings
-    ? `${subjectTitle}だけに、この4つの時間を適用します。`
-    : "設定画面で保存した全教科共通の時間を適用します。";
-  elements.setupReviewScopeNote.textContent += "回答済みの問題も、最後の回答時刻を基準に復習予定を更新します。";
 }
 
 function fillSetupReviewSettings() {
@@ -4226,8 +4215,6 @@ function deckDisplayLabel(deck) {
 
 function setDeckOptions(decks, selectedDeckIds) {
   const selected = new Set(selectedDeckIds);
-  document.querySelector("#deck-selection-summary").textContent =
-    `${decks.filter((deck) => selected.has(deck.id)).length} / ${decks.length} 選択中`;
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
       const label = document.createElement("label");
@@ -4514,7 +4501,6 @@ function configureSetup() {
     ? `個別の復習間隔はこのブラウザーに保存し、問題を変えても引き継ぎます。${originalReviewStorageNotice()}`
     : "変更するとCloudflareへ保存され、学習中メニューにも同じ設定が表示されます。";
   elements.studyStop.querySelector("small").textContent = temporary ? "続きは端末に保存" : "この一周を保存";
-  if (temporary) elements.setupDescription.textContent = "世界史と同じ操作で学習できます。問題・評価・復習予定・学習途中の状態をこのブラウザーに保存し、閉じた後も引き継ぎます。問題・回答・解説や並びを変更して学習を始めると、学習記録を新しくします。個別の復習間隔は引き継ぎます。音声は他教科と同じ設定を使います。";
   const filterLabels = state.subject?.filterLabels ?? {};
   const fieldMappings = [
     [elements.macroRegionField, elements.macroRegionLabel, filterLabels.macroRegion],
@@ -4549,10 +4535,6 @@ function configureSetup() {
   );
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
-  elements.listeningAnswerDescription.textContent =
-    state.subject?.id === classicalChineseSubjectId
-      ? "語句の1秒後に読み、さらに1秒後に意味を再生する"
-      : "保存済みの読み上げ対象を繰り返し再生する";
   for (const option of elements.studyModeOptions) {
     option.closest(".study-mode-choice")?.classList.remove("is-hidden");
     if (listeningModes.has(option.value)) {
@@ -5643,17 +5625,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.247｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
-  const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
-    .filter(Boolean)
-    .join("、");
-  elements.setupDescription.textContent =
-    state.subject.learningType === "vocabulary"
-      ? "複数のデッキ、品詞、出題方向を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。"
-      : state.subject.learningType === "cards"
-        ? `複数のデッキ${cardFilterLabels ? `、${cardFilterLabels}` : ""}を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。`
-        : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
   configureSetup();
   if (!routeChanging && visiblePanel === elements.setupPanel) syncScreenUrl(elements.setupPanel, true);
   if (!state.cloudReady && state.cloudError) {
@@ -6043,8 +6015,6 @@ elements.mindsetIntervalSeconds.addEventListener("change", () => {
 
 async function updateDeckSelection(deckIds) {
   pendingDeckSelection = deckIds;
-  document.querySelector("#deck-selection-summary").textContent =
-    `${deckIds.length} / ${state.deckEntries.length} 選択中`;
   if (deckSelectionUpdating) return;
 
   deckSelectionUpdating = true;

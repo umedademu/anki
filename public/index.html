@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.247"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.247" />
-    <link rel="stylesheet" href="/theme.css?v=0.247" />
+    <script src="/theme.js?v=0.248"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.248" />
+    <link rel="stylesheet" href="/theme.css?v=0.248" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.247" type="module"></script>
+    <script src="/app.js?v=0.248" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.247</span>
+        <span class="app-version">v0.248</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/history.html">学習記録</a>
         <a class="header-link" href="/analysis.html">分析</a>
@@ -32,7 +32,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.247｜科目別学習</p>
+        <p class="eyebrow">v0.248｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -109,14 +109,10 @@
       </section>
 
       <section class="setup-panel is-hidden" id="setup-panel">
-        <p class="eyebrow" id="setup-eyebrow">v0.247｜学習を始める</p>
         <div class="setup-title-row">
           <h1 id="setup-title">今回の学習範囲を選ぶ</h1>
           <a class="secondary-button" id="edit-questions" href="/question-editor.html">問題を編集</a>
         </div>
-        <p class="setup-description" id="setup-description">
-          すべてを選んだまま始めることも、地域や種類を絞って集中することもできます。
-        </p>
         <div class="routine-setup-banner is-hidden" id="routine-setup-banner">
           <strong id="routine-setup-title"></strong>
           <span id="routine-setup-progress"></span>
@@ -129,16 +125,12 @@
               <input type="radio" name="study-mode" value="memorize" checked />
               <span>
                 <strong>暗記モード</strong>
-                <small>回答を確認し、4段階で自己評価する</small>
               </span>
             </label>
             <label class="study-mode-choice listening-mode-choice">
               <input type="radio" name="study-mode" value="listen-answer" />
               <span>
                 <strong>聞き流し</strong>
-                <small id="listening-answer-description">
-                  問題文＋回答＋語呂合わせを繰り返し読み上げる
-                </small>
               </span>
             </label>
           </div>
@@ -149,7 +141,6 @@
             <legend>
               <span class="deck-picker-heading">
                 <span>デッキ（複数選択可）</span>
-                <span class="deck-selection-summary" id="deck-selection-summary" aria-live="polite"></span>
               </span>
             </legend>
             <div class="deck-filter-options" id="deck-filter"></div>
@@ -195,7 +186,6 @@
             <input id="setup-shuffle" type="checkbox" />
             <span>
               <strong>シャッフル</strong>
-              <small>選んだ範囲の出題順を入れ替える</small>
             </span>
           </label>
 
@@ -227,7 +217,6 @@
               />
               <span>この教科だけ個別に設定する</span>
             </label>
-            <p id="setup-review-scope-note"></p>
           </fieldset>
           <div class="study-menu-interval-list setup-review-interval-list">
             <label class="study-menu-interval rating-incorrect-row">
@@ -280,8 +269,7 @@
         </p>
         <label class="setup-field question-limit-field" id="question-limit-field" for="question-limit">
           <span>今回の問題数（任意）</span>
-          <input id="question-limit" type="number" min="1" max="999999" step="1" inputmode="numeric" placeholder="指定なし" aria-describedby="question-limit-help" />
-          <small id="question-limit-help">空欄のままで開始できます。指定すると、その回数の回答後に結果を表示します。</small>
+          <input id="question-limit" type="number" min="1" max="999999" step="1" inputmode="numeric" placeholder="指定なし" />
         </label>
         <div class="setup-actions">
           <button class="primary-button setup-start is-hidden" id="resume-study" type="button">

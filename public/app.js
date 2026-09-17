@@ -1,6 +1,7 @@
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.244";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.245";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.245";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.239";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.245";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -420,6 +421,15 @@ let setupPreferenceSaveVersion = 0;
 let speechPartsSaveVersion = 0;
 let speechPartNoticeTimer = null;
 let listeningPlaybackFeedbackTimer = null;
+let catalogReady = Promise.resolve();
+let initialSettingsReady = Promise.resolve();
+let initialSettingsLoading = true;
+let questionImagesReady = null;
+let routeQueue = Promise.resolve();
+let routeRequest = 0;
+let routeChanging = false;
+let visiblePanel = null;
+let pageHiding = false;
 let startingStudy = false;
 let deckSelectionUpdating = false;
 let pendingDeckSelection = null;
@@ -753,6 +763,8 @@ function startRoutineOvertimeIfNeeded(rating) {
 }
 
 function renderRoutineDashboard() {
+  elements.routineDashboard.classList.toggle("is-hidden", initialSettingsLoading);
+  if (initialSettingsLoading) return;
   const run = normalizeStudyRoutineRun(state.routineRun);
   const activeItem = currentStudyRoutineItem(run);
   const routineMultiplier = normalizeStudyRoutineMultiplier(
@@ -786,8 +798,8 @@ function renderRoutineDashboard() {
   elements.routineSkipVideos.checked = routineSkipVideos;
   elements.routineMultiplier.disabled = !connected || routinePreferenceSaving;
   elements.routineSkipVideos.disabled = !connected || routinePreferenceSaving;
-  elements.startRoutine.disabled = !connected || plan.length === 0;
-  elements.continueRoutine.disabled = !connected || !activeItem;
+  elements.startRoutine.disabled = !connected || !state.catalog || plan.length === 0;
+  elements.continueRoutine.disabled = !connected || !state.catalog || !activeItem;
   elements.continueRoutine.classList.toggle("is-hidden", !activeItem);
   elements.startRoutine.textContent = run
     ? completed
@@ -1276,12 +1288,7 @@ async function launchRoutineCurrentStep() {
     await showRoutineVideoStep();
     return;
   }
-  showOnly(elements.loadingPanel);
-  await activateSubject(item.subjectId);
-  showOnly(elements.setupPanel);
-  renderRoutineSetupContext();
-  queueVisibleSetupPreferenceSave();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  await navigateToRoute({ subject: item.subjectId, view: "setup", routine: true });
 }
 
 async function startRoutineFromBeginning() {
@@ -2629,6 +2636,7 @@ function showMindsetCompletion(total) {
 
 const originalPanel = document.querySelector("#original-panel");
 const originalStudy = createOriginalStudy(originalPanel, returnToSubjectSelection, async (questions) => {
+  await initialSettingsReady;
   await Promise.allSettled([setupPreferenceSave, studySessionSave, studyTimeSave]);
   const settings = getStoredAccessKey()
     ? await loadCloudState().then((saved) => saved.settings).catch(() => null) : null;
@@ -2701,6 +2709,7 @@ function saveOriginalBeforeHide() {
 }
 
 window.addEventListener("pagehide", () => {
+  pageHiding = true;
   originalStudy.clear();
   if (isOriginalSession()) {
     stopStudyClock({ includeHidden: true });
@@ -2716,12 +2725,15 @@ window.addEventListener("pagehide", () => {
 });
 
 window.addEventListener("pageshow", (event) => {
-  if (event.persisted && !originalPanel.classList.contains("is-hidden")) {
-    originalStudy.open();
+  pageHiding = false;
+  if (event.persisted) {
+    void navigateToRoute(readAppRoute(window.location.search), { fromHistory: true });
   }
 });
 
 function showOnly(panel) {
+  visiblePanel = panel;
+  if (!routeChanging && !pageHiding) syncScreenUrl(panel);
   if (panel !== originalPanel) originalStudy.clear();
   if (panel !== elements.studyShell && state.studyMenuOpen) {
     closeStudyMenu({ resumeStudy: false });
@@ -4091,48 +4103,15 @@ function advanceListeningManually() {
 async function returnToSetup() {
   if (state.saving) return;
   elements.questionLimit.value = "";
-  stopListeningSequence();
-  stopStudyClock();
-  state.listeningPaused = false;
-  state.pendingListeningActivity = null;
-  if (state.activeSession) {
-    try {
-      await queueCurrentStudyTimeSave();
-      await queueActiveSessionSave();
-    } catch (error) {
-      state.unlockMessage = error.message;
-      if (isOriginalSession()) {
-        renderQuestion();
-        return;
-      }
-    }
-  }
-  showOnly(elements.setupPanel);
-  fillSetupReviewSettings();
-  updateSetupPreview();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  return navigateToRoute({
+    subject: state.activeSubjectId, view: "setup",
+    decks: state.activeDeckIds, routine: state.inRoutine,
+  });
 }
 
 async function returnToSubjectSelection() {
   if (state.saving) return;
-  await Promise.allSettled([setupPreferenceSave]);
-  stopListeningSequence();
-  stopStudyClock();
-  state.listeningPaused = false;
-  state.pendingListeningActivity = null;
-  if (state.activeSession) {
-    try {
-      await queueCurrentStudyTimeSave();
-      await queueActiveSessionSave();
-    } catch (error) {
-      state.unlockMessage = error.message;
-      if (isOriginalSession()) {
-        renderQuestion();
-        return;
-      }
-    }
-  }
-  showSubjectSelection();
+  return navigateToRoute({ view: "home" });
 }
 
 function renderTermTags(term, question, visible) {
@@ -5524,6 +5503,8 @@ async function resumeStudy() {
 }
 
 async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
+  questionImagesReady ??= loadQuestionImages().then((images) => { state.questionImages = images; });
+  await questionImagesReady;
   const selected = new Set(deckIds);
   const deckEntries = state.deckEntries.filter((deck) => selected.has(deck.id));
   if (deckEntries.length === 0) {
@@ -5670,7 +5651,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.244｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.245｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)
@@ -5682,6 +5663,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
         ? `複数のデッキ${cardFilterLabels ? `、${cardFilterLabels}` : ""}を選んで学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。`
         : "複数のデッキをまとめて学習できます。シャッフル時は選択デッキ全体を混ぜて出題します。";
   configureSetup();
+  if (!routeChanging && visiblePanel === elements.setupPanel) syncScreenUrl(elements.setupPanel, true);
   if (!state.cloudReady && state.cloudError) {
     elements.cloudStatus.innerHTML = `${state.cloudError}　<a href="/settings.html">設定ページを開く</a>`;
   }
@@ -5714,6 +5696,7 @@ function renderSubjectOptions() {
       button.type = "button";
       button.className = "subject-choice random-video-choice";
       button.dataset.randomVideoAction = "play";
+      button.disabled = initialSettingsLoading || !state.cloudConnected;
       const title = document.createElement("strong");
       title.textContent = "動画をランダム再生";
       button.append(title);
@@ -5739,7 +5722,7 @@ function showSubjectSelection() {
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
-async function activateSubject(subjectId) {
+async function activateSubject(subjectId, requestedDecks = []) {
   const subjectEntry = state.subjectEntries.find(
     (subject) => subject.id === subjectId,
   );
@@ -5758,85 +5741,215 @@ async function activateSubject(subjectId) {
     : [savedSubject?.lastDeckId];
   const selectedDeckIds = normalizeDeckSelection(
     state.deckEntries.map((deck) => deck.id),
-    requestedDeckIds,
+    requestedDecks.length ? requestedDecks : requestedDeckIds,
     defaultDeckId,
   );
   setDeckOptions(state.deckEntries, selectedDeckIds);
   await activateDecks(selectedDeckIds);
 }
 
-async function start() {
-  showOnly(elements.loadingPanel);
+function routeForPanel(panel) {
+  if (panel === elements.subjectPanel) return { view: "home" };
+  if (panel === originalPanel) return { subject: "original", view: "input" };
+  if ([elements.setupPanel, elements.studyShell, elements.mindsetPlayerPanel, elements.mindsetCompletionPanel].includes(panel) && state.activeSubjectId) {
+    return {
+      subject: state.activeSubjectId,
+      view: panel === elements.setupPanel ? "setup" : "study",
+      decks: state.activeDeckIds,
+      mode: state.studyMode,
+      routine: state.inRoutine,
+    };
+  }
+  return null;
+}
+
+function syncScreenUrl(panel, replace = false) {
+  const route = routeForPanel(panel);
+  if (!route) return;
+  const url = appRouteUrl(route);
+  if (url !== window.location.pathname + window.location.search) {
+    window.history[replace ? "replaceState" : "pushState"]({ anki: true }, "", url);
+  }
+  document.title = route.view === "home" ? "Anki | 科目選択"
+    : `Anki | ${route.subject === "original" ? "オリジナル" : state.subject?.title ?? "科目別学習"} | ${route.view === "study" ? "学習" : route.view === "input" ? "問題を登録" : "学習を始める"}`;
+}
+
+function restoreStudyRoute(route) {
+  const session = switchStudySessionMode(savedSessionForMode(route.mode), route.mode);
+  if (!state.cloudReady || !session || !restoreActiveSession(session)) return false;
+  enqueueDueSessionTasks();
+  ensureUnseenTasksQueued();
+  enqueuePendingRetryTasksImmediately();
+  state.currentTask ??= state.queue.shift() ?? null;
+  if (!state.currentTask) {
+    state.activeSession = false;
+    return false;
+  }
+  elements.questionLimit.value = "";
+  initializeQuestionLimit();
+  ensureCurrentStudyScreen();
+  state.listeningPaused = true;
+  clearListeningTimer();
+  showOnly(elements.studyShell);
+  renderQuestion();
+  // URLからの復元だけで音声再生や次の問題への進行を始めない。
+  return true;
+}
+
+async function saveBeforeRouteChange() {
+  stopListeningSequence();
+  stopStudyClock();
+  stopMindsetPlayback();
+  if (state.activeSession) {
+    await queueCurrentStudyTimeSave();
+    await queueActiveSessionSave();
+  }
+  await Promise.allSettled([setupPreferenceSave, studySessionSave, studyTimeSave]);
+}
+
+function navigateToRoute(route, { replace = false, fromHistory = false } = {}) {
+  const request = ++routeRequest;
+  routeChanging = true;
+  stopListeningSequence();
+  stopStudyClock();
+  stopMindsetPlayback();
+  if (!fromHistory) {
+    const url = appRouteUrl(route);
+    if (url !== window.location.pathname + window.location.search) {
+      window.history[replace ? "replaceState" : "pushState"]({ anki: true }, "", url);
+    }
+  }
+  routeQueue = routeQueue.catch(() => {}).then(async () => {
+    // 回答の保存・開始処理の途中で別科目の状態に入れ替えない。
+    while (startingStudy || state.saving || deckSelectionUpdating) {
+      await new Promise((resolve) => window.setTimeout(resolve, 25));
+    }
+    if (request !== routeRequest) return;
+    try {
+      try {
+        await saveBeforeRouteChange();
+      } catch (error) {
+        state.unlockMessage = `移動前の学習記録を保存できませんでした。${error.message}`;
+        elements.cloudStatus.textContent = state.unlockMessage;
+        if (visiblePanel === elements.studyShell) renderQuestion();
+        return;
+      }
+      if (request !== routeRequest) return;
+      if (!route.subject) {
+        showSubjectSelection();
+        return;
+      }
+      showOnly(elements.loadingPanel);
+      await initialSettingsReady;
+      if (request !== routeRequest) return;
+      state.inRoutine = false;
+      state.activeSession = false;
+      discardOriginalSession();
+      if (route.subject === "original") {
+        showOnly(originalPanel);
+        originalStudy.open();
+        if (route.view !== "input") await originalStudy.start();
+      } else {
+        await catalogReady;
+        if (request !== routeRequest) return;
+        if (!state.subjectEntries.some((subject) => subject.id === route.subject)) {
+          showSubjectSelection();
+          document.querySelector("#subject-loading-status").textContent = "指定された科目が見つかりません。科目を選び直してください。";
+          return;
+        }
+        await activateSubject(route.subject, route.decks);
+        if (request !== routeRequest) return;
+        state.inRoutine = route.routine && currentStudyRoutineItem(state.routineRun)?.subjectId === route.subject;
+        if (isMindsetMode()) {
+          showMindsetPlayer();
+          return;
+        }
+        showOnly(elements.setupPanel);
+        renderRoutineSetupContext();
+        updateSetupPreview();
+      }
+      if (request !== routeRequest) return;
+      if (route.view === "study" && visiblePanel === elements.setupPanel && !restoreStudyRoute(route)) {
+        elements.cloudStatus.textContent = state.cloudError || "再開できる学習記録がありません。開始条件を確認して学習を始めてください。";
+      }
+    } catch (error) {
+      if (request === routeRequest) {
+        elements.errorMessage.textContent = error.message;
+        showOnly(elements.errorPanel);
+      }
+    } finally {
+      if (request === routeRequest) {
+        routeChanging = false;
+        syncScreenUrl(visiblePanel, true);
+        if (route.view !== "study" && state.cloudReady && [elements.setupPanel, elements.mindsetPlayerPanel].includes(visiblePanel)) {
+          queueVisibleSetupPreferenceSave();
+        }
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    }
+  });
+  return routeQueue;
+}
+
+window.addEventListener("popstate", () => {
+  void navigateToRoute(readAppRoute(window.location.search), { fromHistory: true });
+});
+
+async function loadInitialSettings() {
   try {
-    const [catalog, questionImages] = await Promise.all([
-      fetchJson("index.json"),
-      loadQuestionImages(),
-    ]);
-    if (
-      catalog.schemaVersion !== 3 ||
-      !Array.isArray(catalog.subjects) ||
-      catalog.subjects.length === 0
-    ) {
+    if (getStoredAccessKey()) {
+      const cloudState = await loadCloudState();
+      state.shuffleEnabled = cloudState.settings.shuffleEnabled;
+      state.listeningPauseSeconds = normalizeListeningPauseSeconds(cloudState.settings.listeningPauseSeconds);
+      state.listeningQuestionIntervalSeconds = normalizeListeningQuestionIntervalSeconds(cloudState.settings.listeningQuestionIntervalSeconds);
+      state.studyRoutineOvertimeSeconds = normalizeStudyRoutineOvertimeSeconds(cloudState.settings.studyRoutineOvertimeSeconds);
+      state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(cloudState.settings.studyTimeLimitSeconds);
+      state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
+      syncRoutinePreferences(cloudState.settings.setupPreferences, cloudState.studyDate);
+      state.cloudConnected = true;
+      saveSpeechSettings(cloudState.settings);
+    } else {
+      state.cloudConnected = false;
+    }
+  } catch {
+    state.cloudConnected = false;
+  } finally {
+    initialSettingsLoading = false;
+    document.querySelector("#routine-loading-status").textContent = "";
+    renderRoutineDashboard();
+    renderSubjectOptions();
+  }
+}
+
+async function start() {
+  const initialRoute = readAppRoute(window.location.search);
+  initialSettingsLoading = true;
+  // HTMLの時点から科目選択画面を表示し、取得できた部分から更新する。
+  routeChanging = true;
+  showSubjectSelection();
+  routeChanging = false;
+  document.querySelector("#subject-loading-status").textContent = "科目一覧を読み込んでいます…";
+  document.querySelector("#routine-loading-status").textContent = "学習メニューを読み込んでいます…";
+  document.querySelector("#retry-subjects").classList.add("is-hidden");
+  catalogReady = fetchJson("index.json").then((catalog) => {
+    if (catalog.schemaVersion !== 3 || !Array.isArray(catalog.subjects) || !catalog.subjects.length) {
       throw new Error("科目一覧の形式が正しくありません。");
     }
     state.catalog = catalog;
     state.subjectEntries = catalog.subjects;
-    state.questionImages = questionImages;
-    if (getStoredAccessKey()) {
-      try {
-        const cloudState = await loadCloudState();
-        state.shuffleEnabled = cloudState.settings.shuffleEnabled;
-        state.listeningPauseSeconds = normalizeListeningPauseSeconds(
-          cloudState.settings.listeningPauseSeconds,
-        );
-        state.listeningQuestionIntervalSeconds =
-          normalizeListeningQuestionIntervalSeconds(
-            cloudState.settings.listeningQuestionIntervalSeconds,
-          );
-        state.studyRoutineOvertimeSeconds = normalizeStudyRoutineOvertimeSeconds(
-          cloudState.settings.studyRoutineOvertimeSeconds,
-        );
-        state.studyTimeLimitSeconds = normalizeStudyTimeLimitSeconds(
-          cloudState.settings.studyTimeLimitSeconds,
-        );
-        state.speechParts = normalizeSpeechParts(cloudState.settings.speechParts);
-        syncRoutinePreferences(
-          cloudState.settings.setupPreferences,
-          cloudState.studyDate,
-        );
-        state.cloudConnected = true;
-        saveSpeechSettings(cloudState.settings);
-        await syncRatingSoundSettings(cloudState.settings);
-      } catch {
-        syncRoutinePreferences(normalizeSetupPreferences());
-        await syncRatingSoundSettings({
-          ratingSoundVolume: defaultRatingSoundVolume,
-          ratingSounds: normalizeRatingSounds(),
-        });
-        state.cloudConnected = false;
-      }
-    } else {
-      await syncRatingSoundSettings({
-        ratingSoundVolume: defaultRatingSoundVolume,
-        ratingSounds: normalizeRatingSounds(),
-      });
-      state.cloudConnected = false;
-    }
-    const returnParams = new URLSearchParams(window.location.search);
-    const returnSubject = returnParams.get("subject");
-    if (returnSubject && state.subjectEntries.some((subject) => subject.id === returnSubject && subject.learningType !== mindsetLearningType)) {
-      await activateSubject(returnSubject);
-      state.inRoutine = returnParams.get("routine") === "1" && Boolean(currentStudyRoutineItem(state.routineRun)?.subjectId === returnSubject);
-      showOnly(elements.setupPanel);
-      renderRoutineSetupContext();
-      updateSetupPreview();
-      window.history.replaceState(null, "", window.location.pathname);
-    } else {
-      showSubjectSelection();
-    }
-  } catch (error) {
-    elements.errorMessage.textContent = error.message;
-    showOnly(elements.errorPanel);
+    renderSubjectOptions();
+    renderRoutineDashboard();
+    document.querySelector("#subject-loading-status").textContent = "";
+  });
+  void catalogReady.catch((error) => {
+    document.querySelector("#subject-loading-status").textContent = error.message;
+    document.querySelector("#retry-subjects").classList.remove("is-hidden");
+  });
+  initialSettingsReady = loadInitialSettings();
+  if (initialRoute.subject) {
+    await navigateToRoute(initialRoute, { replace: true, fromHistory: true });
+  } else {
+    syncScreenUrl(elements.subjectPanel, true);
   }
 }
 
@@ -5853,12 +5966,7 @@ document.getElementById("edit-questions").addEventListener("click", async (event
 
 elements.subjectOptions.addEventListener("click", (event) => {
   if (event.target.closest("button[data-original-study]")) {
-    state.inRoutine = false;
-    state.activeSession = false;
-    stopListeningSequence();
-    elements.subjectName.textContent = "オリジナル";
-    showOnly(originalPanel);
-    originalStudy.open();
+    void navigateToRoute({ subject: "original", view: "input" });
     return;
   }
   const randomVideoButton = event.target.closest(
@@ -5875,23 +5983,7 @@ elements.subjectOptions.addEventListener("click", (event) => {
   }
   const button = event.target.closest("button[data-subject-id]");
   if (!button) return;
-  state.inRoutine = false;
-  showOnly(elements.loadingPanel);
-  void setupPreferenceSave
-    .catch(() => {})
-    .then(() => activateSubject(button.dataset.subjectId))
-    .then(() => {
-      if (isMindsetMode()) {
-        showMindsetPlayer();
-      } else {
-        showOnly(elements.setupPanel);
-      }
-      queueVisibleSetupPreferenceSave();
-    })
-    .catch((error) => {
-      elements.errorMessage.textContent = error.message;
-      showOnly(elements.errorPanel);
-    });
+  void navigateToRoute({ subject: button.dataset.subjectId, view: "setup" });
 });
 document.addEventListener(
   "click",
@@ -6177,6 +6269,7 @@ elements.resetProgress.addEventListener("click", () => {
   }
 });
 elements.retryButton.addEventListener("click", start);
+document.querySelector("#retry-subjects").addEventListener("click", start);
 
 elements.studyShell.addEventListener("pointerdown", (event) => {
   if (

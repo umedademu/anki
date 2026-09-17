@@ -4130,3 +4130,8 @@ body.is-listening.is-listening-answer-visible .page {
   text-decoration: none;
   text-align: center;
 }
+
+#routine-loading-status:empty,
+#subject-loading-status:empty {
+  display: none;
+}

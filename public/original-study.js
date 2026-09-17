@@ -88,7 +88,7 @@ export function createOriginalStudy(
     }
   });
   find("exit").addEventListener("click", onExit);
-  find("start").addEventListener("click", async () => {
+  async function start() {
     if (starting) return;
     const parsed = validate();
     if (parsed.errors.length || !parsed.questions.length) return;
@@ -98,14 +98,15 @@ export function createOriginalStudy(
     try { await onStart(parsed.questions); }
     catch (error) { find("status").textContent = error.message; }
     finally { starting = false; input.disabled = false; find("start").disabled = false; }
-  });
+  }
+  find("start").addEventListener("click", start);
   // 画面を閉じるときの片付けでは、保存済みの入力を削除しない。
   function clear() {
     input.value = "";
     find("storage-status").textContent = "";
     validate();
   }
-  return { clear, open() {
+  return { clear, start, open() {
     clear();
     try {
       input.value = getStorage().getItem(originalQuestionsStorageKey) ?? "";

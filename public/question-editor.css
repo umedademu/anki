@@ -1,6 +1,6 @@
-.editor-page, .editor-header { width: min(100% - 40px, 1720px); }
+.editor-page { width: min(100% - 40px, 1720px); }
 .editor-page { color: var(--theme-text, #183b2a); padding-bottom: 32px; }
-.editor-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.editor-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
 .editor-heading h1 { margin: 0; font-size: 1.85rem; }
 .editor-page .primary-button, .editor-page .secondary-button { width: auto; min-height: 42px; padding: 10px 16px; flex-shrink: 0; }
 .editor-intro, .editor-muted, .editor-help { color: var(--theme-muted, #63736a); font-size: .85rem; line-height: 1.7; }

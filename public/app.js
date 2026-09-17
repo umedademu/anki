@@ -1,7 +1,7 @@
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.249";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.249";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.250";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.250";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.249";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.250";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -6127,6 +6127,11 @@ elements.homeLink.addEventListener("click", (event) => {
   event.preventDefault();
   void returnToSubjectSelection();
 });
+document.querySelector("#header-home-link").addEventListener("click", (event) => {
+  event.preventDefault();
+  void returnToSubjectSelection();
+});
+
 elements.changeSubject.addEventListener("click", () => {
   void returnToSubjectSelection();
 });

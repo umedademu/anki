@@ -8,6 +8,7 @@
 }
 
 html {
+  scrollbar-gutter: stable;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
@@ -3270,11 +3271,6 @@ body.is-listening.is-listening-answer-visible .page {
     grid-template-columns: 1fr;
   }
 
-  .history-body .app-version,
-  .analysis-body .app-version {
-    display: none;
-  }
-
   .analysis-controls,
   .analysis-section-list {
     grid-template-columns: 1fr;
@@ -4210,4 +4206,25 @@ body.is-listening.is-listening-answer-visible .page {
 
 .routine-multiplier-status:empty {
   display: none;
+}
+
+/* 現在のページも同じ大きさのボタンとして残す。 */
+.header-link[aria-current="page"] {
+  color: var(--theme-text, #183b2a);
+  background: var(--theme-tint, rgb(74 122 91 / 12%));
+  border-color: var(--theme-accent, #34734c);
+}
+
+@media (max-width: 560px) {
+  .site-header {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-block: 10px;
+  }
+
+  .header-meta {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
 }

@@ -1,7 +1,8 @@
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.250";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.250";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.251";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.251";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.251";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.250";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.251";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -195,6 +196,9 @@ const elements = {
   categoryLabel: document.querySelector("#category-label"),
   categoryFilter: document.querySelector("#category-filter"),
   excludeTimeQuestions: document.querySelector("#exclude-time-questions"),
+  questionTypeField: document.querySelector("#question-type-field"),
+  questionTypeOptions: document.querySelector("#question-type-options"),
+  questionTypeSummary: document.querySelector("#question-type-summary"),
   timeQuestionField: document.querySelector("#time-question-field"),
   questionStyleFilter: document.querySelector("#question-style-filter"),
   questionAmountField: document.querySelector("#question-amount-field"),
@@ -380,6 +384,7 @@ const state = {
   listeningTimer: null,
   listeningRunId: 0,
   excludeTimeQuestions: true,
+  selectedQuestionTypes: null,
   selectedStage: "",
   questionAmountMode: "all",
   answeredThisSession: 0,
@@ -1508,6 +1513,7 @@ function captureActiveSession() {
     studyMode: state.studyMode,
     deckIds: state.activeDeckIds,
     excludeTimeQuestions: state.excludeTimeQuestions,
+    selectedQuestionTypes: state.selectedQuestionTypes,
     selectedStage: state.selectedStage,
     questionAmountMode: state.questionAmountMode,
     shuffleEnabled: state.shuffleEnabled,
@@ -1632,6 +1638,7 @@ function setSetupControlsFromSession(session) {
     option.checked = option.value === session.studyMode;
   }
   elements.excludeTimeQuestions.checked = session.excludeTimeQuestions;
+  renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions));
   elements.setupShuffle.checked = session.shuffleEnabled;
 }
 
@@ -1650,9 +1657,9 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
     return false;
   }
   const termIds = new Set(session.termIds);
-  const terms = filterTimeQuestions(
+  const terms = filterConfiguredQuestions(
     state.allTerms.filter((term) => termIds.has(term.id)),
-    supportsTimeQuestionExclusion() && session.excludeTimeQuestions,
+    session.selectedQuestionTypes, session.excludeTimeQuestions,
   );
   if (terms.length === 0) return false;
   setStudyTerms(terms);
@@ -1692,6 +1699,7 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.sessionRoundId = session.roundId || createEventId();
   state.studyMode = session.studyMode;
   state.excludeTimeQuestions = session.excludeTimeQuestions;
+  state.selectedQuestionTypes = session.selectedQuestionTypes;
   state.selectedStage = session.selectedStage;
   state.questionAmountMode = session.questionAmountMode;
   state.shuffleEnabled = session.shuffleEnabled;
@@ -3183,6 +3191,7 @@ function captureSetupPreferences() {
         lastDeckId: state.activeDeckIds[0],
         selectedDeckIds: state.activeDeckIds,
         studyMode,
+        selectedQuestionTypes: supportsQuestionTypes() ? selectedQuestionTypes() : currentSubject.selectedQuestionTypes,
         decks: Object.fromEntries([
           ...Object.entries(currentSubject.decks),
           ...state.activeDeckIds.map((deckId) => [
@@ -4289,6 +4298,7 @@ function applySetupPreferences() {
   const subject = preferences.subjects[state.activeSubjectId];
   const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
   elements.excludeTimeQuestions.checked = deck.excludeTimeQuestions !== false;
+  renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false));
   setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
@@ -4357,8 +4367,35 @@ function updateRegionDetailOptions(resetSelection = false) {
   elements.regionDetailFilter.disabled = false;
 }
 
+function supportsQuestionTypes() {
+  return ["world-history", "world-history-s"].includes(state.activeSubjectId);
+}
+
+function selectedQuestionTypes() {
+  return [...elements.questionTypeOptions.querySelectorAll("input:checked")].map(input => input.value);
+}
+
+function renderQuestionTypes(selected) {
+  elements.questionTypeOptions.replaceChildren(...Object.entries(questionTypes).map(([value, name]) => {
+    const label = document.createElement("label");
+    const input = document.createElement("input");
+    input.type = "checkbox";
+    input.value = value;
+    input.checked = selected.includes(value);
+    label.append(input, document.createTextNode(name));
+    return label;
+  }));
+  elements.questionTypeField.open = false;
+}
+
+function filterConfiguredQuestions(terms, types, excludeTime) {
+  return supportsQuestionTypes()
+    ? filterQuestionTypes(terms, resolveQuestionTypes(types, excludeTime))
+    : filterTimeQuestions(terms, supportsTimeQuestionExclusion() && excludeTime);
+}
+
 function supportsTimeQuestionExclusion() {
-  return state.activeSubjectId !== "original" &&
+  return !supportsQuestionTypes() && state.activeSubjectId !== "original" &&
     state.subject?.learningType !== "vocabulary" &&
     hasTimeQuestions(state.allTerms);
 }
@@ -4368,14 +4405,17 @@ function selectedTimeQuestionExclusion() {
 }
 
 function selectedStudyTerms() {
-  return filterTimeQuestions(
+  return filterConfiguredQuestions(
     filterTermsBySelection(state.allTerms, selectedFilters()),
-    selectedTimeQuestionExclusion(),
+    selectedQuestionTypes(), selectedTimeQuestionExclusion(),
   );
 }
 
 function updateSetupPreview() {
   elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine);
+  elements.questionTypeField.classList.toggle("is-hidden", !supportsQuestionTypes());
+  const typeCount = selectedQuestionTypes().length;
+  elements.questionTypeSummary.textContent = typeCount ? `出題する問題の種類（${typeCount}種類）` : "出題する問題の種類（１種類以上選んでください）";
   elements.timeQuestionField.classList.toggle("is-hidden", !supportsTimeQuestionExclusion());
   const terms = selectedStudyTerms();
   const selectedStage = elements.questionStyleFilter.value;
@@ -5281,6 +5321,7 @@ async function beginStudy() {
   }
 
   state.excludeTimeQuestions = selectedTimeQuestionExclusion();
+  state.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
   setStudyTerms(selectedTerms);
   state.selectedStage = elements.questionStyleFilter.value;
   state.questionAmountMode = selectedQuestionAmountMode();
@@ -5388,12 +5429,13 @@ async function resumeStudy() {
     return;
   }
   savedSession.excludeTimeQuestions = selectedTimeQuestionExclusion();
-  const eligibleIds = new Set(filterTimeQuestions(state.allTerms, savedSession.excludeTimeQuestions)
+  savedSession.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
+  const eligibleIds = new Set(filterConfiguredQuestions(state.allTerms, savedSession.selectedQuestionTypes, savedSession.excludeTimeQuestions)
     .flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)));
   if (!savedSession.tasks.some((task) => eligibleIds.has(task.questionId))) {
     startingStudy = false;
     updateSetupPreview();
-    elements.cloudStatus.textContent = "現在の条件では再開できる問題がありません。除外をオフにするか、はじめから開始してください。";
+    elements.cloudStatus.textContent = "現在の条件では再開できる問題がありません。問題の種類や除外設定を変更するか、はじめから開始してください。";
     return;
   }
   if (!restoreActiveSession(savedSession)) {
@@ -6085,6 +6127,7 @@ for (const control of [
   elements.questionStyleFilter,
   elements.questionAmountFilter,
   elements.excludeTimeQuestions,
+  elements.questionTypeOptions,
 ]) {
   control.addEventListener("change", () => {
     updateSetupPreview();
@@ -6465,3 +6508,20 @@ window.addEventListener("pagehide", () => {
 });
 
 start();
+
+for (const button of document.querySelectorAll("[data-question-types]")) {
+  button.addEventListener("click", () => {
+    for (const input of elements.questionTypeOptions.querySelectorAll("input")) input.checked = button.dataset.questionTypes === "all";
+    updateSetupPreview();
+    queueVisibleSetupPreferenceSave();
+  });
+}
+document.addEventListener("click", event => {
+  if (!elements.questionTypeField.contains(event.target)) elements.questionTypeField.open = false;
+});
+elements.questionTypeField.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    elements.questionTypeField.open = false;
+    elements.questionTypeSummary.focus();
+  }
+});

@@ -336,6 +336,9 @@ function normalizeSetupPreferences(value) {
     )].slice(0, 100);
     subjects[subjectId] = {
       lastDeckId,
+      selectedQuestionTypes: Array.isArray(rawSubject.selectedQuestionTypes)
+        ? [...new Set(rawSubject.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
+        : null,
       selectedDeckIds,
       studyMode: setupStudyModes.has(rawSubject.studyMode)
         ? rawSubject.studyMode
@@ -529,6 +532,9 @@ function normalizeStudySession(value) {
         .filter(Boolean),
     )].slice(0, 100),
     excludeTimeQuestions: source.excludeTimeQuestions !== false,
+    selectedQuestionTypes: Array.isArray(source.selectedQuestionTypes)
+      ? [...new Set(source.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
+      : null,
     selectedStage: setupQuestionStyles.has(source.selectedStage)
       ? source.selectedStage
       : "",

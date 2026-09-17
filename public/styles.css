@@ -4228,3 +4228,11 @@ body.is-listening.is-listening-answer-visible .page {
     justify-content: flex-end;
   }
 }
+
+.question-type-field { position: relative; min-width: 0; }
+.question-type-field summary { cursor: pointer; padding: 12px; border: 1px solid var(--theme-border, #aaa); border-radius: 8px; }
+.question-type-menu { position: absolute; z-index: 20; inset-inline: 0; top: 100%; min-width: min(290px, 80vw); padding: 12px; background: var(--theme-surface, #fff); color: var(--theme-info, #222); border: 1px solid var(--theme-border, #aaa); border-radius: 8px; box-shadow: 0 8px 24px #0002; max-height: 65vh; overflow-y: auto; }
+.question-type-actions { display: flex; gap: 8px; margin-bottom: 8px; }
+#question-type-options { display: grid; gap: 4px; }
+#question-type-options label { display: flex; align-items: center; gap: 10px; padding: 7px; cursor: pointer; }
+#question-type-options input { width: 18px; height: 18px; margin: 0; }

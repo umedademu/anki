@@ -1,3 +1,4 @@
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "../public/question-types.js";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
@@ -61,9 +62,10 @@ for (const value of [undefined, true, false]) {
 // 実際のアプリの再開処理を実行し、現在問・待ち行列・再出題からの除外を確認する。
 const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
 const extract = (start, end) => app.slice(app.indexOf(start), app.indexOf(end, app.indexOf(start)));
-const state = { allTerms: terms, activeDeckIds: ["deck-1"], activeSubjectId: "world-history", subject: { learningType: "history" }, studyTimeLimitSeconds: 60, progress };
-const elements = { excludeTimeQuestions: { checked: true } };
+const state = { allTerms: terms, activeDeckIds: ["deck-1"], activeSubjectId: "japanese-history", subject: { learningType: "history" }, studyTimeLimitSeconds: 60, progress };
+const elements = { excludeTimeQuestions: { checked: true }, questionTypeOptions: { querySelectorAll: () => [] } };
 const context = {
+  questionTypes, resolveQuestionTypes, filterQuestionTypes,
   state, elements, filterTimeQuestions, hasTimeQuestions, filterTermsBySelection, learningStages,
   normalizeStudySession, normalizeRatingCounts: v => v, createEventId: () => "round",
   cloneTask: t => t ? { ...t } : null, setSavedSessionForMode() {}, refreshPendingReviewTasks() {},
@@ -72,7 +74,7 @@ const context = {
 runInNewContext([
   extract("function setStudyTerms(", "function captureActiveSession("),
   extract("function restoreActiveSession(", "function queueActiveSessionSave("),
-  extract("function supportsTimeQuestionExclusion(", "function updateSetupPreview("),
+  extract("function supportsQuestionTypes(", "function updateSetupPreview("),
 ].join("\n"), context);
 const tasks = terms.flatMap(t => Object.values(t.stages).flat().map(question => ({ termId: t.id, questionId: question.id, stage: question.stage })));
 const session = {
@@ -108,7 +110,7 @@ for (const [id, type] of [["original", "cards"], ["english-vocabulary", "vocabul
 }
 assert.deepEqual(terms, original);
 // 全問が除外される既存の一周は削除せず、解除方法を表示する。
-state.activeSubjectId = "world-history";
+state.activeSubjectId = "japanese-history";
 state.subject.learningType = "history";
 state.cloudReady = true;
 let deleted = 0;
@@ -128,9 +130,33 @@ runInNewContext(extract("async function resumeStudy()", "async function activate
 await context.resumeStudy();
 assert.equal(deleted, 0);
 assert.equal(context.startingStudy, false);
-assert.match(elements.cloudStatus.textContent, /除外をオフ/);
+assert.match(elements.cloudStatus.textContent, /除外設定を変更/);
 saveFails = true;
 await context.resumeStudy();
 assert.equal(deleted, 0);
 assert.match(elements.cloudStatus.textContent, /共有できませんでした/);
 console.log("時期問題の除外: 判定・初期オン・保存・解除・件数・段階移行・暗記と聞き流しの再開・履歴維持を確認しました。");
+
+// 履歴科目は問題文による判定を使わず、保存した分類だけで復元する。
+for (const subjectId of ["world-history", "world-history-s"]) {
+  state.activeSubjectId = subjectId;
+  for (const mode of ["memorize", "listen-answer"]) {
+    for (const selection of [null, [], ["time"], ["identify", "integrated"]]) {
+      const saved = workerSession(normalizeStudySession({ ...session, studyMode: mode, selectedQuestionTypes: selection }));
+      const expected = filterQuestionTypes(terms, resolveQuestionTypes(selection)).flatMap(t => Object.values(t.stages).flat().map(q => q.id));
+      assert.equal(context.restoreActiveSession(saved), expected.length > 0);
+      if (expected.length) assert.deepEqual(Array.from(state.sessionTasks, t => t.questionId), expected);
+      assert.deepEqual(saved.selectedQuestionTypes, selection);
+    }
+  }
+  for (const selection of [null, [], ["time"], ["identify", "integrated"]]) {
+    const input = { subjects: { [subjectId]: { selectedQuestionTypes: selection } } };
+    const saved = workerPreferences(normalizeSetupPreferences(input));
+    assert.deepEqual(saved.subjects[subjectId].selectedQuestionTypes, selection);
+    assert.deepEqual(normalizeSetupPreferences(saved), saved);
+  }
+}
+const misleading = [{ stages: { beginner: [{ type: "content", prompt: "何年？" }, { type: "time", prompt: "時期は？" }] } }];
+assert.deepEqual(filterQuestionTypes(misleading, ["content"])[0].stages.beginner, [misleading[0].stages.beginner[0]]);
+assert.equal(filterQuestionTypes(misleading, []).length, 0);
+console.log("問題形式の選択: 科目別保存、未設定と全解除の区別、暗記・聞き流し再開、分類のみの判定を確認しました。");

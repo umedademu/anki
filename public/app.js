@@ -1,4 +1,4 @@
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.243";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.244";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
 import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.239";
 import {
@@ -99,7 +99,6 @@ import {
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   scaleStudyRoutinePlan,
-  scaledStudyRoutineQuestionTarget,
   studyRoutineTotals,
 } from "./study-routine.js";
 import { createRatingSoundPlayer } from "./rating-sound.js";
@@ -138,7 +137,6 @@ const elements = {
   routineDashboardList: document.querySelector("#routine-dashboard-list"),
   routineMultiplier: document.querySelector("#routine-multiplier"),
   routineMultiplierOutput: document.querySelector("#routine-multiplier-output"),
-  routineMultiplierNote: document.querySelector("#routine-multiplier-note"),
   routineMultiplierStatus: document.querySelector("#routine-multiplier-status"),
   routineSkipVideos: document.querySelector("#routine-skip-videos"),
   startRoutine: document.querySelector("#start-routine"),
@@ -659,14 +657,10 @@ function renderRoutineMultiplierControl(
 ) {
   const multiplier = normalizeStudyRoutineMultiplier(value);
   const label = formatRoutineMultiplier(multiplier);
-  const exampleTarget = scaledStudyRoutineQuestionTarget(100, multiplier);
   elements.routineMultiplier.value = String(multiplier);
   elements.routineMultiplierOutput.value = label;
   elements.routineMultiplierOutput.textContent = label;
   elements.routineMultiplier.setAttribute("aria-valuetext", label);
-  elements.routineMultiplierNote.textContent = multiplier === 1
-    ? "登録した問題数どおりに進めます。動画の本数は変わりません。"
-    : `全科目の問題数を${label}にします（100問なら${exampleTarget}問）。動画の本数は変わりません。`;
 }
 
 function syncRoutinePreferences(preferences, studyDate = "") {
@@ -804,6 +798,9 @@ function renderRoutineDashboard() {
     ? "前回の続きを今日進める"
     : "続きから始める";
 
+  elements.routineDashboardTitle.classList.toggle("is-hidden", previousDay);
+  elements.routineDashboardSummary.classList.toggle("is-hidden", previousDay);
+
   if (!connected) {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
     elements.routineDashboardSummary.textContent =
@@ -814,10 +811,8 @@ function renderRoutineDashboard() {
       ? `${run.items.length}項目・${totals.target}問を完了し、動画${totals.totalVideos}本をスキップしました。`
       : `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
   } else if (activeItem && previousDay) {
-    elements.routineDashboardTitle.textContent = "新しい学習日になりました";
-    elements.routineDashboardSummary.textContent = activeItem.kind === "video"
-      ? `1番から始めるか、前回の${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」から続けるか選べます。`
-      : `1番から始めるか、前回の${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」${activeItem.completedCount}／${activeItem.questionTarget}問から続けるか選べます。`;
+    elements.routineDashboardTitle.textContent = "";
+    elements.routineDashboardSummary.textContent = "";
   } else if (activeItem) {
     elements.routineDashboardTitle.textContent =
       `${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」の途中です`;
@@ -5675,7 +5670,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.243｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.244｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

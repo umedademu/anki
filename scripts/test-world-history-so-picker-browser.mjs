@@ -116,8 +116,14 @@ try {
   const ready = () => page.waitForFunction(() => !document.querySelector("#start-study").disabled);
   await page.goto(base + "/?subject=world-history-so&view=setup");
   await shown("setup-panel"); await ready();
-  assert.equal(await page.locator(".chapter-deck-title").textContent(), "20 イスラーム世界");
-  assert.equal(await page.locator("#deck-filter > .deck-filter-choice").count(), 0);
+  assert.equal(await page.locator("#deck-filter > .deck-filter-choice .deck-filter-name").textContent(), "20 イスラーム世界");
+  assert.equal(await page.locator("#deck-filter > .deck-filter-choice").count(), 1);
+  assert.equal(await page.locator("#deck-filter > .deck-filter-choice .deck-filter-count").textContent(), "357問");
+  const deckCheckbox = page.locator('input[name="chapter-deck-filter"]');
+  assert.equal(await deckCheckbox.isChecked(), true);
+  await deckCheckbox.click();
+  assert.equal(await deckCheckbox.isChecked(), true);
+  assert.match(await page.locator("#cloud-status").textContent(), /デッキは1つ以上/);
   assert.equal(await page.locator(".chapter-picker input").count(), 13);
   assert.equal(await page.locator(".chapter-picker").getAttribute("open"), null);
   await page.locator("#chapter-selection-summary").click();

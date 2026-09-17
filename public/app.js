@@ -1,8 +1,8 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.252";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.252";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.252";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.253";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.253";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.253";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.252";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.253";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -619,7 +619,7 @@ function cloneTask(task) {
 }
 
 function selectedDeckIds() {
-  return [...elements.deckFilter.querySelectorAll('input[type="checkbox"]:checked')]
+  return [...elements.deckFilter.querySelectorAll('input[name="deck-filter"]:checked')]
     .map((input) => input.value)
     .filter((deckId) => state.deckEntries.some((deck) => deck.id === deckId));
 }
@@ -4225,8 +4225,6 @@ function deckDisplayLabel(deck) {
 function setDeckOptions(decks, selectedIds) {
   const selected = new Set(selectedIds);
   const groupedChapters = state.activeSubjectId === "world-history-so";
-  elements.deckFilter.closest("fieldset").querySelector(".deck-picker-heading span").textContent =
-    groupedChapters ? "デッキ" : "デッキ（複数選択可）";
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
       const label = document.createElement("label");
@@ -4250,9 +4248,20 @@ function setDeckOptions(decks, selectedIds) {
     }),
   );
   if (groupedChapters) {
-    const title = document.createElement("strong");
-    title.className = "chapter-deck-title";
+    const deckChoice = document.createElement("label");
+    deckChoice.className = "deck-filter-choice";
+    const deckInput = document.createElement("input");
+    deckInput.type = "checkbox";
+    deckInput.name = "chapter-deck-filter";
+    deckInput.value = "islamic-world-20";
+    deckInput.checked = true;
+    const title = document.createElement("span");
+    title.className = "deck-filter-name";
     title.textContent = "20 イスラーム世界";
+    const count = document.createElement("small");
+    count.className = "deck-filter-count";
+    count.textContent = `${decks.reduce((total, deck) => total + (deck.questionCount ?? 0), 0).toLocaleString("ja-JP")}問`;
+    deckChoice.append(deckInput, title, count);
     const details = document.createElement("details");
     details.className = "question-type-field chapter-picker";
     const summary = document.createElement("summary");
@@ -4276,7 +4285,7 @@ function setDeckOptions(decks, selectedIds) {
     actions.append(selectAll);
     menu.append(actions, choices);
     details.append(summary, menu);
-    elements.deckFilter.append(title, details);
+    elements.deckFilter.append(deckChoice, details);
     updateChapterSelectionSummary();
   }
 }
@@ -5571,7 +5580,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   }
   const loadToken = state.deckLoadToken + 1;
   state.deckLoadToken = loadToken;
-  const deckInputs = [...elements.deckFilter.querySelectorAll("input")];
+  const deckInputs = [...elements.deckFilter.querySelectorAll('input[name="deck-filter"]')];
   if (!keepDeckSelection) {
     deckInputs.forEach((input) => {
       input.disabled = true;
@@ -6151,6 +6160,12 @@ async function updateDeckSelection(deckIds) {
 }
 
 elements.deckFilter.addEventListener("change", (event) => {
+  if (event.target.name === "chapter-deck-filter") {
+    // 他科目と同じく、最後の一つのデッキは解除できない。
+    event.target.checked = true;
+    elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
+    return;
+  }
   const deckIds = selectedDeckIds();
   if (deckIds.length === 0) {
     event.target.checked = true;

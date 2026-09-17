@@ -1,8 +1,8 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.254";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.254";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.254";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.255";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.255";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.255";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.254";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.255";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -1640,7 +1640,7 @@ function setSetupControlsFromSession(session) {
     option.checked = option.value === session.studyMode;
   }
   elements.excludeTimeQuestions.checked = session.excludeTimeQuestions;
-  renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions));
+  renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []));
   elements.setupShuffle.checked = session.shuffleEnabled;
 }
 
@@ -4355,7 +4355,7 @@ function applySetupPreferences() {
   const subject = preferences.subjects[state.activeSubjectId];
   const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
   elements.excludeTimeQuestions.checked = deck.excludeTimeQuestions !== false;
-  renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false));
+  renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []));
   setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
@@ -4425,7 +4425,7 @@ function updateRegionDetailOptions(resetSelection = false) {
 }
 
 function supportsQuestionTypes() {
-  return ["world-history", "world-history-s"].includes(state.activeSubjectId);
+  return ["world-history", "world-history-s", "world-history-so"].includes(state.activeSubjectId);
 }
 
 function selectedQuestionTypes() {
@@ -4433,13 +4433,20 @@ function selectedQuestionTypes() {
 }
 
 function renderQuestionTypes(selected) {
-  elements.questionTypeOptions.replaceChildren(...Object.entries(questionTypes).map(([value, name]) => {
+  const showCounts = state.activeSubjectId === "world-history-so";
+  const counts = {};
+  if (showCounts) for (const term of state.allTerms) for (const questions of Object.values(term.stages ?? {})) {
+    for (const question of questions) counts[question.type] = (counts[question.type] ?? 0) + 1;
+  }
+  // 問題編集で追加した、まだ分類していない問題も選択できるようにする。
+  const labels = showCounts && counts.short_answer ? { ...questionTypes, short_answer: "未分類" } : questionTypes;
+  elements.questionTypeOptions.replaceChildren(...Object.entries(labels).map(([value, name]) => {
     const label = document.createElement("label");
     const input = document.createElement("input");
     input.type = "checkbox";
     input.value = value;
     input.checked = selected.includes(value);
-    label.append(input, document.createTextNode(name));
+    label.append(input, document.createTextNode(showCounts ? `${name}（${counts[value] ?? 0}問）` : name));
     return label;
   }));
   elements.questionTypeField.open = false;
@@ -4447,7 +4454,7 @@ function renderQuestionTypes(selected) {
 
 function filterConfiguredQuestions(terms, types, excludeTime) {
   return supportsQuestionTypes()
-    ? filterQuestionTypes(terms, resolveQuestionTypes(types, excludeTime))
+    ? filterQuestionTypes(terms, resolveQuestionTypes(types, excludeTime, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []))
     : filterTimeQuestions(terms, supportsTimeQuestionExclusion() && excludeTime);
 }
 

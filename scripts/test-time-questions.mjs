@@ -138,7 +138,7 @@ assert.match(elements.cloudStatus.textContent, /共有できませんでした/)
 console.log("時期問題の除外: 判定・初期オン・保存・解除・件数・段階移行・暗記と聞き流しの再開・履歴維持を確認しました。");
 
 // 履歴科目は問題文による判定を使わず、保存した分類だけで復元する。
-for (const subjectId of ["world-history", "world-history-s"]) {
+for (const subjectId of ["world-history", "world-history-s", "world-history-so"]) {
   state.activeSubjectId = subjectId;
   for (const mode of ["memorize", "listen-answer"]) {
     for (const selection of [null, [], ["time"], ["identify", "integrated"]]) {

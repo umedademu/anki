@@ -1,4 +1,5 @@
 import { createAnswerMap } from "./create-answer-map.mjs";
+import { applySOQuestionTypes, loadSOQuestionTypes } from "./world-history-so-question-types.mjs";
 import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -1091,6 +1092,7 @@ export async function loadWorldHistorySODecks() {
   const sourcePath = path.join(projectRoot, "data", "source", "world-history-so", "questions.csv");
   const sourceText = await readFile(sourcePath, "utf8");
   const terms = parseSimpleQuestions(sourceText);
+  applySOQuestionTypes(terms, await loadSOQuestionTypes());
   const mapsText = await readFile(path.join(path.dirname(sourcePath), "question-maps.json"), "utf8");
   const maps = JSON.parse(mapsText);
   for (const map of maps) {

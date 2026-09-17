@@ -100,7 +100,6 @@
 /* メインパネル・カードの影 */
 :root[data-theme="dark"] .context-card,
 :root[data-theme="dark"] .question-card,
-:root[data-theme="dark"] .subject-panel,
 :root[data-theme="dark"] .setup-panel,
 :root[data-theme="dark"] .completion-card,
 :root[data-theme="dark"] .routine-video-panel,

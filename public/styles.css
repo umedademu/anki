@@ -388,7 +388,6 @@ body.is-study-menu-open {
 
 .context-card,
 .question-card,
-.subject-panel,
 .setup-panel,
 .routine-video-panel,
 .mindset-player-panel,
@@ -401,7 +400,6 @@ body.is-study-menu-open {
   box-shadow: 0 18px 55px rgb(38 62 45 / 8%);
 }
 
-.subject-panel,
 .setup-panel,
 .routine-video-panel,
 .mindset-player-panel {
@@ -3130,8 +3128,7 @@ body.is-listening.is-listening-answer-visible .page {
 
   .context-card,
   .question-card,
-  .subject-panel,
-  .setup-panel,
+    .setup-panel,
   .routine-video-panel,
   .mindset-player-panel,
   .completion-card,
@@ -4186,5 +4183,31 @@ body.is-listening.is-listening-answer-visible .page {
 
 #routine-loading-status:empty,
 #subject-loading-status:empty {
+  display: none;
+}
+
+/* 科目選択は外側の囲みを設けず、画面の幅をそのまま使う。 */
+.subject-panel {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.page:has(> .subject-panel:not(.is-hidden)) {
+  padding-top: 12px;
+  padding-bottom: calc(24px + env(safe-area-inset-bottom));
+}
+
+.subject-panel > .routine-dashboard {
+  margin-top: 0;
+}
+
+.subject-panel > .subject-divider {
+  margin-top: 16px;
+}
+
+.routine-multiplier-status:empty {
   display: none;
 }

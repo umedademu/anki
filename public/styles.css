@@ -1113,6 +1113,15 @@ body.is-study-menu-open {
   border-radius: 14px;
 }
 
+.chapter-deck-title {
+  padding: 10px 12px;
+  color: var(--theme-accent, #245f3f);
+}
+
+.chapter-picker .deck-filter-choice {
+  margin-top: 4px;
+}
+
 .deck-filter-choice {
   display: flex;
   min-width: 0;

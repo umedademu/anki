@@ -1,8 +1,8 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.251";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.251";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.251";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.252";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.252";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.252";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.251";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.252";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -4222,8 +4222,11 @@ function deckDisplayLabel(deck) {
     : String(deck?.difficultyLabel ?? deck?.id ?? "デッキ");
 }
 
-function setDeckOptions(decks, selectedDeckIds) {
-  const selected = new Set(selectedDeckIds);
+function setDeckOptions(decks, selectedIds) {
+  const selected = new Set(selectedIds);
+  const groupedChapters = state.activeSubjectId === "world-history-so";
+  elements.deckFilter.closest("fieldset").querySelector(".deck-picker-heading span").textContent =
+    groupedChapters ? "デッキ" : "デッキ（複数選択可）";
   elements.deckFilter.replaceChildren(
     ...decks.map((deck) => {
       const label = document.createElement("label");
@@ -4246,6 +4249,46 @@ function setDeckOptions(decks, selectedDeckIds) {
       return label;
     }),
   );
+  if (groupedChapters) {
+    const title = document.createElement("strong");
+    title.className = "chapter-deck-title";
+    title.textContent = "20 イスラーム世界";
+    const details = document.createElement("details");
+    details.className = "question-type-field chapter-picker";
+    const summary = document.createElement("summary");
+    summary.id = "chapter-selection-summary";
+    const menu = document.createElement("div");
+    menu.className = "question-type-menu";
+    const choices = document.createElement("div");
+    choices.setAttribute("role", "group");
+    choices.setAttribute("aria-label", "20 イスラーム世界の章（複数選択可）");
+    choices.append(...elements.deckFilter.children);
+    const actions = document.createElement("div");
+    actions.className = "question-type-actions";
+    const selectAll = document.createElement("button");
+    selectAll.type = "button";
+    selectAll.textContent = "すべての章を選択";
+    selectAll.addEventListener("click", () => {
+      choices.querySelectorAll("input").forEach((input) => { input.checked = true; });
+      updateChapterSelectionSummary();
+      void updateDeckSelection(selectedDeckIds());
+    });
+    actions.append(selectAll);
+    menu.append(actions, choices);
+    details.append(summary, menu);
+    elements.deckFilter.append(title, details);
+    updateChapterSelectionSummary();
+  }
+}
+
+// 保存先は従来の章別番号を維持し、既存の履歴と選択設定を引き継ぐ。
+function updateChapterSelectionSummary() {
+  const summary = elements.deckFilter.querySelector("#chapter-selection-summary");
+  if (!summary) return;
+  const count = selectedDeckIds().length;
+  summary.textContent = count === state.deckEntries.length
+    ? `章を選択：すべて（${count}章）`
+    : `章を選択：${count} / ${state.deckEntries.length}章`;
 }
 
 function selectedFilters() {
@@ -5661,7 +5704,8 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   const deckNames = deckEntries.map(deckDisplayLabel);
   const shortDeckNames = deckNames.map((name) => name.split("｜")[0]);
   elements.subjectName.textContent = `${state.subject.title}｜${
-    deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
+    state.activeSubjectId === "world-history-so" ? "20 イスラーム世界" :
+      deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
   }`;
   elements.subjectProgressName.textContent = state.subject.title;
   elements.subjectProgressName.title = state.subject.title;
@@ -6110,9 +6154,11 @@ elements.deckFilter.addEventListener("change", (event) => {
   const deckIds = selectedDeckIds();
   if (deckIds.length === 0) {
     event.target.checked = true;
-    elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
+    elements.cloudStatus.textContent = state.activeSubjectId === "world-history-so"
+      ? "章は1つ以上選択してください。" : "デッキは1つ以上選択してください。";
     return;
   }
+  updateChapterSelectionSummary();
   void updateDeckSelection(deckIds);
 });
 

@@ -1,7 +1,7 @@
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.245";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.245";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.246";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.246";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.245";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.246";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -810,8 +810,8 @@ function renderRoutineDashboard() {
     ? "前回の続きを今日進める"
     : "続きから始める";
 
-  elements.routineDashboardTitle.classList.toggle("is-hidden", previousDay);
-  elements.routineDashboardSummary.classList.toggle("is-hidden", previousDay);
+  elements.routineDashboardTitle.classList.toggle("is-hidden", Boolean(activeItem));
+  elements.routineDashboardSummary.classList.toggle("is-hidden", Boolean(activeItem));
 
   if (!connected) {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
@@ -822,15 +822,9 @@ function renderRoutineDashboard() {
     elements.routineDashboardSummary.textContent = routineSkipVideos
       ? `${run.items.length}項目・${totals.target}問を完了し、動画${totals.totalVideos}本をスキップしました。`
       : `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
-  } else if (activeItem && previousDay) {
+  } else if (activeItem) {
     elements.routineDashboardTitle.textContent = "";
     elements.routineDashboardSummary.textContent = "";
-  } else if (activeItem) {
-    elements.routineDashboardTitle.textContent =
-      `${run.currentIndex + 1}番「${routineItemTitle(activeItem)}」の途中です`;
-    elements.routineDashboardSummary.textContent = activeItem.kind === "video"
-      ? "選ばれた動画を視聴すると次へ進みます。"
-      : `${activeItem.completedCount}／${activeItem.questionTarget}問完了・残り${routineRemainingCount(activeItem)}問です。`;
   } else {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
     elements.routineDashboardSummary.textContent = routineSkipVideos
@@ -944,9 +938,7 @@ async function saveRoutineVideoSkip() {
       ...(adjustedRun ? { routineRun: adjustedRun } : {}),
     });
     syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
-    elements.routineMultiplierStatus.textContent = skipVideos
-      ? "毎日のメニュー内の動画をすべてスキップします。"
-      : "未視聴の動画をメニューの対象に戻しました。";
+    elements.routineMultiplierStatus.textContent = "";
   } catch (error) {
     elements.routineMultiplierStatus.textContent = error.message;
     elements.routineMultiplierStatus.classList.add("is-error");
@@ -5651,7 +5643,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.subjectProgressName.title = state.subject.title;
   elements.deckProgressName.textContent = shortDeckNames.join("・");
   elements.deckProgressName.title = deckNames.join("／");
-  elements.setupEyebrow.textContent = `v0.245｜${state.subject.title}を学ぶ`;
+  elements.setupEyebrow.textContent = `v0.246｜${state.subject.title}を学ぶ`;
   elements.setupTitle.textContent = `${state.subject.title}の学習範囲を選ぶ`;
   const cardFilterLabels = Object.values(state.subject.filterLabels ?? {})
     .filter(Boolean)

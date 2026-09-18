@@ -22,19 +22,21 @@ assert.equal(imported.filter(d=>d.chapter.number===4).reduce((n,d)=>n+d.sourceTe
 assert.equal(imported.reduce((n,d)=>n+d.sourceTermCount,0),663);
 assert.deepEqual(imported.filter(d=>d.chapter.number===5).map(d=>d.terms.length),[31,67,23,39,71,74,39,45,28]);
 assert.ok(imported.filter(d=>d.chapter.number===5).every(d=>d.sourceTermCount===null));
+assert.deepEqual(imported.filter(d=>d.chapter.number===7).map(d=>d.terms.length),[39,37,71,28,50,23,47,21,35,23,27,39]);
 const questions=imported.flatMap(d=>d.terms.map(t=>t.stages.beginner[0]));
-assert.equal(questions.length,4855);
-assert.equal(new Set(questions.map(q=>q.id)).size,4855);
+assert.equal(questions.length,5295);
+assert.equal(new Set(questions.map(q=>q.id)).size,5295);
 const combinedSource = await loadWorldHistorySODecks({ includeBook:true });
-assert.equal(combinedSource.terms.length,5212);
-assert.equal(combinedSource.decks.length,76);
-assert.deepEqual(combinedSource.definition.chapterGroups.map(group=>group.number),[1,2,3,4,5,6]);
+assert.equal(combinedSource.terms.length,5652);
+assert.equal(combinedSource.decks.length,88);
+assert.deepEqual(combinedSource.definition.chapterGroups.map(group=>group.number),[1,2,3,4,5,6,7]);
 assert.equal(combinedSource.definition.defaultDeckId,"deck-1");
 const typeCounts={};
 for(const deck of imported) {
   const sourceFile=files.find(f=>f.name===deck.sourceFile);
   if (deck.sourceTermCount === null) {
-    const rows=parseCsv(sourceFile.text.replace(/^\uFEFF/, "")).slice(1);
+    const parsed=parseCsv(sourceFile.text.replace(/^\uFEFF/, ""));
+    const rows=parsed.slice(1).map(cells=>parsed[0][0]==="question_id" ? [cells[0],cells[5],cells[4],cells[1],cells[2],cells[3],...cells.slice(6)] : cells);
     assert.equal(rows.length,deck.terms.length);
     for (const [index,term] of deck.terms.entries()) {
       const q=term.stages.beginner[0];
@@ -68,6 +70,12 @@ rejectChapter5(chapter5File.text.replaceAll("WHSO-05-16-01-", "WHSO-04-16-01-"),
 rejectChapter5(chapter5File.text.replace("用語の特定", "不明な種類"),/未知/);
 rejectChapter5(chapter5File.text.replace('"問題番号"','"別の列"'),/列名/);
 rejectChapter5(chapter5File.text.replace("WHSO-05-16-01-002", "WHSO-05-16-01-001"),/重複/);
+const chapter7File=files.find(file=>file.name.startsWith("第22回_01_"));
+const rejectChapter7 = (text, pattern) => assert.throws(()=>importSOBookFiles([{...chapter7File,text}],contents),pattern);
+rejectChapter7(chapter7File.text.replaceAll("WH-22-01-", "WH-23-01-"),/所属/);
+rejectChapter7(chapter7File.text.replace("用語の特定", "不明な種類"),/未知/);
+rejectChapter7(chapter7File.text.replace('"explanation"','"unknown"'),/列名/);
+rejectChapter7(chapter7File.text.replace("WH-22-01-002", "WH-22-01-001"),/重複/);
 // 次章の資料が同じ元の問題番号を使っても、別の学習履歴を割り当てる。
 const extra={name:"第04回_01_エーゲ文明_3語.csv",text:files[0].text.replaceAll("世界史探究_第1章_第01回_01_古代オリエント世界の特徴","世界史探究_第2章_第04回_01_エーゲ文明")};
 const future=importSOBookFiles([files[0],extra],contents);
@@ -81,8 +89,8 @@ const result=appendSOBookDecks(catalog,current,imported),subject=result.next.sub
 assert.equal(JSON.stringify({catalog,current}),before);
 assert.deepEqual(subject.decks.find(d=>d.id===old.id),old);
 assert.deepEqual(result.next.subjects[0],catalog.subjects[0]);
-assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[2,20],[3,16],[4,10],[5,9],[6,1]]);
-assert.equal(subject.questionCount,4856);assert.equal(subject.defaultDeckId,"deck-1");
+assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[2,20],[3,16],[4,10],[5,9],[6,1],[7,12]]);
+assert.equal(subject.questionCount,5296);assert.equal(subject.defaultDeckId,"deck-1");
 const now=[...current,...result.additions.map(entry=>{
   const index=result.staged.find(s=>s.path===entry.indexPath).value;
   return {entry,index,chunks:index.chunks.map(c=>result.staged.find(s=>s.path===c.path).value)};
@@ -91,7 +99,7 @@ assert.deepEqual(appendSOBookDecks(result.next,now,imported).next,result.next);
 assert.equal(appendSOBookDecks(result.next,now,imported).staged.length,0);
 const edited=structuredClone(now);edited[1].chunks[0].terms[0].stages.beginner[0].answer="追加後に編集された回答";
 assert.throws(()=>appendSOBookDecks(result.next,edited,imported),/既存の編集/);
-assert.equal(soStudyLabel(subject.decks,subject.chapterGroups),"6デッキ");
+assert.equal(soStudyLabel(subject.decks,subject.chapterGroups),"7デッキ");
 assert.equal(soStudyLabel([old],subject.chapterGroups),"第6章 イスラーム世界");
 assert.equal(groupSODecks(subject.decks,subject.chapterGroups)[0].decks.length,12);
 const ids=subject.decks.map(d=>d.id),versions=new Map(subject.decks.map(d=>[d.id,d.version]));
@@ -109,5 +117,5 @@ const invalid=structuredClone(result.next);invalid.subjects[0].untouched=false;
 assert.equal((await send(invalid)).status,400);
 const changed=structuredClone(result.next);changed.subjects[1].decks.find(d=>d.id===old.id).version="changed";
 assert.equal((await send(changed)).status,400);assert.equal(calls.length,0);
-console.log("第1〜5章確認完了：67パート・4,855問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
+console.log("第1〜5・7章確認完了：79パート・5,295問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
 console.log("種類ごとの問題数:",typeCounts);

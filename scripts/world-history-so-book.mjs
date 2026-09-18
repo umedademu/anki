@@ -39,15 +39,22 @@ export async function readSOBookFiles(directory) {
 
 function importQuestionRows(file, chapter, lessonNumber, partNumber, part, id) {
   const rows = parseCsv(file.text.replace(/^\uFEFF/, ""));
-  const headers = ["問題番号", "問題スタイル", "種類", "問題文", "回答", "解説", "出典URL", "出典ファイル", "出典ページ", "出典行"];
+  const englishHeaders = rows[0]?.[0] === "question_id";
+  const headers = englishHeaders
+    ? ["question_id", "question", "answer", "explanation", "type", "style", "source_url", "source_file", "source_page", "source_line"]
+    : ["問題番号", "問題スタイル", "種類", "問題文", "回答", "解説", "出典URL", "出典ファイル", "出典ページ", "出典行"];
   assert.deepEqual(rows[0], headers, `${file.name}の列名が不正です。`);
   assert.ok(rows.length > 1, "問題がありません。");
   const types = new Map(Object.entries(questionTypes).map(([key, label]) => [label, key]));
   const seen = new Set(), datasetLabel = `世界史SO｜第${lessonNumber}回 ${partNumber} ${part.title}`;
   const terms = rows.slice(1).map((cells, index) => {
     assert.equal(cells.length, headers.length, `${file.name}の列数が不正です。`);
-    const [originalId, style, label, prompt, answer, explanation, url, name, page, line] = cells;
-    const match = originalId.match(/^WHSO-(\d+)-(\d+)-(\d+)-(\d+)$/);
+    const [originalId, style, label, prompt, answer, explanation, url, name, page, line] = englishHeaders
+      ? [cells[0], cells[5], cells[4], cells[1], cells[2], cells[3], ...cells.slice(6)] : cells;
+    const rawMatch = englishHeaders ? originalId.match(/^WH-(\d+)-(\d+)-(\d+)$/) : null;
+    const match = englishHeaders
+      ? rawMatch && [rawMatch[0], String(chapter.number), ...rawMatch.slice(1)]
+      : originalId.match(/^WHSO-(\d+)-(\d+)-(\d+)-(\d+)$/);
     assert.ok(match && Number(match[1]) === chapter.number && Number(match[2]) === lessonNumber && Number(match[3]) === partNumber, "問題番号の所属が目次と一致しません。");
     assert.ok(!seen.has(originalId), "問題番号が重複しています。"); seen.add(originalId);
     assert.equal(style, "一問一答", "問題スタイルが不正です。");

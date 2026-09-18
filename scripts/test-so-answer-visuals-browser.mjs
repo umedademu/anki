@@ -31,8 +31,9 @@ assert.ok(selected.every(Boolean));
 const mapQuestion = selected[2].stages.beginner[0];
 for (const key of [mapQuestion.questionMap.path, mapQuestion.questionMap.answerPath, result.manifest.assignments.find(a => a.questionId === selected[1].stages.beginner[0].id).relatedImage.path]) await cloud(key);
 // 読み取った現行問題から試験用の4問を並べる。保存先は下記の模擬窓口のみ。
-objects.set(decks[0].index.chunks[0].path, JSON.stringify({ ...decks[0].chunks[0], terms: selected }));
-objects.set(subject.decks[0].indexPath, JSON.stringify({ ...decks[0].index, chunks: [decks[0].index.chunks[0]] }));
+const testDeck = decks.find(deck => deck.entry.id === "deck-1");
+objects.set(testDeck.index.chunks[0].path, JSON.stringify({ ...testDeck.chunks[0], terms: selected }));
+objects.set(testDeck.entry.indexPath, JSON.stringify({ ...testDeck.index, chunks: [testDeck.index.chunks[0]] }));
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 let settings = { autoSpeechEnabled: false, speechParts: off, shuffleEnabled: false, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 };
 let failManifest = false, failMap = false;

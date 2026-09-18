@@ -1,0 +1,81 @@
+import assert from "node:assert/strict";
+import { readFile } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { parseCsv,toObjects,loadWorldHistorySODecks } from "./build-learning-data.mjs";
+import { parseSOContents,importSOBookFiles,readSOBookFiles,appendSOBookDecks } from "./world-history-so-book.mjs";
+import { groupSODecks,soStudyLabel } from "../public/so-chapters.js";
+import { createSessionDatasetVersion } from "../public/deck-selection.js";
+import storage from "./so-book-storage-worker.js";
+
+const contents=await readFile(new URL("../data/source/world-history-so/sekai_shi_tankyu_mokuji.md",import.meta.url),"utf8");
+const files=await readSOBookFiles(fileURLToPath(new URL("../data/source/world-history-so/book/",import.meta.url)));
+const imported=importSOBookFiles(files,contents);
+assert.equal(parseSOContents(contents).find(c=>c.number===1).lessons.flatMap(l=>l.parts).length,12);
+assert.deepEqual(imported.map(d=>d.terms.length),[23,97,96,30,93,53,69,96,30,123,251,41]);
+assert.equal(imported.reduce((n,d)=>n+d.sourceTermCount,0),130);
+const questions=imported.flatMap(d=>d.terms.map(t=>t.stages.beginner[0]));
+assert.equal(questions.length,1002);
+assert.equal(new Set(questions.map(q=>q.id)).size,1002);
+const combinedSource = await loadWorldHistorySODecks({ includeBook:true });
+assert.equal(combinedSource.terms.length,1359);
+assert.equal(combinedSource.decks.length,21);
+assert.deepEqual(combinedSource.definition.chapterGroups.map(group=>group.number),[1,6]);
+assert.equal(combinedSource.definition.defaultDeckId,"deck-1");
+const typeCounts={};
+for(const deck of imported) {
+  const rows=toObjects(parseCsv(files.find(f=>f.name===deck.sourceFile).text));
+  for(const [index,term] of deck.terms.entries()) {
+    const q=term.stages.beginner[0],row=rows[index];
+    assert.equal(q.prompt,row.question);assert.equal(q.answer,row.answer);assert.equal(q.type,row.question_type);
+    assert.equal(q.source.originalQuestionId,row.question_id);assert.equal(q.source.originalStage,row.stage);
+    assert.equal(q.source.originalTermId,row.term_id);assert.equal(term.term,row.term);assert.equal(term.reading,row.reading);
+    assert.equal(q.answerNote,row.answer_note);assert.equal(q.yearMnemonic,row.year_mnemonic);
+    assert.equal(q.stage,"beginner");assert.equal(q.hideTermUntilAnswer,true);
+    typeCounts[q.type]=(typeCounts[q.type]??0)+1;
+  }
+}
+assert.throws(()=>importSOBookFiles([...files,files[0]],contents),/重複/);
+assert.throws(()=>importSOBookFiles([{...files[0],name:files[0].name.replace("古代オリエント世界の特徴","誤った見出し")}],contents),/見出し/);
+// 次章の資料が同じ元の問題番号を使っても、別の学習履歴を割り当てる。
+const extra={name:"第04回_01_エーゲ文明_3語.csv",text:files[0].text.replaceAll("世界史探究_第1章_第01回_01_古代オリエント世界の特徴","世界史探究_第2章_第04回_01_エーゲ文明")};
+const future=importSOBookFiles([files[0],extra],contents);
+assert.notEqual(future[0].terms[0].id,future[1].terms[0].id);
+const old={id:"deck-1",number:1,version:"old-history-v1",indexPath:"subjects/world-history-so/old.json",termCount:1,questionCount:1};
+const oldTerm={id:"old",stages:{beginner:[{id:"old-q",prompt:"編集済みの問題",answer:"編集済みの回答",questionMap:{path:"old-map.svg"}}],reverse:[],integrated:[]}};
+const current=[{entry:old,index:{id:"world-history-so",learningType:"cards",simpleQuestions:true,version:old.version,masteryTarget:2},chunks:[{terms:[oldTerm]}]}];
+const catalog={schemaVersion:3,subjects:[{id:"other",untouched:true},{id:"world-history-so",defaultDeckId:old.id,indexPath:old.indexPath,decks:[old],termCount:1,questionCount:1,deckSelectionAliases:{"deck-4":["deck-1"]}}]};
+const before=JSON.stringify({catalog,current});
+const result=appendSOBookDecks(catalog,current,imported),subject=result.next.subjects[1];
+assert.equal(JSON.stringify({catalog,current}),before);
+assert.deepEqual(subject.decks.find(d=>d.id===old.id),old);
+assert.deepEqual(result.next.subjects[0],catalog.subjects[0]);
+assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[6,1]]);
+assert.equal(subject.questionCount,1003);assert.equal(subject.defaultDeckId,"deck-1");
+const now=[...current,...result.additions.map(entry=>{
+  const index=result.staged.find(s=>s.path===entry.indexPath).value;
+  return {entry,index,chunks:index.chunks.map(c=>result.staged.find(s=>s.path===c.path).value)};
+})];
+assert.deepEqual(appendSOBookDecks(result.next,now,imported).next,result.next);
+assert.equal(appendSOBookDecks(result.next,now,imported).staged.length,0);
+const edited=structuredClone(now);edited[1].chunks[0].terms[0].stages.beginner[0].answer="追加後に編集された回答";
+assert.throws(()=>appendSOBookDecks(result.next,edited,imported),/既存の編集/);
+assert.equal(soStudyLabel(subject.decks,subject.chapterGroups),"2デッキ");
+assert.equal(soStudyLabel([old],subject.chapterGroups),"第6章 イスラーム世界");
+assert.equal(groupSODecks(subject.decks,subject.chapterGroups)[0].decks.length,12);
+const ids=subject.decks.map(d=>d.id),versions=new Map(subject.decks.map(d=>[d.id,d.version]));
+const combined=createSessionDatasetVersion("world-history-so",ids,versions);
+assert.ok(combined.length<=100);assert.equal(combined,createSessionDatasetVersion("world-history-so",ids.toReversed(),versions));
+assert.notEqual(combined,createSessionDatasetVersion("world-history-so",ids.slice(1),versions));
+assert.equal(createSessionDatasetVersion("world-history-so",["deck-1"],versions),old.version);
+const legacy=[1,2,3,5,7,8,9,12,13].map(n=>`deck-${n}`);
+assert.equal(createSessionDatasetVersion("world-history-so",legacy,new Map()),"mix-world-history-so-deck-1-deck-12-deck-13-deck-2-deck-3-deck-5-deck-7-deck-8-deck-9");
+const calls=[],env={ACCESS_TOKEN:"test",BUCKET:{get:async()=>({etag:"current",json:async()=>catalog}),put:async(...args)=>{calls.push(args);return {etag:"saved"};}}};
+const send=(value,expectedEtag="current",token="test")=>storage.fetch(new Request("https://example.org",{method:"POST",headers:{Authorization:`Bearer ${token}`},body:JSON.stringify({action:"commit",key:"index.json",expectedEtag,value})}),env);
+assert.equal((await send(result.next,"current","wrong")).status,401);
+assert.equal((await send(result.next,"old")).status,409);
+const invalid=structuredClone(result.next);invalid.subjects[0].untouched=false;
+assert.equal((await send(invalid)).status,400);
+const changed=structuredClone(result.next);changed.subjects[1].decks.find(d=>d.id===old.id).version="changed";
+assert.equal((await send(changed)).status,400);assert.equal(calls.length,0);
+console.log("第1章確認完了：12パート・130用語・1,002問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
+console.log("種類ごとの問題数:",typeCounts);

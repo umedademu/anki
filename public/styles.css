@@ -1140,6 +1140,8 @@ body.is-study-menu-open {
   margin-top: 4px;
 }
 
+#chapter-filter { display: grid; gap: 10px; }
+
 .deck-filter-choice {
   display: flex;
   min-width: 0;

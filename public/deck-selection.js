@@ -27,6 +27,14 @@ export function createSessionDatasetVersion(
   if (datasetVersion.length > 100 && sortedIds.every((id) => /^deck-[1-9]\d*$/.test(id))) {
     datasetVersion = `mix-${subjectId}-decks-${sortedIds.map((id) => id.slice(5)).join("-")}`;
   }
+  // 章が増えても全パートを混ぜて保存できるようにする。従来の短い保存名は維持。
+  if (datasetVersion.length > 100 && /^[A-Za-z0-9_-]+$/.test(subjectId) && sortedIds.every(id => /^[A-Za-z0-9_-]+$/.test(id))) {
+    let hash = 14695981039346656037n;
+    for (const character of JSON.stringify([subjectId, sortedIds])) {
+      hash = BigInt.asUintN(64, (hash ^ BigInt(character.codePointAt(0))) * 1099511628211n);
+    }
+    datasetVersion = `mix-${subjectId}-selection-${hash.toString(16).padStart(16, "0")}`;
+  }
   if (!/^[A-Za-z0-9_-]{1,100}$/.test(datasetVersion)) {
     throw new Error("選択したデッキの組合せが多すぎます。");
   }

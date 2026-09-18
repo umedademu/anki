@@ -1088,7 +1088,7 @@ export function parseSimpleQuestions(sourceText, defaultCategory = "") {
   });
 }
 
-export async function loadWorldHistorySODecks() {
+export async function loadWorldHistorySODecks({ includeBook = false } = {}) {
   const sourcePath = path.join(projectRoot, "data", "source", "world-history-so", "questions.csv");
   const sourceText = await readFile(sourcePath, "utf8");
   const terms = parseSimpleQuestions(sourceText);
@@ -1133,6 +1133,22 @@ export async function loadWorldHistorySODecks() {
     }];
   });
   if (assigned.size !== terms.length) throw new Error("世界史SOに章を割り当てていない問題があります。");
+  if (includeBook) {
+    const { importSOBookFiles, readSOBookFiles } = await import("./world-history-so-book.mjs");
+    const bookRoot = path.join(projectRoot, "data/source/world-history-so");
+    const book = importSOBookFiles(await readSOBookFiles(path.join(bookRoot,"book")), await readFile(path.join(bookRoot,"sekai_shi_tankyu_mokuji.md"),"utf8"));
+    const groups = [{ id:"chapter-6", number:6, title:"第6章 イスラーム世界", deckIds:decks.map(deck=>deck.id) }];
+    for (const deck of book) {
+      let group = groups.find(group=>group.id===deck.chapter.id);
+      if(!group) { group={...deck.chapter,deckIds:[]};groups.push(group); }
+      group.deckIds.push(deck.id);
+    }
+    groups.sort((a,b)=>a.number-b.number);
+    const byId = new Map([...decks,...book].map(deck=>[deck.id,deck]));
+    const combined = groups.flatMap(group=>group.deckIds.map(id=>byId.get(id)));
+    return { terms:combined.flatMap(deck=>deck.terms), decks:combined, classification,
+      definition:{ ...worldHistorySODefinition, defaultDeckId:decks[0].id, chapterGroups:groups, datasetLabel:`世界史SO｜${groups.length}デッキ・${combined.length}パート` } };
+  }
   return { terms, decks, classification };
 }
 
@@ -3468,14 +3484,15 @@ export async function writeSubjectData(definition, decks) {
     id: definition.id,
     title: definition.title,
     ...(definition.deckSelectionAliases ? { deckSelectionAliases: definition.deckSelectionAliases } : {}),
+    ...(definition.chapterGroups ? { chapterGroups: definition.chapterGroups } : {}),
     description: definition.description,
     learningType: definition.learningType,
     termUnitLabel: definition.termUnitLabel ?? "語",
-    datasetLabel: `${definition.catalogLabel}｜${range}`,
+    datasetLabel: definition.datasetLabel ?? `${definition.catalogLabel}｜${range}`,
     termCount: terms.length,
     questionCount,
-    indexPath: deckEntries[0].indexPath,
-    defaultDeckId: deckEntries[0].id,
+    indexPath: (deckEntries.find(deck=>deck.id===definition.defaultDeckId) ?? deckEntries[0]).indexPath,
+    defaultDeckId: definition.defaultDeckId ?? deckEntries[0].id,
     decks: deckEntries,
   };
 }
@@ -3497,7 +3514,7 @@ export async function main() {
   ] = await Promise.all([
     loadSourceDecks(),
     loadWorldHistorySDecks(),
-    loadWorldHistorySODecks(),
+    loadWorldHistorySODecks({ includeBook: true }),
     loadJapaneseHistoryDecks(),
     loadEnglishDecks(),
     loadGeographyDecks(),
@@ -3663,7 +3680,7 @@ export async function main() {
       },
       worldHistorySData.decks,
     ),
-    writeSubjectData(worldHistorySODefinition, worldHistorySOData.decks),
+    writeSubjectData(worldHistorySOData.definition ?? worldHistorySODefinition, worldHistorySOData.decks),
     writeSubjectData(
       {
         id: japaneseSubjectId,

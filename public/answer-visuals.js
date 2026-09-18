@@ -46,7 +46,8 @@ export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
   }
   function render(question, visible, subjectId) {
     current = { question, visible, subjectId };
-    if (!visible || subjectId !== "world-history-so" || !question || question.questionMap) { clear(); return; }
+    if (!visible || subjectId !== "world-history-so" || !question || question.questionMap ||
+      (!entries.has(question.id) && (loaded || (question.source?.chapterNumber && question.source.chapterNumber !== 6)))) { clear(); return; }
     const map = entries.get(question.id)?.map;
     if (displayed === question.id && map && picture.hasAttribute("src")) return;
     clear(); displayed = question.id;

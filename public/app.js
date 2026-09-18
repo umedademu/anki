@@ -1,9 +1,10 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.258";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.258";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.258";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.258";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.259";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.259";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.259";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.259";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.259";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.258";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.259";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -69,7 +70,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.258";
+} from "./speech.js?v=0.259";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -85,7 +86,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.258";
+} from "./deck-selection.js?v=0.259";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -4255,57 +4256,70 @@ function setDeckOptions(decks, selectedIds) {
     }),
   );
   if (groupedChapters) {
-    const deckChoice = document.createElement("label");
-    deckChoice.className = "deck-filter-choice";
-    const deckInput = document.createElement("input");
-    deckInput.type = "checkbox";
-    deckInput.name = "chapter-deck-filter";
-    deckInput.value = "islamic-world-20";
-    deckInput.checked = true;
-    const title = document.createElement("span");
-    title.className = "deck-filter-name";
-    title.textContent = "第6章 イスラーム世界";
-    const count = document.createElement("small");
-    count.className = "deck-filter-count";
-    count.textContent = `${decks.reduce((total, deck) => total + (deck.questionCount ?? 0), 0).toLocaleString("ja-JP")}問`;
-    deckChoice.append(deckInput, title, count);
-    const details = document.createElement("details");
-    details.className = "question-type-field chapter-picker";
-    const summary = document.createElement("summary");
-    summary.id = "chapter-selection-summary";
-    const menu = document.createElement("div");
-    menu.className = "question-type-menu";
-    const choices = document.createElement("div");
-    choices.setAttribute("role", "group");
-    choices.setAttribute("aria-label", "第6章 イスラーム世界のパート（複数選択可）");
-    choices.append(...elements.deckFilter.children);
-    const actions = document.createElement("div");
-    actions.className = "question-type-actions";
-    const selectAll = document.createElement("button");
-    selectAll.type = "button";
-    selectAll.textContent = "すべてのパートを選択";
-    selectAll.addEventListener("click", () => {
-      choices.querySelectorAll("input").forEach((input) => { input.checked = true; });
-      updateChapterSelectionSummary();
-      void updateDeckSelection(selectedDeckIds());
-    });
-    actions.append(selectAll);
-    menu.append(actions, choices);
-    details.append(summary, menu);
-    elements.deckFilter.append(deckChoice);
-    elements.chapterFilter.append(details);
+    const groups = groupSODecks(decks, state.subjectEntries.find(subject => subject.id === state.activeSubjectId)?.chapterGroups);
+    const partChoices = [...elements.deckFilter.children];
+    elements.deckFilter.replaceChildren();
+    for (const group of groups) {
+      const deckChoice = document.createElement("label");
+      deckChoice.className = "deck-filter-choice";
+      const deckInput = document.createElement("input");
+      deckInput.type = "checkbox";
+      deckInput.name = "chapter-deck-filter";
+      deckInput.value = group.id;
+      const title = document.createElement("span");
+      title.className = "deck-filter-name";
+      title.textContent = group.title;
+      const count = document.createElement("small");
+      count.className = "deck-filter-count";
+      count.textContent = `${group.decks.reduce((total, deck) => total + (deck.questionCount ?? 0), 0).toLocaleString("ja-JP")}問`;
+      deckChoice.append(deckInput, title, count);
+      const details = document.createElement("details");
+      details.className = "question-type-field chapter-picker";
+      details.dataset.chapterId = group.id;
+      details.dataset.chapterTitle = group.title;
+      details.dataset.chapterNumber = group.number;
+      const summary = document.createElement("summary");
+      summary.id = groups.length === 1 ? "chapter-selection-summary" : `chapter-selection-summary-${group.id}`;
+      const menu = document.createElement("div");
+      menu.className = "question-type-menu";
+      const choices = document.createElement("div");
+      choices.setAttribute("role", "group");
+      choices.setAttribute("aria-label", `${group.title}のパート（複数選択可）`);
+      choices.append(...partChoices.filter(choice => group.deckIds.includes(choice.querySelector("input").value)));
+      const actions = document.createElement("div");
+      actions.className = "question-type-actions";
+      const selectAll = document.createElement("button");
+      selectAll.type = "button";
+      selectAll.textContent = "すべてのパートを選択";
+      selectAll.addEventListener("click", () => {
+        choices.querySelectorAll("input").forEach((input) => { input.checked = true; });
+        updateChapterSelectionSummary();
+        void updateDeckSelection(selectedDeckIds());
+      });
+      actions.append(selectAll);
+      menu.append(actions, choices);
+      details.append(summary, menu);
+      elements.deckFilter.append(deckChoice);
+      elements.chapterFilter.append(details);
+    }
     updateChapterSelectionSummary();
   }
 }
 
-// 目次の9パートを表示し、保存先には既存の番号を使用する。
+// 目次の章ごとに選択数を表示し、保存先にはパートの安定した番号を使用する。
 function updateChapterSelectionSummary() {
-  const summary = elements.chapterFilter.querySelector("#chapter-selection-summary");
-  if (!summary) return;
-  const count = selectedDeckIds().length;
-  summary.textContent = count === state.deckEntries.length
-    ? `パートを選択：すべて（${count}パート）`
-    : `パートを選択：${count} / ${state.deckEntries.length}パート`;
+  const pickers = [...elements.chapterFilter.querySelectorAll(".chapter-picker")];
+  for (const picker of pickers) {
+    const inputs = [...picker.querySelectorAll('input[name="deck-filter"]')];
+    const count = inputs.filter(input => input.checked).length;
+    const prefix = pickers.length === 1 ? "パートを選択" : `第${picker.dataset.chapterNumber}章のパート`;
+    picker.querySelector("summary").textContent = count === inputs.length
+      ? `${prefix}：すべて（${count}パート）` : `${prefix}：${count} / ${inputs.length}パート`;
+    if (pickers.length > 1 && count === inputs.length) picker.querySelector("summary").textContent = `第${picker.dataset.chapterNumber}章：全${count}パート`;
+    const deck = [...elements.deckFilter.querySelectorAll('input[name="chapter-deck-filter"]')].find(input => input.value === picker.dataset.chapterId);
+    deck.checked = count > 0; deck.indeterminate = count > 0 && count < inputs.length;
+    picker.classList.toggle("is-hidden", count === 0);
+  }
 }
 
 function selectedFilters() {
@@ -5731,7 +5745,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   const deckNames = deckEntries.map(deckDisplayLabel);
   const shortDeckNames = deckNames.map((name) => name.split("｜")[0]);
   elements.subjectName.textContent = `${state.subject.title}｜${
-    state.activeSubjectId === "world-history-so" ? "第6章 イスラーム世界" :
+    state.activeSubjectId === "world-history-so" ? soStudyLabel(deckEntries, state.subjectEntries.find(subject => subject.id === state.activeSubjectId)?.chapterGroups) :
       deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
   }`;
   elements.subjectProgressName.textContent = state.subject.title;
@@ -6180,9 +6194,18 @@ async function updateDeckSelection(deckIds) {
 
 function handleDeckOrChapterSelection(event) {
   if (event.target.name === "chapter-deck-filter") {
-    // 他科目と同じく、最後の一つのデッキは解除できない。
-    event.target.checked = true;
-    elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
+    const picker = [...elements.chapterFilter.querySelectorAll(".chapter-picker")].find(item => item.dataset.chapterId === event.target.value);
+    const inputs = [...picker.querySelectorAll('input[name="deck-filter"]')];
+    const previous = inputs.map(input => input.checked);
+    inputs.forEach(input => { input.checked = event.target.checked; });
+    if (!selectedDeckIds().length) {
+      inputs.forEach((input,index) => { input.checked = previous[index]; });
+      elements.cloudStatus.textContent = "デッキは1つ以上選択してください。";
+      updateChapterSelectionSummary();
+      return;
+    }
+    updateChapterSelectionSummary();
+    void updateDeckSelection(selectedDeckIds());
     return;
   }
   const deckIds = selectedDeckIds();

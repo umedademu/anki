@@ -3,3 +3,4 @@ node_modules/
 .wrangler/
 worker/.dev.vars
 worker/.env
+/仮置き/

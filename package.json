@@ -6,7 +6,7 @@
     "build:data": "node scripts/build-learning-data.mjs",
     "preview:data:world-history-so": "node scripts/publish-world-history-so.mjs",
     "publish:data:world-history-so": "node scripts/publish-world-history-so.mjs --apply",
-    "postcheck": "node --check scripts/publish-world-history-so.mjs && node scripts/test-simple-questions.mjs && node scripts/test-world-history-so-chapters.mjs && node scripts/test-world-history-so-question-types.mjs && node scripts/test-world-history-so-parts.mjs && node scripts/test-world-history-so-answer-visuals.mjs",
+    "postcheck": "node --check scripts/publish-world-history-so.mjs && node scripts/test-simple-questions.mjs && node scripts/test-world-history-so-chapters.mjs && node scripts/test-world-history-so-question-types.mjs && node scripts/test-world-history-so-parts.mjs && node scripts/test-world-history-so-answer-visuals.mjs && node scripts/test-world-history-so-book.mjs && node --check scripts/so-book-storage-worker.js && node --check scripts/publish-world-history-so-book.mjs",
     "prepare:images:japanese": "node scripts/prepare-question-images.mjs --subject japanese-history",
     "apply:images:japanese": "node scripts/apply-image-overrides.mjs --subject japanese-history",
     "optimize:images:japanese": "node scripts/optimize-question-images.mjs --subject japanese-history",
@@ -38,7 +38,10 @@
     "publish:parts:world-history-so": "node scripts/regroup-world-history-so-cloudflare.mjs --apply",
     "preview:visuals:world-history-so": "node scripts/publish-world-history-so-answer-visuals.mjs",
     "publish:visuals:world-history-so": "node scripts/publish-world-history-so-answer-visuals.mjs --apply",
-    "test:visuals:browser": "node scripts/test-so-answer-visuals-browser.mjs"
+    "test:visuals:browser": "node scripts/test-so-answer-visuals-browser.mjs",
+    "preview:book:world-history-so": "node scripts/publish-world-history-so-book.mjs",
+    "publish:book:world-history-so": "node scripts/publish-world-history-so-book.mjs --apply",
+    "test:so-book:browser": "node scripts/test-so-book-browser.mjs"
   },
   "devDependencies": {
     "playwright": "^1.63.0",

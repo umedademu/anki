@@ -19,6 +19,14 @@ async function cloudJson(key) {
 }
 const catalog = await cloudJson("index.json");
 const so = catalog.subjects.find((subject) => subject.id === "world-history-so");
+// この確認は既存の第6章だけを取り出す。複数章の選択は book-browser で確認する。
+const islamicIds = so.chapterGroups?.find(group => group.number === 6)?.deckIds;
+if (islamicIds) {
+  so.decks = so.decks.filter(deck => islamicIds.includes(deck.id));
+  so.termCount = so.questionCount = so.decks.reduce((sum,deck) => sum + deck.questionCount,0);
+  delete so.chapterGroups;
+  objects.set("index.json", JSON.stringify(catalog));
+}
 assert.equal(so.decks.length, 9);
 await Promise.all(so.decks.map(async (deck) => {
   const index = await cloudJson(deck.indexPath);
@@ -100,6 +108,8 @@ try {
     if (window.AudioScheduledSourceNode) AudioScheduledSourceNode.prototype.start = () => {};
   }, off);
   await context.route("https://**/*", (route) => route.abort());
+  const cloudProgress = (await readFile(path.join(root, "cloud-progress.js"), "utf8")).replace("export function normalizeSpeechParts(value)", "function unusedNormalizeSpeechParts(value)");
+  await context.route("**/cloud-progress.js*", route => route.fulfill({ contentType: "text/javascript", body: cloudProgress + `\nexport function normalizeSpeechParts() { return ${JSON.stringify(off)}; }` }));
   const speechModule = (await readFile(path.join(root, "speech.js"), "utf8"))
     .replace("export function createSpeechController(", "function unusedSpeechController(");
   await context.route("**/speech.js*", (route) => route.fulfill({
@@ -129,9 +139,6 @@ try {
   assert.deepEqual(await page.locator(".chapter-picker .deck-filter-name").allTextContents(), so.decks.map(deck => deck.datasetLabel.split("｜").slice(1).join(" ")));
   const deckCheckbox = page.locator('input[name="chapter-deck-filter"]');
   assert.equal(await deckCheckbox.isChecked(), true);
-  await deckCheckbox.click();
-  assert.equal(await deckCheckbox.isChecked(), true);
-  assert.match(await page.locator("#cloud-status").textContent(), /デッキは1つ以上/);
   assert.equal(await page.locator(".chapter-picker input").count(), 9);
   assert.equal(await page.locator(".chapter-picker").getAttribute("open"), null);
   await page.locator("#chapter-selection-summary").click();
@@ -149,6 +156,9 @@ try {
   await page.waitForFunction(() => document.querySelector("#setup-panel").getAttribute("aria-busy") !== "true");
   await ready();
   assert.equal(await page.locator('.chapter-picker input:checked').count(), 9);
+  await deckCheckbox.click();
+  assert.equal(await deckCheckbox.isChecked(), true);
+  assert.match(await page.locator("#cloud-status").textContent(), /デッキは1つ以上/);
   assert.match(await page.locator("#chapter-selection-summary").textContent(), /すべて（9パート）/);
   assert.match(await page.locator("#selection-summary").textContent(), /357/);
   assert.equal(await page.locator("#question-type-field").isVisible(), true);

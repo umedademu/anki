@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createHash } from "node:crypto";
-import { atlas, byPlaceId, findMapPlaces, normalizeMapName } from "./world-history-so-atlas.mjs";
+import { atlas, byPlaceId, chapterContext, findMapPlaces, normalizeMapName } from "./world-history-so-atlas.mjs";
 
 const esc = value => String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;");
 const hash = value => createHash("sha256").update(typeof value === "string" ? value : JSON.stringify(value)).digest("hex").slice(0, 20);
@@ -93,6 +93,8 @@ export function buildSOAnswerVisuals(snapshot, imageManifest, baseSvg) {
   const photos = imageManifest.assets.filter(a => /commons\.wikimedia\.org/.test(a.sourcePageUrl ?? "") &&
     /タージ|アルハンブラ|岩のドーム|アヤソフィア|スレイマン|オスマン1世|アクバル|バーブル|シャー|メフメト|ミナレット|アラベスク|コーラン|クルアーン|イブン|モスク|イスファハーン|コルドバ/.test(a.caption ?? ""));
   for (const deck of snapshot.decks) for (const term of deck.chunks.flatMap(c => c.terms)) {
+    // この地理対応表は第6章の既存パート専用。他章を同じ背景地図へ割り当てない。
+    if (!chapterContext[deck.entry.id]) continue;
     const question = term.stages.beginner[0];
     if (question.questionMap) {
       assignments.push({ questionId: question.id, existingQuestionMap: true });

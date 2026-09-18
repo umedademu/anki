@@ -17,6 +17,7 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 - 世界史SOのパート再編は `npm run preview:parts:world-history-so` ／ `npm run publish:parts:world-history-so` を使い、Cloudflare上の現行問題を読み、本文・問題番号・画像を保持して所属だけを変更する。移動した問題の履歴は複写・照合し、他科目を維持した索引を取得時のETagで条件付き更新する。
 
 - 世界史SOの追加・更新は `npm run preview:data:world-history-so` で確認し、`npm run publish:data:world-history-so` でCloudflare上の現行索引へ対象科目だけを反映する。既存科目・画像・音声・学習履歴は維持する。詳細は [世界史SO](world-history-so.md) を参照。
+- 目次に沿った世界史SOの新しい章・パートは `npm run preview:book:world-history-so` ／ `npm run publish:book:world-history-so` で追加する。Cloudflareの現行問題を読み、新しい保存先の照合後に全体索引を条件付き更新する。既存パート・問題・履歴版・他科目を変更せず、重複登録や登録後の編集の上書きを拒否する。今後も「章をデッキ、その中に回・パート」の構成を維持する。詳細は [目次に沿った問題集の追加](world-history-so-book.md) を参照。
 
 - 世界史、世界史S、世界史SO、日本史、英単語、地理、政治・経済、生物基礎、地学基礎、古文、漢文、マインドセットを含む問題集本体はR2の`anki-world-history`から科目別に読み込む
 - マインドセットは問い・答え・復習履歴を持たない119件の音声聞き流し用データとしてR2から読み込み、既存の日本語音声設定と音声キャッシュを利用する。記号「=」は音声生成時だけ「イコール」へ置き換え、R2の元データは変更しない。最後に再生を完了した項目番号はD1へ保存し、次回はその次から再開する

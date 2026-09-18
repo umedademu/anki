@@ -55,7 +55,8 @@ export function importSOBookFiles(files, contentsText) {
     const originalById = new Map(originalTerms.map(t => [t.id,t]));
     const terms = rows.map((row,index) => {
       const label = row.dataset_label.match(/^世界史探究_第(\d+)章_第(\d+)回_(\d+)_/)
-        ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+[^｜]+｜(\d+)\s+/);
+        ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+[^｜]+｜(\d+)\s+/)
+        ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+(\d+)\s+/);
       assert.ok(label && Number(label[1]) === chapter.number && Number(label[2]) === lessonNumber && Number(label[3]) === partNumber, `CSVの所属が目次と一致しません: ${file.name}`);
       assert.match(row.question_id,/^[A-Za-z0-9_-]{1,55}$/);
       const original = originalById.get(row.term_id), question = original.stages[row.stage].find(q => q.id === row.question_id);

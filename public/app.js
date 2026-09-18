@@ -1,10 +1,10 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.260";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.260";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.260";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.260";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.260";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.261";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.261";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.261";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.261";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.261";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.260";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.261";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -70,7 +70,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.260";
+} from "./speech.js?v=0.261";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -86,7 +86,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.260";
+} from "./deck-selection.js?v=0.261";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -4292,13 +4292,22 @@ function setDeckOptions(decks, selectedIds) {
       actions.className = "question-type-actions";
       const selectAll = document.createElement("button");
       selectAll.type = "button";
-      selectAll.textContent = "すべてのパートを選択";
+      selectAll.textContent = "全パートを選択";
       selectAll.addEventListener("click", () => {
         choices.querySelectorAll("input").forEach((input) => { input.checked = true; });
         updateChapterSelectionSummary();
         void updateDeckSelection(selectedDeckIds());
       });
-      actions.append(selectAll);
+      const clearAll = document.createElement("button");
+      clearAll.type = "button";
+      clearAll.textContent = "全パートを解除";
+      clearAll.addEventListener("click", () => {
+        choices.querySelectorAll("input").forEach((input) => { input.checked = false; });
+        details.dataset.keepEmpty = "true";
+        updateChapterSelectionSummary();
+        void updateDeckSelection(selectedDeckIds());
+      });
+      actions.append(selectAll, clearAll);
       menu.append(actions, choices);
       details.append(summary, menu);
       elements.deckFilter.append(deckChoice);
@@ -4320,7 +4329,8 @@ function updateChapterSelectionSummary() {
     if (pickers.length > 1 && count === inputs.length) picker.querySelector("summary").textContent = `第${picker.dataset.chapterNumber}章：全${count}パート`;
     const deck = [...elements.deckFilter.querySelectorAll('input[name="chapter-deck-filter"]')].find(input => input.value === picker.dataset.chapterId);
     deck.checked = count > 0; deck.indeterminate = count > 0 && count < inputs.length;
-    picker.classList.toggle("is-hidden", count === 0);
+    if (count > 0) delete picker.dataset.keepEmpty;
+    picker.classList.toggle("is-hidden", count === 0 && !picker.dataset.keepEmpty);
   }
 }
 
@@ -4500,7 +4510,8 @@ function updateSetupPreview() {
   const typeCount = selectedQuestionTypes().length;
   elements.questionTypeSummary.textContent = typeCount ? `出題する問題の種類（${typeCount}種類）` : "出題する問題の種類（１種類以上選んでください）";
   elements.timeQuestionField.classList.toggle("is-hidden", !supportsTimeQuestionExclusion());
-  const terms = selectedStudyTerms();
+  const noParts = state.activeSubjectId === "world-history-so" && selectedDeckIds().length === 0;
+  const terms = noParts ? [] : selectedStudyTerms();
   const selectedStage = elements.questionStyleFilter.value;
   const studyMode = selectedStudyMode();
   const listening = listeningModes.has(studyMode);
@@ -4526,7 +4537,7 @@ function updateSetupPreview() {
   const savedSession = savedSessionForMode(studyMode);
   const hasSavedSession = Boolean(savedSession);
   elements.resumeStudy.classList.toggle("is-hidden", !hasSavedSession);
-  elements.resumeStudy.disabled = deckSelectionUpdating || !state.cloudReady || !hasSavedSession;
+  elements.resumeStudy.disabled = noParts || deckSelectionUpdating || !state.cloudReady || !hasSavedSession;
   elements.startStudy.disabled =
     deckSelectionUpdating ||
     terms.length === 0 ||
@@ -6169,6 +6180,10 @@ async function updateDeckSelection(deckIds) {
     while (pendingDeckSelection) {
       const next = pendingDeckSelection;
       pendingDeckSelection = null;
+      if (next.length === 0) {
+        elements.cloudStatus.textContent = "パートは1つ以上選択してください。";
+        continue;
+      }
       elements.cloudStatus.textContent = "選択したデッキを反映しています。";
       try {
         // 同時に複数の読み込みを反映せず、途中で変更された選択は次にまとめて処理する。
@@ -6180,7 +6195,7 @@ async function updateDeckSelection(deckIds) {
         state.cloudReady = false;
       }
     }
-    if (!failure && state.cloudReady) queueVisibleSetupPreferenceSave();
+    if (!failure && state.cloudReady && selectedDeckIds().length) queueVisibleSetupPreferenceSave();
   } finally {
     deckSelectionUpdating = false;
     protectedControls.forEach((inert, control) => {

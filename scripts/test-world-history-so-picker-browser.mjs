@@ -152,7 +152,7 @@ try {
   await page.reload(); await shown("setup-panel"); await ready();
   assert.equal(await page.locator('.chapter-picker input:checked').count(), 2);
   await page.locator("#chapter-selection-summary").click();
-  await page.getByRole("button", { name: "すべてのパートを選択" }).click();
+  await page.getByRole("button", { name: "全パートを選択" }).click();
   await page.waitForFunction(() => document.querySelector("#setup-panel").getAttribute("aria-busy") !== "true");
   await ready();
   assert.equal(await page.locator('.chapter-picker input:checked').count(), 9);

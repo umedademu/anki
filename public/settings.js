@@ -17,7 +17,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.259";
+import { createSpeechController } from "./speech.js?v=0.260";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,

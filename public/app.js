@@ -1,10 +1,10 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.259";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.259";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.259";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.259";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.259";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.260";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.260";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.260";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.260";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.260";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.259";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.260";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -70,7 +70,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.259";
+} from "./speech.js?v=0.260";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -86,7 +86,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.259";
+} from "./deck-selection.js?v=0.260";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -4152,11 +4152,13 @@ function renderQuestionImage(question, visible) {
   const image = answerVisuals.relatedImage(question.id, state.activeSubjectId) ?? state.questionImages.get(question.id);
   const showsImage = visible && Boolean(image);
   elements.termImage.classList.toggle("is-hidden", !showsImage);
-  elements.termOverview.classList.toggle("has-image", showsImage);
-  elements.termOverviewMain.classList.toggle("has-image", showsImage);
+  const showsVisual = showsImage || answerVisuals.visible;
+  elements.termOverview.classList.toggle("has-image", showsVisual);
+  elements.termOverviewMain.classList.toggle("has-image", showsVisual);
+  elements.termOverviewMain.classList.toggle("has-map", answerVisuals.visible);
   elements.termOverviewMain.classList.toggle(
     "image-only",
-    showsImage && elements.termOverviewText.classList.contains("is-hidden"),
+    showsVisual && elements.termOverviewText.classList.contains("is-hidden"),
   );
   if (!showsImage) {
     elements.termImageContent.removeAttribute("src");
@@ -4839,7 +4841,7 @@ function renderQuestion() {
   renderQuestionMap(question, state.answerVisible);
   answerVisuals.render(question, state.answerVisible, state.activeSubjectId);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
-  const showsSupplement = showsTermOverview || showsTermImage;
+  const showsSupplement = showsTermOverview || showsTermImage || answerVisuals.visible;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
   renderTermTags(term, question, showsSupplement);
 

@@ -92,6 +92,6 @@ export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
   });
   // 地図の拡大・説明の開閉を、画面左右の回答操作へ渡さない。
   for (const element of [root, dialog]) for (const event of ["click", "touchstart", "touchend", "pointerdown", "pointerup"]) element.addEventListener(event, e => e.stopPropagation());
-  return { load, render, reset() { current = null; clear(); }, get modalOpen() { return dialog.open; },
+  return { load, render, reset() { current = null; clear(); }, get modalOpen() { return dialog.open; }, get visible() { return !root.classList.contains("is-hidden"); },
     relatedImage(questionId, subjectId) { return subjectId === "world-history-so" ? entries.get(questionId)?.relatedImage : null; } };
 }

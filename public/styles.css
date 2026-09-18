@@ -4265,3 +4265,22 @@ body.is-listening.is-listening-answer-visible .page {
 #question-type-options { display: grid; gap: 4px; }
 #question-type-options label { display: flex; align-items: center; gap: 10px; padding: 7px; cursor: pointer; }
 #question-type-options input { width: 18px; height: 18px; margin: 0; }
+
+/* 解答用地図も既存の関連画像と同じ右側の欄に収める。 */
+.term-visuals { display: contents; }
+.term-overview-main.has-map .term-visuals {
+  display: grid;
+  min-width: 0;
+  gap: 12px;
+  align-content: start;
+}
+.term-overview-main.has-map .answer-map { min-width: 0; margin: 0; padding: 8px; }
+.term-overview-main.has-map .answer-map-open img {
+  height: clamp(112px, 16vw, 190px);
+  object-fit: contain;
+}
+.term-overview-main.has-map .term-image img { height: clamp(112px, 16vw, 190px); }
+@media (max-width: 560px) {
+  .term-overview-main.has-map .answer-map-open img,
+  .term-overview-main.has-map .term-image img { height: clamp(130px, 45vw, 210px); }
+}

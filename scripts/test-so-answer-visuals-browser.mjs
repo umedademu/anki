@@ -107,6 +107,11 @@ try {
   assert.equal(requests.some(p => p.includes("answer-visuals/maps/")), false, "回答前に地図画像を要求しない");
   assert.match(await page.locator("#question-text").textContent(), /ホラズム/);
   await page.locator("#next-action").click(); await visible("answer-map"); await loadedMap();
+  const explanationBox = await page.locator("#term-overview-text").boundingBox();
+  const mapBox = await page.locator("#answer-map").boundingBox();
+  assert.ok(mapBox.x >= explanationBox.x + explanationBox.width, "解説の右側に地図を配置する");
+  assert.ok((await page.locator('[data-map="image"]').boundingBox()).height <= 190, "地図を既存画像と同じ高さに収める");
+  await page.locator("#question-card").screenshot({ path: path.join(output, "desktop-answer.png") });
   await page.locator('[data-map="details"]').evaluate(e => { e.open = true; });
   assert.match(await page.locator('[data-map="places"]').textContent(), /ホラーサーン/);
   await page.locator("#answer-map").screenshot({ path: path.join(output, "desktop-map.png") });

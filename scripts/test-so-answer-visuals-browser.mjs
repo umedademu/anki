@@ -110,10 +110,12 @@ try {
   const explanationBox = await page.locator("#term-overview-text").boundingBox();
   const mapBox = await page.locator("#answer-map").boundingBox();
   assert.ok(mapBox.x >= explanationBox.x + explanationBox.width, "解説の右側に地図を配置する");
-  assert.ok((await page.locator('[data-map="image"]').boundingBox()).height <= 190, "地図を既存画像と同じ高さに収める");
+  const answerBox = await page.locator("#answer-panel").boundingBox();
+  assert.ok(mapBox.x >= answerBox.x + answerBox.width, "回答と解説の両方の右に地図を配置する");
+  assert.ok(Math.abs(mapBox.y - answerBox.y) <= 1, "地図の上端を回答に揃える");
+  assert.ok((await page.locator('[data-map="image"]').boundingBox()).height > 300, "地図を読みやすい大きさで表示する");
+  assert.equal(await page.locator('#answer-map figcaption, #answer-map details, [data-map="heading"]').count(), 0);
   await page.locator("#question-card").screenshot({ path: path.join(output, "desktop-answer.png") });
-  await page.locator('[data-map="details"]').evaluate(e => { e.open = true; });
-  assert.match(await page.locator('[data-map="places"]').textContent(), /ホラーサーン/);
   await page.locator("#answer-map").screenshot({ path: path.join(output, "desktop-map.png") });
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
@@ -129,7 +131,6 @@ try {
   assert.match(await page.locator("#question-text").textContent(), /霊廟/);
   await page.locator("#next-action").click(); await loadedMap(); await visible("term-image");
   await page.waitForFunction(() => document.querySelector("#term-image-content").naturalWidth > 0);
-  assert.ok(await page.locator("#answer-map").evaluate(e => Boolean(e.compareDocumentPosition(document.querySelector("#term-image")) & Node.DOCUMENT_POSITION_FOLLOWING)));
   assert.match(await page.locator("#term-image-caption").textContent(), /タージ/);
   await page.locator("#question-card").screenshot({ path: path.join(output, "photo-answer.png") });
   await page.locator("#good-action").click(); await hidden(); await visible("question-map");

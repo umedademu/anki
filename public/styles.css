@@ -1114,16 +1114,8 @@ body.is-study-menu-open {
 }
 
 .answer-map { margin: 22px 0 0; padding: 14px; border: 1px solid var(--theme-border, #cbd9cf); border-radius: 14px; background: var(--theme-surface, #fff); color: var(--theme-text, #263f32); }
-.answer-map-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-.answer-map-heading span, .answer-map figcaption small { font-size: .78rem; color: var(--theme-muted, #607365); }
 .answer-map-open { display: block; width: 100%; padding: 0; border: 0; border-radius: 10px; background: #f9faf7; cursor: zoom-in; overflow: hidden; }
 .answer-map-open img { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 650; }
-.answer-map figcaption { display: grid; gap: 8px; margin-top: 10px; }
-.answer-map details { font-size: .86rem; line-height: 1.8; }
-.answer-map summary { cursor: pointer; }
-.answer-map ul { padding-left: 22px; margin-block: 8px; }
-.answer-map li + li { margin-top: 5px; }
-.answer-map a { color: inherit; }
 .answer-map-dialog { width: min(1200px, calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - 24px); padding: 16px; border: 1px solid var(--theme-border, #cbd9cf); border-radius: 16px; color: var(--theme-text, #263f32); background: var(--theme-surface, #fff); }
 .answer-map-dialog::backdrop { background: rgb(10 25 18 / 65%); }
 .answer-map-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
@@ -4266,21 +4258,39 @@ body.is-listening.is-listening-answer-visible .page {
 #question-type-options label { display: flex; align-items: center; gap: 10px; padding: 7px; cursor: pointer; }
 #question-type-options input { width: 18px; height: 18px; margin: 0; }
 
-/* 解答用地図も既存の関連画像と同じ右側の欄に収める。 */
-.term-visuals { display: contents; }
-.term-overview-main.has-map .term-visuals {
+/* 回答と解説を左、解答用地図を右に並べる。 */
+.term-visuals, .answer-layout { display: contents; }
+.answer-layout.has-answer-map {
   display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  grid-template-rows: auto 1fr;
+  gap: 14px 20px;
+  align-items: start;
+}
+.answer-layout.has-answer-map > .answer { grid-column: 1; grid-row: 1; margin: 0; min-width: 0; }
+.answer-layout.has-answer-map > .term-overview { grid-column: 1; grid-row: 2; margin: 0; min-width: 0; }
+.answer-layout.has-answer-map > .answer-map {
+  grid-column: 2;
+  grid-row: 1 / 3;
   min-width: 0;
-  gap: 12px;
-  align-content: start;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
-.term-overview-main.has-map .answer-map { min-width: 0; margin: 0; padding: 8px; }
-.term-overview-main.has-map .answer-map-open img {
-  height: clamp(112px, 16vw, 190px);
-  object-fit: contain;
+.answer-layout.has-answer-map .answer-map-open img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
 }
-.term-overview-main.has-map .term-image img { height: clamp(112px, 16vw, 190px); }
 @media (max-width: 560px) {
-  .term-overview-main.has-map .answer-map-open img,
-  .term-overview-main.has-map .term-image img { height: clamp(130px, 45vw, 210px); }
+  html:has(.has-answer-map) { scroll-padding-bottom: 260px; }
+  body:has(.has-answer-map) .page { padding-bottom: calc(260px + env(safe-area-inset-bottom)); }
+  .answer-layout.has-answer-map { grid-template-columns: minmax(0, 1fr); }
+  .answer-layout.has-answer-map > .answer-map { grid-column: 1; grid-row: 3; }
 }
+
+/* 地図画像の下端に含まれる凡例も、通常表示・拡大表示とも表示しない。 */
+.answer-layout.has-answer-map .answer-map-open { position: relative; aspect-ratio: 1000 / 600; }
+.answer-layout.has-answer-map .answer-map-open img { position: absolute; inset: 0 auto auto 0; }
+.answer-map-viewport img { clip-path: inset(0 0 7.7% 0); }

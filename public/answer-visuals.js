@@ -17,8 +17,8 @@ export function parseAnswerVisuals(value) {
 
 export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
   const get = name => root.querySelector(`[data-map="${name}"]`);
-  const picture = get("image"), openButton = get("open"), heading = get("heading");
-  const error = get("error"), retry = get("retry"), details = get("details"), places = get("places");
+  const picture = get("image"), openButton = get("open");
+  const error = get("error"), retry = get("retry");
   const zoomImage = dialog.querySelector("img"), viewport = dialog.querySelector(".answer-map-viewport");
   const zoomLabel = dialog.querySelector("output");
   let entries = new Map(), pending = null, loaded = false, current = null, displayed = null, zoom = 1;
@@ -29,7 +29,7 @@ export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
   function clear() {
     close(); displayed = null;
     root.classList.add("is-hidden"); picture.removeAttribute("src"); picture.alt = "";
-    heading.textContent = ""; places.replaceChildren(); details.open = false;
+    root.parentElement.classList.remove("has-answer-map");
     error.classList.add("is-hidden");
   }
   async function load() {
@@ -52,17 +52,13 @@ export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
     if (displayed === question.id && map && picture.hasAttribute("src")) return;
     clear(); displayed = question.id;
     root.classList.remove("is-hidden");
-    heading.textContent = map?.title ?? "この問題の位置関係";
+    root.parentElement.classList.add("has-answer-map");
     if (!map) { showError(); return; }
     openButton.classList.remove("is-hidden");
     picture.alt = map.alt;
     picture.src = getDataUrl(map.path);
-    for (const place of map.places) {
-      const item = document.createElement("li"), name = document.createElement("strong");
-      name.textContent = place.name;
-      item.append(name, document.createTextNode(`：${place.note}`)); places.append(item);
-    }
   }
+
   function setZoom(value) {
     zoom = Math.max(1, Math.min(3, value));
     zoomImage.style.width = `${Math.max(900, viewport.clientWidth) * zoom}px`;
@@ -90,7 +86,7 @@ export function createAnswerVisuals({ root, dialog, fetchJson, getDataUrl }) {
       if (current) render(current.question, current.visible, current.subjectId);
     } finally { retry.disabled = false; }
   });
-  // 地図の拡大・説明の開閉を、画面左右の回答操作へ渡さない。
+  // 地図の拡大操作を、画面左右の回答操作へ渡さない。
   for (const element of [root, dialog]) for (const event of ["click", "touchstart", "touchend", "pointerdown", "pointerup"]) element.addEventListener(event, e => e.stopPropagation());
   return { load, render, reset() { current = null; clear(); }, get modalOpen() { return dialog.open; }, get visible() { return !root.classList.contains("is-hidden"); },
     relatedImage(questionId, subjectId) { return subjectId === "world-history-so" ? entries.get(questionId)?.relatedImage : null; } };

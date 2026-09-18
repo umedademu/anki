@@ -1,10 +1,10 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.268";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.268";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.268";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.268";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.268";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.269";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.269";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.269";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.269";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.269";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.268";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.269";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -70,7 +70,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.268";
+} from "./speech.js?v=0.269";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -86,7 +86,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.268";
+} from "./deck-selection.js?v=0.269";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,

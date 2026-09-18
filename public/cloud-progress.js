@@ -193,7 +193,7 @@ export function normalizeStudySession(value) {
       (Array.isArray(source.deckIds) ? source.deckIds : [])
         .map(normalizeStudySessionId)
         .filter(Boolean),
-    )].slice(0, 100),
+    )].slice(0, 1000),
     excludeTimeQuestions: source.excludeTimeQuestions !== false,
     selectedQuestionTypes: Array.isArray(source.selectedQuestionTypes)
       ? [...new Set(source.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
@@ -333,7 +333,7 @@ export function normalizeSetupPreferences(value) {
         ? rawSubject.decks
         : {};
     const decks = {};
-    for (const [rawDeckId, rawDeck] of Object.entries(rawDecks).slice(0, 100)) {
+    for (const [rawDeckId, rawDeck] of Object.entries(rawDecks).slice(0, 1000)) {
       const deckId = normalizeSetupPreferenceId(rawDeckId);
       if (!deckId || !rawDeck || typeof rawDeck !== "object") continue;
       decks[deckId] = {
@@ -358,7 +358,7 @@ export function normalizeSetupPreferences(value) {
           : [])
         .map(normalizeSetupPreferenceId)
         .filter(Boolean),
-    )].slice(0, 100);
+    )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
       selectedQuestionTypes: Array.isArray(rawSubject.selectedQuestionTypes)

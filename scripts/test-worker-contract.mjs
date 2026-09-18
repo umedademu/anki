@@ -126,6 +126,20 @@ if (
   throw new Error("完了した周回数を正しく整形できませんでした。");
 }
 
+// 100パートを超える科目でも、選択・個別設定・学習途中の範囲を欠落させない。
+const manyDeckIds = Array.from({length:109}, (_, index) => `book-part-${index+1}`);
+const manyDeckSettings = { subjects: { "world-history-so": {
+  selectedDeckIds: manyDeckIds,
+  decks: Object.fromEntries(manyDeckIds.map(id=>[id,{category:id}]))
+} } };
+for (const normalize of [normalizeWorkerSetupPreferences, normalizeBrowserSetupPreferences]) {
+  const value=normalize(manyDeckSettings).subjects["world-history-so"];
+  if (value.selectedDeckIds.join()!==manyDeckIds.join() || Object.keys(value.decks).length!==109 || value.decks[manyDeckIds.at(-1)].category!==manyDeckIds.at(-1)) throw new Error("109パートの開始設定が欠落しました。");
+}
+for (const normalize of [normalizeWorkerStudySession, normalizeBrowserStudySession]) {
+  if (normalize({...studySessionInput,deckIds:manyDeckIds}).deckIds.join()!==manyDeckIds.join()) throw new Error("109パートの一周の保存範囲が欠落しました。");
+}
+
 const listeningSessionInput = {
   ...studySessionInput,
   studyMode: "listen-answer",

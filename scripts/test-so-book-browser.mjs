@@ -31,8 +31,8 @@ objects.set("index.json", JSON.stringify(plan.next));
 for (const object of plan.staged) objects.set(object.path, JSON.stringify(object.value));
 await cloudJson("subjects/world-history-so/answer-visuals/index.json");
 const firstChapter = so.chapterGroups.find(group => group.number === 1), islamicChapter = so.chapterGroups.find(group => group.number === 6);
-assert.equal(so.questionCount, 6792);
-assert.deepEqual(so.chapterGroups.map(group => group.deckIds.length), [12, 20, 16, 10, 18, 9, 24]);
+assert.equal(so.questionCount, 7662);
+assert.deepEqual(so.chapterGroups.map(group => group.deckIds.length), [12, 20, 16, 18, 18, 9, 24]);
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 let settings = { autoSpeechEnabled: false, speechParts: off, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 };
 const sessions = new Map();
@@ -139,7 +139,7 @@ try {
   await page.goto(base + "/?subject=world-history-so&deck=deck-1&view=setup");
   await shown("setup-panel"); await settled();
   assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), so.chapterGroups.map(group => group.title));
-  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,265問", "1,288問", "883問", "978問", "357問", "1,019問"]);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,265問", "1,288問", "1,753問", "978問", "357問", "1,019問"]);
   assert.equal(await chapter(1).isChecked(), false);
   assert.equal(await picker(1).isVisible(), false);
   await chapter(1).check(); await settled(); await deselectChapter(6);
@@ -268,13 +268,13 @@ try {
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜4デッキ");
   await sessionSaved(57);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
-  // 第4章は提供された第11〜13回だけを収録し、本文・回答・評価を確認する。
+  // 第4章の第11〜15回を収録し、本文・回答・評価を確認する。
   await chapter(4).check(); await settled();
   await deselectChapter(1); await deselectChapter(2); await deselectChapter(3); await deselectChapter(6);
-  assert.equal(await picker(4).locator("input:checked").count(),10);
-  assert.equal(await picker(4).locator("input[value^='book-04-14'], input[value^='book-04-15']").count(),0);
+  assert.equal(await picker(4).locator("input:checked").count(),18);
+  assert.equal(await picker(4).locator("input[value^='book-04-14'], input[value^='book-04-15']").count(),8);
   await page.reload(); await shown("setup-panel"); await settled();
-  assert.equal(await picker(4).locator("input:checked").count(),10);
+  assert.equal(await picker(4).locator("input:checked").count(),18);
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第4章 中世ヨーロッパ");
@@ -285,11 +285,30 @@ try {
   await page.locator("#good-action").click(); await shown("completion-card");
   assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-11-01-v1"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
+  // 追加した第14回を単独で選び、原本の問題と回答、保存復元を確認する。
+  await picker(4).locator("summary").click();
+  await picker(4).getByRole("button",{name:"全パートを解除"}).click();
+  await page.waitForFunction(()=>document.querySelector("#setup-panel").getAttribute("aria-busy")!=="true");
+  await picker(4).locator('input[value="book-04-14-01"]').check(); await settled();
+  await page.reload(); await shown("setup-panel"); await settled();
+  assert.equal(await picker(4).locator('input[value="book-04-14-01"]').isChecked(),true);
+  assert.equal(await picker(4).locator("input:checked").count(),1);
+  await page.locator("#question-limit").fill("1");
+  await page.locator("#start-study").click(); await shown("study-shell");
+  assert.match(await page.locator("#question-text").textContent(), /聖地イェルサレムの回復を掲げ/);
+  await page.locator("#next-action").click(); await shown("answer-panel");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"十字軍 / 十字軍遠征");
+  await page.locator("#good-action").click(); await shown("completion-card");
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-14-01-v1"));
+  await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
+  await picker(4).locator("summary").click();
+  await picker(4).getByRole("button",{name:"全パートを選択"}).click(); await settled();
+  await picker(4).locator("summary").click();
   for (const number of [1,2,3,6]) { await chapter(number).check(); await settled(); }
-  assert.equal(await page.locator('.chapter-picker input:checked').count(),67);
+  assert.equal(await page.locator('.chapter-picker input:checked').count(),75);
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜5デッキ");
-  await sessionSaved(67);
+  await sessionSaved(75);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
   // 第5章の10列形式で解説も表示し、提供範囲・保存を確認する。
   await chapter(5).check(); await settled();
@@ -330,10 +349,10 @@ try {
   await picker(5).getByRole("button",{name:"全パートを選択"}).click(); await settled();
   await picker(5).locator("summary").click();
   for (const number of [1,2,3,4,6]) { await chapter(number).check(); await settled(); }
-  assert.equal(await page.locator('.chapter-picker input:checked').count(),85);
+  assert.equal(await page.locator('.chapter-picker input:checked').count(),93);
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜6デッキ");
-  await sessionSaved(85);
+  await sessionSaved(93);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
   // 第7章の列順が異なる10列形式も、原本どおり表示・保存する。
   await chapter(7).check(); await settled();
@@ -373,20 +392,20 @@ try {
   await picker(7).getByRole("button",{name:"全パートを選択"}).click(); await settled();
   await picker(7).locator("summary").click();
   for (const number of [1,2,3,4,5,6]) { await chapter(number).check(); await settled(); }
-  assert.equal(await page.locator('.chapter-picker input:checked').count(),109);
-  const allPartsSaved = page.waitForResponse(response => response.url().includes("/v1/study-session") && response.request().postDataJSON()?.deckIds?.length === 109 && response.ok());
+  assert.equal(await page.locator('.chapter-picker input:checked').count(),117);
+  const allPartsSaved = page.waitForResponse(response => response.url().includes("/v1/study-session") && response.request().postDataJSON()?.deckIds?.length === 117 && response.ok());
   await page.locator("#start-study").click(); await shown("study-shell");
   await allPartsSaved;
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜7デッキ");
-  await sessionSaved(109);
+  await sessionSaved(117);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
   await page.reload(); await shown("setup-panel"); await settled();
-  assert.equal(await page.locator('.chapter-picker input:checked').count(),109);
+  assert.equal(await page.locator('.chapter-picker input:checked').count(),117);
   await page.locator("#resume-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜7デッキ");
   assert.deepEqual(errors,[]);
   assert.equal(requests.some(url=>/\/v1\/.*(speech|rating-sound)/.test(url)),false);
-  console.log("複数章の画面確認完了：7デッキ・109パート・6,792問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
+  console.log("複数章の画面確認完了：7デッキ・117パート・7,662問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve=>server.close(resolve));
 }

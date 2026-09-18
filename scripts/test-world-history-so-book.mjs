@@ -22,13 +22,13 @@ assert.equal(imported.filter(d=>d.chapter.number===4).reduce((n,d)=>n+d.sourceTe
 assert.equal(imported.reduce((n,d)=>n+d.sourceTermCount,0),802);
 assert.deepEqual(imported.filter(d=>d.chapter.number===5).map(d=>d.terms.length),[31,67,23,39,71,74,39,45,28,47,54,36,163,48,40,54,31,88]);
 assert.ok(imported.filter(d=>d.chapter.number===5).every(d=>d.sourceTermCount===null));
-assert.deepEqual(imported.filter(d=>d.chapter.number===7).map(d=>d.terms.length),[39,37,71,28,50,23,47,21,35,23,27,39,49,41,25,57,38,40,30,76,48,52,32,91]);
+assert.deepEqual(imported.filter(d=>d.chapter.number===7).map(d=>d.terms.length),[39,37,71,28,50,23,47,21,35,23,27,39,49,41,25,57,38,40,30,76,48,52,32,91,42,41,27,43,48,37,46,43,48,37,48]);
 const questions=imported.flatMap(d=>d.terms.map(t=>t.stages.beginner[0]));
-assert.equal(questions.length,7305);
-assert.equal(new Set(questions.map(q=>q.id)).size,7305);
+assert.equal(questions.length,7765);
+assert.equal(new Set(questions.map(q=>q.id)).size,7765);
 const combinedSource = await loadWorldHistorySODecks({ includeBook:true });
-assert.equal(combinedSource.terms.length,7662);
-assert.equal(combinedSource.decks.length,117);
+assert.equal(combinedSource.terms.length,8122);
+assert.equal(combinedSource.decks.length,128);
 assert.deepEqual(combinedSource.definition.chapterGroups.map(group=>group.number),[1,2,3,4,5,6,7]);
 assert.equal(combinedSource.definition.defaultDeckId,"deck-1");
 const typeCounts={};
@@ -89,8 +89,8 @@ const result=appendSOBookDecks(catalog,current,imported),subject=result.next.sub
 assert.equal(JSON.stringify({catalog,current}),before);
 assert.deepEqual(subject.decks.find(d=>d.id===old.id),old);
 assert.deepEqual(result.next.subjects[0],catalog.subjects[0]);
-assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[2,20],[3,16],[4,18],[5,18],[6,1],[7,24]]);
-assert.equal(subject.questionCount,7306);assert.equal(subject.defaultDeckId,"deck-1");
+assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[2,20],[3,16],[4,18],[5,18],[6,1],[7,35]]);
+assert.equal(subject.questionCount,7766);assert.equal(subject.defaultDeckId,"deck-1");
 const now=[...current,...result.additions.map(entry=>{
   const index=result.staged.find(s=>s.path===entry.indexPath).value;
   return {entry,index,chunks:index.chunks.map(c=>result.staged.find(s=>s.path===c.path).value)};
@@ -117,5 +117,5 @@ const invalid=structuredClone(result.next);invalid.subjects[0].untouched=false;
 assert.equal((await send(invalid)).status,400);
 const changed=structuredClone(result.next);changed.subjects[1].decks.find(d=>d.id===old.id).version="changed";
 assert.equal((await send(changed)).status,400);assert.equal(calls.length,0);
-console.log("第1〜5・7章確認完了：108パート・7,305問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
+console.log("第1〜5・7章確認完了：119パート・7,765問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
 console.log("種類ごとの問題数:",typeCounts);

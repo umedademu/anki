@@ -38,7 +38,8 @@ if (previous) {
         for (const question of term.stages.beginner) {
           assert.ok(next.term.stages.beginner.some((item) => item.id === question.id), "問題の識別番号が変わっています。");
           assert.ok(previousIndex.version === next.version ||
-            (previousIndex.version === source.classification.legacyVersion && legacyIds.has(question.id)),
+            (previousIndex.version === source.classification.legacyVersion && legacyIds.has(question.id)) ||
+            source.classification.questions.some((item) => item.questionId === question.id && item.previousVersion === previousIndex.version),
             "履歴版の変更には明示的な引継ぎ対象が必要です。");
         }
       }

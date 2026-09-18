@@ -85,6 +85,17 @@ const historySpeechReadings = createHistorySpeechReadings([
   { term: "関ヶ原の戦い", reading: "せきがはらのたたかい" },
   { term: "アッバース朝", reading: "あっばーすちょう" },
 ]);
+for (const subject of ["世界史", "世界史S", "世界史SO"]) {
+  const readings = createHistorySpeechReadings([{ term: "後ウマイヤ朝", reading: "あとうまいやちょう" }]);
+  for (const written of ["後ウマイヤ朝", "後ウマイヤ朝(あとうまいやちょう)", "後ウマイヤ朝（あとうまいやちょう）"]) {
+    for (const tail of ["の建国者は？", "。", "はコルドバを都とした。\n後ウマイヤ朝について学ぶ。"] ) {
+      const spoken = prepareSpeechText(written + tail, "ja-JP", readings);
+      if (spoken !== ("こううまいやちょう" + tail).replaceAll("後ウマイヤ朝", "こううまいやちょう").replaceAll("\n", "。")) {
+        throw new Error(`${subject}の後ウマイヤ朝の読みが不正です: ${spoken}`);
+      }
+    }
+  }
+}
 const historyTermTextChecks = new Map([
   [
     "「アフリカの年(あふりかのとし)」について、この年に独立した国の多くの旧宗主国は？",

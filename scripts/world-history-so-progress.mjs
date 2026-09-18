@@ -10,16 +10,21 @@ const quote = (value) => "'" + String(value).replaceAll("'", "''") + "'";
 export function createSOProgressMigration(decks, classification) {
   assert.equal(classification.legacyVersion, "world-history-so-deck-1-v1");
   const destination = new Map(decks.flatMap((deck) => deck.terms.map((term) => [term.stages.beginner[0].id, deck.version])));
-  return classification.questions.filter((item) => item.legacyQuestionId).map((item) => {
-    const version = destination.get(item.legacyQuestionId);
+  return classification.questions.flatMap((item) => {
+    const questionId = item.questionId ?? item.legacyQuestionId;
+    const version = destination.get(questionId);
+    if (!questionId) return [];
     assert.match(version, /^world-history-so-chapter-\d{2}-v1$/);
-    return {
-      questionId: item.legacyQuestionId, version,
+    // 現行13章の記録を優先し、初期の単一デッキは記録がない場合だけ補う。
+    const sources = [...new Set([item.previousVersion,
+      item.legacyQuestionId ? classification.legacyVersion : null].filter(Boolean))];
+    return sources.filter((sourceVersion) => sourceVersion !== version).map((sourceVersion) => ({
+      questionId, version, sourceVersion,
       sql: `INSERT INTO question_progress (dataset_version, ${columns.join(", ")})
 SELECT ${quote(version)}, ${columns.join(", ")} FROM question_progress
-WHERE dataset_version = ${quote(classification.legacyVersion)} AND question_id = ${quote(item.legacyQuestionId)}
+WHERE dataset_version = ${quote(sourceVersion)} AND question_id = ${quote(questionId)}
 ON CONFLICT(dataset_version, question_id) DO NOTHING;`,
-    };
+    }));
   });
 }
 async function query(sql) {
@@ -54,15 +59,18 @@ export async function migrateSOProgress(decks, classification) {
   }
   const after = (await query(snapshotSql))[0].results;
   await writeFile(path.join(folder, "after.json"), JSON.stringify(after, null, 2));
+  const expected = new Map(before.map((row) => [`${row.dataset_version}/${row.question_id}`, row]));
   let copied = 0;
   for (const item of migration) {
-    const old = before.find((row) => row.dataset_version === classification.legacyVersion && row.question_id === item.questionId);
+    const old = before.find((row) => row.dataset_version === item.sourceVersion && row.question_id === item.questionId);
     if (!old) continue;
+    const key = `${item.version}/${item.questionId}`;
+    if (!expected.has(key)) { expected.set(key, { ...old, dataset_version: item.version }); copied++; }
     const target = after.find((row) => row.dataset_version === item.version && row.question_id === item.questionId);
     assert.ok(target, "習熟度を新しいデッキで確認できません。");
-    const existing = before.find((row) => row.dataset_version === item.version && row.question_id === item.questionId);
-    if (!existing) assert.deepEqual(target, { ...old, dataset_version: item.version });
-    copied++;
+    const wanted = expected.get(key);
+    if (target.updated_at === wanted.updated_at) assert.deepEqual(target, wanted);
+    else assert.ok(target.updated_at > wanted.updated_at, "引継ぎ先の記録が古くなっています。");
   }
   for (const row of before) {
     const retained = after.find((item) => item.dataset_version === row.dataset_version && item.question_id === row.question_id);

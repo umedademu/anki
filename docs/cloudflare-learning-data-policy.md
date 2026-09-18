@@ -14,6 +14,8 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 - 削除時は旧索引をR2の`editor-history/`へ保存し、その後に別の編集が確定していない場合だけ取り消しを受け付ける。元の分割データ・関連画像・音声・D1の回答履歴と日別記録は削除しない。
 - デッキ間の移動では対象の一問だけを移動し、問題番号を維持する。元の履歴を残したまま移動先のD1保存範囲へ複写し、移動先の新しい回答は上書きしない。
 
+- 世界史SOのパート再編は `npm run preview:parts:world-history-so` ／ `npm run publish:parts:world-history-so` を使い、Cloudflare上の現行問題を読み、本文・問題番号・画像を保持して所属だけを変更する。移動した問題の履歴は複写・照合し、他科目を維持した索引を取得時のETagで条件付き更新する。
+
 - 世界史SOの追加・更新は `npm run preview:data:world-history-so` で確認し、`npm run publish:data:world-history-so` でCloudflare上の現行索引へ対象科目だけを反映する。既存科目・画像・音声・学習履歴は維持する。詳細は [世界史SO](world-history-so.md) を参照。
 
 - 世界史、世界史S、世界史SO、日本史、英単語、地理、政治・経済、生物基礎、地学基礎、古文、漢文、マインドセットを含む問題集本体はR2の`anki-world-history`から科目別に読み込む

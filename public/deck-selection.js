@@ -2,8 +2,10 @@ export function normalizeDeckSelection(
   availableDeckIds,
   selectedDeckIds,
   fallbackDeckId = "",
+  aliases = {},
 ) {
-  const selected = new Set(Array.isArray(selectedDeckIds) ? selectedDeckIds : []);
+  const selected = new Set((Array.isArray(selectedDeckIds) ? selectedDeckIds : [])
+    .flatMap((id) => availableDeckIds.includes(id) ? [id] : aliases[id] ?? [id]));
   const normalized = availableDeckIds.filter((deckId) => selected.has(deckId));
   if (normalized.length > 0) return normalized;
   return availableDeckIds.includes(fallbackDeckId)

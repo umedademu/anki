@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.257";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -77,6 +77,9 @@ export function prepareSpeechText(
       .trim();
   }
 
+  // 保存済みの古い読みや括弧内の振り仮名より、利用者指定の発音を優先する。
+  text = text.replace(/後ウマイヤ朝(?:[(（][\p{Script=Hiragana}ー・\s]+[)）])?/gu,
+    requiredHistoryReadings["後ウマイヤ朝"]);
   for (const [term, reading] of readingEntries(additionalReadings)) {
     text = text.replaceAll(`${term}(${reading})`, reading);
   }

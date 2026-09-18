@@ -19,7 +19,7 @@ async function cloudJson(key) {
 }
 const catalog = await cloudJson("index.json");
 const so = catalog.subjects.find((subject) => subject.id === "world-history-so");
-assert.equal(so.decks.length, 13);
+assert.equal(so.decks.length, 9);
 await Promise.all(so.decks.map(async (deck) => {
   const index = await cloudJson(deck.indexPath);
   await Promise.all(index.chunks.map((chunk) => cloudJson(chunk.path)));
@@ -102,7 +102,7 @@ try {
   await context.route("https://**/*", (route) => route.abort());
   const speechModule = (await readFile(path.join(root, "speech.js"), "utf8"))
     .replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js", (route) => route.fulfill({
+  await context.route("**/speech.js*", (route) => route.fulfill({
     contentType: "text/javascript",
     body: speechModule + `\nexport function createSpeechController() {
       return { supported: true, paused: false, currentTarget: null,
@@ -116,7 +116,7 @@ try {
   const ready = () => page.waitForFunction(() => !document.querySelector("#start-study").disabled);
   await page.goto(base + "/?subject=world-history-so&view=setup");
   await shown("setup-panel"); await ready();
-  assert.equal(await page.locator("#deck-filter > .deck-filter-choice .deck-filter-name").textContent(), "20 イスラーム世界");
+  assert.equal(await page.locator("#deck-filter > .deck-filter-choice .deck-filter-name").textContent(), "第6章 イスラーム世界");
   assert.equal(await page.locator("#deck-filter > .deck-filter-choice").count(), 1);
   assert.equal(await page.locator("#deck-filter .chapter-picker").count(), 0);
   assert.equal(await page.locator("#chapter-field .chapter-picker").count(), 1);
@@ -126,29 +126,30 @@ try {
     return deckField.parentElement === chapterField.parentElement && !deckField.contains(chapterField);
   }), true, "デッキ選択と章選択は同じ階層の独立した項目");
   assert.equal(await page.locator("#deck-filter > .deck-filter-choice .deck-filter-count").textContent(), "357問");
+  assert.deepEqual(await page.locator(".chapter-picker .deck-filter-name").allTextContents(), so.decks.map(deck => deck.datasetLabel.split("｜").slice(1).join(" ")));
   const deckCheckbox = page.locator('input[name="chapter-deck-filter"]');
   assert.equal(await deckCheckbox.isChecked(), true);
   await deckCheckbox.click();
   assert.equal(await deckCheckbox.isChecked(), true);
   assert.match(await page.locator("#cloud-status").textContent(), /デッキは1つ以上/);
-  assert.equal(await page.locator(".chapter-picker input").count(), 13);
+  assert.equal(await page.locator(".chapter-picker input").count(), 9);
   assert.equal(await page.locator(".chapter-picker").getAttribute("open"), null);
   await page.locator("#chapter-selection-summary").click();
   await page.locator('.chapter-picker input[value="deck-1"]').click();
   assert.equal(await page.locator('.chapter-picker input[value="deck-1"]').isChecked(), true);
-  assert.match(await page.locator("#cloud-status").textContent(), /章は1つ以上/);
+  assert.match(await page.locator("#cloud-status").textContent(), /パートは1つ以上/);
   await page.locator('.chapter-picker input[value="deck-2"]').check(); await ready();
   await page.waitForFunction(() => document.querySelector("#setup-panel").getAttribute("aria-busy") !== "true");
-  assert.match(await page.locator("#chapter-selection-summary").textContent(), /2 \/ 13章/);
+  assert.match(await page.locator("#chapter-selection-summary").textContent(), /2 \/ 9パート/);
   await page.waitForFunction(() => new URL(location.href).searchParams.getAll("deck").includes("deck-2"));
   await page.reload(); await shown("setup-panel"); await ready();
   assert.equal(await page.locator('.chapter-picker input:checked').count(), 2);
   await page.locator("#chapter-selection-summary").click();
-  await page.getByRole("button", { name: "すべての章を選択" }).click();
+  await page.getByRole("button", { name: "すべてのパートを選択" }).click();
   await page.waitForFunction(() => document.querySelector("#setup-panel").getAttribute("aria-busy") !== "true");
   await ready();
-  assert.equal(await page.locator('.chapter-picker input:checked').count(), 13);
-  assert.match(await page.locator("#chapter-selection-summary").textContent(), /すべて（13章）/);
+  assert.equal(await page.locator('.chapter-picker input:checked').count(), 9);
+  assert.match(await page.locator("#chapter-selection-summary").textContent(), /すべて（9パート）/);
   assert.match(await page.locator("#selection-summary").textContent(), /357/);
   assert.equal(await page.locator("#question-type-field").isVisible(), true);
   await page.locator("#chapter-selection-summary").click();
@@ -178,11 +179,14 @@ try {
   await page.setViewportSize({ width: 390, height: 844 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
   await page.locator("#start-study").click(); await shown("study-shell");
-  assert.equal(await page.locator("#subject-name").textContent(), "世界史SO｜20 イスラーム世界");
-  assert.ok([...sessions.keys()].some((key) => key.startsWith("mix-world-history-so-decks-")));
+  assert.equal(await page.locator("#subject-name").textContent(), "世界史SO｜第6章 イスラーム世界");
+  assert.ok([...sessions.keys()].some((key) => key.startsWith("mix-world-history-so-")));
+  settings.setupPreferences.subjects[so.id].selectedDeckIds = ["deck-10", "deck-11", "deck-6"];
+  await page.goto(base + "/?subject=world-history-so&view=setup"); await shown("setup-panel"); await ready();
+  assert.deepEqual(await page.locator('.chapter-picker input:checked').evaluateAll(inputs => inputs.map(input => input.value)), ["deck-5", "deck-9"]);
   assert.deepEqual(errors, []);
   assert.equal(requests.some((url) => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
-  console.log("世界史SO確認完了: Cloudflare現行357問、13章、問題種類の複数選択・全解除・時期0問・件数・保存復元・狭い画面・従来の保存範囲・音声停止");
+  console.log("世界史SO確認完了: Cloudflare現行357問、9パート、問題種類の複数選択・全解除・時期0問・件数・保存復元・狭い画面・従来の保存範囲・音声停止");
 } finally {
   await browser?.close();
   server.closeAllConnections();

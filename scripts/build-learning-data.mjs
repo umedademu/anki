@@ -1108,6 +1108,7 @@ export async function loadWorldHistorySODecks() {
   }
   const chapterText = await readFile(path.join(path.dirname(sourcePath), "chapters.json"), "utf8");
   const classification = JSON.parse(chapterText);
+  worldHistorySODefinition.deckSelectionAliases = classification.selectionAliases;
   const assignments = new Map(classification.questions.map((item) => [item.prompt, item]));
   if (assignments.size !== terms.length || classification.questions.length !== terms.length) {
     throw new Error("世界史SOの章分類に不足または重複があります。");
@@ -1116,7 +1117,7 @@ export async function loadWorldHistorySODecks() {
   const decks = classification.chapters.flatMap((chapter) => {
     const chapterTerms = terms.filter((term) => assignments.get(term.stages.beginner[0].prompt)?.chapter === chapter.number);
     if (!chapterTerms.length) return [];
-    const datasetLabel = `世界史SO｜${String(chapter.number).padStart(2, "0")} ${chapter.title}`;
+    const datasetLabel = `世界史SO｜第${chapter.lesson}回 ${chapter.part} ${chapter.title}`;
     for (const term of chapterTerms) {
       assigned.add(term.id);
       term.datasetLabel = datasetLabel;
@@ -1125,8 +1126,8 @@ export async function loadWorldHistorySODecks() {
       if (legacyId && legacyId !== question.id) throw new Error("既存問題の識別番号が変わっています。");
     }
     return [{
-      id: `deck-${chapter.number}`, number: chapter.number, sourcePath, sourceText,
-      sourceFile: path.basename(sourcePath), version: `world-history-so-chapter-${String(chapter.number).padStart(2, "0")}-v1`,
+      id: chapter.id, number: chapter.number, sourcePath, sourceText,
+      sourceFile: path.basename(sourcePath), version: chapter.version,
       contentVersion: sourceVersion(JSON.stringify(chapterTerms)), datasetLabel,
       difficultyLabel: chapter.title, terms: chapterTerms,
     }];
@@ -3466,6 +3467,7 @@ export async function writeSubjectData(definition, decks) {
   return {
     id: definition.id,
     title: definition.title,
+    ...(definition.deckSelectionAliases ? { deckSelectionAliases: definition.deckSelectionAliases } : {}),
     description: definition.description,
     learningType: definition.learningType,
     termUnitLabel: definition.termUnitLabel ?? "語",

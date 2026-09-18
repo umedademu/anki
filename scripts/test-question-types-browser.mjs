@@ -105,7 +105,7 @@ try {
   await context.route("https://**/*", (route) => route.abort());
   const speechModule = (await readFile(path.join(root, "speech.js"), "utf8"))
     .replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js", (route) => route.fulfill({
+  await context.route("**/speech.js*", (route) => route.fulfill({
     contentType: "text/javascript",
     body: speechModule + `\nexport function createSpeechController() {
       return { supported: true, paused: false, currentTarget: null,

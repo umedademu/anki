@@ -1113,6 +1113,29 @@ body.is-study-menu-open {
   border-radius: 14px;
 }
 
+.answer-map { margin: 22px 0 0; padding: 14px; border: 1px solid var(--theme-border, #cbd9cf); border-radius: 14px; background: var(--theme-surface, #fff); color: var(--theme-text, #263f32); }
+.answer-map-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.answer-map-heading span, .answer-map figcaption small { font-size: .78rem; color: var(--theme-muted, #607365); }
+.answer-map-open { display: block; width: 100%; padding: 0; border: 0; border-radius: 10px; background: #f9faf7; cursor: zoom-in; overflow: hidden; }
+.answer-map-open img { display: block; width: 100%; height: auto; aspect-ratio: 1000 / 650; }
+.answer-map figcaption { display: grid; gap: 8px; margin-top: 10px; }
+.answer-map details { font-size: .86rem; line-height: 1.8; }
+.answer-map summary { cursor: pointer; }
+.answer-map ul { padding-left: 22px; margin-block: 8px; }
+.answer-map li + li { margin-top: 5px; }
+.answer-map a { color: inherit; }
+.answer-map-dialog { width: min(1200px, calc(100vw - 24px)); max-width: none; max-height: calc(100dvh - 24px); padding: 16px; border: 1px solid var(--theme-border, #cbd9cf); border-radius: 16px; color: var(--theme-text, #263f32); background: var(--theme-surface, #fff); }
+.answer-map-dialog::backdrop { background: rgb(10 25 18 / 65%); }
+.answer-map-toolbar { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.answer-map-toolbar strong { margin-right: auto; }
+.answer-map-toolbar button, .answer-map-error button { min-height: 40px; padding: 6px 12px; color: inherit; background: var(--theme-surface-subtle, #eef4ee); border: 1px solid var(--theme-border, #cbd9cf); border-radius: 8px; cursor: pointer; }
+.answer-map-toolbar button:disabled { opacity: .45; cursor: default; }
+.answer-map-toolbar output { min-width: 45px; text-align: center; font-size: .85rem; }
+.answer-map-hint { font-size: .8rem; color: var(--theme-muted, #607365); margin: 8px 0; }
+.answer-map-viewport { overflow: auto; max-height: calc(100dvh - 170px); background: #f9faf7; border-radius: 10px; overscroll-behavior: contain; }
+.answer-map-viewport img { display: block; min-width: 900px; max-width: none; height: auto; }
+@media (max-width: 540px) { .answer-map { padding: 8px; margin-top: 16px; } .answer-map-toolbar strong { width: 100%; } .answer-map-dialog { padding: 10px; } }
+
 .chapter-picker .deck-filter-choice {
   margin-top: 4px;
 }

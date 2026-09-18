@@ -13,9 +13,11 @@ const elements = new Proxy({}, { get(target, key) {
 let saved = 0;
 let results = 0;
 let resultRatings;
+let mapResets = 0;
 let rejectSave = false;
 const context = {
   state, elements, console,
+  answerVisuals: { reset() { mapResets++; } },
   stopListeningSequence() { state.listeningPaused = true; }, stopStudyClock() {},
   enqueuePendingRetryTasksImmediately() {},
   formatStudyDuration: value => String(value),
@@ -80,6 +82,7 @@ state.listeningPaused = false;
 await context.advanceListening(1);
 assert.equal(saved, 100);
 assert.equal(results, 1);
+assert.ok(mapResets > 0, '指定した問題数を終えたら解答地図を閉じる');
 assert.equal(state.currentTask.questionId, 'q100', '残りの問題を維持する');
 assert.equal(state.activeSession, true, '途中終了を一周完了にしない');
 assert.equal(state.listeningPaused, true);

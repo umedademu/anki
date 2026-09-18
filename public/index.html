@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.257"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.257" />
-    <link rel="stylesheet" href="/theme.css?v=0.257" />
+    <script src="/theme.js?v=0.258"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.258" />
+    <link rel="stylesheet" href="/theme.css?v=0.258" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.257" type="module"></script>
+    <script src="/app.js?v=0.258" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.257</span>
+        <span class="app-version">v0.258</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/history.html">学習記録</a>
@@ -33,7 +33,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.257｜科目別学習</p>
+        <p class="eyebrow">v0.258｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -730,6 +730,19 @@
             </div>
           </div>
 
+          <figure class="answer-map is-hidden" id="answer-map" aria-label="解答用の地図">
+            <div class="answer-map-heading"><strong data-map="heading"></strong><span>地図を押すと拡大</span></div>
+            <button type="button" class="answer-map-open" data-map="open" aria-label="地図を拡大する">
+              <img data-map="image" alt="" decoding="async" />
+            </button>
+            <p class="answer-map-error is-hidden" data-map="error" role="status">地図を読み込めませんでした。<button type="button" data-map="retry">もう一度読み込む</button></p>
+            <figcaption>
+              <details data-map="details"><summary>場所の説明・王朝の時期</summary><ul data-map="places"></ul></details>
+              <small>赤：注目する場所　灰：比較する場所。王朝は主要拠点、地方は範囲の目安です。</small>
+              <small>基図：<a href="https://www.naturalearthdata.com/about/terms-of-use/" target="_blank" rel="noopener noreferrer">Natural Earth</a>／W-History</small>
+            </figcaption>
+          </figure>
+
           <aside class="term-overview is-hidden" id="term-overview">
             <button
               class="speech-button"
@@ -909,5 +922,17 @@
         </button>
       </section>
     </main>
+    <dialog class="answer-map-dialog" id="answer-map-dialog" aria-label="地図の拡大表示">
+      <div class="answer-map-toolbar">
+        <strong>地図の拡大表示</strong>
+        <button type="button" data-zoom="out" aria-label="地図を縮小">−</button>
+        <output aria-live="polite">100%</output>
+        <button type="button" data-zoom="in" aria-label="地図を拡大">＋</button>
+        <button type="button" data-zoom="reset">全体</button>
+        <button type="button" data-zoom="close" autofocus>閉じる</button>
+      </div>
+      <p class="answer-map-hint">小さな画面では上下左右に動かして地名を確認できます。</p>
+      <div class="answer-map-viewport" tabindex="0" aria-label="拡大した地図。上下左右にスクロールできます"><img alt="" /></div>
+    </dialog>
   </body>
 </html>

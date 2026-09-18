@@ -1,8 +1,9 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.257";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.257";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.257";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.258";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.258";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.258";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.258";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.257";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.258";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -68,7 +69,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.257";
+} from "./speech.js?v=0.258";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -84,7 +85,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.257";
+} from "./deck-selection.js?v=0.258";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -426,6 +427,7 @@ let catalogReady = Promise.resolve();
 let initialSettingsReady = Promise.resolve();
 let initialSettingsLoading = true;
 let questionImagesReady = null;
+const answerVisuals = createAnswerVisuals({ root: document.querySelector("#answer-map"), dialog: document.querySelector("#answer-map-dialog"), fetchJson, getDataUrl });
 let routeQueue = Promise.resolve();
 let routeRequest = 0;
 let routeChanging = false;
@@ -2723,6 +2725,7 @@ window.addEventListener("pageshow", (event) => {
 });
 
 function showOnly(panel) {
+  if (panel !== elements.studyShell) answerVisuals.reset();
   visiblePanel = panel;
   if (!routeChanging && !pageHiding) syncScreenUrl(panel);
   if (panel !== originalPanel) originalStudy.clear();
@@ -4145,7 +4148,7 @@ function renderQuestionMap(question, answerVisible = false) {
 }
 
 function renderQuestionImage(question, visible) {
-  const image = state.questionImages.get(question.id);
+  const image = answerVisuals.relatedImage(question.id, state.activeSubjectId) ?? state.questionImages.get(question.id);
   const showsImage = visible && Boolean(image);
   elements.termImage.classList.toggle("is-hidden", !showsImage);
   elements.termOverview.classList.toggle("has-image", showsImage);
@@ -4820,6 +4823,7 @@ function renderQuestion() {
     explanation,
   );
   renderQuestionMap(question, state.answerVisible);
+  answerVisuals.render(question, state.answerVisible, state.activeSubjectId);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
   const showsSupplement = showsTermOverview || showsTermImage;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
@@ -4860,6 +4864,7 @@ function renderQuestion() {
 }
 
 function renderCompletion() {
+  answerVisuals.reset();
   speechController.stop();
   state.currentTask = null;
   elements.contextCard.classList.add("is-hidden");
@@ -5324,6 +5329,7 @@ function hasReachedQuestionLimit() {
 function showQuestionLimitCompletion() {
   if (!hasReachedQuestionLimit()) return false;
   if (state.saving) return true;
+  answerVisuals.reset();
   stopListeningSequence();
   stopStudyClock();
   state.listeningPaused = true;
@@ -5584,7 +5590,7 @@ async function resumeStudy() {
 
 async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   questionImagesReady ??= loadQuestionImages().then((images) => { state.questionImages = images; });
-  await questionImagesReady;
+  await Promise.all([questionImagesReady, state.activeSubjectId === "world-history-so" ? answerVisuals.load() : null]);
   const selected = new Set(deckIds);
   const deckEntries = state.deckEntries.filter((deck) => selected.has(deck.id));
   if (deckEntries.length === 0) {
@@ -6466,6 +6472,7 @@ elements.studyShell.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
+  if (answerVisuals.modalOpen) return;
   if (hasReachedQuestionLimit() && !elements.studyShell.classList.contains("is-hidden")) return;
   if (!elements.mindsetPlayerPanel.classList.contains("is-hidden")) {
     if (event.target.closest("button, a, input, textarea, select") || event.repeat) {

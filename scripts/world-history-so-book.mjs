@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import { parseCsv, toObjects, groupTerms } from "./build-learning-data.mjs";
+import { questionTypes } from "../public/question-types.js";
 import { groupSODecks } from "../public/so-chapters.js";
 
 const hash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,20);
@@ -36,10 +37,43 @@ export async function readSOBookFiles(directory) {
   return Promise.all(names.map(async name => ({ name, text: await readFile(path.join(directory,name),"utf8") })));
 }
 
+function importQuestionRows(file, chapter, lessonNumber, partNumber, part, id) {
+  const rows = parseCsv(file.text.replace(/^\uFEFF/, ""));
+  const headers = ["問題番号", "問題スタイル", "種類", "問題文", "回答", "解説", "出典URL", "出典ファイル", "出典ページ", "出典行"];
+  assert.deepEqual(rows[0], headers, `${file.name}の列名が不正です。`);
+  assert.ok(rows.length > 1, "問題がありません。");
+  const types = new Map(Object.entries(questionTypes).map(([key, label]) => [label, key]));
+  const seen = new Set(), datasetLabel = `世界史SO｜第${lessonNumber}回 ${partNumber} ${part.title}`;
+  const terms = rows.slice(1).map((cells, index) => {
+    assert.equal(cells.length, headers.length, `${file.name}の列数が不正です。`);
+    const [originalId, style, label, prompt, answer, explanation, url, name, page, line] = cells;
+    const match = originalId.match(/^WHSO-(\d+)-(\d+)-(\d+)-(\d+)$/);
+    assert.ok(match && Number(match[1]) === chapter.number && Number(match[2]) === lessonNumber && Number(match[3]) === partNumber, "問題番号の所属が目次と一致しません。");
+    assert.ok(!seen.has(originalId), "問題番号が重複しています。"); seen.add(originalId);
+    assert.equal(style, "一問一答", "問題スタイルが不正です。");
+    assert.ok(types.has(label), `未知の問題種類です: ${label}`);
+    assert.ok(prompt.trim() && answer.trim(), "問題文または回答が空欄です。");
+    const questionId = `WHSO-C${pad(chapter.number)}-L${pad(lessonNumber)}-P${pad(partNumber)}-${originalId}`;
+    const source = { name, url, page, line, chapterNumber: chapter.number, lessonNumber, partNumber,
+      originalQuestionId: originalId, originalStyle: style, file: file.name };
+    return { id: `${questionId}-T`, datasetLabel, importanceRank: index + 1, difficultyLabel: part.title,
+      category: part.title, term: prompt, reading: "", aliases: [], era: "",
+      geography: { macroRegion: "", macroRegions: [], regionDetail: "" },
+      chronology: { displayPeriod: "", sortYear: index + 1 }, source,
+      stages: { beginner: [{ id: questionId, stage: "beginner", focus: label, type: types.get(label), label: style,
+        prompt, answer, explanation, keywords: [], acceptedAnswers: [], answerNote: "", yearMnemonic: "", source,
+        hideTermUntilAnswer: true }], reverse: [], integrated: [] } };
+  });
+  return { id, number: lessonNumber * 100 + partNumber, datasetLabel, difficultyLabel: part.title,
+    version: `world-history-so-${id}-v1`, contentVersion: hash(terms), sourceFile: file.name,
+    chapter: { id: chapter.id, number: chapter.number, title: chapter.title }, lesson: lessonNumber, part: partNumber,
+    sourceTermCount: null, terms };
+}
+
 export function importSOBookFiles(files, contentsText) {
   const contents = parseSOContents(contentsText), seen = new Set();
   return files.map(file => {
-    const match = file.name.match(/^第(\d+)回_(\d+)_(.+?)_(\d+)語\.csv$/);
+    const match = file.name.match(/^第(\d+)回_(\d+)_(.+?)(?:_(\d+)語)?\.csv$/);
     assert.ok(match, `回・パート番号を読み取れません: ${file.name}`);
     const lessonNumber = Number(match[1]), partNumber = Number(match[2]);
     const chapter = contents.find(c => c.lessons.some(l => l.number === lessonNumber));
@@ -48,6 +82,7 @@ export function importSOBookFiles(files, contentsText) {
     assert.equal(match[3], part.title, `目次と見出しが一致しません: ${file.name}`);
     const id = `book-${pad(chapter.number)}-${pad(lessonNumber)}-${pad(partNumber)}`;
     assert.ok(!seen.has(id), "同じパートのファイルが重複しています。"); seen.add(id);
+    if (!match[4]) return importQuestionRows(file, chapter, lessonNumber, partNumber, part, id);
     const rows = toObjects(parseCsv(file.text));
     const originalTerms = groupTerms(rows, { allowMissingSourceUrl: true });
     assert.equal(originalTerms.length, Number(match[4]), `${file.name}の用語数がファイル名と異なります。`);

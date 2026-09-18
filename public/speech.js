@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.263";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.264";
 import {
   defaultSpeechSettings,
   getVoiceId,

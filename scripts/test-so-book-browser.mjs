@@ -31,8 +31,8 @@ objects.set("index.json", JSON.stringify(plan.next));
 for (const object of plan.staged) objects.set(object.path, JSON.stringify(object.value));
 await cloudJson("subjects/world-history-so/answer-visuals/index.json");
 const firstChapter = so.chapterGroups.find(group => group.number === 1), islamicChapter = so.chapterGroups.find(group => group.number === 6);
-assert.equal(so.questionCount, 2624);
-assert.deepEqual(so.chapterGroups.map(group => group.deckIds.length), [12, 20, 9]);
+assert.equal(so.questionCount, 3912);
+assert.deepEqual(so.chapterGroups.map(group => group.deckIds.length), [12, 20, 16, 9]);
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 let settings = { autoSpeechEnabled: false, speechParts: off, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 };
 const sessions = new Map();
@@ -134,7 +134,7 @@ try {
   await page.goto(base + "/?subject=world-history-so&deck=deck-1&view=setup");
   await shown("setup-panel"); await settled();
   assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), so.chapterGroups.map(group => group.title));
-  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,265問", "357問"]);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,265問", "1,288問", "357問"]);
   assert.equal(await chapter(1).isChecked(), false);
   assert.equal(await picker(1).isVisible(), false);
   await chapter(1).check(); await settled(); await deselectChapter(6);
@@ -240,9 +240,31 @@ try {
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜3デッキ");
   assert.ok([...sessions.values()].some(session=>session.deckIds?.length===41));
+  await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
+  // 第3章の選択復元・本文・回答・評価と、4章を合わせた学習を確認する。
+  await chapter(3).check(); await settled();
+  await deselectChapter(1); await deselectChapter(2); await deselectChapter(6);
+  assert.equal(await picker(3).locator("input:checked").count(),16);
+  await page.reload(); await shown("setup-panel"); await settled();
+  assert.equal(await picker(3).locator("input:checked").count(),16);
+  await page.locator("#question-limit").fill("1");
+  await page.locator("#start-study").click(); await shown("study-shell");
+  assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第3章 古代の東アジア");
+  assert.match(await page.locator("#question-text").textContent(), /黄河流域を中心/);
+  await page.locator("#next-action").click(); await shown("answer-panel");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"華北");
+  assert.equal(await page.locator("#answer-map").isVisible(),false);
+  await page.locator("#good-action").click(); await shown("completion-card");
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-03-08-01-v1"));
+  await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
+  await chapter(1).check(); await settled(); await chapter(2).check(); await settled(); await chapter(6).check(); await settled();
+  assert.equal(await page.locator('.chapter-picker input:checked').count(),57);
+  await page.locator("#start-study").click(); await shown("study-shell");
+  assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜4デッキ");
+  assert.ok([...sessions.values()].some(session=>session.deckIds?.length===57));
   assert.deepEqual(errors,[]);
   assert.equal(requests.some(url=>/\/v1\/.*(speech|rating-sound)/.test(url)),false);
-  console.log("複数章の画面確認完了：3デッキ・41パート・2,624問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
+  console.log("複数章の画面確認完了：4デッキ・57パート・3,912問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve=>server.close(resolve));
 }

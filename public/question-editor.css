@@ -56,3 +56,9 @@
   .editor-toolbar > button { width: 100%; order: 2; }
   #question-table textarea { font-size: 16px; }
 }
+
+#question-table tbody .number-column { touch-action: none; user-select: none; cursor: grab; }
+#question-table tbody .number-column[aria-disabled="true"] { cursor: default; }
+#question-table tbody tr.row-dragging { opacity: .5; }
+#question-table tbody tr.row-drop-before > * { box-shadow: inset 0 3px var(--theme-border-accent, #478c65); }
+#question-table tbody tr.row-drop-after > * { box-shadow: inset 0 -3px var(--theme-border-accent, #478c65); }

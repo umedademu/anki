@@ -1,3 +1,4 @@
+import { orderedEditorRows, moveEditorQuestion } from "../../public/editor-row-order.js";
 // 元の分割データを残し、新しい索引への切り替えだけを条件付きで確定する。
 const stages = ["beginner", "reverse", "integrated"];
 const jsonMetadata = { contentType: "application/json; charset=utf-8", cacheControl: "no-cache" };
@@ -124,6 +125,20 @@ export async function mutateEditableSubject(env, input) {
     return { ok: true, revision: etag, ...catalog.editorLastOperation.result };
   }
   if (input.revision !== etag) throw conflict();
+  if (input.action === "reorder") {
+    const decks = await Promise.all(entries(subject).map(entry => readDeck(bucket, entry)));
+    const rows = decks.flatMap(deck => deck.terms.flatMap(term => Object.values(term.stages).flat().map(question => ({ questionId: question.id }))));
+    const ids = orderedEditorRows(rows, subject.editorQuestionOrder).map(row => row.questionId);
+    if (new Set(ids).size !== ids.length) throw new Error("問題番号が重複しているため並べ替えできません。");
+    const editorQuestionOrder = moveEditorQuestion(ids, input.questionId, input.targetQuestionId, input.placement);
+    const result = { questionId: input.questionId };
+    const updated = { ...catalog, version: crypto.randomUUID(),
+      subjects: catalog.subjects.map(item => item.id === subject.id ? { ...item, editorQuestionOrder } : item),
+      editorLastOperation: { id: input.operationId, subjectId: subject.id, result } };
+    const committed = await bucket.put("index.json", JSON.stringify(updated), { httpMetadata: jsonMetadata, onlyIf: { etagMatches: etag } });
+    if (!committed) throw conflict();
+    return { ok: true, revision: committed.etag, ...result };
+  }
   if (input.action === "undo") {
     if (!uuidPattern.test(input.undoId ?? "")) throw new Error("元に戻す対象が正しくありません。");
     const backupObject = await bucket.get(`editor-history/${input.undoId}.json`);

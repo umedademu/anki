@@ -1,3 +1,4 @@
+import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.274";
 import { cloudRequest } from "./cloud-progress.js";
 import { getQuestionExplanation } from "./learning-engine.js";
 
@@ -48,6 +49,7 @@ function updateStatus() {
 
 function updateRowStatus(row) {
   if (!row.element) return;
+  row.element.querySelector(".number-column").setAttribute("aria-disabled", String(!canReorder() || row.isNew));
   row.element.querySelector(".row-delete").disabled = Boolean(state.loading || state.running || state.paused || state.error);
   for (const input of row.element.querySelectorAll("[data-field]")) {
     input.disabled = state.loading;
@@ -63,7 +65,7 @@ function readFields(deck, term, question, stage) {
 }
 
 // 保存結果は項目ごとに取り込み、送信後に入力された内容と入力位置を保つ。
-function mergeData(data) {
+function mergeData(data, reorder = false) {
   state.data = data;
   const existing = new Map(state.rows.filter((row) => row.questionId).map((row) => [row.questionId, row]));
   const found = new Set();
@@ -77,6 +79,7 @@ function mergeData(data) {
     found.add(row);
   }
   state.rows = state.rows.filter((row) => row.isNew || found.has(row) || row.edits.size);
+  if (reorder) state.rows = orderedEditorRows(state.rows, data.subject.editorQuestionOrder);
   $("editor-subject").textContent = `${data.subject.title}｜問題の管理`;
   document.title = `Anki | ${data.subject.title}の問題を編集`;
   for (const row of state.rows) syncCells(row);
@@ -112,7 +115,9 @@ function renderTable() {
   $("editor-empty").hidden = matches.length > 0;
   const nodes = visible.map((row, index) => {
     if (!row.element) row.element = createRow(row);
-    row.element.querySelector(".number-column").textContent = String(state.page * pageSize + index + 1);
+    const number = row.element.querySelector(".number-column");
+    number.textContent = String(state.page * pageSize + index + 1);
+    number.setAttribute("aria-label", `${number.textContent}行目の並び順を変更`);
     syncCells(row);
     return row.element;
   });
@@ -134,6 +139,7 @@ function stageOptions(row, select) {
 function createRow(row) {
   const tr = document.createElement("tr"); tr.dataset.rowKey = row.key;
   const number = document.createElement("th"); number.scope = "row"; number.className = "number-column";
+  number.tabIndex = 0; number.title = "ドラッグで行を移動（矢印キーでも変更できます）";
   tr.append(number);
   for (const field of ["targetDeckId", ...fields]) {
     const cell = document.createElement("td");
@@ -231,11 +237,11 @@ async function executeOperation(operation) {
   }
   if (payload.action === "delete") state.rows = state.rows.filter((item) => item !== row);
   state.undoId = result.undoId ?? null; state.operation = null;
-  mergeData(data);
+  mergeData(data, ["reorder", "undo"].includes(payload.action));
   if (document.activeElement !== $("editor-category")) categoryOptions();
   state.message = payload.action === "delete" ? "削除しました。次の自動保存までは元に戻せます。" : payload.action === "undo" ? "削除した行を元に戻しました。" : "すべて保存済みです。";
   // 自動保存のたびに表を作り直さず、入力位置・選択範囲・横スクロールを維持する。
-  if (payload.action === "delete" || payload.action === "undo" || !document.activeElement?.closest("tr[data-row-key]")) renderTable();
+  if (payload.action === "reorder" || payload.action === "delete" || payload.action === "undo" || !document.activeElement?.closest("tr[data-row-key]")) renderTable();
 }
 
 async function flushAll(except = null) {
@@ -277,7 +283,7 @@ async function reloadData() {
   try {
     const data = await fetchData(), previous = $("editor-deck").value, first = !state.data;
     state.rows = []; state.operation = null; state.error = null; state.undoId = null;
-    mergeData(data);
+    mergeData(data, true);
     const valid = data.decks.filter((deck) => initialDecks.includes(deck.entry.id));
     $("editor-deck").replaceChildren(option("all", "すべてのデッキ"), ...(valid.length > 1 ? [option("selected", "学習で選択中のデッキ")] : []), ...data.decks.map((deck) => option(deck.entry.id, deckName(deck))));
     $("editor-deck").value = first ? (valid.length === 1 ? valid[0].entry.id : valid.length > 1 ? "selected" : "all") : previous;
@@ -288,6 +294,26 @@ async function reloadData() {
     categoryOptions(); renderTable(); state.message = "すべて保存済みです。セルを直接編集できます。";
   } catch (error) { state.error = error; }
   finally { state.loading = false; updateStatus(); }
+}
+
+function canReorder() {
+  return Boolean(state.data && !state.loading && !state.paused && !state.error && !hasPending());
+}
+async function reorderRows(questionId, targetQuestionId, placement) {
+  if (!canReorder()) return;
+  await runOperation({ payload: { subjectId, revision: state.data.revision, operationId: crypto.randomUUID(),
+    action: "reorder", questionId, targetQuestionId, placement } });
+}
+const rowDrag = createEditorRowDrag($("question-rows"), document.querySelector(".editor-table-scroll"), {
+  enabled: canReorder, move: reorderRows,
+  page(direction) {
+    const button = $(direction > 0 ? "next-page" : "previous-page");
+    if (button.disabled) return false;
+    state.page += direction; renderTable(); return true;
+  },
+});
+for (const id of ["editor-deck", "editor-search", "editor-category", "reload-editor", "add-question", "previous-page", "next-page"]) {
+  $(id).addEventListener("pointerdown", rowDrag.cancel);
 }
 
 $("add-question").addEventListener("click", addRow);

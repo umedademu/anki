@@ -371,7 +371,7 @@ export function getIntegratedExplanationQuestion(term, question) {
 
 export function getQuestionExplanation(term, question) {
   const directExplanation = String(question?.explanation ?? "").trim();
-  if (directExplanation) {
+  if (directExplanation || question?.explanationOverride === true) {
     return directExplanation;
   }
   const integratedExplanation = getIntegratedExplanationQuestion(term, question);

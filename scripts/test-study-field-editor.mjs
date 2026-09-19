@@ -1,0 +1,44 @@
+import assert from 'node:assert/strict';
+import {loadEditableSubject,loadEditableQuestion,mutateEditableSubject} from '../worker/src/question-editor.js';
+import {editorFixture} from './question-editor-fixture.mjs';
+import {getQuestionExplanation} from '../public/learning-engine.js';
+import {beginOriginalSession,endOriginalSession,saveOriginalQuestionEdit} from '../public/original-session.js';
+import {parseOriginalQuestions,serializeOriginalQuestions,originalQuestionsStorageKey} from '../public/original-study.js';
+const {env,objects,dbCalls}=editorFixture();
+const initial=await loadEditableSubject(env,'test');
+for(const [field,value] of [['prompt','修正問題'],['answer','修正回答'],['explanation','新しい解説'],['explanation','']]) {
+ const loaded=await loadEditableQuestion(env,'test','deck-1','q1');
+ const input={action:'field',subjectId:'test',deckId:'deck-1',questionId:'q1',field,value,revision:loaded.revision,operationId:crypto.randomUUID()};
+ const result=await mutateEditableSubject(env,input);
+ assert.equal(result.term.stages.beginner[0][field],value);
+ assert.deepEqual(result.term.stages.beginner[1],initial.decks[0].terms[0].stages.beginner[1]);
+ assert.equal(result.deckEntry.version,initial.decks[0].entry.version);
+ assert.deepEqual(await mutateEditableSubject(env,input),result);
+ await assert.rejects(mutateEditableSubject(env,{...input,operationId:crypto.randomUUID()}),e=>e.status===409);
+}
+const loaded=await loadEditableQuestion(env,'test','deck-1','q1');
+assert.equal(loaded.explanation,'');
+for(const changes of [{field:'id',value:'bad'},{field:'answer',value:''},{field:'prompt',value:' '.repeat(3)}])await assert.rejects(mutateEditableSubject(env,{action:'field',subjectId:'test',deckId:'deck-1',questionId:'q1',revision:loaded.revision,operationId:crypto.randomUUID(),...changes}));
+assert.deepEqual(dbCalls,[]);
+assert.deepEqual((await loadEditableSubject(env,'test')).decks[1],initial.decks[1]);
+const values=new Map();const storage={getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)};
+const questions=[{prompt:'元の問題',answer:'元の答え',explanation:''}];
+storage.setItem(originalQuestionsStorageKey,serializeOriginalQuestions(questions));
+const version=await beginOriginalSession({},questions,()=>storage);
+questions[0].prompt='複数行の\n問題';questions[0].explanation='引用"と\tタブ';
+await saveOriginalQuestionEdit(questions);endOriginalSession();
+const parsed=parseOriginalQuestions(storage.getItem(originalQuestionsStorageKey));
+assert.deepEqual(parsed,{questions,errors:[]});
+assert.equal(await beginOriginalSession({},parsed.questions,()=>storage),version);
+endOriginalSession();
+console.log('学習中編集：項目別保存・空解説・再送・競合・本文と履歴版保持・オリジナルの改行と継続を確認しました。');
+
+const chinese=editorFixture();
+const catalog=JSON.parse(chinese.objects.get('index.json'));catalog.subjects[0].id='classical-chinese';chinese.objects.set('index.json',JSON.stringify(catalog));
+const chunk=JSON.parse(chinese.objects.get('subjects/test/deck-1/chunk.json'));chunk.terms[0].stages.beginner[0].focus='意味瞬発';chinese.objects.set('subjects/test/deck-1/chunk.json',JSON.stringify(chunk));
+const context=await loadEditableQuestion(chinese.env,'classical-chinese','deck-1','q1');
+assert.equal(context.prompt,chunk.terms[0].term);
+const changed=await mutateEditableSubject(chinese.env,{action:'field',subjectId:'classical-chinese',deckId:'deck-1',questionId:'q1',field:'prompt',value:'新しい漢文',revision:context.revision,operationId:crypto.randomUUID()});
+assert.equal(changed.term.term,'新しい漢文');
+assert.equal(changed.term.stages.beginner[0].prompt,chunk.terms[0].stages.beginner[0].prompt);
+assert.equal(getQuestionExplanation({}, {explanation:'',explanationOverride:true}),'');

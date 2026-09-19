@@ -28,7 +28,7 @@ import {
 } from "../../public/rating-sound-settings.js";
 import { normalizeQuestionAnalysisSnapshot } from "../../public/analysis-core.js";
 import { normalizeSubjectReviewSettings } from "../../public/learning-engine.js";
-import { loadEditableSubject, mutateEditableSubject } from "./question-editor.js";
+import { loadEditableSubject, loadEditableQuestion, mutateEditableSubject } from "./question-editor.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
 const defaultEnglishAzureSpeechVoice = "en-US-JennyNeural";
@@ -1365,7 +1365,9 @@ async function handleRequest(request, env) {
 
   if (url.pathname === "/v1/question-editor") {
     if (request.method === "GET") {
-      return json(request, env, await loadEditableSubject(env, url.searchParams.get("subject")));
+      return json(request, env, url.searchParams.has("question")
+        ? await loadEditableQuestion(env, url.searchParams.get("subject"), url.searchParams.get("deck"), url.searchParams.get("question"))
+        : await loadEditableSubject(env, url.searchParams.get("subject")));
     }
     if (request.method === "POST") {
       const body = await request.text();

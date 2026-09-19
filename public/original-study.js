@@ -1,9 +1,30 @@
+export function serializeOriginalQuestions(questions) {
+  const escape = value => /["\t\r\n]/.test(value) ? '"' + value.replaceAll('"', '""') + '"' : value;
+  return questions.map(q => [q.prompt,q.answer,q.explanation ?? ""].map(escape).join("\t")).join("\n");
+}
+function originalRows(text) {
+  const rows = [], cells = []; let cell = "", quoted = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"' && (quoted || cell === "")) {
+      if (quoted && text[i+1] === '"') { cell += '"'; i++; }
+      else quoted = !quoted;
+    } else if (!quoted && (c === "\t" || c === "\n" || c === "\r")) {
+      cells.push(cell); cell = "";
+      if (c !== "\t") { rows.push(cells.splice(0)); if (c === "\r" && text[i+1] === "\n") i++; }
+    } else cell += c;
+  }
+  cells.push(cell); rows.push(cells);
+  return {rows, quoted};
+}
 export function parseOriginalQuestions(text) {
   const questions = [];
   const errors = [];
-  String(text).replace(/^\uFEFF/, "").split(/\r\n|\n|\r/).forEach((line, index) => {
-    if (!line.trim()) return;
-    const columns = line.split("\t").map((value) => value.trim());
+  const parsed = originalRows(String(text).replace(/^\uFEFF/, ""));
+  if (parsed.quoted) errors.push("引用符を閉じてください。");
+  parsed.rows.forEach((row, index) => {
+    if (row.every(value => !value.trim())) return;
+    const columns = row.map(value => value.trim());
     if (columns.length < 2 || columns.length > 3) {
       errors.push(`${index + 1}行目：問題・回答（・解説）の2列または3列をタブで区切ってください。`);
     } else if (!columns[0] || !columns[1]) {

@@ -1,3 +1,4 @@
+import { usesStagedClassicalChineseMeaning, getQuestionExplanation } from "../../public/learning-engine.js";
 import { orderedEditorRows, moveEditorQuestion } from "../../public/editor-row-order.js";
 // 元の分割データを残し、新しい索引への切り替えだけを条件付きで確定する。
 const stages = ["beginner", "reverse", "integrated"];
@@ -35,6 +36,15 @@ export async function loadEditableSubject(env, subjectId) {
   const subject = findSubject(catalog, subjectId);
   const decks = await Promise.all(entries(subject).map((entry) => readDeck(env.SPEECH_CACHE, entry)));
   return { subject, decks, revision: etag };
+}
+
+export async function loadEditableQuestion(env, subjectId, deckId, questionId) {
+  const {value: catalog, etag: revision} = await readObject(env.SPEECH_CACHE, "index.json");
+  const subject = findSubject(catalog, subjectId), entry = entries(subject).find(deck => deck.id === deckId);
+  if (!entry) throw new Error("対象のデッキが見つかりません。");
+  const deck = await readDeck(env.SPEECH_CACHE, entry), found = locateQuestion(deck, questionId);
+  return {revision, prompt: usesStagedClassicalChineseMeaning(subjectId, found.question) ? found.term.term : found.question.prompt,
+    answer: found.question.answer, explanation: getQuestionExplanation(found.term, found.question)};
 }
 
 function field(value, name, required = false, max = 20000) {
@@ -149,7 +159,7 @@ export async function mutateEditableSubject(env, input) {
     if (!committed) throw conflict();
     return { ok: true, revision: committed.etag };
   }
-  if (!["create", "update", "delete"].includes(input.action)) throw new Error("編集操作が正しくありません。");
+  if (!["create", "update", "delete", "field"].includes(input.action)) throw new Error("編集操作が正しくありません。");
   const catalogEntries = entries(subject);
   const sourceEntry = catalogEntries.find((entry) => entry.id === input.deckId);
   const destinationEntry = catalogEntries.find((entry) => entry.id === (input.targetDeckId ?? input.deckId));
@@ -158,8 +168,22 @@ export async function mutateEditableSubject(env, input) {
   const destination = sourceEntry.id === destinationEntry.id ? source : await readDeck(bucket, destinationEntry);
   if (source.index.learningType !== destination.index.learningType) throw new Error("学習方式の異なるデッキには移動できません。");
   const changed = new Set([source]);
-  let questionId = input.questionId;
-  if (input.action === "delete") {
+  let questionId = input.questionId, editedTerm = null;
+  if (input.action === "field") {
+    if (!["prompt", "answer", "explanation"].includes(input.field) || source !== destination) throw new Error("編集する項目が正しくありません。");
+    const value = field(input.value, "編集内容", input.field !== "explanation");
+    const found = locateQuestion(source, questionId);
+    if (input.field === "prompt" && usesStagedClassicalChineseMeaning(subject.id, found.question)) found.term.term = value;
+    else found.question[input.field] = value;
+    found.question.editorModified = true;
+    if (input.field === "explanation") found.question.explanationOverride = true;
+    if (found.question.speech && input.field !== "explanation") {
+      const side = input.field === "prompt" ? "question" : "answer";
+      const english = source.index.learningType === "vocabulary" && (side === "question" ? found.stage !== "reverse" : found.stage === "reverse");
+      found.question.speech[side] = [{text: value, language: english ? "en-US" : "ja-JP"}, ...(side === "answer" ? found.question.speech.answer?.slice(1) ?? [] : [])];
+    }
+    editedTerm = found.term;
+  } else if (input.action === "delete") {
     removeQuestion(source, locateQuestion(source, questionId));
   } else {
     const fields = normalizeFields(input.fields ?? {}, destination);
@@ -210,7 +234,7 @@ export async function mutateEditableSubject(env, input) {
   const updatedSubject = { ...subject, decks, indexPath: decks.find((deck) => deck.id === subject.defaultDeckId)?.indexPath ?? decks[0].indexPath,
     termCount: decks.reduce((sum, deck) => sum + deck.termCount, 0), questionCount: decks.reduce((sum, deck) => sum + deck.questionCount, 0) };
   const undoId = input.action === "delete" ? crypto.randomUUID() : null;
-  const result = { questionId, undoId };
+  const result = { questionId, undoId, ...(editedTerm ? {term: editedTerm, deckEntry: updatedEntries.get(source.entry.id)} : {}) };
   const updatedCatalog = { ...catalog, version,
     subjects: catalog.subjects.map((item) => item.id === subject.id ? updatedSubject : item),
     editorLastOperation: { id: input.operationId, subjectId: subject.id, result } };

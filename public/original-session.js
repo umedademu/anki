@@ -3,7 +3,7 @@ import {
   createEmptyProgress, normalizeProgress, normalizeSubjectReviewSettings,
   rescheduleReviewProgress, resolveSubjectReviewSettings,
 } from "./learning-engine.js";
-import { originalProgressStorageKey } from "./original-study.js";
+import { originalProgressStorageKey, originalQuestionsStorageKey, serializeOriginalQuestions } from "./original-study.js";
 export * from "./cloud-progress.js";
 
 let temporary = null;
@@ -53,7 +53,7 @@ export async function beginOriginalSession(settings, questions, getStorage = () 
   }
   const store = {
     version: restored?.version ?? `original-${crypto.randomUUID()}`,
-    fingerprint, storageValue,
+    fingerprint, storageValue, originalInput: getStorage().getItem(originalQuestionsStorageKey),
     settings: normalized, getStorage, reviewStorageNotice,
     progress: normalizeProgress(restored?.progress),
     session: cloud.normalizeStudySession(restored?.session),
@@ -63,6 +63,24 @@ export async function beginOriginalSession(settings, questions, getStorage = () 
   persist(store);
   temporary = store;
   return store.version;
+}
+export async function saveOriginalQuestionEdit(questions) {
+  if (!temporary) throw new Error("オリジナルの学習は終了しています。");
+  const store = temporary;
+  assertCurrentStorage(store);
+  const content = JSON.stringify(questions.map(({prompt,answer,explanation}) => [prompt,answer,explanation ?? ""]));
+  const digest = await crypto.subtle.digest("SHA-256",new TextEncoder().encode(content));
+  const fingerprint = Array.from(new Uint8Array(digest),byte=>byte.toString(16).padStart(2,"0")).join("");
+  assertCurrentStorage(store);
+  const storage = store.getStorage(), previous = storage.getItem(originalQuestionsStorageKey);
+  if (previous !== store.originalInput) throw new Error("別の画面で問題が変更されました。開き直してください。");
+  const originalInput = serializeOriginalQuestions(questions);
+  storage.setItem(originalQuestionsStorageKey, originalInput);
+  try { const next = {...store, fingerprint, originalInput}; persist(next); Object.assign(store,next); }
+  catch (error) {
+    if (previous === null) storage.removeItem(originalQuestionsStorageKey); else storage.setItem(originalQuestionsStorageKey,previous);
+    throw error;
+  }
 }
 export function endOriginalSession() { temporary = null; }
 function memory(version) {

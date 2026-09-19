@@ -1,11 +1,14 @@
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.274";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.274";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.274";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.274";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.274";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.274";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.274";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.275";
+import { cloudRequest } from "./cloud-progress.js";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.275";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.275";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.275";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.275";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.275";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.275";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.275";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.275";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.275";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -61,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.239";
+} from "./original-session.js?v=0.275";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -71,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.274";
+} from "./speech.js?v=0.275";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -87,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.274";
+} from "./deck-selection.js?v=0.275";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -385,6 +388,7 @@ const state = {
   standaloneVideoMode: false,
   studyMode: "memorize",
   listeningPaused: false,
+  inlineEditing: false,
   pendingListeningActivity: null,
   listeningTimer: null,
   listeningRunId: 0,
@@ -1415,7 +1419,7 @@ function canCountStudyTime({ includeHidden = false } = {}) {
     Boolean(state.currentTask) &&
     document.body.classList.contains("is-studying") &&
     (includeHidden || !document.hidden) &&
-    !state.saving &&
+    !state.saving && !state.inlineEditing &&
     state.screenStudySeconds < state.studyTimeLimitSeconds
   );
 }
@@ -4711,6 +4715,55 @@ function updateOverallProgress() {
   elements.progressBar.style.width = `${percent}%`;
 }
 
+const studyFieldEditor = createStudyFieldEditor({
+  root: elements.studyShell,
+  context() {
+    const question=currentQuestion(), term=currentTerm();
+    if (!question || !term || state.saving) return null;
+    return {questionId:question.id,termId:term.id,subjectId:state.activeSubjectId,deckId:deckForQuestion(question.id)?.entry.id,original:isOriginalSession()};
+  },
+  pause() {
+    stopStudyClock(); stopListeningSequence(); state.inlineEditing=true;
+    if(isListeningMode()) {state.listeningPaused=true; void queueActiveSessionSave().catch(() => {});}
+  },
+  async load(snapshot) {
+    if(snapshot.original) return {...currentQuestion()};
+    return cloudRequest('/v1/question-editor?'+new URLSearchParams({subject:snapshot.subjectId,deck:snapshot.deckId,question:snapshot.questionId}));
+  },
+  async save(snapshot,field,pending,loaded) {
+    if(snapshot.questionId!==state.currentTask?.questionId) throw new Error("表示中の問題が変わりました。開き直してください。");
+    if(snapshot.original) {
+      const questions=originalDeck.terms.map(term=>({...term.stages.beginner[0]}));
+      const question=questions.find(question=>question.id===snapshot.questionId); question[field]=pending.value;
+      await saveOriginalQuestionEdit(questions);
+      for(const term of originalDeck.terms) for(const question of term.stages.beginner) {
+        if(question.id===snapshot.questionId){question[field]=pending.value;if(field==='prompt')term.term=pending.value;}
+      }
+      const questionInView=currentQuestion();questionInView[field]=pending.value;
+      if(field==='prompt')currentTerm().term=pending.value;
+      return;
+    }
+    const result=await cloudRequest('/v1/question-editor',{method:'POST',body:JSON.stringify({
+      subjectId:snapshot.subjectId,deckId:snapshot.deckId,questionId:snapshot.questionId,
+      action:'field',field,value:pending.value,operationId:pending.operationId,revision:loaded.revision,
+    })});
+    if(!result.ok || !result.term || !result.deckEntry) throw new Error("保存結果を確認できませんでした。");
+    const patch=result.term, questionPatches=new Map(Object.values(patch.stages).flat().map(question=>[question.id,question]));
+    const deck=deckForQuestion(snapshot.questionId);
+    for(const term of new Set([...state.allTerms,...state.terms,...deck.terms])) {
+      if(term.id!==patch.id)continue;
+      for(const [key,value] of Object.entries(patch))if(key!=='stages')term[key]=structuredClone(value);
+      for(const question of Object.values(term.stages).flat())if(questionPatches.has(question.id))Object.assign(question,structuredClone(questionPatches.get(question.id)));
+    }
+    for(const [id,question] of questionPatches)if(state.questionById.has(id))Object.assign(state.questionById.get(id),structuredClone(question));
+    Object.assign(deck.entry,result.deckEntry);deck.subject.contentVersion=result.deckEntry.contentVersion;
+    for(const entry of state.deckEntries)if(entry.id===snapshot.deckId)Object.assign(entry,result.deckEntry);
+    const subject=state.subjectEntries.find(subject=>subject.id===snapshot.subjectId);
+    for(const entry of subject?.decks??[])if(entry.id===snapshot.deckId)Object.assign(entry,result.deckEntry);
+  },
+  finish() {state.inlineEditing=false;renderQuestion();startStudyClock();},
+});
+
 function renderQuestion() {
   if (showQuestionLimitCompletion()) return;
   const term = currentTerm();
@@ -4851,7 +4904,7 @@ function renderQuestion() {
   renderQuestionMap(question, state.answerVisible);
   answerVisuals.render(question, state.answerVisible, state.activeSubjectId);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
-  const showsSupplement = showsTermOverview || showsTermImage;
+  const showsSupplement = showsTermOverview || showsTermImage || state.answerVisible;
   elements.termOverview.classList.toggle("is-hidden", !showsSupplement);
   renderTermTags(term, question, showsSupplement);
 
@@ -5954,6 +6007,7 @@ function navigateToRoute(route, { replace = false, fromHistory = false } = {}) {
     }
   }
   routeQueue = routeQueue.catch(() => {}).then(async () => {
+    await studyFieldEditor.closeForNavigation();
     // 回答の保存・開始処理の途中で別科目の状態に入れ替えない。
     while (startingStudy || state.saving || deckSelectionUpdating) {
       await new Promise((resolve) => window.setTimeout(resolve, 25));
@@ -6437,7 +6491,7 @@ elements.studyShell.addEventListener("pointerdown", (event) => {
     !isListeningMode() ||
     !state.currentTask ||
     !window.matchMedia("(orientation: portrait) and (pointer: coarse)").matches ||
-    event.target.closest("button, a, input, select, textarea, label")
+    (state.inlineEditing || event.target.closest("button, a, input, select, textarea, label"))
   ) {
     listeningTouchStart = null;
     return;
@@ -6559,6 +6613,7 @@ window.addEventListener("keydown", (event) => {
     }
     return;
   }
+  if (state.inlineEditing) return;
   if (state.studyMenuOpen) {
     if (event.key === "Escape") {
       event.preventDefault();

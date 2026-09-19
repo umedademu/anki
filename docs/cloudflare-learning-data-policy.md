@@ -119,3 +119,7 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 - 世界史SOの問題種類だけの更新は `npm run preview:types:world-history-so` と `npm run publish:types:world-history-so` を使用し、Cloudflare上の現行本文を維持して分類だけを反映する。新しい分割データを登録・照合後、索引の版を条件として切り替える。同時編集時は中断し、既存の問題番号と履歴版を維持する。
 
 - 1教科の選択パート・パート別の開始設定・一周の対象パートはブラウザーと保存窓口で最大1,000件を保持する。100パートを超える世界史SOでも全選択と学習途中の状態を切り詰めずに保存・復元する。
+
+## ファンダの追加
+
+ファンダの1問は `node scripts/publish-funda.mjs` で確認し、`node scripts/publish-funda.mjs --apply` でCloudflareへ登録する。現行の全体索引をCloudflareから読み、新しい問題データを登録・照合した後、取得時の版を条件に科目一覧を更新する。既存科目・問題・学習履歴は変更しない。詳細は [ファンダ](funda.md) を参照。

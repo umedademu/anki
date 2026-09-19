@@ -1,3 +1,4 @@
+import { normalizeSubjectOrder } from "./subject-order.js";
 import {
   createEmptyProgress,
   defaultReviewSettings,
@@ -59,6 +60,7 @@ export const defaultSpeechParts = Object.freeze({
 export const defaultSetupPreferences = Object.freeze({
   schemaVersion: 1,
   lastSubjectId: "",
+  subjectOrder: Object.freeze([]),
   subjects: Object.freeze({}),
   mindsetResume: Object.freeze({ lastCompletedItemId: "" }),
   routinePlan: defaultStudyRoutinePlan,
@@ -384,6 +386,7 @@ export function normalizeSetupPreferences(value) {
   return {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
+    subjectOrder: normalizeSubjectOrder(source.subjectOrder),
     subjects,
     mindsetResume: normalizeMindsetResume(source.mindsetResume),
     routinePlan,

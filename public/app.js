@@ -1,10 +1,11 @@
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.272";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.272";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.272";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.272";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.272";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.273";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.273";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.273";
+import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.273";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.273";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.273";
 import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.239";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.272";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.273";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -70,7 +71,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.272";
+} from "./speech.js?v=0.273";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -86,7 +87,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.272";
+} from "./deck-selection.js?v=0.273";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -5771,27 +5772,52 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   }
 }
 
+const subjectSorter = createSubjectSorter(
+  elements.subjectOptions, document.querySelector("#subject-order-status"),
+  async (subjectOrder) => {
+    const saveVersion = ++setupPreferenceSaveVersion;
+    setupPreferenceSave = setupPreferenceSave.catch(() => {}).then(async () => {
+      const saved = await saveCloudSettings({ setupPreferences: {
+        ...state.setupPreferences, subjectOrder,
+      } });
+      if (JSON.stringify(saved.setupPreferences.subjectOrder) !== JSON.stringify(subjectOrder)) {
+        throw new Error("保存先の更新を確認してから再度お試しください。");
+      }
+      // 並び順以外の、保存中に変更された画面設定は上書きしない。
+      state.setupPreferences.subjectOrder = saved.setupPreferences.subjectOrder;
+      if (saveVersion === setupPreferenceSaveVersion) renderRoutineDashboard();
+      return saved;
+    });
+    await setupPreferenceSave;
+  },
+);
 function renderSubjectOptions() {
+  subjectSorter.beforeRender();
+  const subjects = orderSubjects([
+    { id: "original", title: "オリジナル" }, ...state.subjectEntries,
+  ], state.setupPreferences.subjectOrder);
   elements.subjectOptions.replaceChildren(
-    (() => {
+    ...subjects.map((subject) => {
+      const tile = document.createElement("div");
+      tile.className = "subject-tile";
+      tile.dataset.sortSubject = subject.id;
       const button = document.createElement("button");
       button.type = "button";
       button.className = "subject-choice";
-      button.dataset.originalStudy = "true";
-      const title = document.createElement("strong");
-      title.textContent = "オリジナル";
-      button.append(title);
-      return button;
-    })(),
-    ...state.subjectEntries.map((subject) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "subject-choice";
-      button.dataset.subjectId = subject.id;
+      if (subject.id === "original") button.dataset.originalStudy = "true";
+      else button.dataset.subjectId = subject.id;
       const title = document.createElement("strong");
       title.textContent = subject.title;
       button.append(title);
-      return button;
+      const handle = document.createElement("button");
+      handle.type = "button";
+      handle.className = "subject-drag-handle";
+      handle.textContent = "⠿";
+      handle.setAttribute("aria-label", subject.title + "の並び順を変更");
+      handle.setAttribute("aria-describedby", "subject-order-help");
+      handle.title = "ドラッグして移動（矢印キーでも変更できます）";
+      tile.append(button, handle);
+      return tile;
     }),
     (() => {
       const button = document.createElement("button");
@@ -5805,6 +5831,11 @@ function renderSubjectOptions() {
       return button;
     })(),
   );
+  subjectSorter.setEnabled(!initialSettingsLoading && state.cloudConnected && state.subjectEntries.length > 0);
+  document.querySelector("#subject-order-help").textContent = initialSettingsLoading
+    ? "並び順を読み込んでいます…"
+    : state.cloudConnected ? "ドラッグで並べ替え。スマートフォンでは右のつまみを動かしてください。つまみの矢印キー操作にも対応しています。"
+      : "並び順を保存するには、設定でCloudflareへの接続を確認してください。";
 }
 function showSubjectSelection() {
   discardOriginalSession();

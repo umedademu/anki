@@ -1,3 +1,4 @@
+import { normalizeSubjectOrder } from "../../public/subject-order.js";
 import {
   defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
@@ -69,6 +70,7 @@ const defaultSpeechParts = Object.freeze({
 const defaultSetupPreferences = Object.freeze({
   schemaVersion: 1,
   lastSubjectId: "",
+  subjectOrder: Object.freeze([]),
   subjects: Object.freeze({}),
   mindsetResume: Object.freeze({ lastCompletedItemId: "" }),
   routinePlan: defaultStudyRoutinePlan,
@@ -359,6 +361,7 @@ function normalizeSetupPreferences(value) {
   return {
     schemaVersion: 1,
     lastSubjectId: lastSubjectId in subjects ? lastSubjectId : "",
+    subjectOrder: normalizeSubjectOrder(source.subjectOrder),
     subjects,
     mindsetResume: normalizeMindsetResume(source.mindsetResume),
     routinePlan,

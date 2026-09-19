@@ -4294,3 +4294,21 @@ body.is-listening.is-listening-answer-visible .page {
 .answer-layout.has-answer-map .answer-map-open { position: relative; aspect-ratio: 1000 / 600; }
 .answer-layout.has-answer-map .answer-map-open img { position: absolute; inset: 0 auto auto 0; }
 .answer-map-viewport img { clip-path: inset(0 0 7.7% 0); }
+
+.subject-tile { position: relative; min-width: 0; }
+.subject-tile > .subject-choice { width: 100%; height: 100%; padding-right: 58px; }
+.subject-drag-handle {
+  position: absolute; right: 8px; top: 50%; transform: translateY(-50%);
+  width: 40px; height: 44px; padding: 0; border: 0; border-radius: 8px;
+  color: var(--theme-text, #24442f); background: transparent;
+  font-size: 26px; cursor: grab; touch-action: none;
+}
+.subject-drag-handle:hover, .subject-drag-handle:focus-visible {
+  background: var(--theme-surface-muted, #edf2ed); outline: 2px solid var(--theme-border-accent, #478c65);
+}
+.subject-drag-handle:disabled { opacity: .35; cursor: default; }
+.can-sort .subject-tile { user-select: none; }
+.subject-tile.is-dragging { opacity: .6; outline: 2px dashed var(--theme-border-accent, #478c65); border-radius: 16px; }
+.subject-tile.is-dragging .subject-choice { transform: none; }
+.subject-order-help, .subject-order-status { font-size: .85rem; color: var(--theme-text-muted, #58705d); }
+.subject-order-status:empty { display: none; }

@@ -661,7 +661,7 @@ function normalizeSource(row) {
 export function normalizeQuestion(
   row,
   rowIndex,
-  { allowMissingSourceUrl = false } = {},
+  { allowMissingSourceUrl = false, allowMissingKeywords = false } = {},
 ) {
   const rowNumber = rowIndex + 2;
   const requiredFields = [
@@ -672,7 +672,7 @@ export function normalizeQuestion(
     "question_type",
     "question",
     "answer",
-    "keywords",
+    ...(!allowMissingKeywords ? ["keywords"] : []),
     "source_name",
   ];
   if (!allowMissingSourceUrl) requiredFields.push("source_url");
@@ -731,7 +731,7 @@ function assertSameTermData(firstRow, row, rowNumber) {
   }
 }
 
-export function groupTerms(rows, { allowMissingSourceUrl = false } = {}) {
+export function groupTerms(rows, { allowMissingSourceUrl = false, allowMissingKeywords = false } = {}) {
   const groups = [];
   const groupById = new Map();
   const questionIds = new Set();
@@ -762,7 +762,7 @@ export function groupTerms(rows, { allowMissingSourceUrl = false } = {}) {
     const stages = Object.fromEntries(allowedStages.map((stage) => [stage, []]));
     termRows.forEach(({ row, rowIndex }) => {
       stages[row.stage].push(
-        normalizeQuestion(row, rowIndex, { allowMissingSourceUrl }),
+        normalizeQuestion(row, rowIndex, { allowMissingSourceUrl, allowMissingKeywords }),
       );
     });
     if (stages.beginner.length === 0 || stages.reverse.length === 0) {

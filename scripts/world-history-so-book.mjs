@@ -91,12 +91,12 @@ export function importSOBookFiles(files, contentsText) {
     assert.ok(!seen.has(id), "同じパートのファイルが重複しています。"); seen.add(id);
     if (!match[4]) return importQuestionRows(file, chapter, lessonNumber, partNumber, part, id);
     const rows = toObjects(parseCsv(file.text));
-    const originalTerms = groupTerms(rows, { allowMissingSourceUrl: true });
+    const originalTerms = groupTerms(rows, { allowMissingSourceUrl: true, allowMissingKeywords: chapter.number === 2 });
     assert.equal(originalTerms.length, Number(match[4]), `${file.name}の用語数がファイル名と異なります。`);
     const datasetLabel = `世界史SO｜第${lessonNumber}回 ${partNumber} ${part.title}`;
     const originalById = new Map(originalTerms.map(t => [t.id,t]));
     const terms = rows.map((row,index) => {
-      const label = row.dataset_label.match(/^世界史探究_第(\d+)章_第(\d+)回_(\d+)_/)
+      const label = row.dataset_label.match(/^(?:世界史探究_)?第(\d+)章_第(\d+)回_(\d+)_/)
         ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+[^｜]+｜(\d+)\s+/)
         ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+(\d+)\s+/);
       assert.ok(label && Number(label[1]) === chapter.number && Number(label[2]) === lessonNumber && Number(label[3]) === partNumber, `CSVの所属が目次と一致しません: ${file.name}`);
@@ -112,8 +112,11 @@ export function importSOBookFiles(files, contentsText) {
           hideTermUntilAnswer: true }], reverse: [], integrated: [] } };
     });
     assert.equal(terms.length, rows.length);
+    // 第2章は2026年9月21日に213用語の原本へ全面差し替え。旧番号の履歴を混ぜない。
+    const revision = chapter.number === 2 ? 2 : 1;
+    const version = `world-history-so-${id}-v${revision}`;
     return { id, number: lessonNumber * 100 + partNumber, datasetLabel, difficultyLabel: part.title,
-      version: `world-history-so-${id}-v1`, contentVersion: hash(terms), sourceFile: file.name,
+      version, contentVersion: revision === 1 ? hash(terms) : hash({version, terms}), sourceFile: file.name,
       chapter: { id: chapter.id, number: chapter.number, title: chapter.title }, lesson: lessonNumber, part: partNumber,
       sourceTermCount: originalTerms.length, terms };
   }).sort((a,b) => a.chapter.number - b.chapter.number || a.lesson - b.lesson || a.part - b.part);
@@ -171,4 +174,28 @@ export function appendSOBookDecks(catalog, currentDecks, imported) {
   assert.deepEqual(next.subjects.filter(s=>s.id!==subject.id),catalog.subjects.filter(s=>s.id!==subject.id));
   for(const old of catalog.subjects.find(s=>s.id===subject.id).decks) assert.deepEqual(subject.decks.find(d=>d.id===old.id),old);
   return { next, staged, additions };
+}
+
+export function replaceSOBookChapter(catalog, currentDecks, imported, chapterNumber) {
+  assert.ok(Number.isInteger(chapterNumber) && imported.length);
+  assert.ok(imported.every(d => d.chapter.number === chapterNumber), "置換対象以外の章が含まれています。");
+  const original = catalog.subjects.find(s => s.id === "world-history-so");
+  assert.deepEqual(currentDecks.map(d => d.entry.id).sort(), original.decks.map(d => d.id).sort(), "現行全パートの取得が必要です。");
+  const group = original.chapterGroups.find(g => g.number === chapterNumber);
+  assert.ok(group, "置換する章がありません。");
+  assert.deepEqual(imported.map(d => d.id).sort(), [...group.deckIds].sort(), "章の全パートが必要です。");
+  const removed = new Set(group.deckIds);
+  const targets = currentDecks.filter(d => removed.has(d.entry.id));
+  if (targets.every(d => {
+    const replacement = imported.find(i => i.id === d.entry.id);
+    return d.entry.version === replacement.version && JSON.stringify(d.chunks.flatMap(c => c.terms)) === JSON.stringify(replacement.terms);
+  })) return { next: structuredClone(catalog), staged: [], additions: [] };
+  assert.ok(targets.every(d => d.entry.version !== imported.find(i => i.id === d.entry.id).version), "同じ履歴版の編集済み問題は置換できません。");
+  assert.ok(!removed.has(original.defaultDeckId), "初期選択の章はこの処理で置換できません。");
+  const base = structuredClone(catalog), subject = base.subjects.find(s => s.id === original.id);
+  subject.decks = subject.decks.filter(d => !removed.has(d.id));
+  subject.chapterGroups = subject.chapterGroups.filter(g => g.number !== chapterNumber);
+  const result = appendSOBookDecks(base, currentDecks.filter(d => !removed.has(d.entry.id)), imported);
+  assert.deepEqual(result.next.subjects.filter(s => s.id !== original.id), catalog.subjects.filter(s => s.id !== original.id));
+  return result;
 }

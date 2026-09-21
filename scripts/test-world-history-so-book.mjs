@@ -2,32 +2,32 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { parseCsv,toObjects,loadWorldHistorySODecks } from "./build-learning-data.mjs";
-import { parseSOContents,importSOBookFiles,readSOBookFiles,appendSOBookDecks } from "./world-history-so-book.mjs";
+import { parseSOContents,importSOBookFiles,readSOBookFiles,appendSOBookDecks,replaceSOBookChapter } from "./world-history-so-book.mjs";
 import { questionTypes } from "../public/question-types.js";
 import { groupSODecks,soStudyLabel } from "../public/so-chapters.js";
 import { createSessionDatasetVersion } from "../public/deck-selection.js";
-import storage from "./so-book-storage-worker.js";
+import storage, { validChapterReplacement } from "./so-book-storage-worker.js";
 
 const contents=await readFile(new URL("../data/source/world-history-so/sekai_shi_tankyu_mokuji.md",import.meta.url),"utf8");
 const files=await readSOBookFiles(fileURLToPath(new URL("../data/source/world-history-so/book/",import.meta.url)));
 const imported=importSOBookFiles(files,contents);
 assert.equal(parseSOContents(contents).find(c=>c.number===1).lessons.flatMap(l=>l.parts).length,12);
 assert.deepEqual(imported.filter(d=>d.chapter.number===1).map(d=>d.terms.length),[23,97,96,30,93,53,69,96,30,123,251,41]);
-assert.deepEqual(imported.filter(d=>d.chapter.number===2).map(d=>d.terms.length),[49,62,29,64,66,33,62,85,86,29,41,45,29,104,95,71,39,84,100,92]);
-assert.equal(imported.filter(d=>d.chapter.number===2).reduce((n,d)=>n+d.sourceTermCount,0),193);
+assert.deepEqual(imported.filter(d=>d.chapter.number===2).map(d=>d.terms.length),[71,70,31,77,92,38,80,96,64,39,44,46,23,129,77,81,46,89,82,94]);
+assert.equal(imported.filter(d=>d.chapter.number===2).reduce((n,d)=>n+d.sourceTermCount,0),213);
 assert.deepEqual(imported.filter(d=>d.chapter.number===3).map(d=>d.terms.length),[50,58,53,98,82,126,106,88,29,123,64,81,73,80,55,122]);
 assert.equal(imported.filter(d=>d.chapter.number===3).reduce((n,d)=>n+d.sourceTermCount,0),207);
 assert.deepEqual(imported.filter(d=>d.chapter.number===4).map(d=>d.terms.length),[82,124,79,88,97,95,61,41,48,168,103,137,104,131,107,122,117,49]);
 assert.equal(imported.filter(d=>d.chapter.number===4).reduce((n,d)=>n+d.sourceTermCount,0),272);
-assert.equal(imported.reduce((n,d)=>n+d.sourceTermCount,0),802);
+assert.equal(imported.reduce((n,d)=>n+d.sourceTermCount,0),822);
 assert.deepEqual(imported.filter(d=>d.chapter.number===5).map(d=>d.terms.length),[31,67,23,39,71,74,39,45,28,47,54,36,163,48,40,54,31,88]);
 assert.ok(imported.filter(d=>d.chapter.number===5).every(d=>d.sourceTermCount===null));
 assert.deepEqual(imported.filter(d=>d.chapter.number===7).map(d=>d.terms.length),[39,37,71,28,50,23,47,21,35,23,27,39,49,41,25,57,38,40,30,76,48,52,32,91,42,41,27,43,48,37,46,43,48,37,48]);
 const questions=imported.flatMap(d=>d.terms.map(t=>t.stages.beginner[0]));
-assert.equal(questions.length,7765);
-assert.equal(new Set(questions.map(q=>q.id)).size,7765);
+assert.equal(questions.length,7869);
+assert.equal(new Set(questions.map(q=>q.id)).size,7869);
 const combinedSource = await loadWorldHistorySODecks({ includeBook:true });
-assert.equal(combinedSource.terms.length,8122);
+assert.equal(combinedSource.terms.length,8226);
 assert.equal(combinedSource.decks.length,128);
 assert.deepEqual(combinedSource.definition.chapterGroups.map(group=>group.number),[1,2,3,4,5,6,7]);
 assert.equal(combinedSource.definition.defaultDeckId,"deck-1");
@@ -90,7 +90,7 @@ assert.equal(JSON.stringify({catalog,current}),before);
 assert.deepEqual(subject.decks.find(d=>d.id===old.id),old);
 assert.deepEqual(result.next.subjects[0],catalog.subjects[0]);
 assert.deepEqual(subject.chapterGroups.map(g=>[g.number,g.deckIds.length]),[[1,12],[2,20],[3,16],[4,18],[5,18],[6,1],[7,35]]);
-assert.equal(subject.questionCount,7766);assert.equal(subject.defaultDeckId,"deck-1");
+assert.equal(subject.questionCount,7870);assert.equal(subject.defaultDeckId,"deck-1");
 const now=[...current,...result.additions.map(entry=>{
   const index=result.staged.find(s=>s.path===entry.indexPath).value;
   return {entry,index,chunks:index.chunks.map(c=>result.staged.find(s=>s.path===c.path).value)};
@@ -117,5 +117,43 @@ const invalid=structuredClone(result.next);invalid.subjects[0].untouched=false;
 assert.equal((await send(invalid)).status,400);
 const changed=structuredClone(result.next);changed.subjects[1].decks.find(d=>d.id===old.id).version="changed";
 assert.equal((await send(changed)).status,400);assert.equal(calls.length,0);
-console.log("第1〜5・7章確認完了：119パート・7,765問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
+console.log("第1〜5・7章確認完了：119パート・7,869問の全文と種類、番号の分離、再登録、既存編集・他科目・保存範囲の保持、全パートの組合せ");
 console.log("種類ごとの問題数:",typeCounts);
+
+// 全面置換は対象章だけを切り替え、古い番号の学習履歴を再利用しない。
+const oldCatalog=structuredClone(result.next),oldDecks=structuredClone(now);
+for(const d of oldCatalog.subjects[1].decks.filter(d=>d.bookChapter===2)) d.version=d.version.replace(/v2$/, "v1");
+for(const d of oldDecks.filter(d=>d.entry.bookChapter===2)) {
+  d.entry.version=d.entry.version.replace(/v2$/, "v1");d.index.version=d.entry.version;
+  d.chunks[0].terms[0].stages.beginner[0].answer="旧版の答え";
+}
+const chapter2=imported.filter(d=>d.chapter.number===2);
+const replacement=replaceSOBookChapter(oldCatalog,oldDecks,chapter2,2);
+assert.equal(replacement.additions.length,20);
+assert.ok(validChapterReplacement(oldCatalog.subjects[1],replacement.next.subjects[1],2));
+assert.throws(()=>replaceSOBookChapter(oldCatalog,oldDecks,chapter2.slice(1),2),/全パート/);
+assert.throws(()=>replaceSOBookChapter(oldCatalog,oldDecks,imported,2),/対象以外/);
+const replacedNow=oldDecks.filter(d=>d.entry.bookChapter!==2).concat(replacement.additions.map(entry=>{
+  const index=replacement.staged.find(s=>s.path===entry.indexPath).value;
+  return {entry,index,chunks:index.chunks.map(c=>replacement.staged.find(s=>s.path===c.path).value)};
+}));
+assert.equal(replaceSOBookChapter(replacement.next,replacedNow,chapter2,2).staged.length,0);
+const userEdited=structuredClone(replacedNow);userEdited.find(d=>d.entry.bookChapter===2).chunks[0].terms[0].stages.beginner[0].answer="後から編集した答え";
+assert.throws(()=>replaceSOBookChapter(replacement.next,userEdited,chapter2,2),/編集済み/);
+const invalidOther=structuredClone(replacement.next);invalidOther.subjects[1].decks.find(d=>d.bookChapter===1).version="changed";
+assert.equal(validChapterReplacement(oldCatalog.subjects[1],invalidOther.subjects[1],2),false);
+const replaceWrites=[],objects=new Map(replacement.staged.map(o=>[o.path,o.value]));
+const replaceEnv={ACCESS_TOKEN:"test",BUCKET:{
+  get:async key=>key==="index.json" ? {etag:"current",json:async()=>oldCatalog} : objects.has(key) ? {json:async()=>objects.get(key)} : null,
+  put:async(...args)=>{replaceWrites.push(args);return {etag:"saved"};}
+}};
+const sendReplacement=(value,expectedEtag="current",token="test")=>storage.fetch(new Request("https://example.org",{method:"POST",headers:{Authorization:`Bearer ${token}`},body:JSON.stringify({action:"replace",key:"index.json",chapterNumber:2,expectedEtag,value})}),replaceEnv);
+assert.equal((await sendReplacement(replacement.next,"current","wrong")).status,401);
+assert.equal((await sendReplacement(replacement.next,"stale")).status,409);
+assert.equal((await sendReplacement(invalidOther)).status,400);
+const indexKey=replacement.additions[0].indexPath,stagedIndex=objects.get(indexKey);objects.delete(indexKey);
+assert.equal((await sendReplacement(replacement.next)).status,400);assert.equal(replaceWrites.length,0);
+objects.set(indexKey,stagedIndex);
+assert.equal((await sendReplacement(replacement.next)).status,200);
+assert.equal(replaceWrites.length,2);assert.equal(replaceWrites[1][2].onlyIf.etagMatches,"current");
+console.log("第2章置換：全20パート・履歴版分離・再実行・編集保護・他章保持・認証・競合・登録未完了の拒否を確認");

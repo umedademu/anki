@@ -1,9 +1,10 @@
 // パート追加・明示した章の全面置換に使う、作業中限定の認証付き保存窓口。
 export function validChapterReplacement(previous, next, chapterNumber) {
-  if (!Number.isInteger(chapterNumber) || chapterNumber < 1) return false;
-  const group = previous.chapterGroups?.find(g => g.number === chapterNumber);
-  if (!group || group.deckIds.includes(previous.defaultDeckId)) return false;
-  const ids = new Set(group.deckIds), equal = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+  const numbers = Array.isArray(chapterNumber) ? chapterNumber : [chapterNumber];
+  if (!numbers.length || new Set(numbers).size!==numbers.length || numbers.some(n=>!Number.isInteger(n) || n<1)) return false;
+  const groups = numbers.map(n=>previous.chapterGroups?.find(g=>g.number===n));
+  if (groups.some(g=>!g || g.deckIds.includes(previous.defaultDeckId))) return false;
+  const ids = new Set(groups.flatMap(g=>g.deckIds)), equal = (a,b) => JSON.stringify(a) === JSON.stringify(b);
   const withoutCounts = s => {
     const {decks, termCount, questionCount, ...rest} = s;
     return rest;
@@ -13,7 +14,7 @@ export function validChapterReplacement(previous, next, chapterNumber) {
   for (let i=0; i<previous.decks.length; i++) {
     const old = previous.decks[i], deck = next.decks[i];
     if (!ids.has(old.id)) { if (!equal(old,deck)) return false; continue; }
-    if (deck.id !== old.id || deck.bookChapter !== chapterNumber || deck.lesson !== old.lesson || deck.part !== old.part || deck.version === old.version) return false;
+    if (deck.id !== old.id || deck.bookChapter !== old.bookChapter || !numbers.includes(deck.bookChapter) || deck.lesson !== old.lesson || deck.part !== old.part || deck.version === old.version) return false;
     if (!Number.isInteger(deck.questionCount) || deck.questionCount<1 || deck.termCount!==deck.questionCount) return false;
     if (!/^[a-f0-9]{20}$/.test(deck.contentVersion) || deck.indexPath!==`subjects/world-history-so/imports/${deck.id}/${deck.contentVersion}/index.json`) return false;
   }
@@ -43,7 +44,8 @@ export default {
     if(!next) return new Response("Missing subject",{status:400});
     if(action==="replace") {
       if(!validChapterReplacement(previous,next,chapterNumber)) return new Response("Invalid chapter replacement",{status:400});
-      for(const deck of next.decks.filter(d=>d.bookChapter===chapterNumber)) {
+      const numbers=Array.isArray(chapterNumber) ? chapterNumber : [chapterNumber];
+      for(const deck of next.decks.filter(d=>numbers.includes(d.bookChapter))) {
         const stored=await env.BUCKET.get(deck.indexPath);
         if(!stored) return new Response("Missing staged index",{status:400});
         const index=await stored.json();

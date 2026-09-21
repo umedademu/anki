@@ -8,6 +8,7 @@ import { groupSODecks } from "../public/so-chapters.js";
 
 const hash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex").slice(0,20);
 const pad = n => String(n).padStart(2,"0");
+const replacedChapters = new Set([2, 3, 4, 5, 7]);
 
 export function parseSOContents(text) {
   const chapters = []; let chapter, lesson;
@@ -91,14 +92,17 @@ export function importSOBookFiles(files, contentsText) {
     assert.ok(!seen.has(id), "同じパートのファイルが重複しています。"); seen.add(id);
     if (!match[4]) return importQuestionRows(file, chapter, lessonNumber, partNumber, part, id);
     const rows = toObjects(parseCsv(file.text));
-    const originalTerms = groupTerms(rows, { allowMissingSourceUrl: true, allowMissingKeywords: chapter.number === 2 });
+    const originalTerms = groupTerms(rows, { allowMissingSourceUrl: true, allowMissingKeywords: replacedChapters.has(chapter.number) });
     assert.equal(originalTerms.length, Number(match[4]), `${file.name}の用語数がファイル名と異なります。`);
     const datasetLabel = `世界史SO｜第${lessonNumber}回 ${partNumber} ${part.title}`;
     const originalById = new Map(originalTerms.map(t => [t.id,t]));
     const terms = rows.map((row,index) => {
+      const lessonLabel = row.dataset_label.match(/^(?:世界史探究_)?第(\d+)回_(\d+)_/);
       const label = row.dataset_label.match(/^(?:世界史探究_)?第(\d+)章_第(\d+)回_(\d+)_/)
+        ?? row.dataset_label.match(/^世界史探究 第(\d+)章 第(\d+)回-(\d+) /)
         ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+[^｜]+｜(\d+)\s+/)
-        ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+(\d+)\s+/);
+        ?? row.dataset_label.match(/^第(\d+)章\s+[^｜]+｜第(\d+)回\s+(\d+)\s+/)
+        ?? (lessonLabel && [lessonLabel[0], String(chapter.number), ...lessonLabel.slice(1)]);
       assert.ok(label && Number(label[1]) === chapter.number && Number(label[2]) === lessonNumber && Number(label[3]) === partNumber, `CSVの所属が目次と一致しません: ${file.name}`);
       assert.match(row.question_id,/^[A-Za-z0-9_-]{1,55}$/);
       const original = originalById.get(row.term_id), question = original.stages[row.stage].find(q => q.id === row.question_id);
@@ -112,8 +116,8 @@ export function importSOBookFiles(files, contentsText) {
           hideTermUntilAnswer: true }], reverse: [], integrated: [] } };
     });
     assert.equal(terms.length, rows.length);
-    // 第2章は2026年9月21日に213用語の原本へ全面差し替え。旧番号の履歴を混ぜない。
-    const revision = chapter.number === 2 ? 2 : 1;
+    // 2026年9月21日の全面差し替え対象は、旧番号の履歴を混ぜずに学習する。
+    const revision = replacedChapters.has(chapter.number) ? 2 : 1;
     const version = `world-history-so-${id}-v${revision}`;
     return { id, number: lessonNumber * 100 + partNumber, datasetLabel, difficultyLabel: part.title,
       version, contentVersion: revision === 1 ? hash(terms) : hash({version, terms}), sourceFile: file.name,
@@ -198,4 +202,24 @@ export function replaceSOBookChapter(catalog, currentDecks, imported, chapterNum
   const result = appendSOBookDecks(base, currentDecks.filter(d => !removed.has(d.entry.id)), imported);
   assert.deepEqual(result.next.subjects.filter(s => s.id !== original.id), catalog.subjects.filter(s => s.id !== original.id));
   return result;
+}
+
+export function replaceSOBookChapters(catalog, currentDecks, imported, chapterNumbers) {
+  assert.ok(Array.isArray(chapterNumbers) && chapterNumbers.length);
+  assert.equal(new Set(chapterNumbers).size, chapterNumbers.length, "置換する章番号が重複しています。");
+  assert.ok(imported.every(d => chapterNumbers.includes(d.chapter.number)), "置換対象以外の章が含まれています。");
+  let next = catalog, current = currentDecks;
+  const staged = [], additions = [];
+  for (const chapterNumber of chapterNumbers) {
+    const result = replaceSOBookChapter(next, current, imported.filter(d => d.chapter.number === chapterNumber), chapterNumber);
+    next = result.next; staged.push(...result.staged); additions.push(...result.additions);
+    if (!result.additions.length) continue;
+    const replaced = new Set(result.additions.map(d => d.id));
+    const values = new Map(result.staged.map(o => [o.path, o.value]));
+    current = current.filter(d => !replaced.has(d.entry.id)).concat(result.additions.map(entry => {
+      const index = values.get(entry.indexPath);
+      return {entry, index, chunks:index.chunks.map(c => values.get(c.path))};
+    }));
+  }
+  return {next, staged, additions};
 }

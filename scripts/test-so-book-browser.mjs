@@ -31,7 +31,7 @@ objects.set("index.json", JSON.stringify(plan.next));
 for (const object of plan.staged) objects.set(object.path, JSON.stringify(object.value));
 await cloudJson("subjects/world-history-so/answer-visuals/index.json");
 const firstChapter = so.chapterGroups.find(group => group.number === 1), islamicChapter = so.chapterGroups.find(group => group.number === 6);
-assert.equal(so.questionCount, 8226);
+assert.equal(so.questionCount, 13506);
 assert.deepEqual(so.chapterGroups.map(group => group.deckIds.length), [12, 20, 16, 18, 18, 9, 35]);
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 let settings = { autoSpeechEnabled: false, speechParts: off, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 };
@@ -139,7 +139,7 @@ try {
   await page.goto(base + "/?subject=world-history-so&deck=deck-1&view=setup");
   await shown("setup-panel"); await settled();
   assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), so.chapterGroups.map(group => group.title));
-  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,369問", "1,288問", "1,753問", "978問", "357問", "1,479問"]);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), ["1,002問", "1,369問", "1,535問", "2,390問", "2,452問", "357問", "4,401問"]);
   assert.equal(await chapter(1).isChecked(), false);
   assert.equal(await picker(1).isVisible(), false);
   await chapter(1).check(); await settled(); await deselectChapter(6);
@@ -255,12 +255,12 @@ try {
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第3章 古代の東アジア");
-  assert.match(await page.locator("#question-text").textContent(), /黄河流域を中心/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"黄河中流域で発達し、赤い素焼きの土器に黒い模様をつけた彩陶を特徴とする農耕文化は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"華北");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"仰韶文化(ぎょうしょうぶんか) / 彩陶文化");
   assert.equal(await page.locator("#answer-map").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-03-08-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-03-08-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   await chapter(1).check(); await settled(); await chapter(2).check(); await settled(); await chapter(6).check(); await settled();
   assert.equal(await page.locator('.chapter-picker input:checked').count(),57);
@@ -278,12 +278,12 @@ try {
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第4章 中世ヨーロッパ");
-  assert.match(await page.locator("#question-text").textContent(), /ローマ帝国の北側で部族社会/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"ライン川・ドナウ川の北側でローマと接し、部族国家をつくっていたインド＝ヨーロッパ語系の民族は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
   assert.equal((await page.locator("#answer-text").textContent()).trim(),"ゲルマン人");
   assert.equal(await page.locator("#answer-map").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-11-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-11-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   // 追加した第14回を単独で選び、原本の問題と回答、保存復元を確認する。
   await picker(4).locator("summary").click();
@@ -295,11 +295,11 @@ try {
   assert.equal(await picker(4).locator("input:checked").count(),1);
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
-  assert.match(await page.locator("#question-text").textContent(), /聖地イェルサレムの回復を掲げ/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"外敵の侵入が収まったのち、レコンキスタ・東方植民・十字軍遠征へと向かった西ヨーロッパの動きをまとめて何という？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"十字軍 / 十字軍遠征");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"西欧世界の拡大");
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-14-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-04-14-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   await picker(4).locator("summary").click();
   await picker(4).getByRole("button",{name:"全パートを選択"}).click(); await settled();
@@ -310,7 +310,7 @@ try {
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜5デッキ");
   await sessionSaved(75);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
-  // 第5章の10列形式で解説も表示し、提供範囲・保存を確認する。
+  // 第5章の新しい25列形式の本文・回答・提供範囲・保存を確認する。
   await chapter(5).check(); await settled();
   for (const number of [1,2,3,4,6]) await deselectChapter(number);
   assert.equal(await picker(5).locator("input:checked").count(),18);
@@ -320,13 +320,13 @@ try {
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第5章 東アジア世界の変容");
-  assert.match(await page.locator("#question-text").textContent(), /唐の滅亡後、華北の5王朝/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"唐の滅亡後、華北で五つの王朝が交替し、江南・華南などでも地方政権が興亡した時代は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"五代十国時代。");
-  assert.equal((await page.locator("#term-overview-text").textContent()).trim(),"強大化した藩鎮どうしが政権を争った時代。");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"五代十国時代");
+  assert.equal(await page.locator("#term-overview-text").isVisible(),false);
   assert.equal(await page.locator("#answer-map").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-05-16-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-05-16-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   // 新しい第18回の問題・解説・記録を確認する。
   await picker(5).locator("summary").click();
@@ -338,12 +338,13 @@ try {
   assert.equal(await picker(5).locator("input:checked").count(),1);
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
-  assert.match(await page.locator("#question-text").textContent(), /1368年、朱元璋が建国/);
+  // 問題面では読みの括弧を省く既存の表示規則を適用する。原本の読みは保持する。
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"1368年に朱元璋が南京で建国した漢民族の統一王朝は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"明。");
-  assert.equal((await page.locator("#term-overview-text").textContent()).trim(),"朱元璋は洪武帝と呼ばれる。江南から興った統一王朝である。");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"明");
+  assert.equal(await page.locator("#term-overview-text").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-05-18-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-05-18-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   await picker(5).locator("summary").click();
   await picker(5).getByRole("button",{name:"全パートを選択"}).click(); await settled();
@@ -354,7 +355,7 @@ try {
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜6デッキ");
   await sessionSaved(93);
   await page.locator("#study-stop").click(); await shown("setup-panel"); await settled();
-  // 第7章の列順が異なる10列形式も、原本どおり表示・保存する。
+  // 第7章も新原本どおり表示し、新しい履歴版へ保存する。
   await chapter(7).check(); await settled();
   for (const number of [1,2,3,4,5,6]) await deselectChapter(number);
   assert.equal(await picker(7).locator("input:checked").count(),35);
@@ -363,13 +364,13 @@ try {
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜第7章 近代ヨーロッパの幕開け");
-  assert.match(await page.locator("#question-text").textContent(), /ギリシア・ローマの古典文化/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"ギリシア・ローマの古典文化を手本として、人間の理性や感情を重視する文化を復活させようとした運動は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"ルネサンス。");
-  assert.equal((await page.locator("#term-overview-text").textContent()).trim(),"語義は「再生・復活」。古典文化の復興を通じて、人間を重視する文化を追求した。");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"ルネサンス");
+  assert.equal(await page.locator("#term-overview-text").isVisible(),false);
   assert.equal(await page.locator("#answer-map").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-07-22-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-07-22-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   // 今回追加した第28回だけを選び、保存復元と新しい問題の学習を確認する。
   await picker(7).locator("summary").click();
@@ -381,12 +382,12 @@ try {
   assert.equal(await picker(7).locator("input:checked").count(),1);
   await page.locator("#question-limit").fill("1");
   await page.locator("#start-study").click(); await shown("study-shell");
-  assert.match(await page.locator("#question-text").textContent(), /特権身分の免税特権廃止を目指し/);
+  assert.equal((await page.locator("#question-text").textContent()).trim(),"旧体制の危機と全国三部会の招集を背景に1789年に始まり、統領政府の成立で終わった革命は？");
   await page.locator("#next-action").click(); await shown("answer-panel");
-  assert.equal((await page.locator("#answer-text").textContent()).trim(),"ルイ16世。");
-  assert.equal((await page.locator("#term-overview-text").textContent()).trim(),"財政改革に対する特権身分の反発が、全国三部会招集につながった。");
+  assert.equal((await page.locator("#answer-text").textContent()).trim(),"フランス革命");
+  assert.equal(await page.locator("#term-overview-text").isVisible(),false);
   await page.locator("#good-action").click(); await shown("completion-card");
-  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-07-28-01-v1"));
+  assert.ok([...progress.keys()].some(key=>key==="world-history-so-book-07-28-01-v2"));
   await page.locator("#completion-return").click(); await shown("setup-panel"); await settled();
   await picker(7).locator("summary").click();
   await picker(7).getByRole("button",{name:"全パートを選択"}).click(); await settled();
@@ -405,7 +406,7 @@ try {
   assert.equal(await page.locator("#subject-name").textContent(),"世界史SO｜7デッキ");
   assert.deepEqual(errors,[]);
   assert.equal(requests.some(url=>/\/v1\/.*(speech|rating-sound)/.test(url)),false);
-  console.log("複数章の画面確認完了：7デッキ・128パート・8,226問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
+  console.log("複数章の画面確認完了：7デッキ・128パート・13,506問、章とパートの選択、68問の時期問題、保存復元、本文・回答・評価、既存章、全パートの学習、狭い画面、音声停止");
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve=>server.close(resolve));
 }

@@ -3,15 +3,15 @@ import { randomBytes } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdir,readFile,writeFile,unlink } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { importSOBookFiles,readSOBookFiles,appendSOBookDecks,replaceSOBookChapter } from "./world-history-so-book.mjs";
+import { importSOBookFiles,readSOBookFiles,appendSOBookDecks,replaceSOBookChapters } from "./world-history-so-book.mjs";
 
 const apply=process.argv.includes("--apply"), work=new URL("../.wrangler/so-book/",import.meta.url);
 await mkdir(work,{recursive:true});
 const contents=await readFile(new URL("../data/source/world-history-so/sekai_shi_tankyu_mokuji.md",import.meta.url),"utf8");
-const replaceIndex=process.argv.indexOf("--replace-chapter");
-const chapterNumber=replaceIndex<0 ? null : Number(process.argv[replaceIndex+1]);
-assert.ok(chapterNumber===null || (Number.isInteger(chapterNumber) && chapterNumber>0), "置換する章番号が不正です。");
-const imported=importSOBookFiles(await readSOBookFiles(fileURLToPath(new URL("../data/source/world-history-so/book/",import.meta.url))),contents).filter(d=>chapterNumber===null || d.chapter.number===chapterNumber);
+const replaceIndex=process.argv.findIndex(arg=>["--replace-chapter","--replace-chapters"].includes(arg));
+const chapterNumbers=replaceIndex<0 ? null : (process.argv[replaceIndex+1]??"").split(",").map(Number);
+assert.ok(chapterNumbers===null || (chapterNumbers.every(n=>Number.isInteger(n) && n>0) && new Set(chapterNumbers).size===chapterNumbers.length), "置換する章番号が不正です。");
+const imported=importSOBookFiles(await readSOBookFiles(fileURLToPath(new URL("../data/source/world-history-so/book/",import.meta.url))),contents).filter(d=>chapterNumbers===null || chapterNumbers.includes(d.chapter.number));
 const configPath=new URL("writer.json",work),token=randomBytes(32).toString("hex");
 let endpoint;
 async function wrangler(...args) {
@@ -47,14 +47,14 @@ try {
     const {value:index}=await read(entry.indexPath);
     return {entry,index,chunks:await Promise.all(index.chunks.map(async c=>(await read(c.path)).value))};
   }));
-  const result=chapterNumber===null ? appendSOBookDecks(original.value,current,imported) : replaceSOBookChapter(original.value,current,imported,chapterNumber);
+  const result=chapterNumbers===null ? appendSOBookDecks(original.value,current,imported) : replaceSOBookChapters(original.value,current,imported,chapterNumbers);
   const after=result.next.subjects.find(s=>s.id===subject.id);
   const report={parts:imported.map(({terms,...d})=>({...d,questionCount:terms.length})),added:result.additions.length,addedQuestions:result.additions.reduce((n,d)=>n+d.questionCount,0),totalQuestions:after.questionCount};
   await writeFile(new URL("report.json",work),JSON.stringify(report,null,2)+"\n");
   await writeFile(new URL("plan.json",work),JSON.stringify(result));
   await writeFile(new URL("current.json",work),JSON.stringify({catalog:original.value,decks:current}));
   for(const deck of imported)console.log(`${deck.datasetLabel}：${deck.terms.length}問`);
-  console.log(`${chapterNumber===null ? "追加" : `第${chapterNumber}章の置換`}${report.added}パート・${report.addedQuestions}問、世界史SOの合計${after.questionCount}問。`);
+  console.log(`${chapterNumbers===null ? "追加" : `第${chapterNumbers.join("・")}章の置換`}${report.added}パート・${report.addedQuestions}問、世界史SOの合計${after.questionCount}問。`);
   if(!result.additions.length)console.log("すべて登録済みで内容も一致しています。変更しません。");
   else if(!apply)console.log("確認のみです。--apply でCloudflareへ反映します。");
   else {
@@ -63,7 +63,8 @@ try {
       await request({action:"stage",key:object.path,value:object.value});
       assert.deepEqual((await read(object.path)).value,object.value);
     }
-    await request({action:chapterNumber===null ? "commit" : "replace",chapterNumber,key:"index.json",value:result.next,expectedEtag:original.etag});
+    const changedChapters=[...new Set(result.additions.map(d=>d.bookChapter))];
+    await request({action:chapterNumbers===null ? "commit" : "replace",chapterNumber:changedChapters,key:"index.json",value:result.next,expectedEtag:original.etag});
     assert.deepEqual((await read("index.json")).value,result.next);
     for(const deck of current) {
       assert.deepEqual((await read(deck.entry.indexPath)).value,deck.index);

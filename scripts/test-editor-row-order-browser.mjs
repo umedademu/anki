@@ -81,6 +81,7 @@ try {
   await page.goto(editorUrl); await saved();
   const ids = () => page.locator('#question-rows tr').evaluateAll(rows=>rows.map(r=>r.dataset.questionId));
   async function drag(from,to,after=false) {
+    await row(from).locator('.number-column').scrollIntoViewIfNeeded();
     const a=await row(from).locator('.number-column').boundingBox(), b=await row(to).locator('.number-column').boundingBox();
     await page.mouse.move(a.x+a.width/2,a.y+a.height/2); await page.mouse.down();
     await page.mouse.move(b.x+b.width/2,b.y+b.height*(after?.8:.2),{steps:8}); await page.mouse.up();
@@ -103,13 +104,15 @@ try {
   assert.equal(controls.posts.at(-1).operationId,op);
   assert.deepEqual((await ids()).slice(0,3),['q1','q3','q2']);
   // ドラッグ中に表の末尾へスクロールし、次のページまで移動できる。
-  await page.locator('.editor-table-scroll').scrollIntoViewIfNeeded();
+  await row('q1').locator('.number-column').scrollIntoViewIfNeeded();
   const source=await row('q1').locator('.number-column').boundingBox();
-  const box=await page.locator('.editor-table-scroll').boundingBox();
+  const beforeScroll=await page.evaluate(()=>window.scrollY);
   await page.mouse.move(source.x+20,source.y+20); await page.mouse.down();
-  await page.mouse.move(source.x+20,box.y+box.height-12,{steps:8});
+  await page.mouse.move(source.x+20,988,{steps:8});
+  await page.waitForFunction(before=>window.scrollY>before,beforeScroll);
   await page.waitForFunction(()=>document.querySelector('#page-position').textContent==='2 / 2');
-  await page.waitForFunction(()=>{const s=document.querySelector('.editor-table-scroll');return s.scrollTop+s.clientHeight>=s.scrollHeight-1;});
+  await page.waitForFunction(()=>document.querySelector('#question-rows tr:last-child').getBoundingClientRect().bottom<=innerHeight);
+  assert.equal(await page.locator('.editor-table-scroll').evaluate(s=>s.scrollTop),0);
   const target=await row('extra-32').locator('.number-column').boundingBox();
   await page.mouse.move(target.x+20,target.y+target.height*.8); await page.mouse.up(); await saved();
   assert.equal((await cloud()).subject.editorQuestionOrder.at(-1),'q1');

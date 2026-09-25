@@ -31,17 +31,13 @@ export function createEditorRowDrag(body, scroll, { enabled, move, page }) {
       if ((direction > 0 && box.bottom > window.innerHeight) || (direction < 0 && box.top < 0)) {
         const before = window.scrollY;
         window.scrollBy({top: direction * 14, behavior: "instant"});
-        if (before !== window.scrollY) { targetAtPointer(); frame = requestAnimationFrame(tick); return; }
+        if (before !== window.scrollY) { drag.edgeDirection = 0; targetAtPointer(); frame = requestAnimationFrame(tick); return; }
       }
-      const before = scroll.scrollTop;
-      scroll.scrollTop += direction * 14;
-      if (before === scroll.scrollTop) {
-        if (drag.edgeDirection !== direction) { drag.edgeDirection = direction; drag.edgeSince = time; }
-        if (time - drag.edgeSince > 800) {
-          if (page(direction)) scroll.scrollTop = direction > 0 ? 0 : scroll.scrollHeight;
-          drag.edgeSince = time;
-        }
-      } else drag.edgeDirection = 0;
+      if (drag.edgeDirection !== direction) { drag.edgeDirection = direction; drag.edgeSince = time; }
+      if (time - drag.edgeSince > 800) {
+        if (page(direction)) scroll.scrollIntoView({ block: direction > 0 ? "start" : "end", inline: "nearest", behavior: "instant" });
+        drag.edgeSince = time;
+      }
       targetAtPointer();
     } else drag.edgeDirection = 0;
     frame = requestAnimationFrame(tick);

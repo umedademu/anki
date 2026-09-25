@@ -1,4 +1,4 @@
-import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.277";
+import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.278";
 import { cloudRequest } from "./cloud-progress.js";
 import { getQuestionExplanation } from "./learning-engine.js";
 
@@ -320,8 +320,12 @@ $("add-question").addEventListener("click", addRow);
 $("editor-deck").addEventListener("change", () => { state.page = 0; categoryOptions(); renderTable(); });
 for (const id of ["editor-search", "editor-category"]) $(id).addEventListener("input", () => { state.page = 0; renderTable(); });
 $("show-details").addEventListener("change", () => $("question-table").classList.toggle("show-details", $("show-details").checked));
-$("previous-page").addEventListener("click", () => { state.page--; renderTable(); });
-$("next-page").addEventListener("click", () => { state.page++; renderTable(); });
+function changePage(direction) {
+  state.page += direction; renderTable();
+  $("editor-table-scroll").scrollIntoView({ block: "start", inline: "nearest", behavior: "instant" });
+}
+$("previous-page").addEventListener("click", () => changePage(-1));
+$("next-page").addEventListener("click", () => changePage(1));
 $("retry-save").addEventListener("click", () => { if (state.operation && !state.running) void runOperation(state.operation); });
 $("undo-delete").addEventListener("click", () => {
   if (!hasPending() && state.undoId) void runOperation({ payload: { subjectId, revision: state.data.revision, operationId: crypto.randomUUID(), action: "undo", undoId: state.undoId } });

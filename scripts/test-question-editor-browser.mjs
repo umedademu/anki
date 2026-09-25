@@ -77,10 +77,20 @@ try {
   const cell = (id, field, target = page) => row(id, target).locator(`[data-field="${field}"]`);
   const cloud = () => loadEditableSubject(fixture.env, "test");
   const question = (data, id) => data.decks.flatMap((deck) => deck.terms.flatMap((term) => Object.values(term.stages).flat())).find((q) => q.id === id);
+  async function checkPageScroll() {
+    assert.ok(await page.locator('#editor-table-scroll').evaluate(element => element.scrollHeight <= element.clientHeight + 1), '表内には縦のスクロール領域を作らない');
+    const handle = page.locator('#question-rows .number-column').first();
+    await handle.scrollIntoViewIfNeeded();
+    const box = await handle.boundingBox(), before = await page.evaluate(() => window.scrollY);
+    await page.mouse.move(box.x + 20, box.y + 20); await page.mouse.wheel(0, 500);
+    await page.waitForFunction(value => window.scrollY > value, before);
+    assert.equal(await page.locator('#editor-table-scroll').evaluate(element => element.scrollTop), 0);
+  }
   await page.goto(editorUrl); await saved();
   assert.equal(await page.locator("#editor-deck").inputValue(), "selected");
   assert.equal(await page.locator("#question-rows tr").count(), 30);
   assert.equal(await page.locator("#question-form").count(), 0);
+  await checkPageScroll();
   await cell("q1", "prompt").focus(); await page.keyboard.press("Tab");
   assert.equal(await cell("q1", "answer").evaluate((input) => input === document.activeElement), true);
   await cell("q1", "answer").fill("セルから自動保存した回答"); await saved();
@@ -117,6 +127,7 @@ try {
   await page.locator("#next-page").click(); await saved();
   assert.equal(question(await cloud(), "q2").answer, "別ページへ移動しても保存");
   await page.locator("#previous-page").click();
+  assert.ok(await page.locator('#question-rows tr').first().evaluate(row => { const box = row.getBoundingClientRect(); return box.top >= 0 && box.bottom <= innerHeight; }), 'ページ切り替え後は表の先頭を表示する');
   await page.locator("#editor-search").fill("別のデッキ");
   assert.equal(await page.locator("#question-rows tr").count(), 30);
   // 回答にも同じ文字列があるため、検索結果は30行ずつ表示される。
@@ -186,6 +197,7 @@ try {
   const artifacts = path.join(root, ".wrangler", "editor-check"); await mkdir(artifacts, { recursive: true });
   await page.screenshot({ path: path.join(artifacts, "desktop.png"), fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });
+  await checkPageScroll();
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   assert.ok(await page.locator("#editor-table-scroll").evaluate((element) => element.scrollWidth > element.clientWidth));
   await cell("q1", "answer").fill("スマートフォンから直接編集"); await saved();

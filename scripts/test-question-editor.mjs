@@ -77,6 +77,11 @@ await mutateEditableSubject(env, newQuestion);
 current = await loadEditableSubject(env, "test");
 assert.equal(current.decks[0].index.questionCount, 2);
 assert.equal(current.decks[0].terms[1].stages.beginner[0].id, added.questionId);
+const createdAt = current.decks[0].terms[1].stages.beginner[0].editorCreatedAt;
+assert.ok(Number.isFinite(createdAt) && createdAt > 0, '追加日時を保存する');
+await mutateEditableSubject(env, operation(current.revision, { questionId: added.questionId, targetDeckId: 'deck-2' }));
+current = await loadEditableSubject(env, 'test');
+assert.equal(current.decks[1].terms.flatMap(term => Object.values(term.stages).flat()).find(q => q.id === added.questionId).editorCreatedAt, createdAt, '編集・デッキ移動では追加日時を変えない');
 assert.equal(current.subject.questionCount, 4);
 assert.equal(db.prepare("SELECT attempts FROM question_progress WHERE dataset_version = ?").get("test-deck-1-v1").attempts, 4, "削除・復元・追加でも元の履歴は残る");
 

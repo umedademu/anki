@@ -137,7 +137,7 @@ export async function mutateEditableSubject(env, input) {
   if (input.revision !== etag) throw conflict();
   if (input.action === "reorder") {
     const decks = await Promise.all(entries(subject).map(entry => readDeck(bucket, entry)));
-    const rows = decks.flatMap(deck => deck.terms.flatMap(term => Object.values(term.stages).flat().map(question => ({ questionId: question.id }))));
+    const rows = decks.flatMap(deck => deck.terms.flatMap(term => Object.values(term.stages).flat().map(question => ({ questionId: question.id, question }))));
     const ids = orderedEditorRows(rows, subject.editorQuestionOrder).map(row => row.questionId);
     if (new Set(ids).size !== ids.length) throw new Error("問題番号が重複しているため並べ替えできません。");
     const editorQuestionOrder = moveEditorQuestion(ids, input.questionId, input.targetQuestionId, input.placement);
@@ -213,6 +213,7 @@ export async function mutateEditableSubject(env, input) {
       focus: question?.focus ?? "一問一答", keywords: question?.keywords ?? [],
       hideTermUntilAnswer: question?.hideTermUntilAnswer ?? true,
     };
+    if (input.action === "create") question.editorCreatedAt = Date.now();
     // 表示文を修正した時に古い文章の音声が残らないようにする。
     if (question.speech) {
       const englishQuestion = destination.index.learningType === "vocabulary" && fields.stage !== "reverse";

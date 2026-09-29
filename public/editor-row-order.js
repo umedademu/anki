@@ -1,7 +1,13 @@
 // 学習用の用語構造を崩さず、編集画面の一行単位の順番を扱う。
 export function orderedEditorRows(rows, savedOrder = []) {
   const ranks = new Map((Array.isArray(savedOrder) ? savedOrder : []).map((id, i) => [id, i]));
-  return [...rows].sort((a, b) => (ranks.get(a.questionId) ?? Infinity) - (ranks.get(b.questionId) ?? Infinity));
+  // 追加日時のない既存問題は収録順を逆にし、保存済みの手動順は維持する。
+  return [...rows].reverse().sort((a, b) => {
+    const aSaved = ranks.has(a.questionId), bSaved = ranks.has(b.questionId);
+    if (aSaved && bSaved) return ranks.get(a.questionId) - ranks.get(b.questionId);
+    if (aSaved !== bSaved) return aSaved ? 1 : -1;
+    return (b.question?.editorCreatedAt ?? 0) - (a.question?.editorCreatedAt ?? 0);
+  });
 }
 export function moveEditorQuestion(ids, source, target, placement) {
   if (source === target || !ids.includes(source) || !ids.includes(target) || !["before", "after"].includes(placement)) throw new Error("並べ替える行を確認してください。");

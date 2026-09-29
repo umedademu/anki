@@ -1,4 +1,4 @@
-import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.278";
+import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.279";
 import { cloudRequest } from "./cloud-progress.js";
 import { getQuestionExplanation } from "./learning-engine.js";
 
@@ -79,7 +79,7 @@ function mergeData(data, reorder = false) {
     found.add(row);
   }
   state.rows = state.rows.filter((row) => row.isNew || found.has(row) || row.edits.size);
-  if (reorder) state.rows = orderedEditorRows(state.rows, data.subject.editorQuestionOrder);
+  if (reorder) state.rows = [...state.rows.filter(row => !found.has(row)), ...orderedEditorRows([...found], data.subject.editorQuestionOrder)];
   $("editor-subject").textContent = `${data.subject.title}｜問題の管理`;
   document.title = `Anki | ${data.subject.title}の問題を編集`;
   for (const row of state.rows) syncCells(row);

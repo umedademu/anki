@@ -18,6 +18,9 @@ for (let i = 0; i < 33; i++) {
   fixtureChunk.terms.push(term);
 }
 fixture.objects.set("subjects/test/deck-2/chunk.json", JSON.stringify(fixtureChunk));
+const catalog = JSON.parse(fixture.objects.get('index.json'));
+catalog.subjects[0].editorQuestionOrder = ['q1','q2','q3',...Array.from({length:33},(_,i)=>`extra-${i}`)];
+fixture.objects.set('index.json',JSON.stringify(catalog));
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 const controls = { delay: 0, failPost: false, dropPost: false, failRefresh: false, failGet: false, active: 0, maxActive: 0, posts: [] };
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

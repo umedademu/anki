@@ -87,6 +87,14 @@ try {
     assert.equal(await page.locator('#editor-table-scroll').evaluate(element => element.scrollTop), 0);
   }
   await page.goto(editorUrl); await saved();
+  assert.equal(await page.locator('#question-rows tr').first().getAttribute('data-question-id'), 'extra-32', '標準では最後に収録された問題を先頭にする');
+  await page.reload(); await saved();
+  assert.equal(await page.locator('#question-rows tr').first().getAttribute('data-question-id'), 'extra-32');
+  // 以下は保存済みの手動順で、従来の編集・保存操作を確認する。
+  const catalog = JSON.parse(fixture.objects.get('index.json'));
+  catalog.subjects[0].editorQuestionOrder = ['q1','q2','q3',...Array.from({length:33},(_,i)=>`extra-${i}`)];
+  fixture.objects.set('index.json',JSON.stringify(catalog));
+  await page.reload(); await saved();
   assert.equal(await page.locator("#editor-deck").inputValue(), "selected");
   assert.equal(await page.locator("#question-rows tr").count(), 30);
   assert.equal(await page.locator("#question-form").count(), 0);
@@ -150,6 +158,8 @@ try {
   await page.locator("#retry-save").click(); await saved();
   assert.equal(controls.posts.at(-1).operationId, createId);
   const addedId = await page.locator(`tr[data-row-key="${draftKey}"]`).getAttribute("data-question-id");
+  await page.reload(); await saved();
+  assert.equal(await page.locator('#question-rows tr').first().getAttribute('data-question-id'), addedId, '追加した問題は再読込後も手動順の前に表示する');
   assert.equal((await cloud()).decks.flatMap((deck) => deck.terms.flatMap((term) => Object.values(term.stages).flat())).filter((q) => q.prompt === "新しく追加した問題").length, 1);
   await cell(addedId, "targetDeckId").selectOption("deck-1"); await saved();
   assert.ok((await cloud()).decks[0].terms.some((term) => term.stages.beginner.some((q) => q.id === addedId)));

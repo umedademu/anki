@@ -1512,6 +1512,7 @@ body.is-study-menu-open {
   flex: 1 1 auto;
   min-width: 0;
   margin: 0;
+  white-space: pre-wrap;
   color: var(--theme-text, #29362e);
   font-size: clamp(1.05rem, 2vw, 1.18rem);
   font-weight: 850;
@@ -1573,6 +1574,7 @@ body.is-study-menu-open {
 #term-overview-text {
   margin: 0;
   padding-right: 34px;
+  white-space: pre-wrap;
   font-size: 0.94rem;
   line-height: 1.75;
 }

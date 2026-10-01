@@ -1,0 +1,1030 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 4,
+    "title": "明治時代の文化"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_04_明治時代の文化_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      290,
+      297,
+      298,
+      299,
+      336
+    ],
+    "note": "297頁ニ見出しから299頁ホ見出し直前までの本文、関連注⑯～㉕、学問の表を全て読んで選定。明治文化の広い時代帯だけを19世紀後半～20世紀初頭と示すため、290頁の1868年改元と336頁の1912年終焉の最小引用を補助に使用する。個別の美術作品・学校設立・文学作品・音楽作品の活動年はこの補助から推定しない。他小項目の事件・制度も出題しない。芸術の優劣・世界水準の評価、観音像開帳の年数・作家や作曲家の没年齢・句の総数等は採用しない。学校・作品・人物名を全一覧にせず、技法や文章の変化と関連人物をまとめる。野口英世の黄熱病研究を確かな成果として扱わず、長岡半太郎の土星型模型の1903年も不採用。自然科学・法学の表を全暗記させる出題はせず、医学は北里と志賀の明示された研究を選ぶ。"
+  },
+  "facts": [
+    {
+      "id": "meiji-start",
+      "page": 290,
+      "quote": "慶応4年（1868）9月8日、改元の詔により元号が「明治」に改められた。"
+    },
+    {
+      "id": "meiji-end-year",
+      "page": 336,
+      "quote": "明治四十五年（一九一二）七月三十日未明に崩御となりました。"
+    },
+    {
+      "id": "meiji-end-era",
+      "page": 336,
+      "quote": "明治の時代は、明治天皇の崩御によって幕を閉じました。"
+    },
+    {
+      "id": "fenollosa-name",
+      "page": 297,
+      "quote": "アメリカから来日した東洋美術史家フェノロサです。"
+    },
+    {
+      "id": "japanese-painting-methods",
+      "page": 297,
+      "quote": "フェノロサは⑯狩野芳崖らに、洋画の線の描き方や遠近法などをすすめ、新しい日本画の成立を支援しました。"
+    },
+    {
+      "id": "art-school-start",
+      "page": 297,
+      "quote": "教え子の**岡倉天心**らと東京美術学校（現"
+    },
+    {
+      "id": "art-school-end",
+      "page": 299,
+      "quote": "在の東京芸術大学美術学部）の設立にも努め、"
+    },
+    {
+      "id": "kuroda-name",
+      "page": 298,
+      "quote": "**注⑱ 黒田清輝**　フランスで学び、"
+    },
+    {
+      "id": "kuroda-method",
+      "page": 298,
+      "quote": "スケッチから完成画まで屋外で描き、自然の光や空気を再現しようとする"
+    },
+    {
+      "id": "kuroda-style",
+      "page": 298,
+      "quote": "外光派の画風を日本にもたらし、日本の近代洋画の方向を確立した。"
+    },
+    {
+      "id": "sculpture-koun-person",
+      "page": 299,
+      "quote": "**注⑲ 高村光雲**　仏師・高村東雲に学び、その姓を継いだ。"
+    },
+    {
+      "id": "sculpture-koun-wood",
+      "page": 299,
+      "quote": "木彫に新しい作風を開き、彫刻の近代化に尽力した。"
+    },
+    {
+      "id": "sculpture-koun-method",
+      "page": 299,
+      "quote": "仏師の伝統的彫刻に欧米美術の写実的な技法を加え、"
+    },
+    {
+      "id": "sculpture-ogiwara-person",
+      "page": 299,
+      "quote": "**注⑳ 荻原守衛**"
+    },
+    {
+      "id": "sculpture-ogiwara-study",
+      "page": 299,
+      "quote": "画家を志して渡米したが、パリでロダンの『考える人』を見て衝撃を受け、彫刻家を目指しフランスに留学し、欧米風の近代彫刻を制作した。"
+    },
+    {
+      "id": "taki-person",
+      "page": 298,
+      "quote": "**注㉑ 滝廉太郎**"
+    },
+    {
+      "id": "taki-song-example",
+      "page": 298,
+      "quote": "『荒城の月』『箱根八里』『鳩ぽっぽ』『お正月』『桃太郎』など、"
+    },
+    {
+      "id": "taki-method",
+      "page": 298,
+      "quote": "近代西洋の作曲技法を用いて日本の洋楽の礎を築いた。"
+    },
+    {
+      "id": "taki-germany",
+      "page": 299,
+      "quote": "ドイツに留学した㉑**滝廉太郎**"
+    },
+    {
+      "id": "taki-songs",
+      "page": 299,
+      "quote": "欧米の表現を取り入れた唱歌を作りました。"
+    },
+    {
+      "id": "literary-movement",
+      "page": 299,
+      "quote": "「書きことば」と「話しことば」を使い分けていた時代から、私たちが今日使う文章表現へ転換する機会となりました（**言文一致運動**）。"
+    },
+    {
+      "id": "futabatei-person",
+      "page": 299,
+      "quote": "二葉亭四迷は従来の文語体をやめ、"
+    },
+    {
+      "id": "futabatei-work",
+      "page": 299,
+      "quote": "口語体で小説『浮雲』を書きました。"
+    },
+    {
+      "id": "soseki-study",
+      "page": 298,
+      "quote": "**注㉒ 夏目漱石**　英国留学後、教職を経て作家になった。"
+    },
+    {
+      "id": "soseki-expression",
+      "page": 298,
+      "quote": "心理的手法で孤独や利己主義を追求した。"
+    },
+    {
+      "id": "ogai-study",
+      "page": 298,
+      "quote": "**注㉓ 森鴎外**　陸軍軍医としてドイツに留学し、"
+    },
+    {
+      "id": "ogai-activities",
+      "page": 298,
+      "quote": "翻訳や評論などの文芸活動を展開。"
+    },
+    {
+      "id": "ogai-work",
+      "page": 298,
+      "quote": "個人の感情を尊重するロマン主義の小説『舞姫』が代表作で、"
+    },
+    {
+      "id": "kitazato-culture",
+      "page": 298,
+      "quote": "北里柴三郎：破傷風菌の純粋培養（1889）"
+    },
+    {
+      "id": "kitazato-serum",
+      "page": 298,
+      "quote": "血清療法（1890）に成功"
+    },
+    {
+      "id": "shiga-bacteria",
+      "page": 298,
+      "quote": "志賀潔：赤痢菌発見（1897）"
+    },
+    {
+      "id": "futabatei-style",
+      "page": 299,
+      "quote": "従来の文語体をやめ、口語体で"
+    },
+    {
+      "id": "soseki-work",
+      "page": 298,
+      "quote": "『吾輩は猫である』"
+    },
+    {
+      "id": "soseki-name",
+      "page": 298,
+      "quote": "**注㉒ 夏目漱石**"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日本画と洋画の近代化",
+      "reading": "にほんがとようがのきんだいか",
+      "category": "美術",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "日本画に洋画の技法を取り入れる動き、東京美術学校の設立、黒田清輝による外光派の画風をまとめる。作品名一覧・観音像開帳の年数・芸術の優劣は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "日本画成立を支えた人物",
+          "prompt": "明治時代の日本画と洋画の近代化において、アメリカから来日し、新しい日本画の成立を支援した東洋美術史家は誰か。",
+          "answer": "**フェノロサ**。",
+          "evidence": [
+            "fenollosa-name",
+            "japanese-painting-methods"
+          ],
+          "keywords": [
+            "フェノロサ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "美術教育の学校",
+          "prompt": "明治時代の日本画と洋画の近代化において、フェノロサが岡倉天心らと設立に努めた美術学校は何か。",
+          "answer": "**東京美術学校**。",
+          "evidence": [
+            "art-school-start",
+            "art-school-end"
+          ],
+          "keywords": [
+            "東京美術学校"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "洋画の技法を広めた人物",
+          "prompt": "明治時代の日本画と洋画の近代化において、フランスで学び、屋外で自然の光や空気を描く画風を日本にもたらした人物は誰か。",
+          "answer": "**黒田清輝**。",
+          "evidence": [
+            "kuroda-name",
+            "kuroda-method"
+          ],
+          "keywords": [
+            "黒田清輝"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "洋画の画風",
+          "prompt": "明治時代の日本画と洋画の近代化において、黒田清輝が日本にもたらした、屋外で自然の光や空気を再現する画風を何というか。",
+          "answer": "**外光派**。",
+          "evidence": [
+            "kuroda-style"
+          ],
+          "keywords": [
+            "外光派"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本画と美術教育",
+          "prompt": "明治時代の日本画と洋画の近代化について、日本画と美術教育にどのような変化があったか。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**フェノロサ**は狩野芳崖らに洋画の線の描き方や**遠近法**をすすめ、新しい日本画の成立を支援した。**岡倉天心**らと**東京美術学校**の設立にも努めた。",
+          "evidence": [
+            "fenollosa-name",
+            "japanese-painting-methods",
+            "art-school-start",
+            "art-school-end",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "フェノロサ",
+            "遠近法",
+            "岡倉天心",
+            "東京美術学校"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "洋画の新しい表現",
+          "prompt": "明治時代の日本画と洋画の近代化について、黒田清輝はどのような洋画の表現を日本にもたらしたか。",
+          "answer": "フランスで学んだ**黒田清輝**は、スケッチから完成画まで屋外で描き、**自然の光や空気を再現**しようとする**外光派**の画風を日本にもたらした。",
+          "evidence": [
+            "kuroda-name",
+            "kuroda-method",
+            "kuroda-style"
+          ],
+          "keywords": [
+            "黒田清輝",
+            "自然の光や空気を再現",
+            "外光派"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「日本画と洋画の近代化」について説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**フェノロサ**は洋画の線の描き方や**遠近法**を取り入れた新しい日本画の成立を支援し、**岡倉天心**らと**東京美術学校**の設立にも努めた。洋画ではフランスで学んだ**黒田清輝**が、**自然の光や空気を再現**する**外光派**の画風を日本にもたらした。",
+          "evidence": [
+            "fenollosa-name",
+            "japanese-painting-methods",
+            "art-school-start",
+            "art-school-end",
+            "kuroda-name",
+            "kuroda-method",
+            "kuroda-style",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "フェノロサ",
+            "遠近法",
+            "岡倉天心",
+            "東京美術学校",
+            "黒田清輝",
+            "自然の光や空気を再現",
+            "外光派"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "近代彫刻",
+      "reading": "きんだいちょうこく",
+      "category": "美術",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "高村光雲の伝統的木彫と写実技法の結合、荻原守衛のフランスでの学習を比べる。代表作を全て並べたり個人伝記の細部を暗記したりしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "伝統的木彫を受け継いだ人物",
+          "prompt": "明治時代の日本の近代彫刻で、仏師の伝統を受け継ぎ、木彫に新しい作風を開いた人物は誰か。",
+          "answer": "**高村光雲**。",
+          "evidence": [
+            "sculpture-koun-person",
+            "sculpture-koun-wood"
+          ],
+          "keywords": [
+            "高村光雲"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "伝統に加えられた技法",
+          "prompt": "明治時代の日本の近代彫刻で、高村光雲が仏師の伝統的彫刻に加えた欧米美術の技法は、どのようなものか。",
+          "answer": "**写実的な技法**。",
+          "evidence": [
+            "sculpture-koun-method"
+          ],
+          "keywords": [
+            "写実的な技法"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "欧米風の彫刻を制作した人物",
+          "prompt": "明治時代の日本の近代彫刻で、パリでロダンの作品を見て彫刻家を志し、フランスに留学した人物は誰か。",
+          "answer": "**荻原守衛**。",
+          "evidence": [
+            "sculpture-ogiwara-person",
+            "sculpture-ogiwara-study"
+          ],
+          "keywords": [
+            "荻原守衛"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "木彫の新しい表現",
+          "prompt": "明治時代の日本の近代彫刻で、高村光雲は伝統的な彫刻をどう変えたか。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**高村光雲**は仏師の**伝統的彫刻**に欧米美術の**写実的な技法**を加え、**木彫**に新しい作風を開いた。",
+          "evidence": [
+            "sculpture-koun-person",
+            "sculpture-koun-method",
+            "sculpture-koun-wood",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "高村光雲",
+            "伝統的彫刻",
+            "写実的な技法",
+            "木彫"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "海外での学習と制作",
+          "prompt": "明治時代の日本の近代彫刻で、荻原守衛はどのように欧米の彫刻を学んだか。",
+          "answer": "**荻原守衛**はパリで**ロダン**の『考える人』を見て彫刻家を志し、**フランスに留学**して**欧米風の近代彫刻**を制作した。",
+          "evidence": [
+            "sculpture-ogiwara-person",
+            "sculpture-ogiwara-study"
+          ],
+          "keywords": [
+            "荻原守衛",
+            "ロダン",
+            "フランスに留学",
+            "欧米風の近代彫刻"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「近代彫刻」について説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本では、**高村光雲**が仏師の**伝統的彫刻**に欧米美術の**写実的な技法**を加え、**木彫**に新しい作風を開いた。**荻原守衛**はパリで**ロダン**の作品を見て彫刻家を志し、**フランスに留学**して**欧米風の近代彫刻**を制作した。",
+          "evidence": [
+            "sculpture-koun-person",
+            "sculpture-koun-method",
+            "sculpture-koun-wood",
+            "sculpture-ogiwara-person",
+            "sculpture-ogiwara-study",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "高村光雲",
+            "伝統的彫刻",
+            "写実的な技法",
+            "木彫",
+            "荻原守衛",
+            "ロダン",
+            "フランスに留学",
+            "欧米風の近代彫刻"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "洋楽の発展",
+      "reading": "ようがくのはってん",
+      "category": "音楽",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "滝廉太郎のドイツ留学と西洋の作曲技法、唱歌の制作を関連づける。作品は代表例にとどめ、全曲名・若い没年齢や病気の経過は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "作曲家",
+          "prompt": "明治時代の日本の洋楽の発展で、西洋の作曲技法を用い、『荒城の月』などを作曲した人物は誰か。",
+          "answer": "**滝廉太郎**。",
+          "evidence": [
+            "taki-person",
+            "taki-song-example",
+            "taki-method"
+          ],
+          "keywords": [
+            "滝廉太郎"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "留学先",
+          "prompt": "明治時代の日本の洋楽の発展で、滝廉太郎が留学した国はどこか。",
+          "answer": "**ドイツ**。",
+          "evidence": [
+            "taki-germany"
+          ],
+          "keywords": [
+            "ドイツ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制作された音楽",
+          "prompt": "明治時代の日本の洋楽の発展で、滝廉太郎が欧米の表現を取り入れて作った歌は、どのような種類か。",
+          "answer": "**唱歌**。",
+          "evidence": [
+            "taki-songs"
+          ],
+          "keywords": [
+            "唱歌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "作曲技法と役割",
+          "prompt": "明治時代の日本の洋楽の発展で、滝廉太郎はどのような作曲技法を取り入れたか。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**滝廉太郎**は**近代西洋の作曲技法**を用い、日本の洋楽の礎を築いた。",
+          "evidence": [
+            "taki-person",
+            "taki-method",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "滝廉太郎",
+            "近代西洋の作曲技法"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "留学と作品",
+          "prompt": "明治時代の日本の洋楽の発展で、滝廉太郎の留学と作品にはどのような特徴があるか。",
+          "answer": "**ドイツ**に留学し、欧米の表現を取り入れた**唱歌**を作った。代表例には**『荒城の月』『箱根八里』**がある。",
+          "evidence": [
+            "taki-germany",
+            "taki-songs",
+            "taki-song-example"
+          ],
+          "keywords": [
+            "ドイツ",
+            "唱歌",
+            "『荒城の月』『箱根八里』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「洋楽の発展」について説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**滝廉太郎**は**近代西洋の作曲技法**を用いて日本の洋楽の礎を築いた。**ドイツ**に留学し、欧米の表現を取り入れた**唱歌**を作り、**『荒城の月』『箱根八里』**などを作曲した。",
+          "evidence": [
+            "taki-person",
+            "taki-method",
+            "taki-germany",
+            "taki-songs",
+            "taki-song-example",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "滝廉太郎",
+            "近代西洋の作曲技法",
+            "ドイツ",
+            "唱歌",
+            "『荒城の月』『箱根八里』"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "言文一致運動",
+      "reading": "げんぶんいっちうんどう",
+      "category": "文学",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "文語体から口語体への転換と二葉亭四迷の浮雲を関連づける。作品の発表年や小説の内容は資料にないため補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "文章表現の変化",
+          "prompt": "明治時代の日本で、書きことばと話しことばを使い分ける文章から、話しことばに基づく文章表現へ転換する動きを何というか。",
+          "answer": "**言文一致運動**。",
+          "evidence": [
+            "literary-movement"
+          ],
+          "keywords": [
+            "言文一致運動"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "小説家",
+          "prompt": "明治時代の日本の言文一致運動で、従来の文語体をやめ、口語体で小説を書いた人物は誰か。",
+          "answer": "**二葉亭四迷**。",
+          "evidence": [
+            "futabatei-person"
+          ],
+          "keywords": [
+            "二葉亭四迷"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "口語体の小説",
+          "prompt": "明治時代の日本の言文一致運動で、二葉亭四迷が口語体で書いた小説は何か。",
+          "answer": "**『浮雲』**。",
+          "evidence": [
+            "futabatei-work"
+          ],
+          "keywords": [
+            "『浮雲』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "文章表現の転換",
+          "prompt": "明治時代の日本の言文一致運動は、文章表現をどのように変えたか。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、従来の**文語体**から**口語体**への転換が進んだ。**書きことばと話しことば**を使い分ける時代から、現在につながる文章表現へ転換する機会となった。",
+          "evidence": [
+            "futabatei-style",
+            "literary-movement",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "文語体",
+            "口語体",
+            "書きことばと話しことば"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "小説の例",
+          "prompt": "明治時代の日本の言文一致運動について、二葉亭四迷の小説はどのような例となったか。",
+          "answer": "**二葉亭四迷**は従来の文語体をやめ、**口語体**で小説**『浮雲』**を書いた。",
+          "evidence": [
+            "futabatei-person",
+            "futabatei-work"
+          ],
+          "keywords": [
+            "二葉亭四迷",
+            "口語体",
+            "『浮雲』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「言文一致運動」について説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、従来の**文語体**から**口語体**への転換が進み、**書きことばと話しことば**を使い分ける時代から新しい文章表現へ転換する機会となった。**二葉亭四迷**は口語体で小説**『浮雲』**を書いた。",
+          "evidence": [
+            "futabatei-person",
+            "futabatei-work",
+            "literary-movement",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "文語体",
+            "口語体",
+            "書きことばと話しことば",
+            "二葉亭四迷",
+            "『浮雲』"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "夏目漱石と森鴎外",
+      "reading": "なつめそうせきともりおうがい",
+      "category": "文学",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "二人の欧州留学と文学活動、漱石の心理的手法と鴎外のロマン主義を比べる。作品名一覧を丸暗記させず、作品の内容や発表年を補わない。",
+      "questions": [
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "代表作と著者",
+          "prompt": "明治時代の日本で、小説『吾輩は猫である』を著した人物は誰か。",
+          "answer": "**夏目漱石**。",
+          "keywords": [
+            "夏目漱石"
+          ],
+          "evidence": [
+            "soseki-name",
+            "soseki-work"
+          ]
+        },
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "ロマン主義の小説",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外の文学について、森鴎外が個人の感情を尊重するロマン主義で書いた代表的な小説は何か。",
+          "answer": "**『舞姫』**。",
+          "evidence": [
+            "ogai-work"
+          ],
+          "keywords": [
+            "『舞姫』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "漱石の留学先",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外について、夏目漱石が留学した国はどこか。",
+          "answer": "**イギリス**。",
+          "evidence": [
+            "soseki-study"
+          ],
+          "keywords": [
+            "イギリス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "鴎外の留学先",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外について、森鴎外が陸軍軍医として留学した国はどこか。",
+          "answer": "**ドイツ**。",
+          "evidence": [
+            "ogai-study"
+          ],
+          "keywords": [
+            "ドイツ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "漱石の主題",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外の文学について、夏目漱石が心理的手法で追求した人間の内面にかかわる主題を二つ挙げよ。",
+          "answer": "**孤独や利己主義**。",
+          "evidence": [
+            "soseki-expression"
+          ],
+          "keywords": [
+            "孤独や利己主義"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "漱石の活動と表現",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外について、夏目漱石の活動と文学上の特徴を説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**夏目漱石**は**イギリス留学**後、教職を経て作家となった。**心理的手法**で**孤独や利己主義**を追求し、代表作には**『吾輩は猫である』**がある。",
+          "evidence": [
+            "soseki-study",
+            "soseki-expression",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era",
+            "soseki-work"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "夏目漱石",
+            "イギリス留学",
+            "心理的手法",
+            "孤独や利己主義",
+            "『吾輩は猫である』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "鴎外の活動と表現",
+          "prompt": "明治時代の日本の夏目漱石と森鴎外について、森鴎外の活動と文学上の特徴を説明せよ。",
+          "answer": "**森鴎外**は**陸軍軍医**として**ドイツに留学**し、翻訳や評論などの文芸活動を展開した。個人の感情を尊重する**ロマン主義**の小説**『舞姫』**が代表作である。",
+          "evidence": [
+            "ogai-study",
+            "ogai-activities",
+            "ogai-work"
+          ],
+          "keywords": [
+            "森鴎外",
+            "陸軍軍医",
+            "ドイツに留学",
+            "ロマン主義",
+            "『舞姫』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「夏目漱石と森鴎外」について説明せよ。",
+          "answer": "**19世紀後半～20世紀初頭**の日本で、**夏目漱石**は**イギリス留学**後に教職を経て作家となり、**心理的手法**で**孤独や利己主義**を追求し、代表作には**『吾輩は猫である』**がある。**森鴎外**は**陸軍軍医**として**ドイツに留学**し、翻訳や評論などの活動を展開し、個人の感情を尊重する**ロマン主義**の小説**『舞姫』**を著した。",
+          "evidence": [
+            "soseki-study",
+            "soseki-expression",
+            "ogai-study",
+            "ogai-activities",
+            "ogai-work",
+            "meiji-start",
+            "meiji-end-year",
+            "meiji-end-era",
+            "soseki-work"
+          ],
+          "keywords": [
+            "19世紀後半～20世紀初頭",
+            "夏目漱石",
+            "イギリス留学",
+            "心理的手法",
+            "孤独や利己主義",
+            "『吾輩は猫である』",
+            "森鴎外",
+            "陸軍軍医",
+            "ドイツに留学",
+            "ロマン主義",
+            "『舞姫』"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "近代医学",
+      "reading": "きんだいいがく",
+      "category": "学問・科学",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治時代（19世紀後半～20世紀初頭）",
+        "sortYear": 1868
+      },
+      "explanation": "北里柴三郎と志賀潔の研究をまとめる。原資料に書かれた研究の事実にとどめ、病原菌・療法のしくみ、未記載の治療効果を補わない。野口英世の黄熱病研究の成果や長岡半太郎の理論発表年は不採用。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "破傷風菌の研究者",
+          "prompt": "明治時代の日本の近代医学で、破傷風菌の純粋培養に成功した人物は誰か。",
+          "answer": "**北里柴三郎**。",
+          "evidence": [
+            "kitazato-culture"
+          ],
+          "keywords": [
+            "北里柴三郎"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "成功した療法",
+          "prompt": "明治時代の日本の近代医学で、北里柴三郎が成功した療法は何か。",
+          "answer": "**血清療法(けっせいりょうほう)**。",
+          "evidence": [
+            "kitazato-serum"
+          ],
+          "keywords": [
+            "血清療法"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "赤痢菌の研究者",
+          "prompt": "明治時代の日本の近代医学で、赤痢菌を発見した人物は誰か。",
+          "answer": "**志賀潔**。",
+          "evidence": [
+            "shiga-bacteria"
+          ],
+          "keywords": [
+            "志賀潔"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "北里の研究",
+          "prompt": "明治時代の日本の近代医学で、北里柴三郎にはどのような研究業績があるか。",
+          "answer": "**北里柴三郎**は**1889年**に**破傷風菌の純粋培養**、**1890年**に**血清療法(けっせいりょうほう)**に成功した。",
+          "evidence": [
+            "kitazato-culture",
+            "kitazato-serum"
+          ],
+          "keywords": [
+            "北里柴三郎",
+            "1889年",
+            "破傷風菌の純粋培養",
+            "1890年",
+            "血清療法"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "志賀の研究",
+          "prompt": "明治時代の日本の近代医学で、志賀潔にはどのような研究業績があるか。",
+          "answer": "**志賀潔**は**1897年**に**赤痢菌**を発見した。",
+          "evidence": [
+            "shiga-bacteria"
+          ],
+          "keywords": [
+            "志賀潔",
+            "1897年",
+            "赤痢菌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「近代医学」について説明せよ。",
+          "answer": "日本の**北里柴三郎**は、**1889年**に**破傷風菌の純粋培養**、**1890年**に**血清療法(けっせいりょうほう)**に成功した。**志賀潔**は**1897年**に**赤痢菌**を発見した。",
+          "evidence": [
+            "kitazato-culture",
+            "kitazato-serum",
+            "shiga-bacteria"
+          ],
+          "keywords": [
+            "北里柴三郎",
+            "1889年",
+            "破傷風菌の純粋培養",
+            "1890年",
+            "血清療法",
+            "志賀潔",
+            "1897年",
+            "赤痢菌"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

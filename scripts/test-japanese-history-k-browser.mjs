@@ -99,7 +99,7 @@ try {
   const cloudProgress = (await readFile(path.join(root, "cloud-progress.js"), "utf8")).replace("export function normalizeSpeechParts(value)", "function unusedNormalizeSpeechParts(value)");
   await context.route("**/cloud-progress.js*", route => route.fulfill({ contentType: "text/javascript", body: cloudProgress + `\nexport function normalizeSpeechParts() { return ${JSON.stringify(off)}; }` }));
   const speechModule = (await readFile(path.join(root, "speech.js"), "utf8")).replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speechModule + `\nexport function createSpeechController() { return { supported: true, paused: false, currentTarget: null, stop() {}, unlock() {}, pause() { return false; }, resume() { return false; }, speak() { return false; }, preload() { return Promise.resolve(); } }; }` }));
+  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speechModule + `\nexport function createSpeechController() { return { supported: true, paused: false, currentTarget: null, stop() {}, unlock() {}, pause() { return false; }, resume() { return false; }, speak(segments = []) { if (segments.some(segment => String(segment?.text ?? "").trim())) { window.testAudioAttempts++; void window.reportTestAudioAttempt("読み上げ要求"); } return false; }, preload() { return Promise.resolve(); } }; }` }));
   // 音量ゼロでも内部で音源を開始するため、試験では評価音の処理も無音の代替にする。
   const ratingSoundModule = (await readFile(path.join(root, "rating-sound.js"), "utf8")).replace("export function createRatingSoundPlayer(", "function unusedRatingSoundPlayer(");
   await context.route("**/rating-sound.js*", route => route.fulfill({ contentType: "text/javascript", body: ratingSoundModule + `\nexport function createRatingSoundPlayer() { return { play() { return false; }, setVolume(value) { return value; }, clearCustomSound() {}, setCustomSound() { return Promise.resolve(false); }, close() { return Promise.resolve(); } }; }` }));
@@ -169,7 +169,7 @@ try {
   assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), groups.map(group => `${group.decks.reduce((sum, deck) => sum + deck.questionCount, 0).toLocaleString("ja-JP")}問`));
   const picker = number => page.locator(`.chapter-picker[data-chapter-id="chapter-${number}"]`);
   assert.equal(await picker(6).locator("summary").textContent(), "第6章のパート：1 / 15パート");
-  assert.equal(await picker(5).locator("summary").textContent(), "第5章のパート：0 / 6パート");
+  assert.equal(await picker(5).locator("summary").textContent(), `第5章のパート：0 / ${groups.find(group => group.number === 5).decks.length}パート`);
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);

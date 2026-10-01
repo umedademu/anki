@@ -1,0 +1,817 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 1,
+    "title": "戊辰戦争と新政府の発足"
+  },
+  "integrationPromptPrefix": "幕末から明治初期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_01_戊辰戦争と新政府の発足_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      286,
+      287,
+      288,
+      289
+    ],
+    "note": "担当本文・関連注・文献史料・東京遷都コラムを全文確認し、新政府の成立と指導層、東京への政府機関移転、戊辰戦争の開始・江戸城無血開城・終結、五箇条の御誓文と五榜の掲示の違いを扱う。供奉者や犠牲者の人数、戦闘の細かな経過、国境と現在の県域の細部、京都が現在も都であるという評価は出題しない。東京への移転は政府機関と政治の中心の移転として説明し、正式な遷都声明が出されたとはしない。民衆の政策は原文に明記されたキリシタン禁止の継承と外国人への暴行禁止の目的に限定する。"
+  },
+  "facts": [
+    {
+      "id": "restoration-year",
+      "page": 287,
+      "quote": "慶応三年（一八六七）、"
+    },
+    {
+      "id": "return-power",
+      "page": 287,
+      "quote": "幕府の大政奉還を受けて、朝廷は"
+    },
+    {
+      "id": "restoration-name",
+      "page": 287,
+      "quote": "**王政復古の大号令**を発し、"
+    },
+    {
+      "id": "restoration-purpose",
+      "page": 287,
+      "quote": "明治天皇を中心とした新たな政府を組織することを宣言しました。"
+    },
+    {
+      "id": "government-leaders",
+      "page": 287,
+      "quote": "新政府は薩長両藩などを主とした武士と、有力な公家らを指導者として任命し、"
+    },
+    {
+      "id": "yoshinobu-excluded",
+      "page": 287,
+      "quote": "徳川慶喜は加えられませんでした。"
+    },
+    {
+      "id": "oligarchy-leaders",
+      "page": 288,
+      "quote": "特に薩摩と長州の武士と、有力な公家などが要職を占め、"
+    },
+    {
+      "id": "oligarchy-name",
+      "page": 288,
+      "quote": "後に藩閥政治と呼ばれました。"
+    },
+    {
+      "id": "tokyo-rename",
+      "page": 287,
+      "quote": "「江戸」を「東京」とし、江戸城を皇居とすることが宣言された。"
+    },
+    {
+      "id": "tokyo-government",
+      "page": 287,
+      "quote": "政府機関は東京に移され、東京が新政府の政治の中心となり、"
+    },
+    {
+      "id": "war-opponents",
+      "page": 287,
+      "quote": "幕府軍と新政府軍が京都で衝突し、"
+    },
+    {
+      "id": "war-name",
+      "page": 288,
+      "quote": "を、**戊辰戦争**といいます。"
+    },
+    {
+      "id": "war-cause",
+      "page": 287,
+      "quote": "徳川の処遇に不満を持った"
+    },
+    {
+      "id": "war-start-year",
+      "page": 287,
+      "quote": "明治元年（一八六八）、"
+    },
+    {
+      "id": "war-start-place",
+      "page": 287,
+      "quote": "京都で衝突し、"
+    },
+    {
+      "id": "war-start-battle",
+      "page": 287,
+      "quote": "**鳥羽・伏見の戦い**が起き、内戦が始まりました。"
+    },
+    {
+      "id": "edo-negotiators",
+      "page": 287,
+      "quote": "**勝海舟**と**西郷隆盛**の話し合いにより"
+    },
+    {
+      "id": "edo-peace",
+      "page": 287,
+      "quote": "**江戸城無血開城**が実現し、江戸市中での大規模な戦闘は回避されました。"
+    },
+    {
+      "id": "enomoto",
+      "page": 287,
+      "quote": "箱館（函館、北海道）に逃れた榎本武揚は、"
+    },
+    {
+      "id": "enomoto-government",
+      "page": 287,
+      "quote": "その地で行政機構をともなう政権を樹立して"
+    },
+    {
+      "id": "war-end-year",
+      "page": 287,
+      "quote": "明治二年（一八六九）の"
+    },
+    {
+      "id": "war-end-battle",
+      "page": 287,
+      "quote": "**五稜郭の戦い**で"
+    },
+    {
+      "id": "war-end-result",
+      "page": 287,
+      "quote": "榎本らは新政府軍に敗れ、戦争は終結しました。"
+    },
+    {
+      "id": "oath-emperor",
+      "page": 288,
+      "quote": "明治天皇は"
+    },
+    {
+      "id": "oath-year",
+      "page": 288,
+      "quote": "慶応四年（一八六八）に、"
+    },
+    {
+      "id": "oath-name",
+      "page": 288,
+      "quote": "**五箇条の御誓文**を発布して維新の指針を定め、"
+    },
+    {
+      "id": "oath-public-discussion",
+      "page": 288,
+      "quote": "広く人材を集めて会議を開き、重要なことはすべて公に議論して決めなさい。"
+    },
+    {
+      "id": "oath-world-knowledge",
+      "page": 288,
+      "quote": "知識を世界に求め、国柄を大切にして国を発展させましょう。"
+    },
+    {
+      "id": "boards-date",
+      "page": 288,
+      "quote": "また同年、国民には④**五榜の掲示**が示されました。"
+    },
+    {
+      "id": "boards-definition",
+      "page": 288,
+      "quote": "五箇条の御誓文が発布された翌日に、明治政府が、民衆が順守すべき五カ条を記して掲げた。"
+    },
+    {
+      "id": "boards-religion",
+      "page": 288,
+      "quote": "③キリシタン、邪宗門を禁じる、"
+    },
+    {
+      "id": "boards-inheritance",
+      "page": 288,
+      "quote": "①〜③は江戸幕府の民衆政策を引き継ぐもので、"
+    },
+    {
+      "id": "boards-foreigners",
+      "page": 288,
+      "quote": "④外国人への暴行を禁じる、"
+    },
+    {
+      "id": "boards-anti-joi",
+      "page": 288,
+      "quote": "④〜⑤は攘夷運動を取り締まることを目的とする。"
+    },
+    {
+      "id": "restoration-definition",
+      "page": 288,
+      "quote": "**明治維新**と呼ばれる、近代統一国家とこれを支える新政府が形成されていく一連の政治的社会的変革"
+    },
+    {
+      "id": "war-series",
+      "page": 287,
+      "quote": "この一連の内戦"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "明治新政府の発足",
+      "reading": "めいじしんせいふのほっそく",
+      "category": "政治体制の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1867年～明治初期",
+        "sortYear": 1867
+      },
+      "explanation": "王政復古の大号令による新政府の成立は、近代統一国家と新政府の形成に至る政治的・社会的変革である明治維新の一部として捉える。指導層の構成、東京への政府機関の移転をつなげ、薩摩・長州の武士と有力な公家が要職を占めた政治が後に藩閥政治と呼ばれたことを学ぶ。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "宣言名",
+          "prompt": "幕末の日本で、大政奉還を受けた朝廷が新たな政府を組織することを宣言した際に発した大号令は何か。",
+          "answer": "**王政復古の大号令**。",
+          "keywords": [
+            "王政復古の大号令"
+          ],
+          "evidence": [
+            "return-power",
+            "restoration-name",
+            "restoration-purpose"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "発足の年",
+          "prompt": "日本の明治新政府の発足に関して、王政復古の大号令が発せられたのは何年か。",
+          "answer": "1867年。",
+          "keywords": [],
+          "evidence": [
+            "restoration-year",
+            "restoration-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "指導層",
+          "prompt": "日本の明治新政府の発足に際して、指導者として任命されたのは、主にどのような人々か。",
+          "answer": "主に**薩摩・長州の武士**と**有力な公家(くげ)**。",
+          "keywords": [
+            "薩摩・長州の武士",
+            "有力な公家"
+          ],
+          "evidence": [
+            "government-leaders",
+            "oligarchy-leaders"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "旧幕府の指導者の処遇",
+          "prompt": "日本の明治新政府の発足に際して、指導者に加えられなかった旧幕府の指導者は誰か。",
+          "answer": "**徳川慶喜(とくがわよしのぶ)**。",
+          "keywords": [
+            "徳川慶喜"
+          ],
+          "evidence": [
+            "yoshinobu-excluded"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政治の呼称",
+          "prompt": "明治初期の日本で、特に薩摩・長州の武士と有力な公家が政府の要職を占めた政治は、後に何と呼ばれたか。",
+          "answer": "**藩閥政治**。",
+          "keywords": [
+            "藩閥政治"
+          ],
+          "evidence": [
+            "oligarchy-leaders",
+            "oligarchy-name"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "place",
+          "form": "政治の中心",
+          "prompt": "日本の明治新政府の発足にともない、政府機関が移され、政治の中心となった都市はどこか。",
+          "answer": "**東京**。",
+          "keywords": [
+            "東京"
+          ],
+          "evidence": [
+            "tokyo-government"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政治的・社会的変革の名称",
+          "prompt": "幕末から明治初期の日本で、近代統一国家とそれを支える新政府の形成に至る、一連の政治的・社会的変革を何というか。",
+          "answer": "**明治維新**。",
+          "keywords": [
+            "明治維新"
+          ],
+          "evidence": [
+            "restoration-definition"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "新政府成立の経緯",
+          "prompt": "幕末から明治初期の日本で、明治新政府の成立はどのような変革の一部だったか。",
+          "answer": "1867年、日本では幕府の**大政奉還**を受け、朝廷が**王政復古の大号令**を発し、**明治天皇**を中心とする新政府の組織を宣言した。近代統一国家とそれを支える新政府の形成に至る、一連の**政治的・社会的変革**を**明治維新**という。",
+          "keywords": [
+            "大政奉還",
+            "王政復古の大号令",
+            "明治天皇",
+            "政治的・社会的変革",
+            "明治維新"
+          ],
+          "evidence": [
+            "restoration-year",
+            "return-power",
+            "restoration-name",
+            "restoration-purpose",
+            "restoration-definition"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "指導層の構成",
+          "prompt": "日本の明治新政府の指導層は、どのように構成されたか。",
+          "answer": "主に**薩摩・長州の武士**と**有力な公家(くげ)**が指導者となり、**徳川慶喜(とくがわよしのぶ)**は加えられなかった。戊辰戦争後にも、特に薩摩と長州の武士と有力な公家が政府の要職を占め、後に**藩閥政治**と呼ばれた。",
+          "keywords": [
+            "薩摩・長州の武士",
+            "有力な公家",
+            "徳川慶喜",
+            "藩閥政治"
+          ],
+          "evidence": [
+            "government-leaders",
+            "yoshinobu-excluded",
+            "oligarchy-leaders",
+            "oligarchy-name"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政治の中心の移転",
+          "prompt": "明治初期の日本では、新政府の政治の中心はどのように移ったか。",
+          "answer": "明治初期には、**江戸**が**東京**と改称され、**江戸城**が**皇居**となった。政府機関も東京へ移され、東京が新政府の政治の中心となった。",
+          "keywords": [
+            "江戸",
+            "東京",
+            "江戸城",
+            "皇居"
+          ],
+          "evidence": [
+            "tokyo-rename",
+            "tokyo-government"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "幕末から明治初期の日本の「明治新政府の発足」について説明せよ。",
+          "answer": "日本の**明治維新**は、近代統一国家と新政府の形成に至る**政治的・社会的変革**であり、1867年に幕府の**大政奉還**を受けた朝廷が**王政復古の大号令**を発して、**明治天皇**を中心とする新政府の組織を宣言した。新政府の指導者は主に**薩摩・長州の武士**と**有力な公家(くげ)**で、**徳川慶喜(とくがわよしのぶ)**は加えられず、戊辰戦争後もこれらの人々が要職を占める政治は、後に**藩閥政治**と呼ばれた。明治初期には**江戸**が**東京**と改称され、**江戸城**が**皇居**となり、政府機関が東京へ移されて政治の中心となった。",
+          "keywords": [
+            "明治維新",
+            "政治的・社会的変革",
+            "大政奉還",
+            "王政復古の大号令",
+            "明治天皇",
+            "薩摩・長州の武士",
+            "有力な公家",
+            "徳川慶喜",
+            "藩閥政治",
+            "江戸",
+            "東京",
+            "江戸城",
+            "皇居"
+          ],
+          "evidence": [
+            "restoration-year",
+            "return-power",
+            "restoration-name",
+            "restoration-purpose",
+            "government-leaders",
+            "yoshinobu-excluded",
+            "oligarchy-leaders",
+            "oligarchy-name",
+            "tokyo-rename",
+            "tokyo-government",
+            "restoration-definition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "戊辰戦争",
+      "reading": "ぼしんせんそう",
+      "category": "内戦と政権交代",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1868～1869年",
+        "sortYear": 1868
+      },
+      "explanation": "徳川の処遇をめぐる対立から始まった内戦を、鳥羽・伏見、江戸城の無血開城、箱館の五稜郭という流れで捉える。江戸市中で大規模な戦闘を回避できても、戦争全体は翌年まで続いた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "内戦名",
+          "prompt": "幕末から明治初期の日本で、幕府軍と新政府軍の間で行われた一連の内戦は何か。",
+          "answer": "**戊辰戦争(ぼしんせんそう)**。",
+          "keywords": [
+            "戊辰戦争"
+          ],
+          "evidence": [
+            "war-opponents",
+            "war-series",
+            "war-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "開戦の背景",
+          "prompt": "日本の戊辰戦争で、幕府軍が新政府軍と衝突した背景にあった不満は何か。",
+          "answer": "**徳川の処遇への不満**。",
+          "keywords": [
+            "徳川の処遇への不満"
+          ],
+          "evidence": [
+            "war-cause"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "内戦の開始",
+          "prompt": "日本の戊辰戦争が始まるきっかけとなった、京都での戦いは何か。",
+          "answer": "**鳥羽・伏見の戦い**。",
+          "keywords": [
+            "鳥羽・伏見の戦い"
+          ],
+          "evidence": [
+            "war-start-place",
+            "war-start-battle"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "江戸城での交渉",
+          "prompt": "日本の戊辰戦争で、江戸城の無血開城を実現させる話し合いを行った二人は誰か。",
+          "answer": "**勝海舟(かつかいしゅう)**と**西郷隆盛(さいごうたかもり)**。",
+          "keywords": [
+            "勝海舟",
+            "西郷隆盛"
+          ],
+          "evidence": [
+            "edo-negotiators"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "箱館に逃れた指導者",
+          "prompt": "日本の戊辰戦争で、幕府の艦隊とともに箱館へ逃れ、政権を樹立した人物は誰か。",
+          "answer": "**榎本武揚(えのもとたけあき)**。",
+          "keywords": [
+            "榎本武揚"
+          ],
+          "evidence": [
+            "enomoto",
+            "enomoto-government"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "戦争終結の戦い",
+          "prompt": "日本の戊辰戦争で、箱館に逃れた榎本武揚らが敗れ、戦争が終結した戦いは何か。",
+          "answer": "**五稜郭の戦い(ごりょうかくのたたかい)**。",
+          "keywords": [
+            "五稜郭の戦い"
+          ],
+          "evidence": [
+            "war-end-battle",
+            "war-end-result"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "戦争の終結年",
+          "prompt": "日本の戊辰戦争が終結したのは何年か。",
+          "answer": "1869年。",
+          "keywords": [],
+          "evidence": [
+            "war-end-year",
+            "war-end-result"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内戦の始まり",
+          "prompt": "日本の戊辰戦争は、どのように始まったか。",
+          "answer": "1868年、日本では**徳川の処遇への不満**を持つ幕府軍が新政府軍と京都で衝突した。**鳥羽・伏見の戦い**をきっかけに内戦が始まった。",
+          "keywords": [
+            "徳川の処遇への不満",
+            "鳥羽・伏見の戦い"
+          ],
+          "evidence": [
+            "war-start-year",
+            "war-cause",
+            "war-opponents",
+            "war-start-battle"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "江戸城の引き渡し",
+          "prompt": "日本の戊辰戦争で、江戸城無血開城はどのように実現したか。",
+          "answer": "**勝海舟(かつかいしゅう)**と**西郷隆盛(さいごうたかもり)**の話し合いにより、**江戸城無血開城**が実現した。江戸市中での大規模な戦闘は回避された。",
+          "keywords": [
+            "勝海舟",
+            "西郷隆盛",
+            "江戸城無血開城"
+          ],
+          "evidence": [
+            "edo-negotiators",
+            "edo-peace"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内戦の終結",
+          "prompt": "日本の戊辰戦争は、どのように終結したか。",
+          "answer": "幕府の艦隊とともに北海道の**箱館**へ逃れた**榎本武揚(えのもとたけあき)**は、政権を樹立した。1869年の**五稜郭の戦い(ごりょうかくのたたかい)**で榎本らが新政府軍に敗れ、戦争は終結した。",
+          "keywords": [
+            "箱館",
+            "榎本武揚",
+            "五稜郭の戦い"
+          ],
+          "evidence": [
+            "enomoto",
+            "enomoto-government",
+            "war-end-year",
+            "war-end-battle",
+            "war-end-result"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "幕末から明治初期の日本の「戊辰戦争」について説明せよ。",
+          "answer": "1868年、日本では**徳川の処遇への不満**を持つ幕府軍が新政府軍と京都で衝突し、**鳥羽・伏見の戦い**から内戦が始まった。**勝海舟(かつかいしゅう)**と**西郷隆盛(さいごうたかもり)**の話し合いで**江戸城無血開城**が実現し、江戸市中での大規模な戦闘は回避された。北海道の**箱館**へ逃れた**榎本武揚(えのもとたけあき)**らが1869年の**五稜郭の戦い(ごりょうかくのたたかい)**で新政府軍に敗れ、戦争が終結した。",
+          "keywords": [
+            "徳川の処遇への不満",
+            "鳥羽・伏見の戦い",
+            "勝海舟",
+            "西郷隆盛",
+            "江戸城無血開城",
+            "箱館",
+            "榎本武揚",
+            "五稜郭の戦い"
+          ],
+          "evidence": [
+            "war-start-year",
+            "war-cause",
+            "war-opponents",
+            "war-start-battle",
+            "edo-negotiators",
+            "edo-peace",
+            "enomoto",
+            "war-end-year",
+            "war-end-battle",
+            "war-end-result"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "五箇条の御誓文と五榜の掲示",
+      "reading": "ごかじょうのごせいもんとごぼうのけいじ",
+      "category": "政治方針と民衆政策",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1868年",
+        "sortYear": 1868
+      },
+      "explanation": "五箇条の御誓文は維新の指針を示した一方、五榜の掲示は民衆が守るべき規則を示した。御誓文の公の議論・世界からの知識と、五榜の掲示による江戸幕府の民衆政策の継承や攘夷運動の取り締まりを区別する。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政治方針の文書名",
+          "prompt": "明治初期の日本で、新政府が維新の指針として発布した文書は何か。",
+          "answer": "**五箇条の御誓文(ごかじょうのごせいもん)**。",
+          "keywords": [
+            "五箇条の御誓文"
+          ],
+          "evidence": [
+            "oath-name"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "民衆向けの掲示名",
+          "prompt": "明治初期の日本で、五箇条の御誓文の発布翌日に、民衆が守るべき五カ条を掲げたものは何か。",
+          "answer": "**五榜の掲示(ごぼうのけいじ)**。",
+          "keywords": [
+            "五榜の掲示"
+          ],
+          "evidence": [
+            "boards-definition",
+            "boards-date"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "発布した人物",
+          "prompt": "明治初期の日本の五箇条の御誓文と五榜の掲示のうち、五箇条の御誓文を発布したのは誰か。",
+          "answer": "**明治天皇**。",
+          "keywords": [
+            "明治天皇"
+          ],
+          "evidence": [
+            "oath-emperor",
+            "oath-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "重要事項の決め方",
+          "prompt": "明治初期の日本の五箇条の御誓文と五榜の掲示のうち、御誓文は政治の重要事項をどのように決めるべきとしたか。",
+          "answer": "広く人材を集めて会議を開き、**公に議論して決める**。",
+          "keywords": [
+            "公に議論して決める"
+          ],
+          "evidence": [
+            "oath-public-discussion"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "知識の求め方",
+          "prompt": "明治初期の日本の五箇条の御誓文と五榜の掲示のうち、御誓文は国の発展のため、知識をどこに求めるべきとしたか。",
+          "answer": "**世界**に求める。",
+          "keywords": [
+            "世界"
+          ],
+          "evidence": [
+            "oath-world-knowledge"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "宗教への対応",
+          "prompt": "明治初期の日本の五箇条の御誓文と五榜の掲示のうち、五榜の掲示が禁止した宗教は何か。",
+          "answer": "**キリシタン**。",
+          "keywords": [
+            "キリシタン"
+          ],
+          "evidence": [
+            "boards-religion"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "外国人への暴行禁止の目的",
+          "prompt": "明治初期の日本の五箇条の御誓文と五榜の掲示のうち、五榜の掲示が外国人への暴行を禁じたのは、どの運動を取り締まるためか。",
+          "answer": "**攘夷運動(じょういうんどう)**。",
+          "keywords": [
+            "攘夷運動"
+          ],
+          "evidence": [
+            "boards-foreigners",
+            "boards-anti-joi"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "御誓文の方針",
+          "prompt": "明治初期の日本の五箇条の御誓文は、国家運営についてどのような方針を示したか。",
+          "answer": "1868年、日本で**明治天皇**が**五箇条の御誓文(ごかじょうのごせいもん)**を発布し、維新の指針を示した。政治の重要事項は**公に議論して決める**こと、知識を**世界**に求めて国を発展させることを示した。",
+          "keywords": [
+            "明治天皇",
+            "五箇条の御誓文",
+            "公に議論して決める",
+            "世界"
+          ],
+          "evidence": [
+            "oath-emperor",
+            "oath-year",
+            "oath-name",
+            "oath-public-discussion",
+            "oath-world-knowledge"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "民衆政策の内容",
+          "prompt": "明治初期の日本の五榜の掲示には、民衆に対するどのような政策が示されたか。",
+          "answer": "1868年の**五榜の掲示(ごぼうのけいじ)**は、**キリシタン**禁止など、**江戸幕府の民衆政策の継承**を示した。また、外国人への暴行を禁じて**攘夷運動(じょういうんどう)**を取り締まることを目的とした。",
+          "keywords": [
+            "五榜の掲示",
+            "キリシタン",
+            "江戸幕府の民衆政策の継承",
+            "攘夷運動"
+          ],
+          "evidence": [
+            "boards-date",
+            "boards-definition",
+            "boards-religion",
+            "boards-inheritance",
+            "boards-foreigners",
+            "boards-anti-joi",
+            "oath-year"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "幕末から明治初期の日本の「五箇条の御誓文と五榜の掲示」について説明せよ。",
+          "answer": "1868年、日本で**明治天皇**が発布した**五箇条の御誓文(ごかじょうのごせいもん)**は、政治の重要事項を**公に議論して決める**こと、知識を**世界**に求めて国を発展させることを示した。民衆向けの**五榜の掲示(ごぼうのけいじ)**は、**キリシタン**禁止など、**江戸幕府の民衆政策の継承**を示した。また、外国人への暴行を禁じて**攘夷運動(じょういうんどう)**を取り締まることを目的とした。",
+          "keywords": [
+            "明治天皇",
+            "五箇条の御誓文",
+            "公に議論して決める",
+            "世界",
+            "五榜の掲示",
+            "キリシタン",
+            "江戸幕府の民衆政策の継承",
+            "攘夷運動"
+          ],
+          "evidence": [
+            "oath-emperor",
+            "oath-year",
+            "oath-name",
+            "oath-public-discussion",
+            "oath-world-knowledge",
+            "boards-date",
+            "boards-definition",
+            "boards-religion",
+            "boards-inheritance",
+            "boards-foreigners",
+            "boards-anti-joi"
+          ]
+        }
+      ]
+    }
+  ]
+}

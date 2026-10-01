@@ -1,0 +1,1358 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 3,
+    "title": "富国強兵と文明開化"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_03_富国強兵と文明開化_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      291,
+      292,
+      293,
+      294,
+      295,
+      296,
+      297
+    ],
+    "note": "291頁のハ見出しから297頁ニ見出し直前までと関連注記・図表・史料・コラムを通読して選定。徴兵・地租改正の前項本文・注⑩⑪は不採用。工場と鉱山の全一覧・払下げ年と相手、航路の競争・成長評価、博覧会の人数、クレーンと端島の細部・現在の稼働状態、紙幣肖像の現状や予定は出題しない。岩倉使節団の交渉不調を委任状忘れ等だけで説明せず、人数・留学生年齢は要求しない。宗教政策の思想的評価・野蛮国という評価、近代化による豊かさ・文化衰退、学問と階層についての著者の主張を普遍的事実とする問い、母親の伝記逸話は採用しない。貨幣単位の詳細換算・銀行数、新暦の日付換算・閏年規定も要求しない。明治初期年表は対象政策と著作の同一事実の時期補助だけに使用する。"
+  },
+  "facts": [
+    {
+      "id": "industry-name",
+      "page": 291,
+      "quote": "その原動力となるのが、**殖産興業**でした。"
+    },
+    {
+      "id": "industry-goal",
+      "page": 291,
+      "quote": "国力を増強させ、**富国強兵**、つまり強い経済力と強い軍隊を持つことを目指しました。"
+    },
+    {
+      "id": "industry-office",
+      "page": 291,
+      "quote": "産業を整備して国力の向上を図るため明治三年（一八七〇）に工部省を設置し、"
+    },
+    {
+      "id": "industry-transport",
+      "page": 291,
+      "quote": "主要都市と貿易港を結ぶ鉄道を敷設し、蒸気船の運航を始めました。"
+    },
+    {
+      "id": "industry-post-person",
+      "page": 291,
+      "quote": "**前島密**によって郵便制度が確立され、"
+    },
+    {
+      "id": "industry-telegraph",
+      "page": 291,
+      "quote": "電信網が整備されました。"
+    },
+    {
+      "id": "industry-factories",
+      "page": 291,
+      "quote": "政府は欧米の技術者を招き（お雇い外国人）、欧米から機械を購入して**官営模範工場**を造ることで、近代産業を育成しました。"
+    },
+    {
+      "id": "industry-home-office",
+      "page": 291,
+      "quote": "明治六年（一八七三）には警察、地方自治、殖産興業を所管する**内務省**を設置しました。"
+    },
+    {
+      "id": "tomioka-name",
+      "page": 292,
+      "quote": "官営模範工場の富岡製糸場"
+    },
+    {
+      "id": "tomioka-year",
+      "page": 292,
+      "quote": "明治5年（1872）設立の官営模範工場の富岡製糸場"
+    },
+    {
+      "id": "tomioka-location",
+      "page": 292,
+      "quote": "富岡製糸場（群馬県）"
+    },
+    {
+      "id": "tomioka-technology",
+      "page": 292,
+      "quote": "フランス人技師を招聘し、フランス製機械を備えた大規模なものだった。"
+    },
+    {
+      "id": "textile-exports",
+      "page": 292,
+      "quote": "日本は製糸業と紡績業に力を入れ、生糸（絹糸）と綿糸、絹織物と綿織物は輸出品の主力となった。"
+    },
+    {
+      "id": "currency-law-name",
+      "page": 293,
+      "quote": "新貨条例を制定し、"
+    },
+    {
+      "id": "currency-law-year",
+      "page": 293,
+      "quote": "政府は明治4年（1871）に新貨条例を制定し、"
+    },
+    {
+      "id": "currency-unit",
+      "page": 293,
+      "quote": "貨幣の単位に「円」を採用し、"
+    },
+    {
+      "id": "currency-system",
+      "page": 293,
+      "quote": "円・銭・厘の十進法による貨幣制度を定め"
+    },
+    {
+      "id": "currency-coins",
+      "page": 293,
+      "quote": "硬貨を発行した。"
+    },
+    {
+      "id": "bank-model",
+      "page": 293,
+      "quote": "また明治5年にはアメリカの制度を模範とした国立銀行条例を制定し、"
+    },
+    {
+      "id": "bank-convertible",
+      "page": 293,
+      "quote": "金貨と交換できる兌換紙幣の発行が許された国立銀行"
+    },
+    {
+      "id": "bank-private",
+      "page": 293,
+      "quote": "国立銀行（国法によって設立された銀行）の設立を民間に促した。"
+    },
+    {
+      "id": "mission-name",
+      "page": 294,
+      "quote": "**岩倉使節団**を欧米に派遣しました。"
+    },
+    {
+      "id": "mission-students",
+      "page": 294,
+      "quote": "留学生が随行し、各国に留学した。"
+    },
+    {
+      "id": "mission-purpose-start",
+      "page": 291,
+      "quote": "国内の制度を整備した政府は明治四年（一八七一）、幕末に幕府が欧米諸国と結んだ**不平等条約**を改正するた"
+    },
+    {
+      "id": "mission-leader",
+      "page": 294,
+      "quote": "め、岩倉具視を全権大使とする"
+    },
+    {
+      "id": "mission-observation",
+      "page": 294,
+      "quote": "条約改正の交渉は受けつけられず、主に欧米諸国の進んだ技術や社会の視察に専念して"
+    },
+    {
+      "id": "religion-separation",
+      "page": 294,
+      "quote": "**神仏判然令**を出して、神道と仏教を明確に区別することを求めると、"
+    },
+    {
+      "id": "religion-destruction",
+      "page": 294,
+      "quote": "**廃仏毀釈**の運動が広がりました。"
+    },
+    {
+      "id": "religion-confusion",
+      "page": 294,
+      "quote": "神仏習合の歴史が長かったため、宗教界は大混乱に陥りました。"
+    },
+    {
+      "id": "religion-separation-year",
+      "page": 292,
+      "quote": "明治元年（1868） | 「五箇条の御誓文」発布<br>神仏判然令"
+    },
+    {
+      "id": "christian-ban",
+      "page": 294,
+      "quote": "明治政府は当初キリスト教を禁教としたが、"
+    },
+    {
+      "id": "christian-protest",
+      "page": 294,
+      "quote": "欧米から抗議を受け、"
+    },
+    {
+      "id": "christian-treaty",
+      "page": 294,
+      "quote": "禁教が条約改正を妨げていることが分かり、"
+    },
+    {
+      "id": "christian-release",
+      "page": 294,
+      "quote": "明治6年（1873）に禁教を解いた。"
+    },
+    {
+      "id": "civilization-name",
+      "page": 294,
+      "quote": "これを**文明開化**といいます。"
+    },
+    {
+      "id": "civilization-life",
+      "page": 294,
+      "quote": "洋服や帽子といった服飾や、肉料理などの食文化、ランプやレンガ造りの西洋建築などが取り入れられ、住環境が劇的に**西洋化**しました。"
+    },
+    {
+      "id": "civilization-scenery",
+      "page": 294,
+      "quote": "ガス灯や馬車などが新たな景観を生み出したのもこのころです。"
+    },
+    {
+      "id": "calendar-old",
+      "page": 295,
+      "quote": "月の満ち欠けの周期で日を数え、太陽の動きにより季節に合うように調節した「太陰太陽暦」（太陰暦、旧暦）を使用していた"
+    },
+    {
+      "id": "calendar-new",
+      "page": 295,
+      "quote": "「太陽暦」（新暦）を導入し、"
+    },
+    {
+      "id": "calendar-year",
+      "page": 295,
+      "quote": "明治5年（1872）にこれまでの旧暦を廃止して、"
+    },
+    {
+      "id": "calendar-method",
+      "page": 295,
+      "quote": "地球が太陽の周りを1回転するのを1年とする"
+    },
+    {
+      "id": "fukuzawa-author",
+      "page": 294,
+      "quote": "**福沢諭吉**は**『学問のすゝめ』**で"
+    },
+    {
+      "id": "fukuzawa-principles",
+      "page": 294,
+      "quote": "独立自尊の精神を説き、学問の重要性を啓蒙し、"
+    },
+    {
+      "id": "fukuzawa-west",
+      "page": 294,
+      "quote": "さまざまな西洋文化を紹介する書籍を発表しましたが、"
+    },
+    {
+      "id": "fukuzawa-caution",
+      "page": 294,
+      "quote": "同時に無秩序な西洋化には反対しました。"
+    },
+    {
+      "id": "fukuzawa-year",
+      "page": 292,
+      "quote": "明治5年（1872） | 「学問のすゝめ」初編発行"
+    },
+    {
+      "id": "fukuzawa-equality",
+      "page": 295,
+      "quote": "人は生まれながらにして貴賤・貧富の別なし。"
+    },
+    {
+      "id": "fukuzawa-study",
+      "page": 295,
+      "quote": "されば賢人と愚人との別は学ぶと学ばざるとによりてできるものなり。"
+    },
+    {
+      "id": "industry-method",
+      "page": 291,
+      "quote": "産業を整備して国力の向上を図るため"
+    },
+    {
+      "id": "chomin-ideas",
+      "page": 295,
+      "quote": "岩倉使節団に随伴してフランスに留学した中江兆民は、帰国後「人は生まれながらに平等である」と説くルソーの思想を日本に紹介し、"
+    },
+    {
+      "id": "chomin-book",
+      "page": 294,
+      "quote": "また、中江兆民はルソーの『社会契約論』を翻訳して日本に紹介しました。"
+    },
+    {
+      "id": "chomin-role",
+      "page": 295,
+      "quote": "後に自由民権運動の理論的指導者となる。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "殖産興業",
+      "reading": "しょくさんこうぎょう",
+      "category": "政策・制度",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治初期（1870年・1873年の制度整備）",
+        "sortYear": 1870
+      },
+      "explanation": "産業育成と富国強兵の関係、行政機関、交通・通信、外国技術と官営工場の活用を学ぶ。改革の成功評価や工場一覧は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政策名",
+          "prompt": "明治初期の日本で、政府が産業を整備して国力の向上を図った政策は何か。",
+          "answer": "**殖産興業**。",
+          "evidence": [
+            "industry-name",
+            "industry-method"
+          ],
+          "keywords": [
+            "殖産興業"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "目標との関係",
+          "prompt": "明治初期の日本で、殖産興業が原動力となった、強い経済力と強い軍隊を目指す方針は何か。",
+          "answer": "**富国強兵**。",
+          "evidence": [
+            "industry-goal"
+          ],
+          "keywords": [
+            "富国強兵"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "産業整備の行政機関",
+          "prompt": "明治初期の日本で、1870年に殖産興業のための産業整備を進める目的で設置された省は何か。",
+          "answer": "**工部省**。",
+          "evidence": [
+            "industry-office"
+          ],
+          "keywords": [
+            "工部省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "殖産興業を所管した省",
+          "prompt": "明治初期の日本で、警察や地方自治とともに殖産興業を所管するために設置された省は何か。",
+          "answer": "**内務省**。",
+          "evidence": [
+            "industry-home-office"
+          ],
+          "keywords": [
+            "内務省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "郵便制度の整備",
+          "prompt": "明治初期の殖産興業に伴う日本の通信整備で、郵便制度を確立した人物は誰か。",
+          "answer": "**前島密**。",
+          "evidence": [
+            "industry-post-person"
+          ],
+          "keywords": [
+            "前島密"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "目的と行政機関",
+          "prompt": "明治初期の日本の殖産興業は、どのような目標と行政機関のもとで進められたか。",
+          "answer": "産業を整備して国力を高め、強い経済力と強い軍隊を持つ**富国強兵**を目指した。**1870年**に**工部省**を設置し、**1873年**には殖産興業のほか警察・地方自治を所管する**内務省**を設置した。",
+          "evidence": [
+            "industry-name",
+            "industry-goal",
+            "industry-office",
+            "industry-home-office"
+          ],
+          "keywords": [
+            "富国強兵",
+            "1870年",
+            "工部省",
+            "1873年",
+            "内務省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "産業を育てる方法",
+          "prompt": "明治初期の日本の殖産興業では、産業や交通・通信をどのように整備したか。",
+          "answer": "主要都市と貿易港を結ぶ**鉄道**を敷設して**蒸気船**を運航し、**前島密**による**郵便制度**の確立と**電信網**の整備を進めた。欧米の**技術者**を招き、**機械**を購入し、**官営模範工場**を造って近代産業を育成した。",
+          "evidence": [
+            "industry-transport",
+            "industry-post-person",
+            "industry-telegraph",
+            "industry-factories"
+          ],
+          "keywords": [
+            "鉄道",
+            "蒸気船",
+            "前島密",
+            "郵便制度",
+            "電信網",
+            "技術者",
+            "機械",
+            "官営模範工場"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「殖産興業」について説明せよ。",
+          "answer": "明治初期の日本で、産業を整備して**富国強兵**を目指した政策で、**1870年**に**工部省**、**1873年**に**内務省**を設置した。**鉄道**・**蒸気船**による交通と、**郵便制度**・**電信網**による通信を整備した。欧米から**技術者**を招き、**機械**を購入して**官営模範工場**を造り、近代産業を育てた。",
+          "evidence": [
+            "industry-name",
+            "industry-goal",
+            "industry-office",
+            "industry-home-office",
+            "industry-transport",
+            "industry-post-person",
+            "industry-telegraph",
+            "industry-factories"
+          ],
+          "keywords": [
+            "富国強兵",
+            "1870年",
+            "工部省",
+            "1873年",
+            "内務省",
+            "鉄道",
+            "蒸気船",
+            "郵便制度",
+            "電信網",
+            "技術者",
+            "機械",
+            "官営模範工場"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "官営模範工場",
+      "reading": "かんえいもはんこうじょう",
+      "category": "産業・技術",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治初期（富岡製糸場は1872年設立）",
+        "sortYear": 1872
+      },
+      "explanation": "政府が外国の技術を取り入れた工場と富岡製糸場の例、製糸・紡績製品の輸出を学ぶ。工場名・払下げ先を一覧暗記させない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "工場の種類",
+          "prompt": "明治初期の日本で、政府が欧米の技術者や機械を取り入れ、近代産業を育てるために造った工場を何というか。",
+          "answer": "**官営模範工場**。",
+          "evidence": [
+            "industry-factories"
+          ],
+          "keywords": [
+            "官営模範工場"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "製糸工場の名称",
+          "prompt": "明治初期の日本で、官営模範工場として設立された、大規模な製糸工場は何か。",
+          "answer": "**富岡製糸場**。",
+          "evidence": [
+            "tomioka-name"
+          ],
+          "keywords": [
+            "富岡製糸場"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "製糸工場の所在",
+          "prompt": "日本の官営模範工場である富岡製糸場は、何県に設けられたか。",
+          "answer": "**群馬県**。",
+          "evidence": [
+            "tomioka-location"
+          ],
+          "keywords": [
+            "群馬県"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "技術の導入先",
+          "prompt": "日本の官営模範工場である富岡製糸場が、技師と機械を取り入れた国はどこか。",
+          "answer": "**フランス**。",
+          "evidence": [
+            "tomioka-technology"
+          ],
+          "keywords": [
+            "フランス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政府による工場整備",
+          "prompt": "明治初期の日本の官営模範工場はどのように造られたか。",
+          "answer": "政府が欧米の**技術者**を招き、欧米から**機械**を購入して整備した。**1872年**に設立された**群馬県**の**富岡製糸場**では、**フランス人技師**と**フランス製機械**を取り入れた。",
+          "evidence": [
+            "industry-factories",
+            "tomioka-year",
+            "tomioka-location",
+            "tomioka-technology"
+          ],
+          "keywords": [
+            "技術者",
+            "機械",
+            "1872年",
+            "群馬県",
+            "富岡製糸場",
+            "フランス人技師",
+            "フランス製機械"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "製糸・紡績業と輸出",
+          "prompt": "官営模範工場が整備された明治時代の日本で、製糸業と紡績業の製品は貿易においてどのような位置を占めたか。",
+          "answer": "日本は**製糸業と紡績業**に力を入れ、**生糸・綿糸**と**絹織物・綿織物**が輸出品の主力となった。",
+          "evidence": [
+            "textile-exports"
+          ],
+          "keywords": [
+            "製糸業と紡績業",
+            "生糸・綿糸",
+            "絹織物・綿織物"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「官営模範工場」について説明せよ。",
+          "answer": "明治初期の日本で、政府が欧米の**技術者**と**機械**を取り入れ、近代産業を育てるために造った工場である。**1872年**設立の**群馬県**の**富岡製糸場**では、**フランス人技師**と**フランス製機械**を取り入れた。この時期の日本では**製糸業と紡績業**に力が注がれ、**生糸・綿糸**や**絹織物・綿織物**が輸出品の主力となった。",
+          "evidence": [
+            "industry-factories",
+            "tomioka-year",
+            "tomioka-location",
+            "tomioka-technology",
+            "textile-exports"
+          ],
+          "keywords": [
+            "技術者",
+            "機械",
+            "1872年",
+            "群馬県",
+            "富岡製糸場",
+            "フランス人技師",
+            "フランス製機械",
+            "製糸業と紡績業",
+            "生糸・綿糸",
+            "絹織物・綿織物"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "貨幣制度と国立銀行",
+      "reading": "かへいせいどとこくりつぎんこう",
+      "category": "経済・制度",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1871年の新貨条例と明治初期の銀行制度",
+        "sortYear": 1871
+      },
+      "explanation": "円を単位とする十進法の貨幣制度と、民間に設立を促した国立銀行・兌換紙幣を関連づける。銀行数や両替の細かな換算は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "貨幣制度の法令名",
+          "prompt": "明治初期の日本で、新しい貨幣制度を定めた法令は何か。",
+          "answer": "**新貨条例**。",
+          "evidence": [
+            "currency-law-name"
+          ],
+          "keywords": [
+            "新貨条例"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "貨幣の単位",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行の整備において、新貨条例が貨幣の単位として採用したものは何か。",
+          "answer": "**円**。",
+          "evidence": [
+            "currency-unit"
+          ],
+          "keywords": [
+            "円"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "貨幣の計算方式",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行の整備において、円・銭・厘の貨幣制度は何進法で定められたか。",
+          "answer": "**十進法**。",
+          "evidence": [
+            "currency-system"
+          ],
+          "keywords": [
+            "十進法"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "紙幣の性質",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行において、国立銀行に発行が許された、金貨と交換できる紙幣を何というか。",
+          "answer": "**兌換紙幣(だかんしへい)**。",
+          "evidence": [
+            "bank-convertible"
+          ],
+          "keywords": [
+            "兌換紙幣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "銀行設立の主体",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行の整備において、政府は国立銀行の設立をどのような主体に促したか。",
+          "answer": "**民間**。",
+          "evidence": [
+            "bank-private"
+          ],
+          "keywords": [
+            "民間"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "新しい貨幣制度",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行について、新貨条例による貨幣制度を説明せよ。",
+          "answer": "日本政府は**1871年**に**新貨条例**を制定し、貨幣の単位に**円**を採用した。円・銭・厘の**十進法**による貨幣制度を定め、**硬貨**を発行した。",
+          "evidence": [
+            "currency-law-year",
+            "currency-unit",
+            "currency-system",
+            "currency-coins"
+          ],
+          "keywords": [
+            "1871年",
+            "新貨条例",
+            "円",
+            "十進法",
+            "硬貨"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "銀行制度と紙幣",
+          "prompt": "明治初期の日本の貨幣制度と国立銀行について、国立銀行の設立と紙幣発行はどのように進められたか。",
+          "answer": "政府は**アメリカの制度**を模範として国立銀行条例を定め、**国法によって設立される銀行**の設立を**民間**に促した。国立銀行には、**金貨と交換できる兌換紙幣(だかんしへい)**の発行が許された。",
+          "evidence": [
+            "bank-model",
+            "bank-private",
+            "bank-convertible"
+          ],
+          "keywords": [
+            "アメリカの制度",
+            "国法によって設立される銀行",
+            "民間",
+            "金貨と交換できる兌換紙幣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「貨幣制度と国立銀行」について説明せよ。",
+          "answer": "日本政府は**1871年**に**新貨条例**を制定し、**円**を単位とする**十進法**の貨幣制度を定めて**硬貨**を発行した。また、**アメリカの制度**を模範に、**国法によって設立される銀行**である国立銀行の設立を**民間**に促した。国立銀行には、**金貨と交換できる兌換紙幣(だかんしへい)**の発行が許された。",
+          "evidence": [
+            "currency-law-year",
+            "currency-unit",
+            "currency-system",
+            "currency-coins",
+            "bank-model",
+            "bank-private",
+            "bank-convertible"
+          ],
+          "keywords": [
+            "1871年",
+            "新貨条例",
+            "円",
+            "十進法",
+            "硬貨",
+            "アメリカの制度",
+            "国法によって設立される銀行",
+            "民間",
+            "金貨と交換できる兌換紙幣"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "岩倉使節団",
+      "reading": "いわくらしせつだん",
+      "category": "外交",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1871年に欧米へ派遣",
+        "sortYear": 1871
+      },
+      "explanation": "条約改正を目指した派遣と全権大使、欧米の技術・社会の視察を学ぶ。交渉不調を委任状忘れだけの因果にせず、人数・訪問国の全一覧・留学生の幼年齢は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "使節団名",
+          "prompt": "明治初期、日本の政府首脳と留学生が一行として欧米を歴訪した使節団は何か。",
+          "answer": "**岩倉使節団**。",
+          "evidence": [
+            "mission-name",
+            "mission-students"
+          ],
+          "keywords": [
+            "岩倉使節団"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "全権大使",
+          "prompt": "明治初期の日本の岩倉使節団で、全権大使を務めた人物は誰か。",
+          "answer": "**岩倉具視**。",
+          "evidence": [
+            "mission-leader"
+          ],
+          "keywords": [
+            "岩倉具視"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "派遣の目的",
+          "prompt": "日本政府が岩倉使節団を欧米へ派遣した外交上の目的は何か。",
+          "answer": "**不平等条約の改正**。",
+          "evidence": [
+            "mission-purpose-start",
+            "mission-leader",
+            "mission-name"
+          ],
+          "keywords": [
+            "不平等条約の改正"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "欧米での主要な活動",
+          "prompt": "日本の岩倉使節団が、条約改正の交渉が受け付けられなかった後、欧米で主に取り組んだ活動は何か。",
+          "answer": "**技術や社会の視察**。",
+          "evidence": [
+            "mission-observation"
+          ],
+          "keywords": [
+            "技術や社会の視察"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "派遣の目的と代表",
+          "prompt": "日本の岩倉使節団は、何を目指して派遣され、誰が代表を務めたか。",
+          "answer": "日本政府は**1871年**に、幕末に結んだ**不平等条約の改正**を目指して欧米へ使節団を派遣した。**岩倉具視**が全権大使を務めた。",
+          "evidence": [
+            "mission-purpose-start",
+            "mission-leader",
+            "mission-name"
+          ],
+          "keywords": [
+            "1871年",
+            "不平等条約の改正",
+            "岩倉具視"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "渡航先での活動",
+          "prompt": "明治初期の日本の岩倉使節団は、欧米でどのような活動を行ったか。",
+          "answer": "**条約改正の交渉は受け付けられず**、主に欧米の進んだ**技術や社会の視察**に取り組んだ。",
+          "evidence": [
+            "mission-observation"
+          ],
+          "keywords": [
+            "条約改正の交渉は受け付けられず",
+            "技術や社会の視察"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「岩倉使節団」について説明せよ。",
+          "answer": "日本政府が**1871年**に、幕末の**不平等条約の改正**を目指して欧米へ派遣した使節団で、**岩倉具視**が全権大使を務めた。**条約改正の交渉は受け付けられず**、主に欧米の**技術や社会の視察**に取り組んだ。",
+          "evidence": [
+            "mission-purpose-start",
+            "mission-leader",
+            "mission-name",
+            "mission-observation"
+          ],
+          "keywords": [
+            "1871年",
+            "不平等条約の改正",
+            "岩倉具視",
+            "条約改正の交渉は受け付けられず",
+            "技術や社会の視察"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "明治初期の宗教政策",
+      "reading": "めいじしょきのしゅうきょうせいさく",
+      "category": "政策・宗教",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1868年の神仏判然令と1873年のキリスト教禁教解除",
+        "sortYear": 1868
+      },
+      "explanation": "神道と仏教の分離と廃仏毀釈、キリスト教禁教と条約改正との関係を整理する。神道・仏教の思想評価や日本を野蛮国とみる価値判断は正答にしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "神道と仏教を分ける法令",
+          "prompt": "明治初期の日本で、神道と仏教を明確に区別することを求めた法令は何か。",
+          "answer": "**神仏判然令**。",
+          "evidence": [
+            "religion-separation"
+          ],
+          "keywords": [
+            "神仏判然令"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "分離に伴う運動",
+          "prompt": "日本の明治初期の宗教政策で、神仏判然令に伴って広がった運動を何というか。",
+          "answer": "**廃仏毀釈(はいぶつきしゃく)**。",
+          "evidence": [
+            "religion-destruction"
+          ],
+          "keywords": [
+            "廃仏毀釈"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "禁教政策の対象",
+          "prompt": "日本の明治初期の宗教政策で、政府が当初禁教としていた宗教は何か。",
+          "answer": "**キリスト教**。",
+          "evidence": [
+            "christian-ban"
+          ],
+          "keywords": [
+            "キリスト教"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "禁教と外交課題",
+          "prompt": "日本の明治初期の宗教政策で、キリスト教禁教が妨げとなった外交上の課題は何か。",
+          "answer": "**条約改正**。",
+          "evidence": [
+            "christian-treaty"
+          ],
+          "keywords": [
+            "条約改正"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "神道と仏教の分離",
+          "prompt": "日本の明治初期の宗教政策では、神道と仏教の関係をどのように変えたか。",
+          "answer": "**1868年**の**神仏判然令**により、**神道と仏教の分離**を求めた。**廃仏毀釈(はいぶつきしゃく)**が広がり、長い**神仏習合**の歴史があった宗教界は混乱した。",
+          "evidence": [
+            "religion-separation-year",
+            "religion-separation",
+            "religion-destruction",
+            "religion-confusion"
+          ],
+          "keywords": [
+            "1868年",
+            "神仏判然令",
+            "神道と仏教の分離",
+            "廃仏毀釈",
+            "神仏習合"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "キリスト教禁教の転換",
+          "prompt": "日本の明治初期の宗教政策では、キリスト教に対する禁教をどう改めたか。",
+          "answer": "政府は当初**キリスト教を禁教**としていたが、**欧米から抗議**を受け、禁教が**条約改正**を妨げていることも分かったため、**1873年**に禁教を解いた。",
+          "evidence": [
+            "christian-ban",
+            "christian-protest",
+            "christian-treaty",
+            "christian-release"
+          ],
+          "keywords": [
+            "キリスト教を禁教",
+            "欧米から抗議",
+            "条約改正",
+            "1873年"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「明治初期の宗教政策」について説明せよ。",
+          "answer": "日本では**1868年**の**神仏判然令**で**神道と仏教の分離**が求められ、**廃仏毀釈(はいぶつきしゃく)**が広がった。長い**神仏習合**の歴史があった宗教界は混乱した。一方、当初禁教とされたキリスト教については、**欧米から抗議**を受け、禁教が**条約改正**の妨げとなったことも分かり、**1873年**に禁教を解いた。",
+          "evidence": [
+            "religion-separation-year",
+            "religion-separation",
+            "religion-destruction",
+            "religion-confusion",
+            "christian-ban",
+            "christian-protest",
+            "christian-treaty",
+            "christian-release"
+          ],
+          "keywords": [
+            "1868年",
+            "神仏判然令",
+            "神道と仏教の分離",
+            "廃仏毀釈",
+            "神仏習合",
+            "欧米から抗議",
+            "条約改正",
+            "1873年"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "文明開化",
+      "reading": "ぶんめいかいか",
+      "category": "生活・文化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治初期（1872年に太陽暦を導入）",
+        "sortYear": 1872
+      },
+      "explanation": "西洋文化を取り入れた生活・景観の変化と暦の転換を学ぶ。豊かさや日本文化の衰退という評価、日付換算の細部や閏年規定は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "生活変化の名称",
+          "prompt": "明治初期の日本で、西洋の文化が取り入れられ、人々の生活や住環境が大きく変わった動きを何というか。",
+          "answer": "**文明開化**。",
+          "evidence": [
+            "civilization-life",
+            "civilization-name"
+          ],
+          "keywords": [
+            "文明開化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "採用された暦",
+          "prompt": "明治初期の日本の文明開化で、旧暦に代わって導入された新しい暦は何か。",
+          "answer": "**太陽暦**。",
+          "evidence": [
+            "calendar-new"
+          ],
+          "keywords": [
+            "太陽暦"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "新暦導入の時期",
+          "prompt": "明治初期の日本の文明開化で、旧暦を廃止して太陽暦を導入したのは何年か。",
+          "answer": "1872年。",
+          "evidence": [
+            "calendar-year",
+            "calendar-new"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "生活と景観の変化",
+          "prompt": "明治初期の日本の文明開化では、暮らしや街の景観はどのように変化したか。",
+          "answer": "**洋服や帽子**、**肉料理**、**ランプ**や**レンガ造りの西洋建築**などが取り入れられた。**ガス灯や馬車**も新しい景観を生み出した。",
+          "evidence": [
+            "civilization-life",
+            "civilization-scenery"
+          ],
+          "keywords": [
+            "洋服や帽子",
+            "肉料理",
+            "ランプ",
+            "レンガ造りの西洋建築",
+            "ガス灯や馬車"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "暦の転換",
+          "prompt": "明治初期の日本の文明開化では、暦をどのように改めたか。",
+          "answer": "従来は月の満ち欠けをもとに日を数え、太陽の動きで季節を調節する**太陰太陽暦**を使用していた。**1872年**に旧暦を廃止し、地球が太陽の周りを1回転するのを1年とする**太陽暦**を導入した。",
+          "evidence": [
+            "calendar-old",
+            "calendar-year",
+            "calendar-method",
+            "calendar-new"
+          ],
+          "keywords": [
+            "太陰太陽暦",
+            "1872年",
+            "太陽暦"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「文明開化」について説明せよ。",
+          "answer": "明治初期の日本で、西洋文化が生活に取り入れられた変化である。**洋服や帽子**・**肉料理**・**ランプ**・**レンガ造りの西洋建築**が取り入れられ、**ガス灯や馬車**も新しい景観を生み出した。暦も**1872年**に**太陰太陽暦**から**太陽暦**に改められた。",
+          "evidence": [
+            "civilization-name",
+            "civilization-life",
+            "civilization-scenery",
+            "calendar-old",
+            "calendar-year",
+            "calendar-new"
+          ],
+          "keywords": [
+            "洋服や帽子",
+            "肉料理",
+            "ランプ",
+            "レンガ造りの西洋建築",
+            "ガス灯や馬車",
+            "1872年",
+            "太陰太陽暦",
+            "太陽暦"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "term": "啓蒙思想の普及",
+      "reading": "けいもうしそうのふきゅう",
+      "category": "思想",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1872年に初編発行",
+        "sortYear": 1872
+      },
+      "explanation": "福沢諭吉の独立自尊と学問の重要性、西洋文化の紹介と無秩序な西洋化への反対に、中江兆民によるルソーの思想の紹介と自由民権運動への役割を合わせる。資料にない翻訳題名・活動年は補わず、著者の主張を現在の社会階層についての普遍的正解としない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "著者",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、『学問のすゝめ』を著した人物は誰か。",
+          "answer": "**福沢諭吉**。",
+          "evidence": [
+            "fukuzawa-author"
+          ],
+          "keywords": [
+            "福沢諭吉"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "中心となる精神",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、福沢諭吉が『学問のすゝめ』で説いた中心的な精神は何か。",
+          "answer": "**独立自尊**。",
+          "evidence": [
+            "fukuzawa-principles"
+          ],
+          "keywords": [
+            "独立自尊"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "西洋化への姿勢",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、福沢諭吉はどのような西洋化に反対したか。",
+          "answer": "**無秩序な西洋化**。",
+          "evidence": [
+            "fukuzawa-caution"
+          ],
+          "keywords": [
+            "無秩序な西洋化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "ルソーの思想を紹介した人物",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、ルソーの平等思想を紹介した人物は誰か。",
+          "answer": "**中江兆民**。",
+          "evidence": [
+            "chomin-ideas"
+          ],
+          "keywords": [
+            "中江兆民"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "翻訳された著作",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、中江兆民が翻訳して紹介したルソーの著作は何か。",
+          "answer": "**『社会契約論』**。",
+          "evidence": [
+            "chomin-book"
+          ],
+          "keywords": [
+            "『社会契約論』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "主張と学問の重要性",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、福沢諭吉の『学問のすゝめ』はどのような主張をしたか。",
+          "answer": "**1872年**に初編が発行された**福沢諭吉**の**『学問のすゝめ』**は、**独立自尊**と**学問の重要性**を説いた。人は生まれながらに貴賤・貧富の別がなく、賢い人とそうでない人の違いは学ぶかどうかによって生じると主張した。",
+          "evidence": [
+            "fukuzawa-year",
+            "fukuzawa-author",
+            "fukuzawa-principles",
+            "fukuzawa-equality",
+            "fukuzawa-study"
+          ],
+          "keywords": [
+            "1872年",
+            "福沢諭吉",
+            "『学問のすゝめ』",
+            "独立自尊",
+            "学問の重要性"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "著者の西洋文化への姿勢",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、福沢諭吉は西洋文化にどのような姿勢をとったか。",
+          "answer": "福沢諭吉は**西洋文化を紹介**する書籍を発表する一方、**無秩序な西洋化**には反対した。",
+          "evidence": [
+            "fukuzawa-west",
+            "fukuzawa-caution"
+          ],
+          "keywords": [
+            "西洋文化を紹介",
+            "無秩序な西洋化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "思想の紹介と政治運動",
+          "prompt": "明治時代の日本の啓蒙思想の普及において、中江兆民はどのような思想を紹介し、政治運動でどのような役割を担ったか。",
+          "answer": "**中江兆民**は**ルソー**の**『社会契約論』**を翻訳し、**人は生まれながらに平等である**という思想を日本に紹介した。後に**自由民権運動の理論的指導者**となった。",
+          "evidence": [
+            "chomin-book",
+            "chomin-ideas",
+            "chomin-role"
+          ],
+          "keywords": [
+            "中江兆民",
+            "ルソー",
+            "『社会契約論』",
+            "人は生まれながらに平等である",
+            "自由民権運動の理論的指導者"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「啓蒙思想の普及」について説明せよ。",
+          "answer": "日本では**1872年**に初編が発行された**福沢諭吉**の**『学問のすゝめ』**が、**独立自尊**と**学問の重要性**を説いた。福沢は**西洋文化を紹介**する書籍を発表する一方、**無秩序な西洋化**には反対した。**中江兆民**は**ルソー**の**『社会契約論』**を翻訳して**人は生まれながらに平等である**という思想を紹介し、後に**自由民権運動の理論的指導者**となった。",
+          "evidence": [
+            "fukuzawa-year",
+            "fukuzawa-author",
+            "fukuzawa-principles",
+            "fukuzawa-west",
+            "fukuzawa-caution",
+            "chomin-book",
+            "chomin-ideas",
+            "chomin-role"
+          ],
+          "keywords": [
+            "1872年",
+            "福沢諭吉",
+            "『学問のすゝめ』",
+            "独立自尊",
+            "学問の重要性",
+            "西洋文化を紹介",
+            "無秩序な西洋化",
+            "中江兆民",
+            "ルソー",
+            "『社会契約論』",
+            "人は生まれながらに平等である",
+            "自由民権運動の理論的指導者"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

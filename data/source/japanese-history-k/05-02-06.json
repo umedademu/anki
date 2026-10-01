@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 6,
+    "title": "自由民権運動"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_06_自由民権運動_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      305,
+      306,
+      307,
+      408
+    ],
+    "note": "305～307頁のヘ本文・関連注㉙㉚㉛㉜・西南戦争の図版とコラムを最後まで読む。ト本文は除外し、307頁末の西南戦争の関連コラムだけは収録する。408頁年表の第一回帝国議会開会の一行は、本文で公約された明治23年の国会開設を西暦1890年として確認するためだけに使う。国会期成同盟や自由党・立憲改進党の個別結成年は担当本文と関連年表に明記されないため出題せず、政党結成をすべて1881年の出来事として扱わない。視察と刺殺の聞き違い、政府の暗殺計画の有無、西郷の逆賊という評価、戦闘・戦死者数・儀礼・人物の生没年は不採用。士族の反乱の収束は明治初期の変化として述べ、現在まで武力による政治変動がないという断定はしない。議院内閣制の具体的仕組み、資料にない建白書・政党・憲法草案の細部も補わない。十年後と明治23年の表現から1891年を答えさせる問いは作らない。"
+  },
+  "facts": [
+    {
+      "id": "movement-name",
+      "page": 307,
+      "quote": "国民の政治参加の権利の早期確立を目指す**自由民権運動**を主導していきました。"
+    },
+    {
+      "id": "movement-leader",
+      "page": 307,
+      "quote": "板垣退助は"
+    },
+    {
+      "id": "petition-name",
+      "page": 307,
+      "quote": "㉙**民撰議院設立の建白書**を政府に提出し、国会の早期開設を求めました。"
+    },
+    {
+      "id": "petition-year",
+      "page": 307,
+      "quote": "明治七年（一八七四）"
+    },
+    {
+      "id": "petition-itagaki",
+      "page": 305,
+      "quote": "征韓論をきっかけに政府を離れた**板垣退助**や"
+    },
+    {
+      "id": "risshisha-name",
+      "page": 307,
+      "quote": "㉚立志社を結成し、"
+    },
+    {
+      "id": "risshisha-establishment",
+      "page": 306,
+      "quote": "板垣退助が中心となり、明治7年（1874）に高知県で設立した政治結社。"
+    },
+    {
+      "id": "risshisha-spread",
+      "page": 306,
+      "quote": "各地に自由民権結社が成立する契機となり、自由民権運動の中核的役割を果たした。"
+    },
+    {
+      "id": "assembly-league",
+      "page": 307,
+      "quote": "全国から大阪に集まった民権派によって**国会期成同盟**が結成され、"
+    },
+    {
+      "id": "private-drafts",
+      "page": 307,
+      "quote": "民間でも政治制度について活発な議論が交わされ、憲法草案を作る人々も現れました。"
+    },
+    {
+      "id": "movement-shared-goal",
+      "page": 307,
+      "quote": "政府も**民権派**も国会開設と憲法制定の必要性において一致していましたが、進める速度で対立します。"
+    },
+    {
+      "id": "government-opening-policy",
+      "page": 307,
+      "quote": "大久保らは近代化の完成の目処が立ってから国会を開設すべきと考え、早期開設派と対立しました。"
+    },
+    {
+      "id": "samurai-discontent",
+      "page": 307,
+      "quote": "帯刀などの特権や武士としての誇りが奪われたことで、明治維新に不満を抱く者が現れ、㉛士族の反乱を招きました。"
+    },
+    {
+      "id": "satsuma-leader",
+      "page": 307,
+      "quote": "西郷隆盛を担いで蜂起した**西南戦争**"
+    },
+    {
+      "id": "satsuma-year",
+      "page": 307,
+      "quote": "明治十年（一八七七）"
+    },
+    {
+      "id": "satsuma-result",
+      "page": 307,
+      "quote": "**西南戦争**が失敗に終わると、反乱は収束していきました。"
+    },
+    {
+      "id": "rescript-name",
+      "page": 307,
+      "quote": "明治天皇から**国会開設の勅諭**が発せられました"
+    },
+    {
+      "id": "crisis-name",
+      "page": 307,
+      "quote": "㉜明治十四年の政変"
+    },
+    {
+      "id": "crisis-year",
+      "page": 307,
+      "quote": "明治14年（1881）"
+    },
+    {
+      "id": "assembly-promise",
+      "page": 307,
+      "quote": "政府は10年後（明治23年）に国会を開設することを公約した。"
+    },
+    {
+      "id": "assembly-year",
+      "page": 408,
+      "quote": "| 1890 | 第一回帝国議会が開会 |  |"
+    },
+    {
+      "id": "crisis-sale",
+      "page": 307,
+      "quote": "北海道の開拓使が所有する施設を不当に安く政商に売却しようとしていたことが発覚したのをきっかけに、"
+    },
+    {
+      "id": "crisis-expulsion",
+      "page": 307,
+      "quote": "伊藤は大隈を追放し、"
+    },
+    {
+      "id": "crisis-okuma",
+      "page": 307,
+      "quote": "早期国会開設と議院内閣制採用を主張する急進派の大隈重信と、"
+    },
+    {
+      "id": "crisis-ito",
+      "page": 307,
+      "quote": "早期開設に反対する漸進派の伊藤博文が対立を深め、"
+    },
+    {
+      "id": "party-preparation",
+      "page": 307,
+      "quote": "国会開設時期の確約を勝ち取った民権派は、"
+    },
+    {
+      "id": "liberal-party",
+      "page": 307,
+      "quote": "板垣退助の**自由党**、"
+    },
+    {
+      "id": "reform-party",
+      "page": 307,
+      "quote": "**大隈重信**の**立憲改進党**など国会開設に備えて政党を結成しました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "自由民権運動",
+      "reading": "じゆうみんけんうんどう",
+      "category": "運動",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1874年～明治初期",
+        "sortYear": 1874
+      },
+      "explanation": "建白書・政治結社・全国的な組織・民間の憲法草案を関連づけ、国会開設の速度をめぐる政府との対立を学ぶ。国会期成同盟の結成年や地方議会の制度名、憲法草案の個別名は資料にないため補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "運動の名称",
+          "prompt": "明治時代、国民の政治参加の権利の早期確立を目指し、国会開設を求めて日本で広がった運動は何か。",
+          "answer": "**自由民権運動**。",
+          "keywords": [
+            "自由民権運動"
+          ],
+          "evidence": [
+            "movement-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "明治初期、日本の自由民権運動を主導した人物は誰か。",
+          "answer": "**板垣退助**。",
+          "keywords": [
+            "板垣退助"
+          ],
+          "evidence": [
+            "movement-leader",
+            "movement-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "提出した文書",
+          "prompt": "明治初期、日本の自由民権運動で、国会の早期開設を求めて政府に提出された文書は何か。",
+          "answer": "**民撰議院設立の建白書(みんせんぎいんせつりつのけんぱくしょ)**。",
+          "keywords": [
+            "民撰議院設立の建白書"
+          ],
+          "evidence": [
+            "petition-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治初期、日本の自由民権運動で、民撰議院設立の建白書が政府に提出されたのは何年か。",
+          "answer": "1874年。",
+          "keywords": [],
+          "evidence": [
+            "petition-year"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政治結社",
+          "prompt": "明治初期、日本の自由民権運動で、板垣退助が高知県で設立した政治結社は何か。",
+          "answer": "**立志社(りっししゃ)**。",
+          "keywords": [
+            "立志社"
+          ],
+          "evidence": [
+            "risshisha-name",
+            "risshisha-establishment"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "全国的な組織",
+          "prompt": "明治時代、日本の自由民権運動で、全国から大阪に集まった民権派が結成した組織は何か。",
+          "answer": "**国会期成同盟**。",
+          "keywords": [
+            "国会期成同盟"
+          ],
+          "evidence": [
+            "assembly-league"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "民間で作った文書",
+          "prompt": "明治時代、日本の自由民権運動で、政治制度をめぐる議論のなかで民間の人々が作った草案は何か。",
+          "answer": "**憲法草案**。",
+          "keywords": [
+            "憲法草案"
+          ],
+          "evidence": [
+            "private-drafts"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の自由民権運動はどのように始まったか。",
+          "answer": "1874年、**板垣退助**らが**民撰議院設立の建白書(みんせんぎいんせつりつのけんぱくしょ)**を政府に提出して国会の早期開設を求めた。板垣は国民の**政治参加の権利**の早期確立を目指す**自由民権運動**を主導した。",
+          "keywords": [
+            "板垣退助",
+            "民撰議院設立の建白書",
+            "政治参加の権利",
+            "自由民権運動"
+          ],
+          "evidence": [
+            "petition-itagaki",
+            "petition-year",
+            "petition-name",
+            "movement-leader",
+            "movement-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の自由民権運動はどのように広がったか。",
+          "answer": "**板垣退助**は1874年に高知県で**立志社(りっししゃ)**を設立し、各地にも自由民権結社が成立した。全国から大阪に集まった民権派は**国会期成同盟**を結成し、民間では**憲法草案**を作る人々も現れた。",
+          "keywords": [
+            "板垣退助",
+            "立志社",
+            "国会期成同盟",
+            "憲法草案"
+          ],
+          "evidence": [
+            "risshisha-name",
+            "risshisha-establishment",
+            "risshisha-spread",
+            "assembly-league",
+            "private-drafts"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の自由民権運動で、政府と民権派は何をめぐって対立したか。",
+          "answer": "両者は**国会開設と憲法制定**の必要性では一致したが、政府は近代化の完成のめどが立ってから国会を開設すべきと考えた。早期開設を求める民権派とは、**進める速度**で対立した。",
+          "keywords": [
+            "国会開設と憲法制定",
+            "進める速度"
+          ],
+          "evidence": [
+            "movement-shared-goal",
+            "government-opening-policy",
+            "petition-name"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「自由民権運動」について説明せよ。",
+          "answer": "1874年、日本で**板垣退助**らが**民撰議院設立の建白書(みんせんぎいんせつりつのけんぱくしょ)**を提出し、国会の早期開設を求めた。板垣は高知の**立志社(りっししゃ)**を結成して**自由民権運動**を主導し、**政治参加の権利**の早期確立を目指す運動は、大阪の**国会期成同盟**の結成や民間の**憲法草案**作成へと広がった。政府と民権派は**国会開設と憲法制定**の必要性では一致したが、近代化の完成を待つ政府と早期開設を求める民権派が**進める速度**をめぐって対立した。",
+          "keywords": [
+            "板垣退助",
+            "民撰議院設立の建白書",
+            "立志社",
+            "自由民権運動",
+            "政治参加の権利",
+            "国会期成同盟",
+            "憲法草案",
+            "国会開設と憲法制定",
+            "進める速度"
+          ],
+          "evidence": [
+            "petition-itagaki",
+            "petition-year",
+            "petition-name",
+            "movement-leader",
+            "movement-name",
+            "risshisha-name",
+            "risshisha-establishment",
+            "risshisha-spread",
+            "assembly-league",
+            "private-drafts",
+            "movement-shared-goal",
+            "government-opening-policy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "西南戦争",
+      "reading": "せいなんせんそう",
+      "category": "戦争",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1877年",
+        "sortYear": 1877
+      },
+      "explanation": "士族の不満と反乱、西郷隆盛を担いだ西南戦争の失敗、士族の反乱の収束を学ぶ。暗殺計画や聞き違いを直接原因として覚えさせず、以後の日本で武力による政治変動が存在しないという一般化もしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "担がれた人物",
+          "prompt": "明治時代、日本の西南戦争で、蜂起した士族が担いだ人物は誰か。",
+          "answer": "**西郷隆盛**。",
+          "keywords": [
+            "西郷隆盛"
+          ],
+          "evidence": [
+            "satsuma-leader"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治時代、日本の西南戦争が起きたのは何年か。",
+          "answer": "1877年。",
+          "keywords": [],
+          "evidence": [
+            "satsuma-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "士族の不満",
+          "prompt": "明治初期、日本の西南戦争に至る士族の反乱で、不満の背景となった武士の地位の変化は何か。",
+          "answer": "**帯刀などの特権**や武士としての誇りが奪われたこと。",
+          "keywords": [
+            "帯刀などの特権"
+          ],
+          "evidence": [
+            "samurai-discontent"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "士族の反乱への影響",
+          "prompt": "明治時代、日本の西南戦争が失敗に終わった後、士族の反乱はどのようになったか。",
+          "answer": "**収束**していった。",
+          "keywords": [
+            "収束"
+          ],
+          "evidence": [
+            "satsuma-result"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の西南戦争に至る士族の反乱には、どのような背景があったか。",
+          "answer": "士族のなかに、**帯刀などの特権**や武士としての誇りが奪われたことから、明治維新に**不満**を抱く者が現れ、反乱につながった。",
+          "keywords": [
+            "帯刀などの特権",
+            "不満"
+          ],
+          "evidence": [
+            "samurai-discontent"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の西南戦争はどのような結果となったか。",
+          "answer": "1877年に**西郷隆盛**を担いで蜂起した**西南戦争**は失敗に終わり、士族の反乱は**収束**していった。",
+          "keywords": [
+            "西郷隆盛",
+            "西南戦争",
+            "収束"
+          ],
+          "evidence": [
+            "satsuma-year",
+            "satsuma-leader",
+            "satsuma-result"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「西南戦争」について説明せよ。",
+          "answer": "明治初期の日本では、**帯刀などの特権**や武士としての誇りが奪われたことに**不満**を持つ士族が反乱を起こした。1877年、**西郷隆盛**を担いだ**西南戦争**が失敗に終わり、士族の反乱は**収束**していった。",
+          "keywords": [
+            "帯刀などの特権",
+            "不満",
+            "西郷隆盛",
+            "西南戦争",
+            "収束"
+          ],
+          "evidence": [
+            "samurai-discontent",
+            "satsuma-year",
+            "satsuma-leader",
+            "satsuma-result"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "国会開設の勅諭と政党結成",
+      "reading": "こっかいかいせつのちょくゆとせいとうけっせい",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1881年の公約～1890年の国会開設に向けた準備",
+        "sortYear": 1881
+      },
+      "explanation": "明治十四年の政変、国会開設の公約、民権派の政党結成を関連づける。開拓使の施設の売却計画は計画の発覚までとし、政党の個別結成年や思想・選挙制度は補わない。国会開設の目標年は本文の明治23年と同章年表の1890年を用い、十年後という期間を単純に足し算させない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "天皇の文書",
+          "prompt": "明治時代、日本で国会の開設時期を公約する際に、明治天皇から発せられた文書は何か。",
+          "answer": "**国会開設の勅諭(こっかいかいせつのちょくゆ)**。",
+          "keywords": [
+            "国会開設の勅諭"
+          ],
+          "evidence": [
+            "rescript-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "公約した年",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成について、国会開設が公約された明治十四年の政変は何年か。",
+          "answer": "1881年。",
+          "keywords": [],
+          "evidence": [
+            "crisis-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "開設を約束した年",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成について、政府が国会を開設すると公約した対象の年は何年か。",
+          "answer": "1890年。",
+          "keywords": [],
+          "evidence": [
+            "assembly-promise",
+            "assembly-year"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "発覚した売却計画",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成に関わる明治十四年の政変は、どのような施設の売却計画の発覚をきっかけとしたか。",
+          "answer": "**開拓使の施設を政商に安く売却する計画**。",
+          "keywords": [
+            "開拓使の施設を政商に安く売却する計画"
+          ],
+          "evidence": [
+            "crisis-sale"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "追放された人物",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成に関わる明治十四年の政変で、早期国会開設を主張していた政府内の人物のうち、追放されたのは誰か。",
+          "answer": "**大隈重信**。",
+          "keywords": [
+            "大隈重信"
+          ],
+          "evidence": [
+            "crisis-okuma",
+            "crisis-expulsion"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "板垣の政党",
+          "prompt": "明治時代、日本で国会開設に備えて板垣退助が結成した政党は何か。",
+          "answer": "**自由党**。",
+          "keywords": [
+            "自由党"
+          ],
+          "evidence": [
+            "party-preparation",
+            "liberal-party"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "大隈の政党",
+          "prompt": "明治時代、日本で国会開設に備えて大隈重信が結成した政党は何か。",
+          "answer": "**立憲改進党**。",
+          "keywords": [
+            "立憲改進党"
+          ],
+          "evidence": [
+            "party-preparation",
+            "reform-party"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成に関わる政府内の対立は、どのように展開したか。",
+          "answer": "1881年、早期国会開設を主張する**大隈重信**と、これに反対する**伊藤博文**が対立した。**開拓使の施設を政商に安く売却する計画**の発覚をきっかけに、伊藤は大隈を追放した（**明治十四年の政変**）。",
+          "keywords": [
+            "大隈重信",
+            "伊藤博文",
+            "開拓使の施設を政商に安く売却する計画",
+            "明治十四年の政変"
+          ],
+          "evidence": [
+            "crisis-year",
+            "crisis-okuma",
+            "crisis-ito",
+            "crisis-sale",
+            "crisis-expulsion",
+            "crisis-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成に向けて、政府はどのような約束をしたか。",
+          "answer": "1881年に明治天皇から**国会開設の勅諭(こっかいかいせつのちょくゆ)**が発せられ、政府は1890年に国会を開設することを公約した。",
+          "keywords": [
+            "国会開設の勅諭"
+          ],
+          "evidence": [
+            "crisis-year",
+            "rescript-name",
+            "assembly-promise",
+            "assembly-year"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の国会開設の勅諭と政党結成について、民権派は国会開設にどう備えたか。",
+          "answer": "国会開設時期の確約を受け、**板垣退助**の**自由党**や、**大隈重信**の**立憲改進党**などを結成した。",
+          "keywords": [
+            "板垣退助",
+            "自由党",
+            "大隈重信",
+            "立憲改進党"
+          ],
+          "evidence": [
+            "party-preparation",
+            "liberal-party",
+            "reform-party"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「国会開設の勅諭と政党結成」について説明せよ。",
+          "answer": "1881年の日本では、早期国会開設を求める**大隈重信**とこれに反対する**伊藤博文**が対立し、**開拓使の施設を政商に安く売却する計画**の発覚をきっかけに大隈が追放された（**明治十四年の政変**）。明治天皇から**国会開設の勅諭(こっかいかいせつのちょくゆ)**が発せられ、政府は1890年の国会開設を公約した。その後、国会開設に備えて**板垣退助**の**自由党**や**大隈重信**の**立憲改進党**などが結成された。",
+          "keywords": [
+            "大隈重信",
+            "伊藤博文",
+            "開拓使の施設を政商に安く売却する計画",
+            "明治十四年の政変",
+            "国会開設の勅諭",
+            "板垣退助",
+            "自由党",
+            "立憲改進党"
+          ],
+          "evidence": [
+            "crisis-year",
+            "crisis-okuma",
+            "crisis-ito",
+            "crisis-sale",
+            "crisis-expulsion",
+            "crisis-name",
+            "rescript-name",
+            "assembly-promise",
+            "assembly-year",
+            "party-preparation",
+            "liberal-party",
+            "reform-party"
+          ]
+        }
+      ]
+    }
+  ]
+}

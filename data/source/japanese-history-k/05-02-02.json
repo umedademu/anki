@@ -1,0 +1,1105 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 2,
+    "title": "廃藩置県と三大改革"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_02_廃藩置県と三大改革_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      289,
+      290,
+      291
+    ],
+    "note": "本文・注⑤～⑪・図表・改元のコラムを全文確認し、中央集権化、身分制度、学校、兵役、租税の制度内容と社会への影響を選ぶ。文化や慣習の衰退、高識字率という評価、身分・職業の人口比率、個々の官僚の役職、華族の家数、大学の名称・設立年の細目、一世一元という用語の単純な意味だけの問題は作らない。四民平等や解放令によって現実の差別もすべて消えたとはしない。徴兵は年齢の下限と免除の存在を区別し、すべての男子が例外なく実際に兵役に就いたとはしない。地租は地価と現金納付、財政安定と農民の反発・軽減という制度の関係を扱い、地価の算定法や資料外の免除・法条文は補わない。"
+  },
+  "facts": [
+    {
+      "id": "centralization-purpose",
+      "page": 289,
+      "quote": "欧米列強に対抗する強い国家を作るために、"
+    },
+    {
+      "id": "return-year",
+      "page": 289,
+      "quote": "明治二年（一八六九）に"
+    },
+    {
+      "id": "return-land-people",
+      "page": 289,
+      "quote": "各藩の藩主に、土地（版）と人民（籍）を国家に返させました。"
+    },
+    {
+      "id": "return-name",
+      "page": 289,
+      "quote": "これが**版籍奉還**です。"
+    },
+    {
+      "id": "abolition-year",
+      "page": 289,
+      "quote": "明治四年（一八七一）には**廃藩置県**を実施し、"
+    },
+    {
+      "id": "abolition-content",
+      "page": 289,
+      "quote": "藩を廃止して府と県を置き、"
+    },
+    {
+      "id": "central-governors",
+      "page": 289,
+      "quote": "各県には県令（後の知事）、東京、京都、大阪には府知事を中央から派遣して治めさせました。"
+    },
+    {
+      "id": "centralization-result",
+      "page": 289,
+      "quote": "このように順を追って、中央集権国家を作り上げ、維新の足場を固めていきました。"
+    },
+    {
+      "id": "status-subjects",
+      "page": 289,
+      "quote": "新政府は武士と百姓・町人の身分を改めて、"
+    },
+    {
+      "id": "status-name",
+      "page": 289,
+      "quote": "**四民平等**を推し進め、"
+    },
+    {
+      "id": "status-economic-freedoms",
+      "page": 289,
+      "quote": "職業選択の自由や商売の自由を認め、"
+    },
+    {
+      "id": "status-marriage",
+      "page": 289,
+      "quote": "異なる身分間での結婚や苗字を名乗ることが許されるなど、"
+    },
+    {
+      "id": "outcast-subjects",
+      "page": 289,
+      "quote": "えた・ひにんと呼ばれた人々も、"
+    },
+    {
+      "id": "emancipation-year",
+      "page": 289,
+      "quote": "明治四年のいわゆる**解放令**によって"
+    },
+    {
+      "id": "emancipation-result",
+      "page": 289,
+      "quote": "平民と同等であるとされました。"
+    },
+    {
+      "id": "sword-ban",
+      "page": 289,
+      "quote": "廃刀令により士族の特権である帯刀を禁止しました。"
+    },
+    {
+      "id": "salary-burden",
+      "page": 289,
+      "quote": "しかし財政負担は大きく、近代国家を目指すうえで課題となった。"
+    },
+    {
+      "id": "salary-year",
+      "page": 289,
+      "quote": "明治9年（1876）に、"
+    },
+    {
+      "id": "salary-abolition",
+      "page": 289,
+      "quote": "従来の俸禄を廃止し、"
+    },
+    {
+      "id": "salary-bonds",
+      "page": 289,
+      "quote": "公債を交付して、償還まで一定の利子を支給することとした（秩禄処分）。"
+    },
+    {
+      "id": "salary-result",
+      "page": 289,
+      "quote": "これにより士族の多くは没落し、不満が高まった。"
+    },
+    {
+      "id": "school-year",
+      "page": 289,
+      "quote": "明治五年（一八七二）に"
+    },
+    {
+      "id": "school-name",
+      "page": 289,
+      "quote": "**学制**が公布され、"
+    },
+    {
+      "id": "school-system",
+      "page": 289,
+      "quote": "小学校から大学校までの制度が定められました。"
+    },
+    {
+      "id": "school-children",
+      "page": 289,
+      "quote": "満六歳になった男女すべてを小学校に通わせることを義務とするなど、"
+    },
+    {
+      "id": "school-cost",
+      "page": 290,
+      "quote": "授業料は個人、小学校の建設は地域の負担とされ、画一的な実施は困難だったが、"
+    },
+    {
+      "id": "higher-education-lack",
+      "page": 289,
+      "quote": "高等教育が不足していたため、外国人教師を雇っ"
+    },
+    {
+      "id": "higher-education-exchange",
+      "page": 291,
+      "quote": "たり、欧米諸国に多くの留学生を派遣したりするなど、"
+    },
+    {
+      "id": "higher-education-purpose",
+      "page": 291,
+      "quote": "西洋の進んだ知識や技術の取り込みを図りました。"
+    },
+    {
+      "id": "conscript-year",
+      "page": 291,
+      "quote": "明治六年（一八七三）に"
+    },
+    {
+      "id": "conscript-name",
+      "page": 291,
+      "quote": "**徴兵制**を定めて、"
+    },
+    {
+      "id": "conscript-duty",
+      "page": 291,
+      "quote": "士族に限らず満二十歳以上の男子に一定の兵役の義務を課しました。"
+    },
+    {
+      "id": "conscript-exemption",
+      "page": 291,
+      "quote": "家の跡継ぎなどは免除され、"
+    },
+    {
+      "id": "conscript-actual",
+      "page": 291,
+      "quote": "実際に兵役に就いたのは平民の次男や三男が多かった。"
+    },
+    {
+      "id": "conscript-exemption-end",
+      "page": 291,
+      "quote": "明治22年（1889）に免除規定が廃止され"
+    },
+    {
+      "id": "land-tax-name",
+      "page": 291,
+      "quote": "**注⑪ 地租改正**"
+    },
+    {
+      "id": "land-tax-type",
+      "page": 291,
+      "quote": "土地と租税制度の改革。"
+    },
+    {
+      "id": "land-tax-survey",
+      "page": 291,
+      "quote": "土地を測量して"
+    },
+    {
+      "id": "land-tax-ownership",
+      "page": 291,
+      "quote": "土地の所有を認めて、"
+    },
+    {
+      "id": "land-tax-purpose",
+      "page": 291,
+      "quote": "明治政府が財政基盤の安定のために行った"
+    },
+    {
+      "id": "land-tax-basis",
+      "page": 291,
+      "quote": "地価を決め、"
+    },
+    {
+      "id": "land-tax-payment",
+      "page": 291,
+      "quote": "地価の3%を地租として現金で納めさせた。"
+    },
+    {
+      "id": "land-tax-same-year",
+      "page": 291,
+      "quote": "税制においても財源の確保のために、同年から⑪**地租改正**を実施して、"
+    },
+    {
+      "id": "land-tax-burden",
+      "page": 291,
+      "quote": "江戸時代に匹敵する高額な地租だったため、"
+    },
+    {
+      "id": "land-tax-revolt",
+      "page": 291,
+      "quote": "各地で軽減を要求する農民一揆が起こり、"
+    },
+    {
+      "id": "land-tax-reduction",
+      "page": 291,
+      "quote": "明治10年（1877）からは税率が2.5%に軽減された。"
+    },
+    {
+      "id": "land-tax-revenue",
+      "page": 291,
+      "quote": "政府は地租改正により、米の収穫高に左右されず、安定的に歳入を得られるようになった。"
+    },
+    {
+      "id": "abolition-name",
+      "page": 289,
+      "quote": "**廃藩置県**を実施し、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "版籍奉還と廃藩置県",
+      "reading": "はんせきほうかんとはいはんちけん",
+      "category": "地方統治の改革",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1869～1871年",
+        "sortYear": 1869
+      },
+      "explanation": "土地と人民を国家に返させる版籍奉還、藩を廃止して府県と中央派遣の官吏で治める廃藩置県という順序を区別する。欧米列強への対抗を目指して中央集権化が進められた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "最初の改革名",
+          "prompt": "明治初期の日本で、各藩の藩主に土地と人民を国家に返させた改革は何か。",
+          "answer": "**版籍奉還(はんせきほうかん)**。",
+          "keywords": [
+            "版籍奉還"
+          ],
+          "evidence": [
+            "return-land-people",
+            "return-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "次の改革名",
+          "prompt": "明治初期の日本で、藩を廃止して府と県を置いた改革は何か。",
+          "answer": "**廃藩置県**。",
+          "keywords": [
+            "廃藩置県"
+          ],
+          "evidence": [
+            "abolition-name",
+            "abolition-content"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "版籍奉還の実施年",
+          "prompt": "明治初期の日本の版籍奉還と廃藩置県のうち、版籍奉還が実施されたのは何年か。",
+          "answer": "1869年。",
+          "keywords": [],
+          "evidence": [
+            "return-year",
+            "return-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "廃藩置県の実施年",
+          "prompt": "明治初期の日本の版籍奉還と廃藩置県のうち、廃藩置県が実施されたのは何年か。",
+          "answer": "1871年。",
+          "keywords": [],
+          "evidence": [
+            "abolition-year"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "府県を治める官吏の派遣元",
+          "prompt": "明治初期の日本の版籍奉還と廃藩置県について、府県を治める県令や府知事は、どこから派遣されたか。",
+          "answer": "**中央**。",
+          "keywords": [
+            "中央"
+          ],
+          "evidence": [
+            "central-governors"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "版籍奉還の内容",
+          "prompt": "明治初期の日本で、版籍奉還はどのような政策だったか。",
+          "answer": "欧米列強に対抗する強い国家を作るため、1869年に日本で**版籍奉還(はんせきほうかん)**が行われた。各藩の藩主に**土地と人民**を国家に返させた。",
+          "keywords": [
+            "版籍奉還",
+            "土地と人民"
+          ],
+          "evidence": [
+            "centralization-purpose",
+            "return-year",
+            "return-land-people",
+            "return-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "廃藩置県による統治の変化",
+          "prompt": "明治初期の日本で、廃藩置県は地方の統治をどのように変えたか。",
+          "answer": "1871年の**廃藩置県**で藩を廃止し、**府と県**を置いた。**県令**や**府知事**を**中央**から派遣して治めさせ、**中央集権国家**を作り上げた。",
+          "keywords": [
+            "廃藩置県",
+            "府と県",
+            "県令",
+            "府知事",
+            "中央",
+            "中央集権国家"
+          ],
+          "evidence": [
+            "abolition-year",
+            "abolition-content",
+            "central-governors",
+            "centralization-result"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「版籍奉還と廃藩置県」について説明せよ。",
+          "answer": "日本では欧米列強に対抗する強い国家を作るため、1869年の**版籍奉還(はんせきほうかん)**で各藩の藩主に**土地と人民**を国家に返させた。1871年の**廃藩置県**では藩を廃止して**府と県**を置き、**県令**や**府知事**を**中央**から派遣して治めさせた。こうして**中央集権国家**を作り上げた。",
+          "keywords": [
+            "版籍奉還",
+            "土地と人民",
+            "廃藩置県",
+            "府と県",
+            "県令",
+            "府知事",
+            "中央",
+            "中央集権国家"
+          ],
+          "evidence": [
+            "centralization-purpose",
+            "return-year",
+            "return-land-people",
+            "return-name",
+            "abolition-year",
+            "abolition-content",
+            "central-governors",
+            "centralization-result"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "身分制度の改革",
+      "reading": "みぶんせいどのかいかく",
+      "category": "身分と特権の改革",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "明治初期・1871年・1876年",
+        "sortYear": 1871
+      },
+      "explanation": "四民平等と解放令による身分上の扱い、廃刀令による帯刀の禁止、秩禄処分による俸禄の廃止を区別する。制度の変更を、現実の差別の完全な解消と同一視しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "身分改革の方針",
+          "prompt": "明治初期の日本で、武士と百姓・町人の身分を改めるため、新政府が推進した方針は何か。",
+          "answer": "**四民平等**。",
+          "keywords": [
+            "四民平等"
+          ],
+          "evidence": [
+            "status-subjects",
+            "status-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "経済活動の自由",
+          "prompt": "明治初期の日本の身分制度の改革では、人々の経済活動についてどのような自由が認められたか。",
+          "answer": "**職業選択の自由**と**商売の自由**。",
+          "keywords": [
+            "職業選択の自由",
+            "商売の自由"
+          ],
+          "evidence": [
+            "status-economic-freedoms"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "被差別身分の扱いを変えた法令",
+          "prompt": "明治初期の日本で、「えた・ひにん」と呼ばれた人々を平民と同等とした法令は何か。",
+          "answer": "**解放令**。",
+          "keywords": [
+            "解放令"
+          ],
+          "evidence": [
+            "outcast-subjects",
+            "emancipation-year",
+            "emancipation-result"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "士族の特権を禁止した法令",
+          "prompt": "明治初期の日本で、士族の特権であった帯刀を禁止した法令は何か。",
+          "answer": "**廃刀令**。",
+          "keywords": [
+            "廃刀令"
+          ],
+          "evidence": [
+            "sword-ban"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "俸禄の見直しの背景",
+          "prompt": "明治初期の日本の身分制度の改革に関連して、武士に支給する俸禄の見直しが必要になった財政上の理由は何か。",
+          "answer": "**政府の財政負担が大きかった**ため。",
+          "keywords": [
+            "政府の財政負担が大きかった"
+          ],
+          "evidence": [
+            "salary-burden"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "俸禄廃止の措置名",
+          "prompt": "明治初期の日本で、従来の武士の俸禄を廃止し、公債を交付することにした措置は何か。",
+          "answer": "**秩禄処分(ちつろくしょぶん)**。",
+          "keywords": [
+            "秩禄処分"
+          ],
+          "evidence": [
+            "salary-abolition",
+            "salary-bonds"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "秩禄処分の実施年",
+          "prompt": "明治初期の日本の身分制度の改革について、秩禄処分が行われたのは何年か。",
+          "answer": "1876年。",
+          "keywords": [],
+          "evidence": [
+            "salary-year",
+            "salary-abolition",
+            "salary-bonds"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "生活上の自由の変化",
+          "prompt": "明治初期の日本の身分制度の改革は、人々の生活上の自由をどのように変えたか。",
+          "answer": "**四民平等**を進め、**職業選択の自由**や**商売の自由**を認めた。異なる身分間での結婚や、苗字を名乗ることも許された。",
+          "keywords": [
+            "四民平等",
+            "職業選択の自由",
+            "商売の自由"
+          ],
+          "evidence": [
+            "status-name",
+            "status-economic-freedoms",
+            "status-marriage"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "身分上の扱いの変化",
+          "prompt": "明治初期の日本の身分制度の改革では、従来の身分上の扱いがどのように改められたか。",
+          "answer": "1871年の**解放令**では、「えた・ひにん」と呼ばれた人々が、身分の上で**平民と同等**とされた。また、**廃刀令**により士族の**帯刀**という特権が禁止された。",
+          "keywords": [
+            "解放令",
+            "平民と同等",
+            "廃刀令",
+            "帯刀"
+          ],
+          "evidence": [
+            "abolition-year",
+            "outcast-subjects",
+            "emancipation-year",
+            "emancipation-result",
+            "sword-ban"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "武士の俸禄の見直し",
+          "prompt": "明治初期の日本の身分制度の改革で、武士に支給されていた俸禄はどのように見直されたか。",
+          "answer": "**政府の財政負担が大きかった**ため、1876年の**秩禄処分(ちつろくしょぶん)**で従来の**俸禄を廃止**し、**公債を交付**することにした。これにより、士族の多くは没落し、不満が高まった。",
+          "keywords": [
+            "政府の財政負担が大きかった",
+            "秩禄処分",
+            "俸禄を廃止",
+            "公債を交付"
+          ],
+          "evidence": [
+            "salary-burden",
+            "salary-year",
+            "salary-abolition",
+            "salary-bonds",
+            "salary-result"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「身分制度の改革」について説明せよ。",
+          "answer": "明治初期の日本では**四民平等**を進め、**職業選択の自由**や**商売の自由**を認め、1871年の**解放令**で「えた・ひにん」と呼ばれた人々を身分の上で**平民と同等**とした。**廃刀令**では士族の**帯刀**という特権を禁止した。**政府の財政負担が大きかった**ため、1876年の**秩禄処分(ちつろくしょぶん)**で**俸禄を廃止**して**公債を交付**することにし、士族の多くが没落して不満が高まった。",
+          "keywords": [
+            "四民平等",
+            "職業選択の自由",
+            "商売の自由",
+            "解放令",
+            "平民と同等",
+            "廃刀令",
+            "帯刀",
+            "政府の財政負担が大きかった",
+            "秩禄処分",
+            "俸禄を廃止",
+            "公債を交付"
+          ],
+          "evidence": [
+            "status-name",
+            "status-economic-freedoms",
+            "abolition-year",
+            "outcast-subjects",
+            "emancipation-year",
+            "emancipation-result",
+            "sword-ban",
+            "salary-burden",
+            "salary-year",
+            "salary-abolition",
+            "salary-bonds",
+            "salary-result"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "学制",
+      "reading": "がくせい",
+      "category": "学校制度の改革",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1872年に公布",
+        "sortYear": 1872
+      },
+      "explanation": "学校制度と小学校就学の義務を、費用負担による実施の難しさとあわせて学ぶ。高等教育の不足に対応するため、外国人教師の雇用や欧米への留学生派遣も進められた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "学校制度の法令名",
+          "prompt": "明治初期の日本で、小学校から大学校までの制度を定めた法令は何か。",
+          "answer": "**学制**。",
+          "keywords": [
+            "学制"
+          ],
+          "evidence": [
+            "school-name",
+            "school-system"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "学制の公布年",
+          "prompt": "明治初期の日本で、学制が公布されたのは何年か。",
+          "answer": "1872年。",
+          "keywords": [],
+          "evidence": [
+            "school-year",
+            "school-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "小学校就学の対象",
+          "prompt": "明治初期の日本の学制では、小学校に通わせる義務の対象をどのような子どもとしたか。",
+          "answer": "**満6歳になった男女すべて**。",
+          "keywords": [
+            "満6歳になった男女すべて"
+          ],
+          "evidence": [
+            "school-children"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "実施の難しさ",
+          "prompt": "明治初期の日本の学制で、画一的な実施が困難だったのは、費用負担の面からなぜか。",
+          "answer": "**授業料は個人、小学校の建設は地域の負担**だったため。",
+          "keywords": [
+            "授業料は個人、小学校の建設は地域の負担"
+          ],
+          "evidence": [
+            "school-cost"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "高等教育を補う対策",
+          "prompt": "学制が整えられた時期の日本で、高等教育の不足を補うために、どのような対策が進められたか。",
+          "answer": "**外国人教師の雇用**と**欧米への留学生派遣**。",
+          "keywords": [
+            "外国人教師の雇用",
+            "欧米への留学生派遣"
+          ],
+          "evidence": [
+            "higher-education-lack",
+            "higher-education-exchange"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "学制の内容",
+          "prompt": "明治初期の日本で、学制はどのような学校制度を定めたか。",
+          "answer": "1872年の日本で**学制**が公布され、**小学校から大学校まで**の制度が定められた。**満6歳になった男女すべて**を小学校に通わせることを義務とした。",
+          "keywords": [
+            "学制",
+            "小学校から大学校まで",
+            "満6歳になった男女すべて"
+          ],
+          "evidence": [
+            "school-year",
+            "school-name",
+            "school-system",
+            "school-children"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "高等教育の充実",
+          "prompt": "学制が整えられた時期の日本で、高等教育の不足にどのように対応したか。",
+          "answer": "**外国人教師の雇用**と**欧米への留学生派遣**を行い、西洋の知識や技術を取り込もうとした。",
+          "keywords": [
+            "外国人教師の雇用",
+            "欧米への留学生派遣"
+          ],
+          "evidence": [
+            "higher-education-lack",
+            "higher-education-exchange",
+            "higher-education-purpose"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「学制」について説明せよ。",
+          "answer": "1872年、日本で**学制**が公布され、**小学校から大学校まで**の制度を定め、**満6歳になった男女すべて**を小学校に通わせることを義務とした。**授業料は個人、小学校の建設は地域の負担**とされ、画一的な実施は困難だった。高等教育の不足に対応するため、**外国人教師の雇用**と**欧米への留学生派遣**により、西洋の知識や技術を取り込もうとした。",
+          "keywords": [
+            "学制",
+            "小学校から大学校まで",
+            "満6歳になった男女すべて",
+            "授業料は個人、小学校の建設は地域の負担",
+            "外国人教師の雇用",
+            "欧米への留学生派遣"
+          ],
+          "evidence": [
+            "school-year",
+            "school-name",
+            "school-system",
+            "school-children",
+            "school-cost",
+            "higher-education-lack",
+            "higher-education-exchange",
+            "higher-education-purpose"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "徴兵制",
+      "reading": "ちょうへいせい",
+      "category": "兵役制度の改革",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1873年に制定、1889年に免除規定廃止",
+        "sortYear": 1873
+      },
+      "explanation": "兵役を士族に限らず課す制度上の方針と、当初の家の跡継ぎなどの免除を区別する。制度上の対象年齢と、実際に兵役に就いた人々の構成を同一視しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "兵役制度の名称",
+          "prompt": "明治初期の日本で、国が一定の兵役を義務づけるために設けた制度は何か。",
+          "answer": "**徴兵制**。",
+          "keywords": [
+            "徴兵制"
+          ],
+          "evidence": [
+            "conscript-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "対象年齢の下限",
+          "prompt": "明治初期の日本の徴兵制で、兵役を課す男子の年齢の下限は満何歳だったか。",
+          "answer": "**満20歳**。",
+          "keywords": [
+            "満20歳"
+          ],
+          "evidence": [
+            "conscript-duty"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "徴兵制の制定年",
+          "prompt": "明治初期の日本で、徴兵制が定められたのは何年か。",
+          "answer": "1873年。",
+          "keywords": [],
+          "evidence": [
+            "conscript-year",
+            "conscript-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当初の免除対象",
+          "prompt": "明治初期の日本の徴兵制で、当初、兵役を免除されたのは、家の中でどのような役割を持つ者などだったか。",
+          "answer": "**家の跡継ぎなど**。",
+          "keywords": [
+            "家の跡継ぎなど"
+          ],
+          "evidence": [
+            "conscript-exemption"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "免除規定の廃止年",
+          "prompt": "明治期の日本の徴兵制で、家の跡継ぎなどの免除規定が廃止されたのは何年か。",
+          "answer": "1889年。",
+          "keywords": [],
+          "evidence": [
+            "conscript-exemption-end"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "徴兵制の内容",
+          "prompt": "明治初期の日本で、徴兵制は兵役の対象をどのように定めたか。",
+          "answer": "1873年、日本で**徴兵制**が定められ、**士族に限らず男子に兵役**の義務を課した。対象年齢の下限は**満20歳**とされた。",
+          "keywords": [
+            "徴兵制",
+            "士族に限らず男子に兵役",
+            "満20歳"
+          ],
+          "evidence": [
+            "conscript-year",
+            "conscript-name",
+            "conscript-duty"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "免除と制度運用の変化",
+          "prompt": "明治期の日本の徴兵制では、当初の免除とその後の制度の運用はどのようなものだったか。",
+          "answer": "当初は**家の跡継ぎなど**が免除され、実際に兵役に就いたのは**平民の次男や三男**が多かった。1889年には、こうした**免除規定の廃止**が行われた。",
+          "keywords": [
+            "家の跡継ぎなど",
+            "平民の次男や三男",
+            "免除規定の廃止"
+          ],
+          "evidence": [
+            "conscript-exemption",
+            "conscript-actual",
+            "conscript-exemption-end"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「徴兵制」について説明せよ。",
+          "answer": "1873年、日本で**徴兵制**が定められ、**士族に限らず男子に兵役**の義務を課し、対象年齢の下限を**満20歳**とした。当初は**家の跡継ぎなど**が免除され、実際に兵役に就いたのは**平民の次男や三男**が多かった。1889年には、こうした**免除規定の廃止**が行われた。",
+          "keywords": [
+            "徴兵制",
+            "士族に限らず男子に兵役",
+            "満20歳",
+            "家の跡継ぎなど",
+            "平民の次男や三男",
+            "免除規定の廃止"
+          ],
+          "evidence": [
+            "conscript-year",
+            "conscript-name",
+            "conscript-duty",
+            "conscript-exemption",
+            "conscript-actual",
+            "conscript-exemption-end"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "地租改正",
+      "reading": "ちそかいせい",
+      "category": "土地と租税の改革",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1873年に開始、1877年に税率軽減",
+        "sortYear": 1873
+      },
+      "explanation": "地価を基準に現金で税を納める制度により、政府の歳入が米の収穫高に左右されにくくなった。農民には重い税負担が残り、一揆と税率軽減につながった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "租税改革の名称",
+          "prompt": "明治初期の日本で、土地を測量して所有を認め、土地と租税の制度を改めた改革は何か。",
+          "answer": "**地租改正**。",
+          "keywords": [
+            "地租改正"
+          ],
+          "evidence": [
+            "land-tax-name",
+            "land-tax-type",
+            "land-tax-survey",
+            "land-tax-ownership"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "政府の目的",
+          "prompt": "明治初期の日本で、地租改正を行った財政上の目的は何か。",
+          "answer": "**財政基盤の安定**。",
+          "keywords": [
+            "財政基盤の安定"
+          ],
+          "evidence": [
+            "land-tax-purpose"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "税額の基準",
+          "prompt": "明治初期の日本の地租改正では、税額を決める基準となった土地の何を定めたか。",
+          "answer": "**地価**。",
+          "keywords": [
+            "地価"
+          ],
+          "evidence": [
+            "land-tax-basis"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "納税の方法",
+          "prompt": "明治初期の日本の地租改正では、地租を何で納めさせたか。",
+          "answer": "**現金**。",
+          "keywords": [
+            "現金"
+          ],
+          "evidence": [
+            "land-tax-payment"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "農民の反発",
+          "prompt": "明治初期の日本の地租改正で、高額な地租に不満を持った農民は、どのような行動を起こしたか。",
+          "answer": "**軽減を要求する農民一揆**。",
+          "keywords": [
+            "軽減を要求する農民一揆"
+          ],
+          "evidence": [
+            "land-tax-burden",
+            "land-tax-revolt"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "地租改正の開始年",
+          "prompt": "明治初期の日本で、地租改正が始まったのは何年か。",
+          "answer": "1873年。",
+          "keywords": [],
+          "evidence": [
+            "conscript-year",
+            "land-tax-same-year"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "軽減後の税率",
+          "prompt": "明治初期の日本の地租改正では、1877年から税率が何％に軽減されたか。",
+          "answer": "**2.5％**。",
+          "keywords": [
+            "2.5％"
+          ],
+          "evidence": [
+            "land-tax-reduction"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "地租改正の制度内容",
+          "prompt": "明治初期の日本で、地租改正はどのような制度を定めたか。",
+          "answer": "1873年、日本で**地租改正**が始まり、土地の所有を認めたうえで、**地価の3％**を地租として**現金**で納めさせた。",
+          "keywords": [
+            "地租改正",
+            "地価の3％",
+            "現金"
+          ],
+          "evidence": [
+            "conscript-year",
+            "land-tax-same-year",
+            "land-tax-name",
+            "land-tax-ownership",
+            "land-tax-payment"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政府と農民への影響",
+          "prompt": "明治初期の日本で、地租改正はどのような影響を与えたか。",
+          "answer": "政府は**米の収穫高に左右されない歳入**を安定的に得られるようになった。一方、高額な地租に対し、各地で**軽減を要求する農民一揆**が起こり、1877年から税率が**2.5％**に軽減された。",
+          "keywords": [
+            "米の収穫高に左右されない歳入",
+            "軽減を要求する農民一揆",
+            "2.5％"
+          ],
+          "evidence": [
+            "land-tax-revenue",
+            "land-tax-burden",
+            "land-tax-revolt",
+            "land-tax-reduction"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「地租改正」について説明せよ。",
+          "answer": "1873年、日本で始まった**地租改正**は、土地の所有を認め、**地価の3％**を地租として**現金**で納めさせた。政府は**米の収穫高に左右されない歳入**を安定的に得られるようになった。一方、高額な地租に対し、各地で**軽減を要求する農民一揆**が起こり、1877年から税率が**2.5％**に軽減された。",
+          "keywords": [
+            "地租改正",
+            "地価の3％",
+            "現金",
+            "米の収穫高に左右されない歳入",
+            "軽減を要求する農民一揆",
+            "2.5％"
+          ],
+          "evidence": [
+            "conscript-year",
+            "land-tax-same-year",
+            "land-tax-name",
+            "land-tax-ownership",
+            "land-tax-payment",
+            "land-tax-revenue",
+            "land-tax-burden",
+            "land-tax-revolt",
+            "land-tax-reduction"
+          ]
+        }
+      ]
+    }
+  ]
+}

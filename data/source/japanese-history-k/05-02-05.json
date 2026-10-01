@@ -1,0 +1,1081 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 5,
+    "title": "領土画定と朝鮮政策"
+  },
+  "integrationPromptPrefix": "近代日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_05_領土画定と朝鮮政策_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      299,
+      300,
+      301,
+      302,
+      303,
+      304,
+      305
+    ],
+    "note": "299～305頁のホ本文、関連注㉖㉗㉘、領有図・地域年表・コラムを最後まで読む。前項目の文化本文・注㉕と次項目の自由民権本文は除外。日露間の当時の境界合意、北海道の開拓と行政・防衛・農業教育、琉球の行政変化、朝鮮政策の外交と国内対立を出題する。領土の正当性や現在の主権、統治機構が存在しなかったという断定、軍事力や経済力の評価、外交の正当化、文化・民族の優劣、金額や被害者数を正答にしない。尖閣・竹島の領有主張、小笠原の細かな宣言・通知年、台湾出兵の被害者数、地域年表だけの施設・人口・税制・選挙年などは不採用。資料にない日朝修好条規の開港地・関税や締結月日、江華島事件の年を補わない。各事件を直接原因だけで説明し尽くす問いは作らない。日露和親条約の1854年表記は暦対応に疑義があるため締結年を採用せず、幕末の条約として扱う。資料外の締結年を補わない。"
+  },
+  "facts": [
+    {
+      "id": "russia-old-name",
+      "page": 299,
+      "quote": "締結された日露和親条約"
+    },
+    {
+      "id": "russia-old-border",
+      "page": 299,
+      "quote": "択捉島と得撫島の間に国境線が引かれ、"
+    },
+    {
+      "id": "russia-old-sakhalin",
+      "page": 299,
+      "quote": "樺太においては国境を設けず、これまでどおり両国民の混住の地とすると決められました。"
+    },
+    {
+      "id": "russia-new-year",
+      "page": 300,
+      "quote": "明治八年（一八七五）"
+    },
+    {
+      "id": "russia-negotiator",
+      "page": 300,
+      "quote": "日本側の代表は榎本武揚が担い、"
+    },
+    {
+      "id": "russia-new-name",
+      "page": 300,
+      "quote": "**樺太・千島交換条約**を締結して"
+    },
+    {
+      "id": "russia-new-border",
+      "page": 301,
+      "quote": "樺太全島はロシア領、<br>得撫島以北の千島列島は日本領となる"
+    },
+    {
+      "id": "hokkaido-year",
+      "page": 299,
+      "quote": "明治二年（一八六九）"
+    },
+    {
+      "id": "hokkaido-rename",
+      "page": 299,
+      "quote": "蝦夷地を**北海道**と改称し、"
+    },
+    {
+      "id": "hokkaido-office",
+      "page": 299,
+      "quote": "北海道を開拓し行政を総轄する**開拓使**を設置して、"
+    },
+    {
+      "id": "tonden-name",
+      "page": 300,
+      "quote": "政府は㉖**屯田兵制度**を設けて、本格的な統治を始めました。"
+    },
+    {
+      "id": "tonden-role",
+      "page": 300,
+      "quote": "屯田兵は北海道の開拓と防衛を担い、"
+    },
+    {
+      "id": "tonden-year",
+      "page": 300,
+      "quote": "政府は明治7年（1874）に屯田兵制度を開始し、"
+    },
+    {
+      "id": "tonden-samurai",
+      "page": 300,
+      "quote": "北海道に移住して屯田兵となる士族を募り、"
+    },
+    {
+      "id": "tonden-commoners",
+      "page": 300,
+      "quote": "後に平民からも募り、平民が主体となった。"
+    },
+    {
+      "id": "ainu-assimilation",
+      "page": 300,
+      "quote": "アイヌの同化政策により、アイヌの文化や慣習は圧迫されていきました。"
+    },
+    {
+      "id": "agriculture-purpose",
+      "page": 301,
+      "quote": "北海道の農業の発展のため、"
+    },
+    {
+      "id": "agriculture-school",
+      "page": 301,
+      "quote": "高等農業教育機関である札幌農学校（後の北海道大学）を設立し、"
+    },
+    {
+      "id": "agriculture-clark",
+      "page": 301,
+      "quote": "米国人のクラーク（㉗）を教頭として招き、"
+    },
+    {
+      "id": "ryukyu-year",
+      "page": 303,
+      "quote": "明治五年（一八七二）"
+    },
+    {
+      "id": "ryukyu-separation",
+      "page": 303,
+      "quote": "鹿児島県から琉球を切り離し、"
+    },
+    {
+      "id": "ryukyu-domain",
+      "page": 303,
+      "quote": "新たに**琉球藩**を設置して、"
+    },
+    {
+      "id": "ryukyu-sho",
+      "page": 303,
+      "quote": "国王の尚泰を藩主として華族に列しました。"
+    },
+    {
+      "id": "okinawa-year",
+      "page": 303,
+      "quote": "明治十二年（一八七九）"
+    },
+    {
+      "id": "okinawa-prefecture",
+      "page": 303,
+      "quote": "琉球藩は廃止され**沖縄県**が設置されました。"
+    },
+    {
+      "id": "ryukyu-kingdom-end",
+      "page": 303,
+      "quote": "これで琉球王国（琉球国）は消滅しました。"
+    },
+    {
+      "id": "ryukyu-name",
+      "page": 303,
+      "quote": "この一連の措置を**琉球処分**といいます。"
+    },
+    {
+      "id": "china-treaty-name",
+      "page": 305,
+      "quote": "**日清修好条規**を結びました。"
+    },
+    {
+      "id": "china-treaty-year",
+      "page": 305,
+      "quote": "明治四年（一八七一）"
+    },
+    {
+      "id": "china-treaty-rights",
+      "page": 305,
+      "quote": "お互いに領事裁判権を認め合う平等条約でした。"
+    },
+    {
+      "id": "korea-retry",
+      "page": 305,
+      "quote": "そのうえで朝鮮と再交渉しましたが、うまくいきませんでした。"
+    },
+    {
+      "id": "seikan-proposal",
+      "page": 305,
+      "quote": "留守政府では武力で朝鮮に開国を迫る**征韓論**が主張されましたが、"
+    },
+    {
+      "id": "seikan-okubo",
+      "page": 305,
+      "quote": "欧米から帰国した大久保利通などは、"
+    },
+    {
+      "id": "seikan-policy",
+      "page": 305,
+      "quote": "朝鮮派兵よりも国力増強に注力すべきと考え、征韓論を抑えました。"
+    },
+    {
+      "id": "seikan-departures",
+      "page": 305,
+      "quote": "西郷隆盛や板垣退助などは政府を去りました"
+    },
+    {
+      "id": "seikan-change",
+      "page": 305,
+      "quote": "（明治六年の政変）"
+    },
+    {
+      "id": "korea-gunboat",
+      "page": 305,
+      "quote": "朝鮮に軍艦を派遣して威圧しました。"
+    },
+    {
+      "id": "korea-ganghwa",
+      "page": 305,
+      "quote": "日本の軍艦が朝鮮の砲台から砲撃を受ける**江華島事件**が起き、"
+    },
+    {
+      "id": "korea-demands",
+      "page": 305,
+      "quote": "日本は強い態度で開国と謝罪を求め、"
+    },
+    {
+      "id": "korea-treaty-year",
+      "page": 305,
+      "quote": "明治九年（一八七六）"
+    },
+    {
+      "id": "korea-treaty-name",
+      "page": 305,
+      "quote": "**日朝修好条規**を締結しました。"
+    },
+    {
+      "id": "korea-treaty-rights",
+      "page": 305,
+      "quote": "日本が領事裁判権を持つなどの不平等な条約を結びましたが、"
+    },
+    {
+      "id": "korea-opening",
+      "page": 305,
+      "quote": "朝鮮が開国するきっかけとなりました。"
+    },
+    {
+      "id": "seikan-disagreement",
+      "page": 305,
+      "quote": "欧米視察からの帰国者と留守政府の間で見解の相違が決定的となり、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日露間の国境画定",
+      "reading": "にちろかんのこっきょうかくてい",
+      "category": "条約・会議",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "幕末～1875年",
+        "sortYear": 1875
+      },
+      "explanation": "幕末の日露和親条約と明治初期の樺太・千島交換条約で、境界と樺太の扱いがどう変わったかを学ぶ。当時の合意内容を確認し、現在の領土の正当性や国境の現状は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "関連する条約",
+          "prompt": "幕末、日本とロシアが国境や樺太の扱いを定めた条約は何か。",
+          "answer": "**日露和親条約**。",
+          "keywords": [
+            "日露和親条約"
+          ],
+          "evidence": [
+            "russia-old-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "国境線",
+          "prompt": "近代日本の日露間の国境画定について、日露和親条約で国境線が引かれたのは、どの二つの島の間か。",
+          "answer": "**択捉島(えとろふとう)と得撫島(うるっぷとう)**の間。",
+          "keywords": [
+            "択捉島と得撫島"
+          ],
+          "evidence": [
+            "russia-old-border"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "樺太の扱い",
+          "prompt": "近代日本の日露間の国境画定について、日露和親条約では樺太をどのような地としたか。",
+          "answer": "国境を設けず、**両国民の混住の地**とした。",
+          "keywords": [
+            "両国民の混住の地"
+          ],
+          "evidence": [
+            "russia-old-sakhalin"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "近代日本の日露間の国境画定で、樺太・千島交換条約が締結されたのは何年か。",
+          "answer": "1875年。",
+          "keywords": [],
+          "evidence": [
+            "russia-new-year"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "交渉の代表",
+          "prompt": "近代日本の日露間の国境画定で、樺太・千島交換条約の交渉を担った日本側の代表は誰か。",
+          "answer": "**榎本武揚(えのもとたけあき)**。",
+          "keywords": [
+            "榎本武揚"
+          ],
+          "evidence": [
+            "russia-negotiator"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "領有の合意",
+          "prompt": "近代日本の日露間の国境画定について、樺太・千島交換条約では両国の領有をどう定めたか。",
+          "answer": "**樺太全島をロシア領**、**得撫島以北の千島列島を日本領**とした。",
+          "keywords": [
+            "樺太全島をロシア領",
+            "得撫島以北の千島列島を日本領"
+          ],
+          "evidence": [
+            "russia-new-border"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "幕末、日本の日露間の国境画定はどのように行われたか。",
+          "answer": "幕末の**日露和親条約**で、**択捉島(えとろふとう)と得撫島(うるっぷとう)**の間に国境線を引いた。**樺太(からふと)**には国境を設けず、**両国民の混住の地**とした。",
+          "keywords": [
+            "日露和親条約",
+            "択捉島と得撫島",
+            "樺太",
+            "両国民の混住の地"
+          ],
+          "evidence": [
+            "russia-old-name",
+            "russia-old-border",
+            "russia-old-sakhalin"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の日露間の国境画定はどのように変わったか。",
+          "answer": "日本側の**榎本武揚(えのもとたけあき)**が交渉を担い、1875年に**樺太・千島交換条約**を結んだ。**樺太全島をロシア領**、**得撫島以北の千島列島を日本領**と定めた。",
+          "keywords": [
+            "榎本武揚",
+            "樺太・千島交換条約",
+            "樺太全島をロシア領",
+            "得撫島以北の千島列島を日本領"
+          ],
+          "evidence": [
+            "russia-negotiator",
+            "russia-new-year",
+            "russia-new-name",
+            "russia-new-border"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「日露間の国境画定」について説明せよ。",
+          "answer": "幕末、日本はロシアと**日露和親条約**を結び、**択捉島(えとろふとう)と得撫島(うるっぷとう)**の間に国境線を引き、樺太を**両国民の混住の地**とした。日本側の**榎本武揚(えのもとたけあき)**が交渉を担った1875年の**樺太・千島交換条約**では、**樺太全島をロシア領**、**得撫島以北の千島列島を日本領**と定めた。",
+          "keywords": [
+            "日露和親条約",
+            "択捉島と得撫島",
+            "両国民の混住の地",
+            "榎本武揚",
+            "樺太・千島交換条約",
+            "樺太全島をロシア領",
+            "得撫島以北の千島列島を日本領"
+          ],
+          "evidence": [
+            "russia-old-name",
+            "russia-old-border",
+            "russia-old-sakhalin",
+            "russia-negotiator",
+            "russia-new-year",
+            "russia-new-name",
+            "russia-new-border"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "北海道の開拓",
+      "reading": "ほっかいどうのかいたく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1869年～明治初期",
+        "sortYear": 1869
+      },
+      "explanation": "開拓使・屯田兵制度・農業教育を関連づける。開拓・防衛と行政の仕組みを学び、アイヌの同化政策による文化や慣習への圧迫も確認する。統治機構がなかったという断定や開拓の正当化、年表の細部は出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "行政機関",
+          "prompt": "明治初期、北海道の開拓と行政を総轄するために置かれた機関は何か。",
+          "answer": "**開拓使**。",
+          "keywords": [
+            "開拓使"
+          ],
+          "evidence": [
+            "hokkaido-office"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治初期、日本の北海道の開拓を進める開拓使が設置されたのは何年か。",
+          "answer": "1869年。",
+          "keywords": [],
+          "evidence": [
+            "hokkaido-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "開拓と防衛の制度",
+          "prompt": "明治初期、北海道に移住した人々が開拓と防衛を担った制度は何か。",
+          "answer": "**屯田兵制度(とんでんへいせいど)**。",
+          "keywords": [
+            "屯田兵制度"
+          ],
+          "evidence": [
+            "tonden-name",
+            "tonden-role"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "募集対象の変化",
+          "prompt": "明治時代、日本の北海道の開拓を担った屯田兵の募集対象は、どの身分からどの身分を中心とする形へ広がったか。",
+          "answer": "**士族**から**平民**を中心とする形へ。",
+          "keywords": [
+            "士族",
+            "平民"
+          ],
+          "evidence": [
+            "tonden-samurai",
+            "tonden-commoners"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "アイヌへの政策",
+          "prompt": "明治時代、日本の北海道の開拓に伴い、アイヌの文化や慣習を圧迫した政策は何か。",
+          "answer": "アイヌの**同化政策**。",
+          "keywords": [
+            "同化政策"
+          ],
+          "evidence": [
+            "ainu-assimilation"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "農業教育の機関",
+          "prompt": "明治時代、北海道の農業の発展のために設立された高等農業教育機関は何か。",
+          "answer": "**札幌農学校**。",
+          "keywords": [
+            "札幌農学校"
+          ],
+          "evidence": [
+            "agriculture-purpose",
+            "agriculture-school"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "person",
+          "form": "教頭",
+          "prompt": "明治時代、日本の北海道の開拓について、札幌農学校に教頭として招かれた米国人は誰か。",
+          "answer": "**クラーク**。",
+          "keywords": [
+            "クラーク"
+          ],
+          "evidence": [
+            "agriculture-clark"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の北海道の開拓はどのように進められたか。",
+          "answer": "1869年、蝦夷地を**北海道**と改称して**開拓使**を置き、開拓と行政を総轄させた。1874年に始めた**屯田兵制度(とんでんへいせいど)**で**開拓と防衛**を担わせ、当初の**士族**から後に**平民**へ募集を広げた。",
+          "keywords": [
+            "北海道",
+            "開拓使",
+            "屯田兵制度",
+            "開拓と防衛",
+            "士族",
+            "平民"
+          ],
+          "evidence": [
+            "hokkaido-year",
+            "hokkaido-rename",
+            "hokkaido-office",
+            "tonden-year",
+            "tonden-name",
+            "tonden-role",
+            "tonden-samurai",
+            "tonden-commoners"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の北海道の開拓に伴って、アイヌの文化や慣習にはどのような影響があったか。",
+          "answer": "アイヌの**同化政策**が進められ、その文化や慣習は**圧迫**された。",
+          "keywords": [
+            "同化政策",
+            "圧迫"
+          ],
+          "evidence": [
+            "ainu-assimilation"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の北海道の開拓では、農業の教育はどのように進められたか。",
+          "answer": "北海道の農業の発展のために高等農業教育機関の**札幌農学校**を設立し、米国人の**クラーク**を教頭として招いた。",
+          "keywords": [
+            "札幌農学校",
+            "クラーク"
+          ],
+          "evidence": [
+            "agriculture-purpose",
+            "agriculture-school",
+            "agriculture-clark"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「北海道の開拓」について説明せよ。",
+          "answer": "1869年、日本は蝦夷地を**北海道**と改称して**開拓使**を置き、1874年からの**屯田兵制度(とんでんへいせいど)**で**開拓と防衛**を担わせ、募集を**士族**から**平民**へ広げた。アイヌの**同化政策**により、文化や慣習は**圧迫**された。農業の発展を目指して高等農業教育機関の**札幌農学校**を設立し、米国人の**クラーク**を教頭として招いた。",
+          "keywords": [
+            "北海道",
+            "開拓使",
+            "屯田兵制度",
+            "開拓と防衛",
+            "士族",
+            "平民",
+            "同化政策",
+            "圧迫",
+            "札幌農学校",
+            "クラーク"
+          ],
+          "evidence": [
+            "hokkaido-year",
+            "hokkaido-rename",
+            "hokkaido-office",
+            "tonden-year",
+            "tonden-name",
+            "tonden-role",
+            "tonden-samurai",
+            "tonden-commoners",
+            "ainu-assimilation",
+            "agriculture-purpose",
+            "agriculture-school",
+            "agriculture-clark"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "琉球処分",
+      "reading": "りゅうきゅうしょぶん",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1872～1879年",
+        "sortYear": 1872
+      },
+      "explanation": "琉球藩の設置から廃止、沖縄県の設置への行政上の変化を学ぶ。国王が藩主になったことと王国の消滅を確認し、措置の正当性・必要性や領有権の評価は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "設置された藩",
+          "prompt": "明治初期、日本の琉球処分で、1872年に鹿児島県から琉球を切り離して設置したものは何か。",
+          "answer": "**琉球藩**。",
+          "keywords": [
+            "琉球藩"
+          ],
+          "evidence": [
+            "ryukyu-year",
+            "ryukyu-separation",
+            "ryukyu-domain"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "藩主",
+          "prompt": "明治初期、日本の琉球処分で、琉球藩の藩主とされた国王は誰か。",
+          "answer": "**尚泰(しょうたい)**。",
+          "keywords": [
+            "尚泰"
+          ],
+          "evidence": [
+            "ryukyu-sho"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "設置された県",
+          "prompt": "明治時代、日本の琉球処分で、琉球藩の廃止に伴って設置された県はどこか。",
+          "answer": "**沖縄県**。",
+          "keywords": [
+            "沖縄県"
+          ],
+          "evidence": [
+            "okinawa-prefecture"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治時代、日本の琉球処分で、琉球藩が廃止され沖縄県が設置されたのは何年か。",
+          "answer": "1879年。",
+          "keywords": [],
+          "evidence": [
+            "okinawa-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の琉球処分はどのように始まったか。",
+          "answer": "1872年、政府は鹿児島県から琉球を切り離して**琉球藩**を設け、国王の**尚泰(しょうたい)**を藩主とした。",
+          "keywords": [
+            "琉球藩",
+            "尚泰"
+          ],
+          "evidence": [
+            "ryukyu-year",
+            "ryukyu-separation",
+            "ryukyu-domain",
+            "ryukyu-sho"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の琉球処分で、琉球の行政はどのように変わったか。",
+          "answer": "1879年に**琉球藩**を廃止して**沖縄県**を設置し、**琉球王国**は消滅した。琉球藩の設置から沖縄県の設置に至る一連の措置を**琉球処分**という。",
+          "keywords": [
+            "琉球藩",
+            "沖縄県",
+            "琉球王国",
+            "琉球処分"
+          ],
+          "evidence": [
+            "okinawa-year",
+            "okinawa-prefecture",
+            "ryukyu-kingdom-end",
+            "ryukyu-name"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「琉球処分」について説明せよ。",
+          "answer": "日本政府は1872年、鹿児島県から琉球を切り離して**琉球藩**を設け、国王の**尚泰(しょうたい)**を藩主とした。1879年に琉球藩を廃止して**沖縄県**を設置し、**琉球王国**は消滅した。琉球藩の設置から沖縄県の設置に至る一連の措置を**琉球処分**という。",
+          "keywords": [
+            "琉球藩",
+            "尚泰",
+            "沖縄県",
+            "琉球王国",
+            "琉球処分"
+          ],
+          "evidence": [
+            "ryukyu-year",
+            "ryukyu-separation",
+            "ryukyu-domain",
+            "ryukyu-sho",
+            "okinawa-year",
+            "okinawa-prefecture",
+            "ryukyu-kingdom-end",
+            "ryukyu-name"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "朝鮮政策と征韓論",
+      "reading": "ちょうせんせいさくとせいかんろん",
+      "category": "条約・会議",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1871年～明治初期",
+        "sortYear": 1871
+      },
+      "explanation": "日清修好条規の相互の権利と、征韓論をめぐる留守政府・欧米視察からの帰国者の対立を整理する。朝鮮への派兵と国内の国力増強という方針の違い、政府を去った人物を学ぶ。外交の正当化や征韓論の人物別の解釈は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "関連する条約",
+          "prompt": "明治初期、日本が朝鮮との再交渉に先立って清と結んだ条約は何か。",
+          "answer": "**日清修好条規**。",
+          "keywords": [
+            "日清修好条規"
+          ],
+          "evidence": [
+            "china-treaty-name",
+            "korea-retry"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論に関して、日清修好条規が締結されたのは何年か。",
+          "answer": "1871年。",
+          "keywords": [],
+          "evidence": [
+            "china-treaty-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "相互に認めた権利",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論に関して、日清修好条規で日本と清が互いに認め合った権利は何か。",
+          "answer": "**領事裁判権**。",
+          "keywords": [
+            "領事裁判権"
+          ],
+          "evidence": [
+            "china-treaty-rights"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "征韓論の内容",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論について、留守政府はどのように朝鮮の開国を進めようとしたか。",
+          "answer": "**武力で開国を迫ること**。",
+          "keywords": [
+            "武力で開国を迫ること"
+          ],
+          "evidence": [
+            "seikan-proposal"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "派兵に反対した人物",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論について、欧米から帰国後に朝鮮派兵より国力増強を重視した中心人物は誰か。",
+          "answer": "**大久保利通**。",
+          "keywords": [
+            "大久保利通"
+          ],
+          "evidence": [
+            "seikan-okubo",
+            "seikan-policy"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "政府を去った人物",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論をめぐる対立で、政府を去った留守政府側の人物を二人挙げよ。",
+          "answer": "**西郷隆盛と板垣退助**。",
+          "keywords": [
+            "西郷隆盛と板垣退助"
+          ],
+          "evidence": [
+            "seikan-departures"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政変の名称",
+          "prompt": "明治初期、日本で征韓論をめぐる見解の相違から、留守政府側の人物が政府を去った政変を何というか。",
+          "answer": "**明治六年の政変**。",
+          "keywords": [
+            "明治六年の政変"
+          ],
+          "evidence": [
+            "seikan-change",
+            "seikan-disagreement"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論に関わる日清修好条規は、両国の権利をどう定めたか。",
+          "answer": "1871年に日本と清が結んだ**日清修好条規**は、互いに**領事裁判権**を認め合う**平等条約**だった。",
+          "keywords": [
+            "日清修好条規",
+            "領事裁判権",
+            "平等条約"
+          ],
+          "evidence": [
+            "china-treaty-year",
+            "china-treaty-name",
+            "china-treaty-rights"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論をめぐる対立は、どのようなものだったか。",
+          "answer": "留守政府は朝鮮に**武力で開国を迫ること**を主張した。欧米から帰国した**大久保利通**らは、朝鮮派兵より**国力増強**に注力すべきだと考え、**征韓論**を抑えた。",
+          "keywords": [
+            "武力で開国を迫ること",
+            "大久保利通",
+            "国力増強",
+            "征韓論"
+          ],
+          "evidence": [
+            "seikan-proposal",
+            "seikan-okubo",
+            "seikan-policy"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治初期、日本の朝鮮政策と征韓論をめぐる対立は、政府にどのような変化をもたらしたか。",
+          "answer": "見解の相違から、留守政府側の**西郷隆盛と板垣退助**らが政府を去った。この出来事を**明治六年の政変**という。",
+          "keywords": [
+            "西郷隆盛と板垣退助",
+            "明治六年の政変"
+          ],
+          "evidence": [
+            "seikan-departures",
+            "seikan-change",
+            "seikan-disagreement"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「朝鮮政策と征韓論」について説明せよ。",
+          "answer": "1871年、日本と清が結んだ**日清修好条規**は、互いに**領事裁判権**を認め合う**平等条約**だった。留守政府は朝鮮に**武力で開国を迫ること**を主張する**征韓論**を唱えたが、欧米から帰国した**大久保利通**らは朝鮮派兵より**国力増強**を重視した。この対立で**西郷隆盛と板垣退助**らが政府を去った（**明治六年の政変**）。",
+          "keywords": [
+            "日清修好条規",
+            "領事裁判権",
+            "平等条約",
+            "武力で開国を迫ること",
+            "征韓論",
+            "大久保利通",
+            "国力増強",
+            "西郷隆盛と板垣退助",
+            "明治六年の政変"
+          ],
+          "evidence": [
+            "china-treaty-year",
+            "china-treaty-name",
+            "china-treaty-rights",
+            "seikan-proposal",
+            "seikan-okubo",
+            "seikan-policy",
+            "seikan-departures",
+            "seikan-change",
+            "seikan-disagreement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "日朝修好条規",
+      "reading": "にっちょうしゅうこうじょうき",
+      "category": "条約・会議",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1876年",
+        "sortYear": 1876
+      },
+      "explanation": "江華島事件から条約締結への経緯と、領事裁判権の非対称性を学ぶ。日清修好条規と対照できるよう不平等な性格を確認するが、資料にない開港地・関税・締結月日・江華島事件の年は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "締結に先立つ事件",
+          "prompt": "19世紀、日本が朝鮮に派遣した軍艦が朝鮮の砲台から砲撃を受けた事件は何か。",
+          "answer": "**江華島事件(こうかとうじけん)**。",
+          "keywords": [
+            "江華島事件"
+          ],
+          "evidence": [
+            "korea-ganghwa"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "明治時代、日本の日朝修好条規が締結されたのは何年か。",
+          "answer": "1876年。",
+          "keywords": [],
+          "evidence": [
+            "korea-treaty-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本の権利",
+          "prompt": "明治時代、日本の日朝修好条規で日本に認められた裁判に関する権利は何か。",
+          "answer": "**領事裁判権**。",
+          "keywords": [
+            "領事裁判権"
+          ],
+          "evidence": [
+            "korea-treaty-rights"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "朝鮮への影響",
+          "prompt": "明治時代、日本の日朝修好条規の締結は、朝鮮の対外関係にどのような変化を促したか。",
+          "answer": "朝鮮の**開国**。",
+          "keywords": [
+            "開国"
+          ],
+          "evidence": [
+            "korea-opening"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の日朝修好条規はどのような経緯で締結されたか。",
+          "answer": "日本が朝鮮に軍艦を派遣して威圧し、朝鮮の砲台から砲撃を受ける**江華島事件(こうかとうじけん)**が起きた。日本は開国と謝罪を求め、1876年に**日朝修好条規**を締結した。",
+          "keywords": [
+            "江華島事件",
+            "日朝修好条規"
+          ],
+          "evidence": [
+            "korea-gunboat",
+            "korea-ganghwa",
+            "korea-demands",
+            "korea-treaty-year",
+            "korea-treaty-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "明治時代、日本の日朝修好条規は、どのような性格を持つ条約だったか。",
+          "answer": "日本に**領事裁判権**を認めるなどの**不平等条約**で、朝鮮の**開国**のきっかけとなった。",
+          "keywords": [
+            "領事裁判権",
+            "不平等条約",
+            "開国"
+          ],
+          "evidence": [
+            "korea-treaty-rights",
+            "korea-opening"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「日朝修好条規」について説明せよ。",
+          "answer": "日本が朝鮮に軍艦を派遣して威圧し、朝鮮の砲台から砲撃を受ける**江華島事件(こうかとうじけん)**を経て、1876年に**日朝修好条規**が締結された。日本に**領事裁判権**を認めるなどの**不平等条約**で、朝鮮の**開国**のきっかけとなった。",
+          "keywords": [
+            "江華島事件",
+            "日朝修好条規",
+            "領事裁判権",
+            "不平等条約",
+            "開国"
+          ],
+          "evidence": [
+            "korea-gunboat",
+            "korea-ganghwa",
+            "korea-treaty-year",
+            "korea-treaty-name",
+            "korea-treaty-rights",
+            "korea-opening"
+          ]
+        }
+      ]
+    }
+  ]
+}

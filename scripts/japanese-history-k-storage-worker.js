@@ -31,6 +31,17 @@ export default {
     if (before.schemaVersion !== 3 || !Array.isArray(before.subjects)) return new Response("Invalid catalog", { status: 400 });
     const previous = before.subjects.filter(entry => entry.id === subjectId);
     if (env.PREVIOUS_SUBJECT_HASH ? previous.length !== 1 || await hash(previous[0]) !== env.PREVIOUS_SUBJECT_HASH : previous.length !== 0) return new Response("Previous subject changed", { status: 409 });
+    if (env.PRESERVE_EXISTING_DECKS === "true") {
+      if (previous.length !== 1 || !Array.isArray(subject.decks) || previous[0].decks.some(deck => JSON.stringify(subject.decks.find(item => item.id === deck.id)) !== JSON.stringify(deck))) return new Response("Existing decks changed", { status: 400 });
+      for (const [field, entry] of Object.entries(previous[0])) {
+        if (["decks", "chapterGroups", "termCount", "questionCount"].includes(field)) continue;
+        if (JSON.stringify(subject[field]) !== JSON.stringify(entry)) return new Response("Existing subject metadata changed", { status: 400 });
+      }
+      for (const group of previous[0].chapterGroups) {
+        const currentGroup = subject.chapterGroups.find(item => item.id === group.id);
+        if (!currentGroup || group.deckIds.some(id => !currentGroup.deckIds.includes(id)) || Object.entries(group).some(([field, entry]) => field !== "deckIds" && JSON.stringify(currentGroup[field]) !== JSON.stringify(entry))) return new Response("Existing chapter changed", { status: 400 });
+      }
+    }
     const subjects = previous.length ? before.subjects.map(entry => entry.id === subjectId ? subject : entry) : [...before.subjects, subject];
     const expected = { ...before, subjects, version: (await hash(subjects)).slice(0, 20) };
     if (JSON.stringify(expected) !== JSON.stringify(value)) return new Response("Other fields changed", { status: 400 });

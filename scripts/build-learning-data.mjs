@@ -1,5 +1,5 @@
 import { createAnswerMap } from "./create-answer-map.mjs";
-import { loadJapaneseHistoryK } from "./japanese-history-k.mjs";
+import { loadAllJapaneseHistoryK } from "./japanese-history-k.mjs";
 import { applySOQuestionTypes, loadSOQuestionTypes } from "./world-history-so-question-types.mjs";
 import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
@@ -3520,7 +3520,7 @@ export async function main() {
     loadWorldHistorySDecks(),
     loadWorldHistorySODecks({ includeBook: true }),
     loadJapaneseHistoryDecks(),
-    loadJapaneseHistoryK(),
+    loadAllJapaneseHistoryK(),
     loadEnglishDecks(),
     loadGeographyDecks(),
     loadPoliticsEconomicsDecks(),
@@ -3895,5 +3895,9 @@ export async function main() {
 }
 
 if (path.resolve(process.argv[1] ?? "") === fileURLToPath(import.meta.url)) {
-  await main();
+  // 世界史SOの追加原稿がこのファイルの解析関数を参照するため、読込完了を先に確定する。
+  main().catch(error => {
+    console.error(error);
+    process.exitCode = 1;
+  });
 }

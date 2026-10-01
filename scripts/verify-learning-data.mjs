@@ -1,5 +1,7 @@
 import { createHash } from "node:crypto";
 import { readFile, stat } from "node:fs/promises";
+import assert from "node:assert/strict";
+import { loadAllJapaneseHistoryK } from "./japanese-history-k.mjs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import {
@@ -403,15 +405,34 @@ if (
 }
 
 const catalog = await readJson("index.json");
+const hasJapaneseK = catalog.subjects.some(subject => subject.id === "japanese-history-k");
 if (
   catalog.schemaVersion !== 3 ||
-  catalog.subjects.length !== 12 ||
-  catalog.subjects.map((subject) => subject.id).join(",") !==
+  catalog.subjects.length !== 12 + Number(hasJapaneseK) ||
+  catalog.subjects.filter(subject => subject.id !== "japanese-history-k").map((subject) => subject.id).join(",") !==
     "world-history,world-history-s,world-history-so,japanese-history,english-vocabulary,geography,politics-economics,biology-basics,earth-science-basics,classical-japanese,classical-chinese,mindset"
 ) {
   throw new Error(
-    "世界史・世界史S・世界史SO・日本史・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
+    "世界史・世界史S・世界史SO・日本史・日本史K・英単語・地理・政治・経済・生物基礎・地学基礎・古文・漢文・マインドセットの科目一覧が正しくありません。",
   );
+}
+// 既存の小さな試験用データも利用できる。全科目を再生成した場合は日本史Kも全文照合する。
+if (hasJapaneseK) {
+  const japaneseK = await loadAllJapaneseHistoryK();
+  const japaneseKEntry = catalog.subjects.find(subject => subject.id === "japanese-history-k");
+  assert.equal(japaneseKEntry.questionCount, japaneseK.subject.questionCount);
+  assert.equal(japaneseKEntry.termCount, japaneseK.subject.termCount);
+  assert.equal(japaneseKEntry.defaultDeckId, japaneseK.subject.defaultDeckId);
+  assert.deepEqual(japaneseKEntry.chapterGroups, japaneseK.subject.chapterGroups);
+  assert.equal(japaneseKEntry.decks.length, japaneseK.decks.length);
+  for (const expected of japaneseK.decks) {
+    const entry = japaneseKEntry.decks.find(deck => deck.id === expected.id);
+    assert.equal(entry.version, expected.version);
+    assert.equal(entry.contentVersion, expected.contentVersion);
+    const index = await readJson(entry.indexPath);
+    const chunks = await Promise.all(index.chunks.map(chunk => readJson(chunk.path)));
+    assert.deepEqual(chunks.flatMap(chunk => chunk.terms), expected.terms, "日本史Kの手元確認用生成結果が原稿と一致しません。");
+  }
 }
 const subjectEntry = catalog.subjects.find(
   (subject) => subject.id === "world-history",

@@ -1,0 +1,696 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 1,
+    "title": "昭和時代（戦後）"
+  },
+  "part": {
+    "number": 2,
+    "title": "大日本帝国憲法の改正"
+  },
+  "integrationPromptPrefix": "戦後日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_02_大日本帝国憲法の改正_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      416,
+      417,
+      418,
+      419,
+      420
+    ],
+    "note": "第二小項目の本文・注記・史料を根拠とする。思想的な評価、会談の逸話、細かな人物名は出題せず、憲法制定と原理・統治・関連法の変化に絞る。個別法の制定年は補わない。"
+  },
+  "facts": [
+    {
+      "id": "draft-request",
+      "page": 416,
+      "quote": "日本側はポツダム宣言を受諾しても大日本帝国憲法を改正する必要はないものと考えていましたが、ＧＨＱは憲法の改正を要求しました。日本政府は部分的な修正でよいと考え、改正案を用意しましたが、ＧＨＱはこれを却下し、ＧＨＱが作成した憲法草案を日本政府に交付して憲法改正を要求しました。"
+    },
+    {
+      "id": "government-draft",
+      "page": 417,
+      "quote": "日本政府はＧＨＱ草案をもとに、日本政府案の草案を作成しました。それをＧＨＱとの交渉を経て若干の修正が施され、内閣草案が整いました。"
+    },
+    {
+      "id": "constitutional-deliberation",
+      "page": 417,
+      "quote": "枢密院で可決された内閣草案は、帝国議会の衆議院に「帝国憲法改正案」として勅書をもって提出されました。衆議院で若干の修正を加えて可決し、貴族院に送付しました。貴族院でも若干の修正を加えて可決し、衆議院が貴族院での修正に同意し、帝国議会での審議が終わりました。改正案は再び枢密院で審議され、帝国議会での修正に枢密院が同意したため、憲法改正の審議はすべて終わり、すべての条文が確定しました。"
+    },
+    {
+      "id": "constitutional-dates",
+      "page": 417,
+      "quote": "そして、昭和天皇の裁可を経て昭和二十一年（一九四六）十一月三日に**日本国憲法**として公布され、昭和二十二年（一九四七）五月三日に施行されました。"
+    },
+    {
+      "id": "amendment-procedure",
+      "page": 418,
+      "quote": "大日本帝国憲法を改正する手続きを経て日本国憲法が成立したことが分かる。"
+    },
+    {
+      "id": "basic-principles",
+      "page": 417,
+      "quote": "日本国憲法は、国民主権、基本的人権の尊重、平和主義を基本原理とした。"
+    },
+    {
+      "id": "emperor-position",
+      "page": 417,
+      "quote": "天皇は日本国および日本国民統合の象徴とし、内閣総理大臣の任命、衆議院の解散、法律の公布などの天皇の権能は「国事に関する行為」として明記した。"
+    },
+    {
+      "id": "parliamentary-government",
+      "page": 417,
+      "quote": "また、国会を国権の最高機関とし、内閣が国会に対して責任を負う議院内閣制が導入された。"
+    },
+    {
+      "id": "article-nine",
+      "page": 417,
+      "quote": "マッカーサー元帥の示した原則により、天皇は残されたと同時に、第九条には戦争の放棄、戦力の不保持、交戦権の否認などが明記されました。"
+    },
+    {
+      "id": "law-reform-trigger",
+      "page": 418,
+      "quote": "日本国憲法が公布されたことで、多くの法律が改正・制定された。"
+    },
+    {
+      "id": "civil-law",
+      "page": 418,
+      "quote": "改正民法では個人の権利が強化され、結婚には戸主の同意は不要となり、両性の合意のみで成立することになった。"
+    },
+    {
+      "id": "criminal-law",
+      "page": 418,
+      "quote": "改正刑法でも、大逆罪や不敬罪など皇室に対する罪や、男女不公平だった姦通罪を廃止した。"
+    },
+    {
+      "id": "local-autonomy",
+      "page": 418,
+      "quote": "地方自治法の制定により地方自治が強化され、知事や市町村長が公選されるようになり、地方行政に影響力を持った内務省が廃止された。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日本国憲法の制定",
+      "reading": "にほんこくけんぽうのせいてい",
+      "category": "憲法の制定",
+      "chronology": {
+        "displayPeriod": "1946年公布・1947年施行",
+        "sortYear": 1946
+      },
+      "explanation": "ＧＨＱの草案と日本側の審議・修正をつなぎ、公布と施行を区別する。大日本帝国憲法を改正する手続きが用いられたことを押さえ、制定への思想的な評価や審議の細部は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本で、従来の憲法の改正手続きを経て成立した新しい憲法は何か。",
+          "answer": "日本国憲法。",
+          "evidence": [
+            "amendment-procedure",
+            "constitutional-dates"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後の日本国憲法の制定で、この憲法が公布されたのは何年何月何日か。",
+          "answer": "1946年11月3日。",
+          "evidence": [
+            "constitutional-dates"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後の日本国憲法の制定で、この憲法が施行されたのは何年何月何日か。",
+          "answer": "1947年5月3日。",
+          "evidence": [
+            "constitutional-dates"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の日本国憲法の制定過程で、日本政府の部分修正案を却下し、独自の草案を交付した機関はどこか。",
+          "answer": "ＧＨＱ。",
+          "evidence": [
+            "draft-request"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の日本国憲法の制定過程で、衆議院と貴族院で改正案を審議した議会は何か。",
+          "answer": "帝国議会。",
+          "evidence": [
+            "constitutional-deliberation"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法の制定では、どの憲法の改正手続きが用いられたか。",
+          "answer": "大日本帝国憲法。",
+          "evidence": [
+            "amendment-procedure"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法の制定は、どのように進められたか。",
+          "answer": "日本政府は大日本帝国憲法の部分的な修正を考えたが、**ＧＨＱ**はその案を却下して自らの**憲法草案**を交付した。日本政府はこれをもとに案を作成し、ＧＨＱとの交渉、**枢密院(すうみついん)**と**帝国議会**の審議・修正を経て、**大日本帝国憲法の改正手続き**により新しい憲法が成立した。",
+          "evidence": [
+            "draft-request",
+            "government-draft",
+            "constitutional-deliberation",
+            "amendment-procedure"
+          ],
+          "keywords": [
+            "ＧＨＱ",
+            "憲法草案",
+            "枢密院",
+            "帝国議会",
+            "大日本帝国憲法の改正手続き"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法の制定で、この憲法はいつ公布され、いつ施行されたか。",
+          "answer": "日本で1946年11月3日に**公布**され、1947年5月3日に**施行**された。",
+          "evidence": [
+            "constitutional-dates"
+          ],
+          "keywords": [
+            "公布",
+            "施行"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「日本国憲法の制定」について説明せよ。",
+          "answer": "戦後の日本で、政府は大日本帝国憲法の部分的な修正を考えたが、**ＧＨＱ**がその案を却下して交付した**憲法草案**をもとに案を作成した。日本国憲法は、ＧＨＱとの交渉、**枢密院(すうみついん)**と**帝国議会**の審議・修正を経て、**大日本帝国憲法の改正手続き**によって成立した。1946年11月3日に**公布**され、1947年5月3日に**施行**された。",
+          "evidence": [
+            "draft-request",
+            "government-draft",
+            "constitutional-deliberation",
+            "amendment-procedure",
+            "constitutional-dates"
+          ],
+          "keywords": [
+            "ＧＨＱ",
+            "憲法草案",
+            "枢密院",
+            "帝国議会",
+            "大日本帝国憲法の改正手続き",
+            "公布",
+            "施行"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日本国憲法の基本原理",
+      "reading": "にほんこくけんぽうのきほんげんり",
+      "category": "憲法の原理と統治",
+      "chronology": {
+        "displayPeriod": "1947年施行",
+        "sortYear": 1947
+      },
+      "explanation": "三つの基本原理、天皇の地位、国会と内閣の関係を、原文の一つのまとまりとして整理する。国事に関する行為の例と議院内閣制を扱い、原文にない権限や手続きは補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法の基本原理となった、三つの原理は何か。",
+          "answer": "国民主権、基本的人権の尊重、平和主義。",
+          "evidence": [
+            "basic-principles"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法の基本原理では、天皇の地位は日本国および日本国民統合の何とされたか。",
+          "answer": "象徴。",
+          "evidence": [
+            "emperor-position"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法の基本原理では、天皇による内閣総理大臣の任命や法律の公布などは、どのような行為として明記されたか。",
+          "answer": "国事に関する行為。",
+          "evidence": [
+            "emperor-position"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の日本国憲法の基本原理では、国権の最高機関とされたのはどの機関か。",
+          "answer": "国会。",
+          "evidence": [
+            "parliamentary-government"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本国憲法で、内閣が国会に対して責任を負う仕組みとして導入された制度は何か。",
+          "answer": "議院内閣制。",
+          "evidence": [
+            "parliamentary-government"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法の基本原理は、どのようなものだったか。",
+          "answer": "日本で1947年に施行された憲法は、**国民主権**、**基本的人権の尊重**、**平和主義**を基本原理とした。",
+          "evidence": [
+            "constitutional-dates",
+            "basic-principles"
+          ],
+          "keywords": [
+            "国民主権",
+            "基本的人権の尊重",
+            "平和主義"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法の基本原理では、天皇はどのように位置づけられたか。",
+          "answer": "天皇は**日本国および日本国民統合の象徴**とされた。**内閣総理大臣の任命**、**衆議院の解散**、**法律の公布**などは、天皇の**国事に関する行為**として明記された。",
+          "evidence": [
+            "emperor-position"
+          ],
+          "keywords": [
+            "日本国および日本国民統合の象徴",
+            "内閣総理大臣の任命",
+            "衆議院の解散",
+            "法律の公布",
+            "国事に関する行為"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法の基本原理では、国会と内閣はどのような関係にあったか。",
+          "answer": "**国会**を**国権の最高機関**とし、**内閣**が国会に対して責任を負う**議院内閣制**が導入された。",
+          "evidence": [
+            "parliamentary-government"
+          ],
+          "keywords": [
+            "国会",
+            "国権の最高機関",
+            "内閣",
+            "議院内閣制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「日本国憲法の基本原理」について説明せよ。",
+          "answer": "日本で1947年に施行された憲法は、**国民主権**、**基本的人権の尊重**、**平和主義**を基本原理とした。天皇は**日本国および日本国民統合の象徴**とされ、**内閣総理大臣の任命**、**衆議院の解散**、**法律の公布**などが**国事に関する行為**として明記された。**国会**を**国権の最高機関**とし、**内閣**が国会に対して責任を負う**議院内閣制**が導入された。",
+          "evidence": [
+            "constitutional-dates",
+            "basic-principles",
+            "emperor-position",
+            "parliamentary-government"
+          ],
+          "keywords": [
+            "国民主権",
+            "基本的人権の尊重",
+            "平和主義",
+            "日本国および日本国民統合の象徴",
+            "内閣総理大臣の任命",
+            "衆議院の解散",
+            "法律の公布",
+            "国事に関する行為",
+            "国会",
+            "国権の最高機関",
+            "内閣",
+            "議院内閣制"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "日本国憲法第九条",
+      "reading": "にほんこくけんぽうだいきゅうじょう",
+      "category": "平和主義と憲法",
+      "chronology": {
+        "displayPeriod": "1947年施行",
+        "sortYear": 1947
+      },
+      "explanation": "戦争の放棄、戦力の不保持、交戦権の否認を一つの条文の内容としてまとめる。平和主義とのつながりを押さえ、現在の解釈や改正の議論は出題しない。",
+      "questions": [
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本で、戦争を放棄する原則を明記した憲法の条文は何か。",
+          "answer": "日本国憲法第九条。",
+          "evidence": [
+            "article-nine"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法第九条は、戦力の保持についてどのように定めたか。",
+          "answer": "戦力の不保持。",
+          "evidence": [
+            "article-nine"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本国憲法第九条では、国家の交戦権はどのように扱われたか。",
+          "answer": "交戦権の否認。",
+          "evidence": [
+            "article-nine"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本国憲法第九条は、どのような内容を定めたか。",
+          "answer": "日本で1947年に施行された、**平和主義**を基本原理の一つとする憲法の第九条には、**戦争の放棄**、**戦力の不保持**、**交戦権の否認**が明記された。",
+          "evidence": [
+            "constitutional-dates",
+            "basic-principles",
+            "article-nine"
+          ],
+          "keywords": [
+            "平和主義",
+            "戦争の放棄",
+            "戦力の不保持",
+            "交戦権の否認"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「日本国憲法第九条」について説明せよ。",
+          "answer": "日本では、1947年に施行された日本国憲法が**平和主義**を基本原理の一つとした。第九条には、**戦争の放棄**、**戦力の不保持**、**交戦権の否認**が明記された。",
+          "evidence": [
+            "constitutional-dates",
+            "basic-principles",
+            "article-nine"
+          ],
+          "keywords": [
+            "平和主義",
+            "戦争の放棄",
+            "戦力の不保持",
+            "交戦権の否認"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "憲法改正にともなう法整備",
+      "reading": "けんぽうかいせいにともなうほうせいび",
+      "category": "憲法と関連法",
+      "chronology": {
+        "displayPeriod": "1946年の憲法公布後",
+        "sortYear": 1946
+      },
+      "explanation": "民法・刑法の改正と地方自治法の制定をまとめ、結婚の成立、罪の廃止、地方自治の変化を区別する。各法律の制定年や、原文に説明のない罪の定義は出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本で、憲法改正にともなう法整備により個人の権利が強化されたのは、どの法律の改正によるものか。",
+          "answer": "民法。",
+          "evidence": [
+            "civil-law"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本の憲法改正にともなう法整備で、結婚に必要とされなくなったのは、誰の同意か。",
+          "answer": "戸主(こしゅ)の同意。",
+          "evidence": [
+            "civil-law"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本の憲法改正にともなう法整備で、改正刑法が廃止した皇室に対する二つの罪は何か。",
+          "answer": "大逆罪(たいぎゃくざい)と不敬罪(ふけいざい)。",
+          "evidence": [
+            "criminal-law"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本の憲法改正にともなう法整備で、男女不公平だったとして改正刑法が廃止した罪は何か。",
+          "answer": "姦通罪(かんつうざい)。",
+          "evidence": [
+            "criminal-law"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の日本の憲法改正にともなう法整備で、知事や市町村長はどのように選ばれるようになったか。",
+          "answer": "公選されるようになった。",
+          "evidence": [
+            "local-autonomy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本で、憲法改正にともなう法整備により知事や市町村長が公選されるようになったのは、どの法律の制定によるものか。",
+          "answer": "地方自治法。",
+          "evidence": [
+            "local-autonomy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の日本の憲法改正にともなう法整備で、地方行政に影響力を持ち、廃止された省はどこか。",
+          "answer": "内務省。",
+          "evidence": [
+            "local-autonomy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本の憲法改正にともなう法整備では、結婚と個人の権利にどのような変化があったか。",
+          "answer": "1946年の日本国憲法公布に伴い、日本では改正**民法**で**個人の権利**が強化された。結婚には**戸主(こしゅ)の同意**が不要となり、**両性の合意**だけで成立することになった。",
+          "evidence": [
+            "constitutional-dates",
+            "law-reform-trigger",
+            "civil-law"
+          ],
+          "keywords": [
+            "民法",
+            "個人の権利",
+            "戸主の同意",
+            "両性の合意"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本の憲法改正にともなう法整備では、刑法はどのように改められたか。",
+          "answer": "改正**刑法**では、皇室に対する罪の**大逆罪(たいぎゃくざい)**と**不敬罪(ふけいざい)**、男女不公平だった**姦通罪(かんつうざい)**が廃止された。",
+          "evidence": [
+            "criminal-law"
+          ],
+          "keywords": [
+            "刑法",
+            "大逆罪",
+            "不敬罪",
+            "姦通罪"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "戦後の日本の憲法改正にともなう法整備では、地方行政はどのように変わったか。",
+          "answer": "**地方自治法**の制定によって地方自治が強化され、**知事や市町村長の公選**が行われるようになり、**内務省**が廃止された。",
+          "evidence": [
+            "local-autonomy"
+          ],
+          "keywords": [
+            "地方自治法",
+            "知事や市町村長の公選",
+            "内務省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「憲法改正にともなう法整備」について説明せよ。",
+          "answer": "1946年の日本国憲法公布に伴い、日本では改正**民法**で**個人の権利**が強化され、結婚に**戸主(こしゅ)の同意**は不要となり、**両性の合意**だけで成立することになった。改正**刑法**では、皇室に対する罪の**大逆罪(たいぎゃくざい)**と**不敬罪(ふけいざい)**、男女不公平だった**姦通罪(かんつうざい)**が廃止された。**地方自治法**が制定されて地方自治が強化され、**知事や市町村長の公選**が行われるようになり、**内務省**が廃止された。",
+          "evidence": [
+            "constitutional-dates",
+            "law-reform-trigger",
+            "civil-law",
+            "criminal-law",
+            "local-autonomy"
+          ],
+          "keywords": [
+            "民法",
+            "個人の権利",
+            "戸主の同意",
+            "両性の合意",
+            "刑法",
+            "大逆罪",
+            "不敬罪",
+            "姦通罪",
+            "地方自治法",
+            "知事や市町村長の公選",
+            "内務省"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

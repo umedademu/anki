@@ -50,8 +50,9 @@ assert.equal(deserializeProgress(serializeProgress(progress)).questions[firstId]
 
 const catalog = JSON.parse(await readFile(new URL("../public/data/index.json", import.meta.url), "utf8"));
 const entry = catalog.subjects.find((subject) => subject.id === "world-history-so");
+const complete = await loadWorldHistorySODecks({ includeBook: entry.decks.some(deck => deck.id.startsWith("book-")) });
 assert.equal(entry.title, "世界史SO");
-assert.equal(entry.questionCount, terms.length);
+assert.equal(entry.questionCount, complete.terms.length);
 const subject = JSON.parse(await readFile(new URL(`../public/data/${entry.indexPath}`, import.meta.url), "utf8"));
 assert.equal(subject.simpleQuestions, true);
 assert.equal(subject.version, decks[0].version);
@@ -65,7 +66,9 @@ for (const deck of entry.decks) {
     generated.push(...data.terms);
   }
 }
-assert.deepEqual(generated, decks.flatMap((deck) => deck.terms));
+assert.deepEqual(generated, complete.decks.flatMap(deck => deck.terms), "世界史SOの追加章を含む全生成内容を原稿と照合します。");
+const legacyIds = new Set(terms.map(term => term.id));
+assert.deepEqual(generated.filter(term => legacyIds.has(term.id)), decks.flatMap(deck => deck.terms));
 console.log(`世界史SO: ${terms.length}問の全文一致、カテゴリ、追記時の識別番号、出題・評価・復習、CSVの異常検知を確認しました。`);
 
 // 地図の問題面から答えが漏れず、次の通常問題へ図が残らないことを確認する。

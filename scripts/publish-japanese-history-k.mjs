@@ -4,9 +4,10 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile, unlink } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
-import { loadJapaneseHistoryK, appendJapaneseKSubject, replaceJapaneseKSubject, japaneseKPreviousSubjectHash, contentHash } from "./japanese-history-k.mjs";
+import { loadJapaneseKAdditions, appendJapaneseKDecks, contentHash } from "./japanese-history-k.mjs";
 
-const apply = process.argv.includes("--apply"), plan = await loadJapaneseHistoryK();
+const apply = process.argv.includes("--apply"), additions = await loadJapaneseKAdditions();
+assert.ok(additions.length, "追加する問題原稿がありません。");
 const work = new URL("../.wrangler/japanese-history-k/", import.meta.url);
 await mkdir(work, { recursive: true });
 const configPath = new URL("writer.json", work), token = randomBytes(32).toString("hex");
@@ -40,21 +41,28 @@ async function read(key) {
 }
 try {
   const prepared = await read("index.json");
-  const preparedExisting = prepared.value.subjects.find(subject => subject.id === plan.subject.id);
-  const matchesNew = preparedExisting && contentHash(preparedExisting) === contentHash(plan.subject);
+  const next = appendJapaneseKDecks(prepared.value, additions);
+  const preparedExisting = prepared.value.subjects.find(subject => subject.id === "japanese-history-k");
+  const nextSubject = next.subjects.find(subject => subject.id === preparedExisting.id);
+  const matchesNew = contentHash(preparedExisting) === contentHash(nextSubject);
+  const newAdditions = additions.filter(plan => !preparedExisting.decks.some(deck => deck.id === plan.index.deckId));
+  const newObjects = newAdditions.flatMap(plan => plan.objects);
   const previousHashes = {};
-  if (preparedExisting && !matchesNew) {
-    assert.equal(contentHash(preparedExisting), japaneseKPreviousSubjectHash, "確認済みの試作以外は上書きしません。日本史Kに別の編集があります。");
-    const previousIndex = (await read(preparedExisting.indexPath)).value;
-    previousHashes[preparedExisting.indexPath] = contentHash(previousIndex);
+  for (const deck of preparedExisting.decks) {
+    const previousIndex = (await read(deck.indexPath)).value;
+    previousHashes[deck.indexPath] = contentHash(previousIndex);
     for (const chunk of previousIndex.chunks) previousHashes[chunk.path] = contentHash((await read(chunk.path)).value);
+  }
+  // 追加済みの原稿を再送するときも、公開後の本文編集を上書きしない。
+  for (const plan of additions.filter(plan => !newAdditions.includes(plan))) {
+    for (const object of plan.objects) assert.deepEqual((await read(object.key)).value, object.value, "登録後の編集を上書きしません。");
   }
   if (apply && !matchesNew) {
     await writeFile(configPath, JSON.stringify({
       name: "anki-japanese-history-k-import", compatibility_date: "2026-08-20",
       main: fileURLToPath(new URL("japanese-history-k-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false,
-      vars: { ACCESS_TOKEN: token, ADDITION_JSON: JSON.stringify(plan.subject), OBJECT_HASHES: JSON.stringify(Object.fromEntries(plan.objects.map(object => [object.key, contentHash(object.value)]))),
-        PREVIOUS_SUBJECT_HASH: preparedExisting ? japaneseKPreviousSubjectHash : "", PREVIOUS_OBJECT_HASHES: JSON.stringify(previousHashes) },
+      vars: { ACCESS_TOKEN: token, ADDITION_JSON: JSON.stringify(nextSubject), OBJECT_HASHES: JSON.stringify(Object.fromEntries(newObjects.map(object => [object.key, contentHash(object.value)]))),
+        PREVIOUS_SUBJECT_HASH: contentHash(preparedExisting), PREVIOUS_OBJECT_HASHES: JSON.stringify(previousHashes), PRESERVE_EXISTING_DECKS: "true" },
       r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }],
     }));
     deployAttempted = true;
@@ -63,23 +71,22 @@ try {
   }
   // 作業用窓口の公開直後だけ応答を待つ。登録や索引切替を重複送信しない。
   const original = endpoint ? await request({ action: "read", key: "index.json" }, true) : prepared;
-  const existing = original.value.subjects.find(subject => subject.id === plan.subject.id);
-  if (existing && contentHash(existing) === contentHash(plan.subject)) {
-    assert.deepEqual(existing, plan.subject, "登録済みの日本史Kを上書きしません。");
-    for (const object of plan.objects) assert.deepEqual((await read(object.key)).value, object.value, "登録後の編集を上書きしません。");
-    console.log("日本史Kは登録済みで一致しています。変更しません。");
+  assert.deepEqual(original.value, prepared.value, "確認後に科目一覧が更新されました。再確認してください。");
+  if (matchesNew) {
+    console.log("日本史Kの追加小項目は登録済みで一致しています。変更しません。");
   } else {
-    const next = existing ? replaceJapaneseKSubject(original.value, plan.subject) : appendJapaneseKSubject(original.value, plan.subject);
-    console.log(`日本史K：第6章「ＧＨＱの占領政策」を${plan.unitCount}学習項目・${plan.index.questionCount}問（基礎${plan.index.questionCounts.beginner}・逆向き${plan.index.questionCounts.reverse}・統合${plan.index.questionCounts.integrated}）へ${existing ? "置換" : "追加"}します。他科目と旧データ・旧履歴は維持します。`);
+    for (const plan of newAdditions) console.log(`日本史K：${plan.index.datasetLabel}を${plan.unitCount}学習項目・${plan.index.questionCount}問（基礎${plan.index.questionCounts.beginner}・逆向き${plan.index.questionCounts.reverse}・統合${plan.index.questionCounts.integrated}）で追加します。`);
+    console.log(`全体は${nextSubject.decks.length}小項目・${nextSubject.termCount}学習項目・${nextSubject.questionCount}問です。既存の問題・履歴版・他科目を維持します。`);
     if (apply) {
       await writeFile(new URL(`before-${original.etag.replace(/[^a-zA-Z0-9-]/g, "")}.json`, work), JSON.stringify(original));
-      for (const object of plan.objects) {
+      for (const object of newObjects) {
         await request({ action: "stage", ...object });
         assert.deepEqual((await read(object.key)).value, object.value);
       }
       await request({ action: "commit", key: "index.json", value: next, expectedEtag: original.etag });
       assert.deepEqual((await read("index.json")).value, next);
-      console.log(`Cloudflareへの登録、全${plan.index.questionCount}問と既存科目一覧の照合が完了しました。新しい履歴版で三段階学習を開始します。`);
+      for (const [key, hash] of Object.entries(previousHashes)) assert.equal(contentHash((await read(key)).value), hash, "既存問題が変わっています。");
+      console.log("Cloudflareへの登録、新規問題の全文照合と既存問題・科目一覧の保持確認が完了しました。");
     } else console.log("確認のみです。--applyでCloudflareへ反映します。");
   }
 } finally {

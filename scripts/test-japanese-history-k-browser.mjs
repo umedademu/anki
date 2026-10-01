@@ -3,10 +3,11 @@ import { createServer } from "node:http";
 import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
-import { loadJapaneseHistoryK, appendJapaneseKSubject, replaceJapaneseKSubject, contentHash } from "./japanese-history-k.mjs";
+import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks } from "./japanese-history-k.mjs";
 import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
 
 const root = path.resolve(import.meta.dirname, "../public"), plan = await loadJapaneseHistoryK();
+const additions = await loadJapaneseKAdditions();
 const countQuestions = terms => terms.reduce((sum, term) => sum + Object.values(term.stages).flat().length, 0);
 const countStage = (terms, stage) => terms.reduce((sum, term) => sum + term.stages[stage].length, 0);
 const defaultTerms = filterQuestionTypes(plan.terms, resolveQuestionTypes());
@@ -20,9 +21,12 @@ async function cloudJson(key) {
 // 現行科目一覧をCloudflareから取得し、新規原稿を試験用の通信へ組み合わせる。
 const original = await cloudJson("index.json");
 const existing = original.subjects.find(subject => subject.id === plan.subject.id);
-const catalog = existing ? contentHash(existing) === contentHash(plan.subject) ? original : replaceJapaneseKSubject(original, plan.subject) : appendJapaneseKSubject(original, plan.subject);
+assert.ok(existing, "Cloudflare上の既存日本史Kを使います。");
+const catalog = appendJapaneseKDecks(original, additions);
+const combinedSubject = catalog.subjects.find(subject => subject.id === plan.subject.id);
 objects.set("index.json", JSON.stringify(catalog));
 for (const object of plan.objects) objects.set(object.key, JSON.stringify(object.value));
+for (const addition of additions) for (const object of addition.objects) objects.set(object.key, JSON.stringify(object.value));
 objects.set("term-images.json", JSON.stringify({ schemaVersion: 2, assets: [], assignments: [] }));
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 let settings = { autoSpeechEnabled: false, speechParts: off, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 };
@@ -123,16 +127,23 @@ try {
   await page.goto(base + "/");
   await page.getByRole("button", { name: "日本史K", exact: true }).click(); await shown("setup-panel"); await ready();
   assert.equal(await page.locator("#deck-filter .deck-filter-name").textContent(), "第6章 現代");
-  assert.equal(await page.locator("#deck-filter .deck-filter-count").textContent(), `${plan.index.questionCount}問`);
-  assert.match(await page.locator("#chapter-selection-summary").textContent(), /1パート/);
+  assert.equal(await page.locator("#deck-filter .deck-filter-count").textContent(), `${combinedSubject.questionCount}問`);
+  assert.equal(await page.locator("#chapter-selection-summary").textContent(), `パートを選択：1 / ${combinedSubject.decks.length}パート`);
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);
   await page.locator("#chapter-selection-summary").click();
-  assert.equal(await page.locator(".chapter-picker .deck-filter-name").textContent(), "1 イ ＧＨＱの占領政策");
+  assert.deepEqual(await page.locator(".chapter-picker .deck-filter-name").allTextContents(), [plan, ...additions].map(item => item.index.datasetLabel.split("｜")[1]));
   await page.getByRole("button", { name: "全パートを解除" }).click();
   assert.equal(await page.locator("#start-study").isDisabled(), true);
   await page.getByRole("button", { name: "全パートを選択" }).click(); await ready();
+  await assertSummary(filterQuestionTypes([plan, ...additions].flatMap(item => item.terms), resolveQuestionTypes()));
+  assert.match(await page.locator("#chapter-selection-summary").textContent(), /4パート/);
+  // GHQの既存の動作確認は一小項目に絞り、新規問題は後で個別に確認する。
+  for (const addition of additions) {
+    await page.locator(`.chapter-picker input[value="${addition.index.deckId}"]`).uncheck(); await ready();
+  }
+  await page.locator("#chapter-selection-summary").click();
   await page.locator("#question-type-summary").click();
   for (const [type, label] of [["time", "時期"], ["reverse", "逆向きの説明"], ["integrated", "統合説明"]]) {
     const count = plan.terms.flatMap(term => Object.values(term.stages).flat()).filter(question => question.type === type).length;
@@ -205,6 +216,39 @@ try {
   await page.screenshot({ path: path.join(images, "integrated-answer-mobile.png"), fullPage: true });
   assert.deepEqual(sessions.get(oldVersion), oldSession);
   assert.equal(progress.get(oldVersion)["JHK2-06-01-01-U01-B01"].attempts, 10);
+  const ghqRecords = structuredClone(progress.get(plan.index.version));
+  for (const addition of additions) {
+    await page.locator("#study-stop").click(); await shown("setup-panel"); await ready();
+    await page.goto(`${base}/?subject=${plan.subject.id}&deck=${addition.index.deckId}&view=setup`); await shown("setup-panel"); await ready();
+    await page.locator("#category-filter").selectOption("");
+    await page.locator("#question-style-filter").selectOption("");
+    await page.locator("#setup-shuffle").uncheck();
+    await page.locator("#question-type-summary").click();
+    await page.locator('[data-question-types="all"]').click();
+    await assertSummary(addition.terms);
+    await page.locator("#start-study").click(); await shown("study-shell");
+    const firstQuestion = addition.terms[0].stages.beginner[0];
+    assert.equal(await page.locator("#question-text").textContent(), firstQuestion.prompt);
+    await assertStudyDisplay(firstQuestion, false);
+    await page.locator("#next-action").click(); await assertStudyDisplay(firstQuestion, true);
+    await page.locator("#good-action").click();
+    await page.waitForFunction(prompt => document.querySelector("#question-text").textContent !== prompt, firstQuestion.prompt);
+    await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
+    assert.equal(answers.at(-1).dataset, addition.index.version);
+    const nextPrompt = await page.locator("#question-text").textContent();
+    await page.reload(); await shown("study-shell");
+    assert.equal(await page.locator("#question-text").textContent(), nextPrompt);
+    await page.locator("#study-stop").click(); await shown("setup-panel"); await ready();
+    await page.locator("#question-style-filter").selectOption("integrated");
+    page.once("dialog", async dialog => { assert.match(dialog.message(), /前回の一周を終了/); await dialog.accept(); });
+    await page.locator("#start-study").click(); await shown("study-shell");
+    const integratedQuestion = addition.terms[0].stages.integrated[0];
+    assert.equal(await page.locator("#question-text").textContent(), integratedQuestion.prompt);
+    await assertStudyDisplay(integratedQuestion, false);
+    await page.locator("#next-action").click(); await assertStudyDisplay(integratedQuestion, true);
+    await page.screenshot({ path: path.join(images, `${addition.index.deckId}-integrated-mobile.png`), fullPage: true });
+  }
+  assert.deepEqual(progress.get(plan.index.version), ghqRecords, "新規小項目の回答でGHQの学習記録を変更しません。");
   // 共有化した章表示が、既存の世界史SOにも同じ章名で適用される。
   const so = catalog.subjects.find(subject => subject.id === "world-history-so");
   await page.goto(`${base}/?subject=world-history-so&deck=${so.defaultDeckId}&view=setup`); await shown("setup-panel"); await ready();
@@ -214,8 +258,8 @@ try {
   assert.equal(await page.evaluate(() => window.testAudioAttempts), 0);
   assert.deepEqual(audioAttempts, [], "画面の移動や再読み込みを含め、一度も音声を再生しません。");
   assert.equal(requests.some(url => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
-  assert.ok([...sessions.keys()].every(key => [oldVersion, plan.index.version].includes(key)));
-  console.log(`日本史Kの画面確認：${plan.terms.length}項目・${plan.index.questionCount}問、GHQの全説明問題を習得してから統合へ移行、全段階の用語枠非表示と太字、保存再開、旧記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
+  assert.ok([...sessions.keys()].every(key => [oldVersion, plan.index.version, ...additions.map(item => item.index.version)].includes(key)));
+  console.log(`日本史Kの画面確認：４小項目・${combinedSubject.questionCount}問の選択、新規３小項目の出題・回答・保存再開・統合説明、GHQの全説明問題習得後の移行、用語枠非表示と太字、既存記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

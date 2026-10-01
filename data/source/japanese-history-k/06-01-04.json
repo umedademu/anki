@@ -1,0 +1,790 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 1,
+    "title": "昭和時代（戦後）"
+  },
+  "part": {
+    "number": 4,
+    "title": "高度経済成長と石油危機"
+  },
+  "integrationPromptPrefix": "戦後日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_04_高度経済成長と石油危機_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      426,
+      427,
+      428,
+      429
+    ],
+    "note": "当該小項目の本文・囲み記事・関連注記のみを範囲とする。新幹線の設計者や車両の速度などの細部は出題しない。1968年のGNP順位は本文と同章年表で範囲の表現が一致しないため出題しない。"
+  },
+  "facts": [
+    {
+      "id": "growth-definition",
+      "page": 426,
+      "quote": "特に、昭和三十年代から四十年代にかけて、高い経済成長率を維持していたのを、**高度経済成長**と呼びます。"
+    },
+    {
+      "id": "growth-result",
+      "page": 426,
+      "quote": "日本経済は戦争が終結してから猛烈な勢いで発展しました。そして、短期間のうちに再び欧米列強に並ぶ経済大国になりました。"
+    },
+    {
+      "id": "tokyo-olympics",
+      "page": 426,
+      "quote": "そして、昭和三十九年（一九六四）に、アジアでは初となる**東京オリンピック**が開催されました。"
+    },
+    {
+      "id": "tokyo-infrastructure",
+      "page": 426,
+      "quote": "大会に合わせて東海道新幹線と首都高速道路が開通しました。これらによって戦後の我が国の復興を世界中に示すことができました。"
+    },
+    {
+      "id": "osaka-expo",
+      "page": 426,
+      "quote": "また、昭和四十五年（一九七〇）にはアジアでは初となる万国博覧会が大阪で開催されました（日本万国博覧会、大阪万博）。"
+    },
+    {
+      "id": "economic-white-paper",
+      "page": 427,
+      "quote": "昭和31年（1956）度の『経済白書』は、技術革新による日本経済の発展を強調し、その序文に記載された「もはや戦後ではない」の一文が、戦後復興の終了を宣言した象徴的な言葉として流行語になった。"
+    },
+    {
+      "id": "income-doubling",
+      "page": 427,
+      "quote": "昭和35年（1960）には、池田勇人首相が長期経済政策の「所得倍増計画」を発表し、10年間で国民所得を2倍にすると宣言し、実際に1人あたりの消費支出は10年で2.3倍になった。"
+    },
+    {
+      "id": "oil-crisis",
+      "page": 429,
+      "quote": "ところが、昭和四十八年（一九七三）に⑬**第四次中東戦争**が勃発し、原油価格が高騰する**石油危機**（オイルショック）が起きたことで、日本国内は大混乱になりました。"
+    },
+    {
+      "id": "oil-dependency",
+      "page": 429,
+      "quote": "日本は石油資源に乏しく、ほとんどを中東からの輸入に頼っていたため、中東の石油に依存していることの弱さも露呈しました。"
+    },
+    {
+      "id": "growth-ended",
+      "page": 429,
+      "quote": "以降、経済成長率も低調になり、高度経済成長の時代は終わりました。"
+    },
+    {
+      "id": "oil-response",
+      "page": 429,
+      "quote": "しかし、日本は徹底した省エネとコスト削減に取り組み、高品質で低価格な製品を作り、輸出を拡大させました⑭。"
+    },
+    {
+      "id": "oil-restriction",
+      "page": 429,
+      "quote": "第四次は、中東の現状打破を狙うエジプトとシリアがイスラエルを攻撃するもイスラエル有利に終わり、アラブの産油国が産油制限と米国への禁輸を決め、石油危機が起きた。"
+    },
+    {
+      "id": "industrial-shift",
+      "page": 429,
+      "quote": "その他、IC（集積回路）工業やIT（情報技術）産業など、石油消費が少なく高付加価値の先端技術産業への転換が進んだ。"
+    },
+    {
+      "id": "pollution-health",
+      "page": 429,
+      "quote": "ところで、輝かしい経済成長の裏で、公害が社会問題となりました。工場から排出された汚染物質が拡散し、水俣病、新潟水俣病、四日市喘息、イタイイタイ病といった公害による健康被害を生じさせました。"
+    },
+    {
+      "id": "urban-environment",
+      "page": 429,
+      "quote": "また、各地の主要都市に人口が集中して都市化が進むと、排気ガス問題、ごみ処理問題といった環境問題が生じるようになりました。"
+    },
+    {
+      "id": "environment-policy",
+      "page": 429,
+      "quote": "昭和四十二年（一九六七）に**公害対策基本法**が制定され、また昭和四十六年（一九七一）に**環境庁**（現在の環境省）を設置して公害の防止と環境保全にあたりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "高度経済成長",
+      "reading": "こうどけいざいせいちょう",
+      "category": "経済成長",
+      "chronology": {
+        "displayPeriod": "昭和30〜40年代",
+        "sortYear": 1955
+      },
+      "explanation": "高い成長率が続いた時期、経済大国への変化、公害、石油危機による終了をつないで理解する。GNPの順位は本文と年表で範囲の表現が一致しないため出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後日本の経済が短期間で発展し、高い経済成長率を維持した時期を何と呼ぶか。",
+          "answer": "高度経済成長。",
+          "evidence": [
+            "growth-definition"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "高度経済成長の時期、日本で高い経済成長率が維持されたのは昭和の何年代から何年代にかけてか。",
+          "answer": "昭和30年代から40年代。",
+          "evidence": [
+            "growth-definition"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "終了のきっかけ",
+          "prompt": "日本の高度経済成長の終わりにつながった、原油価格の高騰を伴う出来事は何か。",
+          "answer": "石油危機（オイルショック）。",
+          "evidence": [
+            "oil-crisis",
+            "growth-ended"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "社会問題",
+          "prompt": "高度経済成長期の日本で、工場の汚染物質による健康被害などが問題となった現象を何というか。",
+          "answer": "公害。",
+          "evidence": [
+            "pollution-health"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "変化",
+          "prompt": "日本の高度経済成長では、どのような変化が起きたか。",
+          "answer": "日本は昭和30年代から40年代に高い経済成長率を維持し、欧米列強に並ぶ**経済大国**となった。一方、工場の汚染物質による健康被害などの**公害**も社会問題となった。",
+          "evidence": [
+            "growth-definition",
+            "growth-result",
+            "pollution-health"
+          ],
+          "keywords": [
+            "経済大国",
+            "公害"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "終了",
+          "prompt": "日本の高度経済成長は、どのように終わったか。",
+          "answer": "1973年の**第四次中東戦争**をきっかけとする**石油危機**で原油価格が高騰し、日本国内は混乱した。その後、経済成長率が低調になり、高度経済成長の時代が終わった。",
+          "evidence": [
+            "oil-crisis",
+            "growth-ended"
+          ],
+          "keywords": [
+            "第四次中東戦争",
+            "石油危機"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「高度経済成長」について説明せよ。",
+          "answer": "昭和30年代から40年代の日本では高い経済成長率が維持され、欧米列強に並ぶ**経済大国**となった。一方で**公害**も社会問題となった。1973年の**第四次中東戦争**をきっかけとする**石油危機**で原油価格が高騰し、成長率が低下して高度経済成長の時代は終わった。",
+          "evidence": [
+            "growth-definition",
+            "growth-result",
+            "pollution-health",
+            "oil-crisis",
+            "growth-ended"
+          ],
+          "keywords": [
+            "経済大国",
+            "公害",
+            "第四次中東戦争",
+            "石油危機"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "所得倍増計画",
+      "reading": "しょとくばいぞうけいかく",
+      "category": "経済政策",
+      "chronology": {
+        "displayPeriod": "1960年",
+        "sortYear": 1960
+      },
+      "explanation": "戦後復興の終了を示した経済白書と、その後の国民所得の拡大を目指す政策を区別する。目標の国民所得と、実績として記される消費支出を取り違えない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後日本で、10年間で国民所得を2倍にする目標を掲げた長期経済政策は何か。",
+          "answer": "所得倍増計画。",
+          "evidence": [
+            "income-doubling"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "日本で所得倍増計画を発表した首相は誰か。",
+          "answer": "池田勇人(いけだはやと)。",
+          "evidence": [
+            "income-doubling"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "日本で所得倍増計画が発表されたのは何年か。",
+          "answer": "1960年。",
+          "evidence": [
+            "income-doubling"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "復興の評価",
+          "prompt": "日本で所得倍増計画が発表される前に、「もはや戦後ではない」と戦後復興の終了を示した文書は何か。",
+          "answer": "経済白書。",
+          "evidence": [
+            "economic-white-paper"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政策",
+          "prompt": "日本の所得倍増計画は、どのような政策だったか。",
+          "answer": "1960年に**池田勇人(いけだはやと)**首相が発表した長期経済政策で、10年間で**国民所得**を2倍にすることを目指した。",
+          "evidence": [
+            "income-doubling"
+          ],
+          "keywords": [
+            "池田勇人",
+            "国民所得"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "背景",
+          "prompt": "所得倍増計画が発表される前、日本経済の復興はどう評価されていたか。",
+          "answer": "1956年度の**経済白書**は技術革新による日本経済の発展を強調し、**「もはや戦後ではない」**という一文が戦後復興の終了を示す言葉となった。",
+          "evidence": [
+            "economic-white-paper"
+          ],
+          "keywords": [
+            "経済白書",
+            "「もはや戦後ではない」"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「所得倍増計画」について説明せよ。",
+          "answer": "1956年度の**経済白書**は日本の技術革新による発展を強調し、**「もはや戦後ではない」**という言葉で戦後復興の終了を示した。1960年には**池田勇人(いけだはやと)**首相が所得倍増計画を発表し、10年間で**国民所得**を2倍にすることを目指した。",
+          "evidence": [
+            "economic-white-paper",
+            "income-doubling"
+          ],
+          "keywords": [
+            "経済白書",
+            "「もはや戦後ではない」",
+            "池田勇人",
+            "国民所得"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "東京オリンピック",
+      "reading": "とうきょうおりんぴっく",
+      "category": "復興と国際行事",
+      "chronology": {
+        "displayPeriod": "1964年",
+        "sortYear": 1964
+      },
+      "explanation": "高度経済成長期の大会と交通網の整備を結び、1970年の大阪万博との前後関係も整理する。現在の東京大会と混同しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "アジアで初めて開催され、日本の戦後復興を世界に示した国際的なスポーツ大会は何か。",
+          "answer": "東京オリンピック。",
+          "evidence": [
+            "tokyo-olympics",
+            "tokyo-infrastructure"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "高度経済成長期の日本で開かれた東京オリンピックが開催されたのは何年か。",
+          "answer": "1964年。",
+          "evidence": [
+            "tokyo-olympics"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "交通網",
+          "prompt": "高度経済成長期の日本で開かれた東京オリンピックに合わせて開通した鉄道と道路を答えなさい。",
+          "answer": "東海道新幹線と首都高速道路。",
+          "evidence": [
+            "tokyo-infrastructure"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関連行事",
+          "prompt": "高度経済成長期の日本で東京オリンピックの後に開催され、アジア初となった万国博覧会は何か。",
+          "answer": "日本万国博覧会（大阪万博）。",
+          "evidence": [
+            "osaka-expo"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "復興",
+          "prompt": "高度経済成長期の東京オリンピックは、日本に何をもたらしたか。",
+          "answer": "1964年にアジア初の大会として開催され、大会に合わせて**東海道新幹線**と**首都高速道路**が開通した。こうした変化を通して、日本の**戦後復興**を世界に示した。",
+          "evidence": [
+            "tokyo-olympics",
+            "tokyo-infrastructure"
+          ],
+          "keywords": [
+            "東海道新幹線",
+            "首都高速道路",
+            "戦後復興"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "つながり",
+          "prompt": "高度経済成長期の日本で、東京オリンピックに続いてどのような国際行事が開かれたか。",
+          "answer": "1970年に**日本万国博覧会（大阪万博）**が大阪で開かれ、アジア初の万国博覧会となった。",
+          "evidence": [
+            "osaka-expo"
+          ],
+          "keywords": [
+            "日本万国博覧会（大阪万博）"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「東京オリンピック」について説明せよ。",
+          "answer": "1964年に日本でアジア初の東京オリンピックが開催され、大会に合わせて**東海道新幹線**と**首都高速道路**が開通した。こうした変化を通して日本の**戦後復興**を世界に示し、1970年には大阪でアジア初の**日本万国博覧会（大阪万博）**が開催された。",
+          "evidence": [
+            "tokyo-olympics",
+            "tokyo-infrastructure",
+            "osaka-expo"
+          ],
+          "keywords": [
+            "東海道新幹線",
+            "首都高速道路",
+            "戦後復興",
+            "日本万国博覧会（大阪万博）"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "公害対策基本法",
+      "reading": "こうがいたいさくきほんほう",
+      "category": "公害と環境政策",
+      "chronology": {
+        "displayPeriod": "1967年・1971年",
+        "sortYear": 1967
+      },
+      "explanation": "高度経済成長に伴う健康被害と都市の環境問題を、1967年の法律と1971年の環境庁の設置につなげる。個々の病気の原因となる物質名は原文にないため問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "高度経済成長期の日本で、工場の汚染物質による健康被害などへの対応として制定された法律は何か。",
+          "answer": "公害対策基本法。",
+          "evidence": [
+            "pollution-health",
+            "environment-policy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "法律の時期",
+          "prompt": "日本で公害対策基本法が制定されたのは何年か。",
+          "answer": "1967年。",
+          "evidence": [
+            "environment-policy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "健康被害の原因",
+          "prompt": "公害対策基本法が制定された高度経済成長期の日本で、水俣病(みなまたびょう)などの健康被害を引き起こした汚染物質は、主にどこから排出されたか。",
+          "answer": "工場。",
+          "evidence": [
+            "pollution-health"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "行政機関",
+          "prompt": "公害対策基本法の制定後の日本で、公害防止と環境保全を担うために設置された行政機関は何か。",
+          "answer": "環境庁。",
+          "evidence": [
+            "environment-policy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "行政機関の時期",
+          "prompt": "公害対策基本法の制定後、日本で環境庁が設置されたのは何年か。",
+          "answer": "1971年。",
+          "evidence": [
+            "environment-policy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "都市の環境問題",
+          "prompt": "公害対策基本法が制定された時期の日本で、主要都市の人口集中によって生じた環境問題を二つ挙げなさい。",
+          "answer": "排気ガス問題とごみ処理問題。",
+          "evidence": [
+            "urban-environment"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "背景",
+          "prompt": "公害対策基本法の制定が進められた背景には、日本でどのような問題があったか。",
+          "answer": "工場の汚染物質によって**水俣病(みなまたびょう)**、**新潟水俣病(にいがたみなまたびょう)**、**四日市喘息(よっかいちぜんそく)**、**イタイイタイ病**などの健康被害が生じた。主要都市への人口集中と都市化に伴い、排気ガスやごみ処理の問題も生じた。",
+          "evidence": [
+            "pollution-health",
+            "urban-environment"
+          ],
+          "keywords": [
+            "水俣病",
+            "新潟水俣病",
+            "四日市喘息",
+            "イタイイタイ病"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "対応",
+          "prompt": "高度経済成長期の日本は、公害対策基本法をはじめとしてどのように公害に対応したか。",
+          "answer": "1967年に**公害対策基本法**が制定され、1971年には**環境庁**が設置されて、公害の防止と環境保全にあたった。",
+          "evidence": [
+            "environment-policy"
+          ],
+          "keywords": [
+            "公害対策基本法",
+            "環境庁"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「公害対策基本法」について説明せよ。",
+          "answer": "高度経済成長期の日本では、工場の汚染物質によって**水俣病(みなまたびょう)**、**新潟水俣病(にいがたみなまたびょう)**、**四日市喘息(よっかいちぜんそく)**、**イタイイタイ病**などの健康被害が生じ、主要都市への人口集中と都市化に伴う排気ガスやごみ処理の問題も起きた。1967年に**公害対策基本法**が制定され、1971年には**環境庁**が設置されて、公害の防止と環境保全にあたった。",
+          "evidence": [
+            "pollution-health",
+            "urban-environment",
+            "environment-policy"
+          ],
+          "keywords": [
+            "水俣病",
+            "新潟水俣病",
+            "四日市喘息",
+            "イタイイタイ病",
+            "公害対策基本法",
+            "環境庁"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "石油危機",
+      "reading": "せきゆきき",
+      "category": "経済と国際情勢",
+      "chronology": {
+        "displayPeriod": "1973年",
+        "sortYear": 1973
+      },
+      "explanation": "中東での戦争、石油輸入への依存、日本の成長率の低下、その後の省エネと産業転換を結ぶ。石油価格の上昇と公害の問題を同じ原因としない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "戦後の日本経済が大きな混乱に陥るほど原油価格が高騰した出来事は何というか。",
+          "answer": "石油危機（オイルショック）。",
+          "evidence": [
+            "oil-crisis",
+            "growth-ended"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "高度経済成長期の日本に大きな影響を与えた石油危機が起きたのは何年か。",
+          "answer": "1973年。",
+          "evidence": [
+            "oil-crisis"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "きっかけ",
+          "prompt": "日本経済に大きな影響を与えた石油危機のきっかけとなった戦争は何か。",
+          "answer": "第四次中東戦争。",
+          "evidence": [
+            "oil-crisis"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "輸入への依存",
+          "prompt": "石油危機が起きた当時、日本が石油のほとんどを輸入していた地域はどこか。",
+          "answer": "中東。",
+          "evidence": [
+            "oil-dependency"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "対応",
+          "prompt": "石油危機後の日本が高品質・低価格の製品を作り輸出を拡大するために徹底した、二つの取り組みは何か。",
+          "answer": "省エネとコスト削減。",
+          "evidence": [
+            "oil-response"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "産業転換",
+          "prompt": "石油危機後の日本で、石油消費が少なく高付加価値の分野への転換が進んだ先端技術産業を二つ挙げなさい。",
+          "answer": "IC工業とIT産業。",
+          "evidence": [
+            "industrial-shift"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "発生と影響",
+          "prompt": "石油危機では、日本にどのような変化が起きたか。",
+          "answer": "1973年の**第四次中東戦争**をきっかけに、アラブの産油国が産油制限と米国への禁輸を決め、原油価格が高騰した。日本国内は混乱し、経済成長率が低調となって**高度経済成長**が終わった。",
+          "evidence": [
+            "oil-crisis",
+            "oil-restriction",
+            "growth-ended"
+          ],
+          "keywords": [
+            "第四次中東戦争",
+            "高度経済成長"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "影響の理由",
+          "prompt": "石油危機が日本に大きな影響を与えたのはなぜか。",
+          "answer": "日本は石油資源に乏しく、石油のほとんどを**中東からの輸入**に頼っていたため、中東の石油への依存の弱さが表れた。",
+          "evidence": [
+            "oil-dependency"
+          ],
+          "keywords": [
+            "中東からの輸入"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "対応と転換",
+          "prompt": "石油危機後、日本はどのように対応したか。",
+          "answer": "**省エネ**と**コスト削減**を徹底し、高品質・低価格の製品を作って輸出を拡大した。石油消費が少なく高付加価値の**IC工業**や**IT産業**などへの転換も進んだ。",
+          "evidence": [
+            "oil-response",
+            "industrial-shift"
+          ],
+          "keywords": [
+            "省エネ",
+            "コスト削減",
+            "IC工業",
+            "IT産業"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「石油危機」について説明せよ。",
+          "answer": "1973年の**第四次中東戦争**をきっかけに、アラブの産油国が産油制限と米国への禁輸を決め、原油価格が高騰した。日本は石油資源に乏しく**中東からの輸入**に依存していたため大きな混乱が起こり、成長率が低下して**高度経済成長**が終わった。日本は**省エネ**と**コスト削減**で高品質・低価格の製品の輸出を拡大し、石油消費が少なく高付加価値の**IC工業**や**IT産業**への転換も進んだ。",
+          "evidence": [
+            "oil-crisis",
+            "oil-restriction",
+            "oil-dependency",
+            "growth-ended",
+            "oil-response",
+            "industrial-shift"
+          ],
+          "keywords": [
+            "第四次中東戦争",
+            "中東からの輸入",
+            "高度経済成長",
+            "省エネ",
+            "コスト削減",
+            "IC工業",
+            "IT産業"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

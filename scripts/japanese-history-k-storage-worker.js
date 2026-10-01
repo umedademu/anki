@@ -1,4 +1,4 @@
-// 日本史Kの確認済み新データと、科目一覧への追加だけを許可する一時窓口。
+// 日本史Kの確認済みデータの追加・置換だけを許可する一時窓口。
 const subjectId = "japanese-history-k";
 const hash = async value => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(value))))].map(byte => byte.toString(16).padStart(2, "0")).join("");
 const metadata = { contentType: "application/json; charset=utf-8", cacheControl: "no-cache" };
@@ -9,8 +9,10 @@ export default {
     try { input = await request.json(); } catch { return new Response("Invalid JSON", { status: 400 }); }
     const { action, key, value, expectedEtag } = input;
     const hashes = JSON.parse(env.OBJECT_HASHES);
+    const previousHashes = JSON.parse(env.PREVIOUS_OBJECT_HASHES ?? "{}");
     const isNewData = Object.hasOwn(hashes, key) && key.startsWith(`subjects/${subjectId}/imports/`);
-    if (key !== "index.json" && !isNewData) return new Response("Forbidden", { status: 403 });
+    const isPreviousData = Object.hasOwn(previousHashes, key) && key.startsWith(`subjects/${subjectId}/`);
+    if (key !== "index.json" && !isNewData && !(action === "read" && isPreviousData)) return new Response("Forbidden", { status: 403 });
     if (action === "read") {
       const object = await env.BUCKET.get(key);
       return object ? Response.json({ value: await object.json(), etag: object.etag }) : new Response("Missing", { status: 404 });
@@ -26,11 +28,13 @@ export default {
     const current = await env.BUCKET.get(key);
     if (!current || current.etag !== expectedEtag) return new Response("Conflict", { status: 409 });
     const before = await current.json(), subject = JSON.parse(env.ADDITION_JSON);
-    if (before.schemaVersion !== 3 || !Array.isArray(before.subjects) || before.subjects.some(entry => entry.id === subjectId)) return new Response("Invalid catalog", { status: 400 });
-    const subjects = [...before.subjects, subject];
+    if (before.schemaVersion !== 3 || !Array.isArray(before.subjects)) return new Response("Invalid catalog", { status: 400 });
+    const previous = before.subjects.filter(entry => entry.id === subjectId);
+    if (env.PREVIOUS_SUBJECT_HASH ? previous.length !== 1 || await hash(previous[0]) !== env.PREVIOUS_SUBJECT_HASH : previous.length !== 0) return new Response("Previous subject changed", { status: 409 });
+    const subjects = previous.length ? before.subjects.map(entry => entry.id === subjectId ? subject : entry) : [...before.subjects, subject];
     const expected = { ...before, subjects, version: (await hash(subjects)).slice(0, 20) };
     if (JSON.stringify(expected) !== JSON.stringify(value)) return new Response("Other fields changed", { status: 400 });
-    for (const [objectKey, expectedHash] of Object.entries(hashes)) {
+    for (const [objectKey, expectedHash] of Object.entries({ ...previousHashes, ...hashes })) {
       const object = await env.BUCKET.get(objectKey);
       if (!object || await hash(await object.json()) !== expectedHash) return new Response("Data not verified", { status: 400 });
     }

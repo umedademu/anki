@@ -1,0 +1,275 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 9,
+    "title": "平成から令和へ"
+  },
+  "integrationPromptPrefix": "現代日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_15_平成から令和へ_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      449,
+      450
+    ],
+    "note": "2016年の退位の意向とその理由、2017年の退位特例法、2019年の退位・皇位継承・改元、新元号の出典を一つの流れとして学ぶ。原文には譲位の日程、退位の儀式、深夜の改元を表す日付が混在するため、2019年の移行に限定し、譲位日・退位日・閣議決定の日を問わない。日本国憲法や皇室典範の現在の規定についての法的断定、年齢・代数・約200年の間隔、儀礼名・式典日付・三種の神器の細部、敬語や美化、新冷戦についての価値判断は正答にしない。450頁の式典・元号発表の図版説明は抜粋に保持するが、式典日付や発表者を独立した暗記問題にはしない。資料にない天皇の個人名や法律の正式名称は補わない。"
+  },
+  "facts": [
+    {
+      "id": "transition-year",
+      "page": 449,
+      "quote": "平成三十一年（二〇一九）"
+    },
+    {
+      "id": "era-change",
+      "page": 449,
+      "quote": "同時刻に元号が平成から令和に変わりました。"
+    },
+    {
+      "id": "intention-year",
+      "page": 449,
+      "quote": "平成二十八年（二〇一六）"
+    },
+    {
+      "id": "intention-message",
+      "page": 449,
+      "quote": "ビデオメッセージで譲位の御意向を表明なさいました。"
+    },
+    {
+      "id": "intention-reason",
+      "page": 449,
+      "quote": "今後、加齢により公務に支障が生じたら国民に申し訳ない"
+    },
+    {
+      "id": "special-act",
+      "page": 449,
+      "quote": "国会は平成二十九年（二〇一七）、退位特例法を可決しました。"
+    },
+    {
+      "id": "former-emperor-title",
+      "page": 449,
+      "quote": "平成の天皇陛下は上皇にお成りあそばされました。"
+    },
+    {
+      "id": "succession",
+      "page": 449,
+      "quote": "皇太子徳仁親王殿下に譲位なさり、同時刻に元号が平成から令和に変わりました。"
+    },
+    {
+      "id": "era-source",
+      "page": 449,
+      "quote": "『万葉集』を出典とした"
+    },
+    {
+      "id": "era-source-change",
+      "page": 449,
+      "quote": "元号はこれまで中国古典を出典としてきましたが、初めて日本古典から選ばれたのです。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "平成から令和への移行",
+      "reading": "へいせいかられいわへのいこう",
+      "category": "出来事",
+      "chronology": {
+        "displayPeriod": "2016〜2019年",
+        "sortYear": 2016
+      },
+      "explanation": "退位の意向表明と退位特例法、2019年の退位・皇位継承・改元、新元号の出典を結び付けて整理する。儀礼名や日付の細部、現在の法制度についての断定は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "2019年の日本で、天皇の退位と皇位継承に合わせて平成に代わった新元号は何か。",
+          "answer": "**令和**。",
+          "keywords": [
+            "令和"
+          ],
+          "evidence": [
+            "transition-year",
+            "era-change"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "日本の平成から令和への移行に向けて、平成の天皇がビデオメッセージで退位の意向を表明したのは何年か。",
+          "answer": "2016年。",
+          "keywords": [],
+          "evidence": [
+            "intention-year",
+            "intention-message"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "原因",
+          "prompt": "日本の平成から令和への移行に向けて、平成の天皇が退位の意向を表明した理由は何か。",
+          "answer": "将来の**加齢による公務への支障**を懸念したため。",
+          "keywords": [
+            "加齢による公務への支障"
+          ],
+          "evidence": [
+            "intention-reason"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "2017年、日本で天皇の退位に向けて国会が可決した法律は何か。",
+          "answer": "**退位特例法**。",
+          "keywords": [
+            "退位特例法"
+          ],
+          "evidence": [
+            "special-act"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "日本の平成から令和への移行で、退位した平成の天皇の呼称は何となったか。",
+          "answer": "**上皇**。",
+          "keywords": [
+            "上皇"
+          ],
+          "evidence": [
+            "former-emperor-title"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関連",
+          "prompt": "日本の平成から令和への移行で、新元号の出典となった書物は何か。",
+          "answer": "**万葉集**。",
+          "keywords": [
+            "万葉集"
+          ],
+          "evidence": [
+            "era-source"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "日本の平成から令和への移行で、元号の出典の選び方は、それまでとどのように変わったか。",
+          "answer": "それまでの**中国古典**に代わり、初めて**日本古典**から選ばれた。",
+          "keywords": [
+            "中国古典",
+            "日本古典"
+          ],
+          "evidence": [
+            "era-source-change"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "日本の平成から令和への移行に向けて、天皇の退位はどのように準備されたか。",
+          "answer": "日本では、2016年に平成の天皇が将来の**加齢による公務への支障**を懸念して退位の意向を表明した。2017年に国会が**退位特例法**を可決した。",
+          "keywords": [
+            "加齢による公務への支障",
+            "退位特例法"
+          ],
+          "evidence": [
+            "intention-year",
+            "intention-message",
+            "intention-reason",
+            "special-act"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "日本の平成から令和への移行で、天皇の退位に伴ってどのような変化があったか。",
+          "answer": "2019年、日本で平成の天皇が退位して**上皇**となり、皇位継承とともに元号が平成から**令和**に変わった。",
+          "keywords": [
+            "上皇",
+            "令和"
+          ],
+          "evidence": [
+            "transition-year",
+            "former-emperor-title",
+            "succession",
+            "era-change"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "日本の平成から令和への移行で、新元号の出典にはどのような特徴があったか。",
+          "answer": "新元号の令和は**万葉集**を出典とした。それまでの**中国古典**に代わり、初めて**日本古典**から元号が選ばれた。",
+          "keywords": [
+            "万葉集",
+            "中国古典",
+            "日本古典"
+          ],
+          "evidence": [
+            "era-source",
+            "era-source-change"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代日本の「平成から令和への移行」について説明せよ。",
+          "answer": "日本では、2016年に平成の天皇が**加齢による公務への支障**を懸念して退位の意向を示し、2017年に国会が**退位特例法**を可決した。2019年に平成の天皇が退位して**上皇**となり、皇位継承とともに元号が平成から**令和**に変わった。新元号は**万葉集**を出典とし、それまでの**中国古典**に代わり、初めて**日本古典**から選ばれた。",
+          "keywords": [
+            "加齢による公務への支障",
+            "退位特例法",
+            "上皇",
+            "令和",
+            "万葉集",
+            "中国古典",
+            "日本古典"
+          ],
+          "evidence": [
+            "intention-year",
+            "intention-message",
+            "intention-reason",
+            "special-act",
+            "transition-year",
+            "former-emperor-title",
+            "succession",
+            "era-change",
+            "era-source",
+            "era-source-change"
+          ]
+        }
+      ]
+    }
+  ]
+}

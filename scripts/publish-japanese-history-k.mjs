@@ -5,13 +5,14 @@ import { mkdir, writeFile, unlink } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
 import { loadJapaneseKAdditions, appendJapaneseKDecks, contentHash } from "./japanese-history-k.mjs";
+import { encodeJsonBindings } from "./japanese-history-k-bindings.js";
 
 const apply = process.argv.includes("--apply"), additions = await loadJapaneseKAdditions();
 assert.ok(additions.length, "追加する問題原稿がありません。");
 const work = new URL("../.wrangler/japanese-history-k/", import.meta.url);
 await mkdir(work, { recursive: true });
 const configPath = new URL("writer.json", work), token = randomBytes(32).toString("hex");
-let endpoint, deployAttempted = false;
+let endpoint, deployAttempted = false, publishError;
 async function wrangler(...args) {
   return new Promise((resolve, reject) => {
     const child = spawn(process.execPath, [fileURLToPath(new URL("../node_modules/wrangler/bin/wrangler.js", import.meta.url)), ...args, "--config", fileURLToPath(configPath)], { stdio: ["ignore", "pipe", "pipe"] });
@@ -58,11 +59,18 @@ try {
     for (const object of plan.objects) assert.deepEqual((await read(object.key)).value, object.value, "登録後の編集を上書きしません。");
   }
   if (apply && !matchesNew) {
+    const vars = {
+      ACCESS_TOKEN: token,
+      ...encodeJsonBindings("ADDITION_JSON", nextSubject),
+      ...encodeJsonBindings("OBJECT_HASHES", Object.fromEntries(newObjects.map(object => [object.key, contentHash(object.value)]))),
+      ...encodeJsonBindings("PREVIOUS_OBJECT_HASHES", previousHashes),
+      PREVIOUS_SUBJECT_HASH: contentHash(preparedExisting), PRESERVE_EXISTING_DECKS: "true",
+    };
+    assert.ok(Object.keys(vars).length <= 64, "登録設定がCloudflareの変数数の上限を超えています。");
     await writeFile(configPath, JSON.stringify({
       name: "anki-japanese-history-k-import", compatibility_date: "2026-08-20",
       main: fileURLToPath(new URL("japanese-history-k-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false,
-      vars: { ACCESS_TOKEN: token, ADDITION_JSON: JSON.stringify(nextSubject), OBJECT_HASHES: JSON.stringify(Object.fromEntries(newObjects.map(object => [object.key, contentHash(object.value)]))),
-        PREVIOUS_SUBJECT_HASH: contentHash(preparedExisting), PREVIOUS_OBJECT_HASHES: JSON.stringify(previousHashes), PRESERVE_EXISTING_DECKS: "true" },
+      vars,
       r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }],
     }));
     deployAttempted = true;
@@ -89,10 +97,25 @@ try {
       console.log("Cloudflareへの登録、新規問題の全文照合と既存問題・科目一覧の保持確認が完了しました。");
     } else console.log("確認のみです。--applyでCloudflareへ反映します。");
   }
+} catch (error) {
+  publishError = error;
+  throw error;
 } finally {
   if (deployAttempted) {
-    await wrangler("delete", "--force");
-    await unlink(configPath);
-    console.log("作業用保存窓口を削除しました。");
+    try {
+      await wrangler("delete", "--force");
+      console.log("作業用保存窓口を削除しました。");
+    } catch (error) {
+      if (/\[code: 10090\]/.test(error.message)) console.log("作業用保存窓口が存在しないことを確認しました。");
+      else if (publishError) console.error("作業用保存窓口の削除に失敗しました。" + error.message);
+      else throw error;
+    } finally {
+      try { await unlink(configPath); }
+      catch (error) {
+        if (error.code === "ENOENT") { /* すでに削除済み。 */ }
+        else if (publishError) console.error("一時設定ファイルの削除に失敗しました。" + error.message);
+        else throw error;
+      }
+    }
   }
 }

@@ -1,20 +1,57 @@
 import assert from "node:assert/strict";
 import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks, contentHash } from "./japanese-history-k.mjs";
+import { encodeJsonBindings, readJsonBinding } from "./japanese-history-k-bindings.js";
 import writer from "./japanese-history-k-storage-worker.js";
 import { createEmptyProgress, createQuestionQueue, getTermStage, rateQuestion } from "../public/learning-engine.js";
 import { createSessionDatasetVersion } from "../public/deck-selection.js";
 import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
 
+const checkedBindings = (name, value) => {
+  const bindings = encodeJsonBindings(name, value), parts = Number(bindings[`${name}_PARTS`]);
+  assert.ok(Number.isInteger(parts) && parts >= 1 && parts <= 60);
+  assert.equal(Object.hasOwn(bindings, name), false, "大きな単一変数として登録しません。");
+  assert.equal(Object.keys(bindings).length, parts + 1);
+  for (let number = 0; number < parts; number++) {
+    const part = bindings[`${name}_${number}`];
+    assert.equal(typeof part, "string");
+    assert.ok(Buffer.byteLength(part, "utf8") <= 4000, `${name}_${number}は4000バイト以内です。`);
+    assert.ok(part.isWellFormed(), `${name}_${number}の日本語・絵文字を途中で壊しません。`);
+  }
+  assert.deepEqual(readJsonBinding(bindings, name), value);
+  return bindings;
+};
+const unicodeValue = { text: "日本語🌏🙂𠮷".repeat(1000), nested: { escaped: "改行\n引用\"と\\線" } };
+const unicodeBindings = checkedBindings("UNICODE", unicodeValue);
+assert.ok(Number(unicodeBindings.UNICODE_PARTS) > 1, "日本語と絵文字が複数の変数にまたがる状態を検査します。");
+for (let number = 0; number < Number(unicodeBindings.UNICODE_PARTS); number++) {
+  const missing = { ...unicodeBindings }; delete missing[`UNICODE_${number}`];
+  assert.throws(() => readJsonBinding(missing, "UNICODE"), undefined, "分割設定の欠落を拒否します。");
+  assert.throws(() => readJsonBinding(missing, "UNICODE", "{}"), undefined, "一部欠落した設定を初期値で代用しません。");
+}
+const missingPartCount = { ...unicodeBindings }; delete missingPartCount.UNICODE_PARTS;
+assert.throws(() => readJsonBinding(missingPartCount, "UNICODE"), undefined, "部分だけが残る設定の分割数欠落を拒否します。");
+assert.throws(() => readJsonBinding(missingPartCount, "UNICODE", "{}"), undefined, "分割数が欠落しても初期値で代用しません。");
+for (const parts of ["0", "61", "-1", "1.5", "abc"]) {
+  assert.throws(() => readJsonBinding({ UNICODE_PARTS: parts, UNICODE_0: "{}" }, "UNICODE"), undefined, "不正な分割数を拒否します。");
+}
+assert.throws(() => encodeJsonBindings("TOO_LARGE", "日".repeat(80000)), undefined, "60部分を超える設定を拒否します。");
+assert.deepEqual(readJsonBinding({ LEGACY: JSON.stringify(unicodeValue) }, "LEGACY"), unicodeValue, "従来の単一変数も読み込めます。");
+assert.deepEqual(readJsonBinding({}, "OPTIONAL", "{}"), {});
+assert.throws(() => readJsonBinding({}, "REQUIRED"), undefined, "必須設定の欠落を拒否します。");
+
 const first = await loadJapaneseHistoryK(), additions = await loadJapaneseKAdditions();
-assert.equal(additions.length, 9);
-assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-06-01-02", "book-06-01-03", "book-06-01-04", "book-06-01-05", "book-06-01-06", "book-06-02-01", "book-06-02-02", "book-06-02-03", "book-06-02-04"]);
-const earlier = additions.slice(0, 3), pending = additions.slice(3);
+assert.equal(additions.length, 14);
+assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-06-01-02", "book-06-01-03", "book-06-01-04", "book-06-01-05", "book-06-01-06", "book-06-02-01", "book-06-02-02", "book-06-02-03", "book-06-02-04", "book-06-02-05", "book-06-02-06", "book-06-02-07", "book-06-02-08", "book-06-02-09"]);
+const earlier = additions.slice(0, 9), pending = additions.slice(9);
 const original = appendJapaneseKDecks({ schemaVersion: 3, version: "before", subjects: [{ id: "other", decks: [{ id: "other-deck", version: "keep" }] }, first.subject], termImages: { path: "unchanged" } }, earlier);
 const next = appendJapaneseKDecks(original, additions), subject = next.subjects[1];
+assert.ok(Buffer.byteLength(JSON.stringify(subject), "utf8") > 5 * 1024, "今回の科目情報は単一変数の5KB制限を超えます。");
+const subjectBindings = checkedBindings("ADDITION_JSON", subject);
+assert.ok(Number(subjectBindings.ADDITION_JSON_PARTS) > 1);
 assert.deepEqual(next.subjects[0], original.subjects[0]);
 assert.deepEqual(next.termImages, original.termImages);
 assert.deepEqual(subject.decks[0], first.subject.decks[0]);
-for (const deck of original.subjects[1].decks) assert.deepEqual(subject.decks.find(entry => entry.id === deck.id), deck, "追加前の４小項目と履歴版を保持します。");
+for (const deck of original.subjects[1].decks) assert.deepEqual(subject.decks.find(entry => entry.id === deck.id), deck, "追加前の10小項目と履歴版を保持します。");
 assert.equal(subject.defaultDeckId, first.subject.defaultDeckId);
 assert.equal(subject.indexPath, first.subject.indexPath);
 assert.equal(subject.questionCount, first.index.questionCount + additions.reduce((sum, plan) => sum + plan.index.questionCount, 0));
@@ -64,19 +101,48 @@ const bucket = new MemoryBucket(), objects = pending.flatMap(plan => plan.object
 const previousObjects = [first, ...earlier].flatMap(plan => plan.objects);
 for (const object of previousObjects) await bucket.put(object.key, JSON.stringify(object.value) + "\n");
 const before = await bucket.put("index.json", JSON.stringify(original));
-const env = { BUCKET: bucket, ACCESS_TOKEN: "test-only", PRESERVE_EXISTING_DECKS: "true", PREVIOUS_SUBJECT_HASH: contentHash(original.subjects[1]), ADDITION_JSON: JSON.stringify(subject),
-  OBJECT_HASHES: JSON.stringify(Object.fromEntries(objects.map(object => [object.key, contentHash(object.value)]))),
-  PREVIOUS_OBJECT_HASHES: JSON.stringify(Object.fromEntries(previousObjects.map(object => [object.key, contentHash(object.value)]))) };
+const env = { BUCKET: bucket, ACCESS_TOKEN: "test-only", PRESERVE_EXISTING_DECKS: "true", PREVIOUS_SUBJECT_HASH: contentHash(original.subjects[1]), ...subjectBindings,
+  ...checkedBindings("OBJECT_HASHES", Object.fromEntries(objects.map(object => [object.key, contentHash(object.value)]))),
+  ...checkedBindings("PREVIOUS_OBJECT_HASHES", Object.fromEntries(previousObjects.map(object => [object.key, contentHash(object.value)]))) };
 const call = (input, settings = env) => writer.fetch(new Request("https://example.invalid", { method: "POST", headers: { Authorization: "Bearer test-only", "Content-Type": "application/json" }, body: JSON.stringify(input) }), settings);
+const untouchedObjects = structuredClone([...bucket.objects]), untouchedSerial = bucket.serial;
 const commit = { action: "commit", key: "index.json", value: next, expectedEtag: before.etag };
+const assertSettingsRejected = async (settings, reason) => {
+  for (const input of [{ action: "stage", ...objects[0] }, commit]) {
+    assert.equal((await call(input, settings)).status, 500, `${reason}は登録・切替の前に拒否します。`);
+    assert.deepEqual([...bucket.objects], untouchedObjects, "拒否した設定で保存内容を変更しません。");
+    assert.equal(bucket.serial, untouchedSerial, "拒否した設定で一度も書き込みません。");
+  }
+};
+for (const name of ["ADDITION_JSON", "OBJECT_HASHES", "PREVIOUS_OBJECT_HASHES"]) {
+  const missing = { ...env }; delete missing[`${name}_0`];
+  await assertSettingsRejected(missing, `${name}の一部欠落`);
+  const missingCount = { ...env }; delete missingCount[`${name}_PARTS`];
+  await assertSettingsRejected(missingCount, `${name}の分割数欠落`);
+  for (const value of [null, [], "設定"]) {
+    await assertSettingsRejected({ ...env, ...checkedBindings(name, value) }, `${name}の不正な形`);
+  }
+}
+for (const name of ["OBJECT_HASHES", "PREVIOUS_OBJECT_HASHES"]) {
+  const hashes = readJsonBinding(env, name), key = Object.keys(hashes)[0];
+  for (const value of ["a".repeat(63), "g".repeat(64), "A".repeat(64), null, 0]) {
+    await assertSettingsRejected({ ...env, ...checkedBindings(name, { ...hashes, [key]: value }) }, `${name}の不正な照合値`);
+  }
+}
+await assertSettingsRejected({ ...env, ...checkedBindings("ADDITION_JSON", { ...subject, id: "world-history-so" }) }, "他科目の登録設定");
+for (const field of ["decks", "chapterGroups"]) {
+  const missing = structuredClone(subject); delete missing[field];
+  await assertSettingsRejected({ ...env, ...checkedBindings("ADDITION_JSON", missing) }, `${field}の欠落`);
+  await assertSettingsRejected({ ...env, ...checkedBindings("ADDITION_JSON", { ...subject, [field]: {} }) }, `${field}が配列でない設定`);
+}
 assert.equal((await call(commit)).status, 400, "全新規問題を照合する前には切替できません。");
-assert.equal((await call({ action: "stage", ...first.objects[0] })).status, 403, "既存GHQは参照のみです。");
+for (const object of previousObjects) assert.equal((await call({ action: "stage", ...object })).status, 403, "既存10小項目は参照のみです。");
 for (const object of objects) assert.equal((await call({ action: "stage", ...object })).status, 200);
 assert.equal((await call({ ...commit, expectedEtag: "stale" })).status, 409);
 for (const change of [value => value.decks[0].version = "lost-history", value => value.defaultDeckId = value.decks[1].id, value => value.chapterGroups[0].deckIds.shift()]) {
   const bad = structuredClone(subject); change(bad);
   const badCatalog = structuredClone(next); badCatalog.subjects[1] = bad; badCatalog.version = contentHash(badCatalog.subjects).slice(0, 20);
-  assert.equal((await call({ ...commit, value: badCatalog }, { ...env, ADDITION_JSON: JSON.stringify(bad) })).status, 400);
+  assert.equal((await call({ ...commit, value: badCatalog }, { ...env, ...checkedBindings("ADDITION_JSON", bad) })).status, 400);
 }
 await bucket.put(first.objects[0].key, JSON.stringify({ changed: true }));
 assert.equal((await call(commit)).status, 400, "確認後に既存問題が変わった場合は切替を中止します。");
@@ -85,4 +151,4 @@ assert.equal((await call(commit)).status, 200);
 assert.deepEqual(await (await bucket.get("index.json")).json(), next);
 for (const object of previousObjects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
 assert.deepEqual(await (await bucket.get(`subjects/japanese-history-k/imports/history/${before.etag}.json`)).json(), original);
-console.log(`日本史K追加：原稿${additions.length}小項目の検査、今回の${pending.length}小項目・${pending.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の追加、全項目の段階移行、既存４小項目と履歴版の保持、再送・同時編集・上書き防止を確認しました。`);
+console.log(`日本史K追加：原稿${additions.length}小項目の検査、今回の${pending.length}小項目・${pending.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の追加、全項目の段階移行、既存10小項目と履歴版の保持、再送・同時編集・上書き防止、4000バイト以内の設定分割・復元・欠落拒否を確認しました。`);

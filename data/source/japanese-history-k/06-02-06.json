@@ -1,0 +1,915 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 6,
+    "title": "国際協調と日本の役割"
+  },
+  "integrationPromptPrefix": "第二次世界大戦後の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_12_国際協調と日本の役割_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      444,
+      445,
+      446
+    ],
+    "note": "EUの成立・共通通貨発行・単一市場、国連PKOの監視と日本の協力、先進国首脳会議とG20、京都議定書、日本の外交構想とクアッドの協力を出題する。EUの現在の加盟数、EU法の各国での適用についての一般化、G20の現在の人数・加盟数、米国のパリ協定離脱の現在の状態、温暖化についての否定説、世界最高の技術順位や日本文化の美化、国際社会の賛同や各国戦略への採用の評価は正答にしない。ユーロは原文の2002年の共通通貨発行に限定し、資料にない現金・紙幣硬貨の区別や他の導入年を補わない。G20の1999年は会合の開始であり、首脳会議の開始年とはしない。クアッド自体の開始年は補わない。GTCCともったいない精神は、独立した学習項目にして水増ししない。"
+  },
+  "facts": [
+    {
+      "id": "eu-purpose",
+      "page": 444,
+      "quote": "経済と政治の統合を目指してヨーロッパ連合（EU）が成立した。"
+    },
+    {
+      "id": "eu-name",
+      "page": 444,
+      "quote": "ヨーロッパ連合（ＥＵ）を発足させ"
+    },
+    {
+      "id": "eu-year",
+      "page": 444,
+      "quote": "平成五年（一九九三）に"
+    },
+    {
+      "id": "eu-treaty",
+      "page": 444,
+      "quote": "マーストリヒト条約により"
+    },
+    {
+      "id": "eu-currency",
+      "page": 444,
+      "quote": "共通通貨のユーロを発行し"
+    },
+    {
+      "id": "eu-currency-year",
+      "page": 444,
+      "quote": "平成十四年（二〇〇二）に"
+    },
+    {
+      "id": "eu-market",
+      "page": 444,
+      "quote": "EUは単一市場とされ、域内での人、物、資本の移動は自由とされた。"
+    },
+    {
+      "id": "pko-name",
+      "page": 444,
+      "quote": "国連平和維持活動（ＰＫＯ）です。"
+    },
+    {
+      "id": "pko-definition",
+      "page": 444,
+      "quote": "紛争地域の平和の維持を図る手段として国際連合が小規模の軍隊を派遣して行う活動"
+    },
+    {
+      "id": "pko-watch",
+      "page": 444,
+      "quote": "紛争当事者の間に立って、停戦や軍の撤退の監視などを行うものです。"
+    },
+    {
+      "id": "pko-law-name",
+      "page": 444,
+      "quote": "国際平和協力法（ＰＫＯ法）を成立させて"
+    },
+    {
+      "id": "pko-law-year",
+      "page": 444,
+      "quote": "平成四年（一九九二）に"
+    },
+    {
+      "id": "pko-japan-cooperation",
+      "page": 444,
+      "quote": "カンボジア、ゴラン高原、東ティモール、南スーダンなどの国連ＰＫＯ活動に自衛隊を派遣するなど、人的・物的協力をしてきました。"
+    },
+    {
+      "id": "summit-discussion",
+      "page": 445,
+      "quote": "年1回、先進国の首脳が会談して意見交換を行うことになった。"
+    },
+    {
+      "id": "summit-year",
+      "page": 445,
+      "quote": "昭和五十年（一九七五）の第一回先進国首脳会議"
+    },
+    {
+      "id": "summit-proposer",
+      "page": 445,
+      "quote": "フランスの提唱により"
+    },
+    {
+      "id": "summit-trigger",
+      "page": 445,
+      "quote": "昭和48年（1973）の第四次中東戦争に端を発した石油危機が起きると"
+    },
+    {
+      "id": "summit-purpose",
+      "page": 445,
+      "quote": "石油危機への対処、インフレの克服、不況からの回復などの課題について"
+    },
+    {
+      "id": "summit-japan",
+      "page": 445,
+      "quote": "日本は昭和五十年（一九七五）の第一回先進国首脳会議からのメンバーで"
+    },
+    {
+      "id": "g7-japan",
+      "page": 445,
+      "quote": "我が国はＧ７のメンバーとして先進国の首脳と協調してきました。"
+    },
+    {
+      "id": "g20-name",
+      "page": 445,
+      "quote": "Ｇ20"
+    },
+    {
+      "id": "g20-year",
+      "page": 445,
+      "quote": "平成十一年（一九九九）から"
+    },
+    {
+      "id": "g20-start",
+      "page": 445,
+      "quote": "会合が始まり、以降、毎年開催されるようになりました。"
+    },
+    {
+      "id": "g20-scope",
+      "page": 445,
+      "quote": "先進国に新興国を加えた"
+    },
+    {
+      "id": "g20-japan",
+      "page": 445,
+      "quote": "日本は中核メンバーとしてＧ20に積極的に関わっています。"
+    },
+    {
+      "id": "g20-topics",
+      "page": 445,
+      "quote": "国際社会の幅広い問題を取り上げている。"
+    },
+    {
+      "id": "kyoto-year",
+      "page": 445,
+      "quote": "平成九年（一九九七）に"
+    },
+    {
+      "id": "kyoto-conference",
+      "page": 445,
+      "quote": "京都で地球温暖化防止京都会議が開催され"
+    },
+    {
+      "id": "kyoto-target",
+      "page": 445,
+      "quote": "先進国で"
+    },
+    {
+      "id": "kyoto-reduction",
+      "page": 445,
+      "quote": "温室効果ガスの排出削減を定めた"
+    },
+    {
+      "id": "kyoto-name",
+      "page": 445,
+      "quote": "京都議定書が採択されました。"
+    },
+    {
+      "id": "foip-name",
+      "page": 445,
+      "quote": "日本の外交方針「自由で開かれたインド太平洋構想」を提唱しました。"
+    },
+    {
+      "id": "foip-year",
+      "page": 445,
+      "quote": "平成二十八年（二〇一六）に日本の外交方針"
+    },
+    {
+      "id": "foip-person",
+      "page": 445,
+      "quote": "安倍晋三首相は"
+    },
+    {
+      "id": "foip-goal",
+      "page": 445,
+      "quote": "アフリカとアジアをつなぐことで国際社会の安定と繁栄を目指すものです。"
+    },
+    {
+      "id": "foip-oceans",
+      "page": 445,
+      "quote": "インド洋と太平洋、アフリカとアジアをつなぐことで国際社会の安定と繁栄を目指すものです。"
+    },
+    {
+      "id": "quad-members",
+      "page": 445,
+      "quote": "日本、アメリカ、オーストラリア、インドの関係が強化されました。"
+    },
+    {
+      "id": "quad-name",
+      "page": 445,
+      "quote": "日米豪印戦略対話（クアッド）が始まり"
+    },
+    {
+      "id": "quad-training",
+      "page": 445,
+      "quote": "四カ国での共同訓練も行われました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ヨーロッパ連合（ＥＵ）",
+      "reading": "よーろっぱれんごう いーゆー",
+      "category": "機関・組織",
+      "geographyLabel": "ヨーロッパ",
+      "chronology": {
+        "displayPeriod": "1993年・2002年",
+        "sortYear": 1993
+      },
+      "explanation": "ヨーロッパの政治・経済統合を、EUの成立、共通通貨ユーロの発行、単一市場の移動の自由として整理する。EU法や現在の加盟数、資料にない通貨の導入過程は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "冷戦後、ヨーロッパ諸国が政治と経済の統合を目指して発足させた組織の略称は何か。",
+          "answer": "**ＥＵ**（ヨーロッパ連合）。",
+          "keywords": [
+            "ＥＵ"
+          ],
+          "evidence": [
+            "eu-purpose",
+            "eu-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）が発足したのはいつか。",
+          "answer": "1993年。",
+          "keywords": [],
+          "evidence": [
+            "eu-year",
+            "eu-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関連",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）の発足につながった条約は何か。",
+          "answer": "**マーストリヒト条約**。",
+          "keywords": [
+            "マーストリヒト条約"
+          ],
+          "evidence": [
+            "eu-treaty",
+            "eu-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）で発行された共通通貨は何か。",
+          "answer": "**ユーロ**。",
+          "keywords": [
+            "ユーロ"
+          ],
+          "evidence": [
+            "eu-currency"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）で、共通通貨のユーロが発行されたのはいつか。",
+          "answer": "2002年。",
+          "keywords": [],
+          "evidence": [
+            "eu-currency-year",
+            "eu-currency"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）の単一市場では、何の移動が自由とされたか。",
+          "answer": "**人・物・資本**の移動。",
+          "keywords": [
+            "人・物・資本"
+          ],
+          "evidence": [
+            "eu-market"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）は、どのように発足し、統合を進めたか。",
+          "answer": "1993年、ヨーロッパ諸国は**マーストリヒト条約**により**ヨーロッパ連合（ＥＵ）**を発足させ、政治と経済の統合を進めた。2002年には共通通貨の**ユーロ**を発行した。",
+          "keywords": [
+            "マーストリヒト条約",
+            "ヨーロッパ連合（ＥＵ）",
+            "ユーロ"
+          ],
+          "evidence": [
+            "eu-purpose",
+            "eu-treaty",
+            "eu-year",
+            "eu-name",
+            "eu-currency-year",
+            "eu-currency"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後のヨーロッパ連合（ＥＵ）の単一市場は、どのような仕組みか。",
+          "answer": "ヨーロッパ連合の**単一市場**では、域内の**人・物・資本の自由な移動**が認められた。",
+          "keywords": [
+            "単一市場",
+            "人・物・資本の自由な移動"
+          ],
+          "evidence": [
+            "eu-market"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦後の「ヨーロッパ連合（ＥＵ）」について説明せよ。",
+          "answer": "1993年、ヨーロッパ諸国は**マーストリヒト条約**により**ヨーロッパ連合（ＥＵ）**を発足させ、政治と経済の統合を進めた。2002年には共通通貨の**ユーロ**を発行した。**単一市場**では、域内の**人・物・資本の自由な移動**が認められた。",
+          "keywords": [
+            "マーストリヒト条約",
+            "ヨーロッパ連合（ＥＵ）",
+            "ユーロ",
+            "単一市場",
+            "人・物・資本の自由な移動"
+          ],
+          "evidence": [
+            "eu-purpose",
+            "eu-treaty",
+            "eu-year",
+            "eu-name",
+            "eu-currency-year",
+            "eu-currency",
+            "eu-market"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "国連平和維持活動（ＰＫＯ）",
+      "reading": "こくれんへいわいじかつどう ぴーけーおー",
+      "category": "制度・政策・法律",
+      "chronology": {
+        "displayPeriod": "日本の国際平和協力法成立1992年",
+        "sortYear": 1992
+      },
+      "explanation": "国連PKOの停戦・撤退監視と、日本の国際平和協力法成立後の自衛隊派遣などを結び付ける。資料にない法の条文、参加条件、各派遣先の開始年月は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦後、紛争地域の平和維持を図るため、国連が小規模な軍隊を派遣して行う活動の略称は何か。",
+          "answer": "**ＰＫＯ**（国連平和維持活動）。",
+          "keywords": [
+            "ＰＫＯ"
+          ],
+          "evidence": [
+            "pko-definition",
+            "pko-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の国連平和維持活動（ＰＫＯ）では、紛争当事者の間に立って、どのような動きを監視するか。",
+          "answer": "**停戦と軍の撤退**。",
+          "keywords": [
+            "停戦と軍の撤退"
+          ],
+          "evidence": [
+            "pko-watch"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "戦後日本が、国連の平和維持活動への自衛隊派遣などの協力に関して成立させた法律は何か。",
+          "answer": "**国際平和協力法（ＰＫＯ法）**。",
+          "keywords": [
+            "国際平和協力法（ＰＫＯ法）"
+          ],
+          "evidence": [
+            "pko-law-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後、日本の国連平和維持活動（ＰＫＯ）への協力を進めた国際平和協力法が成立したのはいつか。",
+          "answer": "1992年。",
+          "keywords": [],
+          "evidence": [
+            "pko-law-year",
+            "pko-law-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "第二次世界大戦後の国連平和維持活動（ＰＫＯ）は、どのような活動か。",
+          "answer": "**国連平和維持活動（ＰＫＯ）**は、国連が紛争地域の平和維持を図り、小規模な軍隊を派遣して行う活動である。紛争当事者の間に立ち、**停戦と軍の撤退の監視**などを行う。",
+          "keywords": [
+            "国連平和維持活動（ＰＫＯ）",
+            "停戦と軍の撤退の監視"
+          ],
+          "evidence": [
+            "pko-name",
+            "pko-definition",
+            "pko-watch"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本は国連平和維持活動（ＰＫＯ）に、どのように協力したか。",
+          "answer": "1992年、日本は**国際平和協力法（ＰＫＯ法）**を成立させた。**カンボジア**、**ゴラン高原**、**東ティモール**、**南スーダン**などの国連ＰＫＯ活動に**自衛隊を派遣**するなど、**人的・物的協力**を行った。",
+          "keywords": [
+            "国際平和協力法（ＰＫＯ法）",
+            "カンボジア",
+            "ゴラン高原",
+            "東ティモール",
+            "南スーダン",
+            "自衛隊を派遣",
+            "人的・物的協力"
+          ],
+          "evidence": [
+            "pko-law-year",
+            "pko-law-name",
+            "pko-japan-cooperation"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦後の「国連平和維持活動（ＰＫＯ）」について説明せよ。",
+          "answer": "**国連平和維持活動（ＰＫＯ）**は、国連が紛争地域の平和維持を図り、小規模な軍隊を派遣して、**停戦と軍の撤退の監視**などを行う活動である。1992年、日本は**国際平和協力法（ＰＫＯ法）**を成立させた。**カンボジア**、**ゴラン高原**、**東ティモール**、**南スーダン**などに**自衛隊を派遣**するなど、**人的・物的協力**を行った。",
+          "keywords": [
+            "国連平和維持活動（ＰＫＯ）",
+            "停戦と軍の撤退の監視",
+            "国際平和協力法（ＰＫＯ法）",
+            "カンボジア",
+            "ゴラン高原",
+            "東ティモール",
+            "南スーダン",
+            "自衛隊を派遣",
+            "人的・物的協力"
+          ],
+          "evidence": [
+            "pko-name",
+            "pko-definition",
+            "pko-watch",
+            "pko-law-year",
+            "pko-law-name",
+            "pko-japan-cooperation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "先進国首脳会議とＧ20",
+      "reading": "せんしんこくしゅのうかいぎ とじーとぅえんてぃ",
+      "category": "条約・会議",
+      "chronology": {
+        "displayPeriod": "1975年・1999年",
+        "sortYear": 1975
+      },
+      "explanation": "先進国首脳会議とG20を、会議の背景、日本の参加、先進国から新興国へ広がる協調の範囲で整理する。1975年の第1回は当初6カ国であり、その時点で7カ国だったとはしない。G20の1999年は会合の開始として扱い、首脳会議開始や現在の加盟数は問わない。",
+      "questions": [
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後の先進国首脳会議とＧ20について、日本が第1回から参加した先進国首脳会議が始まったのはいつか。",
+          "answer": "1975年。",
+          "keywords": [],
+          "evidence": [
+            "summit-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の先進国首脳会議とＧ20について、先進国首脳会議の開催を提唱した国はどこか。",
+          "answer": "**フランス**。",
+          "keywords": [
+            "フランス"
+          ],
+          "evidence": [
+            "summit-proposer"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "理由",
+          "prompt": "戦後の先進国首脳会議とＧ20について、先進国首脳会議が開かれるきっかけとなった経済危機は何か。",
+          "answer": "**石油危機**。",
+          "keywords": [
+            "石油危機"
+          ],
+          "evidence": [
+            "summit-trigger"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後の先進国首脳会議とＧ20について、Ｇ20の会合が始まったのはいつか。",
+          "answer": "1999年。",
+          "keywords": [],
+          "evidence": [
+            "g20-year",
+            "g20-name",
+            "g20-start"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後の先進国首脳会議とＧ20について、Ｇ20は先進国にどのような国々を加えた会合か。",
+          "answer": "**新興国**。",
+          "keywords": [
+            "新興国"
+          ],
+          "evidence": [
+            "g20-scope"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "第二次世界大戦後の先進国首脳会議（Ｇ７）は、どのように始まったか。",
+          "answer": "**石油危機**への対処などを目的に、**フランス**の提唱で先進国の首脳が年1回会談するようになった。日本は1975年の第1回**先進国首脳会議**から参加し、**Ｇ７**のメンバーとして協調してきた。",
+          "keywords": [
+            "石油危機",
+            "フランス",
+            "先進国首脳会議",
+            "Ｇ７"
+          ],
+          "evidence": [
+            "summit-purpose",
+            "summit-proposer",
+            "summit-discussion",
+            "summit-year",
+            "summit-japan",
+            "g7-japan"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後、Ｇ20の会合は国際協調の範囲をどのように広げたか。",
+          "answer": "1999年、先進国に**新興国**を加えた**Ｇ20**の会合が始まり、日本も参加した。幅広い国際的な問題を取り上げる場になった。",
+          "keywords": [
+            "新興国",
+            "Ｇ20"
+          ],
+          "evidence": [
+            "g20-year",
+            "g20-name",
+            "g20-start",
+            "g20-scope",
+            "g20-japan",
+            "g20-topics"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦後の「先進国首脳会議とＧ20」について説明せよ。",
+          "answer": "**石油危機**への対処などを目的に、**フランス**の提唱で先進国の首脳が年1回会談するようになった。日本は1975年の第1回**先進国首脳会議**から参加し、**Ｇ７**のメンバーとして協調してきた。1999年には先進国に**新興国**を加えた**Ｇ20**の会合も始まり、日本は幅広い国際的な問題の協議に参加した。",
+          "keywords": [
+            "石油危機",
+            "フランス",
+            "先進国首脳会議",
+            "Ｇ７",
+            "新興国",
+            "Ｇ20"
+          ],
+          "evidence": [
+            "summit-purpose",
+            "summit-proposer",
+            "summit-discussion",
+            "summit-year",
+            "summit-japan",
+            "g7-japan",
+            "g20-year",
+            "g20-name",
+            "g20-start",
+            "g20-scope",
+            "g20-japan",
+            "g20-topics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "京都議定書",
+      "reading": "きょうとぎていしょ",
+      "category": "条約・会議",
+      "geographyLabel": "京都",
+      "chronology": {
+        "displayPeriod": "1997年",
+        "sortYear": 1997
+      },
+      "explanation": "京都議定書の採択と、先進国による温室効果ガスの排出削減という対象と内容を学ぶ。資料にない削減率や発効年月、現在のパリ協定や米国の対応、温暖化に対する否定説は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "冷戦後、地球温暖化防止のため、温室効果ガスの排出削減を定めて国際会議で採択された議定書は何か。",
+          "answer": "**京都議定書**。",
+          "keywords": [
+            "京都議定書"
+          ],
+          "evidence": [
+            "kyoto-conference",
+            "kyoto-reduction",
+            "kyoto-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後の京都議定書が採択されたのはいつか。",
+          "answer": "1997年。",
+          "keywords": [],
+          "evidence": [
+            "kyoto-year",
+            "kyoto-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "冷戦後の京都議定書は、どのような国々の温室効果ガス排出削減を定めたか。",
+          "answer": "**先進国**。",
+          "keywords": [
+            "先進国"
+          ],
+          "evidence": [
+            "kyoto-target",
+            "kyoto-reduction"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後の京都議定書は、どのような取り決めか。",
+          "answer": "1997年、**京都**で地球温暖化防止京都会議が開かれ、**京都議定書**が採択された。**先進国**による**温室効果ガスの排出削減**を定めた。",
+          "keywords": [
+            "京都",
+            "京都議定書",
+            "先進国",
+            "温室効果ガスの排出削減"
+          ],
+          "evidence": [
+            "kyoto-year",
+            "kyoto-conference",
+            "kyoto-name",
+            "kyoto-target",
+            "kyoto-reduction"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦後の「京都議定書」について説明せよ。",
+          "answer": "1997年、**京都**で地球温暖化防止京都会議が開かれ、**京都議定書**が採択された。**先進国**による**温室効果ガスの排出削減**を定めた。",
+          "keywords": [
+            "京都",
+            "京都議定書",
+            "先進国",
+            "温室効果ガスの排出削減"
+          ],
+          "evidence": [
+            "kyoto-year",
+            "kyoto-conference",
+            "kyoto-name",
+            "kyoto-target",
+            "kyoto-reduction"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "自由で開かれたインド太平洋構想とクアッド",
+      "reading": "じゆうでひらかれたいんどたいへいようこうそうとくあっど",
+      "category": "制度・政策・法律",
+      "chronology": {
+        "displayPeriod": "構想の提唱2016年",
+        "sortYear": 2016
+      },
+      "explanation": "構想を提唱した日本の首相と時期、構想が掲げた目的、クアッドの参加国と共同訓練を結び付ける。構想の目的は政策が目指したものとして扱い、国際的な賛同の評価や実際の成果を断定しない。クアッド開始の年は原文にないため補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "2016年、日本がアフリカとアジアをつなぐことで国際社会の安定と繁栄を目指して提唱した外交方針は何か。",
+          "answer": "**自由で開かれたインド太平洋構想**。",
+          "keywords": [
+            "自由で開かれたインド太平洋構想"
+          ],
+          "evidence": [
+            "foip-year",
+            "foip-name",
+            "foip-goal"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "戦後日本の自由で開かれたインド太平洋構想とクアッドに関して、この外交構想を提唱した首相は誰か。",
+          "answer": "**安倍晋三(あべしんぞう)**。",
+          "keywords": [
+            "安倍晋三"
+          ],
+          "evidence": [
+            "foip-person",
+            "foip-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "戦後の自由で開かれたインド太平洋構想とクアッドに関して、クアッドを構成する四つの国はどこか。",
+          "answer": "**日本**、**アメリカ**、**オーストラリア**、**インド**。",
+          "keywords": [
+            "日本",
+            "アメリカ",
+            "オーストラリア",
+            "インド"
+          ],
+          "evidence": [
+            "quad-members",
+            "quad-name"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後日本の自由で開かれたインド太平洋構想とクアッドに関して、クアッドの四カ国はどのような共同活動を行ったか。",
+          "answer": "**共同訓練**。",
+          "keywords": [
+            "共同訓練"
+          ],
+          "evidence": [
+            "quad-training"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本の自由で開かれたインド太平洋構想は、どのような外交方針か。",
+          "answer": "2016年、日本の**安倍晋三(あべしんぞう)**首相が**自由で開かれたインド太平洋構想**を提唱した。**インド洋と太平洋**、**アフリカとアジア**をつなぐことで、国際社会の**安定と繁栄**を目指す外交方針である。",
+          "keywords": [
+            "安倍晋三",
+            "自由で開かれたインド太平洋構想",
+            "インド洋と太平洋",
+            "アフリカとアジア",
+            "安定と繁栄"
+          ],
+          "evidence": [
+            "foip-year",
+            "foip-person",
+            "foip-name",
+            "foip-oceans"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後の日米豪印戦略対話（クアッド）では、どのような協力が行われたか。",
+          "answer": "**日本・アメリカ・オーストラリア・インド**による**日米豪印戦略対話（クアッド）**が行われた。四カ国で**共同訓練**も行われた。",
+          "keywords": [
+            "日本・アメリカ・オーストラリア・インド",
+            "日米豪印戦略対話（クアッド）",
+            "共同訓練"
+          ],
+          "evidence": [
+            "quad-members",
+            "quad-name",
+            "quad-training"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦後の「自由で開かれたインド太平洋構想とクアッド」について説明せよ。",
+          "answer": "2016年、日本の**安倍晋三(あべしんぞう)**首相が**自由で開かれたインド太平洋構想**を提唱し、**インド洋と太平洋**、**アフリカとアジア**をつなぐことで国際社会の**安定と繁栄**を目指した。**日本・アメリカ・オーストラリア・インド**による**日米豪印戦略対話（クアッド）**が行われた。四カ国で**共同訓練**も行われた。",
+          "keywords": [
+            "安倍晋三",
+            "自由で開かれたインド太平洋構想",
+            "インド洋と太平洋",
+            "アフリカとアジア",
+            "安定と繁栄",
+            "日本・アメリカ・オーストラリア・インド",
+            "日米豪印戦略対話（クアッド）",
+            "共同訓練"
+          ],
+          "evidence": [
+            "foip-year",
+            "foip-person",
+            "foip-name",
+            "foip-oceans",
+            "quad-members",
+            "quad-name",
+            "quad-training"
+          ]
+        }
+      ]
+    }
+  ]
+}

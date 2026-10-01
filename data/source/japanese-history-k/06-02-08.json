@@ -1,0 +1,452 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 8,
+    "title": "日本経済の推移と課題"
+  },
+  "integrationPromptPrefix": "現代の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_14_日本経済の推移と課題_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      448,
+      449,
+      458
+    ],
+    "note": "448～449頁の当該小項目と注⑪を読み、458頁の同じアベノミクスの行を2012年という開始年の補助に用いる。バブルの地価・株価上昇は1986～1989年を採用するが、崩壊開始年は本文1990年・年表1991年の食い違いがあるため、どちらも正答や根拠引用に採用しない。注⑪の2009年の日本の成長率が戦後初めてマイナスとなったという記述、政策の成否・現在の景気の断定、未記載の三本の矢・デフレの定義、人口予測・社会問題全般を少子化の結果とする説明は不採用。少子高齢化は2012年の出来事とせず、費用増と経済規模が縮小した場合の税収という課題に絞る。2018年の米中貿易戦争は説明が少ないため独立項目を作らず、449頁のウクライナ侵攻注記も本小項目の三段階を成立させる情報としては採用しない。ロシアの主張やNATOへの要求を侵攻の正当化・原因として出題しない。"
+  },
+  "facts": [
+    {
+      "id": "bubble-prices",
+      "page": 448,
+      "quote": "地価と株価が急激に値上がりし、"
+    },
+    {
+      "id": "bubble-period",
+      "page": 448,
+      "quote": "経済面では、昭和六十一年（一九八六）から平成元年（一九八九）にかけて地価と株価が急激に値上がりし、"
+    },
+    {
+      "id": "bubble-depression",
+      "page": 448,
+      "quote": "大きく値下がりしてから、長期にわたる不況に入りました。"
+    },
+    {
+      "id": "bubble-name",
+      "page": 448,
+      "quote": "**バブル経済**とバブル崩壊です。"
+    },
+    {
+      "id": "lehman-origin",
+      "page": 448,
+      "quote": "アメリカ発の世界金融危機が起きました。⑪**リーマン・ショック**です。"
+    },
+    {
+      "id": "lehman-year",
+      "page": 448,
+      "quote": "平成二十年（二〇〇八）にはアメリカ発の世界金融危機が起きました。⑪**リーマン・ショック**です。"
+    },
+    {
+      "id": "lehman-failure",
+      "page": 448,
+      "quote": "アメリカの大手証券会社リーマン・ブラザーズの破綻"
+    },
+    {
+      "id": "lehman-global-impact",
+      "page": 448,
+      "quote": "が引き金となった世界的な金融危機および世界同時不況。"
+    },
+    {
+      "id": "lehman-measures",
+      "page": 448,
+      "quote": "世界各国が金融緩和と財政出動を両輪とする経済対策を実施すると、"
+    },
+    {
+      "id": "abenomics-start",
+      "page": 448,
+      "quote": "その後、安倍晋三内閣の成立により、アベノミクスが動き出します。"
+    },
+    {
+      "id": "abenomics-goal",
+      "page": 448,
+      "quote": "一番の目標はデフレと賃金低下の負のスパイラルから抜け出すことです。"
+    },
+    {
+      "id": "abenomics-2012",
+      "page": 458,
+      "quote": "| 2012 | 安倍内閣の発足 | アベノミクス"
+    },
+    {
+      "id": "aging-japan",
+      "page": 448,
+      "quote": "また、日本で**少子高齢化**が進行しています。"
+    },
+    {
+      "id": "social-security-cost",
+      "page": 448,
+      "quote": "医療費や介護費が増加することで社会保障費が膨らみ、"
+    },
+    {
+      "id": "tax-revenue",
+      "page": 448,
+      "quote": "経済規模が縮小すれば税収も少なくなること"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "バブル経済",
+      "reading": "ばぶるけいざい",
+      "category": "経済",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "昭和末期～平成期（1986～1989年に価格上昇）",
+        "sortYear": 1986
+      },
+      "explanation": "1986～1989年の日本での地価・株価の急上昇と、その後の値下がり・長期不況を関係づける。バブル崩壊の開始年は本文と年表で食い違うため、単年を正答としない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "価格の動き",
+          "prompt": "日本のバブル経済では、何が急激に値上がりしたか。",
+          "answer": "地価と株価。",
+          "evidence": [
+            "bubble-prices"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "価格が上昇した時期",
+          "prompt": "日本のバブル経済で、地価と株価が急激に値上がりしたのは何年から何年にかけてか。",
+          "answer": "1986～1989年。",
+          "evidence": [
+            "bubble-period"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "崩壊後の景気",
+          "prompt": "日本のバブル経済が崩壊した後、景気はどのような状態に入ったか。",
+          "answer": "長期にわたる不況。",
+          "evidence": [
+            "bubble-depression",
+            "bubble-name"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "価格と景気の変化",
+          "prompt": "日本のバブル経済について、価格の動きと崩壊後の景気を説明せよ。",
+          "answer": "日本の**バブル経済**では、**1986～1989年**に**地価と株価**が急激に値上がりした。その後、地価と株価が大きく値下がりして、**長期の不況**に入った。",
+          "evidence": [
+            "bubble-period",
+            "bubble-depression",
+            "bubble-name"
+          ],
+          "keywords": [
+            "バブル経済",
+            "1986～1989年",
+            "地価と株価",
+            "長期の不況"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "現代の「バブル経済」について説明せよ。",
+          "answer": "日本では、**1986～1989年**に**地価と株価**が急激に値上がりする**バブル経済**が起きた。その後、地価と株価が大きく値下がりして、**長期の不況**に入った。",
+          "evidence": [
+            "bubble-period",
+            "bubble-depression",
+            "bubble-name"
+          ],
+          "keywords": [
+            "1986～1989年",
+            "地価と株価",
+            "バブル経済",
+            "長期の不況"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "リーマン・ショック",
+      "reading": "りーまんしょっく",
+      "category": "経済",
+      "geographyLabel": "アメリカ",
+      "chronology": {
+        "displayPeriod": "2008年",
+        "sortYear": 2008
+      },
+      "explanation": "2008年のアメリカの大手証券会社の破綻を発端とする世界的な金融危機・同時不況と、各国が金融緩和と財政出動を組み合わせた対応を扱う。翌年の日本の成長率についての注記は採用しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "発端となった国",
+          "prompt": "リーマン・ショックは、どの国で起きた出来事を発端とする金融危機か。",
+          "answer": "アメリカ。",
+          "evidence": [
+            "lehman-origin"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "発生年",
+          "prompt": "リーマン・ショックは何年に起きたか。",
+          "answer": "2008年。",
+          "evidence": [
+            "lehman-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "発端となった出来事",
+          "prompt": "リーマン・ショックの引き金となった、アメリカの大手証券会社に起きた事態は何か。",
+          "answer": "リーマン・ブラザーズの破綻。",
+          "evidence": [
+            "lehman-failure"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "各国の対策",
+          "prompt": "リーマン・ショックに対して、世界各国が経済対策の両輪とした政策を二つ挙げよ。",
+          "answer": "金融緩和と財政出動。",
+          "evidence": [
+            "lehman-measures"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "金融危機と各国の対応",
+          "prompt": "リーマン・ショックについて、起こった事態と各国の対応を説明せよ。",
+          "answer": "**リーマン・ショック**は、**2008年**にアメリカの大手証券会社**リーマン・ブラザーズの破綻**を発端として起こった、世界的な**金融危機**と**世界同時不況**である。世界各国は**金融緩和**と**財政出動**を両輪とする経済対策を実施した。",
+          "evidence": [
+            "lehman-year",
+            "lehman-failure",
+            "lehman-global-impact",
+            "lehman-measures"
+          ],
+          "keywords": [
+            "リーマン・ショック",
+            "2008年",
+            "リーマン・ブラザーズの破綻",
+            "金融危機",
+            "世界同時不況",
+            "金融緩和",
+            "財政出動"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "現代の「リーマン・ショック」について説明せよ。",
+          "answer": "**リーマン・ショック**は、**2008年**にアメリカの大手証券会社**リーマン・ブラザーズの破綻**を発端として起こった、世界的な**金融危機**と**世界同時不況**である。世界各国は**金融緩和**と**財政出動**を両輪とする経済対策を実施した。",
+          "evidence": [
+            "lehman-year",
+            "lehman-failure",
+            "lehman-global-impact",
+            "lehman-measures"
+          ],
+          "keywords": [
+            "リーマン・ショック",
+            "2008年",
+            "リーマン・ブラザーズの破綻",
+            "金融危機",
+            "世界同時不況",
+            "金融緩和",
+            "財政出動"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "平成期の経済政策と課題",
+      "reading": "へいせいきのけいざいせいさくとかだい",
+      "category": "経済・社会",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "平成期（アベノミクス開始は2012年）",
+        "sortYear": 2012
+      },
+      "explanation": "2012年に始まったアベノミクスの目標と、日本の社会保障費・税収に関する課題を一つの関連項目に整理する。2012年を少子高齢化の開始年とせず、政策の成否や人口の将来予測も正答にしない。経済規模と税収の関係は条件として説明する。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政策名",
+          "prompt": "平成期の日本で、デフレと賃金低下の悪循環からの脱却を目標として安倍晋三内閣が始めた経済政策を何というか。",
+          "answer": "アベノミクス。",
+          "evidence": [
+            "abenomics-start",
+            "abenomics-goal"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "政策の開始年",
+          "prompt": "平成期の経済政策と課題について、アベノミクスが動き出したのは何年か。",
+          "answer": "2012年。",
+          "evidence": [
+            "abenomics-2012"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "社会保障の費用",
+          "prompt": "平成期の経済政策と課題について、少子高齢化が進む日本で医療費と介護費が増加すると、何の費用が膨らむか。",
+          "answer": "社会保障費。",
+          "evidence": [
+            "aging-japan",
+            "social-security-cost"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "経済規模と税収",
+          "prompt": "平成期の経済政策と課題について、日本の経済規模が縮小すると、税収はどう変化するか。",
+          "answer": "少なくなる。",
+          "evidence": [
+            "tax-revenue"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政策の開始と目標",
+          "prompt": "平成期の経済政策と課題について、アベノミクスはいつ始まり、何を目標としたか。",
+          "answer": "日本では**2012年**の**安倍晋三内閣**の成立により**アベノミクス**が動き出し、**デフレと賃金低下の悪循環**からの脱却を目標とした。",
+          "evidence": [
+            "abenomics-2012",
+            "abenomics-start",
+            "abenomics-goal"
+          ],
+          "keywords": [
+            "2012年",
+            "安倍晋三内閣",
+            "アベノミクス",
+            "デフレと賃金低下の悪循環"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "費用負担と税収の課題",
+          "prompt": "平成期の経済政策と課題について、日本の少子高齢化に伴う費用負担と、経済規模が縮小した場合の税収の課題を説明せよ。",
+          "answer": "日本では、**少子高齢化**に伴って**医療費と介護費**が増加すると、**社会保障費**が膨らむことが課題となる。また、**経済規模が縮小**すれば、**税収が少なくなる**ことも課題となる。",
+          "evidence": [
+            "aging-japan",
+            "social-security-cost",
+            "tax-revenue"
+          ],
+          "keywords": [
+            "少子高齢化",
+            "医療費と介護費",
+            "社会保障費",
+            "経済規模が縮小",
+            "税収が少なくなる"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "現代の「平成期の経済政策と課題」について説明せよ。",
+          "answer": "日本では**2012年**に**安倍晋三内閣**による**アベノミクス**が始まり、**デフレと賃金低下の悪循環**からの脱却を目標とした。また、**少子高齢化**に伴って**医療費と介護費**が増加すると、**社会保障費**が膨らむことが課題となる。**経済規模が縮小**すれば、**税収が少なくなる**ことも課題となる。",
+          "evidence": [
+            "abenomics-2012",
+            "abenomics-start",
+            "abenomics-goal",
+            "aging-japan",
+            "social-security-cost",
+            "tax-revenue"
+          ],
+          "keywords": [
+            "2012年",
+            "安倍晋三内閣",
+            "アベノミクス",
+            "デフレと賃金低下の悪循環",
+            "少子高齢化",
+            "医療費と介護費",
+            "社会保障費",
+            "経済規模が縮小",
+            "税収が少なくなる"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

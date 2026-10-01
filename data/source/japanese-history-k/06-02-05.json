@@ -1,0 +1,801 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 5,
+    "title": "緊張する東アジア情勢"
+  },
+  "integrationPromptPrefix": "現代の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_11_緊張する東アジア情勢_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      440,
+      441,
+      442,
+      443,
+      444
+    ],
+    "note": "当該小項目の本文と442頁の平成期の日本の政権を根拠とする。領土の正当性、衝突の故意や公船派遣の目的、慰安婦の否定・補償の法的評価、未来の台湾侵攻予測、現在の核能力・核開発の停止や再開の断定、現在の拉致被害者認定人数・帰国状況・国交状態、GDP順位などの余分な数字を正答にしない。1994年は1993年の翌年、2019年は2018年の翌年という本文の相対表現から示す。事件と国有化、各政権交代を同じ原因で起きたと断定せず、章末年表から別内容は足さない。"
+  },
+  "facts": [
+    {
+      "id": "government-1993-year",
+      "page": 442,
+      "quote": "平成5年（1993）の衆議院議員総選挙で"
+    },
+    {
+      "id": "ldp-majority-loss",
+      "page": 442,
+      "quote": "自民党が過半数割れを起こし、"
+    },
+    {
+      "id": "hosokawa",
+      "page": 442,
+      "quote": "細川護熙を首相とする"
+    },
+    {
+      "id": "non-ldp-coalition",
+      "page": 442,
+      "quote": "非自民の連立政権が発足したことで、"
+    },
+    {
+      "id": "fifty-five-end",
+      "page": 442,
+      "quote": "昭和期から長期間続いてきた55年体制は崩壊した。"
+    },
+    {
+      "id": "murayama-coalition",
+      "page": 442,
+      "quote": "翌年には、日本社会党の村山富市を首相とする内閣に自民党が参画し、"
+    },
+    {
+      "id": "ldp-centered-coalitions",
+      "page": 442,
+      "quote": "以降、自民党を中心とする連立内閣が続いたが、"
+    },
+    {
+      "id": "government-2009-year",
+      "page": 442,
+      "quote": "平成21年（2009）に総選挙で政権交代が起き、"
+    },
+    {
+      "id": "democratic-government",
+      "page": 442,
+      "quote": "民主党政権が成立"
+    },
+    {
+      "id": "government-2012-year",
+      "page": 442,
+      "quote": "平成24年（2012）の総選挙で"
+    },
+    {
+      "id": "ldp-return",
+      "page": 442,
+      "quote": "自民党が圧勝して政権に復帰し、"
+    },
+    {
+      "id": "abe",
+      "page": 442,
+      "quote": "安倍晋三を首相とする内閣が発足し、"
+    },
+    {
+      "id": "abduction-period",
+      "page": 443,
+      "quote": "昭和四十年代から五十年代にかけて、多くの日本人が"
+    },
+    {
+      "id": "abduction",
+      "page": 444,
+      "quote": "北朝鮮に拉致され、行方不明になりました。"
+    },
+    {
+      "id": "koizumi",
+      "page": 444,
+      "quote": "小泉純一郎首相は"
+    },
+    {
+      "id": "pyongyang-year",
+      "page": 444,
+      "quote": "平成十四年（二〇〇二）、"
+    },
+    {
+      "id": "kim-jong-il",
+      "page": 444,
+      "quote": "北朝鮮の指導者である金正日と"
+    },
+    {
+      "id": "pyongyang-meeting",
+      "page": 444,
+      "quote": "平壌で会談し、"
+    },
+    {
+      "id": "abduction-admission",
+      "page": 444,
+      "quote": "北朝鮮は日本人拉致を認めて、"
+    },
+    {
+      "id": "victims-return",
+      "page": 444,
+      "quote": "五人の被害者の帰国が実現しました。"
+    },
+    {
+      "id": "pyongyang-declaration",
+      "page": 444,
+      "quote": "この際に日朝平壌宣言が調印され、"
+    },
+    {
+      "id": "prevent-abduction",
+      "page": 444,
+      "quote": "拉致問題の再発防止が明記されましたが、"
+    },
+    {
+      "id": "collision-year",
+      "page": 441,
+      "quote": "平成二十二年（二〇一〇）に"
+    },
+    {
+      "id": "collision-place",
+      "page": 441,
+      "quote": "尖閣諸島付近で"
+    },
+    {
+      "id": "chinese-fishing-boat",
+      "page": 441,
+      "quote": "中国漁船が"
+    },
+    {
+      "id": "coast-guard",
+      "page": 441,
+      "quote": "日本の海上保安庁が取り締まったとき、"
+    },
+    {
+      "id": "collision-actors",
+      "page": 441,
+      "quote": "中国漁船が海上保安庁の船に"
+    },
+    {
+      "id": "collision",
+      "page": 441,
+      "quote": "体当たりする事件が発生しました。"
+    },
+    {
+      "id": "collision-name",
+      "page": 441,
+      "quote": "**尖閣諸島漁船衝突事件**といいます。"
+    },
+    {
+      "id": "nationalization-year",
+      "page": 441,
+      "quote": "日本政府は平成二十四年（二〇一二）、"
+    },
+    {
+      "id": "nationalization",
+      "page": 441,
+      "quote": "尖閣諸島を国有化しました。"
+    },
+    {
+      "id": "chinese-public-vessels",
+      "page": 441,
+      "quote": "以降、中国は尖閣諸島周辺に公船をかつてない頻度で派遣するようになりました。"
+    },
+    {
+      "id": "first-us-north-korea-summit",
+      "page": 443,
+      "quote": "平成三十年（二〇一八）に初となる米朝首脳会談が行われ、"
+    },
+    {
+      "id": "second-summit-year",
+      "page": 443,
+      "quote": "翌年に行われた二度目の米朝首脳会談は"
+    },
+    {
+      "id": "second-summit-result",
+      "page": 443,
+      "quote": "二度目の米朝首脳会談は決裂し、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "平成期の政権交代",
+      "reading": "へいせいきのせいけんこうたい",
+      "category": "日本の政治",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1993〜2012年",
+        "sortYear": 1993
+      },
+      "explanation": "1993年の非自民連立政権による55年体制の崩壊、1994年の自民党の連立内閣への参画、2009年の民主党政権と2012年の自民党復帰を整理する。政権の善悪・安定性や在任期間の長さは暗記対象にしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "日本の平成期の政権交代について、非自民の連立政権が発足したのは何年か。",
+          "answer": "1993年。",
+          "evidence": [
+            "government-1993-year",
+            "non-ldp-coalition"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "日本の平成期の政権交代について、1993年に発足した非自民の連立政権で首相となった人物は誰か。",
+          "answer": "細川護熙(ほそかわもりひろ)。",
+          "evidence": [
+            "hosokawa",
+            "non-ldp-coalition"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "日本の平成期の政権交代について、1993年に非自民の連立政権が発足して崩壊した、昭和期から続く政治体制は何か。",
+          "answer": "55年体制。",
+          "evidence": [
+            "fifty-five-end"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "日本の平成期の政権交代について、長く続いた自民党中心の連立内閣に代わる政権が、総選挙後に成立したのは何年か。",
+          "answer": "2009年。",
+          "evidence": [
+            "ldp-centered-coalitions",
+            "government-2009-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当事者",
+          "prompt": "日本の平成期の政権交代について、2009年の総選挙後に政権を担当した政党は何か。",
+          "answer": "民主党。",
+          "evidence": [
+            "democratic-government"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "日本の平成期の政権交代について、総選挙で自民党が政権に復帰したのは何年か。",
+          "answer": "2012年。",
+          "evidence": [
+            "government-2012-year",
+            "ldp-return"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "日本の平成期の政権交代について、2012年の総選挙後に自民党が政権に復帰して首相となった人物は誰か。",
+          "answer": "安倍晋三(あべしんぞう)。",
+          "evidence": [
+            "abe"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "日本の平成期の政権交代では、1993年から翌年にかけてどのような変化があったか。",
+          "answer": "1993年の総選挙で**自民党**が過半数割れし、**細川護熙(ほそかわもりひろ)**を首相とする**非自民の連立政権**が発足して、**55年体制**が崩壊した。1994年には、**日本社会党**の**村山富市(むらやまとみいち)**を首相とする内閣に自民党が参画した。",
+          "evidence": [
+            "government-1993-year",
+            "ldp-majority-loss",
+            "hosokawa",
+            "non-ldp-coalition",
+            "fifty-five-end",
+            "murayama-coalition"
+          ],
+          "keywords": [
+            "自民党",
+            "細川護熙",
+            "非自民の連立政権",
+            "55年体制",
+            "日本社会党",
+            "村山富市"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "日本の平成期の政権交代では、2009年と2012年にどのような変化があったか。",
+          "answer": "2009年の総選挙で政権交代が起き、**民主党**政権が成立した。2012年の総選挙では**自民党**が政権に復帰し、**安倍晋三(あべしんぞう)**を首相とする内閣が発足した。",
+          "evidence": [
+            "government-2009-year",
+            "democratic-government",
+            "government-2012-year",
+            "ldp-return",
+            "abe"
+          ],
+          "keywords": [
+            "民主党",
+            "自民党",
+            "安倍晋三"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「平成期の政権交代」について説明せよ。",
+          "answer": "日本では1993年に**細川護熙(ほそかわもりひろ)**を首相とする**非自民の連立政権**が発足して**55年体制**が崩壊し、翌年には**日本社会党**の**村山富市(むらやまとみいち)**を首相とする内閣に**自民党**が参画した。2009年の総選挙では**民主党**政権が成立した。2012年の総選挙では自民党が政権に復帰し、**安倍晋三(あべしんぞう)**を首相とする内閣が発足した。",
+          "evidence": [
+            "government-1993-year",
+            "hosokawa",
+            "non-ldp-coalition",
+            "fifty-five-end",
+            "murayama-coalition",
+            "government-2009-year",
+            "democratic-government",
+            "government-2012-year",
+            "ldp-return",
+            "abe"
+          ],
+          "keywords": [
+            "細川護熙",
+            "非自民の連立政権",
+            "55年体制",
+            "日本社会党",
+            "村山富市",
+            "自民党",
+            "民主党",
+            "安倍晋三"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日朝平壌宣言",
+      "reading": "にっちょうぴょんやんせんげん",
+      "category": "日朝関係",
+      "geographyLabel": "平壌",
+      "chronology": {
+        "displayPeriod": "昭和40〜50年代・2002年",
+        "sortYear": 2002
+      },
+      "explanation": "日本人拉致の被害と、2002年の日朝首脳会談、被害者の帰国、日朝平壌宣言の再発防止を結び付ける。執筆時の認定人数、現在の帰国状況や国交正常化への評価は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "現代の日本と北朝鮮の首脳会談で、拉致問題の再発防止を明記して調印された宣言は何か。",
+          "answer": "日朝平壌宣言(にっちょうぴょんやんせんげん)。",
+          "evidence": [
+            "pyongyang-declaration",
+            "prevent-abduction"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代の日朝平壌宣言について、宣言が調印されたのは何年か。",
+          "answer": "2002年。",
+          "evidence": [
+            "pyongyang-year",
+            "pyongyang-declaration"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "現代の日朝平壌宣言について、2002年に北朝鮮の指導者と会談した日本の首相は誰か。",
+          "answer": "小泉純一郎(こいずみじゅんいちろう)。",
+          "evidence": [
+            "koizumi",
+            "pyongyang-year",
+            "pyongyang-meeting"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "現代の日朝平壌宣言について、2002年に日本の首相と会談した北朝鮮の指導者は誰か。",
+          "answer": "金正日(きむじょんいる)。",
+          "evidence": [
+            "pyongyang-year",
+            "kim-jong-il",
+            "pyongyang-meeting"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "現代の日朝平壌宣言について、2002年の会談で北朝鮮は日本人拉致にどのように対応したか。",
+          "answer": "日本人拉致を認めた。",
+          "evidence": [
+            "abduction-admission"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "現代の日朝平壌宣言について、2002年の会談で被害者に関して実現した出来事は何か。",
+          "answer": "被害者の帰国。",
+          "evidence": [
+            "victims-return"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "昭和期の日本人の拉致問題では、どのような被害が生じたか。",
+          "answer": "昭和40年代から50年代にかけて、多くの日本人が**北朝鮮**に**拉致(らち)**され、行方不明となった。",
+          "evidence": [
+            "abduction-period",
+            "abduction"
+          ],
+          "keywords": [
+            "北朝鮮",
+            "拉致"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2002年の日朝平壌宣言について説明せよ。",
+          "answer": "2002年、日本の**小泉純一郎(こいずみじゅんいちろう)**首相が北朝鮮の**金正日(きむじょんいる)**と**平壌(ぴょんやん)**で会談し、北朝鮮が**日本人拉致(にほんじんらち)**を認めて5人の被害者の**帰国**が実現した。**日朝平壌宣言(にっちょうぴょんやんせんげん)**が調印され、**拉致問題の再発防止**が明記された。",
+          "evidence": [
+            "koizumi",
+            "pyongyang-year",
+            "kim-jong-il",
+            "pyongyang-meeting",
+            "abduction-admission",
+            "victims-return",
+            "pyongyang-declaration",
+            "prevent-abduction"
+          ],
+          "keywords": [
+            "小泉純一郎",
+            "金正日",
+            "平壌",
+            "日本人拉致",
+            "帰国",
+            "日朝平壌宣言",
+            "拉致問題の再発防止"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「日朝平壌宣言」について説明せよ。",
+          "answer": "昭和40年代から50年代にかけて、多くの日本人が**北朝鮮**に**拉致(らち)**され、行方不明となった。2002年、日本の**小泉純一郎(こいずみじゅんいちろう)**首相が北朝鮮の**金正日(きむじょんいる)**と**平壌(ぴょんやん)**で会談し、北朝鮮が**日本人拉致**を認めて5人の被害者の**帰国**が実現した。**日朝平壌宣言(にっちょうぴょんやんせんげん)**が調印され、**拉致問題の再発防止**が明記された。",
+          "evidence": [
+            "abduction-period",
+            "abduction",
+            "koizumi",
+            "pyongyang-year",
+            "kim-jong-il",
+            "pyongyang-meeting",
+            "abduction-admission",
+            "victims-return",
+            "pyongyang-declaration",
+            "prevent-abduction"
+          ],
+          "keywords": [
+            "北朝鮮",
+            "拉致",
+            "小泉純一郎",
+            "金正日",
+            "平壌",
+            "日本人拉致",
+            "帰国",
+            "日朝平壌宣言",
+            "拉致問題の再発防止"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "尖閣諸島の国有化",
+      "reading": "せんかくしょとうのこくゆうか",
+      "category": "日中関係",
+      "geographyLabel": "尖閣諸島",
+      "chronology": {
+        "displayPeriod": "2010年・2012年",
+        "sortYear": 2010
+      },
+      "explanation": "2010年の漁船と海上保安庁の船の衝突、2012年の国有化、その後の公船派遣の増加を時期を分けて整理する。領有の正当性、衝突の故意や派遣目的は正答とせず、国有化と政権交代を同じ年という理由で結び付けない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代の日本による尖閣諸島の国有化に関連して、漁船衝突事件が起きたのは何年か。",
+          "answer": "2010年。",
+          "evidence": [
+            "collision-year",
+            "collision-name"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代の日本政府による尖閣諸島の国有化は、何年に行われたか。",
+          "answer": "2012年。",
+          "evidence": [
+            "nationalization-year",
+            "nationalization"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当事者",
+          "prompt": "尖閣諸島の国有化に関連して、2010年に漁船を取り締まった日本の機関は何か。",
+          "answer": "海上保安庁。",
+          "evidence": [
+            "coast-guard"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当事者",
+          "prompt": "尖閣諸島の国有化に関連して、2010年に海上保安庁の船と衝突したのは、どの国の漁船か。",
+          "answer": "中国。",
+          "evidence": [
+            "chinese-fishing-boat"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2010年の尖閣諸島漁船衝突事件では、何が起きたか。",
+          "answer": "2010年、**尖閣諸島(せんかくしょとう)**付近で日本の**海上保安庁**が取り締まりを行う際、**中国漁船**が海上保安庁の船に衝突した。",
+          "evidence": [
+            "collision-year",
+            "collision-place",
+            "coast-guard",
+            "collision-actors",
+            "collision",
+            "collision-name"
+          ],
+          "keywords": [
+            "尖閣諸島",
+            "海上保安庁",
+            "中国漁船"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2012年の尖閣諸島の国有化と、その後の日中関係にはどのような動きがあったか。",
+          "answer": "2012年、**日本政府**が**尖閣諸島の国有化**を行った。その後、周辺へ派遣される**中国公船**の頻度が増えた。",
+          "evidence": [
+            "nationalization-year",
+            "nationalization",
+            "chinese-public-vessels"
+          ],
+          "keywords": [
+            "日本政府",
+            "尖閣諸島の国有化",
+            "中国公船"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「尖閣諸島の国有化」について説明せよ。",
+          "answer": "2010年、**尖閣諸島(せんかくしょとう)**付近で、**中国漁船**が日本の**海上保安庁**の船に衝突した。2012年に**日本政府**が**尖閣諸島の国有化**を行い、その後、周辺へ派遣される**中国公船**の頻度が増えた。",
+          "evidence": [
+            "collision-year",
+            "collision-place",
+            "coast-guard",
+            "collision-actors",
+            "collision",
+            "collision-name",
+            "nationalization-year",
+            "nationalization",
+            "chinese-public-vessels"
+          ],
+          "keywords": [
+            "尖閣諸島",
+            "中国漁船",
+            "海上保安庁",
+            "日本政府",
+            "尖閣諸島の国有化",
+            "中国公船"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "米朝首脳会談",
+      "reading": "べいちょうしゅのうかいだん",
+      "category": "米朝関係",
+      "geographyLabel": "北朝鮮",
+      "chronology": {
+        "displayPeriod": "2018〜2019年",
+        "sortYear": 2018
+      },
+      "explanation": "2018年の初会談と2019年の二度目の会談の決裂を分けて学ぶ。核開発が停止した、現在どの能力を持つ、会談後の状況が現在も続くなどの断定はしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "平成期の米朝首脳会談について、初めて会談が行われたのは何年か。",
+          "answer": "2018年。",
+          "evidence": [
+            "first-us-north-korea-summit"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "平成期の米朝首脳会談について、2度目の会談が行われたのは何年か。",
+          "answer": "2019年。",
+          "evidence": [
+            "first-us-north-korea-summit",
+            "second-summit-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "平成期の米朝首脳会談について、2019年の2度目の会談はどのような結果に終わったか。",
+          "answer": "決裂。",
+          "evidence": [
+            "second-summit-result"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2018年と2019年の米朝首脳会談は、どのように進んだか。",
+          "answer": "**アメリカ**と**北朝鮮**の間で、2018年に初の**米朝首脳会談**が行われた。2019年の2度目の会談は**決裂**した。",
+          "evidence": [
+            "first-us-north-korea-summit",
+            "second-summit-year",
+            "second-summit-result"
+          ],
+          "keywords": [
+            "アメリカ",
+            "北朝鮮",
+            "米朝首脳会談",
+            "決裂"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「米朝首脳会談」について説明せよ。",
+          "answer": "2018年に**アメリカ**と**北朝鮮**の間で初の**米朝首脳会談**が行われた。2019年の2度目の会談は**決裂**した。",
+          "evidence": [
+            "first-us-north-korea-summit",
+            "second-summit-year",
+            "second-summit-result"
+          ],
+          "keywords": [
+            "アメリカ",
+            "北朝鮮",
+            "米朝首脳会談",
+            "決裂"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

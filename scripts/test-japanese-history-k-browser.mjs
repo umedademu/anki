@@ -108,6 +108,41 @@ try {
     assert.ok(summary.includes(`${terms.length}項目・${countQuestions(terms)}問`), summary);
     assert.ok(summary.includes(`基礎の一問一答 ${countStage(terms, "beginner")}問`), summary);
   };
+  const assertTextClearOfButtons = async ids => {
+    const results = await page.evaluate(textIds => textIds.map(id => {
+      const text = document.getElementById(id);
+      const container = text.closest(".question-spoken-block, .answer, .term-overview");
+      const buttons = [...container.querySelectorAll(":scope > .study-edit-button, :scope > .speech-button")]
+        .filter(button => button.getClientRects().length && getComputedStyle(button).visibility !== "hidden")
+        .map(button => ({ label: button.getAttribute("aria-label"), rect: button.getBoundingClientRect() }));
+      const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT), range = document.createRange();
+      const overlaps = []; let characters = 0, node;
+      // 要素全体の余白ではなく、改行・太字・読みを含む一文字ずつの表示範囲を調べる。
+      while ((node = walker.nextNode())) {
+        let offset = 0;
+        for (const character of node.textContent) {
+          const start = offset; offset += character.length;
+          if (/\s/u.test(character)) continue;
+          range.setStart(node, start); range.setEnd(node, offset);
+          for (const rect of range.getClientRects()) {
+            if (!rect.width || !rect.height) continue;
+            characters++;
+            for (const button of buttons) {
+              const overlapWidth = Math.min(rect.right, button.rect.right) - Math.max(rect.left, button.rect.left);
+              const overlapHeight = Math.min(rect.bottom, button.rect.bottom) - Math.max(rect.top, button.rect.top);
+              if (overlapWidth > 0.5 && overlapHeight > 0.5 && overlaps.length < 3) overlaps.push({ id, character, button: button.label });
+            }
+          }
+        }
+      }
+      return { id, characters, buttonCount: buttons.length, overlaps };
+    }), ids);
+    for (const result of results) {
+      assert.ok(result.characters > 0, `${result.id}の表示中の文字を検査します。`);
+      assert.equal(result.buttonCount, 2, `${result.id}の編集・読み上げボタンを検査します。`);
+      assert.deepEqual(result.overlaps, [], `${result.id}の文字に編集・読み上げボタンが重なりません。`);
+    }
+  };
   const assertStudyDisplay = async (question, answerVisible) => {
     await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
     assert.equal(await page.locator("#context-card").isVisible(), false, "上部の用語枠は全段階で表示しません。");
@@ -116,6 +151,7 @@ try {
     assert.equal(await page.locator("#overview-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#answer-panel").isVisible(), answerVisible);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await assertTextClearOfButtons(answerVisible ? ["question-text", "answer-text", "term-overview-text"] : ["question-text"]);
     if (answerVisible) {
       assert.equal(await page.locator("#answer-text").textContent(), plain(question.answer));
       if (question.stage !== "beginner") assert.ok(await page.locator("#answer-text strong").count() > 0, "説明回答の重要語が太字で表示されます。");
@@ -246,6 +282,17 @@ try {
     assert.equal(await page.locator("#question-text").textContent(), integratedQuestion.prompt);
     await assertStudyDisplay(integratedQuestion, false);
     await page.locator("#next-action").click(); await assertStudyDisplay(integratedQuestion, true);
+    if (addition.index.deckId === "book-06-02-06") {
+      const previousPadding = await page.locator("#question-text").evaluate(element => {
+        const previous = element.style.paddingRight; element.style.paddingRight = "58px"; return previous;
+      });
+      try {
+        await assert.rejects(() => assertTextClearOfButtons(["question-text"]), /文字に編集・読み上げボタンが重なりません/, "以前の狭い余白で実際に文字が隠れる配置を検出します。");
+      } finally {
+        await page.locator("#question-text").evaluate((element, previous) => { element.style.paddingRight = previous; }, previousPadding);
+      }
+      await assertTextClearOfButtons(["question-text"]);
+    }
     await page.screenshot({ path: path.join(images, `${addition.index.deckId}-integrated-mobile.png`), fullPage: true });
   }
   assert.deepEqual(progress.get(plan.index.version), ghqRecords, "新規小項目の回答でGHQの学習記録を変更しません。");

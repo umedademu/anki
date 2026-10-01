@@ -1,5 +1,8 @@
 // 日本史Kの確認済みデータの追加・置換だけを許可する一時窓口。
+import { readJsonBinding } from "./japanese-history-k-bindings.js";
 const subjectId = "japanese-history-k";
+const isRecord = value => value !== null && typeof value === "object" && !Array.isArray(value);
+const isHashMap = value => isRecord(value) && Object.values(value).every(entry => typeof entry === "string" && /^[a-f0-9]{64}$/.test(entry));
 const hash = async value => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(JSON.stringify(value))))].map(byte => byte.toString(16).padStart(2, "0")).join("");
 const metadata = { contentType: "application/json; charset=utf-8", cacheControl: "no-cache" };
 export default {
@@ -8,8 +11,13 @@ export default {
     let input;
     try { input = await request.json(); } catch { return new Response("Invalid JSON", { status: 400 }); }
     const { action, key, value, expectedEtag } = input;
-    const hashes = JSON.parse(env.OBJECT_HASHES);
-    const previousHashes = JSON.parse(env.PREVIOUS_OBJECT_HASHES ?? "{}");
+    let hashes, previousHashes, subject;
+    try {
+      hashes = readJsonBinding(env, "OBJECT_HASHES");
+      previousHashes = readJsonBinding(env, "PREVIOUS_OBJECT_HASHES", "{}");
+      subject = readJsonBinding(env, "ADDITION_JSON");
+      if (!isHashMap(hashes) || !isHashMap(previousHashes) || !isRecord(subject) || subject.id !== subjectId || !Array.isArray(subject.decks) || !Array.isArray(subject.chapterGroups)) throw new Error("Invalid settings shape");
+    } catch { return new Response("Invalid registration settings", { status: 500 }); }
     const isNewData = Object.hasOwn(hashes, key) && key.startsWith(`subjects/${subjectId}/imports/`);
     const isPreviousData = Object.hasOwn(previousHashes, key) && key.startsWith(`subjects/${subjectId}/`);
     if (key !== "index.json" && !isNewData && !(action === "read" && isPreviousData)) return new Response("Forbidden", { status: 403 });
@@ -27,7 +35,7 @@ export default {
     if (action !== "commit" || key !== "index.json" || typeof expectedEtag !== "string") return new Response("Forbidden", { status: 403 });
     const current = await env.BUCKET.get(key);
     if (!current || current.etag !== expectedEtag) return new Response("Conflict", { status: 409 });
-    const before = await current.json(), subject = JSON.parse(env.ADDITION_JSON);
+    const before = await current.json();
     if (before.schemaVersion !== 3 || !Array.isArray(before.subjects)) return new Response("Invalid catalog", { status: 400 });
     const previous = before.subjects.filter(entry => entry.id === subjectId);
     if (env.PREVIOUS_SUBJECT_HASH ? previous.length !== 1 || await hash(previous[0]) !== env.PREVIOUS_SUBJECT_HASH : previous.length !== 0) return new Response("Previous subject changed", { status: 409 });

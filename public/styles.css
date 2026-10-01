@@ -4325,8 +4325,8 @@ body.is-listening.is-listening-answer-visible .page {
 .study-edit-button:disabled { opacity: .4; cursor: default; }
 .question-spoken-block > .study-edit-button { top: 50%; right: 38px; transform: translateY(-50%); }
 .question-spoken-block h2, .question-card.is-staged-term .question-spoken-block h2 { padding-right: 80px; }
-.answer-line { padding-right: 80px; }
-#term-overview-text { padding-right: 70px; }
+.answer-line { padding-right: 88px; }
+#term-overview-text { padding-right: 88px; }
 .study-field-form { position: relative; padding: 44px 0 8px; text-align: left; font-size: 1rem; }
 .study-field-form label { display: grid; gap: 8px; font-size: .85rem; }
 .study-field-form textarea {
@@ -4341,6 +4341,4 @@ body.is-listening.is-listening-answer-visible .page {
 @media (max-width: 760px) {
   .study-edit-button { top: 4px; right: 47px; width: 32px; height: 32px; }
   .question-spoken-block > .study-edit-button { right: 40px; }
-  .question-spoken-block h2, .question-card.is-staged-term .question-spoken-block h2 { padding-right: 58px; }
-  .answer-line, #term-overview-text { padding-right: 58px; }
 }

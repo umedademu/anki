@@ -1,0 +1,342 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 7,
+    "title": "震災と世界の中の日本"
+  },
+  "integrationPromptPrefix": "現代の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_13_震災と世界の中の日本_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      446,
+      447,
+      448
+    ],
+    "note": "446頁の当該見出しから448頁の次見出し前までを全文読み、447頁のコラムも含めて確認した。被害者人数、個人職員の名前・年齢・美談、日本人の秩序に関する価値判断、旅行者動向の予測は出題しない。東京五輪は2020年の開催予定と新型コロナウイルスによる一年延期までとし、2021年の開催実施・無観客・大阪万博について補わない。"
+  },
+  "facts": [
+    {
+      "id": "hanshin",
+      "page": 446,
+      "quote": "平成七年（一九九五）には**阪神・淡路大震災**"
+    },
+    {
+      "id": "east-japan",
+      "page": 446,
+      "quote": "平成二十三年（二〇一一）には**東日本大震災**が起きました。"
+    },
+    {
+      "id": "tsunami",
+      "page": 446,
+      "quote": "巨大津波が襲ったため"
+    },
+    {
+      "id": "affected-region",
+      "page": 446,
+      "quote": "関東から東北にかけて"
+    },
+    {
+      "id": "tsunami-region",
+      "page": 446,
+      "quote": "東日本大震災では、関東から東北にかけて巨大津波が襲ったため"
+    },
+    {
+      "id": "nuclear-accident",
+      "page": 446,
+      "quote": "福島第一原子力発電所が事故を起こして"
+    },
+    {
+      "id": "radiation-evacuation",
+      "page": 446,
+      "quote": "広い範囲に高濃度の放射性物質が拡散されたため、長期にわたる避難生活を余儀なくされている人が大勢います。"
+    },
+    {
+      "id": "olympic-plan",
+      "page": 446,
+      "quote": "二〇二〇年の**東京オリンピック**の招致が決定しましたが"
+    },
+    {
+      "id": "olympic-virus",
+      "page": 446,
+      "quote": "新型コロナウイルスの"
+    },
+    {
+      "id": "olympic-effect",
+      "page": 448,
+      "quote": "影響で"
+    },
+    {
+      "id": "olympic-delay",
+      "page": 448,
+      "quote": "一年延期となりました。"
+    },
+    {
+      "id": "olympic-consequence",
+      "page": 448,
+      "quote": "影響で一年延期となりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "平成期の大震災",
+      "reading": "へいせいきのだいしんさい",
+      "category": "自然災害と避難",
+      "chronology": {
+        "displayPeriod": "1995年・2011年",
+        "sortYear": 1995
+      },
+      "explanation": "日本では1995年に阪神・淡路大震災、2011年に東日本大震災が起きた。東日本大震災では巨大津波に加え、原子力発電所の事故による放射性物質の拡散が長期の避難生活につながった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "震災の名称",
+          "prompt": "1995年の日本で起きた大震災は何か。",
+          "answer": "**阪神・淡路大震災(はんしんあわじだいしんさい)**。",
+          "evidence": [
+            "hanshin"
+          ],
+          "keywords": [
+            "阪神・淡路大震災"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "震災の名称",
+          "prompt": "2011年の日本で、巨大津波を伴った震災は何か。",
+          "answer": "**東日本大震災(ひがしにほんだいしんさい)**。",
+          "evidence": [
+            "east-japan",
+            "tsunami"
+          ],
+          "keywords": [
+            "東日本大震災"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "津波の被害地域",
+          "prompt": "平成期の大震災のうち、2011年の東日本大震災で巨大津波が襲った地域はどこからどこにかけてか。",
+          "answer": "**関東**から**東北**。",
+          "evidence": [
+            "affected-region"
+          ],
+          "keywords": [
+            "関東",
+            "東北"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "事故が起きた施設",
+          "prompt": "平成期の大震災のうち、東日本大震災で事故が起きた原子力発電所は何というか。",
+          "answer": "**福島第一原子力発電所**。",
+          "evidence": [
+            "nuclear-accident"
+          ],
+          "keywords": [
+            "福島第一原子力発電所"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "長期避難の原因",
+          "prompt": "平成期の大震災のうち、東日本大震災後の原子力発電所事故で、長期の避難生活が必要になったのはなぜか。",
+          "answer": "**高濃度の放射性物質**が広い範囲に拡散したため。",
+          "evidence": [
+            "radiation-evacuation"
+          ],
+          "keywords": [
+            "高濃度の放射性物質"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "震災の発生と津波",
+          "prompt": "平成期の大震災として、阪神・淡路大震災と東日本大震災はそれぞれいつ起き、東日本大震災ではどの地域を津波が襲ったか。",
+          "answer": "日本では1995年に**阪神・淡路大震災(はんしんあわじだいしんさい)**、2011年に**東日本大震災(ひがしにほんだいしんさい)**が起きた。東日本大震災では、**関東**から**東北**にかけて**巨大津波**が襲った。",
+          "evidence": [
+            "hanshin",
+            "east-japan",
+            "tsunami-region"
+          ],
+          "keywords": [
+            "阪神・淡路大震災",
+            "東日本大震災",
+            "関東",
+            "東北",
+            "巨大津波"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "原子力発電所事故の影響",
+          "prompt": "2011年の日本で、東日本大震災に伴う原子力発電所の事故は、人々の生活にどのような影響を与えたか。",
+          "answer": "**福島第一原子力発電所**の事故で、**高濃度の放射性物質**が広い範囲に拡散し、多くの人が長期の**避難生活**を余儀なくされた。",
+          "evidence": [
+            "nuclear-accident",
+            "radiation-evacuation"
+          ],
+          "keywords": [
+            "福島第一原子力発電所",
+            "高濃度の放射性物質",
+            "避難生活"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「平成期の大震災」について説明せよ。",
+          "answer": "日本では1995年に**阪神・淡路大震災(はんしんあわじだいしんさい)**、2011年に**東日本大震災(ひがしにほんだいしんさい)**が起き、東日本大震災では**関東**から**東北**にかけて**巨大津波**が襲った。**福島第一原子力発電所**の事故で**高濃度の放射性物質**が広い範囲に拡散し、多くの人が長期の**避難生活**を余儀なくされた。",
+          "evidence": [
+            "hanshin",
+            "east-japan",
+            "tsunami-region",
+            "nuclear-accident",
+            "radiation-evacuation"
+          ],
+          "keywords": [
+            "阪神・淡路大震災",
+            "東日本大震災",
+            "関東",
+            "東北",
+            "巨大津波",
+            "福島第一原子力発電所",
+            "高濃度の放射性物質",
+            "避難生活"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "東京オリンピックの延期",
+      "reading": "とうきょうおりんぴっくのえんき",
+      "category": "国際行事と感染症",
+      "chronology": {
+        "displayPeriod": "2020年の開催予定と延期",
+        "sortYear": 2020
+      },
+      "explanation": "日本で2020年に開催が予定されていた東京オリンピックは、新型コロナウイルスの影響で一年延期となった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "time",
+          "form": "当初の予定年",
+          "prompt": "21世紀の日本で、東京オリンピックの延期に関連して、大会の開催が当初予定されていたのは何年か。",
+          "answer": "2020年。",
+          "evidence": [
+            "olympic-plan"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "延期の原因",
+          "prompt": "21世紀の日本で、東京オリンピックの延期は何の影響によるものか。",
+          "answer": "**新型コロナウイルス**の影響。",
+          "evidence": [
+            "olympic-virus",
+            "olympic-effect"
+          ],
+          "keywords": [
+            "新型コロナウイルス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "延期の期間",
+          "prompt": "21世紀の日本で、東京オリンピックの延期はどれだけの期間だったか。",
+          "answer": "**１年延期**となった。",
+          "evidence": [
+            "olympic-delay"
+          ],
+          "keywords": [
+            "１年延期"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "開催予定の変更",
+          "prompt": "21世紀の日本で、東京オリンピックの延期は、どのような事情で決まったか。",
+          "answer": "日本で2020年に開催が予定されていた**東京オリンピック**は、**新型コロナウイルス**の影響で**１年延期**となった。",
+          "evidence": [
+            "olympic-plan",
+            "olympic-virus",
+            "olympic-consequence"
+          ],
+          "keywords": [
+            "東京オリンピック",
+            "新型コロナウイルス",
+            "１年延期"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「東京オリンピックの延期」について説明せよ。",
+          "answer": "日本で2020年に開催が予定されていた**東京オリンピック**は、**新型コロナウイルス**の影響で**１年延期**となった。",
+          "evidence": [
+            "olympic-plan",
+            "olympic-virus",
+            "olympic-consequence"
+          ],
+          "keywords": [
+            "東京オリンピック",
+            "新型コロナウイルス",
+            "１年延期"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

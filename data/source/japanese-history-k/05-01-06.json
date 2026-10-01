@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 1,
+    "title": "欧米の近代化と日本"
+  },
+  "part": {
+    "number": 6,
+    "title": "ペリーとハリスの要求"
+  },
+  "integrationPromptPrefix": "19世紀の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_06_ペリーとハリスの要求_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      284,
+      285,
+      286
+    ],
+    "note": "284～287頁を最後まで読み、ヘ本文と関連する注⑳・乗艦図版の範囲を抜粋する。284頁の捕鯨の注⑲と新聞資料は前小項目、286頁末の京都注と287頁の東京遷都コラムは次節の資料として出題しない。狂歌、軍艦・火砲の数や性能、贈物の細部、軍事力の評価は不採用。日米和親条約の1854年は1853年の翌年から示し、この小項目にない日米修好通商条約締結年・開港地・関税や条約の具体的内容は補わない。1863～1864年の戦争後に初めて開国・通商条約締結が始まったとする時系列は採用せず、原文の鎖国支持者の認識の変化までを扱う。ハリスの通商要求を1856年だけに限定せず、19世紀半ばの開国交渉として扱い、資料外の交渉年・締結年を補わない。"
+  },
+  "facts": [
+    {
+      "id": "perry-name",
+      "page": 285,
+      "quote": "東インド艦隊司令長官マシュー・ペリー"
+    },
+    {
+      "id": "perry-year",
+      "page": 286,
+      "quote": "嘉永六年（一八五三）、"
+    },
+    {
+      "id": "uraga",
+      "page": 286,
+      "quote": "浦賀に現れ、日本に開国を求めました。"
+    },
+    {
+      "id": "kanagawa",
+      "page": 286,
+      "quote": "幕府はこれに対抗する手段がなく、翌年に日米和親条約を締結しました。"
+    },
+    {
+      "id": "harris-name",
+      "page": 286,
+      "quote": "アメリカ総領事のタウンゼント・ハリス"
+    },
+    {
+      "id": "harris-demand",
+      "page": 286,
+      "quote": "日米修好通商条約の締結を迫ると、"
+    },
+    {
+      "id": "debate",
+      "page": 286,
+      "quote": "日本を二分する大論争に発展しました。"
+    },
+    {
+      "id": "satsuma-year",
+      "page": 286,
+      "quote": "文久三年（一八六三）には"
+    },
+    {
+      "id": "namamugi",
+      "page": 286,
+      "quote": "生麦事件の犯人の処刑と賠償金を求めて、"
+    },
+    {
+      "id": "satsuma-war",
+      "page": 286,
+      "quote": "イギリスが薩摩藩を攻撃する薩英戦争が起き、"
+    },
+    {
+      "id": "shimonoseki-year",
+      "page": 286,
+      "quote": "元治元年（一八六四）には"
+    },
+    {
+      "id": "kanmon-attack",
+      "page": 286,
+      "quote": "関門海峡で攻撃を受けたことの報復として、"
+    },
+    {
+      "id": "alliance",
+      "page": 286,
+      "quote": "列強四カ国（アメリカ、イギリス、フランス、オランダ）の連合艦隊が"
+    },
+    {
+      "id": "choshu-war",
+      "page": 286,
+      "quote": "長州藩を攻撃する事件（馬関戦争）が起きました。"
+    },
+    {
+      "id": "recognition",
+      "page": 286,
+      "quote": "これにより、鎖国を支持していた人々も、日本が列強に対抗することの困難を悟りました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日本の開国",
+      "reading": "にほんのかいこく",
+      "category": "開国と対外関係",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "19世紀半ば",
+        "sortYear": 1853
+      },
+      "explanation": "ペリー来航を受けて締結された日米和親条約と、ハリスが締結を迫った日米修好通商条約を区別する。前者は幕府がアメリカと締結し、後者への要求は日本を二分する大論争に発展した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "幕末の日本の開国について、1853年に艦隊を率いて来航したアメリカの司令長官は誰か。",
+          "answer": "**ペリー**。",
+          "keywords": [
+            "ペリー"
+          ],
+          "evidence": [
+            "perry-name",
+            "perry-year"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "場所",
+          "prompt": "19世紀の日本の開国について、1853年にペリーの艦隊が現れた場所はどこか。",
+          "answer": "**浦賀(うらが)**。",
+          "keywords": [
+            "浦賀"
+          ],
+          "evidence": [
+            "uraga"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "幕末の日本で、ペリー来航の翌年に幕府がアメリカと締結した条約は何か。",
+          "answer": "**日米和親条約**。",
+          "keywords": [
+            "日米和親条約"
+          ],
+          "evidence": [
+            "kanagawa"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "19世紀の日本の開国について、通商を要求したアメリカの総領事は誰か。",
+          "answer": "**ハリス**。",
+          "keywords": [
+            "ハリス"
+          ],
+          "evidence": [
+            "harris-name"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関連する条約",
+          "prompt": "19世紀の日本の開国について、ハリスが締結を迫った条約は何か。",
+          "answer": "**日米修好通商条約**。",
+          "keywords": [
+            "日米修好通商条約"
+          ],
+          "evidence": [
+            "harris-demand"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "幕末の日本の開国で、ペリーの来航は幕府の対応をどう変えたか。",
+          "answer": "1853年、アメリカの**ペリー**率いる艦隊が日本の**浦賀(うらが)**に現れて開国を求めた。幕府はこれに対抗する手段がなく、1854年に**日米和親条約**を締結した。",
+          "keywords": [
+            "ペリー",
+            "浦賀",
+            "日米和親条約"
+          ],
+          "evidence": [
+            "perry-name",
+            "perry-year",
+            "uraga",
+            "kanagawa"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "幕末の日本の開国で、ハリスの要求はどのような影響を与えたか。",
+          "answer": "日米和親条約の締結後、アメリカ総領事の**ハリス**が**日米修好通商条約**の締結を迫り、日本を二分する大論争に発展した。",
+          "keywords": [
+            "ハリス",
+            "日米修好通商条約"
+          ],
+          "evidence": [
+            "kanagawa",
+            "harris-name",
+            "harris-demand",
+            "debate"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "19世紀の「日本の開国」について説明せよ。",
+          "answer": "1853年、アメリカの**ペリー**率いる艦隊が日本の**浦賀(うらが)**に現れて開国を求め、幕府は対抗する手段がなく1854年に**日米和親条約**を締結した。その後、アメリカ総領事の**ハリス**が**日米修好通商条約**の締結を迫り、日本を二分する大論争に発展した。",
+          "keywords": [
+            "ペリー",
+            "浦賀",
+            "日米和親条約",
+            "ハリス",
+            "日米修好通商条約"
+          ],
+          "evidence": [
+            "perry-name",
+            "perry-year",
+            "uraga",
+            "kanagawa",
+            "harris-name",
+            "harris-demand",
+            "debate"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "薩英戦争と馬関戦争",
+      "reading": "さつえいせんそうとばかんせんそう",
+      "category": "開国と対外関係",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1863～1864年",
+        "sortYear": 1863
+      },
+      "explanation": "薩英戦争は生麦事件、馬関戦争は関門海峡での攻撃が原因となった。両戦争を通じて、鎖国支持者も列強への対抗が困難だと認識した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "理由",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争について、薩英戦争でイギリスが犯人の処刑と賠償金を求めたのは、どの事件か。",
+          "answer": "**生麦事件(なまむぎじけん)**。",
+          "keywords": [
+            "生麦事件"
+          ],
+          "evidence": [
+            "namamugi"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争について、薩英戦争が起きたのは何年か。",
+          "answer": "1863年。",
+          "keywords": [],
+          "evidence": [
+            "satsuma-year",
+            "satsuma-war"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "理由",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争について、馬関戦争の連合艦隊は、何に対する報復として長州藩を攻撃したか。",
+          "answer": "**関門海峡**で攻撃を受けたこと。",
+          "keywords": [
+            "関門海峡"
+          ],
+          "evidence": [
+            "kanmon-attack"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争について、馬関戦争で連合艦隊を組織した四カ国はどこか。",
+          "answer": "**アメリカ・イギリス・フランス・オランダ**。",
+          "keywords": [
+            "アメリカ・イギリス・フランス・オランダ"
+          ],
+          "evidence": [
+            "alliance"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争について、馬関戦争が起きたのは何年か。",
+          "answer": "1864年。",
+          "keywords": [],
+          "evidence": [
+            "shimonoseki-year",
+            "choshu-war"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "幕末の日本の薩英戦争と馬関戦争によって、鎖国を支持していた人々も、列強との関係について何を認識したか。",
+          "answer": "日本が**列強に対抗することの困難さ**。",
+          "keywords": [
+            "列強に対抗することの困難さ"
+          ],
+          "evidence": [
+            "recognition"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "幕末の日本の薩英戦争では、何が起きたか。",
+          "answer": "1863年、イギリスは**生麦事件(なまむぎじけん)**の犯人の処刑と賠償金を求めて、**薩摩藩(さつまはん)**を攻撃した。これが**薩英戦争(さつえいせんそう)**である。",
+          "keywords": [
+            "生麦事件",
+            "薩摩藩",
+            "薩英戦争"
+          ],
+          "evidence": [
+            "satsuma-year",
+            "namamugi",
+            "satsuma-war"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "幕末の日本の馬関戦争では、何が起きたか。",
+          "answer": "1864年、**関門海峡**で攻撃を受けた報復として、**アメリカ・イギリス・フランス・オランダ**の連合艦隊が**長州藩**を攻撃する**馬関戦争(ばかんせんそう)**が起きた。薩英戦争と馬関戦争により、鎖国を支持する人々も日本が**列強に対抗することの困難さ**を認識した。",
+          "keywords": [
+            "関門海峡",
+            "アメリカ・イギリス・フランス・オランダ",
+            "長州藩",
+            "馬関戦争",
+            "列強に対抗することの困難さ"
+          ],
+          "evidence": [
+            "shimonoseki-year",
+            "kanmon-attack",
+            "alliance",
+            "choshu-war",
+            "recognition"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "19世紀の「薩英戦争と馬関戦争」について説明せよ。",
+          "answer": "幕末の日本では1863年、イギリスが**生麦事件(なまむぎじけん)**の犯人の処刑と賠償金を求め、**薩摩藩(さつまはん)**を攻撃する**薩英戦争(さつえいせんそう)**が起きた。1864年には**関門海峡**で攻撃を受けた報復として、**アメリカ・イギリス・フランス・オランダ**の連合艦隊が**長州藩**を攻撃する**馬関戦争(ばかんせんそう)**が起きた。鎖国を支持する人々も、日本が**列強に対抗することの困難さ**を認識した。",
+          "keywords": [
+            "生麦事件",
+            "薩摩藩",
+            "薩英戦争",
+            "関門海峡",
+            "アメリカ・イギリス・フランス・オランダ",
+            "長州藩",
+            "馬関戦争",
+            "列強に対抗することの困難さ"
+          ],
+          "evidence": [
+            "satsuma-year",
+            "namamugi",
+            "satsuma-war",
+            "shimonoseki-year",
+            "kanmon-attack",
+            "alliance",
+            "choshu-war",
+            "recognition"
+          ]
+        }
+      ]
+    }
+  ]
+}

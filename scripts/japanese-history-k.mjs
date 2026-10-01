@@ -24,8 +24,9 @@ const integrationPrefix = bank => bank.integrationPromptPrefix ?? "日本の占�
 export function validateJapaneseKBank(bank, excerpt) {
   assert.equal(bank.schemaVersion, 2);
   assert.equal(bank.subjectId, japaneseKSubjectId);
-  assert.equal(bank.chapter.number, 6);
-  assert.ok([1, 2].includes(bank.section.number));
+  assert.ok([5, 6].includes(bank.chapter.number));
+  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第5章では占領期以外の適切な出題文を指定してください。");
+  assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= (bank.chapter.number === 5 ? 4 : 2));
   assert.ok(Number.isInteger(bank.part.number) && bank.part.number > 0 && bank.part.number < partLetters.length);
   assert.ok(integrationPrefix(bank) && bank.source.file && bank.source.originalFile);
   const pages = new Map([...excerpt.matchAll(/^## (\d+)\s*\n([\s\S]*?)(?=^## \d+\s*$|$(?![\s\S]))/gm)].map(match => [Number(match[1]), normalize(match[2])]));
@@ -94,7 +95,7 @@ export function buildJapaneseHistoryK(bank, excerpt) {
     filterLabels: { macroRegion: "章", regionDetail: "節", category: "分野" },
     stageLabels: { all: "習熟度に応じて自動", beginner: "基礎の一問一答", reverse: "逆向きの説明", integrated: "統合説明" }, availableStages: stages,
     defaultDeckId: deckId,
-    chapterGroups: [{ id: "chapter-6", number: 6, title: bank.chapter.title, deckIds: [deckId] }],
+    chapterGroups: [{ id: `chapter-${bank.chapter.number}`, number: bank.chapter.number, title: bank.chapter.title, deckIds: [deckId] }],
   };
   const terms = bank.units.map(unit => {
     const id = `${isGHQ ? "JHK3" : "JHK"}-${code}-U${unit.id}`;
@@ -111,7 +112,7 @@ export function buildJapaneseHistoryK(bank, excerpt) {
           prompt: question.prompt, answer: question.answer,
           explanation: [question.note || (stage === "integrated" ? unit.explanation : ""), `原文の根拠：${evidence.map(fact => `${fact.page}頁「${displayQuote(fact.quote)}」`).join("\n")}`].filter(Boolean).join("\n\n"),
           keywords: [...question.keywords], acceptedAnswers: [...(question.acceptedAnswers ?? [])], answerNote: "", yearMnemonic: "", hideTermUntilAnswer: stage === "beginner",
-          source: { name: `第6章 現代／${bank.part.title}（${pages.join("・")}頁）`, url: "", file: bank.source.originalFile, pages, evidence },
+          source: { name: `${bank.chapter.title}／${bank.part.title}（${pages.join("・")}頁）`, url: "", file: bank.source.originalFile, pages, evidence },
         };
       })])),
     };
@@ -119,7 +120,7 @@ export function buildJapaneseHistoryK(bank, excerpt) {
   const questionCounts = Object.fromEntries(stages.map(stage => [stage, terms.reduce((sum, term) => sum + term.stages[stage].length, 0)]));
   const questionCount = Object.values(questionCounts).reduce((sum, count) => sum + count, 0);
   const deck = {
-    id: deckId, number: (bank.section.number - 1) * 100 + bank.part.number, datasetLabel, difficultyLabel: "共通テスト対策",
+    id: deckId, number: (bank.chapter.number === 6 ? 0 : bank.chapter.number * 10000) + (bank.section.number - 1) * 100 + bank.part.number, datasetLabel, difficultyLabel: "共通テスト対策",
     version: historyVersion, contentVersion, sourceFile: `data/source/japanese-history-k/${code}.json`, terms,
   };
   const prefix = `subjects/${japaneseKSubjectId}/imports/${deckId}/${contentVersion}`;
@@ -155,7 +156,7 @@ export async function loadJapaneseHistoryK() {
 // 作成用原稿を読み込む。本番の既存問題は公開処理でCloudflareから別途取得する。
 export async function loadJapaneseKAdditions() {
   const directory = path.join(root, "data/source/japanese-history-k");
-  const names = (await readdir(directory)).filter(name => /^06-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
+  const names = (await readdir(directory)).filter(name => /^(?:05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
   return Promise.all(names.map(async name => {
     const bank = JSON.parse(await readFile(path.join(directory, name), "utf8"));
     assert.equal(name, `${partCode(bank)}.json`, "原稿名と小項目の番号が一致しません。");

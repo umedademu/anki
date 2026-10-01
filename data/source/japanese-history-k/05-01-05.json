@@ -1,0 +1,406 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 1,
+    "title": "欧米の近代化と日本"
+  },
+  "part": {
+    "number": 5,
+    "title": "欧米列強の日本遠征"
+  },
+  "integrationPromptPrefix": "近代の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_05_欧米列強の日本遠征_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      283,
+      284
+    ],
+    "note": "283頁のホ本文から284頁の次小項目前までの本文・注⑲・文献史料を全文確認し、欧米の工業化と市場・交易への関心、ロシア使節の来航と幕府の拒絶、アメリカの捕鯨船の補給・安全と対清交易の中継、日本との貿易への関心を出題する。人口の細かな数字・都市間比較・世界最大級の順位、日本文化や政治体制の優越、新聞の評価や貿易予測、捕鯨の収益・船数・乗組員数を正答にしない。文献史料にある文明国・野蛮国の評価、他国の通商を拒否する権利についての断定、個別の被害やキリスト教の任務は出題しない。日本の外国船への対応を全時期・全船舶に例外なく当てはめる問いも作らず、捕鯨船の港利用で期待された補給と安全に限定する。ロシア使節への対応は本文の拒絶の範囲とし、長崎への入港許可など資料にない条件を補わない。アメリカの項目の19世紀という時期は、注⑲の1851年の日本遠征計画と1849～1850年の捕鯨活動の記載を基に示し、その細かな年の暗記問題は作らない。"
+  },
+  "facts": [
+    {
+      "id": "interest-period",
+      "page": 283,
+      "quote": "十八世紀末以降、欧米列強は日本への関心を高めました。"
+    },
+    {
+      "id": "common-trade",
+      "page": 283,
+      "quote": "列強の共通の関心は日本と交易をすることでした。"
+    },
+    {
+      "id": "industrial-market",
+      "page": 283,
+      "quote": "産業革命を経験した欧米はいち早く工業化に成功し、大量生産方式によって作られた工業製品の捌け口として、その市場を広く世界、特にアジアに求めました。"
+    },
+    {
+      "id": "laxman",
+      "page": 283,
+      "quote": "寛政四年（一七九二）のラクスマンの来航"
+    },
+    {
+      "id": "rezanov",
+      "page": 283,
+      "quote": "文化元年（一八〇四）のレザノフの来航"
+    },
+    {
+      "id": "russian-response",
+      "page": 283,
+      "quote": "ロシア使節は日本に通商を求めますが、幕府は拒絶しました。"
+    },
+    {
+      "id": "american-opening",
+      "page": 283,
+      "quote": "日本を開国させることに積極的だったのがアメリカです。"
+    },
+    {
+      "id": "whale-fuel-start",
+      "page": 283,
+      "quote": "当時、アメリカでは鯨の油を燃料として広く用"
+    },
+    {
+      "id": "whale-fuel-end",
+      "page": 284,
+      "quote": "いていて捕鯨が盛んでした。"
+    },
+    {
+      "id": "expedition-plan-period",
+      "page": 284,
+      "quote": "嘉永4年（1851）にアメリカ海軍が上院に報告した日本遠征計画によると"
+    },
+    {
+      "id": "whale-supplies",
+      "page": 284,
+      "quote": "薪や水の補給を目的とした外国船の寄港"
+    },
+    {
+      "id": "whale-ports",
+      "page": 284,
+      "quote": "捕鯨船が日本の港を利用できるようになれば、活動しやすくなり、乗組員の安全も確保できます。"
+    },
+    {
+      "id": "china-transit",
+      "page": 284,
+      "quote": "当時のアメリカは清と交易していて、その中継地として日本の港を利用したいと考えていました。"
+    },
+    {
+      "id": "industrial-exports",
+      "page": 284,
+      "quote": "工業製品を輸出するだけでなく"
+    },
+    {
+      "id": "japanese-imports",
+      "page": 284,
+      "quote": "日本の製品を輸入する意欲も旺盛でした。"
+    },
+    {
+      "id": "whale-range",
+      "page": 284,
+      "quote": "アメリカの捕鯨船の活動範囲は日本周辺に及んでいました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "欧米列強の日本遠征",
+      "reading": "おうべいれっきょうのにほんえんせい",
+      "category": "経済・交易",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀末以降・1792年・1804年",
+        "sortYear": 1792
+      },
+      "explanation": "日本への交易関心を産業革命後の工業製品の市場拡大と結び付け、ロシア使節の来航と幕府の拒絶を具体例として学ぶ。人口比較や文化の優越、資料にない外交上の条件は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "列強共通の関心",
+          "prompt": "江戸時代の欧米列強の日本遠征で、列強に共通していた関心は何か。",
+          "answer": "**日本との交易**。",
+          "keywords": [
+            "日本との交易"
+          ],
+          "evidence": [
+            "common-trade"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "市場を求めた理由",
+          "prompt": "江戸時代の欧米列強の日本遠征で、列強が日本を含むアジアに市場を求めたのはなぜか。",
+          "answer": "**大量生産した工業製品**の販売先を広げるため。",
+          "keywords": [
+            "大量生産した工業製品"
+          ],
+          "evidence": [
+            "industrial-market"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "日本への関心の時期",
+          "prompt": "江戸時代の欧米列強の日本遠征に関して、日本への関心が高まったのはいつ以降か。",
+          "answer": "18世紀末以降。",
+          "keywords": [],
+          "evidence": [
+            "interest-period"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "ロシア使節",
+          "prompt": "欧米列強の日本遠征に関して、1792年に日本へ来航したロシア使節は誰か。",
+          "answer": "**ラクスマン**。",
+          "keywords": [
+            "ラクスマン"
+          ],
+          "evidence": [
+            "laxman"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "ロシア使節",
+          "prompt": "欧米列強の日本遠征に関して、1804年に日本へ来航したロシア使節は誰か。",
+          "answer": "**レザノフ**。",
+          "keywords": [
+            "レザノフ"
+          ],
+          "evidence": [
+            "rezanov"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "幕府の対応",
+          "prompt": "江戸時代の欧米列強の日本遠征に関して、通商を求めたロシア使節に幕府はどう対応したか。",
+          "answer": "通商要求を**拒絶**した。",
+          "keywords": [
+            "拒絶"
+          ],
+          "evidence": [
+            "russian-response"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "経済的な背景",
+          "prompt": "江戸時代後期の日本で、欧米列強の日本遠征を促した経済的な背景は何か。",
+          "answer": "18世紀末以降、欧米列強は**日本との交易**への関心を高めた。**産業革命**を経験した欧米の国々は、大量生産した**工業製品の市場**を広く世界、特にアジアに求めた。",
+          "keywords": [
+            "日本との交易",
+            "産業革命",
+            "工業製品の市場"
+          ],
+          "evidence": [
+            "interest-period",
+            "common-trade",
+            "industrial-market"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ロシア使節と通商",
+          "prompt": "江戸時代後期の欧米列強の日本遠征に関して、ロシア使節の来航は、日本との通商にどのような結果をもたらしたか。",
+          "answer": "ロシアから1792年に**ラクスマン**、1804年に**レザノフ**が日本へ来航して通商を求めたが、幕府は**拒絶**した。",
+          "keywords": [
+            "ラクスマン",
+            "レザノフ",
+            "拒絶"
+          ],
+          "evidence": [
+            "laxman",
+            "rezanov",
+            "russian-response"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「欧米列強の日本遠征」について説明せよ。",
+          "answer": "18世紀末以降、欧米列強は**日本との交易**への関心を高めた。**産業革命**を経験した欧米の国々は、大量生産した**工業製品の市場**を広く世界、特に日本を含むアジアに求めた。ロシアからは1792年に**ラクスマン**、1804年に**レザノフ**が日本へ来航して通商を求めたが、幕府は**拒絶**した。",
+          "keywords": [
+            "日本との交易",
+            "産業革命",
+            "工業製品の市場",
+            "ラクスマン",
+            "レザノフ",
+            "拒絶"
+          ],
+          "evidence": [
+            "interest-period",
+            "common-trade",
+            "industrial-market",
+            "laxman",
+            "rezanov",
+            "russian-response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "アメリカの日本開国要求",
+      "reading": "あめりかのにほんかいこくようきゅう",
+      "category": "経済・交易",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "19世紀（1851年の日本遠征計画）",
+        "sortYear": 1851
+      },
+      "explanation": "捕鯨産業に伴う船の補給と安全、対清交易の中継、日本との貿易という開国要求の目的を結び付ける。時期は日本遠征計画の記載で確認し、被害の断定や文明の優劣を正答にしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "捕鯨の背景",
+          "prompt": "江戸時代末期のアメリカの日本開国要求の背景にある捕鯨では、鯨の油は何として広く用いられたか。",
+          "answer": "**燃料**。",
+          "keywords": [
+            "燃料"
+          ],
+          "evidence": [
+            "whale-fuel-start",
+            "whale-fuel-end"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "捕鯨船への補給",
+          "prompt": "江戸時代末期のアメリカの日本開国要求に関して、捕鯨船が日本の港で補給しようとした物資は何か。",
+          "answer": "**薪(まき)と水**。",
+          "keywords": [
+            "薪と水"
+          ],
+          "evidence": [
+            "whale-range",
+            "whale-supplies"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "交易の中継",
+          "prompt": "江戸時代末期のアメリカの日本開国要求に関して、アメリカはどの国との交易の中継地として日本の港を利用したかったか。",
+          "answer": "**清(しん)**。",
+          "keywords": [
+            "清"
+          ],
+          "evidence": [
+            "china-transit"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本との貿易",
+          "prompt": "江戸時代末期のアメリカの日本開国要求に関して、日本との貿易では、工業製品の輸出に加えて何に関心を持っていたか。",
+          "answer": "**日本製品の輸入**。",
+          "keywords": [
+            "日本製品の輸入"
+          ],
+          "evidence": [
+            "industrial-exports",
+            "japanese-imports"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "捕鯨と開国要求",
+          "prompt": "江戸時代末期のアメリカの日本開国要求に、捕鯨はどのように関係したか。",
+          "answer": "19世紀のアメリカでは、**鯨の油の燃料利用**を背景に捕鯨が盛んで、活動範囲が日本周辺に及んだ。捕鯨船への**薪や水の補給**と乗組員の安全確保のために、日本の港の利用を求めた。",
+          "keywords": [
+            "鯨の油の燃料利用",
+            "薪や水の補給"
+          ],
+          "evidence": [
+            "expedition-plan-period",
+            "whale-fuel-start",
+            "whale-fuel-end",
+            "whale-supplies",
+            "whale-ports",
+            "american-opening",
+            "whale-range"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "交易への期待",
+          "prompt": "江戸時代末期のアメリカの日本開国要求に関して、日本の港や日本との交易に、どのような経済的な役割を期待したか。",
+          "answer": "アメリカは、日本の港を**清との交易の中継地**として利用したいと考えた。また、日本への**工業製品の輸出**に加え、**日本製品の輸入**にも関心を持った。",
+          "keywords": [
+            "清との交易の中継地",
+            "工業製品の輸出",
+            "日本製品の輸入"
+          ],
+          "evidence": [
+            "china-transit",
+            "industrial-exports",
+            "japanese-imports"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「アメリカの日本開国要求」について説明せよ。",
+          "answer": "19世紀のアメリカは、**鯨の油の燃料利用**を背景に日本周辺で捕鯨を行い、捕鯨船への**薪や水の補給**と乗組員の安全確保のため、日本の港の利用を求めた。**清との交易の中継地**として日本の港を利用することも望んだ。日本への**工業製品の輸出**に加え、**日本製品の輸入**にも関心を持ち、日本の開国を求めた。",
+          "keywords": [
+            "鯨の油の燃料利用",
+            "薪や水の補給",
+            "清との交易の中継地",
+            "工業製品の輸出",
+            "日本製品の輸入"
+          ],
+          "evidence": [
+            "expedition-plan-period",
+            "whale-fuel-start",
+            "whale-fuel-end",
+            "whale-supplies",
+            "whale-ports",
+            "american-opening",
+            "china-transit",
+            "industrial-exports",
+            "japanese-imports",
+            "whale-range"
+          ]
+        }
+      ]
+    }
+  ]
+}

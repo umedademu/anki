@@ -1,0 +1,896 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 1,
+    "title": "欧米の近代化と日本"
+  },
+  "part": {
+    "number": 2,
+    "title": "啓蒙思想とフランス革命"
+  },
+  "integrationPromptPrefix": "近代の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02_啓蒙思想とフランス革命_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      274,
+      275,
+      276,
+      277,
+      278
+    ],
+    "note": "274頁のロ本文から278頁のハ本文前までの、本文・注⑫～⑯・図版説明・人権宣言の要約を根拠とする。前小項目の注⑩⑪と、278頁の次小項目に関連する「インドの綿花と綿織物」は抜粋から除く。啓蒙思想はイギリスやフランスで盛んになった時期として18世紀を示し、ロックら各人物の活動年や著書の刊行年は補わない。身分別の人口・比率、王の名言や生没年、処刑の細部、恐怖政治の犠牲者数は出題しない。原文のルイ16世処刑によって共和制が成立したと読める順序を因果として覚えさせず、王政から共和制への制度変化までに限定する。人権宣言は掲げられた原理を問い、その権利が当時すべての人に実現していたとはしない。ナポレオンによる自由・平等の理念普及や日本への影響を一律に断定せず、皇帝となる過程と民法典の制定を扱う。資料にないナポレオン法典の条項・意義や革命の年次は補わない。"
+  },
+  "facts": [
+    {
+      "id": "enlightenment",
+      "page": 274,
+      "quote": "十八世紀に入ると、イギリスやフランスでは、合理的・批判的精神に基づいて伝統的権威や旧来の思想を批判し、理性の啓発によって進歩を図ろうとした**啓蒙思想**が盛んになりました。"
+    },
+    {
+      "id": "locke-name",
+      "page": 274,
+      "quote": "イギリスの哲学者**ジョン・ロック**は、"
+    },
+    {
+      "id": "contract-label",
+      "page": 274,
+      "quote": "**社会契約説**と、"
+    },
+    {
+      "id": "resistance-label",
+      "page": 274,
+      "quote": "抵抗権について説きました。"
+    },
+    {
+      "id": "social-contract",
+      "page": 274,
+      "quote": "社会は基本的人権を持つ個人同士の契約で成り立つという**社会契約説**"
+    },
+    {
+      "id": "resistance-right",
+      "page": 274,
+      "quote": "政府の不当な権力行使には抵抗する権利があるとする抵抗権"
+    },
+    {
+      "id": "montesquieu",
+      "page": 274,
+      "quote": "フランスの哲学者**シャルル・ド・モンテスキュー**は『法の精神』を著し、"
+    },
+    {
+      "id": "separation",
+      "page": 275,
+      "quote": "権力の集中を防ぐため、立法、司法、行政それぞれの権力を独立させる**三権分立**の考えを示しました。"
+    },
+    {
+      "id": "rousseau",
+      "page": 275,
+      "quote": "主にフランスで活躍した哲学者**ジャン＝ジャック・ルソー**は『社会契約論』を著し、国家の主権は人民にあるとする**人民主権**を主張し、社会全体の利益を目指す政治を行うべきと説き"
+    },
+    {
+      "id": "revolution-year",
+      "page": 275,
+      "quote": "一七八九年、"
+    },
+    {
+      "id": "revolution-name",
+      "page": 275,
+      "quote": "⑭**フランス革命**が起こりました。"
+    },
+    {
+      "id": "third-estate",
+      "page": 275,
+      "quote": "第三身分の人々は、第一・第二身分を支えるために重い税で苦しんでいました。"
+    },
+    {
+      "id": "estates",
+      "page": 275,
+      "quote": "第一身分の聖職者、第二身分の貴族、第三身分の平民で構成されていました。"
+    },
+    {
+      "id": "privileged-tax",
+      "page": 276,
+      "quote": "第一身分と第二身分が「特権階級」で、高官の地位と富を独占したうえに、税が免除されていた。"
+    },
+    {
+      "id": "financial-crisis",
+      "page": 276,
+      "quote": "フランスはイギリスとの戦争に敗北し、アメリカ独立戦争への支援などで戦費がかさみ、国家財政は破綻状態だった。"
+    },
+    {
+      "id": "tax-opposition",
+      "page": 276,
+      "quote": "財政を立て直すため、ルイ16世が特権階級への課税を試みると、強い反発が起こり"
+    },
+    {
+      "id": "estates-general",
+      "page": 276,
+      "quote": "3つの身分の代表による議会（三部会）が開かれた。"
+    },
+    {
+      "id": "national-assembly",
+      "page": 276,
+      "quote": "身分ごとの決議方式に反対した第三身分が中心となり国民議会を発足させ、憲法制定に取り組んだ。"
+    },
+    {
+      "id": "popular-uprising",
+      "page": 276,
+      "quote": "議会弾圧のために軍隊が動員されると、民衆が蜂起した。"
+    },
+    {
+      "id": "bastille",
+      "page": 275,
+      "quote": "バスティーユ牢獄を襲うと"
+    },
+    {
+      "id": "bastille-paris",
+      "page": 275,
+      "quote": "一七八九年、パリの民衆は王政を批判した罪で捕らえられた人々が収容されていたバスティーユ牢獄を襲うと"
+    },
+    {
+      "id": "republic",
+      "page": 277,
+      "quote": "共和制が成立しました。"
+    },
+    {
+      "id": "declaration-name",
+      "page": 275,
+      "quote": "⑮**人権宣言**が発表され"
+    },
+    {
+      "id": "declaration-period",
+      "page": 277,
+      "quote": "文献史料　人権宣言（一七八九年、フランス、部分要約）"
+    },
+    {
+      "id": "natural-rights",
+      "page": 277,
+      "quote": "人の譲り渡すことのできない神聖な自然的権利を、厳粛な宣言において提示することを決意した。"
+    },
+    {
+      "id": "rights-equality",
+      "page": 277,
+      "quote": "第一条　人は生まれながらに、自由で平等な権利を持っている。"
+    },
+    {
+      "id": "national-sovereignty",
+      "page": 277,
+      "quote": "第三条　主権の源は、本質的に国民にある。"
+    },
+    {
+      "id": "declaration-principles",
+      "page": 275,
+      "quote": "基本的人権の尊重と人民主権の考え方に基づく⑮**人権宣言**"
+    },
+    {
+      "id": "legal-liberty",
+      "page": 277,
+      "quote": "第五条　法律によって禁止されていないすべての行為は妨げられない。"
+    },
+    {
+      "id": "no-forced-action-start",
+      "page": 277,
+      "quote": "また、法律が命じていないことを"
+    },
+    {
+      "id": "no-forced-action-end",
+      "page": 278,
+      "quote": "行うように強制されない。"
+    },
+    {
+      "id": "expression",
+      "page": 278,
+      "quote": "第十一条　思想および意見の自由な表示は、人の最も貴重な権利の一つである。すべての市民は、その自由の濫用について責任を負うほかは、自由に話し、書き、印刷することができる。"
+    },
+    {
+      "id": "napoleon-rise",
+      "page": 277,
+      "quote": "革命の余波を恐れた他のヨーロッパ諸国はフランスを攻撃し、軍人**ナポレオン・ボナパルト**の指揮のもとフランスはこれらを撃退すると、彼は政権を握り"
+    },
+    {
+      "id": "napoleon-year",
+      "page": 277,
+      "quote": "一八〇四年の"
+    },
+    {
+      "id": "napoleon-emperor",
+      "page": 277,
+      "quote": "皇帝となりました。"
+    },
+    {
+      "id": "napoleon-vote",
+      "page": 277,
+      "quote": "国民投票で皇帝となりました。"
+    },
+    {
+      "id": "napoleon-code",
+      "page": 277,
+      "quote": "ナポレオンは民法典の**ナポレオン法典**を定めました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "啓蒙思想",
+      "reading": "けいもうしそう",
+      "category": "思想・主義",
+      "geographyLabel": "イギリス",
+      "chronology": {
+        "displayPeriod": "18世紀にイギリスやフランスで隆盛",
+        "sortYear": 1700
+      },
+      "explanation": "理性に基づく権威の批判と、ロックの社会契約説・抵抗権、モンテスキューの三権分立、ルソーの人民主権を結び付ける。18世紀は思想が盛んになった時期として扱い、各人物の活動年とはしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "18世紀のイギリスやフランスで、伝統的な権威を批判し、理性によって進歩を目指した思想を何というか。",
+          "answer": "**啓蒙思想**。",
+          "keywords": [
+            "啓蒙思想"
+          ],
+          "evidence": [
+            "enlightenment"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "啓蒙思想に関して、社会契約説と抵抗権を説いたイギリスの哲学者は誰か。",
+          "answer": "**ジョン・ロック**。",
+          "keywords": [
+            "ジョン・ロック"
+          ],
+          "evidence": [
+            "locke-name",
+            "contract-label",
+            "resistance-label"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "啓蒙思想に関して、ロックの社会契約説では、社会は何によって成り立つと考えられたか。",
+          "answer": "基本的人権を持つ**個人同士の契約**。",
+          "keywords": [
+            "個人同士の契約"
+          ],
+          "evidence": [
+            "social-contract"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "啓蒙思想に関して、ロックが説いた抵抗権は、政府のどのような行為に抵抗する権利か。",
+          "answer": "政府の**不当な権力行使**。",
+          "keywords": [
+            "不当な権力行使"
+          ],
+          "evidence": [
+            "resistance-right"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "啓蒙思想に関して、『法の精神』を著したフランスの哲学者は誰か。",
+          "answer": "**シャルル・ド・モンテスキュー**。",
+          "keywords": [
+            "シャルル・ド・モンテスキュー"
+          ],
+          "evidence": [
+            "montesquieu"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "啓蒙思想に関して、モンテスキューの三権分立では、どの三つの権力を独立させるか。",
+          "answer": "**立法・司法・行政**。",
+          "keywords": [
+            "立法・司法・行政"
+          ],
+          "evidence": [
+            "separation"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "啓蒙思想に関して、『社会契約論』を著し、国家の主権は人民にあると主張した、主にフランスで活躍した哲学者は誰か。",
+          "answer": "**ジャン＝ジャック・ルソー**。",
+          "keywords": [
+            "ジャン＝ジャック・ルソー"
+          ],
+          "evidence": [
+            "rousseau"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "思想の特徴",
+          "prompt": "18世紀のイギリスやフランスで、啓蒙思想は伝統的な権威をどのように考えたか。",
+          "answer": "18世紀にイギリスやフランスで盛んになった**啓蒙思想**は、伝統的権威や旧来の思想を合理的・批判的に検討し、**理性**の啓発によって進歩を目指した。",
+          "keywords": [
+            "啓蒙思想",
+            "理性"
+          ],
+          "evidence": [
+            "enlightenment"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "社会と政府",
+          "prompt": "啓蒙思想に関して、イギリスのジョン・ロックは社会と政府をどのように考えたか。",
+          "answer": "ロックは、基本的人権を持つ**個人同士の契約**で社会が成り立つとする**社会契約説**を説いた。また、政府の**不当な権力行使**には抵抗できるとする**抵抗権**を説いた。",
+          "keywords": [
+            "個人同士の契約",
+            "社会契約説",
+            "不当な権力行使",
+            "抵抗権"
+          ],
+          "evidence": [
+            "locke-name",
+            "social-contract",
+            "resistance-right"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "権力の集中防止",
+          "prompt": "啓蒙思想に関して、フランスのシャルル・ド・モンテスキューは、権力の集中を防ぐためにどのような制度を考えたか。",
+          "answer": "モンテスキューは『**法の精神**』を著し、**立法・司法・行政**を互いに独立させる**三権分立**を示した。",
+          "keywords": [
+            "法の精神",
+            "立法・司法・行政",
+            "三権分立"
+          ],
+          "evidence": [
+            "montesquieu",
+            "separation"
+          ]
+        },
+        {
+          "id": "R04",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "国家の主権",
+          "prompt": "啓蒙思想に関して、主にフランスで活躍したジャン＝ジャック・ルソーは、国家の主権をどう考えたか。",
+          "answer": "ルソーは『**社会契約論**』を著し、国家の主権は人民にあるとする**人民主権**を主張した。社会全体の利益を目指す政治を行うべきと説いた。",
+          "keywords": [
+            "社会契約論",
+            "人民主権"
+          ],
+          "evidence": [
+            "rousseau"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「啓蒙思想」について説明せよ。",
+          "answer": "18世紀にイギリスやフランスで盛んになった**啓蒙思想**は、**理性**によって伝統的権威を批判し、進歩を目指した。**ロック**は**個人同士の契約**で社会が成り立つ**社会契約説**と、**不当な権力行使**への**抵抗権**を説き、**モンテスキュー**は『**法の精神**』で**立法・司法・行政**を独立させる**三権分立**を示した。**ルソー**は『**社会契約論**』で、国家の主権が人民にあるという**人民主権**を主張した。",
+          "keywords": [
+            "啓蒙思想",
+            "理性",
+            "ロック",
+            "個人同士の契約",
+            "社会契約説",
+            "不当な権力行使",
+            "抵抗権",
+            "モンテスキュー",
+            "法の精神",
+            "立法・司法・行政",
+            "三権分立",
+            "ルソー",
+            "社会契約論",
+            "人民主権"
+          ],
+          "evidence": [
+            "enlightenment",
+            "locke-name",
+            "social-contract",
+            "resistance-right",
+            "montesquieu",
+            "separation",
+            "rousseau"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "フランス革命",
+      "reading": "ふらんすかくめい",
+      "category": "事件・革命",
+      "geographyLabel": "フランス",
+      "chronology": {
+        "displayPeriod": "1789年に開始",
+        "sortYear": 1789
+      },
+      "explanation": "第三身分の負担と財政難、三部会・国民議会から民衆蜂起への経過、王政から共和制への変化を整理する。共和制の成立をルイ16世の処刑の結果とはしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1789年、フランスで民衆の蜂起によって始まった革命は何か。",
+          "answer": "**フランス革命**。",
+          "keywords": [
+            "フランス革命"
+          ],
+          "evidence": [
+            "revolution-year",
+            "popular-uprising",
+            "revolution-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "税負担の主体",
+          "prompt": "18世紀末のフランス革命前の社会で、第一・第二身分を支える重い税を負担したのは、どの身分か。",
+          "answer": "**第三身分（平民）**。",
+          "keywords": [
+            "第三身分（平民）"
+          ],
+          "evidence": [
+            "third-estate",
+            "estates"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "国家財政の悪化",
+          "prompt": "18世紀末、フランス革命に先立って国家財政が破綻状態となった、支出上の理由は何か。",
+          "answer": "対外戦争やアメリカ独立戦争への支援による**戦費の増大**。",
+          "keywords": [
+            "戦費の増大"
+          ],
+          "evidence": [
+            "financial-crisis"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "議会の名称",
+          "prompt": "18世紀末のフランスで、特権階級への課税をめぐる反発から開かれた、各身分の代表による議会は何か。",
+          "answer": "**三部会**。",
+          "keywords": [
+            "三部会"
+          ],
+          "evidence": [
+            "tax-opposition",
+            "estates-general"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "議会の名称",
+          "prompt": "18世紀末のフランスで、身分ごとの決議方式に反対した第三身分が中心となり、憲法制定に取り組むために発足させた議会は何か。",
+          "answer": "**国民議会**。",
+          "keywords": [
+            "国民議会"
+          ],
+          "evidence": [
+            "national-assembly"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "革命開始の出来事",
+          "prompt": "1789年のフランス革命の始まりに、パリの民衆が襲撃した施設は何か。",
+          "answer": "**バスティーユ牢獄**。",
+          "keywords": [
+            "バスティーユ牢獄"
+          ],
+          "evidence": [
+            "bastille"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "result",
+          "form": "政治体制の変化",
+          "prompt": "18世紀末のフランス革命で、王政に代わって成立した政治体制は何か。",
+          "answer": "**共和制**。",
+          "keywords": [
+            "共和制"
+          ],
+          "evidence": [
+            "republic"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命の背景",
+          "prompt": "18世紀末のフランスで、フランス革命はどのような社会・財政上の背景から起きたか。",
+          "answer": "18世紀末のフランスでは、**第三身分（平民）**が重税を負担していた一方、**聖職者と貴族**は特権階級として免税されていた。対外戦争やアメリカ独立戦争への支援による**戦費の増大**で、**国家財政が破綻状態**となっていた。",
+          "keywords": [
+            "第三身分（平民）",
+            "聖職者と貴族",
+            "戦費の増大",
+            "国家財政が破綻状態"
+          ],
+          "evidence": [
+            "third-estate",
+            "estates",
+            "privileged-tax",
+            "financial-crisis"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命の経過",
+          "prompt": "18世紀末のフランスで、フランス革命はどのような経過をたどったか。",
+          "answer": "特権階級への課税をめぐる反発で**三部会**が開かれ、第三身分が中心となった**国民議会**は憲法制定に取り組んだ。議会弾圧のための軍隊動員に対して民衆が蜂起し、1789年にパリの民衆が**バスティーユ牢獄**を襲撃して**フランス革命**が始まった。その後、王政に代わって**共和制**が成立した。",
+          "keywords": [
+            "三部会",
+            "国民議会",
+            "バスティーユ牢獄",
+            "フランス革命",
+            "共和制"
+          ],
+          "evidence": [
+            "tax-opposition",
+            "estates-general",
+            "national-assembly",
+            "popular-uprising",
+            "revolution-year",
+            "bastille-paris",
+            "revolution-name",
+            "republic"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「フランス革命」について説明せよ。",
+          "answer": "18世紀末のフランスでは、**第三身分（平民）**が重税を負担し、戦費の増大で**国家財政が破綻状態**となっていた。課税をめぐる反発から**三部会**が開かれ、第三身分を中心とする**国民議会**が憲法制定に取り組むなか、議会弾圧のための軍隊動員に対して民衆が蜂起した。1789年、パリの民衆の**バスティーユ牢獄**襲撃から**フランス革命**が始まり、その後王政に代わって**共和制**が成立した。",
+          "keywords": [
+            "第三身分（平民）",
+            "国家財政が破綻状態",
+            "三部会",
+            "国民議会",
+            "バスティーユ牢獄",
+            "フランス革命",
+            "共和制"
+          ],
+          "evidence": [
+            "third-estate",
+            "estates",
+            "financial-crisis",
+            "tax-opposition",
+            "estates-general",
+            "national-assembly",
+            "popular-uprising",
+            "revolution-year",
+            "bastille-paris",
+            "revolution-name",
+            "republic"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "人権宣言",
+      "reading": "じんけんせんげん",
+      "category": "文書・作品",
+      "geographyLabel": "フランス",
+      "chronology": {
+        "displayPeriod": "1789年",
+        "sortYear": 1789
+      },
+      "explanation": "人が生まれながらに持つ自由と平等、国民を主権の源とする原理、法律と行動の自由、思想・意見の表明を学ぶ。宣言が掲げた原理と、当時の実際の権利保障を混同しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "文書の特定",
+          "prompt": "1789年のフランス革命で、人の自然的な権利を示すために発表された文書は何か。",
+          "answer": "**人権宣言**。",
+          "keywords": [
+            "人権宣言"
+          ],
+          "evidence": [
+            "declaration-name",
+            "declaration-period",
+            "natural-rights"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "生まれながらの権利",
+          "prompt": "18世紀末のフランスの人権宣言では、人が生まれながらに持つ権利をどのようなものとしたか。",
+          "answer": "**自由で平等な権利**。",
+          "keywords": [
+            "自由で平等な権利"
+          ],
+          "evidence": [
+            "rights-equality"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "主権の源",
+          "prompt": "18世紀末のフランスの人権宣言では、主権の源は誰にあるとしたか。",
+          "answer": "**国民**。",
+          "keywords": [
+            "国民"
+          ],
+          "evidence": [
+            "national-sovereignty"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "意見の表明",
+          "prompt": "18世紀末のフランスの人権宣言で、思想や意見を自由に表すために認められた方法は何か。",
+          "answer": "**話す・書く・印刷する**こと。",
+          "keywords": [
+            "話す・書く・印刷する"
+          ],
+          "evidence": [
+            "expression"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "行動の自由",
+          "prompt": "18世紀末のフランスの人権宣言では、どのような行為が妨げられないとされたか。",
+          "answer": "**法律で禁止されていない行為**。",
+          "keywords": [
+            "法律で禁止されていない行為"
+          ],
+          "evidence": [
+            "legal-liberty"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "権利と主権",
+          "prompt": "18世紀末のフランスの人権宣言は、人の権利と主権をどのように位置付けたか。",
+          "answer": "1789年のフランスで発表された**人権宣言**は、人が生まれながらに持つ**自由で平等な権利**を掲げた。また、主権の源を**国民**に置く**人民主権**を示した。",
+          "keywords": [
+            "人権宣言",
+            "自由で平等な権利",
+            "国民",
+            "人民主権"
+          ],
+          "evidence": [
+            "declaration-period",
+            "rights-equality",
+            "national-sovereignty",
+            "declaration-principles"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "自由の保障",
+          "prompt": "18世紀末のフランスの人権宣言は、自由な行動や意見表明をどのように保障しようとしたか。",
+          "answer": "**法律で禁止されていない行為**は妨げられず、法律が命じていない行為を強制されないとした。**話す・書く・印刷する自由**を認め、**自由の濫用についての責任**も示した。",
+          "keywords": [
+            "法律で禁止されていない行為",
+            "話す・書く・印刷する自由",
+            "自由の濫用についての責任"
+          ],
+          "evidence": [
+            "legal-liberty",
+            "no-forced-action-start",
+            "no-forced-action-end",
+            "expression"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「人権宣言」について説明せよ。",
+          "answer": "1789年のフランスで発表された**人権宣言**は、人が生まれながらに持つ**自由で平等な権利**と、主権を国民に置く**人民主権**を掲げた。**法律で禁止されていない行為**は妨げられず、法律が命じていない行為を強制されないとした。**話す・書く・印刷する自由**を認め、**自由の濫用についての責任**も示した。",
+          "keywords": [
+            "人権宣言",
+            "自由で平等な権利",
+            "人民主権",
+            "法律で禁止されていない行為",
+            "話す・書く・印刷する自由",
+            "自由の濫用についての責任"
+          ],
+          "evidence": [
+            "declaration-period",
+            "rights-equality",
+            "national-sovereignty",
+            "declaration-principles",
+            "legal-liberty",
+            "no-forced-action-start",
+            "no-forced-action-end",
+            "expression"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "ナポレオン・ボナパルト",
+      "reading": "なぽれおん ぼなぱると",
+      "category": "人物",
+      "geographyLabel": "フランス",
+      "chronology": {
+        "displayPeriod": "1804年の皇帝即位",
+        "sortYear": 1804
+      },
+      "explanation": "対外戦争から政権獲得、国民投票による皇帝即位、民法典の制定を整理する。法典の具体的条項や理念普及についての断定は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "人物の特定",
+          "prompt": "フランス革命後、対外戦争でフランス軍を率いて勝利し、その後に政権を握った軍人は誰か。",
+          "answer": "**ナポレオン・ボナパルト**。",
+          "keywords": [
+            "ナポレオン・ボナパルト"
+          ],
+          "evidence": [
+            "napoleon-rise"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "皇帝即位の時期",
+          "prompt": "フランスでナポレオン・ボナパルトが皇帝となったのはいつか。",
+          "answer": "1804年。",
+          "keywords": [],
+          "evidence": [
+            "napoleon-year",
+            "napoleon-emperor"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "皇帝即位の手続き",
+          "prompt": "フランスでナポレオン・ボナパルトが皇帝となる際、どのような手続きが行われたか。",
+          "answer": "**国民投票**。",
+          "keywords": [
+            "国民投票"
+          ],
+          "evidence": [
+            "napoleon-vote"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "法典の分野",
+          "prompt": "フランスでナポレオン・ボナパルトが制定したナポレオン法典は、どの分野の法律をまとめたものか。",
+          "answer": "**民法**。",
+          "keywords": [
+            "民法"
+          ],
+          "evidence": [
+            "napoleon-code"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政治的地位",
+          "prompt": "フランス革命後、フランスでナポレオン・ボナパルトの政治的地位はどのように変化したか。",
+          "answer": "ナポレオンは対外戦争でフランス軍を率いて勝利し、政権を握った。1804年に**国民投票**で**皇帝**となった。",
+          "keywords": [
+            "国民投票",
+            "皇帝"
+          ],
+          "evidence": [
+            "napoleon-rise",
+            "napoleon-year",
+            "napoleon-vote"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "法整備",
+          "prompt": "フランスでナポレオン・ボナパルトは、法整備のために何を定めたか。",
+          "answer": "**ナポレオン法典**という**民法典**を定めた。",
+          "keywords": [
+            "ナポレオン法典",
+            "民法典"
+          ],
+          "evidence": [
+            "napoleon-code"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代の「ナポレオン・ボナパルト」について説明せよ。",
+          "answer": "フランス革命後、フランス軍を率いて対外戦争に勝利した**ナポレオン・ボナパルト**は政権を握り、1804年の**国民投票**で**皇帝**となった。**ナポレオン法典**という**民法典**を定めた。",
+          "keywords": [
+            "ナポレオン・ボナパルト",
+            "国民投票",
+            "皇帝",
+            "ナポレオン法典",
+            "民法典"
+          ],
+          "evidence": [
+            "napoleon-rise",
+            "napoleon-year",
+            "napoleon-vote",
+            "napoleon-code"
+          ]
+        }
+      ]
+    }
+  ]
+}

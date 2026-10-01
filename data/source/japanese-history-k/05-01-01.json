@@ -1,0 +1,1134 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 1,
+    "title": "欧米の近代化と日本"
+  },
+  "part": {
+    "number": 1,
+    "title": "イギリス革命とアメリカ独立戦争"
+  },
+  "integrationPromptPrefix": "欧米の近代化に関わる",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_01_イギリス革命とアメリカ独立戦争_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      271,
+      272,
+      273,
+      274
+    ],
+    "note": "271～274頁の当該本文・関連注③～⑪・図版説明・マグナカルタ/権利章典/独立宣言資料を読み、主要な制度・対立・思想の関係を選ぶ。名誉革命を戦乱なしと一般化せず、大憲章の対象を自由人と貴族に慎重に限定する。現在の法的効力・世界で初めてという評価・共和制を民主制と同一視する定義・生没年/紙幣/13州の数値・王の詳細な組合せは出題しない。茶法が1773年に新たな税を作ったという単純化と紅茶を海に投機したという誤記は採用しない。独立宣言は理念を述べた文書として扱い、すべての人の権利保障が実現したとはしない。資料にない天賦人権や抵抗権の名称、憲法の具体的な権限配分、現在の制度は補わない。274頁の次のロ本文と注⑫は対象外。"
+  },
+  "facts": [
+    {
+      "id": "magna-overview",
+      "page": 271,
+      "quote": "十三世紀のイギリスでは、③**大憲章（マグナ・カルタ）**という法典が制定され、国王の権限が制限されることになりました。"
+    },
+    {
+      "id": "magna-nobles",
+      "page": 271,
+      "quote": "王権を制限し封建貴族の特権を再確認する大憲章を承認した。"
+    },
+    {
+      "id": "magna-date",
+      "page": 273,
+      "quote": "マグナ・カルタ（一二一五年、英国、部分要約）"
+    },
+    {
+      "id": "magna-john",
+      "page": 271,
+      "quote": "イギリスのジョン王は、失政続きで課税と軍役の要求を繰り返し、貴族から不評を買って、王権を制限し封建貴族の特権を再確認する大憲章を承認した。"
+    },
+    {
+      "id": "magna-freemen",
+      "page": 273,
+      "quote": "いかなる自由人も、正当な裁判の判決か国の法律によらなければ、逮捕あるいは投獄され、または所持物を奪われ、または追放され、または何らかの方法で権利を侵害されることはない。"
+    },
+    {
+      "id": "magna-rule-of-law",
+      "page": 273,
+      "quote": "※王に貴族らの諸権利を確認させ、これを侵害しないと約束させた文書。国王も法の下にあるという原則を確立し、"
+    },
+    {
+      "id": "parliament-rise",
+      "page": 271,
+      "quote": "十七世紀のイギリスでは地主や商工業者らが力を持ち、議会へ進出しました。"
+    },
+    {
+      "id": "puritan-parties",
+      "page": 272,
+      "quote": "王党派と、ピューリタンを中心とする議会派の対立"
+    },
+    {
+      "id": "puritan-outcome",
+      "page": 272,
+      "quote": "国王は処刑され④共和制へ移行しました。"
+    },
+    {
+      "id": "puritan-name",
+      "page": 272,
+      "quote": "**ピューリタン革命**と呼びます。⑤"
+    },
+    {
+      "id": "puritan-leader",
+      "page": 272,
+      "quote": "**クロムウェル**の指導のもと国王は処刑され④共和制へ移行しました。"
+    },
+    {
+      "id": "puritan-cause",
+      "page": 272,
+      "quote": "議会を無視して課税し、ピューリタンを弾圧した"
+    },
+    {
+      "id": "puritan-charles",
+      "page": 272,
+      "quote": "議会を無視して課税し、ピューリタンを弾圧したイギリス王チャールズ1世の専制政治"
+    },
+    {
+      "id": "puritan-civil-war",
+      "page": 272,
+      "quote": "王党派と、ピューリタンを中心とする議会派の対立が1642年に内戦に発展、"
+    },
+    {
+      "id": "puritan-execution",
+      "page": 272,
+      "quote": "1649年に国王が処刑された。"
+    },
+    {
+      "id": "glorious-exile",
+      "page": 272,
+      "quote": "議会は国王を追放しオランダから新しい国王を迎えました。"
+    },
+    {
+      "id": "glorious-name",
+      "page": 272,
+      "quote": "**名誉革命**と呼ばれます。⑥"
+    },
+    {
+      "id": "glorious-james",
+      "page": 272,
+      "quote": "国王ジェームズ2世を追放し、"
+    },
+    {
+      "id": "glorious-year",
+      "page": 272,
+      "quote": "1688年に議会が国王ジェームズ2世を追放し、"
+    },
+    {
+      "id": "bill-name-and-limits",
+      "page": 272,
+      "quote": "ここで定められた**「権利章典」**には、国王は議会の承認がなければ法律の停止や新たな課税はできないことが明記され、"
+    },
+    {
+      "id": "bill-year",
+      "page": 272,
+      "quote": "1689年に権利章典が発布された。"
+    },
+    {
+      "id": "constitutional-monarchy",
+      "page": 273,
+      "quote": "**注⑦ 立憲君主制**　君主の権力を憲法によって制限している政治形態。"
+    },
+    {
+      "id": "bill-institutions",
+      "page": 272,
+      "quote": "⑦**立憲君主制**および⑧**議会政治**が成立しました。"
+    },
+    {
+      "id": "colonies-geography",
+      "page": 272,
+      "quote": "北アメリカ東海岸には、イギリスからの移民によって十八世紀半ばまでに一三の植民地が作られ自治を行っていました。"
+    },
+    {
+      "id": "colonies-tax-protest",
+      "page": 272,
+      "quote": "イギリス議会に議員を送る資格がない植民地の人々は強く反発し、⑩ボストン茶会事件が起きました。"
+    },
+    {
+      "id": "colonies-slogan",
+      "page": 272,
+      "quote": "「代表なくして課税なし」のスローガンの下で"
+    },
+    {
+      "id": "war-repression",
+      "page": 273,
+      "quote": "人々は団結し、イギリスがこれを弾圧したため、"
+    },
+    {
+      "id": "war-name",
+      "page": 273,
+      "quote": "**アメリカ独立戦争**が始まりました。"
+    },
+    {
+      "id": "war-year",
+      "page": 273,
+      "quote": "一七七五年に**アメリカ独立戦争**が始まりました。"
+    },
+    {
+      "id": "war-washington",
+      "page": 273,
+      "quote": "**ジョージ・ワシントン**を司令長官とする植民地軍は"
+    },
+    {
+      "id": "war-french-support",
+      "page": 273,
+      "quote": "植民地軍はフランスの支援を受けて戦いに勝利します。"
+    },
+    {
+      "id": "war-independence",
+      "page": 273,
+      "quote": "その結果アメリカ合衆国が成立し、"
+    },
+    {
+      "id": "declaration-title",
+      "page": 274,
+      "quote": "### 文献史料　アメリカ独立宣言"
+    },
+    {
+      "id": "declaration-year",
+      "page": 273,
+      "quote": "一七七六年に**アメリカ独立宣言**が発表され、"
+    },
+    {
+      "id": "declaration-colonists",
+      "page": 274,
+      "quote": "※アメリカにある英国の一三の植民地の代表が、英国からの独立を宣言した文書で、"
+    },
+    {
+      "id": "declaration-rights",
+      "page": 274,
+      "quote": "すなわち、すべての人間は生まれながらにして平等であり、神によって、生命、自由、および幸福の追求を含む不可侵の権利を与えられているということ。"
+    },
+    {
+      "id": "declaration-consent",
+      "page": 274,
+      "quote": "こうした権利を確保するために、人々の間に政府が樹立され、政府は統治される者の合意に基づいて正当な権力を得る。"
+    },
+    {
+      "id": "declaration-new-government",
+      "page": 274,
+      "quote": "そして、いかなる政府も、その目的に反するとき、国民はその政府を廃して新しい政府を樹立する権利を持つ。"
+    },
+    {
+      "id": "constitution-country",
+      "page": 273,
+      "quote": "その結果アメリカ合衆国が成立し、⑪合衆国憲法が作られると、"
+    },
+    {
+      "id": "constitution-powers",
+      "page": 274,
+      "quote": "①立法、司法、行政の徹底した三権分立、"
+    },
+    {
+      "id": "constitution-year",
+      "page": 274,
+      "quote": "1787年に定められた合衆国憲法には、①立法、司法、行政の徹底した三権分立、"
+    },
+    {
+      "id": "constitution-federation",
+      "page": 274,
+      "quote": "②自治権を持つ13の州から成る連邦制、"
+    },
+    {
+      "id": "constitution-people",
+      "page": 274,
+      "quote": "③自由で平等な人民が主権を持つ共和国、"
+    },
+    {
+      "id": "constitution-presidential",
+      "page": 274,
+      "quote": "④大統領制、という特徴がある。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "大憲章",
+      "reading": "だいけんしょう",
+      "category": "制度・政策・法律",
+      "geographyLabel": "イギリス",
+      "chronology": {
+        "displayPeriod": "1215年",
+        "sortYear": 1215
+      },
+      "explanation": "ジョン王の課税・軍役要求と貴族の反発を背景とする王権制限を学ぶ。自由人に対する適法手続きの原則と国王も法の下にあるという原則を扱い、全国民への普遍的な自由の保障とはしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "文書名",
+          "prompt": "13世紀のイギリスで、国王の権限を制限し、貴族の権利を確認した文書を何というか。",
+          "answer": "**大憲章**（マグナ・カルタ）。",
+          "evidence": [
+            "magna-overview",
+            "magna-nobles"
+          ],
+          "keywords": [
+            "大憲章"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "成立年",
+          "prompt": "イギリスの大憲章は何年に成立したか。",
+          "answer": "1215年。",
+          "evidence": [
+            "magna-date"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "承認した国王",
+          "prompt": "イギリスで大憲章を承認した国王は誰か。",
+          "answer": "**ジョン王**。",
+          "evidence": [
+            "magna-john"
+          ],
+          "keywords": [
+            "ジョン王"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "権利保護の対象",
+          "prompt": "イギリスの大憲章が、正当な裁判や国の法律によらない逮捕・投獄などから保護する対象として挙げたのは誰か。",
+          "answer": "**自由人**。",
+          "evidence": [
+            "magna-freemen"
+          ],
+          "keywords": [
+            "自由人"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "成立の経緯",
+          "prompt": "イギリスの大憲章は、どのような経緯で成立したか。",
+          "answer": "**1215年**のイギリスで、課税と軍役の要求を繰り返して貴族の反発を受けた**ジョン王**が承認した文書である。**国王の権限を制限**し、**貴族の権利**を再確認した。",
+          "evidence": [
+            "magna-date",
+            "magna-john",
+            "magna-nobles"
+          ],
+          "keywords": [
+            "1215年",
+            "ジョン王",
+            "国王の権限を制限",
+            "貴族の権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "権利と法の関係",
+          "prompt": "イギリスの大憲章は、権利と法についてどのように定めたか。",
+          "answer": "**自由人**を、正当な裁判の判決や国の法律によらない逮捕・投獄・財産の剥奪などから保護するとした。**国王も法の下にある**という原則を示した。",
+          "evidence": [
+            "magna-freemen",
+            "magna-rule-of-law"
+          ],
+          "keywords": [
+            "自由人",
+            "国王も法の下にある"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「大憲章」について説明せよ。",
+          "answer": "**1215年**のイギリスで**ジョン王**が承認し、**国王の権限を制限**して**貴族の権利**を再確認した文書である。**自由人**を正当な裁判や国の法律によらない逮捕・投獄などから保護するとし、**国王も法の下にある**という原則を示した。",
+          "evidence": [
+            "magna-date",
+            "magna-john",
+            "magna-nobles",
+            "magna-freemen",
+            "magna-rule-of-law"
+          ],
+          "keywords": [
+            "1215年",
+            "ジョン王",
+            "国王の権限を制限",
+            "貴族の権利",
+            "自由人",
+            "国王も法の下にある"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ピューリタン革命",
+      "reading": "ぴゅーりたんかくめい",
+      "category": "事件・革命",
+      "geographyLabel": "イギリス",
+      "chronology": {
+        "displayPeriod": "1642年に内戦、1649年に国王処刑",
+        "sortYear": 1642
+      },
+      "explanation": "議会に進出する地主・商工業者と国王の対立、課税・宗教弾圧、内戦から国王処刑・共和制への流れを学ぶ。共和制を単に多数決や民主制と同一視する定義は出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "革命名",
+          "prompt": "17世紀のイギリスで、国王と議会の対立から国王が処刑され、共和制へ移行した革命は何か。",
+          "answer": "**ピューリタン革命**。",
+          "evidence": [
+            "parliament-rise",
+            "puritan-parties",
+            "puritan-outcome",
+            "puritan-name"
+          ],
+          "keywords": [
+            "ピューリタン革命"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "イギリスのピューリタン革命を指導した人物は誰か。",
+          "answer": "**クロムウェル**。",
+          "evidence": [
+            "puritan-leader"
+          ],
+          "keywords": [
+            "クロムウェル"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "課税をめぐる対立",
+          "prompt": "イギリスのピューリタン革命の背景となった国王の課税方法は、議会との関係でどのようなものだったか。",
+          "answer": "**議会を無視した課税**。",
+          "evidence": [
+            "puritan-cause"
+          ],
+          "keywords": [
+            "議会を無視した課税"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "処刑された国王",
+          "prompt": "イギリスのピューリタン革命で処刑された国王は誰か。",
+          "answer": "**チャールズ1世**。",
+          "evidence": [
+            "puritan-charles",
+            "puritan-outcome"
+          ],
+          "keywords": [
+            "チャールズ1世"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "内戦の開始年",
+          "prompt": "イギリスのピューリタン革命で、王党派と議会派の対立が内戦に発展したのは何年か。",
+          "answer": "1642年。",
+          "evidence": [
+            "puritan-civil-war"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "国王の処刑年",
+          "prompt": "イギリスのピューリタン革命で国王が処刑されたのは何年か。",
+          "answer": "1649年。",
+          "evidence": [
+            "puritan-execution"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命の背景",
+          "prompt": "イギリスのピューリタン革命はなぜ起きたか。",
+          "answer": "**17世紀**のイギリスでは、議会に進出した**地主や商工業者**と国王が対立した。**チャールズ1世**による**議会を無視した課税**と**ピューリタンへの弾圧**などを背景に、王党派と議会派の対立が**1642年**に内戦に発展した。",
+          "evidence": [
+            "parliament-rise",
+            "puritan-charles",
+            "puritan-civil-war"
+          ],
+          "keywords": [
+            "17世紀",
+            "地主や商工業者",
+            "チャールズ1世",
+            "議会を無視した課税",
+            "ピューリタンへの弾圧",
+            "1642年"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命の展開",
+          "prompt": "イギリスのピューリタン革命で何が起きたか。",
+          "answer": "**クロムウェル**の指導のもと、**1649年**に国王**チャールズ1世**が処刑され、**共和制**へ移行した。",
+          "evidence": [
+            "puritan-leader",
+            "puritan-charles",
+            "puritan-execution",
+            "puritan-outcome"
+          ],
+          "keywords": [
+            "クロムウェル",
+            "1649年",
+            "チャールズ1世",
+            "共和制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「ピューリタン革命」について説明せよ。",
+          "answer": "**17世紀**のイギリスで、議会に進出した**地主や商工業者**と国王の対立が強まり、**チャールズ1世**による**議会を無視した課税**や**ピューリタンへの弾圧**などを背景に、**1642年**に内戦が始まった革命である。**クロムウェル**の指導のもと、**1649年**に国王が処刑され、**共和制**へ移行した。",
+          "evidence": [
+            "parliament-rise",
+            "puritan-charles",
+            "puritan-civil-war",
+            "puritan-leader",
+            "puritan-execution",
+            "puritan-outcome",
+            "puritan-name"
+          ],
+          "keywords": [
+            "17世紀",
+            "地主や商工業者",
+            "チャールズ1世",
+            "議会を無視した課税",
+            "ピューリタンへの弾圧",
+            "1642年",
+            "クロムウェル",
+            "1649年",
+            "共和制"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "名誉革命",
+      "reading": "めいよかくめい",
+      "category": "事件・革命",
+      "geographyLabel": "イギリス",
+      "chronology": {
+        "displayPeriod": "1688年、1689年に権利章典",
+        "sortYear": 1688
+      },
+      "explanation": "国王の追放、新しい国王の受入れ、権利章典による国王の権限の制限と議会の地位を結びつける。戦乱がなかったという一般化や現行の法的効力は出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "革命名",
+          "prompt": "17世紀のイギリスで、議会が国王を追放し、外国から新しい国王を迎えた革命は何か。",
+          "answer": "**名誉革命**。",
+          "evidence": [
+            "glorious-exile",
+            "glorious-name"
+          ],
+          "keywords": [
+            "名誉革命"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "追放された国王",
+          "prompt": "イギリスの名誉革命で追放された国王は誰か。",
+          "answer": "**ジェームズ2世**。",
+          "evidence": [
+            "glorious-james"
+          ],
+          "keywords": [
+            "ジェームズ2世"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "革命の年",
+          "prompt": "イギリスの名誉革命は何年に起きたか。",
+          "answer": "1688年。",
+          "evidence": [
+            "glorious-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "関連する文書名",
+          "prompt": "名誉革命後のイギリスで、国王の法律停止や課税に議会の承認を必要とした文書を何というか。",
+          "answer": "**権利章典**。",
+          "evidence": [
+            "bill-name-and-limits"
+          ],
+          "keywords": [
+            "権利章典"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "成立した政治形態",
+          "prompt": "イギリスの名誉革命後に権利章典によって成立した、君主の権力を憲法で制限する政治形態は何か。",
+          "answer": "**立憲君主制**。",
+          "evidence": [
+            "constitutional-monarchy",
+            "bill-institutions"
+          ],
+          "keywords": [
+            "立憲君主制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命の出来事",
+          "prompt": "イギリスの名誉革命で何が起きたか。",
+          "answer": "**1688年**のイギリスで、議会が国王**ジェームズ2世**を追放し、オランダから新しい国王を迎えた。",
+          "evidence": [
+            "glorious-year",
+            "glorious-exile"
+          ],
+          "keywords": [
+            "1688年",
+            "ジェームズ2世"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "国王と議会の関係",
+          "prompt": "名誉革命後のイギリスの権利章典は、国王と議会の関係をどう定めたか。",
+          "answer": "**1689年**に発布された**権利章典**は、国王が**議会の承認**なしに法律を停止したり、新たな課税をしたりすることを認めなかった。これにより、イギリスで**立憲君主制**と**議会政治**が成立した。",
+          "evidence": [
+            "bill-year",
+            "bill-name-and-limits",
+            "bill-institutions"
+          ],
+          "keywords": [
+            "1689年",
+            "権利章典",
+            "議会の承認",
+            "立憲君主制",
+            "議会政治"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「名誉革命」について説明せよ。",
+          "answer": "**1688年**のイギリスで、議会が国王**ジェームズ2世**を追放し、オランダから新しい国王を迎えた革命である。**1689年**の**権利章典**は、国王の法律停止や課税に**議会の承認**を必要とし、**立憲君主制**と**議会政治**が成立した。",
+          "evidence": [
+            "glorious-year",
+            "glorious-exile",
+            "glorious-name",
+            "bill-year",
+            "bill-name-and-limits",
+            "bill-institutions"
+          ],
+          "keywords": [
+            "1688年",
+            "ジェームズ2世",
+            "1689年",
+            "権利章典",
+            "議会の承認",
+            "立憲君主制",
+            "議会政治"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "アメリカ独立戦争",
+      "reading": "あめりかどくりつせんそう",
+      "category": "戦争",
+      "geographyLabel": "北アメリカ",
+      "chronology": {
+        "displayPeriod": "1775年に開始",
+        "sortYear": 1775
+      },
+      "explanation": "本国議会に代表を送れない植民地の課税への反発と弾圧から独立戦争へ進んだ関係、ワシントンの指導・フランスの支援・アメリカ合衆国の成立を学ぶ。茶法を新税創設とする説明や紅茶投棄の誤記は出題しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦争名",
+          "prompt": "18世紀、本国議会に代表を送れないままの課税に抵抗した植民地と、それを弾圧したイギリスとの戦争は何か。",
+          "answer": "**アメリカ独立戦争**。",
+          "evidence": [
+            "colonies-geography",
+            "colonies-tax-protest",
+            "colonies-slogan",
+            "war-repression",
+            "war-name"
+          ],
+          "keywords": [
+            "アメリカ独立戦争"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "戦争の開始年",
+          "prompt": "アメリカ独立戦争は何年に始まったか。",
+          "answer": "1775年。",
+          "evidence": [
+            "war-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "植民地軍の指導者",
+          "prompt": "アメリカ独立戦争で植民地軍の司令長官を務めた人物は誰か。",
+          "answer": "**ジョージ・ワシントン**。",
+          "evidence": [
+            "war-washington"
+          ],
+          "keywords": [
+            "ジョージ・ワシントン"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "植民地軍の支援国",
+          "prompt": "アメリカ独立戦争で、植民地軍を支援したヨーロッパの国はどこか。",
+          "answer": "**フランス**。",
+          "evidence": [
+            "war-french-support"
+          ],
+          "keywords": [
+            "フランス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "独立戦争の背景",
+          "prompt": "アメリカ独立戦争はなぜ起きたか。",
+          "answer": "北アメリカ東海岸のイギリス植民地は、本国議会に議員を送る資格がないままの課税に反発し、**「代表なくして課税なし」**を掲げた。**ボストン茶会事件**などを経て、イギリスが植民地の人々を弾圧したため、**1775年**に**アメリカ独立戦争**が始まった。",
+          "evidence": [
+            "colonies-geography",
+            "colonies-tax-protest",
+            "colonies-slogan",
+            "war-repression",
+            "war-year"
+          ],
+          "keywords": [
+            "「代表なくして課税なし」",
+            "ボストン茶会事件",
+            "1775年",
+            "アメリカ独立戦争"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "戦争の展開と結果",
+          "prompt": "アメリカ独立戦争で何が起きたか。",
+          "answer": "**ジョージ・ワシントン**を司令長官とする植民地軍が、**フランスの支援**を受けて勝利した。その結果、**アメリカ合衆国**が成立した。",
+          "evidence": [
+            "war-washington",
+            "war-french-support",
+            "war-independence"
+          ],
+          "keywords": [
+            "ジョージ・ワシントン",
+            "フランスの支援",
+            "アメリカ合衆国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「アメリカ独立戦争」について説明せよ。",
+          "answer": "北アメリカ東海岸のイギリス植民地は、本国議会に代表を送る資格がないままの課税に反発し、**「代表なくして課税なし」**を掲げた。イギリスの弾圧を受けて**1775年**に始まった戦争では、**ジョージ・ワシントン**を司令長官とする植民地軍が**フランスの支援**を受けて勝利した。その結果、**アメリカ合衆国**が成立した。",
+          "evidence": [
+            "colonies-geography",
+            "colonies-tax-protest",
+            "colonies-slogan",
+            "war-repression",
+            "war-year",
+            "war-washington",
+            "war-french-support",
+            "war-independence"
+          ],
+          "keywords": [
+            "「代表なくして課税なし」",
+            "1775年",
+            "ジョージ・ワシントン",
+            "フランスの支援",
+            "アメリカ合衆国"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "アメリカ独立宣言",
+      "reading": "あめりかどくりつせんげん",
+      "category": "文書・作品",
+      "geographyLabel": "北アメリカ",
+      "chronology": {
+        "displayPeriod": "1776年",
+        "sortYear": 1776
+      },
+      "explanation": "独立を宣言した文書の人間の生来の平等・不可侵の権利、統治される者の合意、権利保障の目的に反する政府を廃して新政府を樹立する権利を学ぶ。宣言の理念を実際の全国民への完全な権利保障の実現と同一視しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "文書名",
+          "prompt": "18世紀に北アメリカの植民地代表が発表し、人間の生来の平等と生命・自由・幸福の追求の権利を述べた文書は何か。",
+          "answer": "**アメリカ独立宣言**。",
+          "evidence": [
+            "declaration-title",
+            "declaration-colonists",
+            "declaration-rights",
+            "colonies-geography"
+          ],
+          "keywords": [
+            "アメリカ独立宣言"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "発表年",
+          "prompt": "アメリカ独立宣言は何年に発表されたか。",
+          "answer": "1776年。",
+          "evidence": [
+            "declaration-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "政府の権力の根拠",
+          "prompt": "アメリカ独立宣言で、政府の正当な権力の根拠となるのは誰の合意か。",
+          "answer": "**統治される者**。",
+          "evidence": [
+            "declaration-consent"
+          ],
+          "keywords": [
+            "統治される者"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政府に対する国民の権利",
+          "prompt": "アメリカ独立宣言で、政府が権利保障という目的に反するとき、国民に認められる権利は何か。",
+          "answer": "**政府を廃して新しい政府を樹立する権利**。",
+          "evidence": [
+            "declaration-consent",
+            "declaration-new-government"
+          ],
+          "keywords": [
+            "政府を廃して新しい政府を樹立する権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "独立宣言と人間の権利",
+          "prompt": "アメリカ独立宣言には、人間の権利についてどのように書かれているか。",
+          "answer": "**1776年**に北アメリカのイギリス植民地代表が発表し、イギリスからの独立を宣言した文書である。人間の**生来の平等**と、**生命・自由・幸福の追求**を含む**不可侵の権利**を述べた。",
+          "evidence": [
+            "declaration-year",
+            "declaration-colonists",
+            "colonies-geography",
+            "declaration-rights"
+          ],
+          "keywords": [
+            "1776年",
+            "生来の平等",
+            "生命・自由・幸福の追求",
+            "不可侵の権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政府と国民の関係",
+          "prompt": "アメリカ独立宣言は、政府の権力と国民との関係をどう定めたか。",
+          "answer": "政府は人々の権利を保障するために作られ、**統治される者の合意**に基づいて正当な権力を得るとした。政府が権利保障の目的に反するとき、国民には**政府を廃して新しい政府を樹立する権利**があると述べた。",
+          "evidence": [
+            "declaration-consent",
+            "declaration-new-government"
+          ],
+          "keywords": [
+            "統治される者の合意",
+            "政府を廃して新しい政府を樹立する権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「アメリカ独立宣言」について説明せよ。",
+          "answer": "**1776年**に北アメリカのイギリス植民地代表が発表し、イギリスからの独立を宣言した文書である。**生来の平等**と**生命・自由・幸福の追求**を含む**不可侵の権利**を示し、政府は**統治される者の合意**によって正当な権力を得るとした。政府が権利保障の目的に反するとき、国民には**政府を廃して新しい政府を樹立する権利**があると述べた。",
+          "evidence": [
+            "declaration-year",
+            "declaration-colonists",
+            "colonies-geography",
+            "declaration-rights",
+            "declaration-consent",
+            "declaration-new-government"
+          ],
+          "keywords": [
+            "1776年",
+            "生来の平等",
+            "生命・自由・幸福の追求",
+            "不可侵の権利",
+            "統治される者の合意",
+            "政府を廃して新しい政府を樹立する権利"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "合衆国憲法",
+      "reading": "がっしゅうこくけんぽう",
+      "category": "制度・政策・法律",
+      "geographyLabel": "アメリカ合衆国",
+      "chronology": {
+        "displayPeriod": "1787年",
+        "sortYear": 1787
+      },
+      "explanation": "アメリカの憲法が採用した三権分立・自治権を持つ州から成る連邦制・人民が主権を持つ共和国・大統領制を学ぶ。13州という数値を別問題にせず、記載のない個々の権限や現在の制度運用を補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "権力を分ける原則",
+          "prompt": "アメリカの合衆国憲法が、立法・司法・行政の関係に採用した原則は何か。",
+          "answer": "**三権分立**。",
+          "evidence": [
+            "constitution-powers"
+          ],
+          "keywords": [
+            "三権分立"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "制定年",
+          "prompt": "アメリカの合衆国憲法は何年に定められたか。",
+          "answer": "1787年。",
+          "evidence": [
+            "constitution-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "州を結ぶ制度",
+          "prompt": "アメリカの合衆国憲法が採用した、自治権を持つ州から成る国家の仕組みは何か。",
+          "answer": "**連邦制**。",
+          "evidence": [
+            "constitution-federation"
+          ],
+          "keywords": [
+            "連邦制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主権を持つ主体",
+          "prompt": "アメリカの合衆国憲法では、主権を持つのは誰か。",
+          "answer": "**人民**。",
+          "evidence": [
+            "constitution-people"
+          ],
+          "keywords": [
+            "人民"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "権力と州の関係",
+          "prompt": "アメリカの合衆国憲法は、権力と州の関係をどう定めたか。",
+          "answer": "アメリカ合衆国で**1787年**に定められた憲法は、立法・司法・行政の**三権分立**と、自治権を持つ州から成る**連邦制**を採用した。",
+          "evidence": [
+            "constitution-country",
+            "constitution-year",
+            "constitution-powers",
+            "constitution-federation"
+          ],
+          "keywords": [
+            "1787年",
+            "三権分立",
+            "連邦制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "主権と統治の制度",
+          "prompt": "アメリカの合衆国憲法は、主権と統治のあり方をどう定めたか。",
+          "answer": "アメリカ合衆国を、**人民**が主権を持つ**共和国**とし、**大統領制**を採用した。",
+          "evidence": [
+            "constitution-country",
+            "constitution-people",
+            "constitution-presidential"
+          ],
+          "keywords": [
+            "人民",
+            "共和国",
+            "大統領制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "欧米の近代化に関わる「合衆国憲法」について説明せよ。",
+          "answer": "アメリカ合衆国で**1787年**に定められ、立法・司法・行政の**三権分立**と、自治権を持つ州から成る**連邦制**を採用した憲法である。**人民**が主権を持つ**共和国**とし、**大統領制**を採用した。",
+          "evidence": [
+            "constitution-country",
+            "constitution-year",
+            "constitution-powers",
+            "constitution-federation",
+            "constitution-people",
+            "constitution-presidential"
+          ],
+          "keywords": [
+            "1787年",
+            "三権分立",
+            "連邦制",
+            "人民",
+            "共和国",
+            "大統領制"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

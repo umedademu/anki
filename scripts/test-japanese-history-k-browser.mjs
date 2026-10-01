@@ -5,6 +5,7 @@ import path from "node:path";
 import { chromium } from "playwright";
 import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks } from "./japanese-history-k.mjs";
 import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
+import { groupSODecks } from "../public/so-chapters.js";
 
 const root = path.resolve(import.meta.dirname, "../public"), plan = await loadJapaneseHistoryK();
 const additions = await loadJapaneseKAdditions();
@@ -24,6 +25,8 @@ const existing = original.subjects.find(subject => subject.id === plan.subject.i
 assert.ok(existing, "Cloudflare上の既存日本史Kを使います。");
 const catalog = appendJapaneseKDecks(original, additions);
 const combinedSubject = catalog.subjects.find(subject => subject.id === plan.subject.id);
+const groups = groupSODecks(combinedSubject.decks, combinedSubject.chapterGroups);
+const plansById = new Map([plan, ...additions].map(value => [value.index.deckId, value]));
 objects.set("index.json", JSON.stringify(catalog));
 for (const object of plan.objects) objects.set(object.key, JSON.stringify(object.value));
 for (const addition of additions) for (const object of addition.objects) objects.set(object.key, JSON.stringify(object.value));
@@ -162,24 +165,38 @@ try {
   };
   await page.goto(base + "/");
   await page.getByRole("button", { name: "日本史K", exact: true }).click(); await shown("setup-panel"); await ready();
-  assert.equal(await page.locator("#deck-filter .deck-filter-name").textContent(), "第6章 現代");
-  assert.equal(await page.locator("#deck-filter .deck-filter-count").textContent(), `${combinedSubject.questionCount}問`);
-  assert.equal(await page.locator("#chapter-selection-summary").textContent(), `パートを選択：1 / ${combinedSubject.decks.length}パート`);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), ["第5章 近代", "第6章 現代"]);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), groups.map(group => `${group.decks.reduce((sum, deck) => sum + deck.questionCount, 0).toLocaleString("ja-JP")}問`));
+  const picker = number => page.locator(`.chapter-picker[data-chapter-id="chapter-${number}"]`);
+  assert.equal(await picker(6).locator("summary").textContent(), "第6章のパート：1 / 15パート");
+  assert.equal(await picker(5).locator("summary").textContent(), "第5章のパート：0 / 6パート");
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);
-  await page.locator("#chapter-selection-summary").click();
-  assert.deepEqual(await page.locator(".chapter-picker .deck-filter-name").allTextContents(), [plan, ...additions].map(item => item.index.datasetLabel.split("｜")[1]));
-  await page.getByRole("button", { name: "全パートを解除" }).click();
+  for (const group of groups) {
+    assert.deepEqual(await picker(group.number).locator(".deck-filter-name").allTextContents(), group.deckIds.map(id => plansById.get(id).index.datasetLabel.split("｜")[1]));
+  }
+  await picker(6).locator("summary").click();
+  await picker(6).getByRole("button", { name: "全パートを解除" }).click();
   assert.equal(await page.locator("#start-study").isDisabled(), true);
-  await page.getByRole("button", { name: "全パートを選択" }).click(); await ready();
+  await page.locator('#deck-filter input[value="chapter-5"]').check(); await ready();
+  await assertSummary(filterQuestionTypes(additions.filter(value => value.index.deckId.startsWith("book-05-")).flatMap(value => value.terms), resolveQuestionTypes()));
+  for (const group of groups) {
+    for (const other of groups) if (other.id !== group.id && await picker(other.number).isVisible() && await picker(other.number).evaluate(element => element.open)) await picker(other.number).locator("summary").click();
+    if (!await picker(group.number).evaluate(element => element.open)) await picker(group.number).locator("summary").click();
+    await picker(group.number).getByRole("button", { name: "全パートを選択" }).click(); await ready();
+    await picker(group.number).locator("summary").click();
+  }
   await assertSummary(filterQuestionTypes([plan, ...additions].flatMap(item => item.terms), resolveQuestionTypes()));
-  assert.match(await page.locator("#chapter-selection-summary").textContent(), new RegExp(`${combinedSubject.decks.length}パート`));
+  for (const group of groups) assert.equal(await picker(group.number).locator("summary").textContent(), `第${group.number}章：全${group.decks.length}パート`);
   // GHQの既存の動作確認は一小項目に絞り、新規問題は後で個別に確認する。
   for (const addition of additions) {
+    const number = addition.definition.chapterGroups[0].number;
+    for (const other of groups) if (other.number !== number && await picker(other.number).isVisible() && await picker(other.number).evaluate(element => element.open)) await picker(other.number).locator("summary").click();
+    if (!await picker(number).evaluate(element => element.open)) await picker(number).locator("summary").click();
     await page.locator(`.chapter-picker input[value="${addition.index.deckId}"]`).uncheck(); await ready();
   }
-  await page.locator("#chapter-selection-summary").click();
+  for (const group of groups) if (await picker(group.number).isVisible() && await picker(group.number).evaluate(element => element.open)) await picker(group.number).locator("summary").click();
   await page.locator("#question-type-summary").click();
   for (const [type, label] of [["time", "時期"], ["reverse", "逆向きの説明"], ["integrated", "統合説明"]]) {
     const count = plan.terms.flatMap(term => Object.values(term.stages).flat()).filter(question => question.type === type).length;
@@ -279,6 +296,7 @@ try {
     page.once("dialog", async dialog => { assert.match(dialog.message(), /前回の一周を終了/); await dialog.accept(); });
     await page.locator("#start-study").click(); await shown("study-shell");
     const integratedQuestion = addition.terms[0].stages.integrated[0];
+    assert.equal(await page.locator("#subject-name").textContent(), `日本史K｜${addition.definition.chapterGroups[0].title}`);
     assert.equal(await page.locator("#question-text").textContent(), integratedQuestion.prompt);
     await assertStudyDisplay(integratedQuestion, false);
     await page.locator("#next-action").click(); await assertStudyDisplay(integratedQuestion, true);

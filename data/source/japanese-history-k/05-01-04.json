@@ -1,0 +1,1166 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 1,
+    "title": "欧米の近代化と日本"
+  },
+  "part": {
+    "number": 4,
+    "title": "欧米列強のアジア侵略"
+  },
+  "integrationPromptPrefix": "アジアの近代史に関わる",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04_欧米列強のアジア侵略_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      280,
+      281,
+      282
+    ],
+    "note": "280～282頁の担当本文・ロシアの南下政策/東方開発説明・アヘン戦争図版を最後まで読む。283頁は次項目の開始なので収録しない。インド帝国の成立を1857年の直後・同年とはせず19世紀の推移に限定する。ウラジオストク不凍港・クリミア戦争後の南下政策断念・アフガニスタン1880保護国・フィリピン移管を20世紀初頭とする時期は不採用。シャムの独立維持を改革と領土割譲だけで説明する決定的因果、欧米視察による立ち遅れという評価、清攻撃の口実や植民地化免除の単純な成功因果を正答にしない。西アジアのオスマン/ペルシアについては説明と時期が少なく独立主題を追加しない。南京条約1842年は本本文にも章内の同出来事の年表にも根拠がないため要求せず、追加条約の翌年は南京条約を基準とする。植民地の地理は当時の領域を現在の国名で対応させる記述だけを使い、現在の支配状態や境界変更を問わない。作物の全種・地名一覧・港名の語義・賠償額や港数だけで問題を増やさない。"
+  },
+  "facts": [
+    {
+      "id": "colonial-century",
+      "page": 280,
+      "quote": "十九世紀、「世界の工場」と呼ばれたイギリスは、安価な原料の入手先と工業製品の販売先を求めて世界各地に進出し、最大の植民地を持つ大帝国となりました。"
+    },
+    {
+      "id": "india-company",
+      "page": 280,
+      "quote": "イギリス東インド会社が植民地化したインドでは、"
+    },
+    {
+      "id": "india-cotton",
+      "page": 280,
+      "quote": "手工業による綿織物産業が大打撃を受け、"
+    },
+    {
+      "id": "india-rebellion",
+      "page": 280,
+      "quote": "イギリスの支配に不満を持った人々は**インド大反乱**を起こしました。"
+    },
+    {
+      "id": "india-year",
+      "page": 280,
+      "quote": "一八五七年、イギリスの支配に不満を持った人々は**インド大反乱**を起こしました。"
+    },
+    {
+      "id": "india-mughal",
+      "page": 280,
+      "quote": "しかしイギリスはこれを鎮圧するとムガル帝国を滅ぼし、"
+    },
+    {
+      "id": "india-direct",
+      "page": 280,
+      "quote": "インドを直接統治するようになり、植民地支配の拠点をインドに定めました。"
+    },
+    {
+      "id": "india-empire",
+      "page": 280,
+      "quote": "**インド帝国**を成立させて"
+    },
+    {
+      "id": "dutch-name",
+      "page": 280,
+      "quote": "ジャワ島で領土を獲得して以来、支配領域を拡大していき、**オランダ領東インド**としました。"
+    },
+    {
+      "id": "dutch-java-period",
+      "page": 280,
+      "quote": "オランダは、十七世紀にジャワ島で領土を獲得して以来、"
+    },
+    {
+      "id": "dutch-crops",
+      "page": 280,
+      "quote": "現地の農民にコーヒー、さとうきび、茶、たばこなどの農作物を強制的に栽培させ、ヨーロッパなどに転売することで大きな利益を得ました。"
+    },
+    {
+      "id": "dutch-indonesia",
+      "page": 280,
+      "quote": "そして二十世紀初頭までには、現在のインドネシアのほぼ全領域を勢力下に置きました。"
+    },
+    {
+      "id": "french-geography",
+      "page": 281,
+      "quote": "ベトナム、ラオス、カンボジアを合わせた領域に相当する地域を事実上の植民地としました（**フランス領インドシナ**）。"
+    },
+    {
+      "id": "french-vietnam",
+      "page": 280,
+      "quote": "フランスは、十九世紀後半にベトナム南部を植民地とし、"
+    },
+    {
+      "id": "french-protectorates",
+      "page": 280,
+      "quote": "その前後に、周辺諸国を次々と保護国として、"
+    },
+    {
+      "id": "siam-independence",
+      "page": 281,
+      "quote": "また、イギリス領とフランス領に挟まれたシャム王国（タイ）は、東南アジアで唯一、独立を保つことができました。"
+    },
+    {
+      "id": "siam-reforms",
+      "page": 281,
+      "quote": "国王のラーマ五世が欧米を視察してタイの立ち遅れを実感したため、数々の改革を行い近代化を急いだこと、"
+    },
+    {
+      "id": "siam-cessions",
+      "page": 281,
+      "quote": "マレー半島の一部をイギリスに、またラオスとカンボジアの一部をフランスに割譲したこと"
+    },
+    {
+      "id": "russia-south",
+      "page": 281,
+      "quote": "ロシアは17世紀以降、領土を拡大させ、19世紀になると、冬でも船の入出港ができる不凍港を求めて南下政策をとった。"
+    },
+    {
+      "id": "russia-crimean",
+      "page": 281,
+      "quote": "19世紀半ばにロシアが黒海から地中海への進出を試みると、クリミア半島でオスマン帝国と戦争となり、ロシアの勢いを警戒したイギリスやフランスなどが参戦したことで、ロシアは敗北した（クリミア戦争）。"
+    },
+    {
+      "id": "russia-maritime",
+      "page": 282,
+      "quote": "ロシアは1860年に沿海州を自国領とし、「東方を支配せよ」という意味の「ウラジオストク」という名前の軍港を建設した。"
+    },
+    {
+      "id": "russia-central-asia",
+      "page": 281,
+      "quote": "ロシアは十九世紀末までには中央アジアの大半と沿海州を勢力下に置き、"
+    },
+    {
+      "id": "triangle-name",
+      "page": 282,
+      "quote": "これを三角貿易といいます。"
+    },
+    {
+      "id": "triangle-goods",
+      "page": 282,
+      "quote": "イギリスはインドへ綿織物などの工業製品を輸出し、インド産のアヘンを清へ密輸し利益を得るようになりました。"
+    },
+    {
+      "id": "trade-imports",
+      "page": 282,
+      "quote": "イギリスは清から茶や絹を輸入し"
+    },
+    {
+      "id": "trade-silver-payment",
+      "page": 282,
+      "quote": "その代金を銀で支払うという片貿易でした。"
+    },
+    {
+      "id": "trade-18th-century",
+      "page": 282,
+      "quote": "十八世紀、イギリスは朝貢の形式をとって清と貿易を開始しました。"
+    },
+    {
+      "id": "trade-shortage",
+      "page": 282,
+      "quote": "十九世紀に入り清へ支払う銀が不足すると、"
+    },
+    {
+      "id": "opium-destruction",
+      "page": 282,
+      "quote": "広東のアヘンを没収、処分しました。イギリス商人たちはこれに抗議し、"
+    },
+    {
+      "id": "opium-war-name",
+      "page": 282,
+      "quote": "イギリスは東洋艦隊を派遣し清を攻撃します。これが**アヘン戦争**です。"
+    },
+    {
+      "id": "opium-war-year",
+      "page": 282,
+      "quote": "一八四〇年、自由貿易の実現を口実にイギリスは東洋艦隊を派遣し清を攻撃します。"
+    },
+    {
+      "id": "opium-lin",
+      "page": 282,
+      "quote": "清はアヘン中毒患者の増加とその代金となる銀の不足に苦しみ、一八三九年、欽差大臣の林則徐が広東のアヘンを没収、処分しました。"
+    },
+    {
+      "id": "nanking-name",
+      "page": 282,
+      "quote": "イギリスは戦争に勝利すると、清と**南京条約**を結び、"
+    },
+    {
+      "id": "nanking-hongkong",
+      "page": 282,
+      "quote": "香港を手に入れたほか、"
+    },
+    {
+      "id": "nanking-trade-compensation",
+      "page": 282,
+      "quote": "広州などの五港で自由貿易を認めさせ、莫大な賠償金を手に入れ、"
+    },
+    {
+      "id": "additional-tariff",
+      "page": 282,
+      "quote": "翌年には、清に**関税自主権**がなく、"
+    },
+    {
+      "id": "additional-consular",
+      "page": 282,
+      "quote": "イギリスに**領事裁判権**を認める不平等な追加条約を締結しました。"
+    },
+    {
+      "id": "trade-century",
+      "page": 282,
+      "quote": "十九世紀に入り"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "インド大反乱",
+      "reading": "いんどだいはんらん",
+      "category": "事件・革命",
+      "geographyLabel": "インド",
+      "chronology": {
+        "displayPeriod": "1857年、直接統治とインド帝国は19世紀の推移",
+        "sortYear": 1857
+      },
+      "explanation": "植民地支配への不満、綿織物手工業の打撃、反乱・鎮圧・ムガル帝国の滅亡と英国の直接統治を結びつける。インド帝国の成立を1857年の直後や同年と断定せず、19世紀の別の推移として記す。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "反乱名",
+          "prompt": "19世紀にイギリス東インド会社による支配への不満から起こった大規模な反乱は何か。",
+          "answer": "**インド大反乱**。",
+          "evidence": [
+            "india-company",
+            "india-rebellion",
+            "colonial-century"
+          ],
+          "keywords": [
+            "インド大反乱"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "反乱の年",
+          "prompt": "インド大反乱は何年に起きたか。",
+          "answer": "1857年。",
+          "evidence": [
+            "india-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "打撃を受けた産業",
+          "prompt": "インド大反乱の背景として、イギリスの植民地支配下で大打撃を受けた手工業の産業は何か。",
+          "answer": "**綿織物産業(めんおりものさんぎょう)**。",
+          "evidence": [
+            "india-cotton"
+          ],
+          "keywords": [
+            "綿織物産業"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "滅ぼされた帝国",
+          "prompt": "インド大反乱を鎮圧した後、イギリスが滅ぼした帝国は何か。",
+          "answer": "**ムガル帝国**。",
+          "evidence": [
+            "india-mughal"
+          ],
+          "keywords": [
+            "ムガル帝国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "統治の変化",
+          "prompt": "インド大反乱後、イギリスはインドの統治をどのような形に変えたか。",
+          "answer": "**イギリスによる直接統治**。",
+          "evidence": [
+            "india-direct"
+          ],
+          "keywords": [
+            "イギリスによる直接統治"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "反乱の背景",
+          "prompt": "インド大反乱はなぜ起きたか。",
+          "answer": "**イギリス東インド会社**の支配を受けたインドでは、手工業による**綿織物産業(めんおりものさんぎょう)**が大打撃を受けた。イギリスの支配に不満を持った人々が、**1857年**に**インド大反乱**を起こした。",
+          "evidence": [
+            "india-company",
+            "india-cotton",
+            "india-year"
+          ],
+          "keywords": [
+            "イギリス東インド会社",
+            "綿織物産業",
+            "1857年",
+            "インド大反乱"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "反乱後の変化",
+          "prompt": "インド大反乱はどのような結果になったか。",
+          "answer": "イギリスが反乱を鎮圧して**ムガル帝国**を滅ぼし、インドを**直接統治**するようになった。**19世紀**には**インド帝国**が成立し、インドはイギリスの植民地支配の拠点となった。",
+          "evidence": [
+            "india-mughal",
+            "india-direct",
+            "india-empire",
+            "colonial-century"
+          ],
+          "keywords": [
+            "ムガル帝国",
+            "直接統治",
+            "19世紀",
+            "インド帝国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「インド大反乱」について説明せよ。",
+          "answer": "**イギリス東インド会社**の支配下にあるインドでは、手工業による**綿織物産業(めんおりものさんぎょう)**が打撃を受けるなか、**1857年**にイギリスの支配に不満を持つ人々が反乱を起こした。イギリスは鎮圧後に**ムガル帝国**を滅ぼし、インドを**直接統治**するようになった。**19世紀**には**インド帝国**が成立し、インドはイギリスの植民地支配の拠点となった。",
+          "evidence": [
+            "india-company",
+            "india-cotton",
+            "india-year",
+            "india-mughal",
+            "india-direct",
+            "india-empire",
+            "colonial-century"
+          ],
+          "keywords": [
+            "イギリス東インド会社",
+            "綿織物産業",
+            "1857年",
+            "ムガル帝国",
+            "直接統治",
+            "19世紀",
+            "インド帝国"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "オランダ領東インド",
+      "reading": "おらんだりょうひがしいんど",
+      "category": "国家・王朝",
+      "geographyLabel": "インドネシア",
+      "chronology": {
+        "displayPeriod": "17世紀の進出～20世紀初頭の支配拡大",
+        "sortYear": 1600
+      },
+      "explanation": "ジャワ島での領土獲得から支配拡大、現地農民への農作物の強制栽培とヨーロッパへの転売、現在のインドネシアに相当する領域への広がりを学ぶ。農作物全種類の列挙や正式成立年は要求しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "植民地名",
+          "prompt": "ジャワ島を起点にオランダが東南アジアで支配領域を広げた植民地を何と呼ぶか。",
+          "answer": "**オランダ領東インド**。",
+          "evidence": [
+            "dutch-name"
+          ],
+          "keywords": [
+            "オランダ領東インド"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "進出の時期",
+          "prompt": "オランダ領東インドの支配拡大の起点となる、ジャワ島での領土獲得はいつ行われたか。",
+          "answer": "17世紀。",
+          "evidence": [
+            "dutch-java-period"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "栽培の方法",
+          "prompt": "オランダ領東インドで、コーヒーやさとうきびなどの農作物は現地農民にどのように栽培させられたか。",
+          "answer": "**強制的に**。",
+          "evidence": [
+            "dutch-crops"
+          ],
+          "keywords": [
+            "強制的に"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "領域の対応",
+          "prompt": "オランダ領東インドが20世紀初頭までに支配を広げた領域は、現在のどの国のほぼ全領域に相当するか。",
+          "answer": "**インドネシア**。",
+          "evidence": [
+            "dutch-indonesia"
+          ],
+          "keywords": [
+            "インドネシア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "領域の拡大",
+          "prompt": "オランダ領東インドの支配はどのように広がったか。",
+          "answer": "**17世紀**に**ジャワ島**で領土を獲得したオランダが支配領域を広げ、オランダ領東インドとした。**20世紀初頭**までには、現在の**インドネシア**のほぼ全領域を勢力下に置いた。",
+          "evidence": [
+            "dutch-java-period",
+            "dutch-name",
+            "dutch-indonesia"
+          ],
+          "keywords": [
+            "17世紀",
+            "ジャワ島",
+            "20世紀初頭",
+            "インドネシア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "植民地での農業と利益",
+          "prompt": "オランダ領東インドでは、農業を通じてどのように利益を得たか。",
+          "answer": "現地農民に**コーヒーやさとうきび**などの農作物を**強制的に栽培**させた。これをヨーロッパなどへ転売して利益を得た。",
+          "evidence": [
+            "dutch-crops"
+          ],
+          "keywords": [
+            "コーヒーやさとうきび",
+            "強制的に栽培"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「オランダ領東インド」について説明せよ。",
+          "answer": "**17世紀**に**ジャワ島**で領土を獲得したオランダが支配領域を広げた植民地である。現地農民に**コーヒーやさとうきび**などを**強制的に栽培**させ、ヨーロッパなどへ転売して利益を得た。**20世紀初頭**までには、現在の**インドネシア**のほぼ全領域を勢力下に置いた。",
+          "evidence": [
+            "dutch-java-period",
+            "dutch-name",
+            "dutch-crops",
+            "dutch-indonesia"
+          ],
+          "keywords": [
+            "17世紀",
+            "ジャワ島",
+            "コーヒーやさとうきび",
+            "強制的に栽培",
+            "20世紀初頭",
+            "インドネシア"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "フランス領インドシナとシャム王国",
+      "reading": "ふらんすりょういんどしなとしゃむおうこく",
+      "category": "国家・王朝",
+      "geographyLabel": "ベトナム",
+      "chronology": {
+        "displayPeriod": "19世紀後半の植民地化と近接するシャムの対応",
+        "sortYear": 1850
+      },
+      "explanation": "ベトナム南部の植民地化と周辺の保護国化、現在のベトナム・ラオス・カンボジアへの領域対応を学ぶ。近隣のシャムは英仏領の間で独立を保ち、国王の改革と一部領土割譲を行った事実を関連づけるが、その二点だけで独立維持が決まったと断定しない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "領域の対応",
+          "prompt": "フランス領インドシナとシャム王国について、フランスが支配した領域は、現在のどの三国に相当するか。",
+          "answer": "**ベトナム、ラオス、カンボジア**。",
+          "evidence": [
+            "french-geography"
+          ],
+          "keywords": [
+            "ベトナム、ラオス、カンボジア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "植民地化された地域",
+          "prompt": "フランス領インドシナとシャム王国について、19世紀後半にフランスが植民地としたベトナムの地域はどこか。",
+          "answer": "**南部**。",
+          "evidence": [
+            "french-vietnam"
+          ],
+          "keywords": [
+            "南部"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "周辺諸国の地位",
+          "prompt": "19世紀のフランス領インドシナとシャム王国について、フランスはベトナム周辺の諸国をどのような支配上の地位にしたか。",
+          "answer": "**保護国**。",
+          "evidence": [
+            "french-protectorates"
+          ],
+          "keywords": [
+            "保護国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "独立を保った地位",
+          "prompt": "19世紀のフランス領インドシナとシャム王国について、英仏領に挟まれたシャム王国が維持した地位は何か。",
+          "answer": "**独立**。",
+          "evidence": [
+            "siam-independence"
+          ],
+          "keywords": [
+            "独立"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "近代化を進めた国王",
+          "prompt": "フランス領インドシナとシャム王国について、シャムで欧米を視察して近代化を進めた国王は誰か。",
+          "answer": "**ラーマ5世**。",
+          "evidence": [
+            "siam-reforms"
+          ],
+          "keywords": [
+            "ラーマ5世"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "列強への領土上の対応",
+          "prompt": "フランス領インドシナとシャム王国について、英仏に対してシャムが行った領土上の対応は何か。",
+          "answer": "**一部領土の割譲(かつじょう)**。",
+          "evidence": [
+            "siam-cessions"
+          ],
+          "keywords": [
+            "一部領土の割譲"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "植民地の形成",
+          "prompt": "フランス領インドシナとシャム王国について、フランス側の植民地はどのように形成されたか。",
+          "answer": "フランスは**19世紀後半**に**ベトナム南部**を植民地とし、その前後に周辺諸国を**保護国**とした。現在の**ベトナム・ラオス・カンボジア**に相当する領域を事実上の植民地とした。",
+          "evidence": [
+            "french-vietnam",
+            "french-protectorates",
+            "french-geography"
+          ],
+          "keywords": [
+            "19世紀後半",
+            "ベトナム南部",
+            "保護国",
+            "ベトナム・ラオス・カンボジア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "近隣のシャムの対応",
+          "prompt": "フランス領インドシナとシャム王国について、シャムは列強との関係でどのように対応したか。",
+          "answer": "シャム王国（タイ）はイギリス領とフランス領に挟まれながら、**独立を維持**した。**ラーマ5世**は欧米を視察して改革・近代化を進め、シャムはイギリスとフランスに**一部領土を割譲(かつじょう)**した。",
+          "evidence": [
+            "siam-independence",
+            "siam-reforms",
+            "siam-cessions"
+          ],
+          "keywords": [
+            "独立を維持",
+            "ラーマ5世",
+            "一部領土を割譲"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「フランス領インドシナとシャム王国」について説明せよ。",
+          "answer": "フランスは**19世紀後半**に**ベトナム南部**を植民地とし、周辺諸国を**保護国**とした。フランス領インドシナは現在の**ベトナム・ラオス・カンボジア**に相当する領域である。一方、英仏領に挟まれたシャム王国（タイ）は**独立を維持**し、**ラーマ5世**による改革・近代化を進めるとともに、英仏に**一部領土を割譲(かつじょう)**した。",
+          "evidence": [
+            "french-vietnam",
+            "french-protectorates",
+            "french-geography",
+            "siam-independence",
+            "siam-reforms",
+            "siam-cessions"
+          ],
+          "keywords": [
+            "19世紀後半",
+            "ベトナム南部",
+            "保護国",
+            "ベトナム・ラオス・カンボジア",
+            "独立を維持",
+            "ラーマ5世",
+            "一部領土を割譲"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "ロシアの領土拡大",
+      "reading": "ろしあのりょうどかくだい",
+      "category": "国家・王朝",
+      "geographyLabel": "ロシア",
+      "chronology": {
+        "displayPeriod": "19世紀の南下政策、1860年の沿海州領有",
+        "sortYear": 1800
+      },
+      "explanation": "不凍港を求める南下政策とクリミア戦争、沿海州・中央アジアへの領土拡大を扱う。南下政策断念・ウラジオストクの不凍港扱い・侵略の未来予測や港名の語義は不採用。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政策名",
+          "prompt": "19世紀のロシアが、冬でも船の入出港ができる港を求めてとった領土政策を何というか。",
+          "answer": "**南下政策**。",
+          "evidence": [
+            "russia-south"
+          ],
+          "keywords": [
+            "南下政策"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "南方での戦争名",
+          "prompt": "ロシアの領土拡大で、19世紀半ばの黒海から地中海への進出をめぐって起きた戦争は何か。",
+          "answer": "**クリミア戦争**。",
+          "evidence": [
+            "russia-crimean"
+          ],
+          "keywords": [
+            "クリミア戦争"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "沿海州の領有年",
+          "prompt": "ロシアの領土拡大で、沿海州が自国領となったのは何年か。",
+          "answer": "1860年。",
+          "evidence": [
+            "russia-maritime"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "勢力下に置いた地域",
+          "prompt": "ロシアの領土拡大で、19世紀末までに沿海州とともに大半が勢力下に置かれた地域はどこか。",
+          "answer": "**中央アジア**。",
+          "evidence": [
+            "russia-central-asia"
+          ],
+          "keywords": [
+            "中央アジア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "南方での動き",
+          "prompt": "19世紀のロシアの領土拡大では、南方でどのような動きがあったか。",
+          "answer": "**19世紀**のロシアは、冬でも船が入出港できる**不凍港**を求めて**南下政策**をとった。黒海から地中海への進出を試みた際の**クリミア戦争**では、**オスマン帝国**に加えて**イギリスとフランス**などが参戦し、ロシアが敗北した。",
+          "evidence": [
+            "russia-south",
+            "russia-crimean"
+          ],
+          "keywords": [
+            "19世紀",
+            "不凍港",
+            "南下政策",
+            "クリミア戦争",
+            "オスマン帝国",
+            "イギリスとフランス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "アジアでの領土拡大",
+          "prompt": "19世紀のロシアの領土拡大では、アジアでどのような動きがあったか。",
+          "answer": "**1860年**に**沿海州**を自国領とし、**ウラジオストク**という軍港を建設した。**19世紀末**までには、**中央アジア**の大半と沿海州を勢力下に置いた。",
+          "evidence": [
+            "russia-maritime",
+            "russia-central-asia"
+          ],
+          "keywords": [
+            "1860年",
+            "沿海州",
+            "ウラジオストク",
+            "19世紀末",
+            "中央アジア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「ロシアの領土拡大」について説明せよ。",
+          "answer": "**19世紀**のロシアは、**不凍港**を求めて**南下政策**をとった。黒海から地中海への進出をめぐる**クリミア戦争**では、**オスマン帝国**に加えて**イギリスとフランス**などが参戦し、ロシアが敗北した。一方、**1860年**に**沿海州**を自国領として**ウラジオストク**軍港を建設し、**19世紀末**までには**中央アジア**の大半も勢力下に置いた。",
+          "evidence": [
+            "russia-south",
+            "russia-crimean",
+            "russia-maritime",
+            "russia-central-asia"
+          ],
+          "keywords": [
+            "19世紀",
+            "不凍港",
+            "南下政策",
+            "クリミア戦争",
+            "オスマン帝国",
+            "イギリスとフランス",
+            "1860年",
+            "沿海州",
+            "ウラジオストク",
+            "19世紀末",
+            "中央アジア"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "三角貿易",
+      "reading": "さんかくぼうえき",
+      "category": "経済・交易",
+      "geographyLabel": "イギリス",
+      "chronology": {
+        "displayPeriod": "19世紀のイギリス・インド・清の貿易",
+        "sortYear": 1800
+      },
+      "explanation": "この項目はイギリス・インド・清の三角貿易を対象にする。茶・絹輸入の銀決済から銀不足、工業製品輸出とアヘン密輸の関係を学び、別の地域の三角貿易・朝貢形式の評価・未記載の経済用語は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "貿易の仕組み",
+          "prompt": "19世紀、イギリスがインドへ工業製品を輸出し、インド産のアヘンを清へ密輸した貿易の仕組みを何というか。",
+          "answer": "**三角貿易**。",
+          "evidence": [
+            "trade-century",
+            "triangle-goods",
+            "triangle-name"
+          ],
+          "keywords": [
+            "三角貿易"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "清からの輸入品",
+          "prompt": "三角貿易に至る前のイギリスと清の貿易で、イギリスが清から輸入していた主な品物を二つ挙げよ。",
+          "answer": "**茶と絹**。",
+          "evidence": [
+            "trade-imports"
+          ],
+          "keywords": [
+            "茶と絹"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "輸入品の決済",
+          "prompt": "三角貿易が行われる前、イギリスは清からの輸入品の代金を何で支払っていたか。",
+          "answer": "**銀**。",
+          "evidence": [
+            "trade-silver-payment"
+          ],
+          "keywords": [
+            "銀"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "貿易の転換の背景",
+          "prompt": "イギリスが三角貿易を始めるきっかけとなった、清との貿易上の問題は何か。",
+          "answer": "**清に支払う銀の不足**。",
+          "evidence": [
+            "trade-shortage"
+          ],
+          "keywords": [
+            "清に支払う銀の不足"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "貿易の背景",
+          "prompt": "イギリス・インド・清の三角貿易に至るイギリスと清の貿易は、どのような状況だったか。",
+          "answer": "**18世紀**、イギリスは清から**茶や絹**を輸入し、代金を**銀**で支払っていた。**19世紀**に入ると、清へ支払う**銀の不足**が起きた。",
+          "evidence": [
+            "trade-18th-century",
+            "trade-imports",
+            "trade-silver-payment",
+            "trade-shortage"
+          ],
+          "keywords": [
+            "18世紀",
+            "茶や絹",
+            "銀",
+            "19世紀",
+            "銀の不足"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "貿易の経路と商品",
+          "prompt": "イギリス・インド・清の三角貿易は、どのように行われたか。",
+          "answer": "イギリスがインドへ**綿織物(めんおりもの)などの工業製品**を輸出し、インド産の**アヘン**を清へ**密輸**して利益を得る形で行われた。",
+          "evidence": [
+            "triangle-goods",
+            "triangle-name"
+          ],
+          "keywords": [
+            "綿織物などの工業製品",
+            "アヘン",
+            "密輸"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「三角貿易」について説明せよ。",
+          "answer": "イギリスは清から**茶や絹**を輸入して、代金を**銀**で支払っていた。**19世紀**に清へ支払う**銀の不足**が起こると、インドへ**綿織物(めんおりもの)などの工業製品**を輸出し、インド産の**アヘン**を清へ**密輸**して利益を得る貿易を行った。",
+          "evidence": [
+            "trade-imports",
+            "trade-silver-payment",
+            "trade-shortage",
+            "triangle-goods",
+            "triangle-name"
+          ],
+          "keywords": [
+            "茶や絹",
+            "銀",
+            "19世紀",
+            "銀の不足",
+            "綿織物などの工業製品",
+            "アヘン",
+            "密輸"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "アヘン戦争",
+      "reading": "あへんせんそう",
+      "category": "戦争",
+      "geographyLabel": "清",
+      "chronology": {
+        "displayPeriod": "1840年に開始",
+        "sortYear": 1840
+      },
+      "explanation": "清でのアヘン取締りとイギリス商人の抗議、開戦・イギリスの勝利・南京条約と翌年の不平等な追加条約を学ぶ。南京条約の締結年は本文にないため要求せず、追加条約の翌年は南京条約を基準として記す。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦争名",
+          "prompt": "19世紀、清の広東でのアヘンの没収・処分に英国商人が抗議し、イギリスが清を攻撃して始まった戦争は何か。",
+          "answer": "**アヘン戦争**。",
+          "evidence": [
+            "opium-destruction",
+            "opium-war-name"
+          ],
+          "keywords": [
+            "アヘン戦争"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "開戦年",
+          "prompt": "アヘン戦争は何年に始まったか。",
+          "answer": "1840年。",
+          "evidence": [
+            "opium-war-year",
+            "opium-war-name"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "取締りを行った人物",
+          "prompt": "アヘン戦争に先立つ清の取締りで、広東のアヘンを没収・処分した人物は誰か。",
+          "answer": "**林則徐(りんそくじょ)**。",
+          "evidence": [
+            "opium-lin"
+          ],
+          "keywords": [
+            "林則徐"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦後の条約名",
+          "prompt": "アヘン戦争に勝ったイギリスが、清と結んだ条約は何か。",
+          "answer": "**南京条約**。",
+          "evidence": [
+            "nanking-name"
+          ],
+          "keywords": [
+            "南京条約"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "place",
+          "form": "条約で得た地域",
+          "prompt": "アヘン戦争後の南京条約で、イギリスが手に入れた地域はどこか。",
+          "answer": "**香港(ほんこん)**。",
+          "evidence": [
+            "nanking-name",
+            "nanking-hongkong"
+          ],
+          "keywords": [
+            "香港"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "清に認められなかった権利",
+          "prompt": "アヘン戦争後、南京条約の翌年に結ばれた追加条約で、清に認められなかった権利は何か。",
+          "answer": "**関税自主権**。",
+          "evidence": [
+            "additional-tariff"
+          ],
+          "keywords": [
+            "関税自主権"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "イギリスの特権",
+          "prompt": "アヘン戦争後の不平等な追加条約で、イギリスに認められた権利は何か。",
+          "answer": "**領事裁判権**。",
+          "evidence": [
+            "additional-consular"
+          ],
+          "keywords": [
+            "領事裁判権"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "戦争の背景",
+          "prompt": "アヘン戦争はなぜ起きたか。",
+          "answer": "清は**アヘン中毒患者の増加**と代金となる**銀の不足**に苦しみ、**1839年**に**林則徐(りんそくじょ)**が広東のアヘンを没収・処分した。これにイギリス商人が抗議した。",
+          "evidence": [
+            "opium-lin",
+            "opium-destruction"
+          ],
+          "keywords": [
+            "アヘン中毒患者の増加",
+            "銀の不足",
+            "1839年",
+            "林則徐"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "戦争と条約の結果",
+          "prompt": "アヘン戦争はどのように展開したか。",
+          "answer": "**1840年**にイギリスが清を攻撃して始まり、その後イギリスが勝利した。イギリスは**南京条約**で**香港(ほんこん)**を手に入れ、広州などの港で自由貿易を認めさせ、賠償金を得た。",
+          "evidence": [
+            "opium-war-year",
+            "opium-war-name",
+            "nanking-name",
+            "nanking-hongkong",
+            "nanking-trade-compensation"
+          ],
+          "keywords": [
+            "1840年",
+            "南京条約",
+            "香港"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "追加条約の権利関係",
+          "prompt": "アヘン戦争後の追加条約は、清とイギリスの権利の関係をどう定めたか。",
+          "answer": "南京条約の翌年の追加条約では、清に**関税自主権**がなく、イギリスに**領事裁判権**を認めた。",
+          "evidence": [
+            "additional-tariff",
+            "additional-consular"
+          ],
+          "keywords": [
+            "関税自主権",
+            "領事裁判権"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "アジアの近代史に関わる「アヘン戦争」について説明せよ。",
+          "answer": "**1840年**にイギリスと清との間で始まった戦争で、清の**林則徐(りんそくじょ)**によるアヘンの没収・処分に英国商人が抗議したことを背景とする。イギリスが勝利し、**南京条約**によって**香港(ほんこん)**を手に入れ、広州などの港で自由貿易を認めさせ、賠償金を得た。南京条約の翌年の追加条約では、清に**関税自主権**がなく、イギリスに**領事裁判権**を認めた。",
+          "evidence": [
+            "opium-lin",
+            "opium-destruction",
+            "opium-war-year",
+            "opium-war-name",
+            "nanking-name",
+            "nanking-hongkong",
+            "nanking-trade-compensation",
+            "additional-tariff",
+            "additional-consular"
+          ],
+          "keywords": [
+            "1840年",
+            "林則徐",
+            "南京条約",
+            "香港",
+            "関税自主権",
+            "領事裁判権"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

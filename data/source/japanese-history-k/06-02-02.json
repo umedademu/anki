@@ -1,0 +1,749 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 2,
+    "title": "冷戦終結"
+  },
+  "integrationPromptPrefix": "20世紀後半の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_08_冷戦終結_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      437,
+      438,
+      458
+    ],
+    "note": "437頁の当該本文と関連する注①・②、438頁の続き、458頁の同じ出来事のみ。チェルノブイリ事故から経済停滞を直接導く説明や、政治的評価・皮肉は正答にしない。"
+  },
+  "facts": [
+    {
+      "id": "reform",
+      "page": 437,
+      "quote": "ペレストロイカ（立て直し）を主導し、自由化と民主化を積極的に推進した。"
+    },
+    {
+      "id": "gorbachev",
+      "page": 437,
+      "quote": "**注① ゴルバチョフ（1931～2022）**"
+    },
+    {
+      "id": "reform-year",
+      "page": 437,
+      "quote": "昭和60年（1985）の書記長就任時"
+    },
+    {
+      "id": "glasnost",
+      "page": 437,
+      "quote": "言論や報道の自由を認めるグラスノスチ（情報公開）を強調して"
+    },
+    {
+      "id": "afghanistan",
+      "page": 437,
+      "quote": "アフガニスタンからソ連軍を撤退させ"
+    },
+    {
+      "id": "diplomacy",
+      "page": 437,
+      "quote": "米国との対話を始めるなど、融和的外交に転換して緊張緩和をもたらした。"
+    },
+    {
+      "id": "eastern-regimes",
+      "page": 437,
+      "quote": "革命により、東欧の共産主義政権が次々と倒れていったのです。"
+    },
+    {
+      "id": "soviet-influence",
+      "page": 437,
+      "quote": "その結果、ソ連の東欧への影響力が弱まったことが一連の革命の主要な原因となりました。"
+    },
+    {
+      "id": "western-broadcasts",
+      "page": 437,
+      "quote": "西欧の放送局の電波を受信できる地域も多く、東西の情報格差に対して不満が高まりました。テレビの発達が東欧諸国の民主化運動に大きな影響を与えたのです。"
+    },
+    {
+      "id": "pioneers",
+      "page": 437,
+      "quote": "先鞭をつけたのはポーランドとハンガリーでした。"
+    },
+    {
+      "id": "berlin-wall",
+      "page": 437,
+      "quote": "平成元年（一九八九）十一月九日には**ベルリンの壁崩壊**があり"
+    },
+    {
+      "id": "german-unification",
+      "page": 437,
+      "quote": "平成二年（一九九〇）には東ドイツが西ドイツに編入されて東西ドイツが統合しました。"
+    },
+    {
+      "id": "bush",
+      "page": 437,
+      "quote": "アメリカのブッシュ大統領"
+    },
+    {
+      "id": "gorbachev-meeting",
+      "page": 437,
+      "quote": "ソ連の①**ゴルバチョフ**書記長"
+    },
+    {
+      "id": "malta-sea",
+      "page": 437,
+      "quote": "地中海のマルタ島沖で会談し"
+    },
+    {
+      "id": "cold-war-end",
+      "page": 437,
+      "quote": "**冷戦終結**を宣言したのです。"
+    },
+    {
+      "id": "malta-meeting",
+      "page": 437,
+      "quote": "そしてついに、十二月にアメリカのブッシュ大統領とソ連の①**ゴルバチョフ**書記長が地中海のマルタ島沖で会談し、**冷戦終結**を宣言したのです。"
+    },
+    {
+      "id": "cold-war-year",
+      "page": 458,
+      "quote": "米ソ冷戦終結（1989）"
+    },
+    {
+      "id": "soviet-politics",
+      "page": 437,
+      "quote": "ソ連は共産党一党独裁制を廃して大統領制に移行し"
+    },
+    {
+      "id": "soviet-economy",
+      "page": 437,
+      "quote": "市場経済を導入して立て直しを図りましたが"
+    },
+    {
+      "id": "national-independence",
+      "page": 437,
+      "quote": "各地で民族独立運動が高まり、バルト三国が独立を宣言しました。"
+    },
+    {
+      "id": "coup",
+      "page": 437,
+      "quote": "連邦内で保守派勢力によるクーデターが起き鎮圧には成功したものの、連邦の権威は失墜しました"
+    },
+    {
+      "id": "ukraine-vote",
+      "page": 437,
+      "quote": "次いでウクライナの国民投票で独立の意思が示されると"
+    },
+    {
+      "id": "yeltsin",
+      "page": 437,
+      "quote": "ソ連を構成するロシア共和国のエリツィン大統領が主導して"
+    },
+    {
+      "id": "secession",
+      "page": 437,
+      "quote": "ロシア、ウクライナ、ベラルーシが連邦からの離脱を表明し、独立国家共同体の設立を目指しました。"
+    },
+    {
+      "id": "soviet-collapse",
+      "page": 437,
+      "quote": "そこでソ連のゴルバチョフ大統領が辞任したことで、平成三年（一九九一）、ソビエト連邦はその歴史に幕を下ろしました。**ソ連邦崩壊**です。"
+    },
+    {
+      "id": "soviet-collapse-year",
+      "page": 458,
+      "quote": "ソ連の解体（1991）"
+    },
+    {
+      "id": "american-subject",
+      "page": 437,
+      "quote": "これにより、アメリカ"
+    },
+    {
+      "id": "american-superpower",
+      "page": 438,
+      "quote": "が唯一の超大国となりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ペレストロイカ",
+      "reading": "ぺれすとろいか",
+      "category": "ソ連の改革",
+      "geographyLabel": "ソ連",
+      "chronology": {
+        "displayPeriod": "1985年以降",
+        "sortYear": 1985
+      },
+      "explanation": "ソ連のゴルバチョフは立て直しの改革を主導し、言論・報道の自由を認める情報公開と自由化・民主化を進めた。外交もアメリカとの対話などを通じて融和的な方向へ転換した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "1980年代のソ連で、自由化と民主化を積極的に進めた「立て直し」の改革は何と呼ばれたか。",
+          "answer": "ペレストロイカ。",
+          "evidence": [
+            "reform"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "改革の主導者",
+          "prompt": "1980年代のソ連で、ペレストロイカを主導した書記長は誰か。",
+          "answer": "ゴルバチョフ。",
+          "evidence": [
+            "gorbachev",
+            "reform"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "情報公開",
+          "prompt": "1980年代のソ連のペレストロイカに関連して、言論や報道の自由を認める「情報公開」を意味する政策は何か。",
+          "answer": "グラスノスチ。",
+          "evidence": [
+            "glasnost"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "軍の撤退",
+          "prompt": "1980年代のソ連のペレストロイカを進めたゴルバチョフは、アフガニスタンに駐留していたソ連軍をどうしたか。",
+          "answer": "撤退させた。",
+          "evidence": [
+            "afghanistan"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "国内の改革",
+          "prompt": "1980年代のソ連で、ペレストロイカはどのような改革だったか。",
+          "answer": "1985年に書記長となった**ゴルバチョフ**が主導したソ連の立て直しの改革で、**グラスノスチ**（情報公開）を強調して言論や報道の自由を認め、自由化と民主化を積極的に進めた。",
+          "evidence": [
+            "gorbachev",
+            "reform-year",
+            "reform",
+            "glasnost"
+          ],
+          "keywords": [
+            "ゴルバチョフ",
+            "グラスノスチ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "外交の変化",
+          "prompt": "1980年代のソ連で、ペレストロイカを進めたゴルバチョフは外交をどのように変えたか。",
+          "answer": "**アフガニスタン**からソ連軍を撤退させ、**アメリカ**との対話を始めるなど**融和的外交**に転換し、緊張緩和をもたらした。",
+          "evidence": [
+            "afghanistan",
+            "diplomacy"
+          ],
+          "keywords": [
+            "アフガニスタン",
+            "アメリカ",
+            "融和的外交"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "20世紀後半の「ペレストロイカ」について説明せよ。",
+          "answer": "1985年にソ連の書記長となった**ゴルバチョフ**が主導した立て直しの改革で、**グラスノスチ**（情報公開）を強調し、言論や報道の自由を認めて自由化と民主化を進めた。外交では**アフガニスタン**からソ連軍を撤退させ、**アメリカ**との対話を始めるなど**融和的外交**に転換し、緊張緩和をもたらした。",
+          "evidence": [
+            "gorbachev",
+            "reform-year",
+            "reform",
+            "glasnost",
+            "afghanistan",
+            "diplomacy"
+          ],
+          "keywords": [
+            "ゴルバチョフ",
+            "グラスノスチ",
+            "アフガニスタン",
+            "アメリカ",
+            "融和的外交"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ベルリンの壁崩壊",
+      "reading": "べるりんのかべほうかい",
+      "category": "東欧の民主化",
+      "geographyLabel": "東欧",
+      "chronology": {
+        "displayPeriod": "1989～1990年",
+        "sortYear": 1989
+      },
+      "explanation": "東欧でソ連の影響力の低下や東西の情報格差への不満を背景に民主化が進み、1989年にベルリンの壁が崩壊した。1990年には東ドイツが西ドイツに編入され、東西ドイツが統合した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "1989年11月9日、東欧の共産主義政権が次々と倒れる中で起きた壁の崩壊を何というか。",
+          "answer": "ベルリンの壁崩壊。",
+          "evidence": [
+            "eastern-regimes",
+            "berlin-wall"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "民主化の先駆け",
+          "prompt": "20世紀後半のヨーロッパで、ベルリンの壁崩壊に至る東欧の民主化に先鞭をつけた２つの国はどこか。",
+          "answer": "ポーランドとハンガリー。",
+          "evidence": [
+            "pioneers"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "情報の伝わり方",
+          "prompt": "20世紀後半のヨーロッパで、ベルリンの壁崩壊に至る東欧の民主化運動に影響を与えた、西欧の情報を受け取る手段は何か。",
+          "answer": "テレビ放送。",
+          "evidence": [
+            "western-broadcasts"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "東西ドイツの統合",
+          "prompt": "20世紀後半のヨーロッパで、ベルリンの壁崩壊の翌年、東西ドイツはどのような形で統合したか。",
+          "answer": "東ドイツが西ドイツに編入される形。",
+          "evidence": [
+            "german-unification"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "ソ連との関係",
+          "prompt": "20世紀後半のヨーロッパで、ベルリンの壁崩壊の時代に起きた東欧の革命の主要な原因となった、ソ連との関係の変化は何か。",
+          "answer": "ソ連の東欧への影響力が弱まったこと。",
+          "evidence": [
+            "soviet-influence"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "東欧の変化",
+          "prompt": "20世紀後半のヨーロッパでは、ベルリンの壁崩壊に至る東欧の変化はどのように進んだか。",
+          "answer": "ソ連の東欧への**影響力の低下**や西欧のテレビ放送を通じた東西の情報格差への不満を背景に、**ポーランド**と**ハンガリー**が民主化に先鞭をつけた。1989年には東欧の共産主義政権が次々と倒れ、11月9日に**ベルリンの壁崩壊**が起きた。",
+          "evidence": [
+            "soviet-influence",
+            "western-broadcasts",
+            "pioneers",
+            "eastern-regimes",
+            "berlin-wall"
+          ],
+          "keywords": [
+            "影響力の低下",
+            "ポーランド",
+            "ハンガリー",
+            "ベルリンの壁崩壊"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ドイツの統合",
+          "prompt": "20世紀後半のヨーロッパで、ベルリンの壁崩壊後の東西ドイツの関係はどのように変化したか。",
+          "answer": "1990年、**東ドイツ**が**西ドイツ**に編入され、**東西ドイツの統合**が実現した。",
+          "evidence": [
+            "german-unification"
+          ],
+          "keywords": [
+            "東ドイツ",
+            "西ドイツ",
+            "東西ドイツの統合"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "20世紀後半の「ベルリンの壁崩壊」について説明せよ。",
+          "answer": "東欧ではソ連の**影響力の低下**と西欧のテレビ放送を通じた東西の情報格差への不満を背景に、**ポーランド**と**ハンガリー**を先駆けとして民主化が進み、共産主義政権が次々と倒れた。1989年11月9日に**ベルリンの壁崩壊**が起き、1990年には**東ドイツ**が**西ドイツ**に編入されて**東西ドイツの統合**が実現した。",
+          "evidence": [
+            "soviet-influence",
+            "western-broadcasts",
+            "pioneers",
+            "eastern-regimes",
+            "berlin-wall",
+            "german-unification"
+          ],
+          "keywords": [
+            "影響力の低下",
+            "ポーランド",
+            "ハンガリー",
+            "ベルリンの壁崩壊",
+            "東ドイツ",
+            "西ドイツ",
+            "東西ドイツの統合"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "冷戦終結",
+      "reading": "れいせんしゅうけつ",
+      "category": "米ソ関係",
+      "geographyLabel": "ソ連",
+      "chronology": {
+        "displayPeriod": "1989年12月",
+        "sortYear": 1989
+      },
+      "explanation": "1989年12月、アメリカのブッシュ大統領とソ連のゴルバチョフ書記長が地中海のマルタ島沖で会談し、冷戦終結を宣言した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "アメリカの首脳",
+          "prompt": "20世紀後半の米ソ関係で、冷戦終結を宣言したアメリカ側の大統領は誰か。",
+          "answer": "ブッシュ。",
+          "evidence": [
+            "bush",
+            "cold-war-end"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "ソ連の首脳",
+          "prompt": "20世紀後半の米ソ関係で、冷戦終結を宣言したソ連側の書記長は誰か。",
+          "answer": "ゴルバチョフ。",
+          "evidence": [
+            "gorbachev-meeting",
+            "cold-war-end"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "会談の場所",
+          "prompt": "20世紀後半の米ソ関係で、両国の首脳が冷戦終結を宣言したマルタ島沖は、どの海にあるか。",
+          "answer": "地中海。",
+          "evidence": [
+            "malta-sea",
+            "cold-war-end"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "米ソ関係の変化",
+          "prompt": "20世紀後半の米ソ関係で、冷戦終結はどのように宣言されたか。",
+          "answer": "1989年12月、アメリカの**ブッシュ**大統領とソ連の**ゴルバチョフ**書記長が**地中海**のマルタ島沖で会談し、**冷戦終結**を宣言した。",
+          "evidence": [
+            "cold-war-year",
+            "malta-meeting"
+          ],
+          "keywords": [
+            "ブッシュ",
+            "ゴルバチョフ",
+            "地中海",
+            "冷戦終結"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "20世紀後半の「冷戦終結」について説明せよ。",
+          "answer": "1989年12月、アメリカの**ブッシュ**大統領とソ連の**ゴルバチョフ**書記長が、**地中海**のマルタ島沖で会談した。この会談で**冷戦終結**が宣言された。",
+          "evidence": [
+            "cold-war-year",
+            "malta-meeting"
+          ],
+          "keywords": [
+            "ブッシュ",
+            "ゴルバチョフ",
+            "地中海",
+            "冷戦終結"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "ソ連邦崩壊",
+      "reading": "それんぽうほうかい",
+      "category": "ソ連の解体",
+      "geographyLabel": "ソ連",
+      "chronology": {
+        "displayPeriod": "1991年",
+        "sortYear": 1991
+      },
+      "explanation": "ソ連では政治・経済の改革とともに民族独立運動が高まり、クーデター後に連邦の権威も失墜した。ロシアなどの離脱とゴルバチョフの辞任によって1991年にソ連邦が崩壊し、アメリカが唯一の超大国となった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政治体制",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊に先立って廃止された政治体制は何か。",
+          "answer": "共産党一党独裁制。",
+          "evidence": [
+            "soviet-politics"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "経済の改革",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊に先立って導入された経済の仕組みは何か。",
+          "answer": "市場経済。",
+          "evidence": [
+            "soviet-economy"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "離脱の主導者",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊につながるロシアなどの連邦離脱を主導したロシア共和国の大統領は誰か。",
+          "answer": "エリツィン。",
+          "evidence": [
+            "yeltsin"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "新しい国家の枠組み",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊に際して連邦からの離脱を表明したロシアなどが設立を目指した国家の枠組みは何か。",
+          "answer": "独立国家共同体。",
+          "evidence": [
+            "secession"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政治の混乱",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊に至る過程で保守派勢力が起こし、鎮圧された出来事は何か。",
+          "answer": "クーデター。",
+          "evidence": [
+            "coup"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "国際関係の変化",
+          "prompt": "20世紀末の国際社会で、ソ連邦崩壊後に唯一の超大国となった国はどこか。",
+          "answer": "アメリカ。",
+          "evidence": [
+            "american-subject",
+            "american-superpower"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊が起きたのは何年か。",
+          "answer": "1991年。",
+          "evidence": [
+            "soviet-collapse-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "崩壊前の変化",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊前にはどのような変化が起きていたか。",
+          "answer": "ソ連は**共産党一党独裁制**を廃して**大統領制**へ移行し、**市場経済**の導入で立て直しを図ったが、各地で**民族独立運動**が高まり、**バルト三国**が独立を宣言した。",
+          "evidence": [
+            "soviet-politics",
+            "soviet-economy",
+            "national-independence"
+          ],
+          "keywords": [
+            "共産党一党独裁制",
+            "大統領制",
+            "市場経済",
+            "民族独立運動",
+            "バルト三国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "崩壊の過程",
+          "prompt": "20世紀末のソ連で、ソ連邦崩壊はどのように進んだか。",
+          "answer": "保守派の**クーデター**は鎮圧されたが連邦の権威は失墜し、ウクライナの国民投票で独立の意思が示されると、**エリツィン**大統領が主導して**ロシア**・**ウクライナ**・**ベラルーシ**が連邦離脱を表明し、**独立国家共同体**の設立を目指した。**ゴルバチョフ**大統領が辞任し、1991年にソ連邦は崩壊した。",
+          "evidence": [
+            "coup",
+            "ukraine-vote",
+            "yeltsin",
+            "secession",
+            "soviet-collapse"
+          ],
+          "keywords": [
+            "クーデター",
+            "エリツィン",
+            "ロシア",
+            "ウクライナ",
+            "ベラルーシ",
+            "独立国家共同体",
+            "ゴルバチョフ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "崩壊後の国際関係",
+          "prompt": "20世紀末の国際社会で、ソ連邦崩壊後の超大国の関係はどう変わったか。",
+          "answer": "1991年のソ連邦崩壊により、**アメリカ**が唯一の超大国となった。",
+          "evidence": [
+            "soviet-collapse-year",
+            "american-subject",
+            "american-superpower"
+          ],
+          "keywords": [
+            "アメリカ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "20世紀後半の「ソ連邦崩壊」について説明せよ。",
+          "answer": "ソ連は**共産党一党独裁制**を廃して**大統領制**に移行し、**市場経済**を導入したが、**民族独立運動**が高まり、**バルト三国**が独立を宣言した。保守派の**クーデター**は鎮圧されたが連邦の権威が失墜し、**エリツィン**が主導する**ロシア**・**ウクライナ**・**ベラルーシ**が離脱を表明して**独立国家共同体**の設立を目指した。**ゴルバチョフ**の辞任によって1991年にソ連邦が崩壊し、**アメリカ**が唯一の超大国となった。",
+          "evidence": [
+            "soviet-politics",
+            "soviet-economy",
+            "national-independence",
+            "coup",
+            "yeltsin",
+            "secession",
+            "soviet-collapse",
+            "soviet-collapse-year",
+            "american-subject",
+            "american-superpower"
+          ],
+          "keywords": [
+            "共産党一党独裁制",
+            "大統領制",
+            "市場経済",
+            "民族独立運動",
+            "バルト三国",
+            "クーデター",
+            "エリツィン",
+            "ロシア",
+            "ウクライナ",
+            "ベラルーシ",
+            "独立国家共同体",
+            "ゴルバチョフ",
+            "アメリカ"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

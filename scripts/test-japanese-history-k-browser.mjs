@@ -138,7 +138,7 @@ try {
   assert.equal(await page.locator("#start-study").isDisabled(), true);
   await page.getByRole("button", { name: "全パートを選択" }).click(); await ready();
   await assertSummary(filterQuestionTypes([plan, ...additions].flatMap(item => item.terms), resolveQuestionTypes()));
-  assert.match(await page.locator("#chapter-selection-summary").textContent(), /4パート/);
+  assert.match(await page.locator("#chapter-selection-summary").textContent(), new RegExp(`${combinedSubject.decks.length}パート`));
   // GHQの既存の動作確認は一小項目に絞り、新規問題は後で個別に確認する。
   for (const addition of additions) {
     await page.locator(`.chapter-picker input[value="${addition.index.deckId}"]`).uncheck(); await ready();
@@ -259,7 +259,7 @@ try {
   assert.deepEqual(audioAttempts, [], "画面の移動や再読み込みを含め、一度も音声を再生しません。");
   assert.equal(requests.some(url => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
   assert.ok([...sessions.keys()].every(key => [oldVersion, plan.index.version, ...additions.map(item => item.index.version)].includes(key)));
-  console.log(`日本史Kの画面確認：４小項目・${combinedSubject.questionCount}問の選択、新規３小項目の出題・回答・保存再開・統合説明、GHQの全説明問題習得後の移行、用語枠非表示と太字、既存記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
+  console.log(`日本史Kの画面確認：${combinedSubject.decks.length}小項目・${combinedSubject.questionCount}問の選択、全小項目の出題・回答・保存再開・統合説明、GHQの全説明問題習得後の移行、用語枠非表示と太字、既存記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

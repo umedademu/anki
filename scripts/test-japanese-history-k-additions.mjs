@@ -3,15 +3,18 @@ import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks, con
 import writer from "./japanese-history-k-storage-worker.js";
 import { createEmptyProgress, createQuestionQueue, getTermStage, rateQuestion } from "../public/learning-engine.js";
 import { createSessionDatasetVersion } from "../public/deck-selection.js";
+import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
 
 const first = await loadJapaneseHistoryK(), additions = await loadJapaneseKAdditions();
-assert.equal(additions.length, 3);
-assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-06-01-02", "book-06-01-03", "book-06-01-04"]);
-const original = { schemaVersion: 3, version: "before", subjects: [{ id: "other", decks: [{ id: "other-deck", version: "keep" }] }, first.subject], termImages: { path: "unchanged" } };
+assert.equal(additions.length, 9);
+assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-06-01-02", "book-06-01-03", "book-06-01-04", "book-06-01-05", "book-06-01-06", "book-06-02-01", "book-06-02-02", "book-06-02-03", "book-06-02-04"]);
+const earlier = additions.slice(0, 3), pending = additions.slice(3);
+const original = appendJapaneseKDecks({ schemaVersion: 3, version: "before", subjects: [{ id: "other", decks: [{ id: "other-deck", version: "keep" }] }, first.subject], termImages: { path: "unchanged" } }, earlier);
 const next = appendJapaneseKDecks(original, additions), subject = next.subjects[1];
 assert.deepEqual(next.subjects[0], original.subjects[0]);
 assert.deepEqual(next.termImages, original.termImages);
 assert.deepEqual(subject.decks[0], first.subject.decks[0]);
+for (const deck of original.subjects[1].decks) assert.deepEqual(subject.decks.find(entry => entry.id === deck.id), deck, "追加前の４小項目と履歴版を保持します。");
 assert.equal(subject.defaultDeckId, first.subject.defaultDeckId);
 assert.equal(subject.indexPath, first.subject.indexPath);
 assert.equal(subject.questionCount, first.index.questionCount + additions.reduce((sum, plan) => sum + plan.index.questionCount, 0));
@@ -33,7 +36,8 @@ assert.notEqual(createSessionDatasetVersion(subject.id, [subject.decks[0].id], v
 for (const plan of additions) {
   assert.equal(plan.index.version, `japanese-history-k-${plan.index.deckId}-v1`);
   assert.equal(plan.index.availableStages.length, 3);
-  for (const term of plan.terms) {
+  // 年号だけの問いを除く初期設定でも、各項目が統合まで進めることを確認する。
+  for (const term of plan.terms.flatMap(value => [value, ...filterQuestionTypes([value], resolveQuestionTypes())])) {
     const progress = createEmptyProgress();
     assert.equal(getTermStage(term, progress, 2), "beginner");
     assert.ok(createQuestionQueue([term], progress, 2).every(task => task.stage === "beginner"));
@@ -56,12 +60,13 @@ class MemoryBucket {
     const etag = `etag-${++this.serial}`; this.objects.set(key, { etag, text }); return { etag };
   }
 }
-const bucket = new MemoryBucket(), objects = additions.flatMap(plan => plan.objects);
-for (const object of first.objects) await bucket.put(object.key, JSON.stringify(object.value) + "\n");
+const bucket = new MemoryBucket(), objects = pending.flatMap(plan => plan.objects);
+const previousObjects = [first, ...earlier].flatMap(plan => plan.objects);
+for (const object of previousObjects) await bucket.put(object.key, JSON.stringify(object.value) + "\n");
 const before = await bucket.put("index.json", JSON.stringify(original));
-const env = { BUCKET: bucket, ACCESS_TOKEN: "test-only", PRESERVE_EXISTING_DECKS: "true", PREVIOUS_SUBJECT_HASH: contentHash(first.subject), ADDITION_JSON: JSON.stringify(subject),
+const env = { BUCKET: bucket, ACCESS_TOKEN: "test-only", PRESERVE_EXISTING_DECKS: "true", PREVIOUS_SUBJECT_HASH: contentHash(original.subjects[1]), ADDITION_JSON: JSON.stringify(subject),
   OBJECT_HASHES: JSON.stringify(Object.fromEntries(objects.map(object => [object.key, contentHash(object.value)]))),
-  PREVIOUS_OBJECT_HASHES: JSON.stringify(Object.fromEntries(first.objects.map(object => [object.key, contentHash(object.value)]))) };
+  PREVIOUS_OBJECT_HASHES: JSON.stringify(Object.fromEntries(previousObjects.map(object => [object.key, contentHash(object.value)]))) };
 const call = (input, settings = env) => writer.fetch(new Request("https://example.invalid", { method: "POST", headers: { Authorization: "Bearer test-only", "Content-Type": "application/json" }, body: JSON.stringify(input) }), settings);
 const commit = { action: "commit", key: "index.json", value: next, expectedEtag: before.etag };
 assert.equal((await call(commit)).status, 400, "全新規問題を照合する前には切替できません。");
@@ -78,6 +83,6 @@ assert.equal((await call(commit)).status, 400, "確認後に既存問題が変�
 await bucket.put(first.objects[0].key, JSON.stringify(first.objects[0].value) + "\n");
 assert.equal((await call(commit)).status, 200);
 assert.deepEqual(await (await bucket.get("index.json")).json(), next);
-for (const object of first.objects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
+for (const object of previousObjects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
 assert.deepEqual(await (await bucket.get(`subjects/japanese-history-k/imports/history/${before.etag}.json`)).json(), original);
-console.log(`日本史K追加：３小項目・${additions.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の原文検査、全項目の段階移行、既存問題と履歴版の保持、再送・同時編集・上書き防止を確認しました。`);
+console.log(`日本史K追加：原稿${additions.length}小項目の検査、今回の${pending.length}小項目・${pending.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の追加、全項目の段階移行、既存４小項目と履歴版の保持、再送・同時編集・上書き防止を確認しました。`);

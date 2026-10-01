@@ -1,0 +1,600 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 3,
+    "title": "テロとの戦い"
+  },
+  "integrationPromptPrefix": "冷戦後の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_09_テロとの戦い_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      438,
+      439
+    ],
+    "note": "湾岸戦争とイラク戦争の違い、米国同時多発テロと米国の対応、国際テロの拡大、日本の具体的な支援を中心に学ぶ。米国が開戦理由とした嫌疑と、国連査察で確認された事実を区別する。ラッカの所在と2017年の都市奪還、現在の大量破壊兵器やＩＳＩＬの状況、犠牲者数、オバマ政権とＩＳＩＬ成立を直接結び付けた因果は出題しない。アフガニスタン攻撃の正確な年月や具体的な条文・法律名は補わない。"
+  },
+  "facts": [
+    {
+      "id": "gulf-year",
+      "page": 438,
+      "quote": "平成三年（一九九一）には、湾岸戦争が起きました。"
+    },
+    {
+      "id": "gulf-invasion",
+      "page": 438,
+      "quote": "イラクがクウェートに侵攻したことに対して"
+    },
+    {
+      "id": "gulf-response",
+      "page": 438,
+      "quote": "イラク軍を撤退させました。"
+    },
+    {
+      "id": "terror-date",
+      "page": 438,
+      "quote": "平成13年（2001）9月11日"
+    },
+    {
+      "id": "terror-method",
+      "page": 438,
+      "quote": "イスラム過激派が複数の旅客機をハイジャックし"
+    },
+    {
+      "id": "terror-site",
+      "page": 438,
+      "quote": "世界貿易センタービルなどに衝突させるテロ事件を起こし"
+    },
+    {
+      "id": "terror-response",
+      "page": 438,
+      "quote": "平成十三年（二〇〇一）九月十一日にはアメリカのニューヨークで③同時多発テロが起き、テロとの戦いが始まりました。"
+    },
+    {
+      "id": "afghan-attack",
+      "page": 438,
+      "quote": "アメリカはテロリストを保護していたとして、アフガニスタンを攻撃し"
+    },
+    {
+      "id": "iraq-suspicion",
+      "page": 438,
+      "quote": "大量破壊兵器を持っているという嫌疑により"
+    },
+    {
+      "id": "iraq-inspection",
+      "page": 438,
+      "quote": "開戦前のイラクは国連の査察を受け入れ、その際に大量破壊兵器は発見されなかった。それでも米国は開戦に踏み切った。"
+    },
+    {
+      "id": "isil-base",
+      "page": 438,
+      "quote": "ＩＳＩＬはイラクとシリアを拠点とし、世界中で残虐なテロを繰り返すようになりました。"
+    },
+    {
+      "id": "paris-year",
+      "page": 438,
+      "quote": "平成二十七年（二〇一五）にはパリ同時多発テロが起きて"
+    },
+    {
+      "id": "japan-indian-deployment",
+      "page": 439,
+      "quote": "海上自衛隊の補給艦と護衛艦をインド洋に派遣しました。"
+    },
+    {
+      "id": "japan-indian-supply",
+      "page": 439,
+      "quote": "国際テロを防止する活動に従事する各国軍艦艇が頻繁に寄港しなくても長期間の活動ができるよう、燃料や水を洋上補給して海上阻止活動を支援しました。"
+    },
+    {
+      "id": "japan-iraq",
+      "page": 439,
+      "quote": "イラクに自衛隊を派遣し復興を支援しました。"
+    },
+    {
+      "id": "gulf-actor",
+      "page": 438,
+      "quote": "多国籍軍がイラク軍を撤退させました。"
+    },
+    {
+      "id": "iraq-year",
+      "page": 438,
+      "quote": "平成十五年（二〇〇三）にイラクを攻撃しました。"
+    },
+    {
+      "id": "terror-city",
+      "page": 438,
+      "quote": "ニューヨーク"
+    },
+    {
+      "id": "terror-event",
+      "page": 438,
+      "quote": "同時多発テロが起き、テロとの戦いが始まりました。"
+    },
+    {
+      "id": "japan-indian-period",
+      "page": 439,
+      "quote": "平成十三年（二〇〇一）から平成二十二年（二〇一〇）までの期間"
+    },
+    {
+      "id": "japan-iraq-period",
+      "page": 439,
+      "quote": "平成十五年（二〇〇三）から平成二十一年（二〇〇九）にかけて"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "湾岸戦争とイラク戦争",
+      "reading": "わんがんせんそうといらくせんそう",
+      "category": "戦争",
+      "geographyLabel": "イラク",
+      "chronology": {
+        "displayPeriod": "1991年・2003年",
+        "sortYear": 1991
+      },
+      "explanation": "イラクのクウェート侵攻に対する湾岸戦争と、大量破壊兵器保有の嫌疑を理由に米国が始めたイラク戦争を区別する。国連査察で未発見だったことは開戦前の事実として扱い、今日の状況には広げない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "イラクによる侵攻に対し、1991年にイラク軍を撤退させた戦争は何か。",
+          "answer": "**湾岸戦争**。",
+          "keywords": [
+            "湾岸戦争"
+          ],
+          "evidence": [
+            "gulf-year",
+            "gulf-response"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "地域",
+          "prompt": "冷戦後の湾岸戦争とイラク戦争に関して、湾岸戦争のきっかけとなる侵攻をイラクから受けた国はどこか。",
+          "answer": "**クウェート**。",
+          "keywords": [
+            "クウェート"
+          ],
+          "evidence": [
+            "gulf-invasion"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体",
+          "prompt": "冷戦後の湾岸戦争とイラク戦争に関して、湾岸戦争でイラク軍を撤退させたのは、どのような軍か。",
+          "answer": "**多国籍軍**。",
+          "keywords": [
+            "多国籍軍"
+          ],
+          "evidence": [
+            "gulf-actor"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後の湾岸戦争とイラク戦争に関して、イラク戦争が始まったのはいつか。",
+          "answer": "2003年。",
+          "keywords": [],
+          "evidence": [
+            "iraq-year"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "理由",
+          "prompt": "冷戦後の湾岸戦争とイラク戦争に関して、米国はどのような嫌疑を理由にイラク戦争を始めたか。",
+          "answer": "イラクが**大量破壊兵器を保有**しているという嫌疑。",
+          "keywords": [
+            "大量破壊兵器を保有"
+          ],
+          "evidence": [
+            "iraq-suspicion"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後の湾岸戦争とイラク戦争に関して、イラク戦争の開戦前に行われた国連査察では、大量破壊兵器は発見されたか。",
+          "answer": "**大量破壊兵器は発見されなかった**。",
+          "keywords": [
+            "大量破壊兵器は発見されなかった"
+          ],
+          "evidence": [
+            "iraq-inspection"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後の湾岸戦争では、何が起こったか。",
+          "answer": "イラクの**クウェート**侵攻に対し、1991年の**湾岸戦争**で**多国籍軍**がイラク軍を撤退させた。",
+          "keywords": [
+            "クウェート",
+            "湾岸戦争",
+            "多国籍軍"
+          ],
+          "evidence": [
+            "gulf-year",
+            "gulf-invasion",
+            "gulf-actor",
+            "gulf-response"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後のイラク戦争は、どのように始まったか。",
+          "answer": "イラクは開戦前に**国連の査察**を受け入れたが、**大量破壊兵器は発見されなかった**。それでも2003年、米国は**大量破壊兵器保有の嫌疑**を理由にイラクを攻撃し、**イラク戦争**を始めた。",
+          "keywords": [
+            "国連の査察",
+            "大量破壊兵器は発見されなかった",
+            "大量破壊兵器保有の嫌疑",
+            "イラク戦争"
+          ],
+          "evidence": [
+            "iraq-suspicion",
+            "iraq-year",
+            "iraq-inspection"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "冷戦後の「湾岸戦争とイラク戦争」について説明せよ。",
+          "answer": "イラクの**クウェート**侵攻に対し、1991年の**湾岸戦争**で**多国籍軍**がイラク軍を撤退させた。イラク戦争の開戦前、イラクは**国連の査察**を受け入れたが、**大量破壊兵器は発見されなかった**。それでも2003年、米国は**大量破壊兵器保有の嫌疑**を理由にイラクを攻撃し、**イラク戦争**を始めた。",
+          "keywords": [
+            "クウェート",
+            "湾岸戦争",
+            "多国籍軍",
+            "国連の査察",
+            "大量破壊兵器は発見されなかった",
+            "大量破壊兵器保有の嫌疑",
+            "イラク戦争"
+          ],
+          "evidence": [
+            "gulf-year",
+            "gulf-invasion",
+            "gulf-actor",
+            "gulf-response",
+            "iraq-suspicion",
+            "iraq-year",
+            "iraq-inspection"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "米国同時多発テロと国際テロの拡大",
+      "reading": "べいこくどうじたはつてろとこくさいてろのかくだい",
+      "category": "事件・革命",
+      "geographyLabel": "アメリカ",
+      "chronology": {
+        "displayPeriod": "2001年・2015年",
+        "sortYear": 2001
+      },
+      "explanation": "米国同時多発テロとアフガニスタン攻撃への流れを整理し、ＩＳＩＬの活動拠点とパリ同時多発テロを国際テロ拡大の事実として学ぶ。米国の攻撃理由は米国側の主張として扱い、個別の被害者数やＩＳＩＬ成立の単純化した因果、現在の組織の状態は問わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "冷戦後、イスラム過激派が複数の旅客機をハイジャックし、米国で起こしたテロ事件は何か。",
+          "answer": "**米国同時多発テロ**。",
+          "keywords": [
+            "米国同時多発テロ"
+          ],
+          "evidence": [
+            "terror-method",
+            "terror-event"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後の米国同時多発テロと国際テロの拡大に関して、米国での事件が起きたのはいつか。",
+          "answer": "2001年9月11日。",
+          "keywords": [],
+          "evidence": [
+            "terror-date"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後の米国同時多発テロと国際テロの拡大に関して、米国の事件でハイジャックされた旅客機が衝突した主なビルの名称は何か。",
+          "answer": "**世界貿易センタービル**。",
+          "keywords": [
+            "世界貿易センタービル"
+          ],
+          "evidence": [
+            "terror-site"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "地域",
+          "prompt": "冷戦後の米国同時多発テロと国際テロの拡大に関して、米国で世界貿易センタービルへの衝突が起きた都市はどこか。",
+          "answer": "**ニューヨーク**。",
+          "keywords": [
+            "ニューヨーク"
+          ],
+          "evidence": [
+            "terror-city"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "理由",
+          "prompt": "冷戦後の米国同時多発テロと国際テロの拡大に関して、米国はどのような理由を挙げてアフガニスタンを攻撃したか。",
+          "answer": "アフガニスタンが**テロリストを保護していた**という米国側の主張。",
+          "keywords": [
+            "テロリストを保護していた"
+          ],
+          "evidence": [
+            "afghan-attack"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "place",
+          "form": "地域",
+          "prompt": "冷戦後の米国同時多発テロと国際テロの拡大に関して、イスラム教過激派組織ＩＳＩＬが拠点とした二つの国はどこか。",
+          "answer": "**イラク**と**シリア**。",
+          "keywords": [
+            "イラク",
+            "シリア"
+          ],
+          "evidence": [
+            "isil-base"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後の米国同時多発テロは、どのような事件で、何につながったか。",
+          "answer": "2001年9月11日、アメリカでイスラム過激派が**旅客機をハイジャック**し、**ニューヨーク**の**世界貿易センタービル**などに衝突させる**米国同時多発テロ**を起こした。アメリカは、**アフガニスタン**がテロリストを保護していたとして、同国を攻撃した。",
+          "keywords": [
+            "旅客機をハイジャック",
+            "ニューヨーク",
+            "世界貿易センタービル",
+            "米国同時多発テロ",
+            "アフガニスタン"
+          ],
+          "evidence": [
+            "terror-date",
+            "terror-method",
+            "terror-site",
+            "terror-city",
+            "terror-response",
+            "afghan-attack"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後、ＩＳＩＬによる国際テロはどのように広がったか。",
+          "answer": "**ＩＳＩＬ**が**イラクとシリア**を拠点に各地でテロを行うようになった。2015年には**パリ同時多発テロ**も起きた。",
+          "keywords": [
+            "ＩＳＩＬ",
+            "イラクとシリア",
+            "パリ同時多発テロ"
+          ],
+          "evidence": [
+            "isil-base",
+            "paris-year"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "冷戦後の「米国同時多発テロと国際テロの拡大」について説明せよ。",
+          "answer": "2001年9月11日、アメリカでイスラム過激派が**旅客機をハイジャック**し、**ニューヨーク**の**世界貿易センタービル**などに衝突させる**米国同時多発テロ**を起こした。アメリカは、**アフガニスタン**がテロリストを保護していたとして、同国を攻撃した。**ＩＳＩＬ**が**イラクとシリア**を拠点に各地でテロを行うようになり、2015年には**パリ同時多発テロ**も起きた。",
+          "keywords": [
+            "旅客機をハイジャック",
+            "ニューヨーク",
+            "世界貿易センタービル",
+            "米国同時多発テロ",
+            "アフガニスタン",
+            "ＩＳＩＬ",
+            "イラクとシリア",
+            "パリ同時多発テロ"
+          ],
+          "evidence": [
+            "terror-date",
+            "terror-method",
+            "terror-site",
+            "terror-city",
+            "terror-response",
+            "afghan-attack",
+            "isil-base",
+            "paris-year"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "テロとの戦いに対する日本の支援",
+      "reading": "てろとのたたかいにたいするにほんのしえん",
+      "category": "制度・政策・法律",
+      "chronology": {
+        "displayPeriod": "2001〜2010年・2003〜2009年",
+        "sortYear": 2001
+      },
+      "explanation": "日本の支援を、インド洋での海上阻止活動支援とイラクの復興支援に分けて整理する。派遣期間と具体的な補給内容は当該小項目の記述に限定し、資料にない法律名や活動の細目は補わない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "地域",
+          "prompt": "冷戦後のテロとの戦いに対する日本の支援に関して、海上自衛隊の補給艦と護衛艦が派遣された海域はどこか。",
+          "answer": "**インド洋**。",
+          "keywords": [
+            "インド洋"
+          ],
+          "evidence": [
+            "japan-indian-deployment"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後のテロとの戦いに対する日本の支援に関して、インド洋への海上自衛隊の派遣が行われた期間はいつか。",
+          "answer": "2001〜2010年。",
+          "keywords": [],
+          "evidence": [
+            "japan-indian-period"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後のテロとの戦いに対する日本の支援に関して、海上自衛隊が各国軍の艦艇へ洋上補給した物資は何か。",
+          "answer": "**燃料と水**。",
+          "keywords": [
+            "燃料と水"
+          ],
+          "evidence": [
+            "japan-indian-supply"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "冷戦後のテロとの戦いに対する日本の支援に関して、イラクへの自衛隊派遣が行われた期間はいつか。",
+          "answer": "2003〜2009年。",
+          "keywords": [],
+          "evidence": [
+            "japan-iraq-period"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "冷戦後のテロとの戦いに対する日本の支援に関して、イラクに派遣された自衛隊はどのような支援を行ったか。",
+          "answer": "**復興支援**。",
+          "keywords": [
+            "復興支援"
+          ],
+          "evidence": [
+            "japan-iraq"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後、テロとの戦いに対する日本の支援として、海上自衛隊はどのような役割を果たしたか。",
+          "answer": "2001〜2010年、日本は海上自衛隊の**補給艦と護衛艦**を**インド洋**に派遣し、**燃料と水の洋上補給**によって各国軍艦艇の**海上阻止活動**を支援した。艦艇が頻繁に寄港しなくても長期間活動できるようにした。",
+          "keywords": [
+            "補給艦と護衛艦",
+            "インド洋",
+            "燃料と水の洋上補給",
+            "海上阻止活動"
+          ],
+          "evidence": [
+            "japan-indian-period",
+            "japan-indian-deployment",
+            "japan-indian-supply"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "冷戦後、テロとの戦いに対する日本の支援として、イラクではどのような活動が行われたか。",
+          "answer": "2003〜2009年、日本は**イラクに自衛隊を派遣**し、**復興支援**を行った。",
+          "keywords": [
+            "イラクに自衛隊を派遣",
+            "復興支援"
+          ],
+          "evidence": [
+            "japan-iraq-period",
+            "japan-iraq"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "冷戦後の「テロとの戦いに対する日本の支援」について説明せよ。",
+          "answer": "2001〜2010年、日本は海上自衛隊の**補給艦と護衛艦**を**インド洋**に派遣し、**燃料と水の洋上補給**によって各国軍艦艇の**海上阻止活動**を支援した。艦艇が頻繁に寄港しなくても長期間活動できるようにした。また2003〜2009年には**イラクに自衛隊を派遣**し、**復興支援**を行った。",
+          "keywords": [
+            "補給艦と護衛艦",
+            "インド洋",
+            "燃料と水の洋上補給",
+            "海上阻止活動",
+            "イラクに自衛隊を派遣",
+            "復興支援"
+          ],
+          "evidence": [
+            "japan-indian-period",
+            "japan-indian-deployment",
+            "japan-indian-supply",
+            "japan-iraq-period",
+            "japan-iraq"
+          ]
+        }
+      ]
+    }
+  ]
+}

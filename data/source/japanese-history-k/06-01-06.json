@@ -1,0 +1,550 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 1,
+    "title": "昭和時代（戦後）"
+  },
+  "part": {
+    "number": 6,
+    "title": "隣国との関係構築と冷戦"
+  },
+  "integrationPromptPrefix": "戦後日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_06_隣国との関係構築と冷戦_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      432,
+      433,
+      434,
+      435,
+      436,
+      458
+    ],
+    "note": "当該小項目の条約・国交正常化・領域返還を中心に学ぶ。個人請求権の法的解釈、領土紛争の評価的断定、共産主義についての価値判断、皇室の細かな逸話は出題しない。台湾については中国側の立場を日本政府が尊重したという外交上の対応に限定する。1971年の国連についての脱退・加盟の表現は厳密な代表権変更の説明に用いず、日中外交の1972年と1978年を中心に出題する。"
+  },
+  "facts": [
+    {
+      "id": "korea-treaty",
+      "page": 433,
+      "quote": "韓国と日韓基本条約を締結して"
+    },
+    {
+      "id": "korea-diplomacy",
+      "page": 433,
+      "quote": "国交を樹立しました。"
+    },
+    {
+      "id": "korea-agreement",
+      "page": 433,
+      "quote": "このとき、日本は日韓請求権協定という付随協約を結び"
+    },
+    {
+      "id": "korea-cooperation",
+      "page": 433,
+      "quote": "経済協力として五億ドルを供与し、三億ドルの民間融資を実施しました。"
+    },
+    {
+      "id": "china-statement",
+      "page": 433,
+      "quote": "日中共同声明に署名し、中華人民共和国との国交を正常化させ"
+    },
+    {
+      "id": "china-treaty",
+      "page": 433,
+      "quote": "日中平和友好条約を締結しました。"
+    },
+    {
+      "id": "china-government",
+      "page": 433,
+      "quote": "「日中共同声明」には、日本は、中華人民共和国政府が中国唯一の合法政府であると承認し、また、台湾が中華人民共和国の領土の一部であるという中華人民共和国の立場を尊重することが明記された。"
+    },
+    {
+      "id": "china-taiwan",
+      "page": 433,
+      "quote": "これにより、日本は中華民国と断交することになった。"
+    },
+    {
+      "id": "return-years",
+      "page": 433,
+      "quote": "佐藤栄作首相は昭和四十三年（一九六八）に小笠原諸島の返還を、また昭和四十七年（一九七二）には沖縄本土復帰を実現させました。"
+    },
+    {
+      "id": "return-movement",
+      "page": 435,
+      "quote": "沖縄でも祖国復帰運動が盛んになり、全国規模の運動に発展すると、米国は日本の世論を考慮せざるをえなくなった。"
+    },
+    {
+      "id": "return-us",
+      "page": 435,
+      "quote": "日本はその後も米国に沖縄の基地使用を認めている。"
+    },
+    {
+      "id": "return-nuclear",
+      "page": 435,
+      "quote": "沖縄返還に際して佐藤内閣は、核兵器を「持たず、作らず、持ち込ませず」を内容とする非核三原則を示した。"
+    },
+    {
+      "id": "okinawa-us",
+      "page": 435,
+      "quote": "沖縄は当時まだ米国の統治下にあり、本土に復帰するには、昭和四十七年（一九七二）五月十五日を待たなくてはなりません。"
+    },
+    {
+      "id": "return-popular",
+      "page": 433,
+      "quote": "沖縄では、本土復帰への県民の思いが募り、祖国復帰運動が拡大していきました。"
+    },
+    {
+      "id": "korea-year",
+      "page": 433,
+      "quote": "昭和四十年（一九六五）"
+    },
+    {
+      "id": "china-statement-person",
+      "page": 433,
+      "quote": "田中角栄首相は"
+    },
+    {
+      "id": "china-statement-year",
+      "page": 433,
+      "quote": "昭和四十七年（一九七二）"
+    },
+    {
+      "id": "china-treaty-person",
+      "page": 433,
+      "quote": "福田赳夫首相は"
+    },
+    {
+      "id": "china-treaty-year",
+      "page": 433,
+      "quote": "昭和五十三年（一九七八）"
+    },
+    {
+      "id": "ogasawara-year",
+      "page": 433,
+      "quote": "昭和四十三年（一九六八）に小笠原諸島の返還を"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日韓基本条約",
+      "reading": "にっかんきほんじょうやく",
+      "category": "条約・会議",
+      "chronology": {
+        "displayPeriod": "1965年",
+        "sortYear": 1965
+      },
+      "explanation": "日韓基本条約による国交樹立と、付随する日韓請求権協定による経済協力を区別して学ぶ。請求権をめぐる個人の権利の法的解釈や領土紛争についての断定は求めない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "戦後日本が韓国と国交を樹立した際に締結した条約は何か。",
+          "answer": "**日韓基本条約**。",
+          "keywords": [
+            "日韓基本条約"
+          ],
+          "evidence": [
+            "korea-treaty",
+            "korea-diplomacy"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後日本が日韓基本条約を締結したのはいつか。",
+          "answer": "1965年。",
+          "keywords": [],
+          "evidence": [
+            "korea-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関連",
+          "prompt": "戦後日本の日韓基本条約締結時に、付随協約として結ばれた協定は何か。",
+          "answer": "**日韓請求権協定**。",
+          "keywords": [
+            "日韓請求権協定"
+          ],
+          "evidence": [
+            "korea-agreement"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本の日韓基本条約は、韓国との関係をどのように変えたか。",
+          "answer": "1965年、日本は韓国と**日韓基本条約**を締結し、**国交を樹立**した。",
+          "keywords": [
+            "日韓基本条約",
+            "国交を樹立"
+          ],
+          "evidence": [
+            "korea-year",
+            "korea-treaty",
+            "korea-diplomacy"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本の日韓基本条約の締結に伴い、経済面ではどのような協力が行われたか。",
+          "answer": "付随協約として**日韓請求権協定**を結び、日本は韓国に**資金の供与**と**民間融資**による経済協力を行った。",
+          "keywords": [
+            "日韓請求権協定",
+            "資金の供与",
+            "民間融資"
+          ],
+          "evidence": [
+            "korea-agreement",
+            "korea-cooperation"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「日韓基本条約」について説明せよ。",
+          "answer": "1965年、日本は韓国と**日韓基本条約**を締結し、**国交を樹立**した。付随協約として**日韓請求権協定**も結び、韓国に**資金の供与**と**民間融資**による経済協力を行った。",
+          "keywords": [
+            "日韓基本条約",
+            "国交を樹立",
+            "日韓請求権協定",
+            "資金の供与",
+            "民間融資"
+          ],
+          "evidence": [
+            "korea-year",
+            "korea-treaty",
+            "korea-diplomacy",
+            "korea-agreement",
+            "korea-cooperation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日中共同声明と日中平和友好条約",
+      "reading": "にっちゅうきょうどうせいめいとにっちゅうへいわゆうこうじょうやく",
+      "category": "条約・会議",
+      "chronology": {
+        "displayPeriod": "1972〜1978年",
+        "sortYear": 1972
+      },
+      "explanation": "1972年の国交正常化と1978年の平和友好条約を、担当した内閣とともに時系列で整理する。日本政府による中国政府の承認と、中国側の台湾に関する立場の尊重を区別する。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "戦後日本が中華人民共和国との国交を正常化した際に発表した文書は何か。",
+          "answer": "**日中共同声明**。",
+          "keywords": [
+            "日中共同声明"
+          ],
+          "evidence": [
+            "china-statement"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約に関して、共同声明に署名した首相は誰か。",
+          "answer": "**田中角栄(たなかかくえい)**。",
+          "keywords": [
+            "田中角栄"
+          ],
+          "evidence": [
+            "china-statement-person",
+            "china-statement"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約に関して、共同声明による国交正常化が実現したのはいつか。",
+          "answer": "1972年。",
+          "keywords": [],
+          "evidence": [
+            "china-statement-year",
+            "china-statement"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約に関して、平和友好条約を締結した首相は誰か。",
+          "answer": "**福田赳夫(ふくだたけお)**。",
+          "keywords": [
+            "福田赳夫"
+          ],
+          "evidence": [
+            "china-treaty-person",
+            "china-treaty"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約に関して、平和友好条約が締結されたのはいつか。",
+          "answer": "1978年。",
+          "keywords": [],
+          "evidence": [
+            "china-treaty-year",
+            "china-treaty"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約に関して、共同声明の結果、日本が断交した相手はどこか。",
+          "answer": "**中華民国**。",
+          "keywords": [
+            "中華民国"
+          ],
+          "evidence": [
+            "china-taiwan"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本の日中共同声明と日中平和友好条約は、どのような経過で結ばれたか。",
+          "answer": "1972年、日本の**田中角栄(たなかかくえい)**首相が**日中共同声明**に署名し、中華人民共和国との**国交を正常化**した。1978年には**福田赳夫(ふくだたけお)**首相が**日中平和友好条約**を締結した。",
+          "keywords": [
+            "田中角栄",
+            "日中共同声明",
+            "国交を正常化",
+            "福田赳夫",
+            "日中平和友好条約"
+          ],
+          "evidence": [
+            "china-statement-person",
+            "china-statement-year",
+            "china-statement",
+            "china-treaty-person",
+            "china-treaty-year",
+            "china-treaty"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本の日中共同声明は、中国と台湾との関係について、どのような対応を示したか。",
+          "answer": "日本は中華人民共和国政府を中国の**唯一の合法政府**と承認した。台湾が中華人民共和国の領土の一部であるという**中国側の立場を尊重**し、**中華民国と断交**した。",
+          "keywords": [
+            "唯一の合法政府",
+            "中国側の立場を尊重",
+            "中華民国と断交"
+          ],
+          "evidence": [
+            "china-government",
+            "china-taiwan"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「日中共同声明と日中平和友好条約」について説明せよ。",
+          "answer": "1972年、日本の**田中角栄(たなかかくえい)**首相が**日中共同声明**に署名し、中華人民共和国との**国交を正常化**した。日本は中華人民共和国政府を中国の**唯一の合法政府**と承認し、台湾を中国の領土の一部とする**中国側の立場を尊重**して、**中華民国と断交**した。1978年には**福田赳夫(ふくだたけお)**首相が**日中平和友好条約**を締結した。",
+          "keywords": [
+            "田中角栄",
+            "日中共同声明",
+            "国交を正常化",
+            "唯一の合法政府",
+            "中国側の立場を尊重",
+            "中華民国と断交",
+            "福田赳夫",
+            "日中平和友好条約"
+          ],
+          "evidence": [
+            "china-statement-person",
+            "china-statement-year",
+            "china-statement",
+            "china-government",
+            "china-taiwan",
+            "china-treaty-person",
+            "china-treaty-year",
+            "china-treaty"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "小笠原諸島と沖縄の返還",
+      "reading": "おがさわらしょとうとおきなわのへんかん",
+      "category": "制度・政策・法律",
+      "chronology": {
+        "displayPeriod": "1968年・1972年",
+        "sortYear": 1968
+      },
+      "explanation": "小笠原諸島の返還と沖縄本土復帰の年を区別する。沖縄の祖国復帰運動、佐藤内閣の非核三原則、本土復帰後の米国による基地使用を結び付ける。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "戦後、米国統治下で県民の祖国復帰運動が拡大し、1972年に本土復帰した地域はどこか。",
+          "answer": "**沖縄**。",
+          "keywords": [
+            "沖縄"
+          ],
+          "evidence": [
+            "return-popular",
+            "okinawa-us"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "戦後日本の小笠原諸島と沖縄の返還に関して、小笠原諸島が返還されたのはいつか。",
+          "answer": "1968年。",
+          "keywords": [],
+          "evidence": [
+            "ogasawara-year"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "中心人物",
+          "prompt": "戦後日本の小笠原諸島と沖縄の返還を実現した首相は誰か。",
+          "answer": "**佐藤栄作**。",
+          "keywords": [
+            "佐藤栄作"
+          ],
+          "evidence": [
+            "return-years"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後日本の小笠原諸島と沖縄の返還に関して、佐藤内閣が示した非核三原則の内容は何か。",
+          "answer": "核兵器を**持たず、作らず、持ち込ませず**。",
+          "keywords": [
+            "持たず、作らず、持ち込ませず"
+          ],
+          "evidence": [
+            "return-nuclear"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "戦後日本の小笠原諸島と沖縄の返還に関して、本土復帰後も日本が沖縄で米国に認めた活動は何か。",
+          "answer": "**沖縄の基地使用**。",
+          "keywords": [
+            "沖縄の基地使用"
+          ],
+          "evidence": [
+            "return-us"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "戦後日本で、小笠原諸島と沖縄の返還はどのように実現したか。",
+          "answer": "沖縄の**祖国復帰運動**が全国規模に広がる中、日本の**佐藤栄作**首相が1968年の**小笠原諸島**返還と1972年の**沖縄本土復帰**を実現した。",
+          "keywords": [
+            "祖国復帰運動",
+            "佐藤栄作",
+            "小笠原諸島",
+            "沖縄本土復帰"
+          ],
+          "evidence": [
+            "return-movement",
+            "return-years"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "複合説明",
+          "prompt": "沖縄返還に際して、日本は安全保障面でどのような対応をしたか。",
+          "answer": "佐藤内閣は核兵器を**持たず、作らず、持ち込ませず**とする**非核三原則**を示した。本土復帰後も日本は米国に**沖縄の基地使用**を認めた。",
+          "keywords": [
+            "持たず、作らず、持ち込ませず",
+            "非核三原則",
+            "沖縄の基地使用"
+          ],
+          "evidence": [
+            "return-nuclear",
+            "return-us"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "戦後日本の「小笠原諸島と沖縄の返還」について説明せよ。",
+          "answer": "沖縄の**祖国復帰運動**が広がる中、日本の**佐藤栄作**首相が1968年の**小笠原諸島**返還と1972年の**沖縄本土復帰**を実現した。佐藤内閣は核兵器を**持たず、作らず、持ち込ませず**とする**非核三原則**を示した。本土復帰後も日本は米国に**沖縄の基地使用**を認めた。",
+          "keywords": [
+            "祖国復帰運動",
+            "佐藤栄作",
+            "小笠原諸島",
+            "沖縄本土復帰",
+            "持たず、作らず、持ち込ませず",
+            "非核三原則",
+            "沖縄の基地使用"
+          ],
+          "evidence": [
+            "return-movement",
+            "return-years",
+            "return-nuclear",
+            "return-us"
+          ]
+        }
+      ]
+    }
+  ]
+}

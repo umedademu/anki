@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 6,
+    "title": "第6章 現代"
+  },
+  "section": {
+    "number": 2,
+    "title": "平成時代～現在"
+  },
+  "part": {
+    "number": 4,
+    "title": "頻発する地域紛争"
+  },
+  "integrationPromptPrefix": "現代の",
+  "source": {
+    "file": "sources/kokushi/試作/第6章_10_頻発する地域紛争_原文抜粋.md",
+    "originalFile": "sources/kokushi/6_現代.md",
+    "pages": [
+      439,
+      440
+    ],
+    "note": "当該小項目本文と439頁のユーゴスラビア紛争の注記を根拠とする。民族・宗教の違いを機械的にすべての紛争の原因と断定しない。死者数、ルワンダの民族分類、ユーゴスラビア分裂後の国名の網羅、執筆時の現在形の断定は出題しない。数値時期のないウイグル問題とチベット問題は独立項目に選ばず、章末年表から新しい学習内容は補わない。"
+  },
+  "facts": [
+    {
+      "id": "somalia-region",
+      "page": 439,
+      "quote": "アフリカのソマリアでは"
+    },
+    {
+      "id": "somalia-start",
+      "page": 439,
+      "quote": "昭和六十三年（一九八八）から内戦が続き、"
+    },
+    {
+      "id": "somalia-government",
+      "page": 439,
+      "quote": "平成二十四年（二〇一二）に正式政府であるソマリア連邦共和国が設立されましたが、まだ紛争は収まっていません。"
+    },
+    {
+      "id": "yugoslavia-conflict",
+      "page": 439,
+      "quote": "多民族のユーゴスラビアでは民族対立が激化し、"
+    },
+    {
+      "id": "yugoslavia-year",
+      "page": 439,
+      "quote": "平成三年（一九九一）に⑤ユーゴスラビア紛争が起きました。"
+    },
+    {
+      "id": "yugoslavia-division",
+      "page": 439,
+      "quote": "クロアチア、コソボ、スロベニア、セルビア、ボスニア・ヘルツェゴビナ、北マケドニア、モンテネグロの7つの国に分裂し、"
+    },
+    {
+      "id": "chechen-year",
+      "page": 439,
+      "quote": "平成六年（一九九四）のチェチェン紛争では、"
+    },
+    {
+      "id": "chechen-conflict",
+      "page": 439,
+      "quote": "ロシアからの独立を目指す武装勢力とロシアが、"
+    },
+    {
+      "id": "ossetia-year",
+      "page": 439,
+      "quote": "平成二十年（二〇〇八）の南オセチア紛争では、"
+    },
+    {
+      "id": "ossetia-dispute",
+      "page": 439,
+      "quote": "南オセチアとアブハジアの独立"
+    },
+    {
+      "id": "ossetia-actors",
+      "page": 440,
+      "quote": "をめぐってロシアとジョージアが戦火を交えました。"
+    },
+    {
+      "id": "conflicts-fighting",
+      "page": 440,
+      "quote": "戦火を交えました。"
+    },
+    {
+      "id": "crimea-crisis",
+      "page": 440,
+      "quote": "ソ連から独立したウクライナでは、平成二十六年（二〇一四）、クリミア半島の帰属をめぐってロシアが軍事介入し、ロシアが領有を宣言しました。**クリミア危機**です。"
+    },
+    {
+      "id": "ukraine-government",
+      "page": 440,
+      "quote": "ウクライナで親ロシア政権が倒れ、親欧米政権が成立すると、"
+    },
+    {
+      "id": "crimea-occupation",
+      "page": 440,
+      "quote": "ロシアのプーチン大統領はクリミアを軍事占領し、ロシア領に編入しました。"
+    },
+    {
+      "id": "crimea-summit",
+      "page": 440,
+      "quote": "結果としてロシアは毎年行われている先進八カ国首脳会議（Ｇ８）のメンバーから外され、その後は七カ国で開催されることになりました。"
+    },
+    {
+      "id": "crimea-sanctions",
+      "page": 440,
+      "quote": "また、ヨーロッパの多くの国とアメリカがロシアに対して経済制裁を科すことになりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ソマリア内戦",
+      "reading": "そまりあないせん",
+      "category": "内戦と国家の再建",
+      "geographyLabel": "ソマリア",
+      "chronology": {
+        "displayPeriod": "1988年・2012年",
+        "sortYear": 1988
+      },
+      "explanation": "内戦が始まった時期と、正式政府が成立した時期を分けて整理する。政府の成立が紛争の終結と同じではなかったことを学ぶ。執筆時の状況を今日の現状として断定せず、死者数は暗記対象にしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "地域",
+          "prompt": "現代のソマリア内戦が起きた国は、どの大陸にあるか。",
+          "answer": "アフリカ。",
+          "evidence": [
+            "somalia-region"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代のソマリア内戦が始まったのは何年か。",
+          "answer": "1988年。",
+          "evidence": [
+            "somalia-start"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政府成立後の状況",
+          "prompt": "現代のソマリア内戦では、2012年に正式政府が成立した後、紛争はどのようになったか。",
+          "answer": "紛争は続いた。",
+          "evidence": [
+            "somalia-government"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "現代のソマリア内戦と国家の再建は、どのように推移したか。",
+          "answer": "**アフリカ**の**ソマリア**では1988年から内戦が続いた。2012年に正式政府である**ソマリア連邦共和国**が成立したが、その後も紛争が続いた。",
+          "evidence": [
+            "somalia-region",
+            "somalia-start",
+            "somalia-government"
+          ],
+          "keywords": [
+            "アフリカ",
+            "ソマリア",
+            "ソマリア連邦共和国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「ソマリア内戦」について説明せよ。",
+          "answer": "**アフリカ**の**ソマリア**では1988年から内戦が続き、2012年に正式政府である**ソマリア連邦共和国**が成立した。政府の成立後も紛争は続いた。",
+          "evidence": [
+            "somalia-region",
+            "somalia-start",
+            "somalia-government"
+          ],
+          "keywords": [
+            "アフリカ",
+            "ソマリア",
+            "ソマリア連邦共和国"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ユーゴスラビア紛争",
+      "reading": "ゆーごすらびあふんそう",
+      "category": "民族対立と国家の分裂",
+      "geographyLabel": "ユーゴスラビア",
+      "chronology": {
+        "displayPeriod": "1991年",
+        "sortYear": 1991
+      },
+      "explanation": "旧ユーゴスラビアの国家の解体、民族対立の激化、複数の国への分裂を関連付ける。旧ソ連の構成国だったという扱いや、ソ連の解体が紛争の唯一の原因だったという断定はしない。分裂後の全ての国名や数は暗記対象にしない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "背景",
+          "prompt": "現代のユーゴスラビア紛争では、どのような対立が激化したか。",
+          "answer": "民族対立。",
+          "evidence": [
+            "yugoslavia-conflict"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代のユーゴスラビア紛争が起きたのは何年か。",
+          "answer": "1991年。",
+          "evidence": [
+            "yugoslavia-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "現代のユーゴスラビア紛争が起きた旧ユーゴスラビアは、国家としてどのように変化したか。",
+          "answer": "複数の国に分裂した。",
+          "evidence": [
+            "yugoslavia-division"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "現代のユーゴスラビア紛争では、何が起きたか。",
+          "answer": "多民族の**ユーゴスラビア**が解体する過程で**民族対立**が激化し、1991年に紛争が起きた。旧ユーゴスラビアは**複数の国に分裂**した。",
+          "evidence": [
+            "yugoslavia-conflict",
+            "yugoslavia-year",
+            "yugoslavia-division"
+          ],
+          "keywords": [
+            "ユーゴスラビア",
+            "民族対立",
+            "複数の国に分裂"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「ユーゴスラビア紛争」について説明せよ。",
+          "answer": "1991年、旧**ユーゴスラビア**が解体する過程で**民族対立**が激化して紛争が起き、旧ユーゴスラビアは**複数の国に分裂**した。",
+          "evidence": [
+            "yugoslavia-conflict",
+            "yugoslavia-year",
+            "yugoslavia-division"
+          ],
+          "keywords": [
+            "ユーゴスラビア",
+            "民族対立",
+            "複数の国に分裂"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "チェチェン紛争と南オセチア紛争",
+      "reading": "ちぇちぇんふんそうとみなみおせちあふんそう",
+      "category": "独立要求と国家間の対立",
+      "geographyLabel": "ロシア",
+      "chronology": {
+        "displayPeriod": "1994年・2008年",
+        "sortYear": 1994
+      },
+      "explanation": "ロシアが関わった二つの紛争を、独立要求と対立相手の違いから整理する。チェチェン紛争が南オセチア紛争を引き起こしたという因果は付け加えない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代のチェチェン紛争と南オセチア紛争について、チェチェン紛争が起きたのは何年か。",
+          "answer": "1994年。",
+          "evidence": [
+            "chechen-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期",
+          "prompt": "現代のチェチェン紛争と南オセチア紛争について、南オセチア紛争が起きたのは何年か。",
+          "answer": "2008年。",
+          "evidence": [
+            "ossetia-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当事者",
+          "prompt": "現代のチェチェン紛争と南オセチア紛争について、チェチェンの武装勢力が独立を目指した相手国はどこか。",
+          "answer": "ロシア。",
+          "evidence": [
+            "chechen-conflict"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "当事者",
+          "prompt": "現代のチェチェン紛争と南オセチア紛争について、南オセチアの独立などをめぐり、ロシアと戦った国はどこか。",
+          "answer": "ジョージア。",
+          "evidence": [
+            "ossetia-dispute",
+            "ossetia-actors"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "1994年のチェチェン紛争では、何が起きたか。",
+          "answer": "1994年の**チェチェン紛争**では、**ロシア**からの**独立**を目指す武装勢力とロシアが戦った。",
+          "evidence": [
+            "chechen-year",
+            "chechen-conflict",
+            "conflicts-fighting"
+          ],
+          "keywords": [
+            "チェチェン紛争",
+            "ロシア",
+            "独立"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2008年の南オセチア紛争では、何が起きたか。",
+          "answer": "2008年の**南オセチア紛争**では、**南オセチア**と**アブハジア**の**独立**をめぐって、**ロシア**と**ジョージア**が戦った。",
+          "evidence": [
+            "ossetia-year",
+            "ossetia-dispute",
+            "ossetia-actors"
+          ],
+          "keywords": [
+            "南オセチア紛争",
+            "南オセチア",
+            "アブハジア",
+            "独立",
+            "ロシア",
+            "ジョージア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「チェチェン紛争と南オセチア紛争」について説明せよ。",
+          "answer": "1994年の**チェチェン紛争**では、**ロシア**からの**独立**を目指す武装勢力とロシアが戦った。2008年の**南オセチア紛争**では、**南オセチア**と**アブハジア**の独立をめぐって、ロシアと**ジョージア**が戦った。",
+          "evidence": [
+            "chechen-year",
+            "chechen-conflict",
+            "ossetia-year",
+            "ossetia-dispute",
+            "ossetia-actors",
+            "conflicts-fighting"
+          ],
+          "keywords": [
+            "チェチェン紛争",
+            "ロシア",
+            "独立",
+            "南オセチア紛争",
+            "南オセチア",
+            "アブハジア",
+            "ジョージア"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "クリミア危機",
+      "reading": "くりみあきき",
+      "category": "軍事介入と国際的な対応",
+      "geographyLabel": "ウクライナ",
+      "chronology": {
+        "displayPeriod": "2014年",
+        "sortYear": 2014
+      },
+      "explanation": "ウクライナの政権交代、ロシアの軍事介入と領有、首脳会議からの除外と経済制裁を結び付ける。軍隊が自警団に扮したという経過の細部や、資料範囲外のその後の戦争は加えない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "2014年、ウクライナで、軍事介入と半島の領有宣言によって起こった危機を何というか。",
+          "answer": "クリミア危機。",
+          "evidence": [
+            "crimea-crisis"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "2014年のクリミア危機では、ウクライナで親ロシア政権に代わって、どの立場の政権が成立したか。",
+          "answer": "親欧米政権。",
+          "evidence": [
+            "ukraine-government"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物",
+          "prompt": "2014年のクリミア危機で、クリミアを軍事占領してロシア領に編入したロシア大統領は誰か。",
+          "answer": "プーチン。",
+          "evidence": [
+            "crimea-occupation"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果",
+          "prompt": "2014年のクリミア危機による軍事介入後、ロシアがメンバーから外された首脳会議を何というか。",
+          "answer": "先進八カ国首脳会議（G8）。",
+          "evidence": [
+            "crimea-summit"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容",
+          "prompt": "2014年のクリミア危機後、ヨーロッパの多くの国とアメリカがロシアに科した措置は何か。",
+          "answer": "経済制裁。",
+          "evidence": [
+            "crimea-sanctions"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2014年、ウクライナで起きたクリミア危機について説明せよ。",
+          "answer": "2014年、ソ連から独立した**ウクライナ**で、親ロシア政権に代わって**親欧米政権**が成立した。**ロシア**は**クリミア半島**の帰属をめぐって軍事介入して領有を宣言し、**プーチン**大統領がクリミアを軍事占領してロシア領に編入した。",
+          "evidence": [
+            "crimea-crisis",
+            "ukraine-government",
+            "crimea-occupation"
+          ],
+          "keywords": [
+            "ウクライナ",
+            "親欧米政権",
+            "ロシア",
+            "クリミア半島",
+            "プーチン"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "説明",
+          "prompt": "2014年、ウクライナで起きたクリミア危機に、国際社会はどのように対応したか。",
+          "answer": "**ロシア**は**先進八カ国首脳会議（G8）**から外され、以後は七カ国で開催された。**ヨーロッパの多くの国とアメリカ**は、ロシアに**経済制裁**を科した。",
+          "evidence": [
+            "crimea-summit",
+            "crimea-sanctions"
+          ],
+          "keywords": [
+            "ロシア",
+            "先進八カ国首脳会議（G8）",
+            "ヨーロッパの多くの国とアメリカ",
+            "経済制裁"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "現代の「クリミア危機」について説明せよ。",
+          "answer": "2014年、ソ連から独立した**ウクライナ**で親ロシア政権に代わって**親欧米政権**が成立すると、**ロシア**が**クリミア半島**に軍事介入して領有を宣言し、**プーチン**大統領が軍事占領してロシア領に編入した。ロシアは**先進八カ国首脳会議（G8）**から外され、以後は七カ国で開催された。**ヨーロッパの多くの国とアメリカ**がロシアに**経済制裁**を科した。",
+          "evidence": [
+            "crimea-crisis",
+            "ukraine-government",
+            "crimea-occupation",
+            "crimea-summit",
+            "crimea-sanctions"
+          ],
+          "keywords": [
+            "ウクライナ",
+            "親欧米政権",
+            "ロシア",
+            "クリミア半島",
+            "プーチン",
+            "先進八カ国首脳会議（G8）",
+            "ヨーロッパの多くの国とアメリカ",
+            "経済制裁"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

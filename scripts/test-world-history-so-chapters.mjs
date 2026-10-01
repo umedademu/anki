@@ -20,10 +20,19 @@ for (const [prompt, chapter] of [
   ["チャルディラーンの戦いでサファヴィー朝を破り、東アナトリアを獲得したオスマン帝国のスルタンは？", 7],
 ]) assert.equal(byPrompt.get(prompt), chapter);
 // 全入力行の対応を確認し、空白区切りの回答も取りこぼさない。
-const sourceRoot = new URL("../SekaishiSO/", import.meta.url);
+let sourceRoot = new URL("../SekaishiSO/", import.meta.url);
+let sourceFiles;
+try {
+  sourceFiles = await readdir(sourceRoot);
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+  // 利用者が原文をsourcesへ移動した環境でも、同じ入力行を照合する。
+  sourceRoot = new URL("../sources/SekaishiSO/", import.meta.url);
+  sourceFiles = await readdir(sourceRoot);
+}
 const sourceKeys = new Set();
 const questionByPrompt = new Map(terms.map((term) => [term.stages.beginner[0].prompt, term.stages.beginner[0]]));
-for (const file of (await readdir(sourceRoot)).filter((name) => /^QA_\d+\.md$/.test(name))) {
+for (const file of sourceFiles.filter((name) => /^QA_\d+\.md$/.test(name))) {
   const lines = (await readFile(new URL(file, sourceRoot), "utf8")).split(/\r?\n/);
   for (const [i, line] of lines.entries()) {
     if (!line.trim()) continue;

@@ -1,4 +1,5 @@
 import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "../public/question-types.js";
+import { usesChapterDecks } from "../public/so-chapters.js";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
@@ -62,16 +63,17 @@ for (const value of [undefined, true, false]) {
 // 実際のアプリの再開処理を実行し、現在問・待ち行列・再出題からの除外を確認する。
 const app = await readFile(new URL("../public/app.js", import.meta.url), "utf8");
 const extract = (start, end) => app.slice(app.indexOf(start), app.indexOf(end, app.indexOf(start)));
-const state = { allTerms: terms, activeDeckIds: ["deck-1"], activeSubjectId: "japanese-history", subject: { learningType: "history" }, studyTimeLimitSeconds: 60, progress };
+const state = { allTerms: terms, activeDeckIds: ["deck-1"], activeSubjectId: "japanese-history", subjectEntries: [{ id: "japanese-history" }, { id: "world-history-so" }, { id: "japanese-history-k", chapterGroups: [{ id: "chapter-6" }] }], subject: { learningType: "history" }, studyTimeLimitSeconds: 60, progress };
 const elements = { excludeTimeQuestions: { checked: true }, questionTypeOptions: { querySelectorAll: () => [] } };
 const context = {
-  questionTypes, resolveQuestionTypes, filterQuestionTypes,
+  questionTypes, resolveQuestionTypes, filterQuestionTypes, usesChapterDecks,
   state, elements, filterTimeQuestions, hasTimeQuestions, filterTermsBySelection, learningStages,
   normalizeStudySession, normalizeRatingCounts: v => v, createEventId: () => "round",
   cloneTask: t => t ? { ...t } : null, setSavedSessionForMode() {}, refreshPendingReviewTasks() {},
   selectedFilters: () => ({}), setSetupControlsFromSession() {},
 };
 runInNewContext([
+  extract("function activeSubjectUsesChapterDecks(", "function setDeckOptions("),
   extract("function setStudyTerms(", "function captureActiveSession("),
   extract("function restoreActiveSession(", "function queueActiveSessionSave("),
   extract("function supportsQuestionTypes(", "function updateSetupPreview("),
@@ -138,7 +140,7 @@ assert.match(elements.cloudStatus.textContent, /共有できませんでした/)
 console.log("時期問題の除外: 判定・初期オン・保存・解除・件数・段階移行・暗記と聞き流しの再開・履歴維持を確認しました。");
 
 // 履歴科目は問題文による判定を使わず、保存した分類だけで復元する。
-for (const subjectId of ["world-history", "world-history-s", "world-history-so"]) {
+for (const subjectId of ["world-history", "world-history-s", "world-history-so", "japanese-history-k"]) {
   state.activeSubjectId = subjectId;
   for (const mode of ["memorize", "listen-answer"]) {
     for (const selection of [null, [], ["time"], ["identify", "integrated"]]) {

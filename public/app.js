@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.281";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.282";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.281";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.281";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.281";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.281";
-import { groupSODecks, soStudyLabel } from "./so-chapters.js?v=0.281";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.281";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.281";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.281";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.281";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.282";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.282";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.282";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.282";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.282";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.282";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.282";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.282";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.282";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.281";
+} from "./original-session.js?v=0.282";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.281";
+} from "./speech.js?v=0.282";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.281";
+} from "./deck-selection.js?v=0.282";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -1648,7 +1648,7 @@ function setSetupControlsFromSession(session) {
     option.checked = option.value === session.studyMode;
   }
   elements.excludeTimeQuestions.checked = session.excludeTimeQuestions;
-  renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []));
+  renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions, activeSubjectUsesChapterDecks() ? ["short_answer"] : []));
   elements.setupShuffle.checked = session.shuffleEnabled;
 }
 
@@ -4233,9 +4233,13 @@ function deckDisplayLabel(deck) {
     : String(deck?.difficultyLabel ?? deck?.id ?? "デッキ");
 }
 
+function activeSubjectUsesChapterDecks() {
+  return usesChapterDecks(state.subjectEntries.find(subject => subject.id === state.activeSubjectId));
+}
+
 function setDeckOptions(decks, selectedIds) {
   const selected = new Set(selectedIds);
-  const groupedChapters = state.activeSubjectId === "world-history-so";
+  const groupedChapters = activeSubjectUsesChapterDecks();
   elements.chapterFilter.replaceChildren();
   elements.chapterField.classList.toggle("is-hidden", !groupedChapters);
   elements.deckFilter.replaceChildren(
@@ -4387,7 +4391,7 @@ function applySetupPreferences() {
   const subject = preferences.subjects[state.activeSubjectId];
   const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
   elements.excludeTimeQuestions.checked = deck.excludeTimeQuestions !== false;
-  renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []));
+  renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false, activeSubjectUsesChapterDecks() ? ["short_answer"] : []));
   setAvailableSelectValue(elements.macroRegionFilter, deck.macroRegion ?? "");
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, deck.regionDetail ?? "");
@@ -4457,7 +4461,8 @@ function updateRegionDetailOptions(resetSelection = false) {
 }
 
 function supportsQuestionTypes() {
-  return ["world-history", "world-history-s", "world-history-so"].includes(state.activeSubjectId);
+  return ["world-history", "world-history-s"].includes(state.activeSubjectId) ||
+    activeSubjectUsesChapterDecks();
 }
 
 function selectedQuestionTypes() {
@@ -4465,7 +4470,7 @@ function selectedQuestionTypes() {
 }
 
 function renderQuestionTypes(selected) {
-  const showCounts = state.activeSubjectId === "world-history-so";
+  const showCounts = activeSubjectUsesChapterDecks();
   const counts = {};
   if (showCounts) for (const term of state.allTerms) for (const questions of Object.values(term.stages ?? {})) {
     for (const question of questions) counts[question.type] = (counts[question.type] ?? 0) + 1;
@@ -4486,7 +4491,7 @@ function renderQuestionTypes(selected) {
 
 function filterConfiguredQuestions(terms, types, excludeTime) {
   return supportsQuestionTypes()
-    ? filterQuestionTypes(terms, resolveQuestionTypes(types, excludeTime, state.activeSubjectId === "world-history-so" ? ["short_answer"] : []))
+    ? filterQuestionTypes(terms, resolveQuestionTypes(types, excludeTime, activeSubjectUsesChapterDecks() ? ["short_answer"] : []))
     : filterTimeQuestions(terms, supportsTimeQuestionExclusion() && excludeTime);
 }
 
@@ -4513,7 +4518,7 @@ function updateSetupPreview() {
   const typeCount = selectedQuestionTypes().length;
   elements.questionTypeSummary.textContent = typeCount ? `出題する問題の種類（${typeCount}種類）` : "出題する問題の種類（１種類以上選んでください）";
   elements.timeQuestionField.classList.toggle("is-hidden", !supportsTimeQuestionExclusion());
-  const noParts = state.activeSubjectId === "world-history-so" && selectedDeckIds().length === 0;
+  const noParts = activeSubjectUsesChapterDecks() && selectedDeckIds().length === 0;
   const terms = noParts ? [] : selectedStudyTerms();
   const selectedStage = elements.questionStyleFilter.value;
   const studyMode = selectedStudyMode();
@@ -5810,7 +5815,7 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   const deckNames = deckEntries.map(deckDisplayLabel);
   const shortDeckNames = deckNames.map((name) => name.split("｜")[0]);
   elements.subjectName.textContent = `${state.subject.title}｜${
-    state.activeSubjectId === "world-history-so" ? soStudyLabel(deckEntries, state.subjectEntries.find(subject => subject.id === state.activeSubjectId)?.chapterGroups) :
+    activeSubjectUsesChapterDecks() ? soStudyLabel(deckEntries, state.subjectEntries.find(subject => subject.id === state.activeSubjectId)?.chapterGroups) :
       deckEntries.length === 1 ? shortDeckNames[0] : `${deckEntries.length}デッキ`
   }`;
   elements.subjectProgressName.textContent = state.subject.title;
@@ -6311,7 +6316,7 @@ function handleDeckOrChapterSelection(event) {
   const deckIds = selectedDeckIds();
   if (deckIds.length === 0) {
     event.target.checked = true;
-    elements.cloudStatus.textContent = state.activeSubjectId === "world-history-so"
+    elements.cloudStatus.textContent = activeSubjectUsesChapterDecks()
       ? "パートは1つ以上選択してください。" : "デッキは1つ以上選択してください。";
     return;
   }

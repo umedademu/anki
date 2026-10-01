@@ -124,6 +124,10 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 
 ファンダの1問は `node scripts/publish-funda.mjs` で確認し、`node scripts/publish-funda.mjs --apply` でCloudflareへ登録する。現行の全体索引をCloudflareから読み、新しい問題データを登録・照合した後、取得時の版を条件に科目一覧を更新する。既存科目・問題・学習履歴は変更しない。詳細は [ファンダ](funda.md) を参照。
 
+## 日本史Kの追加
+
+日本史Kの試作79問は`npm run preview:data:japanese-history-k`で確認し、`npm run publish:data:japanese-history-k`でCloudflareへ追加する。確認済みの新データだけを一時窓口で登録・照合し、全体索引を取得時の版を条件に切り替える。他科目の内容・画像・音声・学習履歴は維持する。登録済みの内容と違う場合は上書きしない。手元の問題原稿は新規問題の作成用であり、本番データの読み書きにはCloudflareを使用する。詳細は[日本史K](japanese-history-k.md)を参照。
+
 ## トップページの教科の並び順
 
 - オリジナルを含む教科カードはドラッグ、スマートフォンの右側のつまみ、つまみに焦点を合わせた矢印キーで並べ替える。動画再生ボタンは末尾に置く。

@@ -1,4 +1,8 @@
 // 保存する番号はパート単位。画面上では原文の章ごとにデッキをまとめる。
+export function usesChapterDecks(subject) {
+  return subject?.id === "world-history-so" || Boolean(subject?.chapterGroups?.length);
+}
+
 export function groupSODecks(decks, chapterGroups) {
   const definitions = chapterGroups?.length ? chapterGroups : [{
     id: "chapter-6", number: 6, title: "第6章 イスラーム世界", deckIds: decks.map(deck => deck.id),

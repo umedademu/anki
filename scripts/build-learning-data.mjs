@@ -1,4 +1,5 @@
 import { createAnswerMap } from "./create-answer-map.mjs";
+import { loadJapaneseHistoryK } from "./japanese-history-k.mjs";
 import { applySOQuestionTypes, loadSOQuestionTypes } from "./world-history-so-question-types.mjs";
 import { createHash } from "node:crypto";
 import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promises";
@@ -3398,7 +3399,9 @@ export async function writeSubjectData(definition, decks) {
   const deckEntries = [];
   for (const deck of decks) {
     const basePath =
-      definition.id === "world-history-so"
+      definition.id === "japanese-history-k"
+        ? `subjects/${definition.id}/imports/${deck.id}/${deck.contentVersion}`
+      : definition.id === "world-history-so"
         ? `subjects/${definition.id}/${deck.id}/${deck.contentVersion}`
       : deck.number === 1
         ? `subjects/${definition.id}`
@@ -3503,6 +3506,7 @@ export async function main() {
     worldHistorySData,
     worldHistorySOData,
     japaneseHistoryData,
+    japaneseHistoryKData,
     englishData,
     geographyData,
     politicsEconomicsData,
@@ -3516,6 +3520,7 @@ export async function main() {
     loadWorldHistorySDecks(),
     loadWorldHistorySODecks({ includeBook: true }),
     loadJapaneseHistoryDecks(),
+    loadJapaneseHistoryK(),
     loadEnglishDecks(),
     loadGeographyDecks(),
     loadPoliticsEconomicsDecks(),
@@ -3573,6 +3578,7 @@ export async function main() {
     ...worldHistorySData.decks,
     ...worldHistorySOData.decks,
     ...japaneseHistoryData.decks,
+    ...japaneseHistoryKData.decks,
     ...englishData.decks,
     ...geographyData.decks,
     ...politicsEconomicsData.decks,
@@ -3702,6 +3708,7 @@ export async function main() {
       },
       japaneseHistoryData.decks,
     ),
+    writeSubjectData(japaneseHistoryKData.definition, japaneseHistoryKData.decks),
     writeSubjectData(
       {
         id: englishSubjectId,

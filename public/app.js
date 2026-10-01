@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.283";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.284";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.283";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.283";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.283";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.283";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.283";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.283";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.283";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.283";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.283";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.284";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.284";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.284";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.284";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.284";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.284";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.284";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.284";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.284";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.283";
+} from "./original-session.js?v=0.284";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.283";
+} from "./speech.js?v=0.284";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.283";
+} from "./deck-selection.js?v=0.284";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -4808,7 +4808,9 @@ function renderQuestion() {
   elements.contextCard.classList.toggle("is-vocabulary", vocabularyMode);
   elements.contextCard.classList.toggle(
     "is-hidden",
-    (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning || Boolean(state.subject?.simpleQuestions),
+    (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning ||
+      Boolean(state.subject?.simpleQuestions) ||
+      state.activeSubjectId === "japanese-history-k",
   );
   elements.stageName.classList.toggle(
     "is-hidden",

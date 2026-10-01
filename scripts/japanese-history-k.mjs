@@ -5,14 +5,17 @@ import path from "node:path";
 
 export const japaneseKSubjectId = "japanese-history-k";
 export const japaneseKDeckId = "book-06-01-01";
-export const japaneseKHistoryVersion = "japanese-history-k-book-06-01-01-v2";
-export const japaneseKPreviousSubjectHash = "600bf1a05235b010fdce87518bc0cf88fcc43bdf4da61db54a7b36043b05d934";
+export const japaneseKHistoryVersion = "japanese-history-k-book-06-01-01-v3";
+export const japaneseKPreviousSubjectHash = "e7a84a8684f77ba5b157c9351c6cb641266ab9a4b00985506c072cc94fa518a2";
 const stages = ["beginner", "reverse", "integrated"];
 const root = path.resolve(import.meta.dirname, "..");
 const types = new Set(["identify", "time", "place", "person", "actor", "cause", "content", "result", "relation", "reverse", "integrated"]);
 const labels = { identify: "用語", time: "時期", place: "場所", person: "人物", actor: "主体", cause: "原因", content: "内容", result: "結果", relation: "関連", reverse: "逆向きの説明", integrated: "統合説明" };
 export const contentHash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const normalize = text => String(text).normalize("NFKC").replace(/\*\*|\s/g, "");
+const withoutReadings = text => String(text).replace(/\([ぁ-ゖー]+\)/g, "");
+const answerKeywords = answer => [...new Set([...answer.matchAll(/\*\*([^*]+)\*\*/g)].map(match => withoutReadings(match[1])))];
+const displayQuote = quote => quote.replace(/<br\s*\/?>/gi, "、").replace(/^\|\s*|\s*\|$/g, "").replace(/\s*\|\s*/g, "／");
 
 // 引用の掲載ページと出題根拠を原文抜粋で検査する。外部の知識は補わない。
 export function validateJapaneseKBank(bank, excerpt) {
@@ -34,8 +37,15 @@ export function validateJapaneseKBank(bank, excerpt) {
     assert.match(unit.id, /^\d{2}$/);
     assert.ok(!unitIds.has(unit.id)); unitIds.add(unit.id);
     assert.ok(unit.term && unit.reading && unit.category && unit.explanation && unit.questions.length);
-    assert.ok(unit.questions.filter(question => question.stage === "beginner").length >= 3, `基礎問題が不足しています: ${unit.id}`);
-    for (const stage of ["reverse", "integrated"]) assert.equal(unit.questions.filter(question => question.stage === stage).length, 1, `説明段階が不足しています: ${unit.id}/${stage}`);
+    assert.ok(unit.chronology?.displayPeriod && Number.isInteger(unit.chronology.sortYear), `時期が不足しています: ${unit.id}`);
+    const beginner = unit.questions.filter(question => question.stage === "beginner");
+    const reverse = unit.questions.filter(question => question.stage === "reverse");
+    const integrated = unit.questions.filter(question => question.stage === "integrated");
+    assert.ok(beginner.length >= 3 && beginner.length <= 7, `基礎問題の数が適切ではありません: ${unit.id}`);
+    assert.ok(reverse.length >= 1 && reverse.length <= 4, `説明問題の数が適切ではありません: ${unit.id}`);
+    assert.equal(integrated.length, 1, `統合説明が不足しています: ${unit.id}`);
+    const learnedFacts = new Set([...beginner, ...reverse].flatMap(question => question.evidence ?? []));
+    const learnedAnswers = [...beginner, ...reverse].map(question => normalize(withoutReadings(question.answer))).join("\n");
     for (const question of unit.questions) {
       assert.ok(stages.includes(question.stage));
       assert.match(question.id, new RegExp(`^${{ beginner: "B", reverse: "R", integrated: "I" }[question.stage]}\\d{2}$`));
@@ -46,6 +56,19 @@ export function validateJapaneseKBank(bank, excerpt) {
       assert.ok(!/原文|本文|本書|この章|本章|前述|上記|前の問題/.test(question.prompt), `元資料や別の問題に依存しています: ${id}`);
       assert.equal(["reverse", "integrated"].includes(question.type) ? question.type : "beginner", question.stage, `種類と段階が一致しません: ${id}`);
       assert.ok(question.evidence?.length && question.evidence.every(evidence => facts.has(evidence)), `原文の根拠が不足しています: ${id}`);
+      assert.deepEqual(question.keywords, answerKeywords(question.answer), `重要語と強調が一致しません: ${id}`);
+      if (question.stage === "beginner" && question.type !== "identify") assert.ok(question.prompt.includes(unit.term), `問題文に対象の項目名がありません: ${id}`);
+      if (question.stage !== "beginner") assert.ok(question.keywords.length, `説明回答に重要語の強調がありません: ${id}`);
+      if (question.stage === "integrated") {
+        assert.equal(question.prompt, `日本の占領期の「${unit.term}」について説明せよ。`, `統合の答え方を誘導しています: ${id}`);
+        assert.match(question.answer, /\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/, `統合回答に時期がありません: ${id}`);
+        assert.ok(question.answer.includes("日本"), `統合回答に場所がありません: ${id}`);
+        assert.ok(question.evidence.every(key => learnedFacts.has(key)), `統合だけに新しい根拠があります: ${id}`);
+        assert.ok(question.keywords.every(keyword => learnedAnswers.includes(normalize(keyword))), `統合だけに新しい重要語があります: ${id}`);
+        const periods = question.answer.match(/\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/g) ?? [];
+        assert.ok(periods.every(period => learnedAnswers.includes(normalize(period))), `統合だけに新しい時期があります: ${id}`);
+        assert.ok((question.answer.match(/。/g) ?? []).length <= 3, `統合回答が長すぎます: ${id}`);
+      }
     }
   }
   assert.ok(bank.units.length && questionIds.size);
@@ -57,7 +80,7 @@ export function buildJapaneseHistoryK(bank, excerpt) {
   const contentVersion = contentHash(bank).slice(0, 20);
   const datasetLabel = `${bank.subjectTitle}｜1 イ ${bank.part.title}`;
   const definition = {
-    id: japaneseKSubjectId, title: bank.subjectTitle, description: "原文の範囲で用語・改革の内容・比較・資料読解を学ぶ日本史",
+    id: japaneseKSubjectId, title: bank.subjectTitle, description: "原文の範囲で基礎知識から改革の内容・関係の説明へ進む日本史",
     learningType: "history", termUnitLabel: "項目", datasetLabel,
     filterLabels: { macroRegion: "章", regionDetail: "節", category: "分野" },
     stageLabels: { all: "習熟度に応じて自動", beginner: "基礎の一問一答", reverse: "逆向きの説明", integrated: "統合説明" }, availableStages: stages,
@@ -65,20 +88,20 @@ export function buildJapaneseHistoryK(bank, excerpt) {
     chapterGroups: [{ id: "chapter-6", number: 6, title: bank.chapter.title, deckIds: [japaneseKDeckId] }],
   };
   const terms = bank.units.map(unit => {
-    const id = `JHK2-06-01-01-U${unit.id}`;
+    const id = `JHK3-06-01-01-U${unit.id}`;
     return {
       id, datasetLabel, importanceRank: 1, difficultyLabel: "共通テスト対策", category: unit.category,
       term: unit.term, reading: unit.reading, aliases: [], era: bank.section.title,
       geography: { macroRegion: bank.chapter.title, macroRegions: [bank.chapter.title], regionDetail: bank.section.title, splitMacroRegion: false },
-      chronology: { displayPeriod: bank.section.title, sortYear: 1945 },
+      chronology: { ...unit.chronology },
       stages: Object.fromEntries(stages.map(stage => [stage, unit.questions.filter(question => question.stage === stage).map(question => {
         const evidence = question.evidence.map(key => facts.get(key));
         const pages = [...new Set(evidence.map(fact => fact.page))].sort((a, b) => a - b);
         return {
           id: `${id}-${question.id}`, stage, focus: question.form, type: question.type, label: labels[question.type],
           prompt: question.prompt, answer: question.answer,
-          explanation: `${unit.explanation}\n\n原文の根拠：${evidence.map(fact => `${fact.page}頁「${fact.quote}」`).join("\n")}`,
-          keywords: [], acceptedAnswers: [], answerNote: "", yearMnemonic: "", hideTermUntilAnswer: stage === "beginner",
+          explanation: [question.note || (stage === "integrated" ? unit.explanation : ""), `原文の根拠：${evidence.map(fact => `${fact.page}頁「${displayQuote(fact.quote)}」`).join("\n")}`].filter(Boolean).join("\n\n"),
+          keywords: [...question.keywords], acceptedAnswers: [...(question.acceptedAnswers ?? [])], answerNote: "", yearMnemonic: "", hideTermUntilAnswer: stage === "beginner",
           source: { name: `第6章 現代／${bank.part.title}（${pages.join("・")}頁）`, url: "", file: bank.source.originalFile, pages, evidence },
         };
       })])),

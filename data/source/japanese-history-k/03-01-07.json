@@ -1,0 +1,1102 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 3,
+    "title": "第3章 中世"
+  },
+  "section": {
+    "number": 1,
+    "title": "鎌倉時代"
+  },
+  "part": {
+    "number": 7,
+    "title": "鎌倉文化と鎌倉新仏教"
+  },
+  "integrationPromptPrefix": "鎌倉時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第3章_01節_07_鎌倉文化と鎌倉新仏教_原文抜粋.md",
+    "originalFile": "sources/kokushi/3_中世.md",
+    "pages": [
+      121,
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      181
+    ],
+    "note": "140頁ト見出しから145頁末までの全本文・鎌倉新仏教の一覧表・注⑱～㉓・文献史料・図版説明を通読した。140頁の悪党・分割相続・御内人の注⑰⑮⑯は前項06に属し、本項から除く。180～181頁年表を通読したが、年のない新古今和歌集・宗派の欄や空欄を埋めない。121/181頁は鎌倉時代全体の12世紀末～14世紀前半という幅のみの補助で、1192を唯一の幕府成立年にせず、個々の宗派・作品・寺院・図書館の成立年を推定しない。並び年1192も時代位置であり個々の成立年ではない。武士の気風と彫刻、絵巻による生活や伝説の描写、文学・記録・学問、随筆と和歌、念仏系三宗派、題目と禅を五つにまとめる。金沢文庫は原文どおり関東の私設図書館として短答と説明に含め、設立者や蔵書・成立年は補わない。禁秘抄は宮廷の作法・祭祀・学芸の記録として扱い、天皇の心構えへの賛美、皇統や代数・神事の優劣・政治の太平の必然を正答にしない。方丈記の無常観と生活、徒然草の随筆としての性質、新古今和歌集の勅命と編纂者を中心にし、作者の称賛・歌数・歌の作者一覧や歌風の細部・建築寸法は出題しない。絵巻の道真の怨霊や仏教の往生・成仏・悟りは描かれた伝説や宗派の教えとして表現し、歴史的に起きた超自然現象や宗教的救済の真偽を正答にしない。文化財指定・寺院一覧・寺院の現在の状態・僧の生没年は出題しない。浄土宗・浄土真宗・時宗および日蓮宗・臨済宗・曹洞宗の開祖と教義の対応を原文の本文と表で照合し、引用は後の基本問題の開祖名や教義名を先に明かさない長さに分ける。141頁の表の悪人正機・他力本願と題目はそれぞれ親鸞と日蓮の列の教義名として使用するが、他力本願や悪人正機の原文にない定義は補わない。表全体は抜粋に保持し、表示する引用では他の列の後続の主要解答を先出ししない。旧仏教を劣った宗教とせず、宗派の優劣、末法思想の正否、国難の予言の真偽も問わない。"
+  },
+  "facts": [
+    {
+      "id": "kamakura-era-start",
+      "page": 121,
+      "quote": "建久三年（一一九二）、第八十二代**後鳥羽天皇**が頼朝を**征夷大将軍**に任命しました。"
+    },
+    {
+      "id": "kamakura-era-end",
+      "page": 181,
+      "quote": "- 1333　後醍醐天皇が鎌倉幕府を滅ぼし、"
+    },
+    {
+      "id": "sculpture-example",
+      "page": 140,
+      "quote": "東大寺南大門金剛力士立像は鎌倉彫刻の代表作として知られています。"
+    },
+    {
+      "id": "sculptors",
+      "page": 140,
+      "quote": "運慶、快慶らによって作られた東大寺南大門金剛力士立像"
+    },
+    {
+      "id": "sculpture-style",
+      "page": 140,
+      "quote": "武士の持つ気風が新しい傾向を作り出し、豪快な作風の仏像や肖像彫刻が制作されました。"
+    },
+    {
+      "id": "ippen-picture-title",
+      "page": 143,
+      "quote": "一遍聖絵"
+    },
+    {
+      "id": "ippen-picture-life",
+      "page": 143,
+      "quote": "中世の人々の生活の様子を伝える。"
+    },
+    {
+      "id": "ippen-picture-journey",
+      "page": 143,
+      "quote": "一遍の遊行を描いている。"
+    },
+    {
+      "id": "kitano-picture",
+      "page": 145,
+      "quote": "『北野天神縁起絵巻』（全八巻）は、菅原道真が失意のなか生涯を閉じ、死後、怨霊となって霊威を振るったことなどを描いた絵巻物。"
+    },
+    {
+      "id": "picture-popularity",
+      "page": 145,
+      "quote": "鎌倉時代には、ほかにも『蒙古襲来絵詞』『春日権現験記絵巻』をはじめ、盛んに絵巻物が制作された。"
+    },
+    {
+      "id": "heike-name-content",
+      "page": 141,
+      "quote": "平氏の盛衰を描いた『平家物語』"
+    },
+    {
+      "id": "heike-reciters",
+      "page": 141,
+      "quote": "軍記物語では平氏の盛衰を描いた『平家物語』が琵琶法師によって語られ全国で知られることになりました。"
+    },
+    {
+      "id": "azuma-diary",
+      "page": 141,
+      "quote": "歴史書では幕府の歴史が日記体で書かれた『吾妻鏡』が編纂されました。"
+    },
+    {
+      "id": "kinpisho-author",
+      "page": 140,
+      "quote": "順徳天皇が著した『禁秘抄』"
+    },
+    {
+      "id": "kinpisho-content",
+      "page": 140,
+      "quote": "『禁秘抄』は、天皇自ら有職故実を解説し、天皇の心構えや、宮中祭祀、宮中の日常や行事、天皇が習うべき学問や芸術に至るまで、およそ天皇として知っておくべきことが書かれています。"
+    },
+    {
+      "id": "kinpisho-customs",
+      "page": 142,
+      "quote": "およそ宮中の作法は、神事を先にして、他のことは後にするものです。"
+    },
+    {
+      "id": "kanazawa-library",
+      "page": 141,
+      "quote": "学問の分野でも、関東では金沢文庫と呼ばれる私設図書館が設けられました。"
+    },
+    {
+      "id": "shinkokin-compilers",
+      "page": 141,
+      "quote": "『新古今和歌集』が藤原定家らによって編纂されました。"
+    },
+    {
+      "id": "shinkokin-imperial-order",
+      "page": 141,
+      "quote": "後鳥羽上皇の勅命によって『新古今和歌集』が藤原定家らによって編纂されました。"
+    },
+    {
+      "id": "shinkokin-anthology",
+      "page": 141,
+      "quote": "第8番目の勅撰和歌集。"
+    },
+    {
+      "id": "hojoki-author",
+      "page": 141,
+      "quote": "鴨長明の『方丈記』"
+    },
+    {
+      "id": "hojoki-content",
+      "page": 141,
+      "quote": "仏教的無常観を基調に、作者が体験した平安末期の都の生活の様子や、移り住んだ日野山の方丈（一丈四方）の庵での静寂な生活を記す。"
+    },
+    {
+      "id": "tsurezure-author",
+      "page": 141,
+      "quote": "吉田兼好（兼好法師）の『徒然草』"
+    },
+    {
+      "id": "tsurezure-style",
+      "page": 141,
+      "quote": "出家した作者が思いつくままに述べたものとされる。"
+    },
+    {
+      "id": "tsurezure-variety",
+      "page": 141,
+      "quote": "内容は多岐にわたり、"
+    },
+    {
+      "id": "new-buddhism-background",
+      "page": 141,
+      "quote": "戦乱や災害、飢饉、そして末法思想の影響を背景に新しい仏教の宗派が登場しました。"
+    },
+    {
+      "id": "new-buddhism-practice",
+      "page": 141,
+      "quote": "一つの修行法に打ち込むことが鎌倉新仏教の特徴で、その容易さから民衆の宗教として広く受け入れられました。"
+    },
+    {
+      "id": "jodo-teaching",
+      "page": 141,
+      "quote": "浄土宗を開いて「南無阿弥陀仏」とただ念仏を唱えるだけ（専修念仏）で極楽浄土に往生できると説き、"
+    },
+    {
+      "id": "honen-founder",
+      "page": 141,
+      "quote": "法然は浄土宗を開いて"
+    },
+    {
+      "id": "jodoshin-teaching",
+      "page": 141,
+      "quote": "浄土真宗を開いて悪人正機説を説きました。"
+    },
+    {
+      "id": "shinran-founder",
+      "page": 141,
+      "quote": "さらに弟子の親鸞は浄土真宗を開いて悪人正機説を説きました。"
+    },
+    {
+      "id": "shinran-doctrines",
+      "page": 141,
+      "quote": "悪人正機・他力本願"
+    },
+    {
+      "id": "jishu-preaching",
+      "page": 141,
+      "quote": "踊念仏によって時宗の布教"
+    },
+    {
+      "id": "ippen-founder",
+      "page": 143,
+      "quote": "時宗の開祖・一遍の遊行を描いている。"
+    },
+    {
+      "id": "ippen-journey",
+      "page": 141,
+      "quote": "一遍は全国を遊行し、"
+    },
+    {
+      "id": "dance-nembutsu",
+      "page": 144,
+      "quote": "踊念仏とは「南無阿弥陀仏」に節をつけて唱えながら踊る宗教舞踊。"
+    },
+    {
+      "id": "nichiren-founder-and-salvation",
+      "page": 142,
+      "quote": "日蓮は日蓮宗の開祖となり、国難の到来を予言して現世での救済を重んじました。"
+    },
+    {
+      "id": "lotus-sutra",
+      "page": 142,
+      "quote": "法華経が最高の仏典であり"
+    },
+    {
+      "id": "nichiren-chant",
+      "page": 142,
+      "quote": "「南無妙法蓮華経」を唱えることで仏になれると考えた"
+    },
+    {
+      "id": "nichiren-doctrine-name",
+      "page": 141,
+      "quote": "題目"
+    },
+    {
+      "id": "koan-practice",
+      "page": 142,
+      "quote": "公案問答と呼ばれる師との問答を中心とする禅を重視した臨済宗を開き、"
+    },
+    {
+      "id": "eisai-founder",
+      "page": 142,
+      "quote": "栄西は公案問答と呼ばれる師との問答を中心とする禅を重視した臨済宗を開き、"
+    },
+    {
+      "id": "shikantaza-practice",
+      "page": 142,
+      "quote": "ひたすら坐禅に徹する只管打坐を重視した曹洞宗を開きました。"
+    },
+    {
+      "id": "dogen-founder",
+      "page": 142,
+      "quote": "道元はひたすら坐禅に徹する只管打坐を重視した曹洞宗を開きました。"
+    },
+    {
+      "id": "zen-from-song",
+      "page": 142,
+      "quote": "宋からは、坐禅によって自力で悟りの境地に達するという禅宗が伝来しました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "彫刻と絵巻",
+      "reading": "ちょうこくとえまき",
+      "category": "美術と生活の記録",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末～14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "武士の気風を受け、豪快な作風の仏像や肖像彫刻が制作された。運慶(うんけい)・快慶(かいけい)らの東大寺南大門金剛力士立像(こんごうりきしりゅうぞう)が代表作である。絵巻では一遍聖絵(いっぺんひじりえ)が遊行(ゆぎょう)や中世の生活を伝え、北野天神縁起絵巻(きたのてんじんえんぎえまき)が菅原道真の伝説などを描いた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、東大寺南大門にある鎌倉彫刻の代表的な仏像は何か。",
+          "answer": "**金剛力士立像(こんごうりきしりゅうぞう)**。",
+          "keywords": [
+            "金剛力士立像"
+          ],
+          "evidence": [
+            "sculpture-example"
+          ],
+          "acceptedAnswers": [
+            "金剛力士立像",
+            "東大寺南大門金剛力士立像"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の彫刻と絵巻に関して、東大寺南大門の金剛力士立像(こんごうりきしりゅうぞう)を作った代表的な仏師は誰か。",
+          "answer": "**運慶(うんけい)・快慶(かいけい)**ら。",
+          "keywords": [
+            "運慶・快慶"
+          ],
+          "evidence": [
+            "sculptors"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の彫刻と絵巻では、武士の気風を受けた仏像や肖像彫刻には、どのような作風が見られたか。",
+          "answer": "**豪快な作風**。",
+          "keywords": [
+            "豪快な作風"
+          ],
+          "evidence": [
+            "sculpture-style"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の彫刻と絵巻では、彫刻にどのような特色があったか。",
+          "answer": "12世紀末～14世紀前半の日本では、武士の気風を受けて**豪快な作風**の仏像や肖像彫刻が制作された。**運慶(うんけい)・快慶(かいけい)**らによる東大寺南大門の**金剛力士立像(こんごうりきしりゅうぞう)**が代表作である。",
+          "keywords": [
+            "豪快な作風",
+            "運慶・快慶",
+            "金剛力士立像"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "sculpture-style",
+            "sculptors",
+            "sculpture-example"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の彫刻と絵巻では、絵巻はどのような内容を伝えたか。",
+          "answer": "絵巻物が盛んに制作され、**一遍聖絵(いっぺんひじりえ)**は一遍の遊行(ゆぎょう)と**中世の人々の生活**を伝えた。**北野天神縁起絵巻(きたのてんじんえんぎえまき)**は、菅原道真の死後の怨霊という**伝説**などを描いた。",
+          "keywords": [
+            "一遍聖絵",
+            "中世の人々の生活",
+            "北野天神縁起絵巻",
+            "伝説"
+          ],
+          "evidence": [
+            "picture-popularity",
+            "ippen-picture-title",
+            "ippen-picture-life",
+            "ippen-picture-journey",
+            "kitano-picture"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「彫刻と絵巻」について説明せよ。",
+          "answer": "12世紀末～14世紀前半の日本では、武士の気風を受けて**豪快な作風**の仏像や肖像彫刻が制作され、**運慶(うんけい)・快慶(かいけい)**らの東大寺南大門**金剛力士立像(こんごうりきしりゅうぞう)**が代表作となった。絵巻物も盛んに制作され、**一遍聖絵(いっぺんひじりえ)**は一遍の遊行(ゆぎょう)と**中世の人々の生活**を伝え、**北野天神縁起絵巻(きたのてんじんえんぎえまき)**は菅原道真の**伝説**などを描いた。",
+          "keywords": [
+            "豪快な作風",
+            "運慶・快慶",
+            "金剛力士立像",
+            "一遍聖絵",
+            "中世の人々の生活",
+            "北野天神縁起絵巻",
+            "伝説"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "sculpture-style",
+            "sculptors",
+            "sculpture-example",
+            "picture-popularity",
+            "ippen-picture-title",
+            "ippen-picture-life",
+            "ippen-picture-journey",
+            "kitano-picture"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "文学・記録と学問",
+      "reading": "ぶんがくきろくとがくもん",
+      "category": "軍記・歴史書・宮廷の記録",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末～14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "平家物語(へいけものがたり)は平氏の盛衰を描く軍記物語で、琵琶法師(びわほうし)によって語られた。吾妻鏡(あづまかがみ)は幕府の歴史を日記体で記す。順徳天皇(じゅんとくてんのう)の禁秘抄(きんぴしょう)は宮廷の作法・祭祀・学芸を伝え、関東には私設図書館の金沢文庫(かなざわぶんこ)が置かれた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、平氏の盛衰を描いた軍記物語は何か。",
+          "answer": "**平家物語(へいけものがたり)**。",
+          "keywords": [
+            "平家物語"
+          ],
+          "evidence": [
+            "heike-name-content"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、幕府の歴史を日記体で書いた歴史書は何か。",
+          "answer": "**吾妻鏡(あづまかがみ)**。",
+          "keywords": [
+            "吾妻鏡"
+          ],
+          "evidence": [
+            "azuma-diary"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、宮廷の作法や祭祀、天皇の学問や芸術を記した書物は何か。",
+          "answer": "**禁秘抄(きんぴしょう)**。",
+          "keywords": [
+            "禁秘抄"
+          ],
+          "evidence": [
+            "kinpisho-content"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、平家物語(へいけものがたり)を語って各地へ広めた人々は何と呼ばれたか。",
+          "answer": "**琵琶法師(びわほうし)**。",
+          "keywords": [
+            "琵琶法師"
+          ],
+          "evidence": [
+            "heike-reciters"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、関東に設けられた私設図書館は何と呼ばれたか。",
+          "answer": "**金沢文庫(かなざわぶんこ)**。",
+          "keywords": [
+            "金沢文庫"
+          ],
+          "evidence": [
+            "kanazawa-library"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の文学・記録と学問では、軍記物語と歴史書はどのように違ったか。",
+          "answer": "12世紀末～14世紀前半の日本で、軍記物語の**平家物語(へいけものがたり)**は**平氏の盛衰**を描き、**琵琶法師(びわほうし)**によって語られた。歴史書の**吾妻鏡(あづまかがみ)**は、幕府の歴史を**日記体**で記した。",
+          "keywords": [
+            "平家物語",
+            "平氏の盛衰",
+            "琵琶法師",
+            "吾妻鏡",
+            "日記体"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "heike-name-content",
+            "heike-reciters",
+            "azuma-diary"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の文学・記録と学問では、宮廷の記録や学問の施設にはどのような例があったか。",
+          "answer": "順徳天皇(じゅんとくてんのう)の**禁秘抄(きんぴしょう)**は、**宮廷の作法・祭祀・学芸**を記した。関東には**私設図書館**である**金沢文庫(かなざわぶんこ)**が設けられた。",
+          "keywords": [
+            "禁秘抄",
+            "宮廷の作法・祭祀・学芸",
+            "私設図書館",
+            "金沢文庫"
+          ],
+          "evidence": [
+            "kinpisho-author",
+            "kinpisho-content",
+            "kinpisho-customs",
+            "kanazawa-library"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「文学・記録と学問」について説明せよ。",
+          "answer": "12世紀末～14世紀前半の日本で、軍記物語の**平家物語(へいけものがたり)**は**平氏の盛衰**を描き、**琵琶法師(びわほうし)**によって語られた。**吾妻鏡(あづまかがみ)**は幕府の歴史を**日記体**で記した。順徳天皇(じゅんとくてんのう)の**禁秘抄(きんぴしょう)**は**宮廷の作法・祭祀・学芸**を記し、関東には**私設図書館**の**金沢文庫(かなざわぶんこ)**が置かれた。",
+          "keywords": [
+            "平家物語",
+            "平氏の盛衰",
+            "琵琶法師",
+            "吾妻鏡",
+            "日記体",
+            "禁秘抄",
+            "宮廷の作法・祭祀・学芸",
+            "私設図書館",
+            "金沢文庫"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "heike-name-content",
+            "heike-reciters",
+            "azuma-diary",
+            "kinpisho-author",
+            "kinpisho-content",
+            "kinpisho-customs",
+            "kanazawa-library"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "随筆と和歌",
+      "reading": "ずいひつとわか",
+      "category": "文学と編纂",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末～14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "鴨長明(かものちょうめい)の方丈記(ほうじょうき)は、仏教的無常観を基調に都や庵での生活を記した。兼好法師(けんこうほうし)の徒然草(つれづれぐさ)は思いつくままに述べた随筆とされ、内容は幅広い。新古今和歌集(しんこきんわかしゅう)は、後鳥羽上皇(ごとばじょうこう)の勅命により藤原定家(ふじわらのていか)らが編纂した勅撰和歌集である。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、藤原定家(ふじわらのていか)らが編纂した勅撰和歌集は何か。",
+          "answer": "**新古今和歌集(しんこきんわかしゅう)**。",
+          "keywords": [
+            "新古今和歌集"
+          ],
+          "evidence": [
+            "shinkokin-compilers",
+            "shinkokin-anthology"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の随筆と和歌に関して、方丈記(ほうじょうき)を書いたのは誰か。",
+          "answer": "**鴨長明(かものちょうめい)**。",
+          "keywords": [
+            "鴨長明"
+          ],
+          "evidence": [
+            "hojoki-author"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の随筆と和歌に関して、徒然草(つれづれぐさ)を書いたのは誰か。",
+          "answer": "**兼好法師(けんこうほうし)**（吉田兼好(よしだけんこう)）。",
+          "keywords": [
+            "兼好法師"
+          ],
+          "evidence": [
+            "tsurezure-author"
+          ],
+          "acceptedAnswers": [
+            "兼好法師",
+            "吉田兼好"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の随筆と和歌に関して、新古今和歌集(しんこきんわかしゅう)の編纂を命じた上皇は誰か。",
+          "answer": "**後鳥羽上皇(ごとばじょうこう)**。",
+          "keywords": [
+            "後鳥羽上皇"
+          ],
+          "evidence": [
+            "shinkokin-imperial-order"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の随筆と和歌では、方丈記(ほうじょうき)と徒然草(つれづれぐさ)にはどのような特徴があったか。",
+          "answer": "12世紀末～14世紀前半の日本で、**鴨長明(かものちょうめい)**の**方丈記(ほうじょうき)**は、**仏教的無常観**を基調に都の生活や庵での静かな生活を記した。**兼好法師(けんこうほうし)**の**徒然草(つれづれぐさ)**は、作者が**思いつくままに述べた随筆**とされ、内容は幅広い。",
+          "keywords": [
+            "鴨長明",
+            "方丈記",
+            "仏教的無常観",
+            "兼好法師",
+            "徒然草",
+            "思いつくままに述べた随筆"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "hojoki-author",
+            "hojoki-content",
+            "tsurezure-author",
+            "tsurezure-style",
+            "tsurezure-variety"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の随筆と和歌では、新古今和歌集(しんこきんわかしゅう)はどのように編纂されたか。",
+          "answer": "**後鳥羽上皇(ごとばじょうこう)**の勅命によって、**藤原定家(ふじわらのていか)**らが**新古今和歌集(しんこきんわかしゅう)**を編纂した。これは**勅撰和歌集**である。",
+          "keywords": [
+            "後鳥羽上皇",
+            "藤原定家",
+            "新古今和歌集",
+            "勅撰和歌集"
+          ],
+          "evidence": [
+            "shinkokin-imperial-order",
+            "shinkokin-anthology"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「随筆と和歌」について説明せよ。",
+          "answer": "12世紀末～14世紀前半の日本で、**鴨長明(かものちょうめい)**の**方丈記(ほうじょうき)**は**仏教的無常観**を基調に都や庵での生活を記した。**兼好法師(けんこうほうし)**の**徒然草(つれづれぐさ)**は、**思いつくままに述べた随筆**とされ、内容は幅広い。和歌では**後鳥羽上皇(ごとばじょうこう)**の勅命によって、**藤原定家(ふじわらのていか)**らが**勅撰和歌集**の**新古今和歌集(しんこきんわかしゅう)**を編纂した。",
+          "keywords": [
+            "鴨長明",
+            "方丈記",
+            "仏教的無常観",
+            "兼好法師",
+            "徒然草",
+            "思いつくままに述べた随筆",
+            "後鳥羽上皇",
+            "藤原定家",
+            "勅撰和歌集",
+            "新古今和歌集"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "hojoki-author",
+            "hojoki-content",
+            "tsurezure-author",
+            "tsurezure-style",
+            "tsurezure-variety",
+            "shinkokin-imperial-order",
+            "shinkokin-anthology"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "念仏系の鎌倉新仏教",
+      "reading": "ねんぶつけいのかまくらしんぶっきょう",
+      "category": "浄土宗・浄土真宗・時宗",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末～14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "法然(ほうねん)は浄土宗(じょうどしゅう)を開き、南無阿弥陀仏(なむあみだぶつ)と唱える専修念仏(せんじゅねんぶつ)によって往生できると説いた。弟子の親鸞(しんらん)は浄土真宗(じょうどしんしゅう)を開き、悪人正機説(あくにんしょうきせつ)を説き、他力本願(たりきほんがん)も教義とした。一遍(いっぺん)は諸国を遊行(ゆぎょう)し、念仏に節をつけて唱えながら踊る踊念仏(おどりねんぶつ)で時宗(じしゅう)を広めた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、南無阿弥陀仏(なむあみだぶつ)と唱える専修念仏(せんじゅねんぶつ)によって極楽浄土に往生できると説いた宗派は何か。",
+          "answer": "**浄土宗(じょうどしゅう)**。",
+          "keywords": [
+            "浄土宗"
+          ],
+          "evidence": [
+            "jodo-teaching"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教で、浄土宗(じょうどしゅう)を開いた僧は誰か。",
+          "answer": "**法然(ほうねん)**。",
+          "keywords": [
+            "法然"
+          ],
+          "evidence": [
+            "honen-founder"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、悪人正機説(あくにんしょうきせつ)を説いた宗派は何か。",
+          "answer": "**浄土真宗(じょうどしんしゅう)**。",
+          "keywords": [
+            "浄土真宗"
+          ],
+          "evidence": [
+            "jodoshin-teaching"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教で、浄土真宗(じょうどしんしゅう)を開いた僧は誰か。",
+          "answer": "**親鸞(しんらん)**。",
+          "keywords": [
+            "親鸞"
+          ],
+          "evidence": [
+            "shinran-founder"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、踊念仏(おどりねんぶつ)によって布教された宗派は何か。",
+          "answer": "**時宗(じしゅう)**。",
+          "keywords": [
+            "時宗"
+          ],
+          "evidence": [
+            "jishu-preaching"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教で、時宗(じしゅう)の開祖となった僧は誰か。",
+          "answer": "**一遍(いっぺん)**。",
+          "keywords": [
+            "一遍"
+          ],
+          "evidence": [
+            "ippen-founder"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教では、浄土宗(じょうどしゅう)と浄土真宗(じょうどしんしゅう)の開祖や教えはどう違ったか。",
+          "answer": "12世紀末～14世紀前半の日本で、**法然(ほうねん)**は**浄土宗(じょうどしゅう)**を開き、南無阿弥陀仏(なむあみだぶつ)と唱える**専修念仏(せんじゅねんぶつ)**で極楽浄土に往生できると説いた。弟子の**親鸞(しんらん)**は**浄土真宗(じょうどしんしゅう)**を開いて**悪人正機説(あくにんしょうきせつ)**を説き、教義には**他力本願(たりきほんがん)**もある。",
+          "keywords": [
+            "法然",
+            "浄土宗",
+            "専修念仏",
+            "親鸞",
+            "浄土真宗",
+            "悪人正機説",
+            "他力本願"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "honen-founder",
+            "jodo-teaching",
+            "shinran-founder",
+            "jodoshin-teaching",
+            "shinran-doctrines"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教では、時宗(じしゅう)はどのように布教されたか。",
+          "answer": "**一遍(いっぺん)**が**全国を遊行(ゆぎょう)**し、**時宗(じしゅう)**を広めた。**踊念仏(おどりねんぶつ)**は、南無阿弥陀仏(なむあみだぶつ)に節をつけて唱えながら踊るもので、布教に用いられた。",
+          "keywords": [
+            "一遍",
+            "全国を遊行",
+            "時宗",
+            "踊念仏"
+          ],
+          "evidence": [
+            "ippen-founder",
+            "ippen-journey",
+            "jishu-preaching",
+            "dance-nembutsu"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の念仏系の鎌倉新仏教を含め、新しい宗派が登場した背景には何があったか。",
+          "answer": "**戦乱・災害・飢饉・末法思想(まっぽうしそう)**の影響を背景に、新しい仏教の宗派が登場した。一つの修行法に打ち込むことが特徴で、民衆にも広く受け入れられた。",
+          "keywords": [
+            "戦乱・災害・飢饉・末法思想"
+          ],
+          "evidence": [
+            "new-buddhism-background",
+            "new-buddhism-practice"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「念仏系の鎌倉新仏教」について説明せよ。",
+          "answer": "12世紀末～14世紀前半の日本では、**戦乱・災害・飢饉・末法思想(まっぽうしそう)**を背景に新仏教が登場し、**法然(ほうねん)**は**浄土宗(じょうどしゅう)**を開き、南無阿弥陀仏(なむあみだぶつ)と唱える**専修念仏(せんじゅねんぶつ)**で極楽浄土に往生できると説いた。弟子の**親鸞(しんらん)**は**浄土真宗(じょうどしんしゅう)**を開き、**悪人正機説(あくにんしょうきせつ)**を説き、教義には**他力本願(たりきほんがん)**もある。**一遍(いっぺん)**は**全国を遊行(ゆぎょう)**し、南無阿弥陀仏に節をつけて唱えながら踊る**踊念仏(おどりねんぶつ)**によって**時宗(じしゅう)**を広めた。",
+          "keywords": [
+            "戦乱・災害・飢饉・末法思想",
+            "法然",
+            "浄土宗",
+            "専修念仏",
+            "親鸞",
+            "浄土真宗",
+            "悪人正機説",
+            "他力本願",
+            "一遍",
+            "全国を遊行",
+            "踊念仏",
+            "時宗"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "new-buddhism-background",
+            "honen-founder",
+            "jodo-teaching",
+            "shinran-founder",
+            "jodoshin-teaching",
+            "shinran-doctrines",
+            "ippen-founder",
+            "ippen-journey",
+            "jishu-preaching",
+            "dance-nembutsu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "題目と禅の教え",
+      "reading": "だいもくとぜんのおしえ",
+      "category": "日蓮宗・臨済宗・曹洞宗",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末～14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "日蓮(にちれん)は法華経(ほけきょう)を最高の仏典と考え、南無妙法蓮華経(なむみょうほうれんげきょう)を唱える教えと現世での救済を重んじた。宋から伝わった禅宗では自力で悟りを目指し、栄西(えいさい)の臨済宗(りんざいしゅう)は師との公案問答(こうあんもんどう)、道元(どうげん)の曹洞宗(そうとうしゅう)は坐禅に徹する只管打坐(しかんたざ)を重視した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、国難の到来を予言し、現世での救済を重んじた新仏教の僧は誰か。",
+          "answer": "**日蓮(にちれん)**。",
+          "keywords": [
+            "日蓮"
+          ],
+          "evidence": [
+            "nichiren-founder-and-salvation"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の題目と禅の教えで、日蓮宗(にちれんしゅう)の教えにおいて最高の仏典と考えられた経典は何か。",
+          "answer": "**法華経(ほけきょう)**。",
+          "keywords": [
+            "法華経"
+          ],
+          "evidence": [
+            "lotus-sutra"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の題目と禅の教えで、日蓮(にちれん)が唱えることで仏になれると考えた言葉は何か。",
+          "answer": "**南無妙法蓮華経(なむみょうほうれんげきょう)**。",
+          "keywords": [
+            "南無妙法蓮華経"
+          ],
+          "evidence": [
+            "nichiren-chant"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本の臨済宗(りんざいしゅう)で、師との問答を中心にする禅の修行を何というか。",
+          "answer": "**公案問答(こうあんもんどう)**。",
+          "keywords": [
+            "公案問答"
+          ],
+          "evidence": [
+            "koan-practice"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の題目と禅の教えで、臨済宗(りんざいしゅう)を開いた僧は誰か。",
+          "answer": "**栄西(えいさい)**。",
+          "keywords": [
+            "栄西"
+          ],
+          "evidence": [
+            "eisai-founder"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本の曹洞宗(そうとうしゅう)で、ひたすら坐禅に徹する修行を何というか。",
+          "answer": "**只管打坐(しかんたざ)**。",
+          "keywords": [
+            "只管打坐"
+          ],
+          "evidence": [
+            "shikantaza-practice"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の題目と禅の教えで、曹洞宗(そうとうしゅう)を開いた僧は誰か。",
+          "answer": "**道元(どうげん)**。",
+          "keywords": [
+            "道元"
+          ],
+          "evidence": [
+            "dogen-founder"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の題目と禅の教えでは、日蓮(にちれん)はどのような教えを説いたか。",
+          "answer": "**日蓮(にちれん)**は**日蓮宗(にちれんしゅう)**の開祖となり、教義には**題目**がある。**法華経(ほけきょう)**を最高の仏典と考え、**南無妙法蓮華経(なむみょうほうれんげきょう)**を唱えることで仏になれると考え、**現世での救済**を重んじた。",
+          "keywords": [
+            "日蓮",
+            "日蓮宗",
+            "題目",
+            "法華経",
+            "南無妙法蓮華経",
+            "現世での救済"
+          ],
+          "evidence": [
+            "nichiren-founder-and-salvation",
+            "nichiren-doctrine-name",
+            "lotus-sutra",
+            "nichiren-chant"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の題目と禅の教えでは、禅宗の伝来と修行にはどのような特徴があったか。",
+          "answer": "12世紀末～14世紀前半の日本で、禅宗は**宋から伝わり**、坐禅によって**自力で悟りを目指す教え**だった。",
+          "keywords": [
+            "宋から伝わり",
+            "自力で悟りを目指す教え"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "zen-from-song"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の題目と禅の教えでは、臨済宗(りんざいしゅう)と曹洞宗(そうとうしゅう)の開祖や修行はどう違ったか。",
+          "answer": "**栄西(えいさい)**が開いた**臨済宗(りんざいしゅう)**は、師との問答である**公案問答(こうあんもんどう)**を重視した。**道元(どうげん)**が開いた**曹洞宗(そうとうしゅう)**は、ひたすら坐禅に徹する**只管打坐(しかんたざ)**を重視した。",
+          "keywords": [
+            "栄西",
+            "臨済宗",
+            "公案問答",
+            "道元",
+            "曹洞宗",
+            "只管打坐"
+          ],
+          "evidence": [
+            "eisai-founder",
+            "koan-practice",
+            "dogen-founder",
+            "shikantaza-practice"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「題目と禅の教え」について説明せよ。",
+          "answer": "12世紀末～14世紀前半の日本で、**日蓮(にちれん)**は**日蓮宗(にちれんしゅう)**の開祖となり、教義には**題目**があり、**法華経(ほけきょう)**を最高の仏典と考え、**南無妙法蓮華経(なむみょうほうれんげきょう)**を唱えることで仏になれると考えて、**現世での救済**を重んじた。禅宗は**宋から伝わり**、**自力で悟りを目指す教え**で、**栄西(えいさい)**の**臨済宗(りんざいしゅう)**は師との**公案問答(こうあんもんどう)**を重視した。**道元(どうげん)**の**曹洞宗(そうとうしゅう)**は、ひたすら坐禅に徹する**只管打坐(しかんたざ)**を重視した。",
+          "keywords": [
+            "日蓮",
+            "日蓮宗",
+            "題目",
+            "法華経",
+            "南無妙法蓮華経",
+            "現世での救済",
+            "宋から伝わり",
+            "自力で悟りを目指す教え",
+            "栄西",
+            "臨済宗",
+            "公案問答",
+            "道元",
+            "曹洞宗",
+            "只管打坐"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "nichiren-founder-and-salvation",
+            "nichiren-doctrine-name",
+            "lotus-sutra",
+            "nichiren-chant",
+            "zen-from-song",
+            "eisai-founder",
+            "koan-practice",
+            "dogen-founder",
+            "shikantaza-practice"
+          ]
+        }
+      ]
+    }
+  ]
+}

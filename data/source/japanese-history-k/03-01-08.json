@@ -1,0 +1,868 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 3,
+    "title": "第3章 中世"
+  },
+  "section": {
+    "number": 1,
+    "title": "鎌倉時代"
+  },
+  "part": {
+    "number": 8,
+    "title": "後醍醐天皇の倒幕運動と建武の新政"
+  },
+  "integrationPromptPrefix": "鎌倉時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第3章_01節_08_後醍醐天皇の倒幕運動と建武の新政_原文抜粋.md",
+    "originalFile": "sources/kokushi/3_中世.md",
+    "pages": [
+      146,
+      147,
+      148,
+      149,
+      150
+    ],
+    "note": "146頁の関連注㉔から149頁末までの本文・関連注・肖像説明・史料的記述を全文通読し、150頁注①を1336年の分立という時期確認だけに用いた。181頁の同じ出来事の年表も通読したが、本文の1333年の幕府滅亡と翌1334年の建武への改元を区別し、改元を滅亡年へ固定しない。両統迭立の成立年は原文から補わず、1333年の幕府滅亡以前という広い時期枠で扱う。皇統の系譜は両統の関係を理解する必要最小限とし、代数・詳細な譲位経緯・南北朝の正当性は問わない。幕府の仁政や贅沢、天皇の政治の善悪・君主や武将の賛美、全武士が同じ動機で挙兵したという心理の一般化、護良親王殺害・陵墓の向き・生没年などの人物逸話や細部は独立短答にしない。二条河原落書は政治批判と世相の史料として学び、原文で1334年と翌年説が併記される成立年を一意に問わない。1335年の尊氏の離反と1336年の湊川・分立を区別し、南北朝合一や室町幕府の制度は次項以降の内容として持ち込まない。 建武政権への武士の不満を問う短答では、原因となる恩賞を問題文で先に示さず、原文で説明された理由を思い出せる形にする。難読の両統迭立と建武の新政は各短答の初出にも読みを補う。"
+  },
+  "facts": [
+    {
+      "id": "jimyoin",
+      "page": 146,
+      "quote": "後深草天皇系の持明院統"
+    },
+    {
+      "id": "daikakuji",
+      "page": 146,
+      "quote": "亀山天皇系の大覚寺統"
+    },
+    {
+      "id": "alternation-content",
+      "page": 146,
+      "quote": "両統から交互に天皇を立てることが決まり、"
+    },
+    {
+      "id": "alternation-name",
+      "page": 146,
+      "quote": "これを両統迭立といいます。"
+    },
+    {
+      "id": "bakufu-proposal",
+      "page": 146,
+      "quote": "そこで、幕府の提案により"
+    },
+    {
+      "id": "succession-control",
+      "page": 146,
+      "quote": "皇位継承のたびに幕府が主導権を握ることになりました。"
+    },
+    {
+      "id": "plot-purpose",
+      "page": 146,
+      "quote": "第九十六代後醍醐天皇は政治の刷新に努めましたが、鎌倉幕府の存在が障害となったため、倒幕を計画しました。"
+    },
+    {
+      "id": "exile",
+      "page": 146,
+      "quote": "二度の失敗を経て隠岐へと配流になりました"
+    },
+    {
+      "id": "failed-plots",
+      "page": 146,
+      "quote": "（正中の変、元弘の変）"
+    },
+    {
+      "id": "return-year",
+      "page": 147,
+      "quote": "後醍醐天皇は、元弘三年（一三三三）、"
+    },
+    {
+      "id": "return-action",
+      "page": 147,
+      "quote": "隠岐を脱出して帰還すると、再び各地に檄を飛ばしました。"
+    },
+    {
+      "id": "takauji-rokuhara",
+      "page": 147,
+      "quote": "有力な御家人の足利尊氏が反旗を翻して六波羅探題を攻め落としたことで形勢が逆転しました。"
+    },
+    {
+      "id": "yoshisada-kamakura",
+      "page": 147,
+      "quote": "関東では新田義貞が幕府の本拠地である鎌倉を陥落させ、"
+    },
+    {
+      "id": "bakufu-fall",
+      "page": 147,
+      "quote": "同年、約一四〇年続いた鎌倉幕府は滅びました。"
+    },
+    {
+      "id": "new-government-person",
+      "page": 147,
+      "quote": "後醍醐天皇は京都に戻ると、"
+    },
+    {
+      "id": "new-government-principle",
+      "page": 147,
+      "quote": "天皇中心の新しい政治を志し、"
+    },
+    {
+      "id": "new-government-name",
+      "page": 147,
+      "quote": "これを建武の新政（建武の中興）といいます。"
+    },
+    {
+      "id": "kenmu-renaming",
+      "page": 147,
+      "quote": "幕府滅亡の翌年に元号を建武と改元したことから、"
+    },
+    {
+      "id": "warrior-demands",
+      "page": 147,
+      "quote": "領地や地位を求めたからでした。"
+    },
+    {
+      "id": "insufficient-rewards",
+      "page": 148,
+      "quote": "恩賞が不十分だったことで、武士の不満は高まりました。"
+    },
+    {
+      "id": "court-support",
+      "page": 148,
+      "quote": "朝廷内に支持基盤が弱く、公家社会を掌握していませんでした。"
+    },
+    {
+      "id": "graffiti-name",
+      "page": 148,
+      "quote": "二条河原落書"
+    },
+    {
+      "id": "graffiti-nature",
+      "page": 148,
+      "quote": "京都の二条河原に掲げられた政治批判の落書（匿名の投書）。"
+    },
+    {
+      "id": "graffiti-context",
+      "page": 148,
+      "quote": "世の中の混乱の様子は二条河原落書に記されています。"
+    },
+    {
+      "id": "takauji-revolt",
+      "page": 148,
+      "quote": "武家政治の再興を目指す尊氏は建武二年（一三三五）、鎌倉で挙兵し、建武政権から離反しました。"
+    },
+    {
+      "id": "takauji-kyushu",
+      "page": 148,
+      "quote": "朝廷は新田義貞に尊氏追討を命じ、尊氏をいったん九州に追いやりました。"
+    },
+    {
+      "id": "takauji-return",
+      "page": 148,
+      "quote": "尊氏は翌建武三年（一三三六）、光厳上皇の院宣を携えて兵を募り、九州で大軍を組織することに成功します。"
+    },
+    {
+      "id": "minatogawa-start",
+      "page": 148,
+      "quote": "京都へ向かった尊氏は、湊"
+    },
+    {
+      "id": "minatogawa-result",
+      "page": 149,
+      "quote": "川の戦いで新田義貞と楠木正成を破り、京都を軍事制圧しました。"
+    },
+    {
+      "id": "north-court",
+      "page": 149,
+      "quote": "尊氏は京都で光厳院の弟を擁立して北朝二代光明天皇として北朝（持明院統）を開き、"
+    },
+    {
+      "id": "south-court",
+      "page": 149,
+      "quote": "後醍醐天皇はやむなく吉野（奈良県）へ逃れ南朝（大覚寺統）を開きました。"
+    },
+    {
+      "id": "two-courts",
+      "page": 149,
+      "quote": "吉野と京都に二つの朝廷が並び立つことになりました。"
+    },
+    {
+      "id": "court-conflict",
+      "page": 149,
+      "quote": "二つの朝廷が武士に呼びかけて互いに争うようになりました。"
+    },
+    {
+      "id": "period-name",
+      "page": 149,
+      "quote": "動乱の時代を、南北朝時代といいます。"
+    },
+    {
+      "id": "division-date",
+      "page": 150,
+      "quote": "足利尊氏が北朝を建てた1336年"
+    },
+    {
+      "id": "two-courts-definition",
+      "page": 149,
+      "quote": "二つの朝廷が並び立つことになりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "両統迭立",
+      "reading": "りょうとうてつりつ",
+      "category": "皇位継承と政権の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1333年の鎌倉幕府滅亡前",
+        "sortYear": 1300
+      },
+      "explanation": "後深草天皇系の持明院統と亀山天皇系の大覚寺統の対立を背景に、幕府の提案で両統から交互に天皇を立てる方法がとられた。皇位継承のたびに幕府が主導権を握る仕組みとなった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、二つの皇統から交互に天皇を立てた皇位継承の方法を何というか。",
+          "answer": "**両統迭立(りょうとうてつりつ)**。",
+          "keywords": [
+            "両統迭立"
+          ],
+          "evidence": [
+            "alternation-content",
+            "alternation-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の両統迭立(りょうとうてつりつ)で、持明院統(じみょういんとう)はどの天皇の系統だったか。",
+          "answer": "**後深草天皇(ごふかくさてんのう)**の系統。",
+          "keywords": [
+            "後深草天皇"
+          ],
+          "evidence": [
+            "jimyoin"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の両統迭立(りょうとうてつりつ)で、大覚寺統(だいかくじとう)はどの天皇の系統だったか。",
+          "answer": "**亀山天皇(かめやまてんのう)**の系統。",
+          "keywords": [
+            "亀山天皇"
+          ],
+          "evidence": [
+            "daikakuji"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の両統迭立(りょうとうてつりつ)で、皇位継承のたびに主導権を握った政権は何か。",
+          "answer": "**鎌倉幕府**。",
+          "keywords": [
+            "鎌倉幕府"
+          ],
+          "evidence": [
+            "succession-control"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、両統迭立(りょうとうてつりつ)はどのような皇位継承の方法だったか。",
+          "answer": "1333年に鎌倉幕府が滅亡する以前の日本では、後深草天皇(ごふかくさてんのう)系の**持明院統(じみょういんとう)**と亀山天皇(かめやまてんのう)系の**大覚寺統(だいかくじとう)**から、**交互に天皇を立てる**方法がとられた。",
+          "keywords": [
+            "持明院統",
+            "大覚寺統",
+            "交互に天皇を立てる"
+          ],
+          "evidence": [
+            "jimyoin",
+            "daikakuji",
+            "alternation-content",
+            "alternation-name",
+            "return-year",
+            "bakufu-fall"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、両統迭立(りょうとうてつりつ)は幕府と朝廷の関係にどう関わったか。",
+          "answer": "両統から交互に天皇を立てる方法は、**鎌倉幕府**の提案によってとられた。皇位継承のたびに、**幕府が主導権を握る**ことになった。",
+          "keywords": [
+            "鎌倉幕府",
+            "幕府が主導権を握る"
+          ],
+          "evidence": [
+            "bakufu-proposal",
+            "alternation-content",
+            "succession-control"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「両統迭立」について説明せよ。",
+          "answer": "1333年に鎌倉幕府が滅亡する以前の日本では、後深草天皇(ごふかくさてんのう)系の**持明院統(じみょういんとう)**と亀山天皇(かめやまてんのう)系の**大覚寺統(だいかくじとう)**から、**交互に天皇を立てる**方法がとられた。**鎌倉幕府**の提案による**両統迭立(りょうとうてつりつ)**では、皇位継承のたびに**幕府が主導権を握る**仕組みとなった。",
+          "keywords": [
+            "持明院統",
+            "大覚寺統",
+            "交互に天皇を立てる",
+            "鎌倉幕府",
+            "両統迭立",
+            "幕府が主導権を握る"
+          ],
+          "evidence": [
+            "jimyoin",
+            "daikakuji",
+            "alternation-content",
+            "alternation-name",
+            "bakufu-proposal",
+            "succession-control",
+            "return-year",
+            "bakufu-fall"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "鎌倉幕府の滅亡",
+      "reading": "かまくらばくふのめつぼう",
+      "category": "皇位継承と政権の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1333年",
+        "sortYear": 1333
+      },
+      "explanation": "後醍醐天皇の倒幕計画は二度失敗したが、隠岐から帰還して挙兵を呼びかけた。足利尊氏による六波羅探題の攻略と新田義貞による鎌倉の陥落を経て、鎌倉幕府は滅亡した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、鎌倉幕府に反旗を翻して六波羅探題(ろくはらたんだい)を攻め落とした有力な御家人は誰か。",
+          "answer": "**足利尊氏(あしかがたかうじ)**。",
+          "keywords": [
+            "足利尊氏"
+          ],
+          "evidence": [
+            "takauji-rokuhara"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "日本の鎌倉幕府の滅亡で、幕府の本拠地の鎌倉を陥落させた武将は誰か。",
+          "answer": "**新田義貞(にったよしさだ)**。",
+          "keywords": [
+            "新田義貞"
+          ],
+          "evidence": [
+            "yoshisada-kamakura"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の鎌倉幕府の滅亡に至る過程で、倒幕計画に二度失敗した後、後醍醐天皇(ごだいごてんのう)が配流された場所はどこか。",
+          "answer": "**隠岐(おき)**。",
+          "keywords": [
+            "隠岐"
+          ],
+          "evidence": [
+            "exile"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の鎌倉幕府の滅亡に至る過程で、後醍醐天皇(ごだいごてんのう)の倒幕計画が失敗した二つの事件を何というか。",
+          "answer": "**正中の変(しょうちゅうのへん)**と**元弘の変(げんこうのへん)**。",
+          "keywords": [
+            "正中の変",
+            "元弘の変"
+          ],
+          "evidence": [
+            "plot-purpose",
+            "exile",
+            "failed-plots"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の鎌倉幕府の滅亡はいつか。",
+          "answer": "1333年。",
+          "keywords": [],
+          "evidence": [
+            "return-year",
+            "bakufu-fall"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、鎌倉幕府の滅亡へ向けて後醍醐天皇(ごだいごてんのう)はどのように行動したか。",
+          "answer": "**後醍醐天皇(ごだいごてんのう)**は政治の刷新を目指して倒幕を計画したが、**正中の変(しょうちゅうのへん)**・**元弘の変(げんこうのへん)**で失敗し、**隠岐(おき)**に配流された。1333年に日本の隠岐を脱出して帰還し、再び各地に挙兵を呼びかけた。",
+          "keywords": [
+            "後醍醐天皇",
+            "正中の変",
+            "元弘の変",
+            "隠岐"
+          ],
+          "evidence": [
+            "plot-purpose",
+            "exile",
+            "failed-plots",
+            "return-year",
+            "return-action"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、鎌倉幕府の滅亡はどのように進んだか。",
+          "answer": "1333年、**足利尊氏(あしかがたかうじ)**が反旗を翻して**六波羅探題(ろくはらたんだい)**を攻め落とした。**新田義貞(にったよしさだ)**が日本の**鎌倉**を陥落させ、同年に鎌倉幕府が滅亡した。",
+          "keywords": [
+            "足利尊氏",
+            "六波羅探題",
+            "新田義貞",
+            "鎌倉"
+          ],
+          "evidence": [
+            "return-year",
+            "takauji-rokuhara",
+            "yoshisada-kamakura",
+            "bakufu-fall"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「鎌倉幕府の滅亡」について説明せよ。",
+          "answer": "日本の**後醍醐天皇(ごだいごてんのう)**は政治の刷新を目指して倒幕を計画したが、**正中の変(しょうちゅうのへん)**・**元弘の変(げんこうのへん)**で失敗して**隠岐(おき)**に配流され、1333年に脱出・帰還して挙兵を呼びかけた。**足利尊氏(あしかがたかうじ)**が**六波羅探題(ろくはらたんだい)**を攻め落とし、**新田義貞(にったよしさだ)**が**鎌倉**を陥落させたことで、同年に鎌倉幕府は滅亡した。",
+          "keywords": [
+            "後醍醐天皇",
+            "正中の変",
+            "元弘の変",
+            "隠岐",
+            "足利尊氏",
+            "六波羅探題",
+            "新田義貞",
+            "鎌倉"
+          ],
+          "evidence": [
+            "plot-purpose",
+            "exile",
+            "failed-plots",
+            "return-year",
+            "return-action",
+            "takauji-rokuhara",
+            "yoshisada-kamakura",
+            "bakufu-fall"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "建武の新政",
+      "reading": "けんむのしんせい",
+      "category": "皇位継承と政権の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1333年の幕府滅亡後・1334年の改元",
+        "sortYear": 1333
+      },
+      "explanation": "後醍醐天皇は京都で天皇中心の政治を目指した。しかし、恩賞への武士の不満が高まり、朝廷内の支持基盤も弱かった。二条河原落書は、この時期の政治や混乱した世相を伝える史料である。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "日本で鎌倉幕府が滅んだ後、京都に戻った後醍醐天皇(ごだいごてんのう)が始めた新しい政治を何というか。",
+          "answer": "**建武の新政(けんむのしんせい)**（**建武の中興(けんむのちゅうこう)**）。",
+          "keywords": [
+            "建武の新政",
+            "建武の中興"
+          ],
+          "evidence": [
+            "new-government-person",
+            "new-government-name"
+          ],
+          "acceptedAnswers": [
+            "建武の新政",
+            "建武の中興"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "14世紀前半の日本の建武の新政(けんむのしんせい)で、後醍醐天皇(ごだいごてんのう)は何を中心とした政治を目指したか。",
+          "answer": "**天皇中心の政治**。",
+          "keywords": [
+            "天皇中心の政治"
+          ],
+          "evidence": [
+            "new-government-principle"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "14世紀前半の日本の建武の新政(けんむのしんせい)に関わる武士の要求として、倒幕に参加した武士が求めたものは何か。",
+          "answer": "**領地や地位**。",
+          "keywords": [
+            "領地や地位"
+          ],
+          "evidence": [
+            "warrior-demands"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "内容の確認",
+          "prompt": "14世紀前半の日本の建武の新政(けんむのしんせい)で、武士の不満が高まったのはなぜか。",
+          "answer": "**恩賞が不十分**だったため。",
+          "keywords": [
+            "恩賞が不十分"
+          ],
+          "evidence": [
+            "insufficient-rewards"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "14世紀前半の日本で、京都に掲げられ、建武政権の政治や混乱した世相を伝える匿名の落書は何か。",
+          "answer": "**二条河原落書(にじょうがわらのらくしょ)**。",
+          "keywords": [
+            "二条河原落書"
+          ],
+          "evidence": [
+            "graffiti-name",
+            "graffiti-nature",
+            "graffiti-context"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の建武の新政(けんむのしんせい)の名称に関わる、建武への改元はいつか。",
+          "answer": "1334年。",
+          "keywords": [],
+          "evidence": [
+            "return-year",
+            "bakufu-fall",
+            "kenmu-renaming"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "14世紀前半の日本で、建武の新政(けんむのしんせい)はどのような政治だったか。",
+          "answer": "1333年の鎌倉幕府滅亡後、日本の京都に戻った**後醍醐天皇(ごだいごてんのう)**が**天皇中心の政治**を目指した。翌1334年に元号を**建武**へ改めたことから、**建武の新政(けんむのしんせい)**と呼ばれる。",
+          "keywords": [
+            "後醍醐天皇",
+            "天皇中心の政治",
+            "建武",
+            "建武の新政"
+          ],
+          "evidence": [
+            "return-year",
+            "bakufu-fall",
+            "new-government-person",
+            "new-government-principle",
+            "kenmu-renaming",
+            "new-government-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "14世紀前半の日本で、建武の新政(けんむのしんせい)にはどのような課題があったか。",
+          "answer": "武士の側には**領地や地位**を求める動きがあったが、**恩賞が不十分**で不満が高まった。後醍醐天皇(ごだいごてんのう)は**朝廷内の支持基盤が弱く**、公家社会を掌握していなかった。京都に掲げられた政治批判の**二条河原落書(にじょうがわらのらくしょ)**には、混乱した世相が記されている。",
+          "keywords": [
+            "領地や地位",
+            "恩賞が不十分",
+            "朝廷内の支持基盤が弱く",
+            "二条河原落書"
+          ],
+          "evidence": [
+            "warrior-demands",
+            "insufficient-rewards",
+            "court-support",
+            "graffiti-name",
+            "graffiti-nature",
+            "graffiti-context"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "14世紀前半の日本の「建武の新政」について説明せよ。",
+          "answer": "1333年の鎌倉幕府滅亡後、日本の京都で**後醍醐天皇(ごだいごてんのう)**が**天皇中心の政治**を目指し、翌1334年に元号を**建武**へ改めたことから、**建武の新政(けんむのしんせい)**と呼ばれる。武士の側には**領地や地位**を求める動きがあったが、**恩賞が不十分**で不満が高まり、後醍醐天皇は**朝廷内の支持基盤が弱く**公家社会を掌握していなかった。政治批判の**二条河原落書(にじょうがわらのらくしょ)**には、混乱した世相が記されている。",
+          "keywords": [
+            "後醍醐天皇",
+            "天皇中心の政治",
+            "建武",
+            "建武の新政",
+            "領地や地位",
+            "恩賞が不十分",
+            "朝廷内の支持基盤が弱く",
+            "二条河原落書"
+          ],
+          "evidence": [
+            "return-year",
+            "bakufu-fall",
+            "new-government-person",
+            "new-government-principle",
+            "kenmu-renaming",
+            "new-government-name",
+            "warrior-demands",
+            "insufficient-rewards",
+            "court-support",
+            "graffiti-name",
+            "graffiti-nature",
+            "graffiti-context"
+          ]
+        }
+      ],
+      "integrationPromptPrefix": "14世紀前半の日本の"
+    },
+    {
+      "id": "04",
+      "term": "南北朝の分立",
+      "reading": "なんぼくちょうのぶんりつ",
+      "category": "皇位継承と政権の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1335年の離反・1336年の分立",
+        "sortYear": 1336
+      },
+      "explanation": "足利尊氏は武家政治の再興を目指して建武政権から離反した。九州から進んで京都を制圧し北朝を開く一方、後醍醐天皇は吉野で南朝を開いた。二つの朝廷は武士に呼びかけながら対立した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "中世の日本で、二つの朝廷が並び立ち、武士に呼びかけて互いに争った動乱の時代を何というか。",
+          "answer": "**南北朝時代**。",
+          "keywords": [
+            "南北朝時代"
+          ],
+          "evidence": [
+            "two-courts-definition",
+            "court-conflict",
+            "period-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "中世の日本の南北朝の分立に至る過程で、1335年に武家政治の再興を目指して建武政権から離反した武将は誰か。",
+          "answer": "**足利尊氏(あしかがたかうじ)**。",
+          "keywords": [
+            "足利尊氏"
+          ],
+          "evidence": [
+            "takauji-revolt"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "中世の日本の南北朝の分立で、後醍醐天皇(ごだいごてんのう)が南朝を開いた場所はどこか。",
+          "answer": "**吉野(よしの)**。",
+          "keywords": [
+            "吉野"
+          ],
+          "evidence": [
+            "south-court"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "中世の日本の南北朝の分立で、足利尊氏(あしかがたかうじ)が北朝を開いた場所はどこか。",
+          "answer": "**京都**。",
+          "keywords": [
+            "京都"
+          ],
+          "evidence": [
+            "north-court"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "中世の日本の南北朝の分立に至る過程で、足利尊氏(あしかがたかうじ)が湊川の戦い(みなとがわのたたかい)で破った二人の武将は誰か。",
+          "answer": "**新田義貞(にったよしさだ)**と**楠木正成(くすのきまさしげ)**。",
+          "keywords": [
+            "新田義貞",
+            "楠木正成"
+          ],
+          "evidence": [
+            "minatogawa-start",
+            "minatogawa-result"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の南北朝の分立が起こったのはいつか。",
+          "answer": "1336年。",
+          "keywords": [],
+          "evidence": [
+            "division-date"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中世の日本で、南北朝の分立に至る足利尊氏(あしかがたかうじ)の行動を説明せよ。",
+          "answer": "日本の**足利尊氏(あしかがたかうじ)**は武家政治の再興を目指し、1335年に**建武政権から離反**した。朝廷の追討でいったん九州へ退いたが、1336年に京都へ進み、**湊川の戦い(みなとがわのたたかい)**で**新田義貞(にったよしさだ)**と**楠木正成(くすのきまさしげ)**を破って**京都を軍事制圧**した。",
+          "keywords": [
+            "足利尊氏",
+            "建武政権から離反",
+            "湊川の戦い",
+            "新田義貞",
+            "楠木正成",
+            "京都を軍事制圧"
+          ],
+          "evidence": [
+            "takauji-revolt",
+            "takauji-kyushu",
+            "takauji-return",
+            "minatogawa-start",
+            "minatogawa-result"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中世の日本で、南北朝の分立はどのような状態だったか。",
+          "answer": "1336年、足利尊氏(あしかがたかうじ)は**京都**で**北朝**を開き、**後醍醐天皇(ごだいごてんのう)**は**吉野(よしの)**へ逃れて**南朝**を開いた。日本に二つの朝廷が並び立ち、武士に呼びかけて互いに争う**南北朝時代**となった。",
+          "keywords": [
+            "京都",
+            "北朝",
+            "後醍醐天皇",
+            "吉野",
+            "南朝",
+            "南北朝時代"
+          ],
+          "evidence": [
+            "north-court",
+            "south-court",
+            "two-courts",
+            "court-conflict",
+            "period-name",
+            "division-date"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "14世紀前半の日本の「南北朝の分立」について説明せよ。",
+          "answer": "日本の**足利尊氏(あしかがたかうじ)**は武家政治の再興を目指し、1335年に**建武政権から離反**した。1336年に**湊川の戦い(みなとがわのたたかい)**で**新田義貞(にったよしさだ)**と**楠木正成(くすのきまさしげ)**を破って**京都を軍事制圧**し、同地で**北朝**を開いた。**後醍醐天皇(ごだいごてんのう)**は**吉野(よしの)**へ逃れて**南朝**を開き、二つの朝廷が武士に呼びかけて互いに争う**南北朝時代**となった。",
+          "keywords": [
+            "足利尊氏",
+            "建武政権から離反",
+            "湊川の戦い",
+            "新田義貞",
+            "楠木正成",
+            "京都を軍事制圧",
+            "北朝",
+            "後醍醐天皇",
+            "吉野",
+            "南朝",
+            "南北朝時代"
+          ],
+          "evidence": [
+            "takauji-revolt",
+            "takauji-return",
+            "minatogawa-start",
+            "minatogawa-result",
+            "north-court",
+            "south-court",
+            "two-courts",
+            "court-conflict",
+            "period-name",
+            "division-date"
+          ]
+        }
+      ],
+      "integrationPromptPrefix": "14世紀前半の日本の"
+    }
+  ]
+}

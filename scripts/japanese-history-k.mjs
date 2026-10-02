@@ -15,10 +15,10 @@ export const contentHash = value => createHash("sha256").update(JSON.stringify(v
 const normalize = text => String(text).normalize("NFKC").replace(/\*\*|\s/g, "");
 const withoutReadings = text => String(text).replace(/\([ぁ-ゖー]+\)/g, "");
 const answerKeywords = answer => [...new Set([...answer.matchAll(/\*\*([^*]+)\*\*/g)].map(match => withoutReadings(match[1])))];
-const displayQuote = quote => quote.replace(/<br\s*\/?>/gi, "、").replace(/^\|\s*|\s*\|$/g, "").replace(/\s*\|\s*/g, "／");
+const displayQuote = quote => quote.replace(/<sup>\s*\d+\s*<\/sup>/gi, "").replace(/<br\s*\/?>/gi, "、").replace(/^\|\s*|\s*\|$/g, "").replace(/\s*\|\s*/g, "／");
 const partCode = bank => [bank.chapter.number, bank.section.number, bank.part.number].map(number => String(number).padStart(2, "0")).join("-");
 const partLetters = ["", "イ", "ロ", "ハ", "ニ", "ホ", "ヘ", "ト", "チ", "リ", "ヌ", "ル", "ヲ", "ワ", "カ", "ヨ", "タ"];
-const integrationPrefix = bank => bank.integrationPromptPrefix ?? "日本の占領期の";
+const integrationPrefix = (bank, unit) => unit?.integrationPromptPrefix ?? bank.integrationPromptPrefix ?? "日本の占領期の";
 
 // 引用の掲載ページと出題根拠を原文抜粋で検査する。外部の知識は補わない。
 export function validateJapaneseKBank(bank, excerpt) {
@@ -42,6 +42,7 @@ export function validateJapaneseKBank(bank, excerpt) {
     assert.match(unit.id, /^\d{2}$/);
     assert.ok(!unitIds.has(unit.id)); unitIds.add(unit.id);
     assert.ok(unit.term && unit.reading && unit.category && unit.explanation && unit.questions.length);
+    if (unit.integrationPromptPrefix !== undefined) assert.ok(typeof unit.integrationPromptPrefix === "string" && unit.integrationPromptPrefix.trim(), `統合問題の時代・地域が不正です: ${unit.id}`);
     assert.ok(unit.chronology?.displayPeriod && Number.isInteger(unit.chronology.sortYear), `時期が不足しています: ${unit.id}`);
     const beginner = unit.questions.filter(question => question.stage === "beginner");
     const reverse = unit.questions.filter(question => question.stage === "reverse");
@@ -66,7 +67,7 @@ export function validateJapaneseKBank(bank, excerpt) {
       if (question.stage === "beginner" && question.type !== "identify") assert.ok(question.prompt.includes(unit.term), `問題文に対象の項目名がありません: ${id}`);
       if (question.stage !== "beginner") assert.ok(question.keywords.length, `説明回答に重要語の強調がありません: ${id}`);
       if (question.stage === "integrated") {
-        assert.equal(question.prompt, `${integrationPrefix(bank)}「${unit.term}」について説明せよ。`, `統合の答え方を誘導しています: ${id}`);
+        assert.equal(question.prompt, `${integrationPrefix(bank, unit)}「${unit.term}」について説明せよ。`, `統合の答え方を誘導しています: ${id}`);
         assert.match(question.answer, /\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/, `統合回答に時期がありません: ${id}`);
         assert.ok(question.answer.includes(unit.geographyLabel ?? "日本"), `統合回答に場所がありません: ${id}`);
         assert.ok(question.evidence.every(key => learnedFacts.has(key)), `統合だけに新しい根拠があります: ${id}`);

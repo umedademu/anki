@@ -1,0 +1,704 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 14,
+    "title": "韓国併合と中華民国の建国"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_14_韓国併合と中華民国の建国_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      330,
+      331,
+      332
+    ],
+    "note": "330～332頁のカ本文、関連注㊾・㊿・51、関税自主権の完全回復コラム、文献史料大韓帝国皇帝勅諭を最後まで確認した。1905年の保護条約による外交権取得と統監、1910年の併合と朝鮮総督府、土地調査・社会基盤の整備と併合への抗議・独立運動を中立に扱う。高宗皇帝が満足し大臣を説得して調印したとの記述は確定的な史実として問わず、日本・朝鮮の近代化や文明の優劣、併合の正当化、韓国人が一般的に併合を支持したとの断定は採用しない。財政援助の額、予算・設備の数値、王族の待遇、伊藤暗殺の人物や場所、公布月日、鉄道距離・ダム出力・今日の電力事情、ハングル教育の評価は出題しない。関税自主権は1911年の完全回復・小村寿太郎・米国との交渉・不平等条約改正の完成を扱い、戦勝による文明国の承認という価値評価を採用しない。1894年の一部回復というコラムの表現と314頁の説明には差があるため、1894年の関税の状態をここで問い直さない。中国は1905年の中国同盟会、三民主義、1911年の辛亥革命開始と翌1912年の中華民国建国を区別する。清の滅亡を1911年に固定せず、清の滅亡と共和国宣言の精密な年・順序は要求しない。三民主義の各主義の意味、袁世凱の就任・遷都・皇帝即位・死去の年月は本文外から補わない。1912年は1911年の翌年という本文の記載から導く。編集判断はこの出典記録に置き、学習者向け解説には出来事の内容だけを示す。"
+  },
+  "facts": [
+    {
+      "id": "korea-protection-year",
+      "page": 330,
+      "quote": "日露戦争が終結した明治三十八年（一九〇五）、日本は㊾大韓帝国と保護条約を締結して"
+    },
+    {
+      "id": "korea-diplomacy",
+      "page": 330,
+      "quote": "日本は㊾大韓帝国と保護条約を締結して外交権を取得し、"
+    },
+    {
+      "id": "first-resident-general",
+      "page": 330,
+      "quote": "伊藤博文が初代統監に就任しました。"
+    },
+    {
+      "id": "annexation-year",
+      "page": 330,
+      "quote": "翌年の明治四十三年（一九一〇）、"
+    },
+    {
+      "id": "annexation-treaty",
+      "page": 330,
+      "quote": "**日韓併合条約**が締結され日本は朝鮮を統治下に置くことになり、大韓帝国は消滅しました"
+    },
+    {
+      "id": "governor-general",
+      "page": 330,
+      "quote": "併合後に置かれた朝鮮総督府"
+    },
+    {
+      "id": "land-survey",
+      "page": 330,
+      "quote": "朝鮮総督府は、土地調査を行い、"
+    },
+    {
+      "id": "social-infrastructure",
+      "page": 331,
+      "quote": "ダム、上下水道、病院、電話、郵便などの社会基盤を整備していきました。"
+    },
+    {
+      "id": "opposition-to-annexation",
+      "page": 331,
+      "quote": "しかし、併合を良しとしない朝鮮人も多く、自決して併合に抗議する人もいました。"
+    },
+    {
+      "id": "independence-movement",
+      "page": 331,
+      "quote": "反日独立運動が推進されていきます。"
+    },
+    {
+      "id": "komura-negotiation",
+      "page": 331,
+      "quote": "外務大臣の小村寿太郎が交渉して、"
+    },
+    {
+      "id": "full-tariff-year",
+      "page": 331,
+      "quote": "明治44年（1911）に"
+    },
+    {
+      "id": "full-tariff-recovery",
+      "page": 331,
+      "quote": "米国との間で関税自主権を完全に回復し、"
+    },
+    {
+      "id": "revision-completed",
+      "page": 331,
+      "quote": "不平等条約の改正がここに完成した。"
+    },
+    {
+      "id": "china-alliance",
+      "page": 331,
+      "quote": "**孫文**らは東京で中国同盟会を組織しました。"
+    },
+    {
+      "id": "china-alliance-year",
+      "page": 331,
+      "quote": "明治三十八年（一九〇五）、"
+    },
+    {
+      "id": "three-principles",
+      "page": 331,
+      "quote": "三民主義（民族主義、民権主義、民生主義）を唱えていた**孫文**らは東京で中国同盟会を組織しました。"
+    },
+    {
+      "id": "revolution-year",
+      "page": 331,
+      "quote": "明治四十四年（一九一一）には"
+    },
+    {
+      "id": "revolution-name",
+      "page": 331,
+      "quote": "**辛亥革命**"
+    },
+    {
+      "id": "republic-next-year",
+      "page": 331,
+      "quote": "翌年、孫文が臨時大総統となり"
+    },
+    {
+      "id": "republic-name",
+      "page": 331,
+      "quote": "**中華民国**の建国が宣言されました"
+    },
+    {
+      "id": "republic-capital",
+      "page": 331,
+      "quote": "南京を首都とする"
+    },
+    {
+      "id": "yuan-position",
+      "page": 331,
+      "quote": "反乱軍を鎮圧するために清朝が内閣総理大臣に起用した袁世凱は、革命派に寝返り、皇帝を退位させて清を滅ぼし、中華民国の臨時大総統となり、"
+    },
+    {
+      "id": "yuan-capital",
+      "page": 331,
+      "quote": "北京に遷都した。"
+    },
+    {
+      "id": "yuan-actions",
+      "page": 331,
+      "quote": "革命派を弾圧して自ら皇帝に即位し、混乱のなか病死した。"
+    },
+    {
+      "id": "revolution-aim",
+      "page": 331,
+      "quote": "清を打倒し、漢民族の国を復興しようとする運動が起こりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "韓国の保護国化と併合",
+      "reading": "かんこくのほごこくかとへいごう",
+      "category": "植民地支配と抵抗",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "20世紀初頭の日本と韓国の",
+      "chronology": {
+        "displayPeriod": "1905年の保護条約と1910年の併合",
+        "sortYear": 1905
+      },
+      "explanation": "保護条約で日本は大韓帝国の外交権を取得し、統監を置いた。その後の併合によって大韓帝国は消滅し、朝鮮総督府の統治下で土地調査や社会基盤の整備が進められた。併合に抗議する人々がおり、反日独立運動が推進された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "併合時の条約",
+          "prompt": "20世紀初頭、日本が大韓帝国を統治下に置いた際に締結した条約は何か。",
+          "answer": "**日韓併合条約**。",
+          "keywords": [
+            "日韓併合条約"
+          ],
+          "evidence": [
+            "annexation-treaty"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "朝鮮統治の機関",
+          "prompt": "20世紀初頭、日本が韓国を併合した後、朝鮮の統治のために置いた機関は何か。",
+          "answer": "**朝鮮総督府(ちょうせんそうとくふ)**。",
+          "keywords": [
+            "朝鮮総督府"
+          ],
+          "evidence": [
+            "governor-general"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "保護条約の締結年",
+          "prompt": "20世紀初頭の韓国の保護国化と併合について、日本と大韓帝国が保護条約を締結したのは何年か。",
+          "answer": "1905年。",
+          "keywords": [],
+          "evidence": [
+            "korea-protection-year"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "保護条約で取得した権利",
+          "prompt": "20世紀初頭の韓国の保護国化と併合で、日本が保護条約によって大韓帝国から取得した権利は何か。",
+          "answer": "**外交権**。",
+          "keywords": [
+            "外交権"
+          ],
+          "evidence": [
+            "korea-diplomacy"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "初代統監",
+          "prompt": "20世紀初頭の韓国の保護国化と併合について、保護条約の後に初代統監となった日本の政治家は誰か。",
+          "answer": "**伊藤博文(いとうひろぶみ)**。",
+          "keywords": [
+            "伊藤博文"
+          ],
+          "evidence": [
+            "first-resident-general"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "総督府が調査した対象",
+          "prompt": "20世紀初頭の韓国の保護国化と併合で、併合後に朝鮮総督府が実施した調査は、何を対象とするものだったか。",
+          "answer": "**土地**。",
+          "keywords": [
+            "土地"
+          ],
+          "evidence": [
+            "land-survey"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "result",
+          "form": "併合に反対する運動",
+          "prompt": "20世紀初頭の韓国の保護国化と併合について、併合に反対する朝鮮人の間では、どのような運動が推進されたか。",
+          "answer": "**反日独立運動**。",
+          "keywords": [
+            "反日独立運動"
+          ],
+          "evidence": [
+            "opposition-to-annexation",
+            "independence-movement"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "保護条約から併合への変化",
+          "prompt": "20世紀初頭、日本による韓国の保護国化と併合はどのように進んだか。",
+          "answer": "日本は保護条約によって**1905年**に大韓帝国の**外交権を取得**し、**初代統監**は**伊藤博文(いとうひろぶみ)**だった。**1910年**に**日韓併合条約**が締結され、日本は**朝鮮を統治下に置き**、**大韓帝国は消滅**した。",
+          "keywords": [
+            "1905年",
+            "外交権を取得",
+            "初代統監",
+            "伊藤博文",
+            "1910年",
+            "日韓併合条約",
+            "朝鮮を統治下に置き",
+            "大韓帝国は消滅"
+          ],
+          "evidence": [
+            "korea-protection-year",
+            "korea-diplomacy",
+            "first-resident-general",
+            "annexation-year",
+            "annexation-treaty"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "総督府による事業",
+          "prompt": "20世紀初頭の韓国の保護国化と併合について、併合後の朝鮮総督府はどのような事業を進めたか。",
+          "answer": "**朝鮮総督府(ちょうせんそうとくふ)**は**土地調査**を行い、ダム、上下水道、病院、電話、郵便などの**社会基盤の整備**を進めた。",
+          "keywords": [
+            "朝鮮総督府",
+            "土地調査",
+            "社会基盤の整備"
+          ],
+          "evidence": [
+            "governor-general",
+            "land-survey",
+            "social-infrastructure"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "併合に反対する人々の動き",
+          "prompt": "20世紀初頭の韓国の保護国化と併合について、併合に反対した朝鮮人はどのような動きを見せたか。",
+          "answer": "併合に**抗議**する人々がおり、**反日独立運動**が推進された。",
+          "keywords": [
+            "抗議",
+            "反日独立運動"
+          ],
+          "evidence": [
+            "opposition-to-annexation",
+            "independence-movement"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀初頭の日本と韓国の「韓国の保護国化と併合」について説明せよ。",
+          "answer": "日本は保護条約によって**1905年**に大韓帝国の**外交権を取得**し、**初代統監**は**伊藤博文(いとうひろぶみ)**だった。**1910年**に**日韓併合条約**が締結され、日本は**朝鮮を統治下に置き**、**大韓帝国は消滅**した。**朝鮮総督府(ちょうせんそうとくふ)**は**土地調査**や**社会基盤の整備**を進めた一方、併合に**抗議**する朝鮮人がおり、**反日独立運動**が推進された。",
+          "keywords": [
+            "1905年",
+            "外交権を取得",
+            "初代統監",
+            "伊藤博文",
+            "1910年",
+            "日韓併合条約",
+            "朝鮮を統治下に置き",
+            "大韓帝国は消滅",
+            "朝鮮総督府",
+            "土地調査",
+            "社会基盤の整備",
+            "抗議",
+            "反日独立運動"
+          ],
+          "evidence": [
+            "korea-protection-year",
+            "korea-diplomacy",
+            "first-resident-general",
+            "annexation-year",
+            "annexation-treaty",
+            "governor-general",
+            "land-survey",
+            "social-infrastructure",
+            "opposition-to-annexation",
+            "independence-movement"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "関税自主権の完全回復",
+      "reading": "かんぜいじしゅけんのかんぜんかいふく",
+      "category": "条約改正",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1911年",
+        "sortYear": 1911
+      },
+      "explanation": "小村寿太郎の対米交渉により、日本は関税自主権を完全に回復した。関税に関する権利の完全回復によって、不平等条約の改正が完成した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "完全回復を交渉した外相",
+          "prompt": "明治時代の日本で、関税自主権の完全回復を実現する交渉を担当した外務大臣は誰か。",
+          "answer": "**小村寿太郎(こむらじゅたろう)**。",
+          "keywords": [
+            "小村寿太郎"
+          ],
+          "evidence": [
+            "komura-negotiation"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "完全回復の交渉相手",
+          "prompt": "明治時代の日本の関税自主権の完全回復で、小村寿太郎が交渉した相手国はどこか。",
+          "answer": "**米国**。",
+          "keywords": [
+            "米国"
+          ],
+          "evidence": [
+            "full-tariff-recovery"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "完全回復の年",
+          "prompt": "明治時代の日本が、米国との交渉によって関税自主権の完全回復を実現したのは何年か。",
+          "answer": "1911年。",
+          "keywords": [],
+          "evidence": [
+            "full-tariff-year",
+            "full-tariff-recovery"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "完成した外交上の課題",
+          "prompt": "明治時代の日本で、関税自主権の完全回復によって、長く続けてきたどの外交上の課題が完成したか。",
+          "answer": "**不平等条約の改正**。",
+          "keywords": [
+            "不平等条約の改正"
+          ],
+          "evidence": [
+            "revision-completed"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "完全回復に至る交渉",
+          "prompt": "明治時代、日本の関税自主権の完全回復はどのような交渉で実現したか。",
+          "answer": "外務大臣の**小村寿太郎(こむらじゅたろう)**が**米国**と交渉し、日本は**1911年**に**関税自主権を完全に回復**した。",
+          "keywords": [
+            "小村寿太郎",
+            "米国",
+            "1911年",
+            "関税自主権を完全に回復"
+          ],
+          "evidence": [
+            "komura-negotiation",
+            "full-tariff-year",
+            "full-tariff-recovery"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「関税自主権の完全回復」について説明せよ。",
+          "answer": "**1911年**、日本の外務大臣**小村寿太郎(こむらじゅたろう)**が**米国**と交渉して、**関税自主権を完全に回復**した。これにより**不平等条約の改正**が完成した。",
+          "keywords": [
+            "1911年",
+            "小村寿太郎",
+            "米国",
+            "関税自主権を完全に回復",
+            "不平等条約の改正"
+          ],
+          "evidence": [
+            "komura-negotiation",
+            "full-tariff-year",
+            "full-tariff-recovery",
+            "revision-completed"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "辛亥革命と中華民国",
+      "reading": "しんがいかくめいとちゅうかみんこく",
+      "category": "革命と共和政",
+      "geographyLabel": "中国",
+      "integrationPromptPrefix": "20世紀初頭の中国の",
+      "chronology": {
+        "displayPeriod": "1905年の中国同盟会、1911年の革命開始と1912年の共和国建国",
+        "sortYear": 1905
+      },
+      "explanation": "孫文らは三民主義を唱え、中国同盟会を組織した。辛亥革命が起こり、中華民国の建国が宣言される一方、清朝側から革命派に転じた袁世凱は臨時大総統となり、北京に遷都した。その後、袁は革命派を弾圧して皇帝に即位し、政治は混乱した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "革命運動の団体",
+          "prompt": "20世紀初頭、孫文(そんぶん)らが東京で組織した、中国の革命運動の団体は何か。",
+          "answer": "**中国同盟会**。",
+          "keywords": [
+            "中国同盟会"
+          ],
+          "evidence": [
+            "china-alliance"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "清朝打倒の革命",
+          "prompt": "20世紀初頭、中国で清朝の支配を倒す革命として、1911年に起こった出来事は何か。",
+          "answer": "**辛亥革命(しんがいかくめい)**。",
+          "keywords": [
+            "辛亥革命"
+          ],
+          "evidence": [
+            "revolution-aim",
+            "revolution-year",
+            "revolution-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "建国を宣言された共和国",
+          "prompt": "20世紀初頭、中国で孫文(そんぶん)が臨時大総統となり、1912年に建国が宣言された共和国は何か。",
+          "answer": "**中華民国**。",
+          "keywords": [
+            "中華民国"
+          ],
+          "evidence": [
+            "revolution-year",
+            "republic-next-year",
+            "republic-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "三民主義の構成",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、孫文(そんぶん)の三民主義が掲げた三つの主義は何か。",
+          "answer": "**民族主義**・**民権主義**・**民生主義**。",
+          "keywords": [
+            "民族主義",
+            "民権主義",
+            "民生主義"
+          ],
+          "evidence": [
+            "three-principles"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "place",
+          "form": "建国宣言時の首都",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、孫文(そんぶん)が臨時大総統となり建国が宣言された時の首都はどこか。",
+          "answer": "**南京**。",
+          "keywords": [
+            "南京"
+          ],
+          "evidence": [
+            "republic-next-year",
+            "republic-capital",
+            "republic-name"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "person",
+          "form": "清朝側から革命派に転じた人物",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、清朝の内閣総理大臣から革命派に転じ、皇帝を退位させて臨時大総統となった人物は誰か。",
+          "answer": "**袁世凱(えんせいがい)**。",
+          "keywords": [
+            "袁世凱"
+          ],
+          "evidence": [
+            "yuan-position"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "袁世凱と革命派",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、臨時大総統となった袁世凱(えんせいがい)は革命派をどのように扱ったか。",
+          "answer": "**弾圧した**。",
+          "keywords": [
+            "弾圧した"
+          ],
+          "evidence": [
+            "yuan-actions"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "孫文らによる革命運動",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、孫文(そんぶん)らは革命に向けてどのように活動したか。",
+          "answer": "**民族主義・民権主義・民生主義**の**三民主義(さんみんしゅぎ)**を唱える**孫文(そんぶん)**らは、**1905年**に東京で**中国同盟会**を組織した。",
+          "keywords": [
+            "民族主義・民権主義・民生主義",
+            "三民主義",
+            "孫文",
+            "1905年",
+            "中国同盟会"
+          ],
+          "evidence": [
+            "china-alliance-year",
+            "three-principles",
+            "china-alliance"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "革命開始と共和国建国",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国では、革命から共和国の建国へどのように進んだか。",
+          "answer": "**1911年**に**辛亥革命(しんがいかくめい)**が始まり、**1912年**には**孫文(そんぶん)**を**臨時大総統**として、**南京**を首都とする**中華民国**の建国が宣言された。",
+          "keywords": [
+            "1911年",
+            "辛亥革命",
+            "1912年",
+            "孫文",
+            "臨時大総統",
+            "南京",
+            "中華民国"
+          ],
+          "evidence": [
+            "revolution-year",
+            "revolution-name",
+            "republic-next-year",
+            "republic-capital",
+            "republic-name"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "袁世凱の政治行動",
+          "prompt": "20世紀初頭、中国の辛亥革命と中華民国について、袁世凱(えんせいがい)の政治上の行動はどう変化したか。",
+          "answer": "**袁世凱(えんせいがい)**は清朝側から**革命派に転じ**、**皇帝を退位させて**中華民国の**臨時大総統**となり、**北京に遷都**した。その後、**革命派を弾圧**して自ら**皇帝に即位**し、混乱のなか病死した。",
+          "keywords": [
+            "袁世凱",
+            "革命派に転じ",
+            "皇帝を退位させて",
+            "臨時大総統",
+            "北京に遷都",
+            "革命派を弾圧",
+            "皇帝に即位"
+          ],
+          "evidence": [
+            "yuan-position",
+            "yuan-capital",
+            "yuan-actions"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀初頭の中国の「辛亥革命と中華民国」について説明せよ。",
+          "answer": "**民族主義・民権主義・民生主義**の**三民主義(さんみんしゅぎ)**を唱える**孫文(そんぶん)**らは、**1905年**に東京で**中国同盟会**を組織した。中国では**1911年**に**辛亥革命(しんがいかくめい)**が始まり、**1912年**に孫文を**臨時大総統**として、**南京**を首都とする**中華民国**の建国が宣言された。**袁世凱(えんせいがい)**は清朝側から**革命派に転じ**、**皇帝を退位させて**臨時大総統となり、**北京に遷都**した後、**革命派を弾圧**して自ら**皇帝に即位**した。",
+          "keywords": [
+            "民族主義・民権主義・民生主義",
+            "三民主義",
+            "孫文",
+            "1905年",
+            "中国同盟会",
+            "1911年",
+            "辛亥革命",
+            "1912年",
+            "臨時大総統",
+            "南京",
+            "中華民国",
+            "袁世凱",
+            "革命派に転じ",
+            "皇帝を退位させて",
+            "北京に遷都",
+            "革命派を弾圧",
+            "皇帝に即位"
+          ],
+          "evidence": [
+            "china-alliance-year",
+            "three-principles",
+            "china-alliance",
+            "revolution-year",
+            "revolution-name",
+            "republic-next-year",
+            "republic-capital",
+            "republic-name",
+            "yuan-position",
+            "yuan-capital",
+            "yuan-actions"
+          ]
+        }
+      ]
+    }
+  ]
+}

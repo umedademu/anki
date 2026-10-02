@@ -6,6 +6,7 @@ import { chromium } from "playwright";
 import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks } from "./japanese-history-k.mjs";
 import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
 import { groupSODecks } from "../public/so-chapters.js";
+import { getQuestionAnswerDisplayText } from "../public/learning-engine.js";
 
 const root = path.resolve(import.meta.dirname, "../public"), plan = await loadJapaneseHistoryK();
 const additions = await loadJapaneseKAdditions();
@@ -153,14 +154,22 @@ try {
     assert.equal(await page.locator("#answer-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#overview-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#answer-panel").isVisible(), answerVisible);
-    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    const layout = await page.evaluate(() => ({
+      width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
+      overflow: [...document.querySelectorAll("body *")].flatMap(element => {
+        const rect = element.getBoundingClientRect();
+        return rect.width > 0 && rect.right > innerWidth + 1 ? [{ tag: element.tagName, id: element.id, className: element.className, right: rect.right, text: element.textContent.slice(0, 120) }] : [];
+      }).slice(0, 12),
+    }));
+    if (layout.scrollWidth > layout.width) await page.screenshot({ path: path.join(images, `overflow-${question.id}.png`), fullPage: true });
+    assert.ok(layout.scrollWidth <= layout.width, `${question.id} ${answerVisible ? "回答後" : "出題中"}：画面幅を超えています。${JSON.stringify(layout)}`);
     await assertTextClearOfButtons(answerVisible ? ["question-text", "answer-text", "term-overview-text"] : ["question-text"]);
     if (answerVisible) {
-      assert.equal(await page.locator("#answer-text").textContent(), plain(question.answer));
+      assert.equal(await page.locator("#answer-text").textContent(), plain(getQuestionAnswerDisplayText(question)));
       if (question.stage !== "beginner") assert.ok(await page.locator("#answer-text strong").count() > 0, "説明回答の重要語が太字で表示されます。");
       assert.doesNotMatch(await page.locator("#answer-text").textContent(), /\*\*/);
       assert.match(await page.locator("#term-overview-text").textContent(), /原文の根拠：[0-9]+頁/);
-      assert.doesNotMatch(await page.locator("#term-overview-text").textContent(), /<br\s*\/?>|\|/i, "引用の表の記号をそのまま表示しません。");
+      assert.doesNotMatch(await page.locator("#term-overview-text").textContent(), /<br\s*\/?>|<\/?sup\b|\|/i, "引用の表や脚注の表示記号をそのまま表示しません。");
     }
   };
   await page.goto(base + "/");

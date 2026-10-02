@@ -65,7 +65,7 @@ export function validateJapaneseKBank(bank, excerpt) {
       assert.equal(["reverse", "integrated"].includes(question.type) ? question.type : "beginner", question.stage, `種類と段階が一致しません: ${id}`);
       assert.ok(question.evidence?.length && question.evidence.every(evidence => facts.has(evidence)), `原文の根拠が不足しています: ${id}`);
       assert.deepEqual(question.keywords, answerKeywords(question.answer), `重要語と強調が一致しません: ${id}`);
-      if (question.stage === "beginner" && question.type !== "identify") assert.ok(question.prompt.includes(unit.term), `問題文に対象の項目名がありません: ${id}`);
+      if (question.stage === "beginner" && question.type !== "identify") assert.ok(withoutReadings(question.prompt).includes(unit.term), `問題文に対象の項目名がありません: ${id}`);
       if (question.stage !== "beginner") assert.ok(question.keywords.length, `説明回答に重要語の強調がありません: ${id}`);
       if (question.stage === "integrated") {
         assert.equal(question.prompt, `${integrationPrefix(bank, unit)}「${unit.term}」について説明せよ。`, `統合の答え方を誘導しています: ${id}`);

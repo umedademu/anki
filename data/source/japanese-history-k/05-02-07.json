@@ -1,0 +1,955 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 7,
+    "title": "大日本帝国憲法発布と帝国議会開設"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_07_大日本帝国憲法発布と帝国議会開設_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      407
+    ],
+    "note": "担当本文・全関連注・統治機構図・文献史料・憲法発布図版説明・教育勅語コラムを最後まで確認した。内閣制度、憲法の制定と統治機構・自由の制限、帝国議会の構成と選挙・権限、教育勅語の発布・文書に記された憲法や法律・皇室に関する行動・学校での使用と戦後の国会決議を扱う。アジア初の憲法・近代国家という評価、天皇の政治利用を禁じたという解釈、議会が天皇に政治責任を負うという記述、全期間に政党内閣が成立しなかったとする断定、教育勅語の徳目の正しさは不採用。議員数・人口比・選挙区数・式典や御名御璽の細部、人物の一覧は出題しない。教育勅語の1890年のみ同じ出来事の章末年表で確認した。"
+  },
+  "facts": [
+    {
+      "id": "cabinet-name",
+      "page": 308,
+      "quote": "㉝**内閣制度**"
+    },
+    {
+      "id": "cabinet-structure",
+      "page": 308,
+      "quote": "内閣を国家の最高行政機関とする制度で、内閣総理大臣が各省長官の国務大臣を率いて内閣を組織する。"
+    },
+    {
+      "id": "cabinet-predecessor",
+      "page": 308,
+      "quote": "日本では明治初年来の太政官制を廃止して内閣制度を導入した。"
+    },
+    {
+      "id": "cabinet-year",
+      "page": 308,
+      "quote": "明治十八年（一八八五）に㉝**内閣制度**を創設し、"
+    },
+    {
+      "id": "ito-name",
+      "page": 308,
+      "quote": "**伊藤博文**は"
+    },
+    {
+      "id": "cabinet-prime-minister",
+      "page": 308,
+      "quote": "伊藤は、明治十八年（一八八五）に㉝**内閣制度**を創設し、初代内閣総理大臣に就任すると、"
+    },
+    {
+      "id": "constitution-name",
+      "page": 308,
+      "quote": "**大日本帝国憲法**が発布されました。"
+    },
+    {
+      "id": "constitution-monarchy",
+      "page": 308,
+      "quote": "天皇を国家元首とし、統治権の総攬者とする立憲君主制を採用しました。"
+    },
+    {
+      "id": "constitution-imperial-form",
+      "page": 308,
+      "quote": "明治天皇が定める欽定憲法の形式で、"
+    },
+    {
+      "id": "constitution-study",
+      "page": 308,
+      "quote": "**伊藤博文**は明治十五年（一八八二）に自らヨーロッパへと赴き、ドイツのビスマルク憲法をはじめヨーロッパ諸国の憲法を学びました。"
+    },
+    {
+      "id": "constitution-german-name",
+      "page": 308,
+      "quote": "ドイツ帝国の憲法で、ドイツ帝国憲法とも呼ばれます。"
+    },
+    {
+      "id": "constitution-review",
+      "page": 308,
+      "quote": "枢密院での審議を経て、"
+    },
+    {
+      "id": "constitution-year",
+      "page": 308,
+      "quote": "明治二十二年（一八八九）二月十一日に"
+    },
+    {
+      "id": "constitution-limited-sovereign",
+      "page": 309,
+      "quote": "後段では天皇の統治権の行使は憲法により制限されると記す。"
+    },
+    {
+      "id": "constitution-speech-start",
+      "page": 311,
+      "quote": "日本臣民ハ法律ノ範囲内ニ於テ言論著作"
+    },
+    {
+      "id": "constitution-speech-end",
+      "page": 312,
+      "quote": "③印行集会及結社ノ自由ヲ有ス"
+    },
+    {
+      "id": "constitution-faith",
+      "page": 311,
+      "quote": "日本臣民ハ安寧秩序ヲ妨ケス及臣民タルノ義務ニ背カサル限ニ於テ信教ノ自由ヲ有ス"
+    },
+    {
+      "id": "constitution-powers",
+      "page": 308,
+      "quote": "国の統治については三権分立が定められ、"
+    },
+    {
+      "id": "constitution-ministers",
+      "page": 312,
+      "quote": "国務各大臣ハ天皇ヲ輔弼シ其ノ責ニ任ス"
+    },
+    {
+      "id": "constitution-consent",
+      "page": 308,
+      "quote": "具体的には、行政は各大臣の輔弼（助言）、立法と予算は議会の㉞協賛（同意）に基づいて行われなければならず、"
+    },
+    {
+      "id": "constitution-courts",
+      "page": 312,
+      "quote": "司法権ハ天皇ノ名ニ於テ法律ニ依リ裁判所之ヲ行フ"
+    },
+    {
+      "id": "diet-name",
+      "page": 311,
+      "quote": "明治二十三年（一八九〇）、**帝国議会**が開設されました。"
+    },
+    {
+      "id": "diet-year",
+      "page": 311,
+      "quote": "明治二十三年（一八九〇）、**帝国議会**が開設されました。同年、第一回の衆議院議員選挙が実施され㊲、第一回帝国議会が召集されました㊳。"
+    },
+    {
+      "id": "diet-lower-name",
+      "page": 311,
+      "quote": "**衆議院**"
+    },
+    {
+      "id": "diet-upper-name",
+      "page": 311,
+      "quote": "㊶**貴族院**の二院制の議会制度が確立し、"
+    },
+    {
+      "id": "diet-electoral-conditions",
+      "page": 311,
+      "quote": "国税を一五円以上納入し、かつ満二十五歳以上の男子にのみ選挙権が限定された制限選挙でした㊴。"
+    },
+    {
+      "id": "diet-prior-budget",
+      "page": 312,
+      "quote": "衆議院が貴族院より先に予算を審議する権限（予算先議権）を持つ"
+    },
+    {
+      "id": "diet-law-budget",
+      "page": 308,
+      "quote": "法律と予算の成立には必ず帝国議会の協賛を要したため、内閣は議会と協力する必要があった。"
+    },
+    {
+      "id": "diet-parliamentary-system",
+      "page": 311,
+      "quote": "内閣の存立が議会の信任を得ることを条件とする制度が議院内閣制。"
+    },
+    {
+      "id": "diet-no-parliamentary-system",
+      "page": 311,
+      "quote": "帝国憲法には議院内閣制の規定がなく、"
+    },
+    {
+      "id": "diet-popular-parties",
+      "page": 310,
+      "quote": "衆議院では立憲自由党（自由党から改称）や立憲改進党などの民党（民権派の流れを汲む野党勢力）が多数を占め、"
+    },
+    {
+      "id": "diet-budget-compromise",
+      "page": 310,
+      "quote": "政府提出の予算案を削減しようとして紛糾したが、政府は民党の一部の切り崩しに成功し、修正のうえで予算案は成立した。"
+    },
+    {
+      "id": "diet-chambers",
+      "page": 311,
+      "quote": "選挙によって代議士が選ばれる**衆議院**と、皇族や華族などで構成される㊶**貴族院**の二院制の議会制度が確立し、"
+    },
+    {
+      "id": "education-name",
+      "page": 308,
+      "quote": "**教育勅語**を発しました。"
+    },
+    {
+      "id": "education-background",
+      "page": 308,
+      "quote": "明治天皇は教育の荒廃を案じ、**教育勅語**を発しました。"
+    },
+    {
+      "id": "education-year",
+      "page": 407,
+      "quote": "| 1890 | 教育勅語が発布 |  |"
+    },
+    {
+      "id": "education-school",
+      "page": 313,
+      "quote": "このような教育勅語は、先の大戦が終わるまで学校現場で用いられ、多くの国民が修身道徳の根本規範として受け入れたのです。"
+    },
+    {
+      "id": "education-repeal-start",
+      "page": 308,
+      "quote": "昭和二十三年（一九四八）に国会が教育勅語の排除・失"
+    },
+    {
+      "id": "education-repeal-end",
+      "page": 311,
+      "quote": "効を決議するまで、"
+    },
+    {
+      "id": "education-constitutional-duties",
+      "page": 313,
+      "quote": "常ニ国憲ヲ重シ国法ニ遵ヒ一旦緩急アレハ義勇公ニ奉シ以テ天壌無窮ノ皇運ヲ扶翼スヘシ"
+    },
+    {
+      "id": "education-duties-translation",
+      "page": 313,
+      "quote": "つねに憲法を重んじ、法律に従い、もし国に危機が訪れたら勇気をもって公のために尽くし、連綿と続いてきた皇室を助けなさい"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "内閣制度",
+      "reading": "ないかくせいど",
+      "category": "政治制度",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1885年",
+        "sortYear": 1885
+      },
+      "explanation": "1885年、太政官制に代わって内閣制度が導入され、伊藤博文が初代内閣総理大臣となった。内閣総理大臣が国務大臣を率いて、国家の最高行政機関を組織する仕組みである。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "制度の名称",
+          "prompt": "明治時代の日本で、内閣総理大臣が各省の国務大臣を率いて、国家の最高行政機関を組織する制度を何というか。",
+          "answer": "**内閣制度**。",
+          "keywords": [
+            "内閣制度"
+          ],
+          "evidence": [
+            "cabinet-name",
+            "cabinet-structure"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "従来の制度",
+          "prompt": "明治時代の日本で、内閣制度の導入によって廃止された従来の政治制度は何か。",
+          "answer": "**太政官制(だじょうかんせい)**。",
+          "keywords": [
+            "太政官制"
+          ],
+          "evidence": [
+            "cabinet-predecessor"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "制度導入の年",
+          "prompt": "明治時代の日本で、内閣制度が創設されたのは何年か。",
+          "answer": "1885年。",
+          "keywords": [],
+          "evidence": [
+            "cabinet-year"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "初代の首相",
+          "prompt": "明治時代の日本で、内閣制度を創設して初代内閣総理大臣に就任した人物は誰か。",
+          "answer": "**伊藤博文**。",
+          "keywords": [
+            "伊藤博文"
+          ],
+          "evidence": [
+            "ito-name",
+            "cabinet-prime-minister"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "制度の変更",
+          "prompt": "明治時代の日本の内閣制度は、どのように導入されたか。",
+          "answer": "日本では**1885年**に**太政官制(だじょうかんせい)**を廃止して**内閣制度**を導入し、**伊藤博文**が初代内閣総理大臣に就任した。",
+          "keywords": [
+            "1885年",
+            "太政官制",
+            "内閣制度",
+            "伊藤博文"
+          ],
+          "evidence": [
+            "cabinet-predecessor",
+            "cabinet-year",
+            "ito-name",
+            "cabinet-prime-minister"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "行政機関の仕組み",
+          "prompt": "明治時代の日本の内閣制度は、どのような行政機関を組織する仕組みか。",
+          "answer": "**内閣**を国家の**最高行政機関**とし、**内閣総理大臣**が各省長官である**国務大臣**を率いて組織する仕組みである。",
+          "keywords": [
+            "内閣",
+            "最高行政機関",
+            "内閣総理大臣",
+            "国務大臣"
+          ],
+          "evidence": [
+            "cabinet-structure"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「内閣制度」について説明せよ。",
+          "answer": "日本では**1885年**に**太政官制(だじょうかんせい)**を廃止して**内閣制度**を導入し、**伊藤博文**が初代内閣総理大臣に就任した。**内閣**は国家の**最高行政機関**であり、**内閣総理大臣**が各省長官である**国務大臣**を率いて組織する。",
+          "keywords": [
+            "1885年",
+            "太政官制",
+            "内閣制度",
+            "伊藤博文",
+            "内閣",
+            "最高行政機関",
+            "内閣総理大臣",
+            "国務大臣"
+          ],
+          "evidence": [
+            "cabinet-predecessor",
+            "cabinet-year",
+            "ito-name",
+            "cabinet-prime-minister",
+            "cabinet-structure"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "大日本帝国憲法",
+      "reading": "だいにほんていこくけんぽう",
+      "category": "憲法",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1882年の調査・1889年の発布",
+        "sortYear": 1889
+      },
+      "explanation": "大日本帝国憲法は1889年に欽定憲法として発布され、天皇を国家元首とする立憲君主制を定めた。天皇の権限行使は憲法によって制限され、行政・立法・司法の仕組みと、自由の行使の条件が定められた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "憲法の名称",
+          "prompt": "明治時代の日本で、天皇を国家元首・統治権の総攬者(とうちけんのそうらんしゃ)とする立憲君主制を定めた憲法を何というか。",
+          "answer": "**大日本帝国憲法**。",
+          "keywords": [
+            "大日本帝国憲法"
+          ],
+          "evidence": [
+            "constitution-name",
+            "constitution-monarchy"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制定方式",
+          "prompt": "明治時代の日本で、大日本帝国憲法は天皇が定める形式で発布された。この制定方式を何というか。",
+          "answer": "**欽定憲法(きんていけんぽう)**。",
+          "keywords": [
+            "欽定憲法"
+          ],
+          "evidence": [
+            "constitution-imperial-form"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "研究した外国憲法",
+          "prompt": "明治時代の日本で、大日本帝国憲法の制定を進めた伊藤博文がヨーロッパで学んだビスマルク憲法は、どの国の憲法か。",
+          "answer": "**ドイツ帝国**。",
+          "keywords": [
+            "ドイツ帝国"
+          ],
+          "evidence": [
+            "constitution-study",
+            "constitution-german-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "草案の審議",
+          "prompt": "明治時代の日本で、大日本帝国憲法の草案を審議した国家機関は何か。",
+          "answer": "**枢密院(すうみついん)**。",
+          "keywords": [
+            "枢密院"
+          ],
+          "evidence": [
+            "constitution-review"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "統治の原則",
+          "prompt": "明治時代の日本の大日本帝国憲法が定めた、行政・立法・司法の権限を分ける統治の原則を何というか。",
+          "answer": "**三権分立**。",
+          "keywords": [
+            "三権分立"
+          ],
+          "evidence": [
+            "constitution-powers",
+            "constitution-consent",
+            "constitution-courts"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "自由に付された制限",
+          "prompt": "明治時代の日本の大日本帝国憲法では、言論・著作・印刷発行・集会・結社の自由は、どのような範囲で認められたか。",
+          "answer": "**法律の範囲内**。",
+          "keywords": [
+            "法律の範囲内"
+          ],
+          "evidence": [
+            "constitution-speech-start",
+            "constitution-speech-end"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "憲法発布の年",
+          "prompt": "明治時代の日本で、大日本帝国憲法が発布されたのは何年か。",
+          "answer": "1889年。",
+          "keywords": [],
+          "evidence": [
+            "constitution-year",
+            "constitution-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "制定までの経過",
+          "prompt": "明治時代の日本の大日本帝国憲法は、どのような経過で発布されたか。",
+          "answer": "**伊藤博文**は**1882年**にヨーロッパへ赴き、**ドイツ帝国**の憲法などを学んだ。憲法草案は**枢密院(すうみついん)**で審議され、日本で**1889年**に明治天皇が定める**欽定憲法(きんていけんぽう)**として発布された。",
+          "keywords": [
+            "伊藤博文",
+            "1882年",
+            "ドイツ帝国",
+            "枢密院",
+            "1889年",
+            "欽定憲法"
+          ],
+          "evidence": [
+            "constitution-study",
+            "constitution-german-name",
+            "constitution-review",
+            "constitution-year",
+            "constitution-imperial-form",
+            "constitution-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "統治機構の仕組み",
+          "prompt": "明治時代の日本の大日本帝国憲法が定めた統治の仕組みを説明せよ。",
+          "answer": "天皇を**国家元首**・**統治権の総攬者(とうちけんのそうらんしゃ)**とする**立憲君主制**で、天皇の権限行使は**憲法**により制限された。**三権分立**が定められ、行政は国務大臣の**輔弼(ほひつ)**、立法と予算は議会の**協賛(きょうさん)**に基づき、司法は**裁判所**を通じて行われた。",
+          "keywords": [
+            "国家元首",
+            "統治権の総攬者",
+            "立憲君主制",
+            "憲法",
+            "三権分立",
+            "輔弼",
+            "協賛",
+            "裁判所"
+          ],
+          "evidence": [
+            "constitution-monarchy",
+            "constitution-limited-sovereign",
+            "constitution-powers",
+            "constitution-ministers",
+            "constitution-consent",
+            "constitution-courts"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "自由とその制限",
+          "prompt": "明治時代の日本の大日本帝国憲法では、自由はどのような制限のもとで認められたか。",
+          "answer": "言論・著作・印刷発行・集会・結社の自由は**法律の範囲内**で認められた。**信教の自由**は、安寧秩序を妨げず、臣民としての義務に背かないことを条件とした。",
+          "keywords": [
+            "法律の範囲内",
+            "信教の自由"
+          ],
+          "evidence": [
+            "constitution-speech-start",
+            "constitution-speech-end",
+            "constitution-faith"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「大日本帝国憲法」について説明せよ。",
+          "answer": "日本では**伊藤博文**が**1882年**にヨーロッパで**ドイツ帝国**の憲法などを学び、草案は**枢密院(すうみついん)**で審議され、**1889年**に明治天皇が定める**欽定憲法(きんていけんぽう)**として発布された。天皇を**国家元首**・**統治権の総攬者(とうちけんのそうらんしゃ)**とする**立憲君主制**で、権限行使を**憲法**により制限し、**三権分立**のもと行政は大臣の**輔弼(ほひつ)**、立法と予算は議会の**協賛(きょうさん)**に基づき、司法は**裁判所**を通じて行われた。言論・著作・集会・結社などの自由は**法律の範囲内**で、**信教の自由**は安寧秩序を妨げず臣民としての義務に背かない限りで認められた。",
+          "keywords": [
+            "伊藤博文",
+            "1882年",
+            "ドイツ帝国",
+            "枢密院",
+            "1889年",
+            "欽定憲法",
+            "国家元首",
+            "統治権の総攬者",
+            "立憲君主制",
+            "憲法",
+            "三権分立",
+            "輔弼",
+            "協賛",
+            "裁判所",
+            "法律の範囲内",
+            "信教の自由"
+          ],
+          "evidence": [
+            "constitution-study",
+            "constitution-german-name",
+            "constitution-review",
+            "constitution-year",
+            "constitution-imperial-form",
+            "constitution-name",
+            "constitution-monarchy",
+            "constitution-limited-sovereign",
+            "constitution-powers",
+            "constitution-ministers",
+            "constitution-consent",
+            "constitution-courts",
+            "constitution-speech-start",
+            "constitution-speech-end",
+            "constitution-faith"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "帝国議会",
+      "reading": "ていこくぎかい",
+      "category": "議会制度",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1890年の開設",
+        "sortYear": 1890
+      },
+      "explanation": "帝国議会は1890年に開設され、衆議院と貴族院の二院で構成された。衆議院選挙には国税納入額・年齢・性別による制限があり、法律と予算の成立に議会の同意が必要なため、内閣は議会と協力する必要があった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "議会の名称",
+          "prompt": "明治時代の日本で、1890年に第一回が召集された国の議会を何というか。",
+          "answer": "**帝国議会**。",
+          "keywords": [
+            "帝国議会"
+          ],
+          "evidence": [
+            "diet-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "二つの議院",
+          "prompt": "明治時代の日本で、帝国議会を構成した二つの議院を挙げよ。",
+          "answer": "**衆議院**と**貴族院**。",
+          "keywords": [
+            "衆議院",
+            "貴族院"
+          ],
+          "evidence": [
+            "diet-lower-name",
+            "diet-upper-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "選挙権の条件",
+          "prompt": "明治時代の日本で、帝国議会開設時の衆議院議員選挙では、どのような人に選挙権が認められたか。",
+          "answer": "国税を**15円以上**納める**満25歳以上の男子**。",
+          "keywords": [
+            "15円以上",
+            "満25歳以上の男子"
+          ],
+          "evidence": [
+            "diet-electoral-conditions"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "議会の権限",
+          "prompt": "明治時代の日本で、帝国議会の協賛が成立のために必要だった国政上の事項を二つ挙げよ。",
+          "answer": "**法律と予算**。",
+          "keywords": [
+            "法律と予算"
+          ],
+          "evidence": [
+            "diet-law-budget"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "予算の先議",
+          "prompt": "明治時代の日本の帝国議会で、予算を先に審議する権限を持った議院はどちらか。",
+          "answer": "**衆議院**。",
+          "keywords": [
+            "衆議院"
+          ],
+          "evidence": [
+            "diet-prior-budget"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "規定のなかった制度",
+          "prompt": "明治時代の日本で、帝国議会が開設されたときの憲法に、内閣が存立する条件を議会の信任とする制度の規定はなかった。この制度を何というか。",
+          "answer": "**議院内閣制**。",
+          "keywords": [
+            "議院内閣制"
+          ],
+          "evidence": [
+            "diet-parliamentary-system",
+            "diet-no-parliamentary-system"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "第一回議会の多数派",
+          "prompt": "明治時代の日本で、第一回帝国議会の衆議院で多数を占めた、民権派の流れをくむ野党勢力を何というか。",
+          "answer": "**民党**。",
+          "keywords": [
+            "民党"
+          ],
+          "evidence": [
+            "diet-popular-parties"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "開設と議会の構成",
+          "prompt": "明治時代の日本の帝国議会は、どのように開設され、構成されたか。",
+          "answer": "日本で**1890年**に開設され、同年に第一回の衆議院議員選挙と第一回の議会召集が行われた。選挙で代議士を選ぶ**衆議院**と、皇族や華族などで構成される**貴族院**の**二院制**だった。",
+          "keywords": [
+            "1890年",
+            "衆議院",
+            "貴族院",
+            "二院制"
+          ],
+          "evidence": [
+            "diet-year",
+            "diet-chambers"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "選挙と予算審議",
+          "prompt": "明治時代の日本の帝国議会開設時の選挙と、両院の予算審議の特徴を説明せよ。",
+          "answer": "衆議院議員選挙は、国税を**15円以上**納める**満25歳以上の男子**だけに選挙権を認める**制限選挙**だった。衆議院は、貴族院より先に予算を審議する**予算先議権**を持った。",
+          "keywords": [
+            "15円以上",
+            "満25歳以上の男子",
+            "制限選挙",
+            "予算先議権"
+          ],
+          "evidence": [
+            "diet-electoral-conditions",
+            "diet-prior-budget"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政府と議会の関係",
+          "prompt": "明治時代の日本で、帝国議会開設当初の政府と議会はどのような関係だったか。",
+          "answer": "憲法に**議院内閣制**の規定はなかったが、**法律と予算**の成立には議会の**協賛(きょうさん)**が必要で、内閣は議会と協力する必要があった。第一回の衆議院では**民党**が多数を占め、政府との対立を経て予算案は**修正**して成立した。",
+          "keywords": [
+            "議院内閣制",
+            "法律と予算",
+            "協賛",
+            "民党",
+            "修正"
+          ],
+          "evidence": [
+            "diet-no-parliamentary-system",
+            "diet-law-budget",
+            "diet-popular-parties",
+            "diet-budget-compromise"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「帝国議会」について説明せよ。",
+          "answer": "日本で**1890年**に開設され、選挙で選ばれる**衆議院**と、皇族や華族などで構成される**貴族院**の**二院制**となった。衆議院議員選挙は、国税を**15円以上**納める**満25歳以上の男子**に限る**制限選挙**で、衆議院は**予算先議権**を持った。憲法に**議院内閣制**の規定はなかったが、**法律と予算**の成立には議会の**協賛(きょうさん)**が必要で、第一回の衆議院で多数を占めた**民党**と政府が対立し、予算案は**修正**して成立した。",
+          "keywords": [
+            "1890年",
+            "衆議院",
+            "貴族院",
+            "二院制",
+            "15円以上",
+            "満25歳以上の男子",
+            "制限選挙",
+            "予算先議権",
+            "議院内閣制",
+            "法律と予算",
+            "協賛",
+            "民党",
+            "修正"
+          ],
+          "evidence": [
+            "diet-year",
+            "diet-chambers",
+            "diet-electoral-conditions",
+            "diet-prior-budget",
+            "diet-no-parliamentary-system",
+            "diet-law-budget",
+            "diet-popular-parties",
+            "diet-budget-compromise"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "教育勅語",
+      "reading": "きょういくちょくご",
+      "category": "教育",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1890年の発布・1948年の国会決議",
+        "sortYear": 1890
+      },
+      "explanation": "1890年に発布された教育勅語には、憲法を重んじ法律に従い、国の危機の際に皇室を助ける行動などが記された。学校現場で用いられ、多くの国民が修身道徳の根本規範として受け入れた。戦後の1948年、国会は排除・失効を決議した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "文書の名称",
+          "prompt": "明治時代の日本で、明治天皇が教育の荒廃を案じて発した、教育に関する文書を何というか。",
+          "answer": "**教育勅語**。",
+          "keywords": [
+            "教育勅語"
+          ],
+          "evidence": [
+            "education-name",
+            "education-background"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "学校での使用",
+          "prompt": "日本の教育勅語は学校で用いられ、どのような教えの根本規範として受け入れられたか。",
+          "answer": "**修身道徳**。",
+          "keywords": [
+            "修身道徳"
+          ],
+          "evidence": [
+            "education-school"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "文書発布の年",
+          "prompt": "明治時代の日本で、教育勅語が発布されたのは何年か。",
+          "answer": "1890年。",
+          "keywords": [],
+          "evidence": [
+            "education-year"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "戦後の国会決議",
+          "prompt": "日本の教育勅語について、1948年に国会はどのような決議を行ったか。",
+          "answer": "**排除・失効**の決議。",
+          "keywords": [
+            "排除・失効"
+          ],
+          "evidence": [
+            "education-repeal-start",
+            "education-repeal-end"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "文書に記された行動",
+          "prompt": "明治時代の日本の教育勅語では、憲法・法律と、国に危機が訪れた際の皇室について、どのような行動が述べられたか。",
+          "answer": "**憲法を重んじて法律に従い、危機の際に皇室を助ける**こと。",
+          "keywords": [
+            "憲法を重んじて法律に従い、危機の際に皇室を助ける"
+          ],
+          "evidence": [
+            "education-constitutional-duties",
+            "education-duties-translation"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "発布と使用",
+          "prompt": "明治時代の日本の教育勅語は、どのような背景で発され、教育でどう用いられたか。",
+          "answer": "日本で**1890年**に、教育の荒廃を案じた**明治天皇**が発した。文中では**憲法を重んじて法律に従い、危機の際に皇室を助ける**ことなどが述べられた。学校現場で用いられ、多くの国民が**修身道徳の根本規範**として受け入れた。",
+          "keywords": [
+            "1890年",
+            "明治天皇",
+            "憲法を重んじて法律に従い、危機の際に皇室を助ける",
+            "修身道徳の根本規範"
+          ],
+          "evidence": [
+            "education-background",
+            "education-year",
+            "education-school",
+            "education-constitutional-duties",
+            "education-duties-translation"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "戦後の扱い",
+          "prompt": "日本の教育勅語は、戦後の国会でどのように扱われたか。",
+          "answer": "日本の国会は**1948年**に**教育勅語**の**排除・失効**を決議した。",
+          "keywords": [
+            "1948年",
+            "教育勅語",
+            "排除・失効"
+          ],
+          "evidence": [
+            "education-repeal-start",
+            "education-repeal-end"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「教育勅語」について説明せよ。",
+          "answer": "日本で**1890年**に、教育の荒廃を案じた**明治天皇**が発した。**憲法を重んじて法律に従い、危機の際に皇室を助ける**ことなどが記され、学校現場で用いられて、多くの国民が**修身道徳の根本規範**として受け入れた。戦後、日本の国会は**1948年**に**教育勅語**の**排除・失効**を決議した。",
+          "keywords": [
+            "1890年",
+            "明治天皇",
+            "憲法を重んじて法律に従い、危機の際に皇室を助ける",
+            "修身道徳の根本規範",
+            "1948年",
+            "教育勅語",
+            "排除・失効"
+          ],
+          "evidence": [
+            "education-background",
+            "education-year",
+            "education-school",
+            "education-repeal-start",
+            "education-repeal-end",
+            "education-constitutional-duties",
+            "education-duties-translation"
+          ]
+        }
+      ]
+    }
+  ]
+}

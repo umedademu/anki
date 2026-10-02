@@ -1,0 +1,659 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 9,
+    "title": "朝鮮における日清の対立"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_09_朝鮮における日清の対立_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      314,
+      315,
+      316,
+      317
+    ],
+    "note": "314頁リ見出しから317頁ヌ見出し直前までの本文・地図・図版・コラムを通読した。前項の条約改正と注㊷㊸は範囲外。壬午事変、甲申政変、天津条約を関連づけ、製艦費をめぐる議会と政府、東学党の乱から日清軍艦の交戦への経過を扱う。壬午事変と天津条約の締結年は当該本文と同章年表に明記されないため補わない。ロシアへの危機感を戦争が必然・正当だったという説明に変えず、清の衰退によって朝鮮は自衛できなかったという評価、艦船数や皇室経費の期間、国力や軍隊の優劣、被害者数・疾病・天皇の私生活や美化は出題しない。20世紀初頭の地図の鉄道を19世紀の事件の時点に混在させない。農民軍解散、清軍の衝突回避姿勢、日本軍不撤兵と内政改革の提案・拒否を省かず、原文の出来事を中立に記す。下関条約と講和は次小項目へ分ける。"
+  },
+  "facts": [
+    {
+      "id": "korea-qing",
+      "page": 314,
+      "quote": "朝鮮は清を宗主国として冊封体制下にあった"
+    },
+    {
+      "id": "imo-name",
+      "page": 314,
+      "quote": "壬午事変という朝鮮軍人による暴動が発生しました。"
+    },
+    {
+      "id": "imo-response",
+      "page": 314,
+      "quote": "清が朝鮮半島に派兵し、これを鎮圧しました。"
+    },
+    {
+      "id": "kapsin-year",
+      "page": 314,
+      "quote": "明治十七年（一八八四）"
+    },
+    {
+      "id": "kapsin-coup",
+      "page": 314,
+      "quote": "日本の支援を受けた金玉均らがクーデターを起こしますが、"
+    },
+    {
+      "id": "kapsin-result",
+      "page": 315,
+      "quote": "同じく鎮圧されています。これを甲申政変といいます。"
+    },
+    {
+      "id": "tianjin-name",
+      "page": 316,
+      "quote": "日本と清は甲申政変の後に天津条約を結び、"
+    },
+    {
+      "id": "tianjin-notice",
+      "page": 316,
+      "quote": "朝鮮に軍を派遣する際にはお互いに通知する義務を定めました。"
+    },
+    {
+      "id": "navy-year",
+      "page": 315,
+      "quote": "明治二十六年（一八九三）"
+    },
+    {
+      "id": "navy-request",
+      "page": 315,
+      "quote": "海軍予算の増額を帝国議会に求めましたが、"
+    },
+    {
+      "id": "navy-rejection",
+      "page": 315,
+      "quote": "衆議院はこれを否決しました。"
+    },
+    {
+      "id": "navy-reduction",
+      "page": 315,
+      "quote": "衆議院は政府に製艦費（軍艦を製造する費用）削減を求めましたが、"
+    },
+    {
+      "id": "navy-government-refusal",
+      "page": 315,
+      "quote": "政府はこれに同意しませんでした。"
+    },
+    {
+      "id": "navy-emperor",
+      "page": 315,
+      "quote": "このような政府と衆議院の対立を心配した明治天皇は、両院議長に詔勅を賜い、"
+    },
+    {
+      "id": "navy-restart",
+      "page": 315,
+      "quote": "この詔勅がきっかけとなって、政府と衆議院の交渉が再開し、"
+    },
+    {
+      "id": "navy-compromise",
+      "page": 315,
+      "quote": "政府は譲歩して議会の要求を一部認めて改革を進めることを約束し、"
+    },
+    {
+      "id": "navy-approval",
+      "page": 316,
+      "quote": "政府が要求する製艦費の一部を認める修正を可決して決着となりました。"
+    },
+    {
+      "id": "donghak-year",
+      "page": 316,
+      "quote": "明治二十七年（一八九四）、"
+    },
+    {
+      "id": "donghak-name",
+      "page": 316,
+      "quote": "**東学党の乱**（甲午農民戦争）と呼ばれる民間宗教を中心とした農民らによる暴動です。"
+    },
+    {
+      "id": "korea-request",
+      "page": 316,
+      "quote": "朝鮮政府が清に援軍を要請すると、"
+    },
+    {
+      "id": "japanese-dispatch",
+      "page": 316,
+      "quote": "日本は日清両国の朝鮮での権力均衡を維持するため朝鮮に軍を派遣し、日本と清の間で緊張感が高まりました。"
+    },
+    {
+      "id": "donghak-disband",
+      "page": 316,
+      "quote": "農民軍は解散し、清軍は日本軍との衝突を避ける姿勢を示しましたが、"
+    },
+    {
+      "id": "japanese-stay",
+      "page": 316,
+      "quote": "日本軍は撤兵せず、"
+    },
+    {
+      "id": "reform-proposal",
+      "page": 316,
+      "quote": "日清両国による朝鮮の内政改革を提案し、"
+    },
+    {
+      "id": "reform-alone",
+      "page": 316,
+      "quote": "清がこれを拒否すると、日本は単独で内政改革を行うことを目指しました。"
+    },
+    {
+      "id": "war-month",
+      "page": 316,
+      "quote": "同年七月、"
+    },
+    {
+      "id": "war-engagement",
+      "page": 316,
+      "quote": "朝鮮の豊島沖で日清の軍艦が遭遇すると、両軍は交戦状態となり、"
+    },
+    {
+      "id": "war-name",
+      "page": 316,
+      "quote": "朝鮮半島、遼東半島、黄海などを戦場とする**日清戦争**が勃発しました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "朝鮮をめぐる日清の対立",
+      "reading": "ちょうせんをめぐるにっしんのたいりつ",
+      "category": "外交・事件・条約",
+      "geographyLabel": "朝鮮",
+      "chronology": {
+        "displayPeriod": "明治時代・1884年の甲申政変",
+        "sortYear": 1884
+      },
+      "explanation": "朝鮮は清を宗主国とする冊封体制の下にあった。壬午事変と甲申政変では清が鎮圧に関与し、甲申政変後に結ばれた天津条約は、朝鮮への軍派遣に際して日本と清が互いに通知することを定めた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "朝鮮軍人の暴動",
+          "prompt": "明治時代の朝鮮で、軍人による暴動として起きた事件は何か。",
+          "answer": "**壬午事変(じんごじへん)**。",
+          "keywords": [
+            "壬午事変"
+          ],
+          "evidence": [
+            "imo-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "日本が支援したクーデター",
+          "prompt": "明治時代の朝鮮で、日本の支援を受けた金玉均(きんぎょくきん)らが起こし、鎮圧されたクーデターを何というか。",
+          "answer": "**甲申政変(こうしんせいへん)**。",
+          "keywords": [
+            "甲申政変"
+          ],
+          "evidence": [
+            "kapsin-coup",
+            "kapsin-result"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "軍派遣に関する条約",
+          "prompt": "明治時代、甲申政変の後に、朝鮮への軍派遣に関して日本と清が結んだ条約は何か。",
+          "answer": "**天津条約(てんしんじょうやく)**。",
+          "keywords": [
+            "天津条約"
+          ],
+          "evidence": [
+            "tianjin-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "甲申政変の年",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立で、甲申政変が起きたのは何年か。",
+          "answer": "1884年。",
+          "keywords": [],
+          "evidence": [
+            "kapsin-year"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "清と朝鮮の政治的関係",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立では、当時の朝鮮と清はどのような政治的関係にあったか。",
+          "answer": "朝鮮は**清を宗主国とする冊封体制(さくほうたいせい)**の下にあった。",
+          "keywords": [
+            "清を宗主国とする冊封体制"
+          ],
+          "evidence": [
+            "korea-qing"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "朝鮮への派兵の取り決め",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立に関わる天津条約では、両国が朝鮮へ軍を派遣するとき、何をする義務を定めたか。",
+          "answer": "**互いに通知すること**。",
+          "keywords": [
+            "互いに通知すること"
+          ],
+          "evidence": [
+            "tianjin-name",
+            "tianjin-notice"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "清の関与",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立では、朝鮮と清はどのような関係にあり、壬午事変に清はどう対応したか。",
+          "answer": "朝鮮は**清を宗主国とする冊封体制(さくほうたいせい)**の下にあった。朝鮮軍人による暴動である**壬午事変(じんごじへん)**が起きると、清が朝鮮半島へ派兵して鎮圧した。",
+          "keywords": [
+            "清を宗主国とする冊封体制",
+            "壬午事変"
+          ],
+          "evidence": [
+            "korea-qing",
+            "imo-name",
+            "imo-response"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "甲申政変の経過",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立で、甲申政変はどのように展開したか。",
+          "answer": "1884年、**日本の支援**を受けた**金玉均(きんぎょくきん)**らが朝鮮でクーデターを起こした（**甲申政変(こうしんせいへん)**）。清に鎮圧された。",
+          "keywords": [
+            "日本の支援",
+            "金玉均",
+            "甲申政変"
+          ],
+          "evidence": [
+            "kapsin-year",
+            "kapsin-coup",
+            "imo-response",
+            "kapsin-result"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "天津条約の内容",
+          "prompt": "明治時代の朝鮮をめぐる日清の対立で、天津条約は何を定めたか。",
+          "answer": "甲申政変の後に日本と清が**天津条約(てんしんじょうやく)**を結び、朝鮮へ軍を派遣するときには**互いに通知すること**を義務とした。",
+          "keywords": [
+            "天津条約",
+            "互いに通知すること"
+          ],
+          "evidence": [
+            "tianjin-name",
+            "tianjin-notice"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「朝鮮をめぐる日清の対立」について説明せよ。",
+          "answer": "明治時代の朝鮮は**清を宗主国とする冊封体制(さくほうたいせい)**の下にあり、朝鮮軍人による**壬午事変(じんごじへん)**が起きると、清が派兵して鎮圧した。1884年には**日本の支援**を受けた**金玉均(きんぎょくきん)**らがクーデターを起こしたが、清に鎮圧された（**甲申政変(こうしんせいへん)**）。その後、日本と清は**天津条約(てんしんじょうやく)**を結び、朝鮮へ軍を派遣するときには**互いに通知すること**を義務とした。",
+          "keywords": [
+            "清を宗主国とする冊封体制",
+            "壬午事変",
+            "日本の支援",
+            "金玉均",
+            "甲申政変",
+            "天津条約",
+            "互いに通知すること"
+          ],
+          "evidence": [
+            "korea-qing",
+            "imo-name",
+            "imo-response",
+            "kapsin-year",
+            "kapsin-coup",
+            "kapsin-result",
+            "tianjin-name",
+            "tianjin-notice"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "製艦費をめぐる政府と衆議院の対立",
+      "reading": "せいかんひをめぐるせいふとしゅうぎいんのたいりつ",
+      "category": "議会と政府",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1893年",
+        "sortYear": 1893
+      },
+      "explanation": "政府の海軍予算増額要求に対し、衆議院は製艦費削減を求めて対立した。明治天皇の詔勅をきっかけに交渉が再開し、政府が議会の要求を一部受け入れ、議会も製艦費の一部を認めることで決着した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政府の予算要求",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立では、政府は海軍予算をどのように変更することを求めたか。",
+          "answer": "海軍予算の**増額**。",
+          "keywords": [
+            "増額"
+          ],
+          "evidence": [
+            "navy-request"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "衆議院の判断",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立では、衆議院は政府の海軍予算増額要求をどのように扱ったか。",
+          "answer": "**否決**した。",
+          "keywords": [
+            "否決"
+          ],
+          "evidence": [
+            "navy-request",
+            "navy-rejection"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "最終的な議会の決定",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立は、議会が製艦費についてどのような修正を可決して決着したか。",
+          "answer": "**製艦費の一部を認める修正**。",
+          "keywords": [
+            "製艦費の一部を認める修正"
+          ],
+          "evidence": [
+            "navy-approval"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "対立の年",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立で、政府が海軍予算の増額を帝国議会に求めたのは何年か。",
+          "answer": "1893年。",
+          "keywords": [],
+          "evidence": [
+            "navy-year",
+            "navy-request"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "対立の内容",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立は、どのようなものだったか。",
+          "answer": "1893年の日本で、政府は海軍予算の**増額**を求めたが、衆議院は**否決**した。衆議院は**製艦費の削減**を求め、政府は同意しなかった。",
+          "keywords": [
+            "増額",
+            "否決",
+            "製艦費の削減"
+          ],
+          "evidence": [
+            "navy-year",
+            "navy-request",
+            "navy-rejection",
+            "navy-reduction",
+            "navy-government-refusal"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "交渉と決着",
+          "prompt": "明治時代の日本の製艦費をめぐる政府と衆議院の対立は、どのように決着したか。",
+          "answer": "**明治天皇の詔勅**をきっかけに政府と衆議院の交渉が再開した。政府は**譲歩**して議会の要求の一部を受け入れ、改革を進めることを約束し、議会も**製艦費の一部を認める修正**を可決して決着した。",
+          "keywords": [
+            "明治天皇の詔勅",
+            "譲歩",
+            "製艦費の一部を認める修正"
+          ],
+          "evidence": [
+            "navy-emperor",
+            "navy-restart",
+            "navy-compromise",
+            "navy-approval"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「製艦費をめぐる政府と衆議院の対立」について説明せよ。",
+          "answer": "1893年の日本では、政府が海軍予算の**増額**を求めたが、衆議院は**否決**し、**製艦費の削減**を要求した。**明治天皇の詔勅**をきっかけに交渉が再開し、政府は**譲歩**して議会の要求の一部を受け入れ、改革を約束し、議会も**製艦費の一部を認める修正**を可決して決着した。",
+          "keywords": [
+            "増額",
+            "否決",
+            "製艦費の削減",
+            "明治天皇の詔勅",
+            "譲歩",
+            "製艦費の一部を認める修正"
+          ],
+          "evidence": [
+            "navy-year",
+            "navy-request",
+            "navy-rejection",
+            "navy-reduction",
+            "navy-emperor",
+            "navy-restart",
+            "navy-compromise",
+            "navy-approval"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "東学党の乱と日清戦争",
+      "reading": "とうがくとうのらんとにっしんせんそう",
+      "category": "戦争・朝鮮の動き",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1894年",
+        "sortYear": 1894
+      },
+      "explanation": "朝鮮の農民の動きに対して朝鮮政府が清へ援軍を求め、日本も軍を派遣した。農民軍が解散した後も日本軍は撤兵せず、朝鮮の内政改革をめぐる提案と拒否を経て、日清両国の軍艦が交戦するに至った。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "農民の暴動",
+          "prompt": "明治時代の朝鮮で、民間宗教を中心に農民らが起こした暴動は何か。",
+          "answer": "**東学党の乱(とうがくとうのらん)**（**甲午農民戦争(こうごのうみんせんそう)**）。",
+          "keywords": [
+            "東学党の乱",
+            "甲午農民戦争"
+          ],
+          "evidence": [
+            "donghak-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦争の名称",
+          "prompt": "明治時代、朝鮮半島・遼東半島(りょうとうはんとう)・黄海(こうかい)などを戦場として、日本と清の間で始まった戦争は何か。",
+          "answer": "**日清戦争**。",
+          "keywords": [
+            "日清戦争"
+          ],
+          "evidence": [
+            "war-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "農民の乱と開戦の年",
+          "prompt": "明治時代の東学党の乱と日清戦争では、東学党の乱が起き、日清戦争が始まったのは何年か。",
+          "answer": "1894年。",
+          "keywords": [],
+          "evidence": [
+            "donghak-year",
+            "donghak-name",
+            "war-month",
+            "war-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "朝鮮政府の要請",
+          "prompt": "明治時代の東学党の乱と日清戦争の経緯で、農民の暴動に対して朝鮮政府はどのような援軍要請をしたか。",
+          "answer": "**清に援軍を要請**した。",
+          "keywords": [
+            "清に援軍を要請"
+          ],
+          "evidence": [
+            "korea-request"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本軍の撤兵の対応",
+          "prompt": "明治時代の東学党の乱と日清戦争の経緯で、農民軍の解散後、日本軍は朝鮮からの撤兵についてどのように対応したか。",
+          "answer": "**撤兵せず**、朝鮮にとどまった。",
+          "keywords": [
+            "撤兵せず"
+          ],
+          "evidence": [
+            "japanese-stay"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "改革への日本の方針",
+          "prompt": "明治時代の東学党の乱と日清戦争の経緯で、清が日清両国による朝鮮の内政改革を拒否すると、日本はどのような方針をとったか。",
+          "answer": "**日本単独での内政改革**を目指した。",
+          "keywords": [
+            "日本単独での内政改革"
+          ],
+          "evidence": [
+            "reform-proposal",
+            "reform-alone"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "農民の乱と出兵",
+          "prompt": "明治時代の東学党の乱と日清戦争では、農民の動きが両国の関与にどのようにつながったか。",
+          "answer": "1894年、朝鮮で民間宗教を中心とする農民らの**東学党の乱(とうがくとうのらん)**（**甲午農民戦争(こうごのうみんせんそう)**）が起きた。朝鮮政府が**清に援軍を要請**すると、日本も朝鮮に軍を派遣して、清との緊張が高まった。",
+          "keywords": [
+            "東学党の乱",
+            "甲午農民戦争",
+            "清に援軍を要請"
+          ],
+          "evidence": [
+            "donghak-year",
+            "donghak-name",
+            "korea-request",
+            "japanese-dispatch"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内政改革の提案と交戦",
+          "prompt": "明治時代の東学党の乱と日清戦争では、農民軍の解散後、日清はどのように交戦へ進んだか。",
+          "answer": "農民軍は解散し、清軍は日本軍との衝突を避ける姿勢を示したが、日本軍は**撤兵せず**、日清両国による朝鮮の内政改革を提案した。清が拒否すると**日本単独での内政改革**を目指し、1894年7月に両国の軍艦が交戦した。**朝鮮半島・遼東半島(りょうとうはんとう)・黄海(こうかい)**などを戦場とする**日清戦争**が始まった。",
+          "keywords": [
+            "撤兵せず",
+            "日本単独での内政改革",
+            "朝鮮半島・遼東半島・黄海",
+            "日清戦争"
+          ],
+          "evidence": [
+            "donghak-year",
+            "donghak-disband",
+            "japanese-stay",
+            "reform-proposal",
+            "reform-alone",
+            "war-month",
+            "war-engagement",
+            "war-name"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "明治時代の日本の「東学党の乱と日清戦争」について説明せよ。",
+          "answer": "1894年、朝鮮で民間宗教を中心とする農民らの**東学党の乱(とうがくとうのらん)**（**甲午農民戦争(こうごのうみんせんそう)**）が起き、朝鮮政府が**清に援軍を要請**すると、日本も朝鮮に軍を派遣した。農民軍は解散し、清軍は衝突を避ける姿勢を示したが、日本軍は**撤兵せず**、日清両国による朝鮮の内政改革を提案し、清が拒否すると**日本単独での内政改革**を目指した。同年7月に両国軍艦が交戦し、**朝鮮半島・遼東半島(りょうとうはんとう)・黄海(こうかい)**などを戦場とする**日清戦争**が始まった。",
+          "keywords": [
+            "東学党の乱",
+            "甲午農民戦争",
+            "清に援軍を要請",
+            "撤兵せず",
+            "日本単独での内政改革",
+            "朝鮮半島・遼東半島・黄海",
+            "日清戦争"
+          ],
+          "evidence": [
+            "donghak-year",
+            "donghak-name",
+            "korea-request",
+            "japanese-dispatch",
+            "donghak-disband",
+            "japanese-stay",
+            "reform-proposal",
+            "reform-alone",
+            "war-month",
+            "war-engagement",
+            "war-name"
+          ]
+        }
+      ]
+    }
+  ]
+}

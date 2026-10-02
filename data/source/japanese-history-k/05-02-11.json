@@ -1,0 +1,426 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 11,
+    "title": "義和団事件と日英同盟"
+  },
+  "integrationPromptPrefix": "20世紀初頭の東アジアの",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_11_義和団事件と日英同盟_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      320,
+      321
+    ],
+    "note": "321頁ル見出し～ヲ見出し直前と関連注㊺（320頁）・㊻を全文確認。前項目の政党、清の租借地・エルトゥールル号コラムは対象外。各国派遣軍の国数、議定書締結国数、賠償金額、国防の重大な懸念・交渉成功への称賛などの価値判断は問わない。日英同盟の条文・参戦義務・存続や失効年は原文にないため補わない。列強の進出や外国製品流入だけを義和団事件の唯一の原因として問わず、事件の内容・国際対応とロシアの満州駐留、日本の外交方針を中心に扱う。日英の二国を同盟名から答える自明な短答も作らない。"
+  },
+  "facts": [
+    {
+      "id": "boxer-name",
+      "page": 321,
+      "quote": "清で㊺**義和団事件**が起こりました。"
+    },
+    {
+      "id": "boxer-year",
+      "page": 321,
+      "quote": "明治三十三年（一九〇〇）"
+    },
+    {
+      "id": "boxer-siege",
+      "page": 321,
+      "quote": "清国内で外国人の排斥を叫ぶ義和団を中心とする群衆が、首都・北京の各国公使館を包囲した事件です。"
+    },
+    {
+      "id": "boxer-support",
+      "page": 321,
+      "quote": "清の西太后がこの反乱を支持して欧米列強に宣戦布告し、国家間の戦争に発展しました。"
+    },
+    {
+      "id": "boxer-slogan",
+      "page": 320,
+      "quote": "義和団は「扶清滅洋」の旗印のもと、各地で外国人やキリスト教会を襲い、北京に及んだ。"
+    },
+    {
+      "id": "boxer-intervention",
+      "page": 321,
+      "quote": "我が国はロシアやイギリスなど七カ国とともに軍隊を派遣し、北京および紫禁城（王宮）を制圧し反乱を鎮圧しました"
+    },
+    {
+      "id": "beijing-protocol",
+      "page": 321,
+      "quote": "事件翌年の明治34年（1901）、日本、ドイツ、英国など11カ国は清と北京議定書を締結し、"
+    },
+    {
+      "id": "beijing-provisions",
+      "page": 321,
+      "quote": "賠償金の支払い、各国軍隊の北京と天津への駐屯などが決まった。"
+    },
+    {
+      "id": "boxer-withdrawal",
+      "page": 321,
+      "quote": "派遣された各国軍の主力部隊は清が降伏するとともに撤退しましたが、"
+    },
+    {
+      "id": "russia-stays",
+      "page": 321,
+      "quote": "南下政策を進めるロシアは朝鮮に隣接する満州に軍を留め撤退しませんでした。"
+    },
+    {
+      "id": "ito-russia",
+      "page": 321,
+      "quote": "伊藤博文はロシアと協力する路線で我が国の独立を保とうと考えていました。"
+    },
+    {
+      "id": "alliance-minister",
+      "page": 321,
+      "quote": "外務大臣の**小村寿太郎**は"
+    },
+    {
+      "id": "alliance-year",
+      "page": 321,
+      "quote": "明治三十五年（一九〇二）、イギリスとの交渉に成功し、"
+    },
+    {
+      "id": "alliance-britain",
+      "page": 321,
+      "quote": "イギリスと同盟関係を築くことができました。"
+    },
+    {
+      "id": "alliance-name",
+      "page": 321,
+      "quote": "この同盟を**日英同盟**と呼びます。"
+    },
+    {
+      "id": "alliance-result",
+      "page": 321,
+      "quote": "これにより、我が国はロシアに対抗できる環境が一つ整いました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "義和団事件",
+      "reading": "ぎわだんじけん",
+      "category": "事件・国際関係",
+      "geographyLabel": "清",
+      "chronology": {
+        "displayPeriod": "1900年の事件と1901年の議定書",
+        "sortYear": 1900
+      },
+      "explanation": "清国内の排外的な動きは公使館の包囲と列強への宣戦、各国の派兵に発展した。北京議定書による取り決めと、ロシアの満州駐留が事件後の国際関係に関わった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "事件名",
+          "prompt": "20世紀初頭、清で外国人の排斥を叫ぶ群衆が各国公使館を包囲した事件は何か。",
+          "answer": "**義和団事件**。",
+          "evidence": [
+            "boxer-name",
+            "boxer-siege"
+          ],
+          "keywords": [
+            "義和団事件"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "反乱を支持した人物",
+          "prompt": "清の義和団事件で、反乱を支持して欧米列強に宣戦布告した人物は誰か。",
+          "answer": "**西太后(せいたいこう)**。",
+          "evidence": [
+            "boxer-support"
+          ],
+          "keywords": [
+            "西太后"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "運動の旗印",
+          "prompt": "清の義和団事件で、義和団が掲げた旗印は何か。",
+          "answer": "**扶清滅洋(ふしんめつよう)**。",
+          "evidence": [
+            "boxer-slogan"
+          ],
+          "keywords": [
+            "扶清滅洋"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "事件後の議定書",
+          "prompt": "義和団事件の翌年、清が日本・ドイツ・イギリスなどと結んだ議定書は何か。",
+          "answer": "**北京議定書**。",
+          "evidence": [
+            "beijing-protocol"
+          ],
+          "keywords": [
+            "北京議定書"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "撤退しなかった国",
+          "prompt": "義和団事件後、派遣軍の主力が撤退するなかで、満州に軍を留めて撤退しなかった国はどこか。",
+          "answer": "**ロシア**。",
+          "evidence": [
+            "boxer-withdrawal",
+            "russia-stays"
+          ],
+          "keywords": [
+            "ロシア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "事件の内容と発展",
+          "prompt": "清の義和団事件は、どのような事件として起こり、どう発展したか。",
+          "answer": "**1900年**の清で、**扶清滅洋(ふしんめつよう)**を掲げた義和団を中心とする群衆が、外国人の排斥を叫び、**北京の各国公使館を包囲**した。**西太后(せいたいこう)**が反乱を支持して**欧米列強に宣戦布告**し、国家間の戦争へ発展した。",
+          "evidence": [
+            "boxer-year",
+            "boxer-siege",
+            "boxer-slogan",
+            "boxer-support"
+          ],
+          "keywords": [
+            "1900年",
+            "扶清滅洋",
+            "北京の各国公使館を包囲",
+            "西太后",
+            "欧米列強に宣戦布告"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "各国の対応と事件後の取り決め",
+          "prompt": "清の義和団事件に各国はどのように対応し、事件後はどうなったか。",
+          "answer": "**日本・ロシア・イギリス**などが派兵して反乱を鎮圧し、**1901年**の**北京議定書**で清の**賠償金支払い**と各国軍隊の**北京・天津への駐屯**などが定められた。主力部隊は撤退したが、**ロシア**は**満州に軍を留めた**。",
+          "evidence": [
+            "boxer-intervention",
+            "beijing-protocol",
+            "beijing-provisions",
+            "boxer-withdrawal",
+            "russia-stays"
+          ],
+          "keywords": [
+            "日本・ロシア・イギリス",
+            "1901年",
+            "北京議定書",
+            "賠償金支払い",
+            "北京・天津への駐屯",
+            "ロシア",
+            "満州に軍を留めた"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀初頭の東アジアの「義和団事件」について説明せよ。",
+          "answer": "**1900年**の清で、**扶清滅洋(ふしんめつよう)**を掲げる義和団を中心とする群衆が**北京の各国公使館を包囲**し、**西太后(せいたいこう)**が反乱を支持して**欧米列強に宣戦布告**し、国家間の戦争へ発展した。**日本・ロシア・イギリス**などが鎮圧し、**1901年**の**北京議定書**で清の**賠償金支払い**と各国軍隊の**北京・天津への駐屯**などが定められた。主力部隊は撤退したが、**ロシア**は**満州に軍を留めた**。",
+          "evidence": [
+            "boxer-year",
+            "boxer-siege",
+            "boxer-slogan",
+            "boxer-support",
+            "boxer-intervention",
+            "beijing-protocol",
+            "beijing-provisions",
+            "boxer-withdrawal",
+            "russia-stays"
+          ],
+          "keywords": [
+            "1900年",
+            "扶清滅洋",
+            "北京の各国公使館を包囲",
+            "西太后",
+            "欧米列強に宣戦布告",
+            "日本・ロシア・イギリス",
+            "1901年",
+            "北京議定書",
+            "賠償金支払い",
+            "北京・天津への駐屯",
+            "ロシア",
+            "満州に軍を留めた"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日英同盟",
+      "reading": "にちえいどうめい",
+      "category": "同盟・外交",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1902年成立",
+        "sortYear": 1902
+      },
+      "explanation": "ロシアが満州に軍を留めるなか、日本ではロシアとの協力も検討された。小村寿太郎の交渉で日英同盟が成立し、ロシアに対抗する外交環境が整った。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "同盟名",
+          "prompt": "20世紀初頭、ロシアが満州に軍を留めるなかで、日本が外交交渉によって結んだ同盟は何か。",
+          "answer": "**日英同盟**。",
+          "evidence": [
+            "russia-stays",
+            "alliance-name"
+          ],
+          "keywords": [
+            "日英同盟"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "同盟交渉を進めた外務大臣",
+          "prompt": "明治時代の日本で、日英同盟の交渉を進めた外務大臣は誰か。",
+          "answer": "**小村寿太郎**。",
+          "evidence": [
+            "alliance-minister"
+          ],
+          "keywords": [
+            "小村寿太郎"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "成立年",
+          "prompt": "明治時代の日本の日英同盟が成立したのは何年か。",
+          "answer": "1902年。",
+          "evidence": [
+            "alliance-year",
+            "alliance-britain",
+            "alliance-name"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "対ロシア協力を考えた人物",
+          "prompt": "日英同盟成立前の日本で、ロシアと協力する路線を考えていた政治家は誰か。",
+          "answer": "**伊藤博文**。",
+          "evidence": [
+            "ito-russia"
+          ],
+          "keywords": [
+            "伊藤博文"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "成立の経緯",
+          "prompt": "明治時代の日本の日英同盟は、どのように成立したか。",
+          "answer": "**1902年**に、日本の外務大臣**小村寿太郎**がイギリスとの交渉を進め、**日本とイギリスの同盟関係**を築いた。",
+          "evidence": [
+            "alliance-minister",
+            "alliance-year",
+            "alliance-britain",
+            "alliance-name"
+          ],
+          "keywords": [
+            "1902年",
+            "小村寿太郎",
+            "日本とイギリスの同盟関係"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "対ロシア政策との関係",
+          "prompt": "明治時代の日本の日英同盟は、対ロシア政策とどのように関わったか。",
+          "answer": "義和団事件後、**ロシアは満州に軍を留めた**。日本では**伊藤博文**が**ロシアとの協力**を考えていたが、日英同盟の成立は**ロシアに対抗する環境**を整えるものとなった。",
+          "evidence": [
+            "russia-stays",
+            "ito-russia",
+            "alliance-name",
+            "alliance-result"
+          ],
+          "keywords": [
+            "ロシアは満州に軍を留めた",
+            "伊藤博文",
+            "ロシアとの協力",
+            "ロシアに対抗する環境"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀初頭の東アジアの「日英同盟」について説明せよ。",
+          "answer": "**1902年**に、日本の外務大臣**小村寿太郎**の交渉によって**日本とイギリスの同盟関係**が築かれた。義和団事件後、**ロシアは満州に軍を留めた**。日本では**伊藤博文**が**ロシアとの協力**を考えていたが、同盟の成立によって**ロシアに対抗する環境**が整った。",
+          "evidence": [
+            "alliance-minister",
+            "alliance-year",
+            "alliance-britain",
+            "alliance-name",
+            "russia-stays",
+            "ito-russia",
+            "alliance-result"
+          ],
+          "keywords": [
+            "1902年",
+            "小村寿太郎",
+            "日本とイギリスの同盟関係",
+            "ロシアは満州に軍を留めた",
+            "伊藤博文",
+            "ロシアとの協力",
+            "ロシアに対抗する環境"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

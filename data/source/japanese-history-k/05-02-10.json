@@ -1,0 +1,800 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 10,
+    "title": "三国干渉"
+  },
+  "integrationPromptPrefix": "近代日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_10_三国干渉_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      317,
+      318,
+      319,
+      320,
+      321,
+      408
+    ],
+    "note": "317頁ヌ見出しから321頁ル見出し直前までの本文・注㊹・図版説明・コラムを通読した。下関条約と台湾統治、三国干渉と列強の租借・権益獲得、初の政党内閣から立憲政友会への流れを三つの学習項目にまとめる。408頁の同じ出来事の年表行を、三国干渉に伴う1895年の遼東半島返還の時期根拠として加えた。日清戦争後の国家や軍隊の優劣、領土の正当性、臥薪嘗胆の標語や対外不満、台湾統治の美化、親王や李鴻章襲撃の逸話、細かな調印日と金額は出題しない。エルトゥールル号遭難と1985年の救援の物語は今回の主題と受験の基礎知識の優先度から除外した。列強の租借地を機械的に列挙せず、租借の意味と軍事・鉄道・鉱山の権益を関連づける。初の政党内閣のコラムにある板垣と大隈の両名を首相に推挙したという表現は、二人が首相を務めたという断定へ変えない。政友会を指導的と評価する表現や、資料にない桂園時代の名称・期間・政党内閣の崩壊経緯は補わない。注㊺と義和団事件・日英同盟は次小項目のため抜粋にも含めない。"
+  },
+  "facts": [
+    {
+      "id": "treaty-name",
+      "page": 317,
+      "quote": "我が国と清の間で下関講和会議が開かれ、**下関条約**が結ばれました。"
+    },
+    {
+      "id": "treaty-year",
+      "page": 317,
+      "quote": "明治二十八年（一八九五）"
+    },
+    {
+      "id": "treaty-korea",
+      "page": 317,
+      "quote": "①清は朝鮮の独立を認めること、"
+    },
+    {
+      "id": "treaty-indemnity",
+      "page": 317,
+      "quote": "②清は日本に賠償金を支払うこと、"
+    },
+    {
+      "id": "treaty-territories",
+      "page": 317,
+      "quote": "③清は日本に遼東半島と台湾を譲ることなどを約束しました。"
+    },
+    {
+      "id": "treaty-japan-delegates",
+      "page": 318,
+      "quote": "日本側は伊藤博文首相と陸奥宗光外相が全権代表を担った。"
+    },
+    {
+      "id": "treaty-qing-delegate",
+      "page": 318,
+      "quote": "清は李鴻章を講和使節全権代表として日本に派遣し、"
+    },
+    {
+      "id": "treaty-war-end",
+      "page": 318,
+      "quote": "こうして日清戦争は終結しました。"
+    },
+    {
+      "id": "taiwan-resistance",
+      "page": 318,
+      "quote": "下関条約による台湾の割譲を受け、北白川宮能久親王率いる日本軍が台湾に上陸すると、清の残兵や一部の台湾住民が抵抗して戦闘となり、"
+    },
+    {
+      "id": "taiwan-government",
+      "page": 318,
+      "quote": "日本は明治28年（1895）に台湾総督府を設置し、"
+    },
+    {
+      "id": "taiwan-development",
+      "page": 318,
+      "quote": "学校教育制度を導入し、鉄道や灌漑設備を整備して"
+    },
+    {
+      "id": "intervention-demand",
+      "page": 318,
+      "quote": "我が国に対し、遼東半島を清に返還するように迫りました。"
+    },
+    {
+      "id": "intervention-name",
+      "page": 318,
+      "quote": "この要求を**三国干渉**と呼びます。"
+    },
+    {
+      "id": "lease-name",
+      "page": 318,
+      "quote": "**注㊹ 租借**"
+    },
+    {
+      "id": "lease-definition",
+      "page": 318,
+      "quote": "合意のもと、ある国が他国の領土の一部を一定期間、借り受けること。"
+    },
+    {
+      "id": "intervention-countries",
+      "page": 318,
+      "quote": "ロシアは、ドイツ・フランスとともに、"
+    },
+    {
+      "id": "intervention-response",
+      "page": 318,
+      "quote": "この要求に従わざるをえませんでした"
+    },
+    {
+      "id": "intervention-return-year",
+      "page": 408,
+      "quote": "| 1895 | 清に勝利し下関条約を締結<br>「　　」によって遼東半島を返還する |  |"
+    },
+    {
+      "id": "russian-ports",
+      "page": 318,
+      "quote": "その後、ロシアは我が国から返還された遼東半島の**旅順**と**大連**を清から㊹租借して軍事拠点を構築し、東アジアへの勢力を拡大しようとしました。"
+    },
+    {
+      "id": "powers-rights",
+      "page": 320,
+      "quote": "清が日清戦争に敗れると、列強は競って清から権益を獲得した。"
+    },
+    {
+      "id": "german-rights",
+      "page": 320,
+      "quote": "明治31年（1898）に膠州湾の租借権、青島・済南間の鉄道敷設権とその沿線の石炭採掘権を得て、"
+    },
+    {
+      "id": "german-actor",
+      "page": 320,
+      "quote": "ドイツは宣教師殺害事件を口実に、山東省の膠州湾を占領し、"
+    },
+    {
+      "id": "party-cabinet-name",
+      "page": 319,
+      "quote": "初の政党内閣（政党を基盤として組閣される内閣）となる第一次大隈内閣が成立した。"
+    },
+    {
+      "id": "party-cabinet-year",
+      "page": 319,
+      "quote": "明治31年（1898）"
+    },
+    {
+      "id": "kenseito-formation",
+      "page": 319,
+      "quote": "板垣退助率いる自由党と、大隈重信率いる進歩党が合一して一大政党の憲政党が発足すると、"
+    },
+    {
+      "id": "seiyukai-ito",
+      "page": 321,
+      "quote": "伊藤博文は、"
+    },
+    {
+      "id": "seiyukai-name",
+      "page": 321,
+      "quote": "立憲政友会を結成し、その総裁となった。"
+    },
+    {
+      "id": "seiyukai-year",
+      "page": 321,
+      "quote": "明治33年（1900）"
+    },
+    {
+      "id": "seiyukai-base",
+      "page": 321,
+      "quote": "旧自由党系の憲政党と伊藤派官僚を中心に立憲政友会を結成し、"
+    },
+    {
+      "id": "saionji-name",
+      "page": 321,
+      "quote": "西園寺公望や原敬らとともに、"
+    },
+    {
+      "id": "party-government-alternation",
+      "page": 321,
+      "quote": "伊藤の後継者である西園寺と、山県有朋の後継者である桂太郎が交互に政権を担う時期もあり、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "下関条約",
+      "reading": "しものせきじょうやく",
+      "category": "条約・台湾統治",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1895年",
+        "sortYear": 1895
+      },
+      "explanation": "下関条約は日清戦争の講和条約で、朝鮮の独立承認、賠償金の支払い、領土の割譲を清に求めた。台湾の割譲後、日本軍の上陸に清の残兵や一部住民が抵抗して戦闘となり、日本は台湾総督府を設置して統治を進めた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "日清戦争の講和条約",
+          "prompt": "明治時代、日清戦争の講和で日本と清が結んだ条約は何か。",
+          "answer": "**下関条約**。",
+          "keywords": [
+            "下関条約"
+          ],
+          "evidence": [
+            "treaty-name",
+            "treaty-war-end"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "time",
+          "form": "条約締結の年",
+          "prompt": "明治時代、日本と清が下関条約を結んだのは何年か。",
+          "answer": "1895年。",
+          "keywords": [],
+          "evidence": [
+            "treaty-year",
+            "treaty-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "朝鮮の地位",
+          "prompt": "明治時代の下関条約は、清に朝鮮の地位について何を認めるよう求めたか。",
+          "answer": "**朝鮮の独立**。",
+          "keywords": [
+            "朝鮮の独立"
+          ],
+          "evidence": [
+            "treaty-korea"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "金銭に関する条件",
+          "prompt": "明治時代の下関条約は、清に日本へのどのような金銭の支払いを求めたか。",
+          "answer": "**賠償金の支払い**。",
+          "keywords": [
+            "賠償金の支払い"
+          ],
+          "evidence": [
+            "treaty-indemnity"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "place",
+          "form": "割譲された地域",
+          "prompt": "明治時代の下関条約で、清が日本に譲ると約束した地域はどこか。",
+          "answer": "**遼東半島(りょうとうはんとう)**と**台湾**。",
+          "keywords": [
+            "遼東半島",
+            "台湾"
+          ],
+          "evidence": [
+            "treaty-territories"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "person",
+          "form": "日本側の全権代表",
+          "prompt": "明治時代の下関条約の講和交渉で、日本側の全権代表を担った首相と外相は誰か。",
+          "answer": "**伊藤博文**と**陸奥宗光(むつむねみつ)**。",
+          "keywords": [
+            "伊藤博文",
+            "陸奥宗光"
+          ],
+          "evidence": [
+            "treaty-japan-delegates"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "person",
+          "form": "清側の全権代表",
+          "prompt": "明治時代の下関条約の講和交渉で、清側の全権代表として日本へ派遣された人物は誰か。",
+          "answer": "**李鴻章(りこうしょう)**。",
+          "keywords": [
+            "李鴻章"
+          ],
+          "evidence": [
+            "treaty-qing-delegate"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "講和交渉",
+          "prompt": "明治時代、下関条約の講和交渉はどのように進められたか。",
+          "answer": "1895年、日本と清の間で講和会議が開かれ、日本側は**伊藤博文**と**陸奥宗光(むつむねみつ)**、清側は**李鴻章(りこうしょう)**が全権代表を担った。**下関条約**が結ばれ、日清戦争は終結した。",
+          "keywords": [
+            "伊藤博文",
+            "陸奥宗光",
+            "李鴻章",
+            "下関条約"
+          ],
+          "evidence": [
+            "treaty-year",
+            "treaty-name",
+            "treaty-japan-delegates",
+            "treaty-qing-delegate",
+            "treaty-war-end"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "条約の条件",
+          "prompt": "明治時代の下関条約は、清に何を求めたか。",
+          "answer": "清は**朝鮮の独立**を認め、日本への**賠償金の支払い**と、**遼東半島(りょうとうはんとう)**・**台湾**の割譲を約束した。",
+          "keywords": [
+            "朝鮮の独立",
+            "賠償金の支払い",
+            "遼東半島",
+            "台湾"
+          ],
+          "evidence": [
+            "treaty-korea",
+            "treaty-indemnity",
+            "treaty-territories"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "台湾の統治",
+          "prompt": "明治時代、下関条約の締結後、台湾ではどのような統治が始まったか。",
+          "answer": "台湾の割譲後、日本軍が上陸すると、**清の残兵や一部の台湾住民の抵抗**があり、戦闘となった。日本は1895年に**台湾総督府**を設置し、その統治の下で**学校教育制度**の導入や、**鉄道や灌漑設備(かんがいせつび)**の整備を進めた。",
+          "keywords": [
+            "清の残兵や一部の台湾住民の抵抗",
+            "台湾総督府",
+            "学校教育制度",
+            "鉄道や灌漑設備"
+          ],
+          "evidence": [
+            "taiwan-resistance",
+            "taiwan-government",
+            "taiwan-development"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「下関条約」について説明せよ。",
+          "answer": "1895年、日本と清は日清戦争の講和で、日本側の**伊藤博文**・**陸奥宗光(むつむねみつ)**と清側の**李鴻章(りこうしょう)**を全権代表として**下関条約**を結んだ。清は**朝鮮の独立**を認め、日本への**賠償金の支払い**と、**遼東半島(りょうとうはんとう)**・**台湾**の割譲を約束した。割譲後の台湾では日本軍が上陸し、**清の残兵や一部の台湾住民の抵抗**があり戦闘となり、日本は同年に**台湾総督府**を設置し、その統治の下で**学校教育制度**の導入と**鉄道や灌漑設備(かんがいせつび)**の整備を進めた。",
+          "keywords": [
+            "伊藤博文",
+            "陸奥宗光",
+            "李鴻章",
+            "下関条約",
+            "朝鮮の独立",
+            "賠償金の支払い",
+            "遼東半島",
+            "台湾",
+            "清の残兵や一部の台湾住民の抵抗",
+            "台湾総督府",
+            "学校教育制度",
+            "鉄道や灌漑設備"
+          ],
+          "evidence": [
+            "treaty-year",
+            "treaty-name",
+            "treaty-japan-delegates",
+            "treaty-qing-delegate",
+            "treaty-korea",
+            "treaty-indemnity",
+            "treaty-territories",
+            "taiwan-resistance",
+            "taiwan-government",
+            "taiwan-development",
+            "treaty-war-end"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "三国干渉と列強の清への進出",
+      "reading": "さんごくかんしょうとれっきょうのしんへのしんしゅつ",
+      "category": "外交・租借・権益",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1895年の遼東半島返還・1898年のドイツの権益獲得",
+        "sortYear": 1895
+      },
+      "explanation": "三国干渉では、日本が下関条約で得た遼東半島を清へ返還することになった。その後、ロシアは清から旅順と大連を租借して軍事拠点を築き、ドイツも租借権に加えて鉄道敷設権や石炭採掘権を得るなど、列強は清への進出を進めた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "遼東半島返還の要求",
+          "prompt": "明治時代の日清戦争後、列強が日本に遼東半島(りょうとうはんとう)を清へ返すよう迫った要求を何というか。",
+          "answer": "**三国干渉**。",
+          "keywords": [
+            "三国干渉"
+          ],
+          "evidence": [
+            "intervention-demand",
+            "intervention-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "他国の領土を借りる仕組み",
+          "prompt": "19世紀末、列強の清への進出でも使われた、合意のもとで他国の領土の一部を一定期間借り受けることを何というか。",
+          "answer": "**租借(そしゃく)**。",
+          "keywords": [
+            "租借"
+          ],
+          "evidence": [
+            "lease-name",
+            "lease-definition"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "三国干渉の当事国",
+          "prompt": "明治時代の三国干渉と列強の清への進出で、日本に遼東半島の返還を要求した三国はどこか。",
+          "answer": "**ロシア**・**ドイツ**・**フランス**。",
+          "keywords": [
+            "ロシア",
+            "ドイツ",
+            "フランス"
+          ],
+          "evidence": [
+            "intervention-countries",
+            "intervention-demand"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "result",
+          "form": "日本の対応",
+          "prompt": "明治時代の三国干渉と列強の清への進出では、日本は三国からの遼東半島返還要求にどう対応したか。",
+          "answer": "**遼東半島を清へ返還する要求に応じた**。",
+          "keywords": [
+            "遼東半島を清へ返還する要求に応じた"
+          ],
+          "evidence": [
+            "intervention-demand",
+            "intervention-response"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "place",
+          "form": "ロシアの租借地",
+          "prompt": "19世紀末の三国干渉と列強の清への進出で、ロシアが清から租借して軍事拠点を築いた遼東半島の港はどこか。",
+          "answer": "**旅順(りょじゅん)**と**大連(だいれん)**。",
+          "keywords": [
+            "旅順",
+            "大連"
+          ],
+          "evidence": [
+            "russian-ports"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "ドイツの権益",
+          "prompt": "19世紀末の三国干渉と列強の清への進出で、ドイツは膠州湾(こうしゅうわん)の租借権に加え、鉄道や鉱山についてどのような権益を得たか。",
+          "answer": "**青島(ちんたお)・済南(さいなん)間の鉄道敷設権**と、**沿線の石炭採掘権**。",
+          "keywords": [
+            "青島・済南間の鉄道敷設権",
+            "沿線の石炭採掘権"
+          ],
+          "evidence": [
+            "german-actor",
+            "german-rights"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "遼東半島返還の年",
+          "prompt": "明治時代の三国干渉と列強の清への進出で、日本が遼東半島を清に返還したのは何年か。",
+          "answer": "1895年。",
+          "keywords": [],
+          "evidence": [
+            "intervention-demand",
+            "intervention-name",
+            "intervention-response",
+            "intervention-return-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "三国干渉と日本の対応",
+          "prompt": "明治時代、日本は三国干渉にどのように対応したか。",
+          "answer": "日清戦争後の1895年、**ロシア**・**ドイツ**・**フランス**が日本へ**遼東半島(りょうとうはんとう)**を清に返還するよう要求した（**三国干渉**）。日本は要求に応じ、遼東半島を清に返還した。",
+          "keywords": [
+            "ロシア",
+            "ドイツ",
+            "フランス",
+            "遼東半島",
+            "三国干渉"
+          ],
+          "evidence": [
+            "intervention-countries",
+            "intervention-demand",
+            "intervention-name",
+            "intervention-response",
+            "intervention-return-year"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ロシアの租借",
+          "prompt": "19世紀末、三国干渉の後、ロシアは清でどのように勢力を伸ばしたか。",
+          "answer": "ロシアは、清から遼東半島の**旅順(りょじゅん)**と**大連(だいれん)**を**租借(そしゃく)**して、**軍事拠点**を築いた。租借とは、合意のもとで他国の領土の一部を一定期間借り受けることである。",
+          "keywords": [
+            "旅順",
+            "大連",
+            "租借",
+            "軍事拠点"
+          ],
+          "evidence": [
+            "russian-ports",
+            "lease-name",
+            "lease-definition"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ドイツと列強の権益獲得",
+          "prompt": "19世紀末、日清戦争後にドイツは清でどのような権益を得たか。",
+          "answer": "1898年、ドイツは清で**膠州湾(こうしゅうわん)の租借権**、**青島(ちんたお)・済南(さいなん)間の鉄道敷設権**と、**沿線の石炭採掘権**を得た。日清戦争に敗れた清では、列強が権益の獲得を進めた。",
+          "keywords": [
+            "膠州湾の租借権",
+            "青島・済南間の鉄道敷設権",
+            "沿線の石炭採掘権"
+          ],
+          "evidence": [
+            "german-actor",
+            "german-rights",
+            "powers-rights"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「三国干渉と列強の清への進出」について説明せよ。",
+          "answer": "日清戦争後の1895年、**ロシア**・**ドイツ**・**フランス**が日本に**遼東半島(りょうとうはんとう)**の清への返還を要求し（**三国干渉**）、日本はこれに応じた。その後、ロシアは清から**旅順(りょじゅん)**・**大連(だいれん)**を**租借(そしゃく)**（合意により他国の領土の一部を一定期間借り受けること）し、**軍事拠点**を築いた。1898年にはドイツが**膠州湾(こうしゅうわん)の租借権**、**青島(ちんたお)・済南(さいなん)間の鉄道敷設権**、**沿線の石炭採掘権**を得るなど、列強は清で権益の獲得を進めた。",
+          "keywords": [
+            "ロシア",
+            "ドイツ",
+            "フランス",
+            "遼東半島",
+            "三国干渉",
+            "旅順",
+            "大連",
+            "租借",
+            "軍事拠点",
+            "膠州湾の租借権",
+            "青島・済南間の鉄道敷設権",
+            "沿線の石炭採掘権"
+          ],
+          "evidence": [
+            "intervention-countries",
+            "intervention-demand",
+            "intervention-name",
+            "intervention-response",
+            "intervention-return-year",
+            "russian-ports",
+            "lease-name",
+            "lease-definition",
+            "german-actor",
+            "german-rights",
+            "powers-rights"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "政党内閣と立憲政友会",
+      "reading": "せいとうないかくとりっけんせいゆうかい",
+      "category": "組織・政党・内閣",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1898年の初の政党内閣・1900年以降の政党政治",
+        "sortYear": 1898
+      },
+      "explanation": "自由党と進歩党が合一した憲政党を基盤に、初の政党内閣である第一次大隈内閣が成立した。続いて伊藤博文が旧自由党系の憲政党と伊藤派官僚を中心に立憲政友会を結成し、その後、西園寺と桂が交互に政権を担う時期もあった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "初の政党内閣",
+          "prompt": "明治時代の日本で、政党を基盤として組閣された初の内閣は何か。",
+          "answer": "**第一次大隈内閣**。",
+          "keywords": [
+            "第一次大隈内閣"
+          ],
+          "evidence": [
+            "party-cabinet-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "伊藤博文が結成した政党",
+          "prompt": "近代日本で、伊藤博文が結成してその総裁となった政党は何か。",
+          "answer": "**立憲政友会**。",
+          "keywords": [
+            "立憲政友会"
+          ],
+          "evidence": [
+            "seiyukai-ito",
+            "seiyukai-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "第一次大隈内閣成立の年",
+          "prompt": "明治時代の日本の政党内閣と立憲政友会について、初の政党内閣となった第一次大隈内閣が成立したのは何年か。",
+          "answer": "1898年。",
+          "keywords": [],
+          "evidence": [
+            "party-cabinet-year",
+            "party-cabinet-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "立憲政友会結成の年",
+          "prompt": "近代日本の政党内閣と立憲政友会について、伊藤博文が立憲政友会を結成したのは何年か。",
+          "answer": "1900年。",
+          "keywords": [],
+          "evidence": [
+            "seiyukai-year",
+            "seiyukai-ito",
+            "seiyukai-name"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "初の政党内閣の基盤",
+          "prompt": "明治時代の日本で、自由党と進歩党が合一して発足し、初の政党内閣を支えた政党は何か。",
+          "answer": "**憲政党**。",
+          "keywords": [
+            "憲政党"
+          ],
+          "evidence": [
+            "kenseito-formation",
+            "party-cabinet-name"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "立憲政友会の基盤",
+          "prompt": "近代日本の政党内閣と立憲政友会について、伊藤博文が立憲政友会を結成したとき、中心となった政治勢力は何か。",
+          "answer": "**旧自由党系の憲政党**と**伊藤派官僚**。",
+          "keywords": [
+            "旧自由党系の憲政党",
+            "伊藤派官僚"
+          ],
+          "evidence": [
+            "seiyukai-base"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "初の政党内閣の成立",
+          "prompt": "明治時代の日本で、初の政党内閣となった第一次大隈内閣はどのように成立したか。",
+          "answer": "**板垣退助の自由党**と**大隈重信の進歩党**が合一して**憲政党**をつくった。この政党を基盤に、1898年に初の政党内閣である**第一次大隈内閣**が成立した。",
+          "keywords": [
+            "板垣退助の自由党",
+            "大隈重信の進歩党",
+            "憲政党",
+            "第一次大隈内閣"
+          ],
+          "evidence": [
+            "kenseito-formation",
+            "party-cabinet-year",
+            "party-cabinet-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "立憲政友会の結成",
+          "prompt": "近代日本で、立憲政友会はどのような政治勢力を中心に結成されたか。",
+          "answer": "1900年、**伊藤博文**は**旧自由党系の憲政党**と**伊藤派官僚**を中心に**立憲政友会**を結成し、その総裁となった。",
+          "keywords": [
+            "伊藤博文",
+            "旧自由党系の憲政党",
+            "伊藤派官僚",
+            "立憲政友会"
+          ],
+          "evidence": [
+            "seiyukai-year",
+            "seiyukai-ito",
+            "seiyukai-base",
+            "seiyukai-name"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政権の交代",
+          "prompt": "近代日本で、立憲政友会の成立後、政権の担い手はどのように交代したか。",
+          "answer": "伊藤博文の後継者である**西園寺公望(さいおんじきんもち)**と、山県有朋の後継者である**桂太郎**が、交互に政権を担う時期があった。",
+          "keywords": [
+            "西園寺公望",
+            "桂太郎"
+          ],
+          "evidence": [
+            "saionji-name",
+            "party-government-alternation"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近代日本の「政党内閣と立憲政友会」について説明せよ。",
+          "answer": "日本では、**板垣退助の自由党**と**大隈重信の進歩党**が合一した**憲政党**を基盤に、1898年に初の政党内閣となる**第一次大隈内閣**が成立した。1900年には**伊藤博文**が**旧自由党系の憲政党**と**伊藤派官僚**を中心に**立憲政友会**を結成し、その総裁となった。その後、伊藤の後継者である**西園寺公望(さいおんじきんもち)**と、山県有朋の後継者である**桂太郎**が交互に政権を担う時期もあった。",
+          "keywords": [
+            "板垣退助の自由党",
+            "大隈重信の進歩党",
+            "憲政党",
+            "第一次大隈内閣",
+            "伊藤博文",
+            "旧自由党系の憲政党",
+            "伊藤派官僚",
+            "立憲政友会",
+            "西園寺公望",
+            "桂太郎"
+          ],
+          "evidence": [
+            "kenseito-formation",
+            "party-cabinet-year",
+            "party-cabinet-name",
+            "seiyukai-year",
+            "seiyukai-ito",
+            "seiyukai-base",
+            "seiyukai-name",
+            "saionji-name",
+            "party-government-alternation"
+          ]
+        }
+      ]
+    }
+  ]
+}

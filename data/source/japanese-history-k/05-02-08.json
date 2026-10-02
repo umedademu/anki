@@ -1,0 +1,430 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 2,
+    "title": "明治時代"
+  },
+  "part": {
+    "number": 8,
+    "title": "条約改正交渉"
+  },
+  "integrationPromptPrefix": "明治時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_02節_08_条約改正交渉_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      312,
+      314,
+      407
+    ],
+    "note": "312頁チ本文から314頁リ見出し直前と関連注㊷㊸を全文確認した。井上馨の欧化政策による交渉・外国人裁判官任用案と国内の反発、法典整備とイギリスの対ロシア警戒、陸奥宗光による1894年の条約締結、領事裁判権の撤廃と関税自主権の回復の時期の違いを扱う。鹿鳴館の1883年のみ407頁の同じ出来事の年表で確認し、交渉全体の開始年や改正案の年に拡張しない。民法の整備完了を条約締結前に断定すること、成熟した国家という評価、大津事件の犯人の動機や細部、シベリア鉄道の開始年、交渉者の一覧は不採用。1894年は条約締結年に限定し、領事裁判権撤廃の施行年や関税自主権の回復年・権利の詳しい定義を資料外から補わない。"
+  },
+  "facts": [
+    {
+      "id": "inoue-name",
+      "page": 312,
+      "quote": "これまでの**条約改正**の交渉は、井上馨が"
+    },
+    {
+      "id": "rokumeikan-building",
+      "page": 312,
+      "quote": "井上馨が鹿鳴館という西洋建築物を造り、外国人を招いて"
+    },
+    {
+      "id": "rokumeikan-parties",
+      "page": 314,
+      "quote": "各国公使らを招いて鹿鳴館で行われた舞踏会"
+    },
+    {
+      "id": "rokumeikan-year",
+      "page": 407,
+      "quote": "| 1883 |  | 鹿鳴館 |"
+    },
+    {
+      "id": "westernization-policy",
+      "page": 314,
+      "quote": "舞踏会を行うなどして展開した**欧化政策**によるアピールが不発に終わりました㊷。"
+    },
+    {
+      "id": "foreign-judges-plan",
+      "page": 314,
+      "quote": "領事裁判権を撤廃する代わりに、外国人に関わる裁判に外国人裁判官を任用するという井上馨の改正案"
+    },
+    {
+      "id": "inoue-opposition",
+      "page": 314,
+      "quote": "日夜、各国公使らを招いて鹿鳴館で行われた舞踏会や、領事裁判権を撤廃する代わりに、外国人に関わる裁判に外国人裁判官を任用するという井上馨の改正案には、国内で大きな反発があった。"
+    },
+    {
+      "id": "treaty-year",
+      "page": 314,
+      "quote": "明治二十七年（一八九四）、"
+    },
+    {
+      "id": "treaty-name",
+      "page": 314,
+      "quote": "**日英通商航海条約**を締結して、"
+    },
+    {
+      "id": "mutsu-negotiator",
+      "page": 314,
+      "quote": "交渉の責任者に任命された**陸奥宗光**の努力によって、"
+    },
+    {
+      "id": "consular-rights",
+      "page": 314,
+      "quote": "ついにイギリスの領事裁判権を撤廃することに成功し、"
+    },
+    {
+      "id": "other-powers",
+      "page": 314,
+      "quote": "それを見た他の欧米諸国も領事裁判権の撤廃に応じました。"
+    },
+    {
+      "id": "tariff-rights",
+      "page": 314,
+      "quote": "しかし、関税自主権が認められるのは、日露戦争後になります。"
+    },
+    {
+      "id": "legal-preparation",
+      "page": 314,
+      "quote": "諸法典の整備など近代国家の条件をほぼ整えたこと"
+    },
+    {
+      "id": "british-background",
+      "page": 314,
+      "quote": "ロシアの極東進出に警戒心を示していたイギリスが日本との関係を重視し、条約交渉を受け入れたこと"
+    },
+    {
+      "id": "inoue-party-activity",
+      "page": 314,
+      "quote": "舞踏会を行う"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "井上馨の条約改正交渉",
+      "reading": "いのうえかおるのじょうやくかいせいこうしょう",
+      "category": "外交",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1883年の鹿鳴館建設と明治時代の交渉",
+        "sortYear": 1883
+      },
+      "explanation": "井上馨は鹿鳴館の舞踏会などを通じた欧化政策で条約改正を目指したが、アピールは不発に終わった。外国人裁判官を任用する改正案や舞踏会には、国内から大きな反発があった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "交渉した人物",
+          "prompt": "明治時代の日本で、外国人を招く舞踏会などによって条約改正を目指した政治家は誰か。",
+          "answer": "**井上馨(いのうえかおる)**。",
+          "keywords": [
+            "井上馨"
+          ],
+          "evidence": [
+            "inoue-name",
+            "inoue-party-activity"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "交渉に用いた建築物",
+          "prompt": "明治時代の日本で、井上馨の条約改正交渉の際に、外国人公使を招く舞踏会が開かれた西洋建築物は何か。",
+          "answer": "**鹿鳴館(ろくめいかん)**。",
+          "keywords": [
+            "鹿鳴館"
+          ],
+          "evidence": [
+            "rokumeikan-building",
+            "rokumeikan-parties"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "政策の名称",
+          "prompt": "明治時代の日本で、井上馨の条約改正交渉の一環として、外国人を招く舞踏会などで西洋化を示して条約改正を目指した政策を何というか。",
+          "answer": "**欧化政策**。",
+          "keywords": [
+            "欧化政策"
+          ],
+          "evidence": [
+            "westernization-policy"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "裁判官の任用案",
+          "prompt": "明治時代の日本の井上馨の条約改正交渉では、領事裁判権を撤廃する代わりに、裁判官の任用についてどのような案が示されたか。",
+          "answer": "**外国人裁判官を任用する**案。",
+          "keywords": [
+            "外国人裁判官を任用する"
+          ],
+          "evidence": [
+            "foreign-judges-plan"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "国内の反応",
+          "prompt": "明治時代の日本で、井上馨の条約改正交渉における舞踏会や裁判官任用の改正案は、国内からどのような反応を受けたか。",
+          "answer": "**大きな反発**。",
+          "keywords": [
+            "大きな反発"
+          ],
+          "evidence": [
+            "inoue-opposition"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "欧化政策による交渉",
+          "prompt": "明治時代の日本の井上馨の条約改正交渉における欧化政策は、どのように進められたか。",
+          "answer": "日本の**井上馨(いのうえかおる)**は、**1883年**に建てられた**鹿鳴館(ろくめいかん)**を用いて、外国人公使を招く舞踏会などを行った。こうした**欧化政策**で条約改正を目指したが、アピールは不発に終わった。",
+          "keywords": [
+            "井上馨",
+            "1883年",
+            "鹿鳴館",
+            "欧化政策"
+          ],
+          "evidence": [
+            "inoue-name",
+            "rokumeikan-building",
+            "rokumeikan-parties",
+            "rokumeikan-year",
+            "westernization-policy"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "改正案と反応",
+          "prompt": "明治時代の日本の井上馨の条約改正交渉で示された改正案は、どのような内容で、どのような反応を受けたか。",
+          "answer": "領事裁判権を撤廃する代わりに、外国人が関わる裁判で**外国人裁判官を任用する**案を示した。鹿鳴館での舞踏会やこの改正案には、国内で**大きな反発**があった。",
+          "keywords": [
+            "外国人裁判官を任用する",
+            "大きな反発"
+          ],
+          "evidence": [
+            "foreign-judges-plan",
+            "inoue-opposition"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「井上馨の条約改正交渉」について説明せよ。",
+          "answer": "日本の**井上馨(いのうえかおる)**は、**1883年**に建てられた**鹿鳴館(ろくめいかん)**を用いて、外国人公使を招く舞踏会などの**欧化政策**で条約改正を目指したが、アピールは不発に終わった。領事裁判権を撤廃する代わりに**外国人裁判官を任用する**改正案も示し、舞踏会やこの案には国内で**大きな反発**があった。",
+          "keywords": [
+            "井上馨",
+            "1883年",
+            "鹿鳴館",
+            "欧化政策",
+            "外国人裁判官を任用する",
+            "大きな反発"
+          ],
+          "evidence": [
+            "inoue-name",
+            "rokumeikan-building",
+            "rokumeikan-parties",
+            "rokumeikan-year",
+            "westernization-policy",
+            "foreign-judges-plan",
+            "inoue-opposition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日英通商航海条約",
+      "reading": "にちえいつうしょうこうかいじょうやく",
+      "category": "条約改正",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1894年の条約締結と日露戦争後の関税自主権",
+        "sortYear": 1894
+      },
+      "explanation": "法典整備が進んだ日本と、ロシアの極東進出を警戒するイギリスとの交渉は、陸奥宗光を責任者として1894年の条約締結に至った。領事裁判権の撤廃につながったが、関税自主権が認められるのは日露戦争後となった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "条約の名称",
+          "prompt": "明治時代の日本で、1894年に日本とイギリスの間で締結され、条約改正交渉の成果となった条約を何というか。",
+          "answer": "**日英通商航海条約**。",
+          "keywords": [
+            "日英通商航海条約"
+          ],
+          "evidence": [
+            "treaty-year",
+            "treaty-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "交渉責任者",
+          "prompt": "明治時代の日本で、日英通商航海条約の交渉責任者に任命された人物は誰か。",
+          "answer": "**陸奥宗光(むつむねみつ)**。",
+          "keywords": [
+            "陸奥宗光"
+          ],
+          "evidence": [
+            "mutsu-negotiator"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "改正で撤廃した権利",
+          "prompt": "明治時代の日本で、日英通商航海条約による改正で、イギリスのどの権利を撤廃することに成功したか。",
+          "answer": "**領事裁判権**。",
+          "keywords": [
+            "領事裁判権"
+          ],
+          "evidence": [
+            "consular-rights"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "回復が後になった権利",
+          "prompt": "明治時代の日本で、日英通商航海条約締結後も、日露戦争後まで認められなかった日本の権利は何か。",
+          "answer": "**関税自主権**。",
+          "keywords": [
+            "関税自主権"
+          ],
+          "evidence": [
+            "tariff-rights"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "イギリス側の背景",
+          "prompt": "明治時代の日本で、日英通商航海条約につながる交渉をイギリスが受け入れた背景には、どの国の極東進出への警戒があったか。",
+          "answer": "**ロシア**。",
+          "keywords": [
+            "ロシア"
+          ],
+          "evidence": [
+            "british-background"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本側の整備",
+          "prompt": "明治時代の日本で、日英通商航海条約の交渉が進んだ背景として、国内ではどのような制度面の整備が進められたか。",
+          "answer": "**諸法典の整備**。",
+          "keywords": [
+            "諸法典の整備"
+          ],
+          "evidence": [
+            "legal-preparation"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "交渉が進んだ背景",
+          "prompt": "明治時代の日本で、日英通商航海条約につながる条約改正交渉が進んだ背景を説明せよ。",
+          "answer": "日本で**諸法典の整備**などが進んだ。**イギリス**は**ロシア**の極東進出を警戒して日本との関係を重視し、条約交渉を受け入れた。",
+          "keywords": [
+            "諸法典の整備",
+            "イギリス",
+            "ロシア"
+          ],
+          "evidence": [
+            "legal-preparation",
+            "british-background"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "条約改正の成果",
+          "prompt": "明治時代の日本の日英通商航海条約による改正は、どのような成果をもたらしたか。",
+          "answer": "日本は**1894年**に**陸奥宗光(むつむねみつ)**を交渉責任者として**イギリス**と**日英通商航海条約**を締結し、**領事裁判権**の撤廃につなげた。他の欧米諸国も領事裁判権の撤廃に応じたが、**関税自主権**が認められるのは**日露戦争後**になった。",
+          "keywords": [
+            "1894年",
+            "陸奥宗光",
+            "イギリス",
+            "日英通商航海条約",
+            "領事裁判権",
+            "関税自主権",
+            "日露戦争後"
+          ],
+          "evidence": [
+            "treaty-year",
+            "mutsu-negotiator",
+            "treaty-name",
+            "consular-rights",
+            "other-powers",
+            "tariff-rights"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "明治時代の日本の「日英通商航海条約」について説明せよ。",
+          "answer": "日本で**諸法典の整備**が進み、**イギリス**も**ロシア**の極東進出を警戒して日本との関係を重視し、交渉を受け入れた。日本は**1894年**に**陸奥宗光(むつむねみつ)**を交渉責任者として**日英通商航海条約**を締結し、**領事裁判権**の撤廃につなげた。他の欧米諸国も撤廃に応じたが、**関税自主権**が認められるのは**日露戦争後**になった。",
+          "keywords": [
+            "諸法典の整備",
+            "イギリス",
+            "ロシア",
+            "1894年",
+            "陸奥宗光",
+            "日英通商航海条約",
+            "領事裁判権",
+            "関税自主権",
+            "日露戦争後"
+          ],
+          "evidence": [
+            "legal-preparation",
+            "british-background",
+            "treaty-year",
+            "mutsu-negotiator",
+            "treaty-name",
+            "consular-rights",
+            "other-powers",
+            "tariff-rights"
+          ]
+        }
+      ]
+    }
+  ]
+}

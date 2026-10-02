@@ -1,0 +1,538 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 10,
+    "title": "日本の快進撃とアジア諸国"
+  },
+  "integrationPromptPrefix": "太平洋戦争期の日本とアジアの",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_10_日本の快進撃とアジア諸国_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      378,
+      379,
+      380,
+      381
+    ],
+    "note": "378頁ヌ見出しから381頁ル見出し直前までの本文・図版・勢力範囲図を全文確認した。378頁冒頭の注⑮は前小項目の関連注として読み、担当抜粋からは除いた。真珠湾攻撃本体と枢軸国・連合国の構図は09担当との重複を避け、南方作戦、対アジア政策、協力と抵抗に絞る。1941年は当該本文にある太平洋戦争開始の年だけを時期枠として採用し、個別の独立承認・軍政・インド国民軍の結成を同年の出来事としない。日本と現地の時差による開戦日を混同せず、攻撃の具体日付や時刻は問わない。1942年2月のシンガポール占領は同じ出来事の明記から採用。旧支配国と主要地域の関係を問うが、勢力範囲図の全地名・島名の網羅、艦艇名・損失数・兵器性能・人類史上初・神業・国や軍人の優劣、戦術成功/戦略失敗の断定、宣戦通知や国際法評価は出題しない。日本の「自存自衛」という戦争正当化、植民地支配の正当性やアジア民衆全体の歓迎を正答にしない。大東亜共栄圏は日本の影響下の地域への呼称として扱い、フィリピンとビルマの独立承認を完全な主権の保障としない。インド国民軍は捕虜となったインド人兵士への働きかけと独立という目標を学び、インド全土が日本に占領されたとする表現を使わない。軍政への反発・抵抗と犠牲を明記し、犠牲数は問わない。終戦後の多くの地域の独立は、軍政や戦時中の協力と別の時期の事実として記し、日本の進出を唯一の原因、または独立に直結した必然の過程としない。戦後独立国の例示全一覧や個別独立年は問わない。巻末資料㊵は当該範囲に本文がないため補わない。"
+  },
+  "facts": [
+    {
+      "id": "war-year-context",
+      "page": 378,
+      "quote": "日本海軍の機動部隊は昭和十六年（一九四一）"
+    },
+    {
+      "id": "pacific-war-begins",
+      "page": 378,
+      "quote": "この**真珠湾攻撃**により、**太平洋戦争**が始まり、"
+    },
+    {
+      "id": "malaya-and-britain",
+      "page": 380,
+      "quote": "イギリスが統治していたマレー半島に上陸した日本軍の部隊は南下してマレー半島を制圧し、"
+    },
+    {
+      "id": "singapore-occupation",
+      "page": 380,
+      "quote": "昭和十七年（一九四二）二月十五日、イギリス東洋艦隊が本拠地としていたシンガポールを占領しました。"
+    },
+    {
+      "id": "philippines-and-america",
+      "page": 380,
+      "quote": "アメリカが支配していたフィリピンの攻略戦、"
+    },
+    {
+      "id": "java-sumatra-and-netherlands",
+      "page": 380,
+      "quote": "オランダが支配していたジャワ・スマトラの攻略戦、"
+    },
+    {
+      "id": "burma-and-britain",
+      "page": 380,
+      "quote": "イギリスが支配していたビルマの攻略戦などを次々に成功させ、"
+    },
+    {
+      "id": "occupation-extent",
+      "page": 380,
+      "quote": "東アジア、東南アジア、西太平洋の大半から欧米の軍隊を排除して、広い範囲を勢力下に置きました。"
+    },
+    {
+      "id": "co-prosperity-sphere-name",
+      "page": 380,
+      "quote": "日本は、このように日本の影響下にある地域を**大東亜共栄圏**と呼びました。"
+    },
+    {
+      "id": "independence-recognition",
+      "page": 380,
+      "quote": "そして、日本政府はフィリピンとビルマの独立を承認しました。"
+    },
+    {
+      "id": "thai-alliance",
+      "page": 380,
+      "quote": "タイとは開戦直後に同盟を締結しました。"
+    },
+    {
+      "id": "indian-prisoners",
+      "page": 380,
+      "quote": "日本軍がイギリス軍と戦って捕虜にしたイギリス兵のなかには多くのインド人がいました。"
+    },
+    {
+      "id": "indian-national-army-name",
+      "page": 380,
+      "quote": "インド国民軍が結成され、"
+    },
+    {
+      "id": "indian-independence-call",
+      "page": 380,
+      "quote": "日本軍は彼らにインド独立のために決起することを呼びかけて、"
+    },
+    {
+      "id": "indian-army-action",
+      "page": 380,
+      "quote": "独立を目指して日本軍と行動しました。"
+    },
+    {
+      "id": "military-rule-and-education",
+      "page": 380,
+      "quote": "しかし、日本語教育を取り入れるなど日本の軍政への反発もあり、"
+    },
+    {
+      "id": "resistance-and-victims",
+      "page": 380,
+      "quote": "抵抗活動をする民衆に日本軍が厳しく対処したため、民衆に多くの犠牲が出ました。"
+    },
+    {
+      "id": "postwar-independence-start",
+      "page": 380,
+      "quote": "大東亜共栄圏の地域の国々は欧米の植民地からの独立を願っていましたが、終戦後、その多くが独立しま"
+    },
+    {
+      "id": "postwar-independence-continuation",
+      "page": 381,
+      "quote": "した。たとえば、マレーシア、シンガポール、インドネシア、ベトナム、フィリピンなどが挙げられます。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "南方作戦と東南アジアの占領",
+      "reading": "なんぽうさくせんととうなんあじあのせんりょう",
+      "category": "戦争・国際関係",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争初期の日本の",
+      "chronology": {
+        "displayPeriod": "1942年のシンガポール占領など",
+        "sortYear": 1942
+      },
+      "explanation": "南方作戦で日本軍は、欧米諸国の支配下にあった東南アジア各地へ進出した。マレー半島からシンガポールへの進撃と、フィリピンやジャワ・スマトラ、ビルマへの進出を通じて、アジアと西太平洋の広い範囲を勢力下に置いた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "マレー半島の旧支配国",
+          "prompt": "太平洋戦争初期の南方作戦と東南アジアの占領について、日本軍が上陸した当時、マレー半島を統治していた欧米の国はどこか。",
+          "answer": "**イギリス**。",
+          "evidence": [
+            "malaya-and-britain"
+          ],
+          "keywords": [
+            "イギリス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "日本軍が占領した艦隊本拠地",
+          "prompt": "1942年2月、日本軍がマレー半島を南下して占領した、イギリス東洋艦隊の本拠地だった都市はどこか。",
+          "answer": "**シンガポール**。",
+          "evidence": [
+            "malaya-and-britain",
+            "singapore-occupation"
+          ],
+          "keywords": [
+            "シンガポール"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "フィリピンの旧支配国",
+          "prompt": "太平洋戦争初期の南方作戦と東南アジアの占領について、日本軍が攻略したフィリピンをそれまで支配していた国はどこか。",
+          "answer": "**アメリカ**。",
+          "evidence": [
+            "philippines-and-america"
+          ],
+          "keywords": [
+            "アメリカ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "ジャワ・スマトラの旧支配国",
+          "prompt": "太平洋戦争初期の南方作戦と東南アジアの占領について、日本軍が攻略したジャワ・スマトラをそれまで支配していた欧米の国はどこか。",
+          "answer": "**オランダ**。",
+          "evidence": [
+            "java-sumatra-and-netherlands"
+          ],
+          "keywords": [
+            "オランダ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "マレー半島からシンガポールへの進出",
+          "prompt": "太平洋戦争初期の南方作戦と東南アジアの占領について、マレー半島からシンガポールへの作戦はどのように進んだか。",
+          "answer": "日本軍は、**イギリス統治下のマレー半島**へ上陸して南下した。**1942年2月**に、イギリス東洋艦隊の本拠地だった**シンガポールを占領**した。",
+          "evidence": [
+            "malaya-and-britain",
+            "singapore-occupation"
+          ],
+          "keywords": [
+            "イギリス統治下のマレー半島",
+            "1942年2月",
+            "シンガポールを占領"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "欧米の支配地域への進出と勢力範囲",
+          "prompt": "太平洋戦争初期の南方作戦と東南アジアの占領について、日本軍の進出は、アジアや太平洋の支配状況をどう変えたか。",
+          "answer": "日本軍は**アメリカ支配下のフィリピン**、**オランダ支配下のジャワ・スマトラ**、**イギリス支配下のビルマ**などにも進出した。日本は**東アジア・東南アジア・西太平洋の広い範囲を勢力下**に置いた。",
+          "evidence": [
+            "philippines-and-america",
+            "java-sumatra-and-netherlands",
+            "burma-and-britain",
+            "occupation-extent"
+          ],
+          "keywords": [
+            "アメリカ支配下のフィリピン",
+            "オランダ支配下のジャワ・スマトラ",
+            "イギリス支配下のビルマ",
+            "東アジア・東南アジア・西太平洋の広い範囲を勢力下"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争初期の日本の「南方作戦と東南アジアの占領」について説明せよ。",
+          "answer": "日本軍は**イギリス統治下のマレー半島**へ上陸して南下し、**1942年2月**に**シンガポールを占領**した。日本軍は**アメリカ支配下のフィリピン**、**オランダ支配下のジャワ・スマトラ**、**イギリス支配下のビルマ**などにも進出した。日本は**東アジア・東南アジア・西太平洋の広い範囲を勢力下**に置いた。",
+          "evidence": [
+            "malaya-and-britain",
+            "singapore-occupation",
+            "philippines-and-america",
+            "java-sumatra-and-netherlands",
+            "burma-and-britain",
+            "occupation-extent"
+          ],
+          "keywords": [
+            "イギリス統治下のマレー半島",
+            "1942年2月",
+            "シンガポールを占領",
+            "アメリカ支配下のフィリピン",
+            "オランダ支配下のジャワ・スマトラ",
+            "イギリス支配下のビルマ",
+            "東アジア・東南アジア・西太平洋の広い範囲を勢力下"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "大東亜共栄圏と対アジア政策",
+      "reading": "だいとうあきょうえいけんとたいあじあせいさく",
+      "category": "政策・国際関係",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争期の日本の",
+      "chronology": {
+        "displayPeriod": "1941年開戦の太平洋戦争中",
+        "sortYear": 1941
+      },
+      "explanation": "日本は東アジア・東南アジア・西太平洋などの影響下にある地域を大東亜共栄圏と呼んだ。タイとは同盟を結び、フィリピンとビルマの独立を承認したが、この呼称や承認だけで各地の民衆が一様に日本の統治を支持したことにはならない。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "日本の影響下の地域の呼称",
+          "prompt": "太平洋戦争中、日本が自国の影響下にある地域に用いた呼称は何か。",
+          "answer": "**大東亜共栄圏**。",
+          "evidence": [
+            "co-prosperity-sphere-name"
+          ],
+          "keywords": [
+            "大東亜共栄圏"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "開戦直後の同盟国",
+          "prompt": "太平洋戦争中の大東亜共栄圏と対アジア政策について、日本が開戦直後に同盟を結んだ東南アジアの国はどこか。",
+          "answer": "**タイ**。",
+          "evidence": [
+            "thai-alliance"
+          ],
+          "keywords": [
+            "タイ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "日本が独立を承認した国",
+          "prompt": "太平洋戦争中の大東亜共栄圏と対アジア政策について、日本政府が独立を承認した二つの国はどこか。",
+          "answer": "**フィリピンとビルマ**。",
+          "evidence": [
+            "independence-recognition"
+          ],
+          "keywords": [
+            "フィリピンとビルマ"
+          ],
+          "note": "",
+          "acceptedAnswers": [
+            "ビルマとフィリピン"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "大東亜共栄圏が指した地域",
+          "prompt": "太平洋戦争期の大東亜共栄圏と対アジア政策について、大東亜共栄圏とは、どのような地域に用いられた呼称か。",
+          "answer": "**1941年**に開戦した**太平洋戦争**中、日本は**東アジア・東南アジア・西太平洋**などの**自国の影響下にある地域**を**大東亜共栄圏**と呼んだ。",
+          "evidence": [
+            "war-year-context",
+            "pacific-war-begins",
+            "co-prosperity-sphere-name",
+            "occupation-extent"
+          ],
+          "keywords": [
+            "1941年",
+            "太平洋戦争",
+            "東アジア・東南アジア・西太平洋",
+            "自国の影響下にある地域",
+            "大東亜共栄圏"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "アジア諸国との関係",
+          "prompt": "太平洋戦争期の大東亜共栄圏と対アジア政策について、日本はアジア諸国との関係でどのような対応をとったか。",
+          "answer": "日本は**開戦直後にタイと同盟を締結**し、**フィリピンとビルマの独立を承認**した。",
+          "evidence": [
+            "thai-alliance",
+            "independence-recognition"
+          ],
+          "keywords": [
+            "開戦直後にタイと同盟を締結",
+            "フィリピンとビルマの独立を承認"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争期の日本の「大東亜共栄圏と対アジア政策」について説明せよ。",
+          "answer": "**1941年**に開戦した**太平洋戦争**中、日本は**東アジア・東南アジア・西太平洋**などの**自国の影響下にある地域**を**大東亜共栄圏**と呼んだ。日本は**開戦直後にタイと同盟を締結**し、**フィリピンとビルマの独立を承認**した。",
+          "evidence": [
+            "war-year-context",
+            "pacific-war-begins",
+            "co-prosperity-sphere-name",
+            "thai-alliance",
+            "independence-recognition",
+            "occupation-extent"
+          ],
+          "keywords": [
+            "1941年",
+            "太平洋戦争",
+            "東アジア・東南アジア・西太平洋",
+            "自国の影響下にある地域",
+            "大東亜共栄圏",
+            "開戦直後にタイと同盟を締結",
+            "フィリピンとビルマの独立を承認"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "占領地の協力と抵抗",
+      "reading": "せんりょうちのきょうりょくとていこう",
+      "category": "占領・独立運動・社会",
+      "geographyLabel": "アジア",
+      "integrationPromptPrefix": "太平洋戦争期のアジアの",
+      "chronology": {
+        "displayPeriod": "1941年開戦の太平洋戦争中と終戦後",
+        "sortYear": 1941
+      },
+      "explanation": "インド人兵士らはインドの独立を目指して日本軍と行動した。一方、占領地では日本語教育などの軍政に反発する民衆もおり、抵抗活動に対する日本軍の厳しい対応で犠牲が出た。終戦後、この地域の多くの国が独立した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "インド人兵士による組織",
+          "prompt": "太平洋戦争中、日本軍が捕虜にしたイギリス兵のうち、インド人兵士らによって結成された軍隊は何か。",
+          "answer": "**インド国民軍**。",
+          "evidence": [
+            "indian-prisoners",
+            "indian-national-army-name"
+          ],
+          "keywords": [
+            "インド国民軍"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "インド国民軍の目標",
+          "prompt": "太平洋戦争中の占領地の協力と抵抗について、インド国民軍が実現を目指した政治上の目標は何か。",
+          "answer": "**インドの独立**。",
+          "evidence": [
+            "indian-independence-call",
+            "indian-army-action"
+          ],
+          "keywords": [
+            "インドの独立"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "軍政への反発を招いた教育上の対応",
+          "prompt": "太平洋戦争中の占領地の協力と抵抗について、日本の軍政への反発につながった、教育に関する対応は何か。",
+          "answer": "**日本語教育の導入**。",
+          "evidence": [
+            "military-rule-and-education"
+          ],
+          "keywords": [
+            "日本語教育の導入"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "インド国民軍の成立と行動",
+          "prompt": "太平洋戦争期のアジアの占領地の協力と抵抗について、インド国民軍はどのように結成され、何を目指して行動したか。",
+          "answer": "**1941年**に開戦した**太平洋戦争**中、アジアで日本軍が捕虜にしたイギリス兵のうち**インド人兵士ら**に、日本軍が独立のための決起を呼びかけ、**インド国民軍**が結成された。インド国民軍は**インドの独立**を目指して**日本軍と行動**した。",
+          "evidence": [
+            "war-year-context",
+            "pacific-war-begins",
+            "indian-prisoners",
+            "indian-independence-call",
+            "indian-national-army-name",
+            "indian-army-action"
+          ],
+          "keywords": [
+            "1941年",
+            "太平洋戦争",
+            "インド人兵士ら",
+            "インド国民軍",
+            "インドの独立",
+            "日本軍と行動"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "軍政への反発と終戦後の変化",
+          "prompt": "太平洋戦争期のアジアの占領地の協力と抵抗について、日本の軍政に対する民衆の反応と、終戦後の地域の変化を説明せよ。",
+          "answer": "**日本語教育などの軍政への反発**があり、**抵抗活動に日本軍が厳しく対処**したため、**民衆に犠牲が出た**。終戦後には地域の**多くの国が独立**した。",
+          "evidence": [
+            "military-rule-and-education",
+            "resistance-and-victims",
+            "postwar-independence-start",
+            "postwar-independence-continuation"
+          ],
+          "keywords": [
+            "日本語教育などの軍政への反発",
+            "抵抗活動に日本軍が厳しく対処",
+            "民衆に犠牲が出た",
+            "多くの国が独立"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争期のアジアの「占領地の協力と抵抗」について説明せよ。",
+          "answer": "**1941年**に開戦した**太平洋戦争**中、アジアで日本軍が捕虜にしたイギリス兵のうち**インド人兵士ら**に日本軍が決起を呼びかけ、**インド国民軍**が結成され、**インドの独立**を目指して**日本軍と行動**した。**日本語教育などの軍政への反発**があり、**抵抗活動に日本軍が厳しく対処**したため、**民衆に犠牲が出た**。終戦後には地域の**多くの国が独立**した。",
+          "evidence": [
+            "war-year-context",
+            "pacific-war-begins",
+            "indian-prisoners",
+            "indian-independence-call",
+            "indian-national-army-name",
+            "indian-army-action",
+            "military-rule-and-education",
+            "resistance-and-victims",
+            "postwar-independence-start",
+            "postwar-independence-continuation"
+          ],
+          "keywords": [
+            "1941年",
+            "太平洋戦争",
+            "インド人兵士ら",
+            "インド国民軍",
+            "インドの独立",
+            "日本軍と行動",
+            "日本語教育などの軍政への反発",
+            "抵抗活動に日本軍が厳しく対処",
+            "民衆に犠牲が出た",
+            "多くの国が独立"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

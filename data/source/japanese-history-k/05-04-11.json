@@ -1,0 +1,654 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 11,
+    "title": "戦局の暗転と疲弊する日本"
+  },
+  "integrationPromptPrefix": "太平洋戦争中の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_11_戦局の暗転と疲弊する日本_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      381,
+      382,
+      383,
+      384
+    ],
+    "note": "381頁ル見出しから384頁ヲ見出し直前の本文、382頁補給線コラムと注⑯、383頁の海戦図・航路文字・図版説明、384頁の戦争指導の大綱史料まで全文を確認した。海戦と補給、サイパンの陥落と本土への影響、学徒出陣と勤労動員、戦時生活と報道統制の四つに分け、統合の過密化を避ける。ミッドウェーの損失は航空母艦・搭載機の種類だけを採用し、日米航空戦力の精密な逆転、パイロットの大半を失ったとの断定、養成に十年、損失数・軍人名・個別艦艇名・兵器性能数値は正答にしない。ガダルカナルの昭和17年と翌年2月は、当小項目の同じ紀年表記「昭和十七年（一九四二）」との照合で1942年8月～1943年2月とし、戦死者数や戦闘日数は問わない。商船への攻撃と戦地向け物資供給・占領地からの資源運搬の困難を学ぶが、補給軽視だけを敗戦の唯一の原因とする評価や損失船数・船員の犠牲率、各島名の網羅、転進/玉砕による美化の語彙穴埋めは見送る。サイパンでは1944年の上陸・陥落とマリアナ/本土爆撃の関係を扱い、占領後に日本のすべての都市が一律に爆撃されたとはしない。守り抜くか早期講和かの二択・必然論は採用しない。384頁ヲ以降の東條内閣退陣、次小項目の注⑰と本土の具体的空襲/疎開は担当境界外なので先取りしない。学徒出陣は大学生も徴兵対象になったことを問うが、全学生に例外なく適用されたとしない。勤労挺身隊の年齢数、朝鮮人/台湾人の徴用時期と賃金、国民全体が勝利を願い一丸となったという評価は正答にしない。1940年代は当本文に明記される1942・1943・1944年から確認できる戦時生活の広い時期枠で、農業/配給の悪化や報道統制の開始年を特定しない。動員と生活の各負担・制約を簡潔に示し、家族や兵士の思いを一律化しない。384頁戦争指導の大綱は全文読んだが、絶対確保地域や外交方針の全項目・難しい原文語句を列挙暗記させず、同範囲本文・コラムに明記された輸送と生活・報道の関係を優先した。"
+  },
+  "facts": [
+    {
+      "id": "midway-time-and-loss",
+      "page": 381,
+      "quote": "ところが、昭和十七年（一九四二）六月、**ミッドウェー海戦**で日本軍は大敗し、航空母艦四隻と重巡洋艦一隻を失い、"
+    },
+    {
+      "id": "midway-carriers-and-planes",
+      "page": 383,
+      "quote": "この海戦で日本軍は投入した重巡洋艦1隻、航空母艦4隻（赤城、加賀、蒼龍、飛龍）とその搭載機約290機のすべてを喪失した。"
+    },
+    {
+      "id": "guadalcanal-landing",
+      "page": 381,
+      "quote": "そして、昭和十七年八月七日、米軍は**ガダルカナル島**上陸作戦を実施しました。"
+    },
+    {
+      "id": "guadalcanal-retreat",
+      "page": 381,
+      "quote": "翌年の二月に日本軍が撤退するまでの"
+    },
+    {
+      "id": "american-counteroffensive",
+      "page": 382,
+      "quote": "以降、アメリカによる本格的な反攻が始まります。"
+    },
+    {
+      "id": "submarines-and-merchant-ships",
+      "page": 382,
+      "quote": "米国は多くの戦闘艦を輸送船の護衛に充て、日本の商船を沈めるために潜水艦を西太平洋の全域に配備した。"
+    },
+    {
+      "id": "supply-and-resource-difficulty",
+      "page": 382,
+      "quote": "日本は戦地への物資供給と占領地からの資源運搬が困難になり、"
+    },
+    {
+      "id": "saipan-and-mariana",
+      "page": 382,
+      "quote": "米軍は**マリアナ諸島のサイパン島**上陸作戦を開始しました。"
+    },
+    {
+      "id": "saipan-landing-time",
+      "page": 382,
+      "quote": "そして昭和十九年（一九四四）六月、米軍は**マリアナ諸島のサイパン島**上陸作戦を開始しました。"
+    },
+    {
+      "id": "saipan-fall",
+      "page": 382,
+      "quote": "そしてサイパンは同年七月、アメリカの手に落ちました。"
+    },
+    {
+      "id": "mariana-and-bombing-range",
+      "page": 382,
+      "quote": "もしマリアナが陥落したら、日本本土の大半が、アメリカのB29長距離爆撃機の射程距離に入るからです。"
+    },
+    {
+      "id": "b29-air-raids",
+      "page": 382,
+      "quote": "以降、B29が日本中を空襲することになります。"
+    },
+    {
+      "id": "student-draft-time",
+      "page": 382,
+      "quote": "昭和十八年（一九四三）には、大学生も徴兵の対象となりました。"
+    },
+    {
+      "id": "student-draft-name",
+      "page": 382,
+      "quote": "**学徒出陣**です。"
+    },
+    {
+      "id": "women-labor-mobilization",
+      "page": 382,
+      "quote": "多くの男子が兵隊になったため、国内の軍需工場などには、二十五歳未満の未婚の女子が勤労挺身隊として動員されました（**勤労動員**）。"
+    },
+    {
+      "id": "school-pupils-labor",
+      "page": 382,
+      "quote": "また中学生以上の生徒も軍需工場などに勤労動員されました⑯。"
+    },
+    {
+      "id": "metal-contributions",
+      "page": 382,
+      "quote": "戦争が長引くにつれ、国民生活はいよいよ困窮し、金属の供出も求められました。"
+    },
+    {
+      "id": "conscription-and-agriculture",
+      "page": 382,
+      "quote": "多くの男性が徴兵されると農村での働き手が減り、農業生産は激減した。"
+    },
+    {
+      "id": "urban-food-shortage",
+      "page": 382,
+      "quote": "都市では食料が欠乏し、小麦や芋などを米の代用食として配給するも、戦争末期にはそれも滞り、人々は工夫して空腹を満たした。"
+    },
+    {
+      "id": "war-situation-concealment",
+      "page": 382,
+      "quote": "戦況は悪化していきましたが、大本営は正しい戦況を伝えず、隠蔽しました。"
+    },
+    {
+      "id": "government-control-of-press",
+      "page": 382,
+      "quote": "報道は政府の統制下に置か"
+    },
+    {
+      "id": "controlled-reporting",
+      "page": 384,
+      "quote": "れ、国内のラジオや新聞などは大本営の発表をそのまま伝えるのみでした。国民には戦況が不利な状態に陥ったことも知らされませんでした。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "海戦と補給の悪化",
+      "reading": "かいせんとほきゅうのあっか",
+      "category": "戦争・輸送・経済",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争中の日本の",
+      "chronology": {
+        "displayPeriod": "1942～1943年の戦局の変化と戦時の補給",
+        "sortYear": 1942
+      },
+      "explanation": "ミッドウェー海戦の損失とガダルカナル島からの撤退を経て、日本の戦局は厳しくなり、米軍の反攻が進んだ。海上でも商船への攻撃が行われ、戦地への物資供給と占領地からの資源運搬が困難になった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "空母を失った海戦",
+          "prompt": "1942年6月、太平洋で日本軍が敗れ、航空母艦を失った海戦は何か。",
+          "answer": "**ミッドウェー海戦**。",
+          "evidence": [
+            "midway-time-and-loss"
+          ],
+          "keywords": [
+            "ミッドウェー海戦"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "米軍上陸後に日本軍が撤退した島",
+          "prompt": "1942年8月に米軍が上陸し、戦闘の末、1943年2月に日本軍が撤退した太平洋の島はどこか。",
+          "answer": "**ガダルカナル島**。",
+          "evidence": [
+            "midway-time-and-loss",
+            "guadalcanal-landing",
+            "guadalcanal-retreat"
+          ],
+          "keywords": [
+            "ガダルカナル島"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "商船攻撃に配備された艦種",
+          "prompt": "太平洋戦争中の海戦と補給の悪化について、米国が日本の商船を沈めるため、西太平洋に配備した艦種は何か。",
+          "answer": "**潜水艦**。",
+          "evidence": [
+            "submarines-and-merchant-ships"
+          ],
+          "keywords": [
+            "潜水艦"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "海戦の損失と米軍の反攻",
+          "prompt": "太平洋戦争中の海戦と補給の悪化について、1942年からの海戦と島での戦闘は、日本の戦局をどう変えたか。",
+          "answer": "**1942年6月**、日本は**ミッドウェー海戦**で敗れ、**航空母艦と搭載機を失う痛手**を受けた。**1942年8月**に米軍が**ガダルカナル島へ上陸**し、戦闘が続いて**1943年2月に日本軍が撤退**し、その後**米軍の本格的な反攻**が進んだ。",
+          "evidence": [
+            "midway-time-and-loss",
+            "midway-carriers-and-planes",
+            "guadalcanal-landing",
+            "guadalcanal-retreat",
+            "american-counteroffensive"
+          ],
+          "keywords": [
+            "1942年6月",
+            "ミッドウェー海戦",
+            "航空母艦と搭載機を失う痛手",
+            "1942年8月",
+            "ガダルカナル島へ上陸",
+            "1943年2月に日本軍が撤退",
+            "米軍の本格的な反攻"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "海上輸送の妨害と補給",
+          "prompt": "太平洋戦争中の海戦と補給の悪化について、海上では日本の補給にどのような支障が生じたか。",
+          "answer": "米国は**日本の商船を沈めるために潜水艦を西太平洋へ配備**した。日本は**戦地への物資供給と占領地からの資源運搬が困難**になった。",
+          "evidence": [
+            "submarines-and-merchant-ships",
+            "supply-and-resource-difficulty"
+          ],
+          "keywords": [
+            "日本の商船を沈めるために潜水艦を西太平洋へ配備",
+            "戦地への物資供給と占領地からの資源運搬が困難"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争中の日本の「海戦と補給の悪化」について説明せよ。",
+          "answer": "**1942年6月**、日本は**ミッドウェー海戦**で敗れ、**航空母艦と搭載機を失う痛手**を受けた。**1942年8月**に米軍が**ガダルカナル島へ上陸**し、戦闘が続いて**1943年2月に日本軍が撤退**し、その後**米軍の本格的な反攻**が進んだ。戦争中、米国は**日本の商船を沈めるために潜水艦を西太平洋へ配備**し、日本は**戦地への物資供給と占領地からの資源運搬が困難**になった。",
+          "evidence": [
+            "midway-time-and-loss",
+            "midway-carriers-and-planes",
+            "guadalcanal-landing",
+            "guadalcanal-retreat",
+            "american-counteroffensive",
+            "submarines-and-merchant-ships",
+            "supply-and-resource-difficulty"
+          ],
+          "keywords": [
+            "1942年6月",
+            "ミッドウェー海戦",
+            "航空母艦と搭載機を失う痛手",
+            "1942年8月",
+            "ガダルカナル島へ上陸",
+            "1943年2月に日本軍が撤退",
+            "米軍の本格的な反攻",
+            "日本の商船を沈めるために潜水艦を西太平洋へ配備",
+            "戦地への物資供給と占領地からの資源運搬が困難"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "サイパン島の陥落",
+      "reading": "さいぱんとうのかんらく",
+      "category": "戦争・本土空襲",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争中の日本の",
+      "chronology": {
+        "displayPeriod": "1944年",
+        "sortYear": 1944
+      },
+      "explanation": "サイパン島を含むマリアナ諸島の陥落は、日本本土の大半がB29の射程に入ることを意味した。島での戦闘は、日本の都市への空襲が進む状況につながった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "サイパン島が属する諸島",
+          "prompt": "太平洋戦争中のサイパン島の陥落について、サイパン島が属する太平洋の諸島は何か。",
+          "answer": "**マリアナ諸島**。",
+          "evidence": [
+            "saipan-and-mariana"
+          ],
+          "keywords": [
+            "マリアナ諸島"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本の都市を空襲した爆撃機",
+          "prompt": "太平洋戦争中のサイパン島の陥落について、日本の都市を空襲した米軍の長距離爆撃機は何か。",
+          "answer": "**B29**。",
+          "evidence": [
+            "mariana-and-bombing-range",
+            "b29-air-raids"
+          ],
+          "keywords": [
+            "B29"
+          ],
+          "note": "",
+          "acceptedAnswers": [
+            "B-29",
+            "B－29"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "サイパン島の陥落年",
+          "prompt": "太平洋戦争中のサイパン島の陥落は何年の出来事か。",
+          "answer": "1944年。",
+          "evidence": [
+            "saipan-landing-time",
+            "saipan-fall"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "米軍の上陸と陥落",
+          "prompt": "太平洋戦争中のサイパン島の陥落は、どのように起きたか。",
+          "answer": "**1944年6月**、米軍は**マリアナ諸島のサイパン島に上陸**し、**同年7月にサイパン島が陥落**した。",
+          "evidence": [
+            "saipan-landing-time",
+            "saipan-fall"
+          ],
+          "keywords": [
+            "1944年6月",
+            "マリアナ諸島のサイパン島に上陸",
+            "同年7月にサイパン島が陥落"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本本土への影響",
+          "prompt": "太平洋戦争中のサイパン島の陥落は、なぜ日本の都市にとって重大だったか。",
+          "answer": "**日本本土の大半がB29長距離爆撃機の射程に入り**、**日本の都市への空襲**が進むことになった。",
+          "evidence": [
+            "mariana-and-bombing-range",
+            "b29-air-raids"
+          ],
+          "keywords": [
+            "日本本土の大半がB29長距離爆撃機の射程に入り",
+            "日本の都市への空襲"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争中の日本の「サイパン島の陥落」について説明せよ。",
+          "answer": "**1944年6月**、米軍は**マリアナ諸島のサイパン島に上陸**し、**同年7月にサイパン島が陥落**した。**日本本土の大半がB29長距離爆撃機の射程に入り**、**日本の都市への空襲**が進むことになった。",
+          "evidence": [
+            "saipan-landing-time",
+            "saipan-fall",
+            "mariana-and-bombing-range",
+            "b29-air-raids"
+          ],
+          "keywords": [
+            "1944年6月",
+            "マリアナ諸島のサイパン島に上陸",
+            "同年7月にサイパン島が陥落",
+            "日本本土の大半がB29長距離爆撃機の射程に入り",
+            "日本の都市への空襲"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "学徒出陣と勤労動員",
+      "reading": "がくとしゅつじんときんろうどういん",
+      "category": "動員・教育・労働",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争中の日本の",
+      "chronology": {
+        "displayPeriod": "1943年の学徒出陣と戦時中の勤労動員",
+        "sortYear": 1943
+      },
+      "explanation": "大学生も徴兵の対象となる学徒出陣が行われ、兵員となる男子が増えた。軍需工場などの労働には未婚の女子が勤労挺身隊として動員され、中学生以上の生徒も動員された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "大学生への徴兵の拡大",
+          "prompt": "1943年の日本で、大学生も徴兵の対象となったことを何というか。",
+          "answer": "**学徒出陣**。",
+          "evidence": [
+            "student-draft-time",
+            "student-draft-name"
+          ],
+          "keywords": [
+            "学徒出陣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "軍需工場などに動員された女子の隊",
+          "prompt": "太平洋戦争中の日本で、未婚の女子が軍需工場などの労働に動員された際の隊を何というか。",
+          "answer": "**勤労挺身隊(きんろうていしんたい)**。",
+          "evidence": [
+            "women-labor-mobilization"
+          ],
+          "keywords": [
+            "勤労挺身隊"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "勤労動員された生徒の範囲",
+          "prompt": "太平洋戦争中の日本の学徒出陣と勤労動員について、女子の隊に加え、どの段階以上の学校の生徒も軍需工場などに動員されたか。",
+          "answer": "**中学生以上の生徒**。",
+          "evidence": [
+            "school-pupils-labor"
+          ],
+          "keywords": [
+            "中学生以上の生徒"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "学徒出陣の内容",
+          "prompt": "太平洋戦争中の日本の学徒出陣と勤労動員について、学徒出陣とはどのような動員だったか。",
+          "answer": "**1943年**の日本で、**大学生も徴兵の対象**となる**学徒出陣**が行われた。",
+          "evidence": [
+            "student-draft-time",
+            "student-draft-name"
+          ],
+          "keywords": [
+            "1943年",
+            "大学生も徴兵の対象",
+            "学徒出陣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "勤労動員の背景と対象",
+          "prompt": "太平洋戦争中の日本の学徒出陣と勤労動員について、勤労動員は、どのような状況で誰を対象に進められたか。",
+          "answer": "**多くの男子が兵隊になったため**、日本では**未婚の女子を勤労挺身隊(きんろうていしんたい)として軍需工場などに動員**した。**中学生以上の生徒も勤労動員**された。",
+          "evidence": [
+            "women-labor-mobilization",
+            "school-pupils-labor"
+          ],
+          "keywords": [
+            "多くの男子が兵隊になったため",
+            "未婚の女子を勤労挺身隊として軍需工場などに動員",
+            "中学生以上の生徒も勤労動員"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争中の日本の「学徒出陣と勤労動員」について説明せよ。",
+          "answer": "**1943年**の日本で、**大学生も徴兵の対象**となる**学徒出陣**が行われた。戦争中は**多くの男子が兵隊になったため**、**未婚の女子を勤労挺身隊(きんろうていしんたい)として軍需工場などに動員**し、**中学生以上の生徒も勤労動員**した。",
+          "evidence": [
+            "student-draft-time",
+            "student-draft-name",
+            "women-labor-mobilization",
+            "school-pupils-labor"
+          ],
+          "keywords": [
+            "1943年",
+            "大学生も徴兵の対象",
+            "学徒出陣",
+            "多くの男子が兵隊になったため",
+            "未婚の女子を勤労挺身隊として軍需工場などに動員",
+            "中学生以上の生徒も勤労動員"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "戦時生活と報道統制",
+      "reading": "せんじせいかつとほうどうとうせい",
+      "category": "社会・生活・情報",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "太平洋戦争中の日本の",
+      "chronology": {
+        "displayPeriod": "1940年代の太平洋戦争中",
+        "sortYear": 1943
+      },
+      "explanation": "徴兵による農村の働き手の減少と農業生産の低下、都市の食料不足や金属の供出など、戦争は生活にも負担を及ぼした。政府の報道統制の下、ラジオや新聞は大本営の発表を伝え、不利な戦況は国民に知らされなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "農村の働き手が減った原因",
+          "prompt": "太平洋戦争中の日本の戦時生活と報道統制について、農村の働き手が減少した直接の原因は何か。",
+          "answer": "**多くの男性が徴兵されたこと**。",
+          "evidence": [
+            "conscription-and-agriculture"
+          ],
+          "keywords": [
+            "多くの男性が徴兵されたこと"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "国民に供出が求められた素材",
+          "prompt": "太平洋戦争中の日本の戦時生活と報道統制について、戦争が長引くなか、国民に供出が求められた素材は何か。",
+          "answer": "**金属**。",
+          "evidence": [
+            "metal-contributions"
+          ],
+          "keywords": [
+            "金属"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "ラジオや新聞が伝えた発表の機関",
+          "prompt": "太平洋戦争中の日本の戦時生活と報道統制について、国内のラジオや新聞は、どの機関の発表をそのまま伝えていたか。",
+          "answer": "**大本営(だいほんえい)**。",
+          "evidence": [
+            "controlled-reporting"
+          ],
+          "keywords": [
+            "大本営"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "徴兵と物資不足による生活の変化",
+          "prompt": "太平洋戦争中の日本の戦時生活と報道統制について、徴兵や物資不足は生活をどう変えたか。",
+          "answer": "**1940年代**の日本では、**多くの男性が徴兵**されて**農村の働き手が減少**し、**農業生産が減少**した。都市では**食料不足**が起き、米の代用食として**小麦や芋などを配給**したが、**戦争末期には配給も滞った**。また、国民には**金属の供出**も求められた。",
+          "evidence": [
+            "student-draft-time",
+            "conscription-and-agriculture",
+            "urban-food-shortage",
+            "metal-contributions"
+          ],
+          "keywords": [
+            "1940年代",
+            "多くの男性が徴兵",
+            "農村の働き手が減少",
+            "農業生産が減少",
+            "食料不足",
+            "小麦や芋などを配給",
+            "戦争末期には配給も滞った",
+            "金属の供出"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "戦況と報道の関係",
+          "prompt": "太平洋戦争中の日本の戦時生活と報道統制について、戦況と国民への報道はどのような関係にあったか。",
+          "answer": "戦況が悪化するなか、**大本営(だいほんえい)は正しい戦況を隠蔽(いんぺい)**した。**政府による報道統制**の下、国内のラジオや新聞は**大本営の発表をそのまま伝え**、**不利な戦況が国民に伝えられなかった**。",
+          "evidence": [
+            "war-situation-concealment",
+            "government-control-of-press",
+            "controlled-reporting"
+          ],
+          "keywords": [
+            "大本営は正しい戦況を隠蔽",
+            "政府による報道統制",
+            "大本営の発表をそのまま伝え",
+            "不利な戦況が国民に伝えられなかった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "太平洋戦争中の日本の「戦時生活と報道統制」について説明せよ。",
+          "answer": "**1940年代**の日本では、**多くの男性が徴兵**されて**農村の働き手が減少**し、**農業生産が減少**し、都市では**食料不足**が起きた。米の代用食として**小麦や芋などを配給**したが、**戦争末期には配給も滞った**うえ、国民には**金属の供出**も求められた。**大本営(だいほんえい)は正しい戦況を隠蔽(いんぺい)**し、**政府による報道統制**の下、ラジオや新聞は**大本営の発表をそのまま伝え**、**不利な戦況が国民に伝えられなかった**。",
+          "evidence": [
+            "student-draft-time",
+            "conscription-and-agriculture",
+            "urban-food-shortage",
+            "metal-contributions",
+            "war-situation-concealment",
+            "government-control-of-press",
+            "controlled-reporting"
+          ],
+          "keywords": [
+            "1940年代",
+            "多くの男性が徴兵",
+            "農村の働き手が減少",
+            "農業生産が減少",
+            "食料不足",
+            "小麦や芋などを配給",
+            "戦争末期には配給も滞った",
+            "金属の供出",
+            "大本営は正しい戦況を隠蔽",
+            "政府による報道統制",
+            "大本営の発表をそのまま伝え",
+            "不利な戦況が国民に伝えられなかった"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

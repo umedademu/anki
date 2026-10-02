@@ -1,0 +1,690 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 9,
+    "title": "真珠湾攻撃で対米戦争が始まる"
+  },
+  "integrationPromptPrefix": "昭和期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_09_真珠湾攻撃で対米戦争が始まる_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      373,
+      374,
+      375,
+      376,
+      377,
+      378,
+      379
+    ],
+    "note": "373頁リ見出しから378頁ヌ見出し直前までの本文、人物図版、376・377頁のハル・ノートとスチムソン日記の史料、注⑮を通読した。実際の真珠湾攻撃の本文が次小項目にあるため、関連箇所として378頁ヌ冒頭の攻撃と戦争拡大の最初の段落、および379頁の攻撃写真説明だけを原文引用と抜粋へ追加した。次小項目に属する戦闘技術・戦果の評価、通知の法的評価以後はこの小項目の作問根拠にしない。1941年は373頁冒頭の昭和十六年（一九四一）と378頁の同表記を用い、376頁の同年11月26日という史料日付、375頁の12月1日の正式決定を同じ経過内で照合した。写真説明の12月7日と本文の現地時間表記を使い、日本時間12月8日への資料外の換算、攻撃開始の時刻の補足はしない。同章年表から別の出来事や年代を補っていない。白紙還元・内閣交代・開戦決定の経過をまとめ、木戸や甲案・乙案、MAGIC報告、暗号の名称を薄い独立項目にしない。天皇の発言が憲法上許されないという法的断定、天皇や首相の和平努力への称賛、米国が受諾できない要求を故意に出した、攻撃を事前に知りながら放置したという断定、開戦が必然だったという評価は正答にしない。ハル・ノートは提示された要求・措置と東條内閣の判断を扱い、最後通牒とする法的評価や戦争・侵略の正当化はしない。兵力・被害人数・撃沈数、御製・暗号・戦艦名などの細部は出題しない。"
+  },
+  "facts": [
+    {
+      "id": "decision-era",
+      "page": 373,
+      "quote": "昭和十六年（一九四一）九月六日、"
+    },
+    {
+      "id": "september-policy",
+      "page": 373,
+      "quote": "陸海軍が対米戦争の準備に入ること、十月上旬までに日米交渉が妥結しない場合は開戦することが示されていました。"
+    },
+    {
+      "id": "tojo-premier",
+      "page": 374,
+      "quote": "東條が内閣総理大臣に就任しました。"
+    },
+    {
+      "id": "konoe-disagreement",
+      "page": 374,
+      "quote": "即時開戦を主張して総理との意見の対立が解消できなくなり、近衛内閣は総辞職になりました。"
+    },
+    {
+      "id": "tojo-war-position",
+      "page": 374,
+      "quote": "当時、陸軍大臣だった**東條英機**は一人、即時開戦を主張して"
+    },
+    {
+      "id": "white-reset",
+      "page": 374,
+      "quote": "昭和天皇は、東條を首相に任命するにあたり、九月六日の御前会議の決定を白紙に戻すように命ぜられました。"
+    },
+    {
+      "id": "white-name",
+      "page": 374,
+      "quote": "この勅命は後に「**白紙還元の御諚**」と呼ばれます。"
+    },
+    {
+      "id": "policy-reconsideration",
+      "page": 374,
+      "quote": "これを受けて東條は大本営政府連絡会議を開いて再検討し、"
+    },
+    {
+      "id": "talks-abandonment",
+      "page": 375,
+      "quote": "東條内閣は交渉を断念し、開戦を決定します。"
+    },
+    {
+      "id": "departure-location",
+      "page": 375,
+      "quote": "日本海軍の機動部隊は、日本を出発してハワイの**真珠湾**に向けて出撃していました。"
+    },
+    {
+      "id": "attack-cancel-condition",
+      "page": 375,
+      "quote": "日米交渉が合意に達した場合は、攻撃中止を命じる暗号が打電される予定でした。"
+    },
+    {
+      "id": "december-decision",
+      "page": 375,
+      "quote": "十二月一日に御前会議が開かれ、ついに対米戦争の開戦が正式に決定しました。"
+    },
+    {
+      "id": "hull-name",
+      "page": 375,
+      "quote": "十一月二十六日、アメリカから**ハル・ノート**を突きつけられました。"
+    },
+    {
+      "id": "hull-document-date",
+      "page": 376,
+      "quote": "（昭和十六年十一月二十六日、部分要約）"
+    },
+    {
+      "id": "hull-withdrawal",
+      "page": 376,
+      "quote": "日本国政府は支那および仏印より一切の陸海空軍兵力および警察力を撤収する。"
+    },
+    {
+      "id": "hull-chinese-government",
+      "page": 376,
+      "quote": "米国政府および日本国政府は臨時に首都を重慶に置く中華民国国民政府以外の支那におけるいかなる政府もしくは政権をも軍事的、経済的に支持しない"
+    },
+    {
+      "id": "hull-chinese-recognition",
+      "page": 375,
+      "quote": "蒋介石政権を承認すること、"
+    },
+    {
+      "id": "hull-alliance",
+      "page": 375,
+      "quote": "日独伊三国同盟を実質的に廃棄することなどが記されていました。"
+    },
+    {
+      "id": "hull-funds",
+      "page": 376,
+      "quote": "米国政府および日本国政府はそれぞれ米国にある日本資金および日本国にある米国資金に対する凍結措置を撤廃する。"
+    },
+    {
+      "id": "hull-government-response",
+      "page": 375,
+      "quote": "ハル・ノートが提示されると、これまで開戦に消極的だった人の考えまで変えてしまいました。東條内閣は交渉を断念し、開戦を決定します。"
+    },
+    {
+      "id": "attack-name",
+      "page": 378,
+      "quote": "この**真珠湾攻撃**により、"
+    },
+    {
+      "id": "attack-subject",
+      "page": 378,
+      "quote": "日本海軍の機動部隊は"
+    },
+    {
+      "id": "attack-caption",
+      "page": 379,
+      "quote": "真珠湾攻撃：日本軍機から魚雷攻撃を受けるアメリカ軍艦"
+    },
+    {
+      "id": "attack-year",
+      "page": 378,
+      "quote": "昭和十六年（一九四一）十二月七日"
+    },
+    {
+      "id": "attack-local-time",
+      "page": 378,
+      "quote": "十二月七日午前六時（現地時間）"
+    },
+    {
+      "id": "attack-caption-date",
+      "page": 379,
+      "quote": "真珠湾攻撃：日本軍機から魚雷攻撃を受けるアメリカ軍艦（昭和16年12月7日）"
+    },
+    {
+      "id": "pacific-start",
+      "page": 378,
+      "quote": "この**真珠湾攻撃**により、**太平洋戦争**が始まり、"
+    },
+    {
+      "id": "war-expansion",
+      "page": 378,
+      "quote": "⑮**枢軸国と連合国**による第二次世界大戦は、ヨーロッパからアジアと太平洋にまで拡大しました。"
+    },
+    {
+      "id": "axis-group",
+      "page": 378,
+      "quote": "日本を含む日独伊三国同盟を中心とする枢軸国"
+    },
+    {
+      "id": "allies-group",
+      "page": 378,
+      "quote": "それに対抗する米国、英国、ソ連を中心とする連合国"
+    },
+    {
+      "id": "group-structure",
+      "page": 378,
+      "quote": "日米の参戦により、日本を含む日独伊三国同盟を中心とする枢軸国と、それに対抗する米国、英国、ソ連を中心とする連合国の構図が固まり、"
+    },
+    {
+      "id": "tojo-full-name",
+      "page": 374,
+      "quote": "当時、陸軍大臣だった**東條英機**"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "日米交渉と開戦決定",
+      "reading": "にちべいこうしょうとかいせんけってい",
+      "category": "交渉と政府の決定",
+      "chronology": {
+        "displayPeriod": "1941年9～12月",
+        "sortYear": 1941
+      },
+      "explanation": "日本は対米戦争の準備と外交交渉を並行させた。近衛(このえ)内閣の総辞職後、東條(とうじょう)内閣はそれまでの決定を白紙に戻して再検討したが、最終的には交渉を断念し、御前会議で対米開戦を正式に決めた。出撃済みの海軍部隊も、交渉が合意すれば攻撃中止を命じられる予定だった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "人物の特定",
+          "prompt": "1941年の日本で、近衛(このえ)内閣の総辞職後に内閣総理大臣へ就任した人物は誰か。",
+          "answer": "**東條英機(とうじょうひでき)**。",
+          "keywords": [
+            "東條英機"
+          ],
+          "evidence": [
+            "tojo-premier",
+            "decision-era",
+            "tojo-full-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1941年の日本で、昭和天皇が新首相の東條英機(とうじょうひでき)に、9月6日の御前会議の決定を白紙に戻すよう命じた勅命は何と呼ばれるか。",
+          "answer": "**白紙還元の御諚(はくしかんげんのごじょう)**。",
+          "keywords": [
+            "白紙還元の御諚"
+          ],
+          "evidence": [
+            "white-reset",
+            "white-name",
+            "decision-era"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "交渉と準備の関係",
+          "prompt": "1941年の日本の日米交渉と開戦決定について、9月6日の御前会議で示された方針は、どのような交渉の状況なら開戦するとしたものか。",
+          "answer": "**10月上旬までに日米交渉が妥結しない場合**。",
+          "keywords": [
+            "10月上旬までに日米交渉が妥結しない場合"
+          ],
+          "evidence": [
+            "decision-era",
+            "september-policy"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "正式決定の時期",
+          "prompt": "昭和期の日本の日米交渉と開戦決定について、御前会議で対米開戦が正式に決定された日はいつか。",
+          "answer": "**1941年12月1日**。",
+          "keywords": [
+            "1941年12月1日"
+          ],
+          "evidence": [
+            "decision-era",
+            "december-decision"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "交渉合意時の予定",
+          "prompt": "1941年の日本の日米交渉と開戦決定について、出撃済みの海軍部隊には、交渉が合意に達した場合にどのような指示を出す予定だったか。",
+          "answer": "**攻撃中止**を命じる予定だった。",
+          "keywords": [
+            "攻撃中止"
+          ],
+          "evidence": [
+            "attack-cancel-condition",
+            "decision-era"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内閣交代と再検討",
+          "prompt": "昭和期の日本では、対米開戦をめぐり近衛(このえ)内閣から東條(とうじょう)内閣へどのように移ったか。",
+          "answer": "**1941年**、対米開戦をめぐる意見対立から**近衛(このえ)内閣が総辞職**し、**東條英機(とうじょうひでき)が首相**となった。東條は**白紙還元の御諚(はくしかんげんのごじょう)**を受け、**9月6日の御前会議決定を白紙に戻して再検討**した。",
+          "keywords": [
+            "1941年",
+            "近衛内閣が総辞職",
+            "東條英機が首相",
+            "白紙還元の御諚",
+            "9月6日の御前会議決定を白紙に戻して再検討"
+          ],
+          "evidence": [
+            "decision-era",
+            "konoe-disagreement",
+            "tojo-war-position",
+            "tojo-premier",
+            "white-reset",
+            "white-name",
+            "policy-reconsideration"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "最終決定の説明",
+          "prompt": "昭和期の日本政府は、日米交渉の継続から最終的な対米開戦の決定へどう進んだか。",
+          "answer": "**1941年**、日本は**対米戦争の準備と外交交渉を並行**させ、出撃済みの海軍部隊についても**交渉合意なら攻撃を中止**させる予定を持っていた。しかし、東條(とうじょう)内閣は**日米交渉を断念**し、**12月1日の御前会議で対米開戦を正式決定**した。",
+          "keywords": [
+            "1941年",
+            "対米戦争の準備と外交交渉を並行",
+            "交渉合意なら攻撃を中止",
+            "日米交渉を断念",
+            "12月1日の御前会議で対米開戦を正式決定"
+          ],
+          "evidence": [
+            "decision-era",
+            "attack-cancel-condition",
+            "talks-abandonment",
+            "december-decision",
+            "september-policy"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「日米交渉と開戦決定」について説明せよ。",
+          "answer": "**1941年**、日本は**対米戦争の準備と外交交渉を並行**させ、**近衛(このえ)内閣が総辞職**した後、**東條英機(とうじょうひでき)が首相**となった。東條は**白紙還元の御諚(はくしかんげんのごじょう)**を受け、**9月6日の御前会議決定を白紙に戻して再検討**した。その後、東條内閣は**日米交渉を断念**し、**12月1日の御前会議で対米開戦を正式決定**した。",
+          "keywords": [
+            "1941年",
+            "対米戦争の準備と外交交渉を並行",
+            "近衛内閣が総辞職",
+            "東條英機が首相",
+            "白紙還元の御諚",
+            "9月6日の御前会議決定を白紙に戻して再検討",
+            "日米交渉を断念",
+            "12月1日の御前会議で対米開戦を正式決定"
+          ],
+          "evidence": [
+            "decision-era",
+            "konoe-disagreement",
+            "tojo-war-position",
+            "tojo-premier",
+            "white-reset",
+            "white-name",
+            "policy-reconsideration",
+            "talks-abandonment",
+            "december-decision",
+            "september-policy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ハル・ノート",
+      "reading": "はるのーと",
+      "category": "米国の提案と日本の対応",
+      "chronology": {
+        "displayPeriod": "1941年11月26日",
+        "sortYear": 1941
+      },
+      "explanation": "米国のハル・ノートには、日本軍の中国・仏印(ふついん)からの撤退、中国で支持する政府、同盟の扱い、日米双方の資金凍結解除などが示された。日本の東條(とうじょう)内閣は提示後に交渉を断念し、開戦を決定した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1941年11月26日、日米交渉で米国が日本に提示した外交文書は何か。",
+          "answer": "**ハル・ノート**。",
+          "keywords": [
+            "ハル・ノート"
+          ],
+          "evidence": [
+            "hull-name",
+            "hull-document-date",
+            "decision-era"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "撤退要求の確認",
+          "prompt": "1941年のハル・ノートでは、日本軍のどの地域からの全面撤退を求めたか。",
+          "answer": "**中国と仏印(ふついん)**。",
+          "keywords": [
+            "中国と仏印"
+          ],
+          "evidence": [
+            "hull-withdrawal"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "中国政府への対応",
+          "prompt": "1941年のハル・ノートでは、中国でどの政府以外の政権を支持しないとしたか。",
+          "answer": "**重慶(じゅうけい)に首都を置く中華民国国民政府**。",
+          "keywords": [
+            "重慶に首都を置く中華民国国民政府"
+          ],
+          "evidence": [
+            "hull-chinese-government",
+            "hull-chinese-recognition"
+          ],
+          "acceptedAnswers": [
+            "蒋介石政権"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "経済面の措置",
+          "prompt": "1941年のハル・ノートでは、日米双方が相互の資金に対して行っていた凍結措置をどうすることが示されたか。",
+          "answer": "日米双方が**相互の資金凍結措置を撤廃**すること。",
+          "keywords": [
+            "相互の資金凍結措置を撤廃"
+          ],
+          "evidence": [
+            "hull-funds"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "同盟への要求",
+          "prompt": "1941年のハル・ノートには、日本の日独伊三国同盟に対してどのような要求が示されたか。",
+          "answer": "**日独伊三国同盟を実質的に廃棄**すること。",
+          "keywords": [
+            "日独伊三国同盟を実質的に廃棄"
+          ],
+          "evidence": [
+            "hull-alliance"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "文書内容の説明",
+          "prompt": "1941年のハル・ノートは、日本にどのような軍事・外交上の対応を求めたものか。",
+          "answer": "**1941年11月26日**に**米国が日本へ提示**した**ハル・ノート**は、**中国と仏印(ふついん)からの日本軍全面撤退**、**蒋介石(しょうかいせき)政権の承認**、**日独伊三国同盟の実質廃棄**などを求めた。また、**日米双方の資金凍結措置の撤廃**も示された。",
+          "keywords": [
+            "1941年11月26日",
+            "米国が日本へ提示",
+            "ハル・ノート",
+            "中国と仏印からの日本軍全面撤退",
+            "蒋介石政権の承認",
+            "日独伊三国同盟の実質廃棄",
+            "日米双方の資金凍結措置の撤廃"
+          ],
+          "evidence": [
+            "decision-era",
+            "hull-name",
+            "hull-document-date",
+            "hull-withdrawal",
+            "hull-chinese-recognition",
+            "hull-chinese-government",
+            "hull-alliance",
+            "hull-funds"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本政府の対応",
+          "prompt": "1941年、ハル・ノートの提示を受けた日本政府は、日米交渉についてどのような判断をしたか。",
+          "answer": "**東條(とうじょう)内閣**は、**日米交渉を断念し、開戦を決定**した。",
+          "keywords": [
+            "東條内閣",
+            "日米交渉を断念し、開戦を決定"
+          ],
+          "evidence": [
+            "hull-government-response"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「ハル・ノート」について説明せよ。",
+          "answer": "**1941年11月26日**、**米国が日本へ提示**した**ハル・ノート**は、**中国と仏印(ふついん)からの日本軍全面撤退**、**蒋介石(しょうかいせき)政権の承認**、**日独伊三国同盟の実質廃棄**などを求めた。**日米双方の資金凍結措置の撤廃**も示された。提示後、**東條(とうじょう)内閣**は**日米交渉を断念し、開戦を決定**した。",
+          "keywords": [
+            "1941年11月26日",
+            "米国が日本へ提示",
+            "ハル・ノート",
+            "中国と仏印からの日本軍全面撤退",
+            "蒋介石政権の承認",
+            "日独伊三国同盟の実質廃棄",
+            "日米双方の資金凍結措置の撤廃",
+            "東條内閣",
+            "日米交渉を断念し、開戦を決定"
+          ],
+          "evidence": [
+            "decision-era",
+            "hull-name",
+            "hull-document-date",
+            "hull-withdrawal",
+            "hull-chinese-recognition",
+            "hull-chinese-government",
+            "hull-alliance",
+            "hull-funds",
+            "hull-government-response"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "真珠湾攻撃と太平洋戦争",
+      "reading": "しんじゅわんこうげきとたいへいようせんそう",
+      "category": "開戦と戦争の拡大",
+      "chronology": {
+        "displayPeriod": "1941年12月7日（現地時間）",
+        "sortYear": 1941
+      },
+      "explanation": "日本海軍によるハワイの真珠湾(しんじゅわん)への攻撃で太平洋戦争が始まった。第二次世界大戦の戦域は欧州からアジアと太平洋へ拡大し、日独伊を中心とする枢軸国(すうじくこく)と、米英ソを中心とする連合国の対立構図が固まった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期、日本海軍が米軍を攻撃し、日本の対米戦争の始まりとなった攻撃は何か。",
+          "answer": "**真珠湾攻撃(しんじゅわんこうげき)**。",
+          "keywords": [
+            "真珠湾攻撃"
+          ],
+          "evidence": [
+            "attack-name",
+            "attack-subject",
+            "attack-caption"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期、日本の真珠湾攻撃(しんじゅわんこうげき)によって始まった戦争は何か。",
+          "answer": "**太平洋戦争**。",
+          "keywords": [
+            "太平洋戦争"
+          ],
+          "evidence": [
+            "pacific-start"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "攻撃地点の確認",
+          "prompt": "昭和期の日本の真珠湾攻撃と太平洋戦争について、日本海軍が攻撃した真珠湾(しんじゅわん)はどの地域にあるか。",
+          "answer": "**ハワイ**。",
+          "keywords": [
+            "ハワイ"
+          ],
+          "evidence": [
+            "departure-location"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "攻撃日の確認",
+          "prompt": "昭和期の日本の真珠湾攻撃と太平洋戦争について、真珠湾攻撃(しんじゅわんこうげき)の日付を現地時間で答えよ。",
+          "answer": "**1941年12月7日**。",
+          "keywords": [
+            "1941年12月7日"
+          ],
+          "evidence": [
+            "attack-year",
+            "attack-local-time",
+            "attack-caption-date"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "陣営の名称",
+          "prompt": "第二次世界大戦で、日本・ドイツ・イタリアを中心とする陣営は何と呼ばれたか。",
+          "answer": "**枢軸国(すうじくこく)**。",
+          "keywords": [
+            "枢軸国"
+          ],
+          "evidence": [
+            "axis-group"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "陣営の名称",
+          "prompt": "第二次世界大戦で、米国・英国・ソ連を中心とする陣営は何と呼ばれたか。",
+          "answer": "**連合国**。",
+          "keywords": [
+            "連合国"
+          ],
+          "evidence": [
+            "allies-group"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "開戦と戦域の説明",
+          "prompt": "昭和期の日本の真珠湾攻撃は、第二次世界大戦の広がりにどうつながったか。",
+          "answer": "**1941年12月7日**（現地時間）、**日本海軍**は**ハワイの真珠湾(しんじゅわん)**を攻撃し、**太平洋戦争**が始まった。第二次世界大戦の戦域は**ヨーロッパからアジアと太平洋へ拡大**した。",
+          "keywords": [
+            "1941年12月7日",
+            "日本海軍",
+            "ハワイの真珠湾",
+            "太平洋戦争",
+            "ヨーロッパからアジアと太平洋へ拡大"
+          ],
+          "evidence": [
+            "attack-year",
+            "attack-local-time",
+            "attack-caption-date",
+            "attack-subject",
+            "departure-location",
+            "pacific-start",
+            "war-expansion"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "対立する陣営の説明",
+          "prompt": "太平洋戦争が始まり日米が参戦すると、第二次世界大戦の陣営はどのような構図になったか。",
+          "answer": "**日本・ドイツ・イタリアを中心とする枢軸国(すうじくこく)**と、**米国・英国・ソ連を中心とする連合国**の対立構図が固まった。",
+          "keywords": [
+            "日本・ドイツ・イタリアを中心とする枢軸国",
+            "米国・英国・ソ連を中心とする連合国"
+          ],
+          "evidence": [
+            "group-structure"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「真珠湾攻撃と太平洋戦争」について説明せよ。",
+          "answer": "**1941年12月7日**（現地時間）、**日本海軍**は**ハワイの真珠湾(しんじゅわん)**を攻撃し、**太平洋戦争**が始まった。第二次世界大戦の戦域は**ヨーロッパからアジアと太平洋へ拡大**した。**日本・ドイツ・イタリアを中心とする枢軸国(すうじくこく)**と、**米国・英国・ソ連を中心とする連合国**の対立構図が固まった。",
+          "keywords": [
+            "1941年12月7日",
+            "日本海軍",
+            "ハワイの真珠湾",
+            "太平洋戦争",
+            "ヨーロッパからアジアと太平洋へ拡大",
+            "日本・ドイツ・イタリアを中心とする枢軸国",
+            "米国・英国・ソ連を中心とする連合国"
+          ],
+          "evidence": [
+            "attack-year",
+            "attack-local-time",
+            "attack-caption-date",
+            "attack-subject",
+            "departure-location",
+            "pacific-start",
+            "war-expansion",
+            "group-structure"
+          ]
+        }
+      ]
+    }
+  ]
+}

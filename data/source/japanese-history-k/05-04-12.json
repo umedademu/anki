@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 12,
+    "title": "都市空爆と本土陸上戦"
+  },
+  "integrationPromptPrefix": "第二次世界大戦末期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_12_都市空爆と本土陸上戦_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      384,
+      385,
+      386,
+      387,
+      388
+    ],
+    "note": "384頁ヲ見出しから388頁末までを本文の続きも含めて通読し、385頁写真、386～387頁の台湾・朝鮮の参政権と戦争の勝算のコラム、388頁写真および注⑰⑱⑲も読んだ。389頁冒頭の注㉑は次項目の終戦外交に関するためこの抜粋から除いた。本文の昭和十九年（一九四四）・昭和二十年（一九四五）と注⑲の1945年4月を時期根拠にし、東條内閣退陣、学童疎開、沖縄戦の時期を区別する。硫黄島陥落は護衛機の離発着拠点の獲得として扱い、東京大空襲の前提や都市空爆の唯一の原因としない。東京大空襲の人数・家屋数・被災割合、硫黄島・沖縄の戦死者数や学生の人数、戦艦大和や特攻の兵器名・性能・人数・賛美、民間人を巻き込む本土地上戦は沖縄だけという断定、人類史上最大規模との評価、戦争の勝算や民族的優劣、台湾・朝鮮の選挙制度の価値評価は正答にしない。沖縄の6月23日は組織的戦闘の終結であり、全戦闘の終了としない。 沖縄の学徒動員は1945年の戦時として示し、動員そのものの開始月を特定しない。沖縄戦は6月23日の組織的戦闘の終結後も戦闘が続いた点を問うが、7月2日の米軍の作戦終了宣言の日付を追加暗記させない。"
+  },
+  "facts": [
+    {
+      "id": "tokyo-name",
+      "page": 387,
+      "quote": "**東京大空襲**です。"
+    },
+    {
+      "id": "tokyo-date",
+      "page": 387,
+      "quote": "そして三月十日未明、"
+    },
+    {
+      "id": "battle-year",
+      "page": 384,
+      "quote": "昭和二十年（一九四五）三月には"
+    },
+    {
+      "id": "tojo-name",
+      "page": 384,
+      "quote": "東條内閣が総辞職になりました。"
+    },
+    {
+      "id": "tojo-cause",
+      "page": 384,
+      "quote": "絶対国防圏を突破されたことの責任を取り、"
+    },
+    {
+      "id": "tojo-time",
+      "page": 384,
+      "quote": "昭和十九年（一九四四）七月、東條内閣が総辞職になりました。"
+    },
+    {
+      "id": "city-raids",
+      "page": 384,
+      "quote": "マリアナ諸島がアメリカ軍（米軍）に占領されると、米軍による本土の都市空爆が開始されました⑰。"
+    },
+    {
+      "id": "tokyo-bombs",
+      "page": 387,
+      "quote": "焼夷弾を満載した"
+    },
+    {
+      "id": "tokyo-target",
+      "page": 387,
+      "quote": "B29爆撃機が東京の空を埋め尽くし、無差別爆撃を実行しました。"
+    },
+    {
+      "id": "houses-burned",
+      "page": 387,
+      "quote": "家屋が焼失し、"
+    },
+    {
+      "id": "raid-scope",
+      "page": 388,
+      "quote": "B29による爆撃は大都市だけでなく、日本全土に及び、"
+    },
+    {
+      "id": "evacuation-name",
+      "page": 384,
+      "quote": "（学童疎開・集団疎開）。"
+    },
+    {
+      "id": "evacuation-destination",
+      "page": 384,
+      "quote": "個人的、集団的に地方や農村に疎開させた"
+    },
+    {
+      "id": "evacuation-year",
+      "page": 384,
+      "quote": "大戦末期の昭和19年（1944）から、"
+    },
+    {
+      "id": "evacuation-cause",
+      "page": 384,
+      "quote": "米軍の空襲を避けるため、"
+    },
+    {
+      "id": "evacuation-target",
+      "page": 384,
+      "quote": "都会の国民学校（昭和16年以降、小学校を「国民学校」と称した）の児童を、"
+    },
+    {
+      "id": "student-unit",
+      "page": 388,
+      "quote": "学徒隊に編入され、"
+    },
+    {
+      "id": "student-ages",
+      "page": 388,
+      "quote": "沖縄攻防戦では、中学生から高校生の男女"
+    },
+    {
+      "id": "okinawa-year",
+      "page": 388,
+      "quote": "昭和20年（1945）4月からの沖縄攻防戦では、"
+    },
+    {
+      "id": "iwo-fall",
+      "page": 387,
+      "quote": "に硫黄島が陥落します。"
+    },
+    {
+      "id": "iwo-airfield",
+      "page": 387,
+      "quote": "硫黄島を手に入れたアメリカは、そのB29を護衛する飛行機を離発着させられるようになり、"
+    },
+    {
+      "id": "okinawa-landing",
+      "page": 388,
+      "quote": "四月一日には米軍が沖縄本島への上陸を開始しました。"
+    },
+    {
+      "id": "okinawa-organized-end",
+      "page": 388,
+      "quote": "日本軍の組織的戦闘が終結したのが6月23日で、"
+    },
+    {
+      "id": "okinawa-fighting-continued",
+      "page": 388,
+      "quote": "実際の戦闘はその後も続き、米軍が作戦の終了を宣言したのは7月2日のことである。"
+    },
+    {
+      "id": "okinawa-civilians",
+      "page": 388,
+      "quote": "逃げ場を失って自決した民間人もいました。"
+    },
+    {
+      "id": "iwo-mainland",
+      "page": 387,
+      "quote": "硫黄島は離島であるものの日本本土であり、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "本土空襲",
+      "reading": "ほんどくうしゅう",
+      "category": "国内の被害と戦局",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1944～1945年",
+        "sortYear": 1944
+      },
+      "explanation": "米軍による本土の都市空爆が進む一方、絶対国防圏の突破を受けて東條内閣が総辞職した。東京大空襲では焼夷弾によって家屋が焼失し、空襲は大都市に限らず日本全土に及んだ。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1945年3月10日未明、米軍によって日本の首都に行われた大規模な都市空襲は何か。",
+          "answer": "**東京大空襲**。",
+          "keywords": [
+            "東京大空襲"
+          ],
+          "evidence": [
+            "tokyo-name",
+            "tokyo-date",
+            "battle-year",
+            "tokyo-target"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1944年7月、第二次世界大戦末期の日本で総辞職した内閣は何か。",
+          "answer": "**東條内閣(とうじょうないかく)**。",
+          "keywords": [
+            "東條内閣"
+          ],
+          "evidence": [
+            "tojo-name",
+            "tojo-time"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "背景の確認",
+          "prompt": "第二次世界大戦末期の日本の本土空襲をめぐる戦局で、東條内閣(とうじょうないかく)が総辞職した原因は何か。",
+          "answer": "**絶対国防圏を突破されたこと**。",
+          "keywords": [
+            "絶対国防圏を突破されたこと"
+          ],
+          "evidence": [
+            "tojo-cause"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "1945年の日本の本土空襲について、東京大空襲で米軍が投下した、火災を起こす爆弾は何か。",
+          "answer": "**焼夷弾(しょういだん)**。",
+          "keywords": [
+            "焼夷弾"
+          ],
+          "evidence": [
+            "tokyo-bombs"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の本土空襲で、米軍の爆撃を受けた日本国内の範囲はどこまで広がったか。",
+          "answer": "**大都市だけでなく日本全土**。",
+          "keywords": [
+            "大都市だけでなく日本全土"
+          ],
+          "evidence": [
+            "raid-scope"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本で、本土空襲と東條内閣(とうじょうないかく)の退陣は、どのような戦局の変化の中で起きたか。",
+          "answer": "米軍がマリアナ諸島を占領すると日本本土の都市空爆が始まり、**絶対国防圏の突破**の責任を取って、1944年7月に**東條内閣(とうじょうないかく)**が総辞職した。",
+          "keywords": [
+            "絶対国防圏の突破",
+            "東條内閣"
+          ],
+          "evidence": [
+            "city-raids",
+            "tojo-cause",
+            "tojo-time"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の本土空襲について、東京大空襲と国内の空襲被害はどのようなものだったか。",
+          "answer": "1945年3月10日未明の**東京大空襲**で、米軍は**焼夷弾(しょういだん)**を投下し、家屋が焼失した。米軍の爆撃は**大都市だけでなく日本全土**に及んだ。",
+          "keywords": [
+            "東京大空襲",
+            "焼夷弾",
+            "大都市だけでなく日本全土"
+          ],
+          "evidence": [
+            "battle-year",
+            "tokyo-date",
+            "tokyo-name",
+            "tokyo-bombs",
+            "tokyo-target",
+            "houses-burned",
+            "raid-scope"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の日本の「本土空襲」について説明せよ。",
+          "answer": "日本では米軍による本土の都市空爆が進み、**絶対国防圏の突破**の責任を取って1944年7月に**東條内閣(とうじょうないかく)**が総辞職した。1945年3月10日未明の**東京大空襲**では**焼夷弾(しょういだん)**によって家屋が焼失し、爆撃は**大都市だけでなく日本全土**に及んだ。",
+          "keywords": [
+            "絶対国防圏の突破",
+            "東條内閣",
+            "東京大空襲",
+            "焼夷弾",
+            "大都市だけでなく日本全土"
+          ],
+          "evidence": [
+            "city-raids",
+            "tojo-cause",
+            "tojo-time",
+            "battle-year",
+            "tokyo-date",
+            "tokyo-name",
+            "tokyo-bombs",
+            "tokyo-target",
+            "houses-burned",
+            "raid-scope"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "学童疎開と沖縄の学徒動員",
+      "reading": "がくどうそかいとおきなわのがくとどういん",
+      "category": "児童と生徒への影響",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1944～1945年",
+        "sortYear": 1944
+      },
+      "explanation": "学童疎開は空襲を避けるため、都会の国民学校の児童を地方や農村へ移すことだった。一方、沖縄戦では中学生から高校生の男女が学徒隊に編入された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦末期の日本で、都会の国民学校の児童を空襲の危険から遠ざけるために行った移動を何というか。",
+          "answer": "**学童疎開(がくどうそかい)**。",
+          "keywords": [
+            "学童疎開"
+          ],
+          "evidence": [
+            "evacuation-name",
+            "evacuation-cause",
+            "evacuation-target"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の学童疎開と沖縄の学徒動員について、学童疎開(がくどうそかい)で都会の児童はどこへ移ったか。",
+          "answer": "**地方や農村**。",
+          "keywords": [
+            "地方や農村"
+          ],
+          "evidence": [
+            "evacuation-destination"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1945年の沖縄戦で、中学生から高校生の男女が編入された隊を何というか。",
+          "answer": "**学徒隊(がくとたい)**。",
+          "keywords": [
+            "学徒隊"
+          ],
+          "evidence": [
+            "student-unit"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "第二次世界大戦末期の日本の学童疎開と沖縄の学徒動員について、学童疎開(がくどうそかい)は何年から行われたか。",
+          "answer": "1944年。",
+          "keywords": [],
+          "evidence": [
+            "evacuation-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の学童疎開と沖縄の学徒動員のうち、学童疎開(がくどうそかい)はどのように行われたか。",
+          "answer": "1944年から、米軍の空襲を避けるために都会の国民学校の児童を、個人的・集団的に**地方や農村**へ移す**学童疎開(がくどうそかい)**が行われた。",
+          "keywords": [
+            "地方や農村",
+            "学童疎開"
+          ],
+          "evidence": [
+            "evacuation-year",
+            "evacuation-cause",
+            "evacuation-target",
+            "evacuation-destination",
+            "evacuation-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の学童疎開と沖縄の学徒動員のうち、沖縄戦では生徒はどのように動員されたか。",
+          "answer": "1945年の沖縄戦では、**中学生から高校生の男女**が**学徒隊(がくとたい)**に編入された。",
+          "keywords": [
+            "中学生から高校生の男女",
+            "学徒隊"
+          ],
+          "evidence": [
+            "okinawa-year",
+            "student-ages",
+            "student-unit"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の日本の「学童疎開と沖縄の学徒動員」について説明せよ。",
+          "answer": "日本では1944年から、都会の国民学校の児童を米軍の空襲から遠ざけるため、個人的・集団的に**地方や農村**へ移す**学童疎開(がくどうそかい)**が行われた。一方、1945年の沖縄戦では、**中学生から高校生の男女**が**学徒隊(がくとたい)**に編入された。",
+          "keywords": [
+            "地方や農村",
+            "学童疎開",
+            "中学生から高校生の男女",
+            "学徒隊"
+          ],
+          "evidence": [
+            "evacuation-year",
+            "evacuation-cause",
+            "evacuation-target",
+            "evacuation-destination",
+            "evacuation-name",
+            "okinawa-year",
+            "student-ages",
+            "student-unit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "日本本土の陸上戦",
+      "reading": "にほんほんどのりくじょうせん",
+      "category": "戦争末期の戦闘",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1945年3～7月",
+        "sortYear": 1945
+      },
+      "explanation": "硫黄島の陥落で米軍は爆撃機を護衛する飛行機の離発着拠点を得た。沖縄本島では米軍の上陸後に住民も巻き込まれる陸上戦が続き、日本軍の組織的戦闘が終結した後も、実際の戦闘は続いた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1945年3月、第二次世界大戦末期の日本で、米軍との攻防戦の末に陥落した島は何か。",
+          "answer": "**硫黄島(いおうとう)**。",
+          "keywords": [
+            "硫黄島"
+          ],
+          "evidence": [
+            "battle-year",
+            "iwo-fall",
+            "iwo-mainland"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1945年4月1日、米軍が上陸を開始し、住民も巻き込まれた陸上戦の場となった日本の島はどこか。",
+          "answer": "**沖縄本島**。",
+          "keywords": [
+            "沖縄本島"
+          ],
+          "evidence": [
+            "okinawa-landing",
+            "okinawa-year",
+            "okinawa-civilians"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "1945年の日本本土の陸上戦で、硫黄島(いおうとう)を占領した米軍は、空襲を支えるために同島で何をできるようになったか。",
+          "answer": "**B29を護衛する飛行機の離発着**。",
+          "keywords": [
+            "B29を護衛する飛行機の離発着"
+          ],
+          "evidence": [
+            "iwo-airfield"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "1945年の日本本土の陸上戦について、沖縄で日本軍の組織的戦闘が終結したのは何月何日か。",
+          "answer": "6月23日。",
+          "keywords": [],
+          "evidence": [
+            "okinawa-organized-end"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本本土の陸上戦のうち、硫黄島(いおうとう)の陥落は米軍による日本への空襲にどのような意味を持ったか。",
+          "answer": "1945年3月に日本の**硫黄島(いおうとう)**が陥落し、米軍は同島で**B29を護衛する飛行機の離発着**ができるようになった。",
+          "keywords": [
+            "硫黄島",
+            "B29を護衛する飛行機の離発着"
+          ],
+          "evidence": [
+            "battle-year",
+            "iwo-fall",
+            "iwo-airfield",
+            "iwo-mainland"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本本土の陸上戦のうち、沖縄本島での戦闘はどのように進んだか。",
+          "answer": "1945年4月1日、米軍が日本の**沖縄本島**への上陸を始め、住民も戦闘に巻き込まれた。6月23日に**日本軍の組織的戦闘が終結**したが、実際の戦闘はその後も続いた。",
+          "keywords": [
+            "沖縄本島",
+            "日本軍の組織的戦闘が終結"
+          ],
+          "evidence": [
+            "okinawa-year",
+            "okinawa-landing",
+            "okinawa-civilians",
+            "okinawa-organized-end",
+            "okinawa-fighting-continued"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の日本の「日本本土の陸上戦」について説明せよ。",
+          "answer": "1945年3月に日本の**硫黄島(いおうとう)**が陥落し、米軍は**B29を護衛する飛行機の離発着**の拠点を得た。4月1日には米軍が**沖縄本島**に上陸し、住民も戦闘に巻き込まれた。6月23日に**日本軍の組織的戦闘が終結**したが、実際の戦闘はその後も続いた。",
+          "keywords": [
+            "硫黄島",
+            "B29を護衛する飛行機の離発着",
+            "沖縄本島",
+            "日本軍の組織的戦闘が終結"
+          ],
+          "evidence": [
+            "battle-year",
+            "iwo-fall",
+            "iwo-airfield",
+            "okinawa-year",
+            "okinawa-landing",
+            "okinawa-civilians",
+            "okinawa-organized-end",
+            "okinawa-fighting-continued",
+            "iwo-mainland"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,593 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 13,
+    "title": "ソ連参戦か原爆投下か"
+  },
+  "integrationPromptPrefix": "第二次世界大戦末期の米国と欧州の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_13_ソ連参戦か原爆投下か_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      388,
+      389,
+      390,
+      391
+    ],
+    "note": "389頁ワ見出しから390頁カ見出し直前までの続き、389頁注㉑と注⑳、390頁注㉒、および同範囲に印のある391頁注㉓を通読した。関連する鈴木貫太郎内閣成立の本文と西暦表記のある388頁注⑲も追加した。ヤルタ会談の対日参戦の約束はドイツ降伏後という関係にまとめ、九十日以内という具体日数を正答に固定しない。南樺太と千島列島の取り決めは秘密協定の内容であり、領土変更の正当化や戦後の法的地位を答えにしない。ルーズベルトの死去について、会談から約二か月後との記述を新たな単独の精密年表へ変換しない。ヤルタ会談の開催地域を当節にないクリミア等で補わない。鈴木内閣成立は388頁の1945年4月の沖縄攻防戦と同じ本文の四月七日・この日のつながりで確認した。日本の仲介要請と米側の情報把握を区別し、原爆使用の理由をソ連との競争だけに固定しない。注㉓の本土制圧・天皇の地位保障・ソ連参戦という複数方策も読んだが、米側の選択肢がこの三つに尽きるという枠組みや、地位保障またはソ連参戦で日本がただちに降伏するとの予測を確定事実として暗記させない。米高官全員の反対、バーンズだけが賛成、トルーマンの心理変化、ソ連参戦なら必ず降伏するという判断や侮蔑語、核爆発の威力・塔の寸法・空爆都市数、政治的価値評価を正答にしない。トリニティー実験の固有名だけの薄い学習項目を設けず、核実験成功とポツダム会談に届いた情報の関係を扱う。原爆投下命令・ポツダム宣言とその受諾は次項目なので問いにしない。"
+  },
+  "facts": [
+    {
+      "id": "yalta-name",
+      "page": 389,
+      "quote": "**ヤルタ会談**を開き、"
+    },
+    {
+      "id": "yalta-participants",
+      "page": 389,
+      "quote": "アメリカとイギリスとソ連の三首脳は"
+    },
+    {
+      "id": "yalta-period",
+      "page": 389,
+      "quote": "昭和二十年（一九四五）二月、"
+    },
+    {
+      "id": "yalta-agenda",
+      "page": 389,
+      "quote": "戦後処理を話し合いました。"
+    },
+    {
+      "id": "yalta-entry",
+      "page": 389,
+      "quote": "ドイツ降伏から九十日以内にソ連は対日参戦すること、"
+    },
+    {
+      "id": "yalta-territories",
+      "page": 389,
+      "quote": "南樺太と千島列島はソ連に引き渡されることなどが密約として交わされました。"
+    },
+    {
+      "id": "president-change",
+      "page": 389,
+      "quote": "ルーズベルト大統領は脳卒中で急死し、副大統領のハリー・トルーマンが大統領に就任しました。"
+    },
+    {
+      "id": "german-surrender",
+      "page": 389,
+      "quote": "昭和二十年（一九四五）四月にヒトラーが自殺し、五月にドイツは降伏しました。"
+    },
+    {
+      "id": "suzuki-cabinet",
+      "page": 388,
+      "quote": "この日、鈴木貫太郎内閣が成立しました。"
+    },
+    {
+      "id": "suzuki-date",
+      "page": 388,
+      "quote": "四月七日のことでした。"
+    },
+    {
+      "id": "suzuki-year",
+      "page": 388,
+      "quote": "昭和20年（1945）4月からの沖縄攻防戦では、"
+    },
+    {
+      "id": "soviet-mediation",
+      "page": 389,
+      "quote": "ソ連に終戦の仲介をしてもらおうと考えていました㉑。"
+    },
+    {
+      "id": "unknown-secret",
+      "page": 389,
+      "quote": "しかし、そのような密約があることを知らない日本は、"
+    },
+    {
+      "id": "decoded-telegram",
+      "page": 389,
+      "quote": "アメリカはその暗号電報を傍受・解読して、トルーマン大統領に報告していた。"
+    },
+    {
+      "id": "american-awareness",
+      "page": 389,
+      "quote": "そのため、日本が和平に向けて本格的に動きはじめたことを大統領は知っていた。"
+    },
+    {
+      "id": "envoy-telegram-context",
+      "page": 389,
+      "quote": "昭和天皇は7月12日、近衛文麿元首相を特使に任命し、ソ連に特使派遣を打診した。"
+    },
+    {
+      "id": "potsdam-name",
+      "page": 389,
+      "quote": "**ポツダム会談**が予定されていました。"
+    },
+    {
+      "id": "nuclear-test-date",
+      "page": 389,
+      "quote": "七月十六日、アメリカで人類史上初となる核実験が行われました。"
+    },
+    {
+      "id": "nuclear-success-news",
+      "page": 389,
+      "quote": "核実験が成功したとの報せは、ドイツのポツダムにいる大統領に届けられました。"
+    },
+    {
+      "id": "potsdam-participants",
+      "page": 389,
+      "quote": "アメリカ、イギリス、ソ連の三首脳が"
+    },
+    {
+      "id": "potsdam-agenda",
+      "page": 389,
+      "quote": "戦後処理と対日戦争の終結などについて話し合う"
+    },
+    {
+      "id": "potsdam-date",
+      "page": 389,
+      "quote": "七月十七日からは"
+    },
+    {
+      "id": "stalin-meeting",
+      "page": 389,
+      "quote": "七月十七日、トルーマン大統領はソ連のスターリン書記長と会談しました。"
+    },
+    {
+      "id": "stalin-entry-promise",
+      "page": 389,
+      "quote": "その席でスターリン書記長は八月中旬までに参戦することを約束しました㉒。"
+    },
+    {
+      "id": "potsdam-location",
+      "page": 389,
+      "quote": "ドイツのポツダムにいる大統領に届けられました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ヤルタ会談と欧州戦線の終結",
+      "reading": "やるたかいだんとおうしゅうせんせんのしゅうけつ",
+      "category": "連合国の戦後処理",
+      "geographyLabel": "アメリカ",
+      "integrationPromptPrefix": "第二次世界大戦末期の米国と欧州の",
+      "chronology": {
+        "displayPeriod": "1945年2～5月",
+        "sortYear": 1945
+      },
+      "explanation": "米英ソの首脳は戦後処理を協議し、ドイツ降伏後のソ連の対日参戦を秘密に取り決めた。米国ではルーズベルトの死去でトルーマンが大統領となり、欧州ではドイツが降伏した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦末期の1945年2月、戦後処理を話し合うために開かれた連合国の首脳会談は何か。",
+          "answer": "**ヤルタ会談**。",
+          "keywords": [
+            "ヤルタ会談"
+          ],
+          "evidence": [
+            "yalta-name",
+            "yalta-period"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "1945年のヤルタ会談と欧州戦線の終結について、ヤルタ会談に参加した首脳はどの3か国の代表か。",
+          "answer": "**アメリカ・イギリス・ソ連**。",
+          "keywords": [
+            "アメリカ・イギリス・ソ連"
+          ],
+          "evidence": [
+            "yalta-participants"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "内容の確認",
+          "prompt": "1945年のヤルタ会談と欧州戦線の終結について、ヤルタ会談の密約では、どの国の降伏後にソ連が対日参戦することになっていたか。",
+          "answer": "**ドイツ**。",
+          "keywords": [
+            "ドイツ"
+          ],
+          "evidence": [
+            "yalta-entry"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "1945年のヤルタ会談と欧州戦線の終結について、ヤルタ会談の密約でソ連に引き渡すことが約束された二つの地域はどこか。",
+          "answer": "**南樺太(みなみからふと)**と**千島列島**。",
+          "keywords": [
+            "南樺太",
+            "千島列島"
+          ],
+          "evidence": [
+            "yalta-territories"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "1945年のヤルタ会談と欧州戦線の終結の時期、ルーズベルトの死去後にアメリカ大統領となったのは誰か。",
+          "answer": "**ハリー・トルーマン**。",
+          "keywords": [
+            "ハリー・トルーマン"
+          ],
+          "evidence": [
+            "president-change"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "第二次世界大戦末期のヤルタ会談と欧州戦線の終結について、ドイツが降伏したのは何年何月か。",
+          "answer": "1945年5月。",
+          "keywords": [],
+          "evidence": [
+            "german-surrender"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のヤルタ会談と欧州戦線の終結について、ヤルタ会談ではどのような取り決めが交わされたか。",
+          "answer": "1945年2月、**アメリカ・イギリス・ソ連**の首脳が**ヤルタ会談**で戦後処理を話し合った。密約では**ドイツ降伏後のソ連の対日参戦**と、**南樺太(みなみからふと)**・**千島列島**をソ連に引き渡すことが約束された。",
+          "keywords": [
+            "アメリカ・イギリス・ソ連",
+            "ヤルタ会談",
+            "ドイツ降伏後のソ連の対日参戦",
+            "南樺太",
+            "千島列島"
+          ],
+          "evidence": [
+            "yalta-period",
+            "yalta-participants",
+            "yalta-name",
+            "yalta-agenda",
+            "yalta-entry",
+            "yalta-territories"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のヤルタ会談と欧州戦線の終結の時期、アメリカの大統領とドイツの戦争継続にはどのような変化があったか。",
+          "answer": "アメリカではルーズベルトの死去後、副大統領の**ハリー・トルーマン**が大統領となった。1945年5月には**ドイツが降伏**した。",
+          "keywords": [
+            "ハリー・トルーマン",
+            "ドイツが降伏"
+          ],
+          "evidence": [
+            "president-change",
+            "german-surrender"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の米国と欧州の「ヤルタ会談と欧州戦線の終結」について説明せよ。",
+          "answer": "1945年2月、**アメリカ・イギリス・ソ連**の首脳は**ヤルタ会談**で戦後処理を話し合った。密約では**ドイツ降伏後のソ連の対日参戦**と、**南樺太(みなみからふと)**・**千島列島**をソ連に引き渡すことが約束された。アメリカではルーズベルトの死去後に**ハリー・トルーマン**が大統領となり、1945年5月には**ドイツが降伏**した。",
+          "keywords": [
+            "アメリカ・イギリス・ソ連",
+            "ヤルタ会談",
+            "ドイツ降伏後のソ連の対日参戦",
+            "南樺太",
+            "千島列島",
+            "ハリー・トルーマン",
+            "ドイツが降伏"
+          ],
+          "evidence": [
+            "yalta-period",
+            "yalta-participants",
+            "yalta-name",
+            "yalta-agenda",
+            "yalta-entry",
+            "yalta-territories",
+            "president-change",
+            "german-surrender"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "日本の終戦外交",
+      "reading": "にほんのしゅうせんがいこう",
+      "category": "終戦の仲介要請",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "第二次世界大戦末期の",
+      "chronology": {
+        "displayPeriod": "1945年4～7月",
+        "sortYear": 1945
+      },
+      "explanation": "日本はソ連の対日参戦の密約を知らずに、ソ連へ終戦の仲介を求めた。一方、アメリカは特使派遣の打診に関する暗号電報を傍受・解読し、日本の和平への動きを把握していた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦末期の1945年4月7日、日本で成立した内閣は何か。",
+          "answer": "**鈴木貫太郎内閣(すずきかんたろうないかく)**。",
+          "keywords": [
+            "鈴木貫太郎内閣"
+          ],
+          "evidence": [
+            "suzuki-cabinet",
+            "suzuki-date",
+            "suzuki-year"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の終戦外交について、日本が終戦の仲介を求めようとした国はどこか。",
+          "answer": "**ソ連**。",
+          "keywords": [
+            "ソ連"
+          ],
+          "evidence": [
+            "soviet-mediation"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の終戦外交について、日本がソ連に仲介を求める際に知らなかった、対日戦争に関する秘密の取り決めは何か。",
+          "answer": "**ソ連の対日参戦の密約**。",
+          "keywords": [
+            "ソ連の対日参戦の密約"
+          ],
+          "evidence": [
+            "unknown-secret",
+            "yalta-entry"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の終戦外交では、どのような内閣の下で、どの国に終戦の仲介を求めようとしたか。",
+          "answer": "1945年4月7日に**鈴木貫太郎内閣(すずきかんたろうないかく)**が成立した。日本は**ソ連の対日参戦の密約**を知らずに、**ソ連**へ終戦の仲介を求めようとした。",
+          "keywords": [
+            "鈴木貫太郎内閣",
+            "ソ連の対日参戦の密約",
+            "ソ連"
+          ],
+          "evidence": [
+            "suzuki-cabinet",
+            "suzuki-date",
+            "suzuki-year",
+            "unknown-secret",
+            "yalta-entry",
+            "soviet-mediation"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の終戦外交について、アメリカは日本のソ連への仲介要請をどのように把握していたか。",
+          "answer": "アメリカは特使派遣の打診に関する**暗号電報を傍受・解読**し、**トルーマン**大統領に報告していた。そのため、大統領は日本が和平に向けて動き始めたことを知っていた。",
+          "keywords": [
+            "暗号電報を傍受・解読",
+            "トルーマン"
+          ],
+          "evidence": [
+            "envoy-telegram-context",
+            "decoded-telegram",
+            "american-awareness"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の「日本の終戦外交」について説明せよ。",
+          "answer": "日本では1945年4月7日に**鈴木貫太郎内閣(すずきかんたろうないかく)**が成立した。日本は**ソ連の対日参戦の密約**を知らず、**ソ連**へ終戦の仲介を求めようとした。一方、アメリカは特使派遣の打診に関する**暗号電報を傍受・解読**して**トルーマン**大統領に報告し、日本の和平への動きを把握していた。",
+          "keywords": [
+            "鈴木貫太郎内閣",
+            "ソ連の対日参戦の密約",
+            "ソ連",
+            "暗号電報を傍受・解読",
+            "トルーマン"
+          ],
+          "evidence": [
+            "suzuki-cabinet",
+            "suzuki-date",
+            "suzuki-year",
+            "unknown-secret",
+            "yalta-entry",
+            "soviet-mediation",
+            "envoy-telegram-context",
+            "decoded-telegram",
+            "american-awareness"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "ポツダム会談と原爆開発",
+      "reading": "ぽつだむかいだんとげんばくかいはつ",
+      "category": "対日戦争の終結に向けた協議",
+      "geographyLabel": "アメリカ",
+      "integrationPromptPrefix": "第二次世界大戦末期の米国と欧州の",
+      "chronology": {
+        "displayPeriod": "1945年7月",
+        "sortYear": 1945
+      },
+      "explanation": "米国での核実験成功の報せは、ドイツのポツダムにいたトルーマンへ届いた。米英ソの首脳は戦後処理と対日戦争の終結を協議し、トルーマンとスターリンの会談ではソ連の対日参戦の予定が確認された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦末期の1945年7月、ドイツで開かれることが予定されていた連合国の首脳会談は何か。",
+          "answer": "**ポツダム会談**。",
+          "keywords": [
+            "ポツダム会談"
+          ],
+          "evidence": [
+            "potsdam-name",
+            "potsdam-date",
+            "potsdam-location",
+            "yalta-period"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "result",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム会談と原爆開発について、会談が予定されていた直前に、アメリカの原爆開発で何が成功したか。",
+          "answer": "**核実験**。",
+          "keywords": [
+            "核実験"
+          ],
+          "evidence": [
+            "nuclear-success-news"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "1945年のポツダム会談と原爆開発について、米英ソの首脳はポツダム会談で何を話し合う予定だったか。",
+          "answer": "**戦後処理と対日戦争の終結**。",
+          "keywords": [
+            "戦後処理と対日戦争の終結"
+          ],
+          "evidence": [
+            "potsdam-participants",
+            "potsdam-agenda"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "1945年のポツダム会談と原爆開発について、トルーマン大統領と会談して対日参戦を約束したソ連の指導者は誰か。",
+          "answer": "**スターリン**。",
+          "keywords": [
+            "スターリン"
+          ],
+          "evidence": [
+            "stalin-meeting",
+            "stalin-entry-promise"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のポツダム会談と原爆開発について、アメリカの核実験はいつ行われ、成功の報せはどこにいた米大統領へ届いたか。",
+          "answer": "1945年7月16日、アメリカで**核実験**が行われ、成功の報せはドイツのポツダムにいた**トルーマン**大統領へ届いた。",
+          "keywords": [
+            "核実験",
+            "トルーマン"
+          ],
+          "evidence": [
+            "yalta-period",
+            "nuclear-test-date",
+            "nuclear-success-news",
+            "stalin-meeting"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のポツダム会談と原爆開発について、連合国首脳の協議と、米ソ首脳の会談はどのような内容だったか。",
+          "answer": "1945年7月17日から、**アメリカ・イギリス・ソ連**の首脳が**ポツダム会談**で**戦後処理と対日戦争の終結**を話し合う予定だった。同日の米ソ首脳の会談で、**スターリン**は8月中旬までの**ソ連の対日参戦**を約束した。",
+          "keywords": [
+            "アメリカ・イギリス・ソ連",
+            "ポツダム会談",
+            "戦後処理と対日戦争の終結",
+            "スターリン",
+            "ソ連の対日参戦"
+          ],
+          "evidence": [
+            "yalta-period",
+            "potsdam-date",
+            "potsdam-participants",
+            "potsdam-name",
+            "potsdam-agenda",
+            "stalin-meeting",
+            "stalin-entry-promise"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の米国と欧州の「ポツダム会談と原爆開発」について説明せよ。",
+          "answer": "1945年7月16日、アメリカで**核実験**が成功し、その報せはドイツのポツダムにいた**トルーマン**大統領へ届いた。7月17日から予定された**ポツダム会談**では、**アメリカ・イギリス・ソ連**の首脳が**戦後処理と対日戦争の終結**を話し合うことになっていた。同日の米ソ首脳の会談で、**スターリン**は8月中旬までの**ソ連の対日参戦**を約束した。",
+          "keywords": [
+            "核実験",
+            "トルーマン",
+            "ポツダム会談",
+            "アメリカ・イギリス・ソ連",
+            "戦後処理と対日戦争の終結",
+            "スターリン",
+            "ソ連の対日参戦"
+          ],
+          "evidence": [
+            "yalta-period",
+            "nuclear-test-date",
+            "nuclear-success-news",
+            "potsdam-date",
+            "potsdam-participants",
+            "potsdam-name",
+            "potsdam-agenda",
+            "stalin-meeting",
+            "stalin-entry-promise"
+          ]
+        }
+      ]
+    }
+  ]
+}

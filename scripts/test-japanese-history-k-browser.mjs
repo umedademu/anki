@@ -175,11 +175,12 @@ try {
   };
   await page.goto(base + "/");
   await page.getByRole("button", { name: "日本史K", exact: true }).click(); await shown("setup-panel"); await ready();
-  assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), ["第5章 近代", "第6章 現代"]);
+  assert.deepEqual(await page.locator("#deck-filter .deck-filter-name").allTextContents(), groups.map(group => group.title));
   assert.deepEqual(await page.locator("#deck-filter .deck-filter-count").allTextContents(), groups.map(group => `${group.decks.reduce((sum, deck) => sum + deck.questionCount, 0).toLocaleString("ja-JP")}問`));
   const picker = number => page.locator(`.chapter-picker[data-chapter-id="chapter-${number}"]`);
   assert.equal(await picker(6).locator("summary").textContent(), "第6章のパート：1 / 15パート");
   assert.equal(await picker(5).locator("summary").textContent(), `第5章のパート：0 / ${groups.find(group => group.number === 5).decks.length}パート`);
+  assert.equal(await picker(4).locator("summary").textContent(), `第4章のパート：0 / ${groups.find(group => group.number === 4).decks.length}パート`);
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);
@@ -192,6 +193,10 @@ try {
   await page.locator('#deck-filter input[value="chapter-5"]').check(); await ready();
   await assertSummary(filterQuestionTypes(additions.filter(value => value.index.deckId.startsWith("book-05-")).flatMap(value => value.terms), resolveQuestionTypes()));
   for (const group of groups) {
+    // 未選択の章は、章を選択してから小項目の一覧を開く。
+    if (!await picker(group.number).isVisible()) {
+      await page.locator(`#deck-filter input[value="${group.id}"]`).check(); await ready();
+    }
     for (const other of groups) if (other.id !== group.id && await picker(other.number).isVisible() && await picker(other.number).evaluate(element => element.open)) await picker(other.number).locator("summary").click();
     if (!await picker(group.number).evaluate(element => element.open)) await picker(group.number).locator("summary").click();
     await picker(group.number).getByRole("button", { name: "全パートを選択" }).click(); await ready();

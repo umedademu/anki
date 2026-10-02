@@ -1,0 +1,679 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 1,
+    "title": "安土桃山時代"
+  },
+  "part": {
+    "number": 1,
+    "title": "世界の動きと日本"
+  },
+  "integrationPromptPrefix": "中世から近世初期のヨーロッパの",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_01節_01_世界の動きと日本_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      185,
+      186,
+      187,
+      188
+    ],
+    "note": "185～188頁のイ本文・関連注①③④⑤・図版・宗派比較表を最後まで読んだうえで、十字軍と文化交流、ルネサンス、宗教改革とカトリック側の改革を採用する。十字軍のすべてが失敗したという一律な説明や、十字軍失敗から贖宥状販売までを直接の原因結果にする単純化は出題しない。宗派比較表の一律な救済観・聖職者や女性の地位、贖宥状購入で罪そのものが許されるという説明、宗教・文化・技術の優劣や独自性の評価、ペスト人口割合・生没年・軍事行動の細部は不採用。ルター自身の聖書に基づく信仰と信仰者の平等は図版解説の明示事項として扱う。芸術作品は代表例2点に絞る。カトリック側の海外布教は同時代の改革の関連内容として扱い、イエズス会の設立年や日本への具体的伝来年は追加しない。188頁注⑦とロ本文は対象外。"
+  },
+  "facts": [
+    {
+      "id": "crusades-start",
+      "page": 185,
+      "quote": "十一世紀末のヨーロッパでは、ローマ教皇がイスラム勢力下にある聖地エルサレム奪還を呼びかけ、十字軍の遠征が行われました。"
+    },
+    {
+      "id": "crusades-request",
+      "page": 187,
+      "quote": "セルジューク朝の勢いを警戒した東ローマ帝国の皇帝が、ローマ教皇に援助を求めると、"
+    },
+    {
+      "id": "crusades-century",
+      "page": 187,
+      "quote": "十字軍は13世紀まで何度も組織されたが、"
+    },
+    {
+      "id": "crusades-astronomy",
+      "page": 185,
+      "quote": "天文学などのイスラムの進んだ技術や学問を取り込み、"
+    },
+    {
+      "id": "crusades-classical",
+      "page": 185,
+      "quote": "古代ギリシャ・ローマ文化と再び接しました。"
+    },
+    {
+      "id": "renaissance-name",
+      "page": 185,
+      "quote": "十四、十五世紀になるとヨーロッパでルネサンス（文芸復興）と呼ばれる運動が起きます。"
+    },
+    {
+      "id": "renaissance-individual",
+      "page": 185,
+      "quote": "人間の個性や自由を求めはじめたのです。"
+    },
+    {
+      "id": "renaissance-classical",
+      "page": 185,
+      "quote": "人々は古代ギリシャ・ローマの文化を理想とし、"
+    },
+    {
+      "id": "renaissance-spread",
+      "page": 185,
+      "quote": "イタリアで始まって西ヨーロッパ各地に広がり、"
+    },
+    {
+      "id": "renaissance-patrons",
+      "page": 185,
+      "quote": "教皇や国王、裕福な商人から保護を受けた芸術家たちが多くの芸術作品を生み出しました。"
+    },
+    {
+      "id": "renaissance-mona",
+      "page": 186,
+      "quote": "モナ・リザ\n\nレオナルド・ダ・ヴィンチ筆 ⑤"
+    },
+    {
+      "id": "renaissance-david",
+      "page": 186,
+      "quote": "ダビデ像\n\nミケランジェロ作 ④"
+    },
+    {
+      "id": "renaissance-period",
+      "page": 186,
+      "quote": "16世紀にかけて大規模な文化的活動が展開された。"
+    },
+    {
+      "id": "indulgence-sale",
+      "page": 185,
+      "quote": "ローマ教皇は大聖堂修築の費用を集めるため贖宥状（免罪符）を販売すると、"
+    },
+    {
+      "id": "luther-location-date",
+      "page": 185,
+      "quote": "ドイツのルターは一五一七年に"
+    },
+    {
+      "id": "luther-theses",
+      "page": 185,
+      "quote": "「九十五カ条の論題」を著して教皇やカトリック教会を厳しく批判し宗教改革を実行しました。"
+    },
+    {
+      "id": "protestant-spread",
+      "page": 185,
+      "quote": "ルターの考えを支持するプロテスタントと呼ばれるキリスト教徒は各地に広がっていきました。"
+    },
+    {
+      "id": "printing-reform",
+      "page": 185,
+      "quote": "グーテンベルクによる活版印刷術の発明はこの改革に拍車をかけ、"
+    },
+    {
+      "id": "catholic-reform",
+      "page": 185,
+      "quote": "一方、カトリック教会側でも改革が進められ、中心"
+    },
+    {
+      "id": "jesuit-missions",
+      "page": 188,
+      "quote": "となったイエズス会は海外布教に力を入れはじめます。それはキリスト教勢力が日本にも訪れることを意味します。"
+    },
+    {
+      "id": "luther-faith",
+      "page": 187,
+      "quote": "聖書に基づく信仰のみを説く「福音主義」を目指し、"
+    },
+    {
+      "id": "luther-equality",
+      "page": 187,
+      "quote": "すべての信仰者は等しいという考えを主張した。"
+    },
+    {
+      "id": "luther-criticism",
+      "page": 185,
+      "quote": "教皇やカトリック教会を厳しく批判し宗教改革を実行しました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "十字軍と文化交流",
+      "reading": "じゅうじぐんとぶんかこうりゅう",
+      "category": "宗教・文化交流",
+      "geographyLabel": "ヨーロッパ",
+      "integrationPromptPrefix": "中世ヨーロッパの",
+      "chronology": {
+        "displayPeriod": "11世紀末～13世紀",
+        "sortYear": 1000
+      },
+      "explanation": "十字軍は、東ローマ帝国からの援助要請と、ローマ教皇による聖地奪還の呼びかけを背景に組織された。遠征によるイスラム世界との接触は、ヨーロッパが天文学などの学問や古代ギリシャ・ローマ文化に触れる機会にもなった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "中世ヨーロッパで、ローマ教皇の呼びかけにより聖地エルサレムの奪還を目指して組織された遠征を何というか。",
+          "answer": "**十字軍**。",
+          "evidence": [
+            "crusades-start"
+          ],
+          "keywords": [
+            "十字軍"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "中世の十字軍と文化交流について、セルジューク朝を警戒してローマ教皇に援助を求めた皇帝は、どの国の皇帝か。",
+          "answer": "**東ローマ帝国**。",
+          "evidence": [
+            "crusades-request"
+          ],
+          "keywords": [
+            "東ローマ帝国"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "中世ヨーロッパの十字軍と文化交流について、イスラム世界との接触によって取り込まれた学問を一つ答えよ。",
+          "answer": "**天文学**。",
+          "evidence": [
+            "crusades-astronomy"
+          ],
+          "keywords": [
+            "天文学"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "中世ヨーロッパの十字軍と文化交流について、イスラム世界との接触によって再び触れた古代の文化は何か。",
+          "answer": "**古代ギリシャ・ローマ文化**。",
+          "evidence": [
+            "crusades-classical"
+          ],
+          "keywords": [
+            "古代ギリシャ・ローマ文化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "中世ヨーロッパの十字軍と文化交流について、遠征が組織された背景と目的を説明せよ。",
+          "answer": "11世紀末のヨーロッパでは、セルジューク朝を警戒した**東ローマ帝国**の皇帝が**ローマ教皇**に援助を求め、教皇はイスラム勢力下の**聖地エルサレムの奪還**を呼びかけた。**十字軍**は13世紀まで何度も組織された。",
+          "evidence": [
+            "crusades-start",
+            "crusades-request",
+            "crusades-century"
+          ],
+          "keywords": [
+            "東ローマ帝国",
+            "ローマ教皇",
+            "聖地エルサレムの奪還",
+            "十字軍"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "中世ヨーロッパの十字軍と文化交流について、イスラム世界との接触はヨーロッパの学問や文化にどのような影響を与えたか。",
+          "answer": "ヨーロッパはイスラム世界との接触によって、**天文学**などの技術や学問を取り込み、**古代ギリシャ・ローマ文化**と再び接した。",
+          "evidence": [
+            "crusades-astronomy",
+            "crusades-classical"
+          ],
+          "keywords": [
+            "天文学",
+            "古代ギリシャ・ローマ文化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "中世ヨーロッパの「十字軍と文化交流」について説明せよ。",
+          "answer": "11世紀末のヨーロッパでは、**東ローマ帝国**の皇帝の援助要請を受けた**ローマ教皇**が、イスラム勢力下の**聖地エルサレムの奪還**を呼びかけた。**十字軍**は13世紀まで何度も組織された。イスラム世界との接触を通じて、ヨーロッパは**天文学**などの技術や学問を取り込み、**古代ギリシャ・ローマ文化**と再び接した。",
+          "evidence": [
+            "crusades-start",
+            "crusades-request",
+            "crusades-century",
+            "crusades-astronomy",
+            "crusades-classical"
+          ],
+          "keywords": [
+            "東ローマ帝国",
+            "ローマ教皇",
+            "聖地エルサレムの奪還",
+            "十字軍",
+            "天文学",
+            "古代ギリシャ・ローマ文化"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ルネサンス",
+      "reading": "るねさんす",
+      "category": "文化",
+      "geographyLabel": "ヨーロッパ",
+      "integrationPromptPrefix": "中世末から近世初期のヨーロッパの",
+      "chronology": {
+        "displayPeriod": "14～16世紀",
+        "sortYear": 1300
+      },
+      "explanation": "ルネサンスは古代ギリシャ・ローマ文化を理想とし、人間の個性や自由を求めた文化運動である。イタリアから西ヨーロッパへ広がり、教皇や国王、裕福な商人の保護のもとで芸術活動が展開された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "14～15世紀にヨーロッパで起こった、人間の個性や自由を求める文芸復興の運動を何というか。",
+          "answer": "**ルネサンス**。",
+          "evidence": [
+            "renaissance-name",
+            "renaissance-individual"
+          ],
+          "keywords": [
+            "ルネサンス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスで、人々が理想とした古代の文化は何か。",
+          "answer": "**古代ギリシャ・ローマ文化**。",
+          "evidence": [
+            "renaissance-classical"
+          ],
+          "keywords": [
+            "古代ギリシャ・ローマ文化"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "中世末から近世初期のヨーロッパで、ルネサンスが始まった国はどこか。",
+          "answer": "**イタリア**。",
+          "evidence": [
+            "renaissance-spread"
+          ],
+          "keywords": [
+            "イタリア"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスで、『モナ・リザ』を描いた芸術家は誰か。",
+          "answer": "**レオナルド・ダ・ヴィンチ**。",
+          "evidence": [
+            "renaissance-mona"
+          ],
+          "keywords": [
+            "レオナルド・ダ・ヴィンチ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスで、『ダビデ像』を制作した芸術家は誰か。",
+          "answer": "**ミケランジェロ**。",
+          "evidence": [
+            "renaissance-david"
+          ],
+          "keywords": [
+            "ミケランジェロ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスで、芸術家を保護した人々はどのような人々か。",
+          "answer": "**教皇・国王・裕福な商人**。",
+          "evidence": [
+            "renaissance-patrons"
+          ],
+          "keywords": [
+            "教皇・国王・裕福な商人"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスについて、文化的な特徴と広がりを説明せよ。",
+          "answer": "14～16世紀のヨーロッパでは、**古代ギリシャ・ローマ文化**を理想とし、**人間の個性や自由**を求める**ルネサンス**が展開された。運動は**イタリア**から**西ヨーロッパ各地**へ広がった。",
+          "evidence": [
+            "renaissance-name",
+            "renaissance-period",
+            "renaissance-classical",
+            "renaissance-individual",
+            "renaissance-spread"
+          ],
+          "keywords": [
+            "古代ギリシャ・ローマ文化",
+            "人間の個性や自由",
+            "ルネサンス",
+            "イタリア",
+            "西ヨーロッパ各地"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "中世末から近世初期のヨーロッパのルネサンスについて、芸術家を支えた人々と、代表的な作品を説明せよ。",
+          "answer": "芸術家は**教皇・国王・裕福な商人**の保護を受けた。代表的な作品には、**レオナルド・ダ・ヴィンチ**の**『モナ・リザ』**や、**ミケランジェロ**の**『ダビデ像』**がある。",
+          "evidence": [
+            "renaissance-patrons",
+            "renaissance-mona",
+            "renaissance-david"
+          ],
+          "keywords": [
+            "教皇・国王・裕福な商人",
+            "レオナルド・ダ・ヴィンチ",
+            "『モナ・リザ』",
+            "ミケランジェロ",
+            "『ダビデ像』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "中世末から近世初期のヨーロッパの「ルネサンス」について説明せよ。",
+          "answer": "14～16世紀のヨーロッパで展開された**ルネサンス**は、**古代ギリシャ・ローマ文化**を理想とし、**人間の個性や自由**を求める文化運動で、**イタリア**から**西ヨーロッパ各地**へ広がった。芸術家は**教皇・国王・裕福な商人**の保護を受け、**レオナルド・ダ・ヴィンチ**の**『モナ・リザ』**や、**ミケランジェロ**の**『ダビデ像』**などの作品を生み出した。",
+          "evidence": [
+            "renaissance-name",
+            "renaissance-period",
+            "renaissance-classical",
+            "renaissance-individual",
+            "renaissance-spread",
+            "renaissance-patrons",
+            "renaissance-mona",
+            "renaissance-david"
+          ],
+          "keywords": [
+            "ルネサンス",
+            "古代ギリシャ・ローマ文化",
+            "人間の個性や自由",
+            "イタリア",
+            "西ヨーロッパ各地",
+            "教皇・国王・裕福な商人",
+            "レオナルド・ダ・ヴィンチ",
+            "『モナ・リザ』",
+            "ミケランジェロ",
+            "『ダビデ像』"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "宗教改革とカトリックの改革",
+      "reading": "しゅうきょうかいかくとかとりっくのかいかく",
+      "category": "宗教",
+      "geographyLabel": "ヨーロッパ",
+      "integrationPromptPrefix": "16世紀のヨーロッパの",
+      "chronology": {
+        "displayPeriod": "16世紀",
+        "sortYear": 1500
+      },
+      "explanation": "ルターは贖宥状の販売を批判し、聖書に基づく信仰を説いた。活版印刷術は改革の広がりを促し、ルターの考えを支持するプロテスタントが各地に広がった。一方、カトリック側も改革を進め、イエズス会の海外布教は日本へのキリスト教伝来につながった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "16世紀初頭のヨーロッパで、ローマ教皇が大聖堂の修築費用を集めるため販売し、宗教改革で批判された証書を何というか。",
+          "answer": "**贖宥状(しょくゆうじょう)**（**免罪符**）。",
+          "evidence": [
+            "indulgence-sale"
+          ],
+          "keywords": [
+            "贖宥状",
+            "免罪符"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "16世紀の宗教改革とカトリックの改革について、ドイツで贖宥状の販売と教皇を批判した人物は誰か。",
+          "answer": "**ルター**。",
+          "evidence": [
+            "indulgence-sale",
+            "luther-location-date",
+            "luther-criticism"
+          ],
+          "keywords": [
+            "ルター"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "16世紀のドイツの宗教改革とカトリックの改革について、ルターが教皇や教会を批判するために著した論題は何か。",
+          "answer": "**『九十五カ条の論題』**。",
+          "evidence": [
+            "luther-theses"
+          ],
+          "keywords": [
+            "『九十五カ条の論題』"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "16世紀のヨーロッパの宗教改革とカトリックの改革について、ルターの考えを支持するキリスト教徒は何と呼ばれるか。",
+          "answer": "**プロテスタント**。",
+          "evidence": [
+            "protestant-spread"
+          ],
+          "keywords": [
+            "プロテスタント"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "短答",
+          "prompt": "16世紀のヨーロッパの宗教改革とカトリックの改革について、ルターの改革の広がりを促した印刷技術は何か。",
+          "answer": "**活版印刷術**。",
+          "evidence": [
+            "printing-reform"
+          ],
+          "keywords": [
+            "活版印刷術"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "16世紀のカトリック教会側の改革で中心となり、海外への布教に力を入れた組織は何か。",
+          "answer": "**イエズス会**。",
+          "evidence": [
+            "catholic-reform",
+            "jesuit-missions"
+          ],
+          "keywords": [
+            "イエズス会"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "16世紀のドイツの宗教改革とカトリックの改革について、ルターは信仰者どうしの関係をどのように考えたか。",
+          "answer": "**すべての信仰者は等しい**と考えた。",
+          "evidence": [
+            "luther-equality"
+          ],
+          "keywords": [
+            "すべての信仰者は等しい"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "16世紀のドイツの宗教改革とカトリックの改革について、ルターの批判と信仰に関する考えを説明せよ。",
+          "answer": "16世紀のヨーロッパでは、ドイツの**ルター**が1517年に**贖宥状(しょくゆうじょう)**の販売を批判し、**『九十五カ条の論題』**を著した。ルターは**聖書に基づく信仰**を説き、**すべての信仰者は等しい**と主張した。",
+          "evidence": [
+            "indulgence-sale",
+            "luther-location-date",
+            "luther-theses",
+            "luther-faith",
+            "luther-equality"
+          ],
+          "keywords": [
+            "ルター",
+            "贖宥状",
+            "『九十五カ条の論題』",
+            "聖書に基づく信仰",
+            "すべての信仰者は等しい"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "16世紀のヨーロッパの宗教改革とカトリックの改革について、ルターの考えが広がるうえで印刷技術はどのような役割を果たしたか。",
+          "answer": "**活版印刷術**はルターの改革の広がりを促し、ルターの考えを支持する**プロテスタント**が各地に広がった。",
+          "evidence": [
+            "printing-reform",
+            "protestant-spread"
+          ],
+          "keywords": [
+            "活版印刷術",
+            "プロテスタント"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "16世紀のヨーロッパの宗教改革とカトリックの改革について、カトリック側の改革と日本への布教のつながりを説明せよ。",
+          "answer": "ヨーロッパではカトリック教会側でも改革が進み、中心となった**イエズス会**が**海外布教**に力を入れ、キリスト教の勢力が**日本**にも訪れることになった。",
+          "evidence": [
+            "catholic-reform",
+            "jesuit-missions"
+          ],
+          "keywords": [
+            "イエズス会",
+            "海外布教",
+            "日本"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀のヨーロッパの「宗教改革とカトリックの改革」について説明せよ。",
+          "answer": "16世紀のヨーロッパでは、ドイツの**ルター**が1517年に**贖宥状(しょくゆうじょう)**の販売を批判して**『九十五カ条の論題』**を著し、**聖書に基づく信仰**を説いて、**すべての信仰者は等しい**と主張した。**活版印刷術**が改革の広がりを促し、**プロテスタント**が各地に広がった。一方、カトリック側でも改革が進み、**イエズス会**が**海外布教**に力を入れ、キリスト教の勢力は**日本**にも訪れることになった。",
+          "evidence": [
+            "indulgence-sale",
+            "luther-location-date",
+            "luther-theses",
+            "luther-faith",
+            "luther-equality",
+            "printing-reform",
+            "protestant-spread",
+            "catholic-reform",
+            "jesuit-missions"
+          ],
+          "keywords": [
+            "ルター",
+            "贖宥状",
+            "『九十五カ条の論題』",
+            "聖書に基づく信仰",
+            "すべての信仰者は等しい",
+            "活版印刷術",
+            "プロテスタント",
+            "イエズス会",
+            "海外布教",
+            "日本"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

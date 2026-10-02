@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 14,
+    "title": "ポツダム宣言と原爆投下"
+  },
+  "integrationPromptPrefix": "第二次世界大戦末期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_14_ポツダム宣言と原爆投下_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      390,
+      391,
+      392,
+      393,
+      409
+    ],
+    "note": "390頁カ見出しから392頁ヨ見出し直前までの本文、391頁のポツダム宣言の部分要約と削除文、390頁注㉔、392頁注㉕を通読した。広島の被害を説明する392頁注㉖と、同じ原爆投下の関連記述である393頁の長崎投下段落・注㉘を補足し、長崎の「この日」が指す日を確認する392頁の八月九日の記述も引用した。1945年の同じ出来事は409頁の年表で確認した。宣言が求めたのは全日本軍の無条件降伏であり、日本国全体の無条件降伏という意味に広げない。占領・主権範囲・民主主義と人権・撤収の条件は宣言の要求内容として扱い、その後の法的地位の断定にしない。原爆の必要性・必然論、米国の意図や政府の黙殺報道の評価、天皇の地位の法的評価、爆弾の個数・愛称・機体名・爆発高度・速度・温度・被害者数は出題しない。長期被害は放射線障害と原爆症の質に限り、原爆だけが降伏をもたらしたという因果を正答にしない。年表の他の出来事は出題根拠に用いない。"
+  },
+  "facts": [
+    {
+      "id": "declaration-name",
+      "page": 390,
+      "quote": "七月二十六日、日本に対する降伏勧告である**ポツダム宣言**が出されました。"
+    },
+    {
+      "id": "declaration-year",
+      "page": 391,
+      "quote": "ポツダム宣言（昭和二十年七月二十六日、部分要約）"
+    },
+    {
+      "id": "military-surrender",
+      "page": 391,
+      "quote": "日本国政府がただちに全日本軍の無条件降伏を宣言し、その行動を日本政府が保障することを要求する。"
+    },
+    {
+      "id": "disarmament",
+      "page": 391,
+      "quote": "日本軍は武装解除後、各自には家庭に復帰して平和的かつ生産的生活を営む機会が与えられなければならない。"
+    },
+    {
+      "id": "occupation",
+      "page": 391,
+      "quote": "新秩序が建設され、かつ日本国の戦争遂行能力が破砕されたことの確証があるまで、日本国領域は連合国によって占領される。"
+    },
+    {
+      "id": "sovereignty",
+      "page": 391,
+      "quote": "日本国の主権は本州、北海道、九州および四国、ならびに連合国の決定する諸島に限られる。"
+    },
+    {
+      "id": "democracy",
+      "page": 391,
+      "quote": "政府は民主主義的傾向の復活・強化に対する障害を除去しなければならない。"
+    },
+    {
+      "id": "freedoms-rights",
+      "page": 391,
+      "quote": "言論、宗教、思想の自由、基本的人権の尊重は確立されなければならない。"
+    },
+    {
+      "id": "occupation-withdrawal",
+      "page": 391,
+      "quote": "これらの目的が達成され、日本国国民の自由に表明された意志に従い平和的傾向の責任ある政府が樹立されれば、連合国の占領軍はただちに日本より撤収する。"
+    },
+    {
+      "id": "hiroshima-day",
+      "page": 392,
+      "quote": "八月六日、"
+    },
+    {
+      "id": "hiroshima-target",
+      "page": 392,
+      "quote": "第一投下目標の広島市の市街中心部に投下しました。"
+    },
+    {
+      "id": "nagasaki-day-context",
+      "page": 392,
+      "quote": "日本時間の八月九日午前零時"
+    },
+    {
+      "id": "nagasaki-target",
+      "page": 393,
+      "quote": "長崎に「ファットマン」（太っちょ）と名づけられたプルトニウム型原子爆弾が投下されたのがこの日の十一時二分でした。"
+    },
+    {
+      "id": "heat-damage",
+      "page": 392,
+      "quote": "炸裂時に発せられた熱線は光速で地面に到達し、あらゆるものを焼き尽くした。"
+    },
+    {
+      "id": "shock-damage",
+      "page": 392,
+      "quote": "発生した衝撃波は秒速350m以上の速度で地面に広がり、家屋を吹き飛ばした。"
+    },
+    {
+      "id": "radiation-injury",
+      "page": 392,
+      "quote": "放射線による急性障害"
+    },
+    {
+      "id": "lasting-injury",
+      "page": 392,
+      "quote": "その後も原爆症などにより犠牲者は増え"
+    },
+    {
+      "id": "nagasaki-lasting-injury",
+      "page": 393,
+      "quote": "その後も原爆症などにより犠牲者は増え"
+    },
+    {
+      "id": "atomic-year",
+      "page": 409,
+      "quote": "| 1945 | 東京大空襲<br>沖縄上陸作戦<br>広島・長崎に原子爆弾投下"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ポツダム宣言",
+      "reading": "ぽつだむせんげん",
+      "category": "降伏勧告と戦後の方針",
+      "chronology": {
+        "displayPeriod": "1945年7月",
+        "sortYear": 1945
+      },
+      "explanation": "ポツダム宣言は日本への降伏勧告で、日本軍の無条件降伏と武装解除、連合国による占領、主権の範囲などを定めた。民主主義の復活・強化と自由・人権の尊重を求め、目的の達成と国民の自由意思に基づく平和的な政府の樹立を、占領軍撤収の条件とした。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "第二次世界大戦末期の1945年7月、日本に対して降伏を勧告した宣言は何か。",
+          "answer": "**ポツダム宣言**。",
+          "keywords": [
+            "ポツダム宣言"
+          ],
+          "evidence": [
+            "declaration-name",
+            "declaration-year"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本国政府に全日本軍について何を宣言するよう求めたか。",
+          "answer": "**全日本軍の無条件降伏**。",
+          "keywords": [
+            "全日本軍の無条件降伏"
+          ],
+          "evidence": [
+            "military-surrender"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本軍の兵士が家庭に復帰する前に、軍にどのような措置を行うとしたか。",
+          "answer": "**武装解除**。",
+          "keywords": [
+            "武装解除"
+          ],
+          "evidence": [
+            "disarmament"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本を占領する主体は誰とされたか。",
+          "answer": "**連合国**。",
+          "keywords": [
+            "連合国"
+          ],
+          "evidence": [
+            "occupation"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本国の主権が及ぶ範囲をどこに限るとしたか。",
+          "answer": "**本州・北海道・九州・四国と、連合国の決定する諸島**。",
+          "keywords": [
+            "本州・北海道・九州・四国と、連合国の決定する諸島"
+          ],
+          "evidence": [
+            "sovereignty"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本で民主主義的傾向を復活・強化するとともに、自由や権利について何を確立するよう求めたか。",
+          "answer": "**言論・宗教・思想の自由と基本的人権の尊重**。",
+          "keywords": [
+            "言論・宗教・思想の自由と基本的人権の尊重"
+          ],
+          "evidence": [
+            "freedoms-rights",
+            "democracy"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、宣言の目的達成とともに、占領軍撤収の条件としてどのような政府の樹立を求めたか。",
+          "answer": "**国民の自由意思に従う平和的な責任ある政府**。",
+          "keywords": [
+            "国民の自由意思に従う平和的な責任ある政府"
+          ],
+          "evidence": [
+            "occupation-withdrawal"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のポツダム宣言は、日本の軍事と占領についてどのような条件を示したか。",
+          "answer": "1945年7月26日に出された**ポツダム宣言**は、日本に**全日本軍の無条件降伏**と**武装解除**を求め、**連合国による占領**を定めた。日本国の主権を**本州・北海道・九州・四国と、連合国の決定する諸島**に限るとした。",
+          "keywords": [
+            "ポツダム宣言",
+            "全日本軍の無条件降伏",
+            "武装解除",
+            "連合国による占領",
+            "本州・北海道・九州・四国と、連合国の決定する諸島"
+          ],
+          "evidence": [
+            "declaration-name",
+            "declaration-year",
+            "military-surrender",
+            "disarmament",
+            "occupation",
+            "sovereignty"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期のポツダム宣言では、日本の政治の変化と占領軍の撤収をどのように結び付けていたか。",
+          "answer": "日本政府に**民主主義的傾向の復活・強化**と**言論・宗教・思想の自由、基本的人権の尊重**を求めた。宣言の目的が達成され、**国民の自由意思に従う平和的な責任ある政府**が樹立されれば、**占領軍の撤収**を定めた。",
+          "keywords": [
+            "民主主義的傾向の復活・強化",
+            "言論・宗教・思想の自由、基本的人権の尊重",
+            "国民の自由意思に従う平和的な責任ある政府",
+            "占領軍の撤収"
+          ],
+          "evidence": [
+            "democracy",
+            "freedoms-rights",
+            "occupation-withdrawal"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の日本の「ポツダム宣言」について説明せよ。",
+          "answer": "1945年7月26日の**ポツダム宣言**は日本に**全日本軍の無条件降伏**と**武装解除**、**連合国による占領**を求め、主権を**本州・北海道・九州・四国と、連合国の決定する諸島**に限るとした。日本政府には**民主主義的傾向の復活・強化**と**言論・宗教・思想の自由、基本的人権の尊重**を求めた。宣言の目的が達成され、**国民の自由意思に従う平和的な責任ある政府**が樹立されれば、**占領軍の撤収**を定めた。",
+          "keywords": [
+            "ポツダム宣言",
+            "全日本軍の無条件降伏",
+            "武装解除",
+            "連合国による占領",
+            "本州・北海道・九州・四国と、連合国の決定する諸島",
+            "民主主義的傾向の復活・強化",
+            "言論・宗教・思想の自由、基本的人権の尊重",
+            "国民の自由意思に従う平和的な責任ある政府",
+            "占領軍の撤収"
+          ],
+          "evidence": [
+            "declaration-name",
+            "declaration-year",
+            "military-surrender",
+            "disarmament",
+            "occupation",
+            "sovereignty",
+            "democracy",
+            "freedoms-rights",
+            "occupation-withdrawal"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "原爆投下と被害",
+      "reading": "げんばくとうかとひがい",
+      "category": "戦争による都市の被害",
+      "chronology": {
+        "displayPeriod": "1945年8月とその後",
+        "sortYear": 1945
+      },
+      "explanation": "アメリカによる原爆投下は広島と長崎に大きな被害をもたらした。熱線と衝撃波による市街や家屋の破壊に加え、放射線による急性障害が生じ、その後も原爆症などで犠牲者が増えた。",
+      "questions": [
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の原爆投下と被害について、8月6日にアメリカが原子爆弾を投下した都市はどこか。",
+          "answer": "**広島**。",
+          "keywords": [
+            "広島"
+          ],
+          "evidence": [
+            "hiroshima-day",
+            "hiroshima-target"
+          ],
+          "acceptedAnswers": [
+            "広島市"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の原爆投下と被害について、8月9日にアメリカが原子爆弾を投下した都市はどこか。",
+          "answer": "**長崎**。",
+          "keywords": [
+            "長崎"
+          ],
+          "evidence": [
+            "nagasaki-day-context",
+            "nagasaki-target"
+          ],
+          "acceptedAnswers": [
+            "長崎市"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "第二次世界大戦末期の日本の原爆投下と被害について、爆発時に物を焼き、家屋を吹き飛ばした二つの作用は何か。",
+          "answer": "**熱線と衝撃波**。",
+          "keywords": [
+            "熱線と衝撃波"
+          ],
+          "evidence": [
+            "heat-damage",
+            "shock-damage"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の原爆投下で、日本の都市にはどのような破壊が生じたか。",
+          "answer": "1945年、アメリカは8月6日に**広島**、8月9日に**長崎**へ**原子爆弾**を投下した。**熱線と衝撃波**が市街や家屋を破壊した。",
+          "keywords": [
+            "広島",
+            "長崎",
+            "原子爆弾",
+            "熱線と衝撃波"
+          ],
+          "evidence": [
+            "atomic-year",
+            "hiroshima-day",
+            "hiroshima-target",
+            "nagasaki-day-context",
+            "nagasaki-target",
+            "heat-damage",
+            "shock-damage"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "第二次世界大戦末期の日本の原爆投下と被害では、爆発直後の市街の破壊だけで終わらなかったのはなぜか。",
+          "answer": "**放射線による急性障害**が生じ、その後も**原爆症**などで犠牲者が増えたため。",
+          "keywords": [
+            "放射線による急性障害",
+            "原爆症"
+          ],
+          "evidence": [
+            "radiation-injury",
+            "lasting-injury",
+            "nagasaki-lasting-injury"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "第二次世界大戦末期の日本の「原爆投下と被害」について説明せよ。",
+          "answer": "1945年、日本ではアメリカが8月6日に**広島**、8月9日に**長崎**へ**原子爆弾**を投下した。**熱線と衝撃波**が市街や家屋を破壊した。爆発直後の破壊に加えて**放射線による急性障害**が生じ、その後も**原爆症**などで犠牲者が増えた。",
+          "keywords": [
+            "広島",
+            "長崎",
+            "原子爆弾",
+            "熱線と衝撃波",
+            "放射線による急性障害",
+            "原爆症"
+          ],
+          "evidence": [
+            "atomic-year",
+            "hiroshima-day",
+            "hiroshima-target",
+            "nagasaki-day-context",
+            "nagasaki-target",
+            "heat-damage",
+            "shock-damage",
+            "radiation-injury",
+            "lasting-injury",
+            "nagasaki-lasting-injury"
+          ]
+        }
+      ]
+    }
+  ]
+}

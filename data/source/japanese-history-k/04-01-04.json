@@ -1,0 +1,870 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 1,
+    "title": "安土桃山時代"
+  },
+  "part": {
+    "number": 4,
+    "title": "正親町天皇と織田信長"
+  },
+  "integrationPromptPrefix": "16世紀後半の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_01節_04_正親町天皇と織田信長_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      190,
+      191,
+      192,
+      193,
+      194,
+      195,
+      265
+    ],
+    "note": "190頁ニ見出しから195頁ホ見出し直前までの全本文を読み、191頁注⑪、192頁の南蛮人渡来図・長篠合戦図と注⑫、193頁注⑬⑭、194頁の正親町天皇の図説明と本能寺の図、195頁の信長公記の神宮寄進史料を含めた。190頁注⑨と191頁注⑩は前項目の関連資料なので、この抜粋では除いた。196頁は次項目の大坂城の説明で、担当範囲に対応する追加注がないことを確認した。同章265頁年表は本文の翌永禄十一年の上洛を1568年と確かめる同じ出来事の行のみ補足する。桶狭間1560、義昭追放1573、長篠1575、本能寺1582は本文の西暦併記を用いた。朝廷との関係、宗教・貿易、商業政策の時期は16世紀後半にまとめ、個々の行為を同一単年へ固定しない。安土城の本文の1576は築城開始と完成年の混同を避けて単独年暗記にせず、楽市・楽座も本文の近接記述と年表1577を混ぜた実施年を正答にしない。鉄砲隊の数、騎馬隊から個人戦・集団戦への唯一転換、戦国最強や最新兵器という評価、信長の戦術の独自性、天皇や信長への賛美、神宮寄進の金額と現代換算、中断期間や宗教的功績の評価、位階・官職の細目や人物の生没年、殺害や支配の正当化は問わない。信長のキリスト教への対応と一部仏教勢力との対立は政治的行動として記述し、宗教全体への善悪評価や焼き討ちの正しさを正答にしない。安土城の現存物・未再建など刊行時の現況は出題しない。宗教・貿易政策と商業政策の16世紀後半という時代幅は、この小項目の本文にある1560～1582年の出来事の範囲で確認するためのもので、1567年の美濃進出を別の宗教・商業政策の実施年とはしていない。"
+  },
+  "facts": [
+    {
+      "id": "okehazama",
+      "page": 191,
+      "quote": "信長は、永禄三年（一五六〇）に駿河（静岡県）の今川義元を桶狭間の戦いで破り、"
+    },
+    {
+      "id": "yoshiaki-request",
+      "page": 191,
+      "quote": "前将軍・足利義輝の弟・義昭が、室町幕府の再興を信長に依頼しました。"
+    },
+    {
+      "id": "yoshiaki-shogun",
+      "page": 191,
+      "quote": "信長は義昭とともに京に上り、幕府を再興して義昭を十五代将軍に擁立しました。"
+    },
+    {
+      "id": "entry-year",
+      "page": 265,
+      "quote": "| 1568 | 織田信長が上洛 |  |"
+    },
+    {
+      "id": "yoshiaki-opposition",
+      "page": 191,
+      "quote": "しかし、信長と義昭の関係はしだいに悪化しました。義昭は信長に敵対する勢力を結成しようと画策し、"
+    },
+    {
+      "id": "yoshiaki-expulsion",
+      "page": 191,
+      "quote": "元亀四年（一五七三）に義昭を京都から追放することになります。"
+    },
+    {
+      "id": "shogunate-end",
+      "page": 191,
+      "quote": "ここに二百三十年続いた室町幕府は滅亡しました。"
+    },
+    {
+      "id": "nagashino",
+      "page": 191,
+      "quote": "天正三年（一五七五）に甲斐（山梨県）の武田勝頼の騎馬隊を長篠の戦いで破り、"
+    },
+    {
+      "id": "gun-tactics",
+      "page": 191,
+      "quote": "信長は鉄砲の有効な戦術を生み出し、"
+    },
+    {
+      "id": "emperor-name",
+      "page": 191,
+      "quote": "第百六代正親町天皇は、信長に直接綸旨を宛てて"
+    },
+    {
+      "id": "emperor-approach-period",
+      "page": 191,
+      "quote": "信長が永禄十年（一五六七）に美濃（岐阜県）の斎藤龍興を追放すると、"
+    },
+    {
+      "id": "imperial-request",
+      "page": 191,
+      "quote": "尾張と美濃にある朝廷の御料地を回復し、宮廷経費を献上するように求めました。"
+    },
+    {
+      "id": "imperial-peace",
+      "page": 193,
+      "quote": "正親町天皇の勅命により、浅井氏・朝倉氏との和睦が成立しました。本願寺勢力との講和も天皇の勅命により成立しました。"
+    },
+    {
+      "id": "imperial-restoration",
+      "page": 193,
+      "quote": "信長も、朝廷の御料地を回復し、御所を造営し、親王の元服を実施し、元日の節会をはじめ途絶えていた朝廷の儀式を復興するなど、天皇の要望を次々と実現していきました。"
+    },
+    {
+      "id": "hiei-burning",
+      "page": 191,
+      "quote": "比叡山延暦寺（滋賀県）も反信長連合に加わったため、信長は延暦寺を焼き討ちにしました。"
+    },
+    {
+      "id": "honganji-surrender",
+      "page": 191,
+      "quote": "当時最大の宗教的武装勢力だった本願寺勢力（石山本願寺、大阪府）を降伏させ、"
+    },
+    {
+      "id": "christian-tolerance",
+      "page": 191,
+      "quote": "一部の仏教勢力とはぶつかり合った信長ですが、キリスト教には寛容でした。"
+    },
+    {
+      "id": "christian-activities",
+      "page": 191,
+      "quote": "布教を許し、教会の建設を認めました。"
+    },
+    {
+      "id": "trade-policy",
+      "page": 191,
+      "quote": "信長は宣教師を取り込むことで、積極的に南蛮文化を取り入れ、南蛮貿易を進めました。"
+    },
+    {
+      "id": "trade-policy-purpose",
+      "page": 191,
+      "quote": "その目的は経済力と軍事力を高めることでした。"
+    },
+    {
+      "id": "market-policy-name",
+      "page": 193,
+      "quote": "城下町には楽市・楽座を実施し、"
+    },
+    {
+      "id": "za-abolition",
+      "page": 193,
+      "quote": "特権が認められた同業者組合の座を廃止（楽座）して「楽市」とし、自由な商業活動を促進した。"
+    },
+    {
+      "id": "barriers-abolition",
+      "page": 193,
+      "quote": "関所を廃止するなどして、商人に自由な活動をさせ、商業が賑わいました。"
+    },
+    {
+      "id": "market-outcome",
+      "page": 193,
+      "quote": "それによって物資を調達しやすくなり、領地の経済が栄えました。"
+    },
+    {
+      "id": "azuchi-location",
+      "page": 193,
+      "quote": "近江（滋賀県）の琵琶湖の湖畔に五層の天守閣を持つ安土城を築きました。"
+    },
+    {
+      "id": "azuchi-purpose",
+      "page": 193,
+      "quote": "織田信長が天下統一のための拠点として築いた城。"
+    },
+    {
+      "id": "honnoji-name",
+      "page": 193,
+      "quote": "これを本能寺の変といいます。"
+    },
+    {
+      "id": "honnoji-death",
+      "page": 193,
+      "quote": "天下統一の道半ばで自害します。"
+    },
+    {
+      "id": "honnoji-place",
+      "page": 193,
+      "quote": "本能寺（京都府）にて"
+    },
+    {
+      "id": "mitsuhide-rebellion",
+      "page": 193,
+      "quote": "家臣の明智光秀の謀反により、"
+    },
+    {
+      "id": "honnoji-year",
+      "page": 193,
+      "quote": "信長は天正十年（一五八二）、"
+    },
+    {
+      "id": "azuchi-burned",
+      "page": 193,
+      "quote": "本能寺の変の後の混乱で焼失した。"
+    },
+    {
+      "id": "oda-decline",
+      "page": 193,
+      "quote": "信長の死後、織田氏は没落し、"
+    },
+    {
+      "id": "imperial-peace-asai",
+      "page": 193,
+      "quote": "正親町天皇の勅命により、浅井氏・朝倉氏との和睦が成立しました。"
+    },
+    {
+      "id": "imperial-palace",
+      "page": 193,
+      "quote": "信長も、朝廷の御料地を回復し、御所を造営し、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "織田信長の勢力拡大",
+      "reading": "おだのぶながのせいりょくかくだい",
+      "category": "戦国大名と幕府",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1560～1575年",
+        "sortYear": 1560
+      },
+      "explanation": "信長は桶狭間の戦いで今川義元を破り、足利義昭を将軍に擁立した。しかし義昭との対立が深まり、義昭の京都からの追放で室町幕府は滅亡した。長篠の戦いでは鉄砲を用いて武田勝頼を破った。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1560年の日本で、織田信長が駿河の今川義元を破った戦いは何か。",
+          "answer": "**桶狭間の戦い(おけはざまのたたかい)**。",
+          "keywords": [
+            "桶狭間の戦い"
+          ],
+          "evidence": [
+            "okehazama"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "1568年の日本で、織田信長の勢力拡大の過程で信長が京都へ伴い、室町幕府の第15代将軍に擁立したのは誰か。",
+          "answer": "**足利義昭(あしかがよしあき)**。",
+          "keywords": [
+            "足利義昭"
+          ],
+          "evidence": [
+            "yoshiaki-request",
+            "yoshiaki-shogun",
+            "entry-year"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の織田信長の勢力拡大について、信長との関係が悪化した足利義昭(あしかがよしあき)は、何を結成しようとしたか。",
+          "answer": "**信長に敵対する勢力**。",
+          "keywords": [
+            "信長に敵対する勢力"
+          ],
+          "evidence": [
+            "yoshiaki-opposition"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "1573年の日本で、織田信長の勢力拡大の過程で信長は足利義昭(あしかがよしあき)にどのような措置を取ったか。",
+          "answer": "**京都から追放**した。",
+          "keywords": [
+            "京都から追放"
+          ],
+          "evidence": [
+            "yoshiaki-expulsion"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "内容の確認",
+          "prompt": "1573年の日本の織田信長の勢力拡大について、足利義昭(あしかがよしあき)の京都からの追放は、室町幕府にどのような結果をもたらしたか。",
+          "answer": "**室町幕府が滅亡**した。",
+          "keywords": [
+            "室町幕府が滅亡"
+          ],
+          "evidence": [
+            "shogunate-end"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1575年の日本で、織田信長が鉄砲を用いて武田勝頼(たけだかつより)を破った戦いは何か。",
+          "answer": "**長篠の戦い(ながしののたたかい)**。",
+          "keywords": [
+            "長篠の戦い"
+          ],
+          "evidence": [
+            "nagashino",
+            "gun-tactics"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の織田信長の勢力拡大について、桶狭間の戦いから京都への進出はどのように進んだか。",
+          "answer": "1560年の日本で、信長は**桶狭間の戦い(おけはざまのたたかい)**で今川義元を破った。1568年には**足利義昭(あしかがよしあき)**とともに京都へ上り、義昭を室町幕府の第15代将軍に擁立した。",
+          "keywords": [
+            "桶狭間の戦い",
+            "足利義昭"
+          ],
+          "evidence": [
+            "okehazama",
+            "yoshiaki-request",
+            "yoshiaki-shogun",
+            "entry-year"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の織田信長の勢力拡大について、信長と足利義昭(あしかがよしあき)の対立は室町幕府にどのような変化をもたらしたか。",
+          "answer": "信長との関係が悪化した義昭は、**信長に敵対する勢力**を結成しようとした。1573年、信長は義昭を**京都から追放**し、**室町幕府が滅亡**した。",
+          "keywords": [
+            "信長に敵対する勢力",
+            "京都から追放",
+            "室町幕府が滅亡"
+          ],
+          "evidence": [
+            "yoshiaki-opposition",
+            "yoshiaki-expulsion",
+            "shogunate-end"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の織田信長の勢力拡大について、長篠の戦いではどのような戦闘が行われたか。",
+          "answer": "1575年、信長は**長篠の戦い(ながしののたたかい)**で**鉄砲**を用い、**武田勝頼(たけだかつより)**を破った。",
+          "keywords": [
+            "長篠の戦い",
+            "鉄砲",
+            "武田勝頼"
+          ],
+          "evidence": [
+            "nagashino",
+            "gun-tactics"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀後半の日本の「織田信長の勢力拡大」について説明せよ。",
+          "answer": "日本の織田信長は1560年の**桶狭間の戦い(おけはざまのたたかい)**で今川義元を破り、1568年に**足利義昭(あしかがよしあき)**と京都へ上って、義昭を室町幕府の第15代将軍に擁立した。やがて義昭は**信長に敵対する勢力**を結成しようとし、1573年に信長が義昭を**京都から追放**して、**室町幕府が滅亡**した。1575年の**長篠の戦い(ながしののたたかい)**では**鉄砲**を用いて**武田勝頼(たけだかつより)**を破った。",
+          "keywords": [
+            "桶狭間の戦い",
+            "足利義昭",
+            "信長に敵対する勢力",
+            "京都から追放",
+            "室町幕府が滅亡",
+            "長篠の戦い",
+            "鉄砲",
+            "武田勝頼"
+          ],
+          "evidence": [
+            "okehazama",
+            "yoshiaki-request",
+            "yoshiaki-shogun",
+            "entry-year",
+            "yoshiaki-opposition",
+            "yoshiaki-expulsion",
+            "shogunate-end",
+            "nagashino",
+            "gun-tactics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "朝廷と織田信長",
+      "reading": "ちょうていとおだのぶなが",
+      "category": "朝廷との関係",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "16世紀後半",
+        "sortYear": 1567
+      },
+      "explanation": "朝廷は信長に御料地の回復や宮廷経費の献上を求め、信長は御所や朝廷の儀式の復興を進めた。天皇の勅命は信長と敵対勢力との和睦・講和にも用いられ、朝廷と信長の関係は政治と財政の両面に及んだ。",
+      "questions": [
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の朝廷と織田信長について、正親町天皇(おおぎまちてんのう)が信長に回復を求めた、朝廷の領地は何か。",
+          "answer": "**朝廷の御料地(ごりょうち)**。",
+          "keywords": [
+            "朝廷の御料地"
+          ],
+          "evidence": [
+            "imperial-request"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の朝廷と織田信長について、浅井氏(あざいし)・朝倉氏と信長の争いで、天皇の勅命(ちょくめい)は何を成立させたか。",
+          "answer": "**浅井氏(あざいし)・朝倉氏との和睦**。",
+          "keywords": [
+            "浅井氏・朝倉氏との和睦"
+          ],
+          "evidence": [
+            "imperial-peace-asai"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の朝廷と織田信長について、信長が朝廷の施設として造営したものは何か。",
+          "answer": "**御所**。",
+          "keywords": [
+            "御所"
+          ],
+          "evidence": [
+            "imperial-palace"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の朝廷と織田信長について、朝廷の財政や儀式にどのような対応が行われたか。",
+          "answer": "16世紀後半の日本で、**正親町天皇(おおぎまちてんのう)**は信長に**朝廷の御料地(ごりょうち)**の回復と宮廷経費の献上を求めた。信長は御料地を回復し、**御所**を造営して、**朝廷の儀式の復興**を進めた。",
+          "keywords": [
+            "正親町天皇",
+            "朝廷の御料地",
+            "御所",
+            "朝廷の儀式の復興"
+          ],
+          "evidence": [
+            "emperor-name",
+            "emperor-approach-period",
+            "imperial-request",
+            "imperial-restoration"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の朝廷と織田信長について、天皇は信長と敵対勢力との争いにどのような役割を果たしたか。",
+          "answer": "**正親町天皇(おおぎまちてんのう)**の**勅命(ちょくめい)**によって**浅井氏(あざいし)**・**朝倉氏**との**和睦**が成立し、**本願寺勢力との講和**にも天皇の勅命が用いられた。",
+          "keywords": [
+            "正親町天皇",
+            "勅命",
+            "浅井氏",
+            "朝倉氏",
+            "和睦",
+            "本願寺勢力との講和"
+          ],
+          "evidence": [
+            "imperial-peace"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀後半の日本の「朝廷と織田信長」について説明せよ。",
+          "answer": "16世紀後半の日本で、**正親町天皇(おおぎまちてんのう)**は織田信長に**朝廷の御料地(ごりょうち)**の回復と宮廷経費の献上を求めた。信長は御料地回復や**御所**造営、**朝廷の儀式の復興**を進めた。天皇の**勅命(ちょくめい)**は**浅井氏(あざいし)**・**朝倉氏**との**和睦**や**本願寺勢力との講和**を成立させる役割も果たした。",
+          "keywords": [
+            "正親町天皇",
+            "朝廷の御料地",
+            "御所",
+            "朝廷の儀式の復興",
+            "勅命",
+            "浅井氏",
+            "朝倉氏",
+            "和睦",
+            "本願寺勢力との講和"
+          ],
+          "evidence": [
+            "emperor-name",
+            "emperor-approach-period",
+            "imperial-request",
+            "imperial-restoration",
+            "imperial-peace"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "信長の宗教・貿易政策",
+      "reading": "のぶながのしゅうきょうぼうえきせいさく",
+      "category": "宗教勢力と対外交易",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "16世紀後半",
+        "sortYear": 1571
+      },
+      "explanation": "信長は一部の仏教勢力と対立して寺院への攻撃や降伏を行う一方、キリスト教の布教と教会建設を認めた。宣教師との関係を通じて南蛮文化や貿易を取り入れ、経済力と軍事力を高めようとした。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "16世紀後半の日本で、反信長連合に加わり、織田信長によって焼き討ちされた寺院はどこか。",
+          "answer": "**比叡山延暦寺(ひえいざんえんりゃくじ)**。",
+          "keywords": [
+            "比叡山延暦寺"
+          ],
+          "evidence": [
+            "hiei-burning"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の信長の宗教・貿易政策について、一部の仏教勢力との対立とは異なり、信長が寛容な方針を取った宗教は何か。",
+          "answer": "**キリスト教**。",
+          "keywords": [
+            "キリスト教"
+          ],
+          "evidence": [
+            "christian-tolerance"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の信長の宗教・貿易政策について、信長がキリスト教に認めた具体的な活動は何か。",
+          "answer": "**布教と教会の建設**。",
+          "keywords": [
+            "布教と教会の建設"
+          ],
+          "evidence": [
+            "christian-activities"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の信長の宗教・貿易政策について、宣教師を取り込み南蛮貿易を進めた目的は、どのような力を高めることか。",
+          "answer": "**経済力と軍事力**。",
+          "keywords": [
+            "経済力と軍事力"
+          ],
+          "evidence": [
+            "trade-policy",
+            "trade-policy-purpose"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の信長の宗教・貿易政策について、一部の仏教勢力とキリスト教にはどのような対応を取ったか。",
+          "answer": "16世紀後半の日本で、信長は反信長連合に加わった**比叡山延暦寺(ひえいざんえんりゃくじ)**を焼き討ちし、**本願寺勢力**を降伏させた。一方、**キリスト教**には寛容で、**布教と教会の建設**を認めた。",
+          "keywords": [
+            "比叡山延暦寺",
+            "本願寺勢力",
+            "キリスト教",
+            "布教と教会の建設"
+          ],
+          "evidence": [
+            "hiei-burning",
+            "honganji-surrender",
+            "christian-tolerance",
+            "christian-activities"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の信長の宗教・貿易政策について、宣教師との関係と南蛮貿易はどのような目的で進められたか。",
+          "answer": "信長は**経済力と軍事力**を高めるため、宣教師を取り込み、南蛮文化を取り入れて**南蛮貿易**を進めた。",
+          "keywords": [
+            "経済力と軍事力",
+            "南蛮貿易"
+          ],
+          "evidence": [
+            "trade-policy",
+            "trade-policy-purpose"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀後半の日本の「信長の宗教・貿易政策」について説明せよ。",
+          "answer": "16世紀後半の日本で、織田信長は反信長連合に加わった**比叡山延暦寺(ひえいざんえんりゃくじ)**を焼き討ちし、**本願寺勢力**を降伏させた。**キリスト教**には寛容で、**布教と教会の建設**を認めた。**経済力と軍事力**を高める目的で宣教師を取り込み、南蛮文化を取り入れて**南蛮貿易**を進めた。",
+          "keywords": [
+            "比叡山延暦寺",
+            "本願寺勢力",
+            "キリスト教",
+            "布教と教会の建設",
+            "経済力と軍事力",
+            "南蛮貿易"
+          ],
+          "evidence": [
+            "hiei-burning",
+            "honganji-surrender",
+            "christian-tolerance",
+            "christian-activities",
+            "trade-policy",
+            "trade-policy-purpose"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "楽市・楽座と商業政策",
+      "reading": "らくいちらくざとしょうぎょうせいさく",
+      "category": "経済政策と政権の拠点",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "16世紀後半",
+        "sortYear": 1576
+      },
+      "explanation": "安土城の城下町では、座の特権や関所による制約を取り除いて商人の自由な活動を促した。商業の活発化は物資の調達をしやすくし、領地の経済にも影響した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "16世紀後半の日本で、織田信長が城下町の自由な商業活動を促進するために実施した政策は何か。",
+          "answer": "**楽市・楽座(らくいちらくざ)**。",
+          "keywords": [
+            "楽市・楽座"
+          ],
+          "evidence": [
+            "market-policy-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の楽市・楽座と商業政策で、廃止された「座」はどのような組織だったか。",
+          "answer": "**特権が認められた同業者組合**。",
+          "keywords": [
+            "特権が認められた同業者組合"
+          ],
+          "evidence": [
+            "za-abolition"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本の楽市・楽座と商業政策について、商人の自由な活動のため、座のほかに廃止された施設は何か。",
+          "answer": "**関所(せきしょ)**。",
+          "keywords": [
+            "関所"
+          ],
+          "evidence": [
+            "barriers-abolition"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "16世紀後半の日本で、織田信長が琵琶湖湖畔に築き、城下町で楽市・楽座(らくいちらくざ)を行った城は何か。",
+          "answer": "**安土城(あづちじょう)**。",
+          "keywords": [
+            "安土城"
+          ],
+          "evidence": [
+            "azuchi-location",
+            "market-policy-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の楽市・楽座と商業政策は、商人の活動と領地の経済をどのように変えたか。",
+          "answer": "信長は**特権が認められた同業者組合の座**や**関所(せきしょ)**を廃止して、**商人の自由な活動**を促した。物資を調達しやすくなり、領地の経済が栄えた。",
+          "keywords": [
+            "特権が認められた同業者組合の座",
+            "関所",
+            "商人の自由な活動"
+          ],
+          "evidence": [
+            "za-abolition",
+            "barriers-abolition",
+            "market-outcome"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の楽市・楽座と商業政策について、信長の政権の拠点と商業活動はどのように結び付いたか。",
+          "answer": "16世紀後半の日本で、信長は天下統一の拠点として琵琶湖湖畔に**安土城(あづちじょう)**を築き、その城下町で**楽市・楽座(らくいちらくざ)**を実施した。",
+          "keywords": [
+            "安土城",
+            "楽市・楽座"
+          ],
+          "evidence": [
+            "azuchi-location",
+            "azuchi-purpose",
+            "market-policy-name"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀後半の日本の「楽市・楽座と商業政策」について説明せよ。",
+          "answer": "16世紀後半の日本で、織田信長は琵琶湖湖畔に**安土城(あづちじょう)**を築き、城下町で**楽市・楽座(らくいちらくざ)**を実施した。**特権が認められた同業者組合の座**や**関所(せきしょ)**を廃止して**商人の自由な活動**を促した。物資を調達しやすくなり、領地の経済が栄えた。",
+          "keywords": [
+            "安土城",
+            "楽市・楽座",
+            "特権が認められた同業者組合の座",
+            "関所",
+            "商人の自由な活動"
+          ],
+          "evidence": [
+            "azuchi-location",
+            "market-policy-name",
+            "za-abolition",
+            "barriers-abolition",
+            "market-outcome"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "本能寺の変",
+      "reading": "ほんのうじのへん",
+      "category": "信長の死と政治の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1582年",
+        "sortYear": 1582
+      },
+      "explanation": "信長は家臣の明智光秀の謀反によって、天下統一の途中で自害した。本能寺の変後の混乱で安土城が焼失し、信長の死後に織田氏も没落した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "16世紀後半の日本で、織田信長が京都の寺院で家臣の謀反により、天下統一の道半ばで自害した事件は何か。",
+          "answer": "**本能寺の変**。",
+          "keywords": [
+            "本能寺の変"
+          ],
+          "evidence": [
+            "honnoji-name",
+            "honnoji-death",
+            "honnoji-place"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "内容の確認",
+          "prompt": "16世紀後半の日本で、本能寺の変を起こした信長の家臣は誰か。",
+          "answer": "**明智光秀(あけちみつひで)**。",
+          "keywords": [
+            "明智光秀"
+          ],
+          "evidence": [
+            "mitsuhide-rebellion"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "16世紀後半の日本で、本能寺の変が起きたのは何年か。",
+          "answer": "1582年。",
+          "keywords": [],
+          "evidence": [
+            "honnoji-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀後半の日本の本能寺の変は、信長の天下統一とその政権にどのような変化をもたらしたか。",
+          "answer": "1582年の日本で、信長は天下統一の途中で自害した。その死後に**織田氏が没落**し、本能寺の変後の混乱で**安土城が焼失**した。",
+          "keywords": [
+            "織田氏が没落",
+            "安土城が焼失"
+          ],
+          "evidence": [
+            "honnoji-year",
+            "honnoji-death",
+            "oda-decline",
+            "azuchi-burned"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀後半の日本の「本能寺の変」について説明せよ。",
+          "answer": "1582年、日本の京都の本能寺で、織田信長は家臣の**明智光秀(あけちみつひで)**の謀反によって天下統一の道半ばで自害した。その後の混乱で**安土城が焼失**し、信長の死後に**織田氏が没落**した。",
+          "keywords": [
+            "明智光秀",
+            "安土城が焼失",
+            "織田氏が没落"
+          ],
+          "evidence": [
+            "honnoji-year",
+            "honnoji-place",
+            "mitsuhide-rebellion",
+            "honnoji-death",
+            "honnoji-name",
+            "azuchi-burned",
+            "oda-decline"
+          ]
+        }
+      ]
+    }
+  ]
+}

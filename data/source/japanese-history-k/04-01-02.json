@@ -1,0 +1,618 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 1,
+    "title": "安土桃山時代"
+  },
+  "part": {
+    "number": 2,
+    "title": "大航海時代"
+  },
+  "integrationPromptPrefix": "近世初期のヨーロッパの",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_01節_02_大航海時代_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      188,
+      189,
+      190,
+      265
+    ],
+    "note": "188～190頁のロ本文、関連注⑦⑧・全図版説明・時代区分を最後まで読み、航路開拓の技術と目的、トルデシリャス条約とアジア進出、植民地支配と奴隷・三角貿易の関係を採用する。265頁は同じ出来事であるダ・ガマのインド到達1498年のみ補足する。コロンブス1492年は注記のカリブ海の島への到達とし、本文/年表の大陸到達という表現は採用せず、現イギリス領という現状表記も引用から外す。マゼラン本人の世界周航とはしない。イスラム勢力が地中海全体を一律に支配したという原因づけ、教皇承認と条約の全球的な分割や日本分断、植民地支配の正当化や民族・宗教の評価は出題しない。条約による分割は二国間の取り決めとして扱い、フィリピン支配が条約の直接の結果であるとはしない。コルテス/ピサロの個別年と拷問・処刑の詳細、元がイスラム世界全体を征服したという一律の説明、奴隷の人数・死亡率・船の定員・長期継続年数・ヨーロッパ全体の利益という評価は不採用。植民地化の時期は本文の大航海時代の説明から15世紀後半以降とし、奴隷/三角貿易全体の開始単年を補わない。190頁の港名一覧は次項の貿易に関係する背景として読んだが出題せず、ハ本文は範囲外。"
+  },
+  "facts": [
+    {
+      "id": "navigation-compass",
+      "page": 188,
+      "quote": "ヨーロッパでは羅針盤の改良により、航海技術が格段に進歩して、海洋進出が盛んになりました。"
+    },
+    {
+      "id": "navigation-countries",
+      "page": 188,
+      "quote": "特にポルトガルとスペインは競うように東洋（特にインドなど）への航路を開拓していきます。"
+    },
+    {
+      "id": "navigation-missions",
+      "page": 188,
+      "quote": "その目的は東洋にキリスト教を布教することと、"
+    },
+    {
+      "id": "navigation-spices",
+      "page": 188,
+      "quote": "イスラム商人が仲介して高騰した香辛料を直接手に入れることでした。"
+    },
+    {
+      "id": "gama-voyage",
+      "page": 188,
+      "quote": "ポルトガルはバスコ・ダ・ガマの艦隊を派遣して、アフリカの西海岸を南下し、インドに至る航路を発見しました。"
+    },
+    {
+      "id": "gama-year",
+      "page": 265,
+      "quote": "バスコ・ダ・ガマがインドに到達（1498）"
+    },
+    {
+      "id": "columbus-plan",
+      "page": 188,
+      "quote": "スペインはコロンブスの計画を支援して大西洋に乗り出しアジアへ至る航路を模索し、"
+    },
+    {
+      "id": "columbus-plan-year",
+      "page": 188,
+      "quote": "スペインはコロンブスの計画を支援して大西洋に乗り出しアジアへ至る航路を模索し、一四九二年、"
+    },
+    {
+      "id": "columbus-island",
+      "page": 188,
+      "quote": "コロンブスはカリブ海のサンサルバドル島"
+    },
+    {
+      "id": "columbus-arrival",
+      "page": 188,
+      "quote": "に到達したが、その地をインドであると信じていた。"
+    },
+    {
+      "id": "magellan-voyage",
+      "page": 188,
+      "quote": "マゼランの艦隊は、一五二二年に世界周航を達成しました。"
+    },
+    {
+      "id": "exploration-era",
+      "page": 188,
+      "quote": "この十五世紀後半の海洋進出と植民地拡大の時代を大航海時代といいます。"
+    },
+    {
+      "id": "tordesillas-name",
+      "page": 188,
+      "quote": "トルデシリャス条約を結びました。"
+    },
+    {
+      "id": "tordesillas-countries-year",
+      "page": 188,
+      "quote": "一四九四年、スペインとポルトガルはトルデシリャス条約を結びました。"
+    },
+    {
+      "id": "tordesillas-partition",
+      "page": 188,
+      "quote": "ヨーロッパからアジアに向かう海洋を二国間で分割した条約です。"
+    },
+    {
+      "id": "asia-colonization",
+      "page": 188,
+      "quote": "アジアでも両国による植民地化が進められ、フィリピンはフェリペ二世の名のもとにスペインに支配されていきました。"
+    },
+    {
+      "id": "colonial-conquest",
+      "page": 188,
+      "quote": "アメリカ大陸に到達したスペイン人は武力によって反抗先住民族を征服し、植民地支配を進めました。"
+    },
+    {
+      "id": "indigenous-decline",
+      "page": 188,
+      "quote": "厳しい強制労働と、ヨーロッパから持ち込まれた伝染病で人口が激減すると、"
+    },
+    {
+      "id": "slavery-transport",
+      "page": 188,
+      "quote": "ヨーロッパの人々はアフリカの人々を捕らえて奴隷としてアメリカ大陸に連行しました。これが奴隷貿易です。"
+    },
+    {
+      "id": "triangle-africa-america",
+      "page": 188,
+      "quote": "アフリカ大陸からアメリカ大陸には奴隷、"
+    },
+    {
+      "id": "triangle-america-europe",
+      "page": 188,
+      "quote": "アメリカ大陸からヨーロッパには砂糖・たばこ・綿など、"
+    },
+    {
+      "id": "triangle-europe-africa",
+      "page": 188,
+      "quote": "ヨーロッパからアフリカ大陸には武器や雑貨類がそれぞれ輸出された。"
+    },
+    {
+      "id": "triangle-name",
+      "page": 188,
+      "quote": "この「三角貿易」"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "大航海時代の航路開拓",
+      "reading": "だいこうかいじだいのこうろかいたく",
+      "category": "航海・交流",
+      "geographyLabel": "ヨーロッパ",
+      "integrationPromptPrefix": "近世初期のヨーロッパの",
+      "chronology": {
+        "displayPeriod": "15世紀後半～16世紀",
+        "sortYear": 1450
+      },
+      "explanation": "ポルトガルとスペインは、香辛料を直接手に入れることとキリスト教の布教を目指して東洋への航路を求めた。ダ・ガマの艦隊はアフリカの西海岸を南下してインドへ到達し、スペインの支援を受けたコロンブスは大西洋に乗り出してカリブ海の島へ到達した。マゼランの艦隊は世界周航を達成した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "15世紀末の大航海時代の航路開拓について、ポルトガルが派遣し、アフリカの西海岸を南下してインドに至る航路を開いた艦隊の指導者は誰か。",
+          "answer": "**バスコ・ダ・ガマ**。",
+          "evidence": [
+            "gama-voyage"
+          ],
+          "keywords": [
+            "バスコ・ダ・ガマ"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "15世紀末の大航海時代の航路開拓について、スペインの支援で大西洋に乗り出し、アジアへ至る航路を探した航海者は誰か。",
+          "answer": "**コロンブス**。",
+          "evidence": [
+            "columbus-plan"
+          ],
+          "keywords": [
+            "コロンブス"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "16世紀の大航海時代の航路開拓について、1522年に世界周航を達成したのは、誰の艦隊か。",
+          "answer": "**マゼランの艦隊**。",
+          "evidence": [
+            "magellan-voyage"
+          ],
+          "keywords": [
+            "マゼランの艦隊"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "15～16世紀のヨーロッパの大航海時代の航路開拓について、改良されて航海技術の進歩を支えた道具は何か。",
+          "answer": "**羅針盤(らしんばん)**。",
+          "evidence": [
+            "navigation-compass"
+          ],
+          "keywords": [
+            "羅針盤"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "短答",
+          "prompt": "15～16世紀の大航海時代の航路開拓について、ポルトガルとスペインが東洋から直接手に入れようとした商品は何か。",
+          "answer": "**香辛料**。",
+          "evidence": [
+            "navigation-spices"
+          ],
+          "keywords": [
+            "香辛料"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "短答",
+          "prompt": "15～16世紀の大航海時代の航路開拓について、ポルトガルとスペインが東洋への航路を求めた宗教的な目的は何か。",
+          "answer": "**キリスト教の布教**。",
+          "evidence": [
+            "navigation-missions"
+          ],
+          "keywords": [
+            "キリスト教の布教"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "15世紀末の大航海時代の航路開拓について、コロンブスが到達した島は、どの海域にあったか。",
+          "answer": "**カリブ海**。",
+          "evidence": [
+            "columbus-island",
+            "columbus-arrival"
+          ],
+          "keywords": [
+            "カリブ海"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世初期のヨーロッパの大航海時代の航路開拓について、航海を支えた技術と、東洋を目指した目的を説明せよ。",
+          "answer": "15世紀後半から16世紀のヨーロッパでは、**羅針盤(らしんばん)**の改良によって航海技術が進歩した。ポルトガルとスペインは、**香辛料の直接入手**と**キリスト教の布教**を目指し、東洋への航路を開拓した。",
+          "evidence": [
+            "navigation-compass",
+            "navigation-countries",
+            "navigation-missions",
+            "navigation-spices",
+            "exploration-era",
+            "magellan-voyage"
+          ],
+          "keywords": [
+            "羅針盤",
+            "香辛料の直接入手",
+            "キリスト教の布教"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世初期のヨーロッパの大航海時代の航路開拓について、ダ・ガマとコロンブスの進路と到達先の違いを説明せよ。",
+          "answer": "ポルトガルの**バスコ・ダ・ガマ**の艦隊は、**アフリカの西海岸を南下**し、1498年に**インド**へ到達した。スペインの支援を受けた**コロンブス**は**大西洋**に乗り出し、1492年に**カリブ海の島**へ到達した。",
+          "evidence": [
+            "gama-voyage",
+            "gama-year",
+            "columbus-plan-year",
+            "columbus-island",
+            "columbus-arrival"
+          ],
+          "keywords": [
+            "バスコ・ダ・ガマ",
+            "アフリカの西海岸を南下",
+            "インド",
+            "コロンブス",
+            "大西洋",
+            "カリブ海の島"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世初期のヨーロッパの大航海時代の航路開拓について、マゼランの艦隊が達成した航海の成果を説明せよ。",
+          "answer": "**マゼランの艦隊**は1522年に**世界周航**を達成した。",
+          "evidence": [
+            "magellan-voyage"
+          ],
+          "keywords": [
+            "マゼランの艦隊",
+            "世界周航"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近世初期のヨーロッパの「大航海時代の航路開拓」について説明せよ。",
+          "answer": "15世紀後半から16世紀のヨーロッパでは、**羅針盤(らしんばん)**の改良を背景に、ポルトガルとスペインが**香辛料の直接入手**と**キリスト教の布教**を目指して航路を開拓した。**バスコ・ダ・ガマ**の艦隊は**アフリカの西海岸を南下**して1498年に**インド**へ到達し、スペインの支援を受けた**コロンブス**は**大西洋**に乗り出して1492年に**カリブ海の島**へ到達した。**マゼランの艦隊**は1522年に**世界周航**を達成した。",
+          "evidence": [
+            "navigation-compass",
+            "navigation-countries",
+            "navigation-missions",
+            "navigation-spices",
+            "exploration-era",
+            "gama-voyage",
+            "gama-year",
+            "columbus-plan-year",
+            "columbus-island",
+            "columbus-arrival",
+            "magellan-voyage"
+          ],
+          "keywords": [
+            "羅針盤",
+            "香辛料の直接入手",
+            "キリスト教の布教",
+            "バスコ・ダ・ガマ",
+            "アフリカの西海岸を南下",
+            "インド",
+            "コロンブス",
+            "大西洋",
+            "カリブ海の島",
+            "マゼランの艦隊",
+            "世界周航"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "トルデシリャス条約と海外支配",
+      "reading": "とるでしりゃすじょうやくとかいがいしはい",
+      "category": "条約・植民地",
+      "geographyLabel": "スペイン",
+      "integrationPromptPrefix": "近世初期のスペインとポルトガルの",
+      "chronology": {
+        "displayPeriod": "15世紀末～16世紀",
+        "sortYear": 1494
+      },
+      "explanation": "スペインとポルトガルはトルデシリャス条約を結び、海洋を二国間で分割する取り決めをした。両国の進出はアジアへも及び、フィリピンではスペインの植民地支配が進められた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "15世紀末にヨーロッパの海洋進出国が結び、アジアへ向かう海洋を二国間で分割する内容を定めた条約は何か。",
+          "answer": "**トルデシリャス条約**。",
+          "evidence": [
+            "tordesillas-name",
+            "tordesillas-partition"
+          ],
+          "keywords": [
+            "トルデシリャス条約"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "15世紀末のトルデシリャス条約と海外支配について、この条約を結んだ二国はどこか。",
+          "answer": "**スペインとポルトガル**。",
+          "evidence": [
+            "tordesillas-countries-year"
+          ],
+          "keywords": [
+            "スペインとポルトガル"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "近世初期のトルデシリャス条約と海外支配について、スペインがアジアで植民地支配を進めた地域はどこか。",
+          "answer": "**フィリピン**。",
+          "evidence": [
+            "asia-colonization"
+          ],
+          "keywords": [
+            "フィリピン"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世初期のトルデシリャス条約と海外支配について、条約の当事国と取り決めの内容を説明せよ。",
+          "answer": "1494年のヨーロッパで、**スペインとポルトガル**は**トルデシリャス条約**を結び、**海洋を二国間で分割**する取り決めをした。",
+          "evidence": [
+            "tordesillas-countries-year",
+            "tordesillas-partition"
+          ],
+          "keywords": [
+            "スペインとポルトガル",
+            "トルデシリャス条約",
+            "海洋を二国間で分割"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世初期のトルデシリャス条約と海外支配について、アジアへの進出とフィリピンの支配を説明せよ。",
+          "answer": "スペインとポルトガルによる植民地化はアジアでも進められ、**フィリピン**は**スペイン**に支配された。",
+          "evidence": [
+            "asia-colonization"
+          ],
+          "keywords": [
+            "フィリピン",
+            "スペイン"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近世初期のスペインとポルトガルの「トルデシリャス条約と海外支配」について説明せよ。",
+          "answer": "1494年のヨーロッパで、**スペインとポルトガル**は**トルデシリャス条約**を結び、**海洋を二国間で分割**する取り決めをした。また、両国によるアジアへの植民地化が進められ、**フィリピン**は**スペイン**に支配された。",
+          "evidence": [
+            "tordesillas-countries-year",
+            "tordesillas-partition",
+            "asia-colonization"
+          ],
+          "keywords": [
+            "スペインとポルトガル",
+            "トルデシリャス条約",
+            "海洋を二国間で分割",
+            "フィリピン",
+            "スペイン"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "植民地支配と奴隷・三角貿易",
+      "reading": "しょくみんちしはいとどれいさんかくぼうえき",
+      "category": "植民地・貿易",
+      "geographyLabel": "アメリカ大陸",
+      "integrationPromptPrefix": "近世の大西洋地域の",
+      "chronology": {
+        "displayPeriod": "15世紀後半以降",
+        "sortYear": 1450
+      },
+      "explanation": "アメリカ大陸ではスペイン人による先住民族の征服と植民地化が進んだ。植民地での強制労働や伝染病は先住民の人口減少をもたらし、アフリカの人々が奴隷としてアメリカ大陸へ連行された。三角貿易は、この強制移送と大陸間の産物・武器などの取引を組み合わせていた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "近世の大西洋地域で、アフリカの人々を捕らえ、アメリカ大陸へ強制的に連行した取引を何というか。",
+          "answer": "**奴隷貿易**。",
+          "evidence": [
+            "slavery-transport"
+          ],
+          "keywords": [
+            "奴隷貿易"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "短答",
+          "prompt": "近世の植民地支配と奴隷・三角貿易について、アメリカ大陸の先住民の人口が減少した原因は何か。",
+          "answer": "**強制労働と伝染病**。",
+          "evidence": [
+            "indigenous-decline"
+          ],
+          "keywords": [
+            "強制労働と伝染病"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "近世の植民地支配と奴隷・三角貿易について、アメリカ大陸からヨーロッパへ輸出された農産物を一つ答えよ。",
+          "answer": "**砂糖**（**たばこ**・**綿**なども可）。",
+          "evidence": [
+            "triangle-america-europe"
+          ],
+          "keywords": [
+            "砂糖",
+            "たばこ",
+            "綿"
+          ],
+          "note": "",
+          "acceptedAnswers": [
+            "砂糖",
+            "たばこ",
+            "綿"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世の植民地支配と奴隷・三角貿易について、スペイン人によるアメリカ大陸での支配と先住民の人口減少を説明せよ。",
+          "answer": "15世紀後半以降、スペイン人はアメリカ大陸の**先住民族を武力で征服**し、**植民地支配**を進めた。先住民の人口は**強制労働と伝染病**によって減少した。",
+          "evidence": [
+            "exploration-era",
+            "colonial-conquest",
+            "indigenous-decline"
+          ],
+          "keywords": [
+            "先住民族を武力で征服",
+            "植民地支配",
+            "強制労働と伝染病"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "要点説明",
+          "prompt": "近世の植民地支配と奴隷・三角貿易について、アフリカ・アメリカ・ヨーロッパを結んだ取引を説明せよ。",
+          "answer": "アフリカの人々を捕らえ、奴隷としてアメリカ大陸へ連行する**奴隷貿易**が行われた。**三角貿易**では、アフリカからアメリカへ奴隷、アメリカからヨーロッパへ**砂糖・たばこ・綿**など、ヨーロッパからアフリカへ**武器・雑貨類**が運ばれた。",
+          "evidence": [
+            "slavery-transport",
+            "triangle-africa-america",
+            "triangle-america-europe",
+            "triangle-europe-africa",
+            "triangle-name"
+          ],
+          "keywords": [
+            "奴隷貿易",
+            "三角貿易",
+            "砂糖・たばこ・綿",
+            "武器・雑貨類"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "近世の大西洋地域の「植民地支配と奴隷・三角貿易」について説明せよ。",
+          "answer": "15世紀後半以降、スペインはアメリカ大陸の**先住民族を武力で征服**し、**植民地支配**を進めた。**強制労働と伝染病**によって先住民の人口が減少するなか、ヨーロッパの人々はアフリカの人々を捕らえ、**奴隷貿易**によってアメリカ大陸へ連行した。**三角貿易**では、アフリカからアメリカへ奴隷、アメリカからヨーロッパへ**砂糖・たばこ・綿**など、ヨーロッパからアフリカへ**武器・雑貨類**が運ばれた。",
+          "evidence": [
+            "exploration-era",
+            "colonial-conquest",
+            "indigenous-decline",
+            "slavery-transport",
+            "triangle-africa-america",
+            "triangle-america-europe",
+            "triangle-europe-africa",
+            "triangle-name"
+          ],
+          "keywords": [
+            "先住民族を武力で征服",
+            "植民地支配",
+            "強制労働と伝染病",
+            "奴隷貿易",
+            "三角貿易",
+            "砂糖・たばこ・綿",
+            "武器・雑貨類"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,598 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 2,
+    "title": "江戸時代"
+  },
+  "part": {
+    "number": 13,
+    "title": "天保の大飢饉と天保の改革"
+  },
+  "integrationPromptPrefix": "江戸時代後期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_02節_13_天保の大飢饉と天保の改革_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      247,
+      248,
+      249
+    ],
+    "note": "247頁ワから248頁カ見出し直前の本文と、248頁の大塩平八郎・水野忠邦の図版説明および注53、249頁末の注54をすべて通読した。248頁冒頭の藩政改革は13の本文の続きであり、海防の勅の本文・史料は対象外。注53と54は関連補足として元掲載頁を保って収録する。265〜268頁年表・まとめも通読したが、出題の日時は本文と同じ出来事の図版説明で足りるため、空欄の推定や別の出来事の持込みをしない。1833年は飢饉、1837年は大塩の乱、1841年は水野忠邦の本格的な幕政改革着手、1843年は人返しの法に対応させ、改革全体が1843年に初めて始まったとはしない。19世紀の藩政改革という時代幅は、1841年・1843年の幕政改革と並べて記す同じ本文の『他方』の位置関係に基づく大まかな時代枠であり、各藩の政策実施年を推定する根拠にしない。米価高騰、豪商の米買い占めに対する反乱、幕府の元役人という立場、農村再建・商業や娯楽の統制、政策への反発と藩の財政・軍事再建を扱う。大塩の賛美・反乱の正当性、豪商や奉行所への一律評価、強引という改革の善悪、政治失敗の唯一原因、すべての政策の成果・全国一律の強制範囲は正答にしない。飢饉の死亡数、人物の生没年・私生活・私塾の細部、改革の正確な継続月数・減封や転封、藩と改革者の全対応一覧、炉の熱原理・現存唯一や現在の世界遺産指定も独立暗記にしない。上知令など対象原文にない政策や、外部の法令条文・実施年は追加しない。大塩平八郎の名前は通常の説明で学べるため、大塩の乱という項目名から姓を推測できる人物短答を追加しない。人返しの法と農民の商業禁止は幕府の関連する政策として扱い、原文にない当該法の条項へ固定しない。"
+  },
+  "facts": [
+    {
+      "id": "famine-1833",
+      "page": 247,
+      "quote": "天保四年（一八三三）から**天保の大飢饉**が始まり、米価が高騰しました。"
+    },
+    {
+      "id": "osaka-1837",
+      "page": 247,
+      "quote": "天保八年（一八三七）、特に多くの餓死者が出た大坂（大阪）では、"
+    },
+    {
+      "id": "rice-buying",
+      "page": 247,
+      "quote": "豪商の米の買い占めに対し陽明学徒の"
+    },
+    {
+      "id": "oshio-leadership",
+      "page": 247,
+      "quote": "**大塩平八郎**が町人や百姓を率いて暴動を起こしました。"
+    },
+    {
+      "id": "oshio-name",
+      "page": 247,
+      "quote": "**大塩の乱**です。"
+    },
+    {
+      "id": "oshio-role",
+      "page": 248,
+      "quote": "大坂町奉行所の与力となる。"
+    },
+    {
+      "id": "oshio-suppression",
+      "page": 247,
+      "quote": "乱は一日で鎮圧されましたが、"
+    },
+    {
+      "id": "oshio-government",
+      "page": 247,
+      "quote": "幕領の大坂で幕府の元役人による反乱が起きたことは幕府にとって衝撃的な事件でした。"
+    },
+    {
+      "id": "mizuno-person",
+      "page": 247,
+      "quote": "老中・**水野忠邦**は"
+    },
+    {
+      "id": "reform-start-1841",
+      "page": 248,
+      "quote": "天保12年（1841）に大御所の徳川家斉が没すると、本格的な幕政改革に着手した。"
+    },
+    {
+      "id": "rural-purpose-1843",
+      "page": 247,
+      "quote": "天保十四年（一八四三）、老中・**水野忠邦**は農村再建のため、"
+    },
+    {
+      "id": "return-farmers",
+      "page": 247,
+      "quote": "**人返しの法**により都市の農民を農村に帰し、"
+    },
+    {
+      "id": "rural-commerce-ban",
+      "page": 247,
+      "quote": "農民が商業に手を出すことを禁じました。"
+    },
+    {
+      "id": "association-dissolve",
+      "page": 247,
+      "quote": "営業を独占していた株仲間の解散を命じ、"
+    },
+    {
+      "id": "popular-arts-control",
+      "page": 247,
+      "quote": "倹約令で歌舞伎などの大衆文芸を取り締まりました。"
+    },
+    {
+      "id": "tempo-reform-name",
+      "page": 247,
+      "quote": "これら一連の政策を**天保の改革**といいます。"
+    },
+    {
+      "id": "reform-resistance",
+      "page": 247,
+      "quote": "改革は反発を招き、幕府の権威は衰えました。"
+    },
+    {
+      "id": "strong-domain-name",
+      "page": 248,
+      "quote": "改革に成功した藩は雄藩と呼ばれ、"
+    },
+    {
+      "id": "domain-finance",
+      "page": 248,
+      "quote": "薩摩藩（鹿児島県）では調所広郷、長州藩（山口県）では村田清風が、特産物や商品作物の専売制を強化し、貿易を促進して藩の財政を再建しました。"
+    },
+    {
+      "id": "furnace-definition",
+      "page": 248,
+      "quote": "金属の製錬や溶融に用いる炉の一種で、"
+    },
+    {
+      "id": "saga-furnace",
+      "page": 248,
+      "quote": "反射炉を造ったのは佐賀藩で、"
+    },
+    {
+      "id": "saga-military",
+      "page": 248,
+      "quote": "佐賀藩主の鍋島直正は〔53〕反射炉を設けて洋式砲術を採用し軍事力を強化しました。"
+    },
+    {
+      "id": "domains-political-role",
+      "page": 248,
+      "quote": "幕末の政局に発言力を持つようになります〔54〕。"
+    },
+    {
+      "id": "domain-accumulation",
+      "page": 248,
+      "quote": "他方、藩政改革により経済力と軍事力を蓄える藩が現れました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "天保の大飢饉と大塩の乱",
+      "reading": "てんぽうのだいききんとおおしおのらん",
+      "category": "経済・社会",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1833〜1837年",
+        "sortYear": 1833
+      },
+      "explanation": "天保の大飢饉では米価が高騰し、大坂では豪商の米買い占めに対して大塩平八郎が町人や百姓を率いて反乱を起こした。乱は鎮圧されたが、幕領で幕府の元役人が反乱の主体となったことは、幕府と民衆の関係にかかわる事件だった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1837年の日本で、幕領の大坂において、幕府の元役人が町人や百姓を率いて起こした反乱を何というか。",
+          "answer": "**大塩の乱(おおしおのらん)**。",
+          "keywords": [
+            "大塩の乱"
+          ],
+          "evidence": [
+            "osaka-1837",
+            "oshio-government",
+            "oshio-name"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "result",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天保の大飢饉と大塩の乱について、飢饉が始まると米価はどうなったか。",
+          "answer": "**高騰**した。",
+          "keywords": [
+            "高騰"
+          ],
+          "evidence": [
+            "famine-1833"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天保の大飢饉と大塩の乱について、大塩平八郎はどの役所の元役人だったか。",
+          "answer": "**大坂町奉行所(おおさかまちぶぎょうしょ)**。",
+          "keywords": [
+            "大坂町奉行所"
+          ],
+          "evidence": [
+            "oshio-role",
+            "oshio-government"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の天保の大飢饉と大塩の乱について、飢饉と反乱の経過を説明せよ。",
+          "answer": "1833年から**天保の大飢饉**が始まり、**米価が高騰**した。1837年、大坂で**豪商の米の買い占め**に対し、**大塩平八郎(おおしおへいはちろう)**が町人や百姓を率いて**大塩の乱(おおしおのらん)**を起こした。",
+          "keywords": [
+            "天保の大飢饉",
+            "米価が高騰",
+            "豪商の米の買い占め",
+            "大塩平八郎",
+            "大塩の乱"
+          ],
+          "evidence": [
+            "famine-1833",
+            "osaka-1837",
+            "rice-buying",
+            "oshio-leadership",
+            "oshio-name"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本で、大塩の乱(おおしおのらん)は幕府との関係でどのような特徴を持つ事件だったか。",
+          "answer": "大塩平八郎は大坂町奉行所(おおさかまちぶぎょうしょ)に勤めた**幕府の元役人**で、反乱の舞台の大坂は**幕領**だった。乱は一日で鎮圧された。",
+          "keywords": [
+            "幕府の元役人",
+            "幕領"
+          ],
+          "evidence": [
+            "oshio-role",
+            "oshio-government",
+            "oshio-suppression"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代後期の日本の「天保の大飢饉と大塩の乱」について説明せよ。",
+          "answer": "1833年から日本では**天保の大飢饉**が始まり、**米価が高騰**した。1837年、大坂で**豪商の米の買い占め**に対し、**大塩平八郎(おおしおへいはちろう)**が町人や百姓を率いて**大塩の乱(おおしおのらん)**を起こした。**幕府の元役人**による反乱は**幕領**の大坂で起き、一日で鎮圧された。",
+          "keywords": [
+            "天保の大飢饉",
+            "米価が高騰",
+            "豪商の米の買い占め",
+            "大塩平八郎",
+            "大塩の乱",
+            "幕府の元役人",
+            "幕領"
+          ],
+          "evidence": [
+            "famine-1833",
+            "osaka-1837",
+            "rice-buying",
+            "oshio-leadership",
+            "oshio-name",
+            "oshio-role",
+            "oshio-government",
+            "oshio-suppression"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "天保の改革",
+      "reading": "てんぽうのかいかく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1841〜1843年",
+        "sortYear": 1841
+      },
+      "explanation": "水野忠邦の改革は農村再建と商業抑制を組み合わせた。人返しの法で都市の農民を農村に帰し、株仲間を解散させ、倹約令で大衆文芸を統制したが、改革への反発も起こった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、天保の改革を進めた老中は誰か。",
+          "answer": "**水野忠邦(みずのただくに)**。",
+          "keywords": [
+            "水野忠邦"
+          ],
+          "evidence": [
+            "mizuno-person"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1843年の日本で、農村再建のため、都市の農民を農村へ帰すよう命じた法令を何というか。",
+          "answer": "**人返しの法(ひとがえしのほう)**。",
+          "keywords": [
+            "人返しの法"
+          ],
+          "evidence": [
+            "rural-purpose-1843",
+            "return-farmers"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天保の改革で、幕府は株仲間にどのような措置を命じたか。",
+          "answer": "**解散**。",
+          "keywords": [
+            "解散"
+          ],
+          "evidence": [
+            "association-dissolve"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天保の改革で、人返しの法(ひとがえしのほう)による農村再建とあわせて、幕府は農民の商業活動をどう扱ったか。",
+          "answer": "**農民が商業に手を出すことを禁止**した。",
+          "keywords": [
+            "農民が商業に手を出すことを禁止"
+          ],
+          "evidence": [
+            "rural-commerce-ban"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天保の改革で、倹約令の取締りを受けた大衆文芸の代表例は何か。",
+          "answer": "**歌舞伎**。",
+          "keywords": [
+            "歌舞伎"
+          ],
+          "evidence": [
+            "popular-arts-control"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の天保の改革について、水野忠邦(みずのただくに)の農村政策を説明せよ。",
+          "answer": "日本では1841年に**水野忠邦(みずのただくに)**が本格的な幕政改革に着手した。1843年、幕府は農村再建のため、**人返しの法(ひとがえしのほう)**で**都市の農民を農村に帰し**、**農民が商業に手を出すことを禁止**した。",
+          "keywords": [
+            "水野忠邦",
+            "人返しの法",
+            "都市の農民を農村に帰し",
+            "農民が商業に手を出すことを禁止"
+          ],
+          "evidence": [
+            "mizuno-person",
+            "reform-start-1841",
+            "rural-purpose-1843",
+            "return-farmers",
+            "rural-commerce-ban"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の天保の改革について、商業や娯楽への政策はどのようなものだったか。",
+          "answer": "幕府は**株仲間の解散**を命じ、倹約令で**歌舞伎などの大衆文芸を取り締まった**。一連の改革は反発を招き、幕府の権威は衰えた。",
+          "keywords": [
+            "株仲間の解散",
+            "歌舞伎などの大衆文芸を取り締まった"
+          ],
+          "evidence": [
+            "association-dissolve",
+            "popular-arts-control",
+            "tempo-reform-name",
+            "reform-resistance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代後期の日本の「天保の改革」について説明せよ。",
+          "answer": "日本では1841年に**水野忠邦(みずのただくに)**が本格的な幕政改革に着手した。1843年、幕府は農村再建のため、**人返しの法(ひとがえしのほう)**で**都市の農民を農村に帰し**、**農民が商業に手を出すことを禁止**した。**株仲間の解散**を命じ、倹約令で**歌舞伎などの大衆文芸を取り締まった**が、改革は反発を招き、幕府の権威は衰えた。",
+          "keywords": [
+            "水野忠邦",
+            "人返しの法",
+            "都市の農民を農村に帰し",
+            "農民が商業に手を出すことを禁止",
+            "株仲間の解散",
+            "歌舞伎などの大衆文芸を取り締まった"
+          ],
+          "evidence": [
+            "mizuno-person",
+            "reform-start-1841",
+            "rural-purpose-1843",
+            "return-farmers",
+            "rural-commerce-ban",
+            "association-dissolve",
+            "popular-arts-control",
+            "tempo-reform-name",
+            "reform-resistance"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "藩政改革と雄藩",
+      "reading": "はんせいかいかくとゆうはん",
+      "category": "政治・外交",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "19世紀",
+        "sortYear": 1801
+      },
+      "explanation": "幕府の改革が進む一方、諸藩でも専売制や貿易によって財政を再建し、西洋の技術で軍事力を強化する動きがあった。こうした改革に成功した雄藩は、幕末の政治に発言力を持つようになった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代後期の日本で、藩政改革に成功し、経済力や軍事力を蓄えた藩は何と呼ばれたか。",
+          "answer": "**雄藩(ゆうはん)**。",
+          "keywords": [
+            "雄藩"
+          ],
+          "evidence": [
+            "strong-domain-name",
+            "domain-accumulation"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革と雄藩について、薩摩藩と長州藩が特産物や商品作物について強化した制度は何か。",
+          "answer": "**専売制**。",
+          "keywords": [
+            "専売制"
+          ],
+          "evidence": [
+            "domain-finance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "19世紀の日本で、佐賀藩が洋式砲術の採用に際して設けた、金属の製錬や溶融に用いる炉を何というか。",
+          "answer": "**反射炉(はんしゃろ)**。",
+          "keywords": [
+            "反射炉"
+          ],
+          "evidence": [
+            "furnace-definition",
+            "saga-furnace"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革と雄藩について、反射炉(はんしゃろ)を設けて洋式砲術を採用した佐賀藩主は誰か。",
+          "answer": "**鍋島直正(なべしまなおまさ)**。",
+          "keywords": [
+            "鍋島直正"
+          ],
+          "evidence": [
+            "saga-military"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革と雄藩について、改革に成功した雄藩は幕末の政治でどのような立場を持つようになったか。",
+          "answer": "**政局への発言力**を持つようになった。",
+          "keywords": [
+            "政局への発言力"
+          ],
+          "evidence": [
+            "domains-political-role"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の藩政改革と雄藩について、薩摩藩と長州藩の財政再建はどのように進められたか。",
+          "answer": "19世紀の日本では、**薩摩藩（鹿児島県）と長州藩（山口県）**が、特産物や商品作物の**専売制**を強化し、**貿易の促進**によって財政を再建した。",
+          "keywords": [
+            "薩摩藩（鹿児島県）と長州藩（山口県）",
+            "専売制",
+            "貿易の促進"
+          ],
+          "evidence": [
+            "rural-purpose-1843",
+            "domain-finance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の藩政改革と雄藩について、軍事と幕末の政治にはどのような変化があったか。",
+          "answer": "佐賀藩主の**鍋島直正(なべしまなおまさ)**は**反射炉(はんしゃろ)**を設け、**洋式砲術**を採用して軍事力を強化した。改革に成功した藩は**雄藩(ゆうはん)**と呼ばれ、幕末の**政局への発言力**を持つようになった。",
+          "keywords": [
+            "鍋島直正",
+            "反射炉",
+            "洋式砲術",
+            "雄藩",
+            "政局への発言力"
+          ],
+          "evidence": [
+            "saga-military",
+            "strong-domain-name",
+            "domains-political-role"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代後期の日本の「藩政改革と雄藩」について説明せよ。",
+          "answer": "19世紀の日本では、**薩摩藩（鹿児島県）と長州藩（山口県）**が特産物や商品作物の**専売制**を強化し、**貿易の促進**によって財政を再建した。佐賀藩主の**鍋島直正(なべしまなおまさ)**は**反射炉(はんしゃろ)**を設け、**洋式砲術**を採用して軍事力を強化した。改革に成功した藩は**雄藩(ゆうはん)**と呼ばれ、幕末の**政局への発言力**を持つようになった。",
+          "keywords": [
+            "薩摩藩（鹿児島県）と長州藩（山口県）",
+            "専売制",
+            "貿易の促進",
+            "鍋島直正",
+            "反射炉",
+            "洋式砲術",
+            "雄藩",
+            "政局への発言力"
+          ],
+          "evidence": [
+            "rural-purpose-1843",
+            "domain-finance",
+            "saga-military",
+            "strong-domain-name",
+            "domains-political-role"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

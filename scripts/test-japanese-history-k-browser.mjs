@@ -27,6 +27,7 @@ assert.ok(existing, "Cloudflare上の既存日本史Kを使います。");
 const catalog = appendJapaneseKDecks(original, additions);
 const combinedSubject = catalog.subjects.find(subject => subject.id === plan.subject.id);
 const groups = groupSODecks(combinedSubject.decks, combinedSubject.chapterGroups);
+assert.deepEqual(groups.map(group => group.number), [1, 2, 3, 4, 5, 6], "第１章を含む全章を原文の順に表示します。");
 const plansById = new Map([plan, ...additions].map(value => [value.index.deckId, value]));
 objects.set("index.json", JSON.stringify(catalog));
 for (const object of plan.objects) objects.set(object.key, JSON.stringify(object.value));
@@ -183,6 +184,7 @@ try {
   assert.equal(await picker(4).locator("summary").textContent(), `第4章のパート：0 / ${groups.find(group => group.number === 4).decks.length}パート`);
   assert.equal(await picker(3).locator("summary").textContent(), `第3章のパート：0 / ${groups.find(group => group.number === 3).decks.length}パート`);
   assert.equal(await picker(2).locator("summary").textContent(), `第2章のパート：0 / ${groups.find(group => group.number === 2).decks.length}パート`);
+  assert.equal(await picker(1).locator("summary").textContent(), "第1章のパート：0 / 3パート");
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);

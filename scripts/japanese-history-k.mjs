@@ -14,6 +14,7 @@ const labels = { identify: "用語", time: "時期", place: "場所", person: "�
 export const contentHash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const normalize = text => String(text).normalize("NFKC").replace(/\*\*|\s/g, "");
 const withoutReadings = text => String(text).replace(/\([ぁ-ゖー]+\)/g, "");
+const answerPeriods = text => String(text).match(/(?:約)?(?:\d{1,3}(?:\.\d+)?万(?:\d{1,4})?|\d{4,6}|数万)年前|\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/g) ?? [];
 const answerKeywords = answer => [...new Set([...answer.matchAll(/\*\*([^*]+)\*\*/g)].map(match => withoutReadings(match[1])))];
 const displayQuote = quote => quote.replace(/<sup>\s*\d+\s*<\/sup>/gi, "").replace(/<br\s*\/?>/gi, "、").replace(/^\|\s*|\s*\|$/g, "").replace(/\s*\|\s*/g, "／");
 const partCode = bank => [bank.chapter.number, bank.section.number, bank.part.number].map(number => String(number).padStart(2, "0")).join("-");
@@ -24,9 +25,9 @@ const integrationPrefix = (bank, unit) => unit?.integrationPromptPrefix ?? bank.
 export function validateJapaneseKBank(bank, excerpt) {
   assert.equal(bank.schemaVersion, 2);
   assert.equal(bank.subjectId, japaneseKSubjectId);
-  assert.ok([2, 3, 4, 5, 6].includes(bank.chapter.number));
-  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第2～5章では占領期以外の適切な出題文を指定してください。");
-  assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= ([2, 5].includes(bank.chapter.number) ? 4 : 2));
+  assert.ok([1, 2, 3, 4, 5, 6].includes(bank.chapter.number));
+  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第1～5章では占領期以外の適切な出題文を指定してください。");
+  assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= (bank.chapter.number === 1 ? 3 : [2, 5].includes(bank.chapter.number) ? 4 : 2));
   assert.ok(Number.isInteger(bank.part.number) && bank.part.number > 0 && bank.part.number < partLetters.length);
   assert.ok(integrationPrefix(bank) && bank.source.file && bank.source.originalFile);
   const pages = new Map([...excerpt.matchAll(/^## (\d+)\s*\n([\s\S]*?)(?=^## \d+\s*$|$(?![\s\S]))/gm)].map(match => [Number(match[1]), normalize(match[2])]));
@@ -69,11 +70,11 @@ export function validateJapaneseKBank(bank, excerpt) {
       if (question.stage !== "beginner") assert.ok(question.keywords.length, `説明回答に重要語の強調がありません: ${id}`);
       if (question.stage === "integrated") {
         assert.equal(question.prompt, `${integrationPrefix(bank, unit)}「${unit.term}」について説明せよ。`, `統合の答え方を誘導しています: ${id}`);
-        assert.match(question.answer, /\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/, `統合回答に時期がありません: ${id}`);
+        assert.ok(answerPeriods(question.answer).length, `統合回答に時期がありません: ${id}`);
         assert.ok(question.answer.includes(unit.geographyLabel ?? "日本"), `統合回答に場所がありません: ${id}`);
         assert.ok(question.evidence.every(key => learnedFacts.has(key)), `統合だけに新しい根拠があります: ${id}`);
         assert.ok(question.keywords.every(keyword => learnedAnswers.includes(normalize(keyword))), `統合だけに新しい重要語があります: ${id}`);
-        const periods = question.answer.match(/\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/g) ?? [];
+        const periods = answerPeriods(question.answer);
         assert.ok(periods.every(period => learnedAnswers.includes(normalize(period))), `統合だけに新しい時期があります: ${id}`);
         assert.ok(periods.every(period => defaultLearnedAnswers.includes(normalize(period))), `時期問題を除く初期設定では統合の時期を学べません: ${id}`);
         assert.ok((question.answer.match(/。/g) ?? []).length <= 3, `統合回答が長すぎます: ${id}`);
@@ -158,7 +159,7 @@ export async function loadJapaneseHistoryK() {
 // 作成用原稿を読み込む。本番の既存問題は公開処理でCloudflareから別途取得する。
 export async function loadJapaneseKAdditions() {
   const directory = path.join(root, "data/source/japanese-history-k");
-  const names = (await readdir(directory)).filter(name => /^(?:02|03|04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
+  const names = (await readdir(directory)).filter(name => /^(?:01|02|03|04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
   return Promise.all(names.map(async name => {
     const bank = JSON.parse(await readFile(path.join(directory, name), "utf8"));
     assert.equal(name, `${partCode(bank)}.json`, "原稿名と小項目の番号が一致しません。");

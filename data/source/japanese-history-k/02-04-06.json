@@ -1,0 +1,595 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 2,
+    "title": "第2章 古代"
+  },
+  "section": {
+    "number": 4,
+    "title": "平安時代"
+  },
+  "part": {
+    "number": 6,
+    "title": "武士の台頭"
+  },
+  "integrationPromptPrefix": "平安時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第2章_04節_06_武士の台頭_原文抜粋.md",
+    "originalFile": "sources/kokushi/2_古代.md",
+    "pages": [
+      106,
+      107,
+      108,
+      109,
+      117
+    ],
+    "note": "106頁ヘから109頁ト見出し前までの本文・課題・107頁の武士団の仕組みと注⑫⑬、108頁の天皇・源氏・平氏関係図、109頁冒頭の続きまで全て通読した。115～118頁のまとめ・年表も通読した。武士団の形成と主従関係・朝廷による警備や国司派遣、東西の反乱と武士の登用、前九年・後三年の区別とその後の奥州藤原氏・平泉の文化を三項目へまとめる。小項目名に武士が表示されるため、武士という名称だけを答えさせる薄い識別問題を作らない。各引用は元掲載頁の連続句に分け、先に読む根拠で後の主要な反乱名・人物名・文化財名を先出ししない。前九年の役は107頁本文の1051～1062年、後三年の役は本文の1083～1087年を扱う。107頁末の後三年の役の名は108頁の図版を挟んで109頁へ続くため、その原表記を抜粋に保つ。117頁の後三年の役1087（～1087）は終了年の補助にだけ用い、開始年を1087年に固定しない。統合では11世紀後半を通常の説明で先に学び、平泉の文化財の建立年には転用しない。家系の全人物や代数、国府を攻めた全地名、反乱が歴史上最初という一律の断定、平定の正当化、武士の血統や身分の優劣、寺院の寸法・金額で水増ししない。109頁ト以降の親政と院政、110頁の北面の武士や源平の争いは別の小項目へ分ける。939年は平将門が関東の国府を攻めた年として扱い、反乱の全期間の唯一の開始年に拡張しない。"
+  },
+  "facts": [
+    {
+      "id": "formation-period",
+      "page": 106,
+      "quote": "九世紀後半から十世紀にかけては、厳しい増税に耐えられずに盗賊や海賊になる者が現れ、また有力者たちによる土地をめぐる争いも起きるようになりました。"
+    },
+    {
+      "id": "local-defense",
+      "page": 106,
+      "quote": "各地の公領と荘園では、秩序を守り、外敵から所領を守るために、"
+    },
+    {
+      "id": "formation-actors",
+      "page": 106,
+      "quote": "豪族や有力農民たちは自ら武装し、従者を率いて武装集団を形成しました。"
+    },
+    {
+      "id": "retainer-relations",
+      "page": 107,
+      "quote": "主人（棟梁、惣領）と家子、さらに郎党、下人の主従関係を中心に武士団としてまとまっていった。"
+    },
+    {
+      "id": "court-guards",
+      "page": 106,
+      "quote": "また朝廷は、武芸に優れた中級・下級貴族に、天皇の住まいや役所の警備と犯罪の取り締まりを担当させ、"
+    },
+    {
+      "id": "provincial-appointment",
+      "page": 106,
+      "quote": "悪化した治安を回復させるために、国司として地方に派遣しました。"
+    },
+    {
+      "id": "local-settlement",
+      "page": 106,
+      "quote": "なかには派遣先でそのまま土着し、武士団を形成する者も現れました。"
+    },
+    {
+      "id": "takiguchi-guards",
+      "page": 107,
+      "quote": "宇多天皇のときには、⑫滝口の武士を創設し、御所の警備を担当させました。"
+    },
+    {
+      "id": "masakado-date",
+      "page": 107,
+      "quote": "天慶二年（九三九）に"
+    },
+    {
+      "id": "masakado-action",
+      "page": 107,
+      "quote": "常陸国、下野国、上野国の国府を攻め落として関東の大半を勢力下に収めました"
+    },
+    {
+      "id": "masakado-name",
+      "page": 107,
+      "quote": "これが平将門の乱です。"
+    },
+    {
+      "id": "masakado-defeat",
+      "page": 107,
+      "quote": "翌年、関東の武士により平定されました。"
+    },
+    {
+      "id": "sumitomo-actor",
+      "page": 107,
+      "quote": "同じころ、西国では伊予国（愛媛県）の元国司であった藤原純友が海賊の首領となって、"
+    },
+    {
+      "id": "sumitomo-action",
+      "page": 107,
+      "quote": "伊予国の国府と大宰府などを攻略しました"
+    },
+    {
+      "id": "sumitomo-name",
+      "page": 107,
+      "quote": "（藤原純友の乱）。"
+    },
+    {
+      "id": "sumitomo-defeat",
+      "page": 107,
+      "quote": "天慶四年（九四一）に武士によって滅ぼされました"
+    },
+    {
+      "id": "warrior-employment",
+      "page": 107,
+      "quote": "このころから、各地の国司は武士を用いて治安維持にあたらせたほか、朝廷や貴族も武士を重用するようになりました。"
+    },
+    {
+      "id": "abe-revolt",
+      "page": 107,
+      "quote": "永承六年（一〇五一）に陸奥国の豪族の安倍氏が反乱を起こすと、"
+    },
+    {
+      "id": "yoriyoshi-yoshiie",
+      "page": 107,
+      "quote": "朝廷は源頼義とその子・義家に鎮圧を命じ、"
+    },
+    {
+      "id": "zenkunen-ending",
+      "page": 107,
+      "quote": "康平五年（一〇六二）に安倍氏を滅ぼしました（前九年の役）。"
+    },
+    {
+      "id": "kiyohara-conflict",
+      "page": 107,
+      "quote": "また、永保三年（一〇八三）に⑬清原氏一族の内紛が起きると、"
+    },
+    {
+      "id": "yoshiie-intervention",
+      "page": 107,
+      "quote": "義家はこれに介入して寛治元年（一〇八七）に制圧しました"
+    },
+    {
+      "id": "gosannen-ending-table",
+      "page": 117,
+      "quote": "| 1087 | 後三年の役（〜1087） |  |  |"
+    },
+    {
+      "id": "oshu-fujiwara",
+      "page": 109,
+      "quote": "その後、清衡を祖とする奥州藤原氏が勢力を伸ばし、"
+    },
+    {
+      "id": "hiraizumi-place",
+      "page": 109,
+      "quote": "平泉（岩手県）"
+    },
+    {
+      "id": "hiraizumi-culture",
+      "page": 109,
+      "quote": "平泉（岩手県）に中尊寺金色堂に代表される仏教文化が栄えました。"
+    },
+    {
+      "id": "hiraizumi-flourishing",
+      "page": 109,
+      "quote": "仏教文化が栄えました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "武士団の形成と役割",
+      "reading": "ぶしだんのけいせいとやくわり",
+      "category": "地方社会と軍事",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "9世紀後半～10世紀の武士団の形成",
+        "sortYear": 900
+      },
+      "explanation": "地方の治安悪化や土地をめぐる争いを背景に、豪族や有力農民が所領と秩序を守るために武装した。武士団は主人と従者の主従関係でまとまり、地方に派遣されて土着する貴族からも形成された。朝廷も武士を警備や治安維持に用い、滝口の武士(たきぐちのぶし)は御所の警備を担った。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "主体の確認",
+          "prompt": "9世紀後半から10世紀の日本の武士団の形成と役割について、公領や荘園で自ら武装し、従者を率いて武装集団を作った主体は誰か。",
+          "answer": "**豪族や有力農民**。",
+          "keywords": [
+            "豪族や有力農民"
+          ],
+          "evidence": [
+            "formation-period",
+            "formation-actors"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "平安時代の日本の武士団の形成と役割について、各地の公領や荘園で武装した人々は、何を守ろうとしたか。",
+          "answer": "**秩序と所領**。",
+          "keywords": [
+            "秩序と所領"
+          ],
+          "evidence": [
+            "local-defense"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "関係の確認",
+          "prompt": "平安時代の日本の武士団の形成と役割について、主人と家子(いえのこ)・郎党(ろうとう)らを結び付けた関係は何か。",
+          "answer": "**主従関係**。",
+          "keywords": [
+            "主従関係"
+          ],
+          "evidence": [
+            "retainer-relations"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "平安時代の日本の武士団の形成と役割について、朝廷は武芸に優れた貴族を、地方の治安回復のためにどの役職で派遣したか。",
+          "answer": "**国司(こくし)**。",
+          "keywords": [
+            "国司"
+          ],
+          "evidence": [
+            "court-guards",
+            "provincial-appointment"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "平安時代の日本で、宇多天皇(うだてんのう)のときに創設され、御所の警備を担当した武士の組織は何か。",
+          "answer": "**滝口の武士(たきぐちのぶし)**。",
+          "keywords": [
+            "滝口の武士"
+          ],
+          "evidence": [
+            "takiguchi-guards"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "平安時代の日本で、武士団はどのように形成されたか。",
+          "answer": "9世紀後半から10世紀の日本では治安が悪化し、土地をめぐる争いが起きるなか、**豪族や有力農民**が**秩序と所領**を守るために武装し、従者を率いた。武士団は主人と家子(いえのこ)・郎党(ろうとう)らの**主従関係**を中心にまとまった。",
+          "keywords": [
+            "豪族や有力農民",
+            "秩序と所領",
+            "主従関係"
+          ],
+          "evidence": [
+            "formation-period",
+            "formation-actors",
+            "local-defense",
+            "retainer-relations"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "平安時代の日本で、朝廷は武芸に優れた人々をどのように用いたか。",
+          "answer": "朝廷は武芸に優れた中級・下級貴族を警備や犯罪の取り締まりに用い、地方へ**国司(こくし)**として派遣した。そのまま地方に土着して武士団を作る者もおり、宇多天皇(うだてんのう)のときには**滝口の武士(たきぐちのぶし)**が御所の警備を担った。",
+          "keywords": [
+            "国司",
+            "滝口の武士"
+          ],
+          "evidence": [
+            "court-guards",
+            "provincial-appointment",
+            "local-settlement",
+            "takiguchi-guards"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "平安時代の日本の「武士団の形成と役割」について説明せよ。",
+          "answer": "9世紀後半から10世紀の日本では、治安悪化や土地をめぐる争いを背景に、**豪族や有力農民**が**秩序と所領**を守るために武装した。武士団は主人と従者の**主従関係**を中心にまとまり、朝廷が地方へ**国司(こくし)**として派遣した貴族からも土着して武士団を作る者が現れた。朝廷は武芸に優れた人々を警備や犯罪の取り締まりに用い、**滝口の武士(たきぐちのぶし)**も御所の警備を担った。",
+          "keywords": [
+            "豪族や有力農民",
+            "秩序と所領",
+            "主従関係",
+            "国司",
+            "滝口の武士"
+          ],
+          "evidence": [
+            "formation-period",
+            "formation-actors",
+            "local-defense",
+            "retainer-relations",
+            "court-guards",
+            "provincial-appointment",
+            "local-settlement",
+            "takiguchi-guards"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "平将門の乱と藤原純友の乱",
+      "reading": "たいらのまさかどのらんとふじわらのすみとものらん",
+      "category": "地方の反乱と治安",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "939年の平将門の乱と同じころの藤原純友の乱",
+        "sortYear": 939
+      },
+      "explanation": "平将門(たいらのまさかど)は関東の国府を攻めて勢力を広げ、藤原純友(ふじわらのすみとも)は西国で海賊を率いて国府や大宰府(だざいふ)を攻略した。両者は武士によって平定された。このころから国司(こくし)は武士を治安維持に用い、朝廷や貴族も武士を重用するようになった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "平安時代の日本で、関東の国府を攻め落とし、関東の大半を勢力下に収めた反乱は何か。",
+          "answer": "**平将門の乱(たいらのまさかどのらん)**。",
+          "keywords": [
+            "平将門の乱"
+          ],
+          "evidence": [
+            "masakado-action",
+            "masakado-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "平安時代の日本で、伊予国(いよのくに)の元国司が海賊の首領となり、伊予国の国府や大宰府(だざいふ)を攻略した反乱は何か。",
+          "answer": "**藤原純友の乱(ふじわらのすみとものらん)**。",
+          "keywords": [
+            "藤原純友の乱"
+          ],
+          "evidence": [
+            "sumitomo-actor",
+            "sumitomo-action",
+            "sumitomo-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "平安時代の日本の平将門の乱(たいらのまさかどのらん)と藤原純友の乱(ふじわらのすみとものらん)のころから、各地の国司(こくし)が武士に担わせた役割は何か。",
+          "answer": "**治安維持**。",
+          "keywords": [
+            "治安維持"
+          ],
+          "evidence": [
+            "warrior-employment"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "平安時代の日本で、平将門の乱(たいらのまさかどのらん)と藤原純友の乱(ふじわらのすみとものらん)は、それぞれどのように進んだか。",
+          "answer": "10世紀の日本で、**平将門の乱(たいらのまさかどのらん)**では939年に平将門が関東の国府を攻めて勢力を広げたが、翌年に関東の武士によって平定された。同じころ西国では、**藤原純友の乱(ふじわらのすみとものらん)**で海賊の首領となった元国司が伊予国(いよのくに)の国府や大宰府(だざいふ)を攻略したが、941年に武士によって滅ぼされた。",
+          "keywords": [
+            "平将門の乱",
+            "藤原純友の乱"
+          ],
+          "evidence": [
+            "masakado-date",
+            "masakado-action",
+            "masakado-name",
+            "masakado-defeat",
+            "sumitomo-actor",
+            "sumitomo-action",
+            "sumitomo-name",
+            "sumitomo-defeat"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "10世紀の日本で、平将門の乱(たいらのまさかどのらん)と藤原純友の乱(ふじわらのすみとものらん)のころから、武士の役割はどう変わったか。",
+          "answer": "各地の国司(こくし)は**武士を治安維持に用い**、朝廷や貴族も武士を重用するようになった。",
+          "keywords": [
+            "武士を治安維持に用い"
+          ],
+          "evidence": [
+            "warrior-employment"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "平安時代の日本の「平将門の乱と藤原純友の乱」について説明せよ。",
+          "answer": "10世紀の日本で、**平将門の乱(たいらのまさかどのらん)**では939年に平将門が関東の国府を攻め、翌年に関東の武士によって平定された。同じころ西国では、**藤原純友の乱(ふじわらのすみとものらん)**で海賊の首領となった元国司が伊予国(いよのくに)の国府や大宰府(だざいふ)を攻略したが、941年に武士によって滅ぼされた。このころ国司(こくし)は**武士を治安維持に用い**、朝廷や貴族も武士を重用するようになった。",
+          "keywords": [
+            "平将門の乱",
+            "藤原純友の乱",
+            "武士を治安維持に用い"
+          ],
+          "evidence": [
+            "masakado-date",
+            "masakado-action",
+            "masakado-name",
+            "masakado-defeat",
+            "sumitomo-actor",
+            "sumitomo-action",
+            "sumitomo-name",
+            "sumitomo-defeat",
+            "warrior-employment"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "東北の争いと武士の成長",
+      "reading": "とうほくのあらそいとぶしのせいちょう",
+      "category": "東北の武士と文化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "11世紀後半の前九年・後三年の役とその後の平泉",
+        "sortYear": 1051
+      },
+      "explanation": "朝廷は源頼義(みなもとのよりよし)と義家(よしいえ)に安倍氏の反乱の鎮圧を命じた。続いて義家は清原氏(きよはらし)の内紛に介入し、東北の争いで武士が軍事力を発揮した。その後、奥州藤原氏(おうしゅうふじわらし)が勢力を伸ばし、平泉(ひらいずみ)では中尊寺金色堂(ちゅうそんじこんじきどう)に代表される仏教文化が栄えた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "11世紀の日本で、陸奥国(むつのくに)の豪族・安倍氏の反乱を朝廷が鎮圧した戦いは何か。",
+          "answer": "**前九年の役(ぜんくねんのえき)**。",
+          "keywords": [
+            "前九年の役"
+          ],
+          "evidence": [
+            "abe-revolt",
+            "zenkunen-ending"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物の確認",
+          "prompt": "11世紀の日本の東北の争いと武士の成長について、前九年の役(ぜんくねんのえき)の鎮圧を朝廷から命じられた父子は誰か。",
+          "answer": "**源頼義(みなもとのよりよし)・義家(よしいえ)**。",
+          "keywords": [
+            "源頼義・義家"
+          ],
+          "evidence": [
+            "yoriyoshi-yoshiie"
+          ],
+          "acceptedAnswers": [
+            "源頼義と源義家",
+            "源頼義と義家"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "11世紀後半の日本で、清原氏(きよはらし)の内紛に義家(よしいえ)が介入し、1087年に制圧した戦いは何か。",
+          "answer": "**後三年の役(ごさんねんのえき)**。",
+          "keywords": [
+            "後三年の役"
+          ],
+          "evidence": [
+            "kiyohara-conflict",
+            "yoshiie-intervention",
+            "gosannen-ending-table"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "place",
+          "form": "場所の確認",
+          "prompt": "平安時代の日本の東北の争いと武士の成長について、後三年の役(ごさんねんのえき)後、奥州藤原氏(おうしゅうふじわらし)のもとで仏教文化が栄えた岩手県の地はどこか。",
+          "answer": "**平泉(ひらいずみ)**。",
+          "keywords": [
+            "平泉"
+          ],
+          "evidence": [
+            "oshu-fujiwara",
+            "hiraizumi-place",
+            "hiraizumi-flourishing"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "平安時代の日本の平泉(ひらいずみ)で、奥州藤原氏(おうしゅうふじわらし)のもとで栄えた仏教文化を代表する建物は何か。",
+          "answer": "**中尊寺金色堂(ちゅうそんじこんじきどう)**。",
+          "keywords": [
+            "中尊寺金色堂"
+          ],
+          "evidence": [
+            "hiraizumi-culture"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "11世紀後半の日本で、前九年の役(ぜんくねんのえき)と後三年の役(ごさんねんのえき)は、何が異なる争いだったか。",
+          "answer": "11世紀後半の日本の陸奥国(むつのくに)では、1051～1062年の**前九年の役(ぜんくねんのえき)**で、朝廷が**源頼義(みなもとのよりよし)・義家(よしいえ)**に安倍氏の反乱の鎮圧を命じた。1083～1087年の**後三年の役(ごさんねんのえき)**では、義家が**清原氏(きよはらし)の内紛**に介入した。",
+          "keywords": [
+            "前九年の役",
+            "源頼義・義家",
+            "後三年の役",
+            "清原氏の内紛"
+          ],
+          "evidence": [
+            "abe-revolt",
+            "yoriyoshi-yoshiie",
+            "zenkunen-ending",
+            "kiyohara-conflict",
+            "yoshiie-intervention",
+            "gosannen-ending-table"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "平安時代の日本で、後三年の役(ごさんねんのえき)後の東北ではどのような勢力と文化が伸びたか。",
+          "answer": "**奥州藤原氏(おうしゅうふじわらし)**が勢力を伸ばし、岩手県の**平泉(ひらいずみ)**では**中尊寺金色堂(ちゅうそんじこんじきどう)**に代表される仏教文化が栄えた。",
+          "keywords": [
+            "奥州藤原氏",
+            "平泉",
+            "中尊寺金色堂"
+          ],
+          "evidence": [
+            "oshu-fujiwara",
+            "hiraizumi-culture"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "平安時代の日本の「東北の争いと武士の成長」について説明せよ。",
+          "answer": "11世紀後半の日本では、**前九年の役(ぜんくねんのえき)**で朝廷が**源頼義(みなもとのよりよし)・義家(よしいえ)**に陸奥国(むつのくに)の安倍氏の反乱の鎮圧を命じた。続く**後三年の役(ごさんねんのえき)**では、義家が**清原氏(きよはらし)の内紛**に介入した。その後、**奥州藤原氏(おうしゅうふじわらし)**が勢力を伸ばし、岩手県の**平泉(ひらいずみ)**では**中尊寺金色堂(ちゅうそんじこんじきどう)**に代表される仏教文化が栄えた。",
+          "keywords": [
+            "前九年の役",
+            "源頼義・義家",
+            "後三年の役",
+            "清原氏の内紛",
+            "奥州藤原氏",
+            "平泉",
+            "中尊寺金色堂"
+          ],
+          "evidence": [
+            "abe-revolt",
+            "yoriyoshi-yoshiie",
+            "zenkunen-ending",
+            "kiyohara-conflict",
+            "yoshiie-intervention",
+            "gosannen-ending-table",
+            "oshu-fujiwara",
+            "hiraizumi-culture"
+          ]
+        }
+      ]
+    }
+  ]
+}

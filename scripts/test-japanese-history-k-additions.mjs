@@ -51,11 +51,11 @@ for (const prefix of ["", "   ", null, 0]) {
   const invalid = structuredClone(regionalBank); invalid.units[0].integrationPromptPrefix = prefix;
   assert.throws(() => validateJapaneseKBank(invalid, regionalExcerpt), /統合問題の時代・地域が不正/, "空白や文字以外の指定を拒否します。");
 }
-assert.equal(additions.length, 122);
-assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-02-01-01", "book-02-01-02", "book-02-01-03", "book-02-01-04", "book-02-01-05", "book-02-01-06", "book-02-01-07", "book-02-01-08", "book-02-02-01", "book-02-02-02", "book-02-02-03", "book-02-02-04", "book-02-02-05", "book-02-02-06", "book-02-03-01", "book-02-03-02", "book-02-03-03", "book-02-03-04", "book-02-03-05", "book-02-04-01", "book-02-04-02", "book-02-04-03", "book-02-04-04", "book-02-04-05", "book-03-01-01", "book-03-01-02", "book-03-01-03", "book-03-01-04", "book-03-01-05", "book-03-01-06", "book-03-01-07", "book-03-01-08", "book-03-02-01", "book-03-02-02", "book-03-02-03", "book-03-02-04", "book-03-02-05", "book-03-02-06", "book-03-02-07", "book-03-02-08", "book-03-02-09", "book-04-01-01", "book-04-01-02", "book-04-01-03", "book-04-01-04", "book-04-01-05", "book-04-01-06", "book-04-01-07", "book-04-02-01", "book-04-02-02", "book-04-02-03", "book-04-02-04", "book-04-02-05", "book-04-02-06", "book-04-02-07", "book-04-02-08", "book-04-02-09", "book-04-02-10", "book-04-02-11", "book-04-02-12", "book-04-02-13", "book-04-02-14", "book-04-02-15", "book-04-02-16", "book-05-01-01", "book-05-01-02", "book-05-01-03", "book-05-01-04", "book-05-01-05", "book-05-01-06", "book-05-02-01", "book-05-02-02", "book-05-02-03", "book-05-02-04", "book-05-02-05", "book-05-02-06", "book-05-02-07", "book-05-02-08", "book-05-02-09", "book-05-02-10", "book-05-02-11", "book-05-02-12", "book-05-02-13", "book-05-02-14", "book-05-02-15", "book-05-02-16", "book-05-03-01", "book-05-03-02", "book-05-03-03", "book-05-03-04", "book-05-03-05", "book-05-03-06", "book-05-03-07", "book-05-04-01", "book-05-04-02", "book-05-04-03", "book-05-04-04", "book-05-04-05", "book-05-04-06", "book-05-04-07", "book-05-04-08", "book-05-04-09", "book-05-04-10", "book-05-04-11", "book-05-04-12", "book-05-04-13", "book-05-04-14", "book-05-04-15", "book-06-01-02", "book-06-01-03", "book-06-01-04", "book-06-01-05", "book-06-01-06", "book-06-02-01", "book-06-02-02", "book-06-02-03", "book-06-02-04", "book-06-02-05", "book-06-02-06", "book-06-02-07", "book-06-02-08", "book-06-02-09"]);
-const isPending = plan => /^book-02-(?:03-05|04-0[1-5])$/.test(plan.index.deckId);
+assert.equal(additions.length, 128);
+assert.deepEqual(additions.map(plan => plan.index.deckId), ["book-01-01-01", "book-01-01-02", "book-01-01-03", "book-02-01-01", "book-02-01-02", "book-02-01-03", "book-02-01-04", "book-02-01-05", "book-02-01-06", "book-02-01-07", "book-02-01-08", "book-02-02-01", "book-02-02-02", "book-02-02-03", "book-02-02-04", "book-02-02-05", "book-02-02-06", "book-02-03-01", "book-02-03-02", "book-02-03-03", "book-02-03-04", "book-02-03-05", "book-02-04-01", "book-02-04-02", "book-02-04-03", "book-02-04-04", "book-02-04-05", "book-02-04-06", "book-02-04-07", "book-02-04-08", "book-03-01-01", "book-03-01-02", "book-03-01-03", "book-03-01-04", "book-03-01-05", "book-03-01-06", "book-03-01-07", "book-03-01-08", "book-03-02-01", "book-03-02-02", "book-03-02-03", "book-03-02-04", "book-03-02-05", "book-03-02-06", "book-03-02-07", "book-03-02-08", "book-03-02-09", "book-04-01-01", "book-04-01-02", "book-04-01-03", "book-04-01-04", "book-04-01-05", "book-04-01-06", "book-04-01-07", "book-04-02-01", "book-04-02-02", "book-04-02-03", "book-04-02-04", "book-04-02-05", "book-04-02-06", "book-04-02-07", "book-04-02-08", "book-04-02-09", "book-04-02-10", "book-04-02-11", "book-04-02-12", "book-04-02-13", "book-04-02-14", "book-04-02-15", "book-04-02-16", "book-05-01-01", "book-05-01-02", "book-05-01-03", "book-05-01-04", "book-05-01-05", "book-05-01-06", "book-05-02-01", "book-05-02-02", "book-05-02-03", "book-05-02-04", "book-05-02-05", "book-05-02-06", "book-05-02-07", "book-05-02-08", "book-05-02-09", "book-05-02-10", "book-05-02-11", "book-05-02-12", "book-05-02-13", "book-05-02-14", "book-05-02-15", "book-05-02-16", "book-05-03-01", "book-05-03-02", "book-05-03-03", "book-05-03-04", "book-05-03-05", "book-05-03-06", "book-05-03-07", "book-05-04-01", "book-05-04-02", "book-05-04-03", "book-05-04-04", "book-05-04-05", "book-05-04-06", "book-05-04-07", "book-05-04-08", "book-05-04-09", "book-05-04-10", "book-05-04-11", "book-05-04-12", "book-05-04-13", "book-05-04-14", "book-05-04-15", "book-06-01-02", "book-06-01-03", "book-06-01-04", "book-06-01-05", "book-06-01-06", "book-06-02-01", "book-06-02-02", "book-06-02-03", "book-06-02-04", "book-06-02-05", "book-06-02-06", "book-06-02-07", "book-06-02-08", "book-06-02-09"]);
+const isPending = plan => /^book-(?:01-01-0[1-3]|02-04-0[6-8])$/.test(plan.index.deckId);
 const earlier = additions.filter(plan => !isPending(plan)), pending = additions.filter(isPending);
-assert.equal(earlier.length, 116); assert.equal(pending.length, 6);
+assert.equal(earlier.length, 122); assert.equal(pending.length, 6);
 // 項目名の途中に語ごとの読みを付けても、対象の項目自体は引き続き必須にする。
 const readingBank = JSON.parse(await readFile("data/source/japanese-history-k/02-04-05.json", "utf8"));
 const readingExcerpt = await readFile(readingBank.source.file, "utf8");
@@ -66,6 +66,21 @@ validateJapaneseKBank(readingBank, readingExcerpt);
 const missingTarget = structuredClone(readingBank);
 missingTarget.units[0].questions.find(question => question.id === readingQuestion.id).prompt = "平安時代の日本で、農民の行動と戸籍にはどのような問題があったか。";
 assert.throws(() => validateJapaneseKBank(missingTarget, readingExcerpt), /問題文に対象の項目名がありません/, "読みの表記を認めても対象の項目がない設問は拒否します。");
+const prehistoricBank = JSON.parse(await readFile("data/source/japanese-history-k/01-01-02.json", "utf8"));
+const prehistoricExcerpt = await readFile(prehistoricBank.source.file, "utf8");
+validateJapaneseKBank(prehistoricBank, prehistoricExcerpt);
+for (const value of ["約6万年前", "約1万1000年前", "数万年前"]) {
+  const invalid = structuredClone(prehistoricBank);
+  const question = invalid.units.flatMap(unit => unit.questions).find(entry => entry.stage === "integrated" && entry.answer.includes(value));
+  assert.ok(question, `${value}を含む統合回答で原始時代の年月のまとまりを検査します。`);
+  question.answer = question.answer.replace(value, value === "数万年前" ? "約9万年前" : "約5万9000年前");
+  assert.throws(() => validateJapaneseKBank(invalid, prehistoricExcerpt), /統合だけに新しい時期があります/, "万を含む時期も、一部の数字だけで既習と誤認しません。");
+}
+const noPeriod = structuredClone(prehistoricBank);
+noPeriod.units[0].questions.find(question => question.stage === "integrated").answer = noPeriod.units[0].questions.find(question => question.stage === "integrated").answer.replace("約6万年前", "その後");
+assert.throws(() => validateJapaneseKBank(noPeriod, prehistoricExcerpt), /統合回答に時期がありません/, "原始時代も統合回答自体に時期を明示します。");
+const invalidSection = structuredClone(prehistoricBank); invalidSection.section.number = 4;
+assert.throws(() => validateJapaneseKBank(invalidSection, prehistoricExcerpt), undefined, "第１章は原文の３節までに限定します。");
 // 史料名の「日本書紀」は許可し、同じ問題内の「本書」や「この章」は引き続き拒否する。
 const chroniclesBank = JSON.parse(await readFile("data/source/japanese-history-k/02-01-04.json", "utf8"));
 const chroniclesExcerpt = await readFile(chroniclesBank.source.file, "utf8");
@@ -89,7 +104,7 @@ assert.ok(Number(subjectBindings.ADDITION_JSON_PARTS) > 1);
 assert.deepEqual(next.subjects[0], original.subjects[0]);
 assert.deepEqual(next.termImages, original.termImages);
 assert.deepEqual(subject.decks.find(deck => deck.id === first.index.deckId), first.subject.decks[0]);
-for (const deck of original.subjects[1].decks) assert.deepEqual(subject.decks.find(entry => entry.id === deck.id), deck, "追加前の117小項目と履歴版を保持します。");
+for (const deck of original.subjects[1].decks) assert.deepEqual(subject.decks.find(entry => entry.id === deck.id), deck, "追加前の123小項目と履歴版を保持します。");
 assert.equal(subject.defaultDeckId, first.subject.defaultDeckId);
 assert.equal(subject.indexPath, first.subject.indexPath);
 assert.equal(subject.questionCount, first.index.questionCount + additions.reduce((sum, plan) => sum + plan.index.questionCount, 0));
@@ -99,16 +114,17 @@ assert.deepEqual(subject.chapterGroups.find(group => group.id === "chapter-5"), 
 assert.deepEqual(subject.chapterGroups.find(group => group.id === "chapter-3"), { id: "chapter-3", number: 3, title: "第3章 中世", deckIds: additions.filter(plan => plan.index.deckId.startsWith("book-03-")).map(plan => plan.index.deckId) });
 assert.deepEqual(subject.chapterGroups.find(group => group.id === "chapter-4"), { id: "chapter-4", number: 4, title: "第4章 近世", deckIds: additions.filter(plan => plan.index.deckId.startsWith("book-04-")).map(plan => plan.index.deckId) });
 assert.deepEqual(subject.chapterGroups.find(group => group.id === "chapter-2"), { id: "chapter-2", number: 2, title: "第2章 古代", deckIds: additions.filter(plan => plan.index.deckId.startsWith("book-02-")).map(plan => plan.index.deckId) });
-assert.deepEqual(pending.map(plan => plan.index.deckNumber), [20205, 20301, 20302, 20303, 20304, 20305], "奈良時代から平安時代の小項目が原文の順に並びます。");
+assert.deepEqual(subject.chapterGroups.find(group => group.id === "chapter-1"), { id: "chapter-1", number: 1, title: "第1章 原始", deckIds: additions.filter(plan => plan.index.deckId.startsWith("book-01-")).map(plan => plan.index.deckId) });
+assert.deepEqual(pending.map(plan => plan.index.deckNumber), [10001, 10002, 10003, 20306, 20307, 20308], "第１章と平安時代の小項目が原文の順に並びます。");
 assert.deepEqual(subject.chapterGroups.flatMap(group => group.deckIds).sort(), subject.decks.map(deck => deck.id).sort(), "全小項目がそれぞれの章に一度ずつ所属します。");
 assert.equal(new Set(subject.decks.map(deck => deck.number)).size, subject.decks.length, "別章の小項目番号も衝突しません。");
 for (const plan of pending) for (const term of plan.terms) for (const question of Object.values(term.stages).flat()) {
   assert.ok(question.id.startsWith(`JHK-${plan.index.deckId.slice(5)}-`));
   const chapter = plan.definition.chapterGroups[0];
-  assert.equal(question.source.file, "sources/kokushi/2_古代.md");
+  assert.equal(question.source.file, plan.index.deckId.startsWith("book-01-") ? "sources/kokushi/1_原始.md" : "sources/kokushi/2_古代.md");
   assert.ok(question.source.name.startsWith(`${chapter.title}／`));
   assert.equal(term.geography.macroRegion, chapter.title);
-  assert.equal(term.geography.regionDetail, plan.index.deckId.startsWith("book-02-03-") ? "奈良時代" : "平安時代");
+  assert.equal(term.geography.regionDetail, plan.index.deckId.startsWith("book-01-") ? "先土器時代以前" : "平安時代");
 }
 assert.deepEqual(appendJapaneseKDecks(next, additions), next, "同じ追加を繰り返しても問題・索引版を増やしません。");
 assert.throws(() => appendJapaneseKDecks(original, [additions[0], additions[0]]));
@@ -191,7 +207,7 @@ for (const field of ["decks", "chapterGroups"]) {
   await assertSettingsRejected({ ...env, ...checkedBindings("ADDITION_JSON", { ...subject, [field]: {} }) }, `${field}が配列でない設定`);
 }
 assert.equal((await call(commit)).status, 400, "全新規問題を照合する前には切替できません。");
-for (const object of previousObjects) assert.equal((await call({ action: "stage", ...object })).status, 403, "既存117小項目は参照のみです。");
+for (const object of previousObjects) assert.equal((await call({ action: "stage", ...object })).status, 403, "既存123小項目は参照のみです。");
 for (const object of objects) assert.equal((await call({ action: "stage", ...object })).status, 200);
 assert.equal((await call({ ...commit, expectedEtag: "stale" })).status, 409);
 for (const change of [value => value.decks[0].version = "lost-history", value => value.defaultDeckId = value.decks[1].id, value => value.chapterGroups[0].deckIds.shift()]) {
@@ -206,4 +222,4 @@ assert.equal((await call(commit)).status, 200);
 assert.deepEqual(await (await bucket.get("index.json")).json(), next);
 for (const object of previousObjects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
 assert.deepEqual(await (await bucket.get(`subjects/japanese-history-k/imports/history/${before.etag}.json`)).json(), original);
-console.log(`日本史K追加：原稿${additions.length}小項目の検査、第2章の奈良時代残り１小項目と平安時代先頭５小項目、計${pending.length}小項目・${pending.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の追加と章別表示情報、全項目の段階移行、既存117小項目と履歴版の保持、項目ごとの時代・地域、再送・同時編集・上書き防止、4000バイト以内の設定分割・復元・欠落拒否を確認しました。`);
+console.log(`日本史K追加：原稿${additions.length}小項目の検査、第1章の先頭３小項目と平安時代残り３小項目、計${pending.length}小項目・${pending.reduce((sum, plan) => sum + plan.index.questionCount, 0)}問の追加と章別表示情報、全項目の段階移行、既存123小項目と履歴版の保持、項目ごとの時代・地域、再送・同時編集・上書き防止、4000バイト以内の設定分割・復元・欠落拒否を確認しました。`);

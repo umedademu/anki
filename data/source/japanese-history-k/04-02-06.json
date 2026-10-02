@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 2,
+    "title": "江戸時代"
+  },
+  "part": {
+    "number": 6,
+    "title": "享保の改革"
+  },
+  "integrationPromptPrefix": "18世紀前半の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_02節_06_享保の改革_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      228,
+      229,
+      230
+    ],
+    "note": "229頁ヘから230頁ト見出し直前の本文・全注・図版・史料と、228頁に先置きされた関連注㉛㉝を通読した。228頁は公事方御定書と目安箱の関連注だけを補足根拠とし、元禄文化の本文や図版は対象外。法典の成立1742年は注㉛の同じ出来事の記述に基づく。1716年は吉宗の将軍就任に対応させ、各制度の個別実施年へ置き換えない。18世紀前半は享保期の政策の大まかな時代範囲であり、個別年の創作ではない。上げ米の納付量、参勤の短縮月数、法典の刑罰や窃盗額、享保の大飢饉の害虫名、大名借財の数量・全員一律の断定、人物の生没年は独立暗記にしない。質素・倹約を掲げた事実と制度の仕組みを扱い、吉宗の賛美、綱紀が正されたという評価、改革による経済縮小の一律断定や政策の善悪は正答にしない。国産化と貿易制限の説明は、限定条件や時期の説明量が少ないため独立項目にしない。漢訳洋書に限る輸入制限の緩和を全外国書籍・全宗教の自由化へ拡張しない。官立病院の始まりという最初の断定を問わない。"
+  },
+  "facts": [
+    {
+      "id": "finance-background",
+      "page": 229,
+      "quote": "金銀の産出量の減少や江戸の大火事、富士山の噴火などにより幕府の財政は元禄期を境に悪化していきました。"
+    },
+    {
+      "id": "yoshimune-1716",
+      "page": 229,
+      "quote": "享保元年（一七一六）に八代将軍となった**徳川吉宗**は、"
+    },
+    {
+      "id": "frugality-finance",
+      "page": 229,
+      "quote": "質素・倹約を掲げて幕府の財政の立て直しに取り組みました。これが**享保の改革**です。"
+    },
+    {
+      "id": "rice-payment",
+      "page": 229,
+      "quote": "石高一万石につき米一〇〇石を献上させる"
+    },
+    {
+      "id": "agemai-name",
+      "page": 229,
+      "quote": "**上げ米**"
+    },
+    {
+      "id": "stay-reduction",
+      "page": 229,
+      "quote": "参勤交代の江戸の滞在期間を一年から半年に軽減する代わりに、"
+    },
+    {
+      "id": "new-fields",
+      "page": 229,
+      "quote": "**新田開発**を奨励して米の増収に努めるなど、吉宗の改革は幕府の収入増加に結びつきました。"
+    },
+    {
+      "id": "court-law-arrangement",
+      "page": 229,
+      "quote": "それまでの法を整理した㉛**公事方御定書**を制定し、"
+    },
+    {
+      "id": "court-law-1742",
+      "page": 228,
+      "quote": "徳川吉宗の命により寛保2年（1742）に成立した法典。"
+    },
+    {
+      "id": "court-law-content",
+      "page": 228,
+      "quote": "下巻には裁判の手続きや判例、刑罰規定などがある。"
+    },
+    {
+      "id": "ashidaka-goal",
+      "page": 229,
+      "quote": "有能な人材を登用するために㉜足高の制を導入し、"
+    },
+    {
+      "id": "ashidaka-condition",
+      "page": 229,
+      "quote": "役職ごとに基準の家禄を設定し、その役職に任命された者の家禄がその基準に満たない場合、"
+    },
+    {
+      "id": "ashidaka-payment",
+      "page": 229,
+      "quote": "不足分を幕府が支給することとした。"
+    },
+    {
+      "id": "ashidaka-period",
+      "page": 229,
+      "quote": "在職中に限り不足分を幕府が支給することとした。"
+    },
+    {
+      "id": "ashidaka-low-income",
+      "page": 229,
+      "quote": "少禄でも有能な人材を要職に抜擢するため、"
+    },
+    {
+      "id": "opinion-box",
+      "page": 229,
+      "quote": "庶民の意見を取り入れる㉝**目安箱**を設置しました。"
+    },
+    {
+      "id": "medical-facility",
+      "page": 228,
+      "quote": "窮民の医療を目的とした小石川養生所（東京都）が開設された。"
+    },
+    {
+      "id": "opinion-medicine",
+      "page": 228,
+      "quote": "目安箱が契機となって、窮民の医療を目的とした小石川養生所（東京都）が開設された。"
+    },
+    {
+      "id": "practical-learning",
+      "page": 229,
+      "quote": "日常生活に役立つ実学を奨励し、"
+    },
+    {
+      "id": "import-easing",
+      "page": 229,
+      "quote": "それまで厳しかった漢訳洋書の輸入制限も緩和され、キリスト教と関係のない書籍の輸入ができるようになり、"
+    },
+    {
+      "id": "knowledge-fields",
+      "page": 229,
+      "quote": "天文学や医学などの新しい知識を取り入れました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "享保の改革と財政",
+      "reading": "きょうほうのかいかくとざいせい",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀前半",
+        "sortYear": 1716
+      },
+      "explanation": "幕府財政の悪化に対して、吉宗は倹約と収入増加を組み合わせた。上げ米は大名の米の納付と江戸滞在の軽減を交換する制度で、新田開発は米の増収に結び付いた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "1716年の日本の享保の改革と財政について、八代将軍として改革を進めた人物は誰か。",
+          "answer": "**徳川吉宗**。",
+          "keywords": [
+            "徳川吉宗"
+          ],
+          "evidence": [
+            "yoshimune-1716"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府が大名の石高に応じて米を献上させた制度を何というか。",
+          "answer": "**上げ米(あげまい)**。",
+          "keywords": [
+            "上げ米"
+          ],
+          "evidence": [
+            "rice-payment",
+            "agemai-name"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革と財政について、上げ米(あげまい)の納付と引き換えに、大名の参勤交代はどのように軽減されたか。",
+          "answer": "**江戸の滞在期間を短縮**した。",
+          "keywords": [
+            "江戸の滞在期間を短縮"
+          ],
+          "evidence": [
+            "stay-reduction",
+            "rice-payment",
+            "agemai-name"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革と財政について、米を増産するために奨励された農地に関する政策は何か。",
+          "answer": "**新田開発**。",
+          "keywords": [
+            "新田開発"
+          ],
+          "evidence": [
+            "new-fields"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革と財政について、吉宗が財政再建のため生活面で掲げた方針は何か。",
+          "answer": "**質素・倹約**。",
+          "keywords": [
+            "質素・倹約"
+          ],
+          "evidence": [
+            "frugality-finance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革と財政について、改革はどのような背景と方針で進められたか。",
+          "answer": "金銀の産出量減少や災害で幕府財政が悪化した日本で、1716年に八代将軍となった**徳川吉宗**は、**質素・倹約**を掲げて財政再建に取り組む**享保の改革**を進めた。",
+          "keywords": [
+            "徳川吉宗",
+            "質素・倹約",
+            "享保の改革"
+          ],
+          "evidence": [
+            "finance-background",
+            "yoshimune-1716",
+            "frugality-finance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革と財政について、幕府の収入を増やす政策を説明せよ。",
+          "answer": "**上げ米(あげまい)**は、大名に米を献上させる代わりに、参勤交代での**江戸の滞在期間を短縮**する制度だった。**新田開発**も奨励し、米の増収によって幕府の収入を増やした。",
+          "keywords": [
+            "上げ米",
+            "江戸の滞在期間を短縮",
+            "新田開発"
+          ],
+          "evidence": [
+            "rice-payment",
+            "agemai-name",
+            "stay-reduction",
+            "new-fields"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀前半の日本の「享保の改革と財政」について説明せよ。",
+          "answer": "1716年、日本で八代将軍となった**徳川吉宗**は、金銀の産出量減少や災害で悪化した幕府財政を立て直すため、**質素・倹約**を掲げて**享保の改革**を進めた。**上げ米(あげまい)**では大名に米を献上させる代わりに**江戸の滞在期間を短縮**し、**新田開発**を奨励して幕府の収入増加を図った。",
+          "keywords": [
+            "徳川吉宗",
+            "質素・倹約",
+            "享保の改革",
+            "上げ米",
+            "江戸の滞在期間を短縮",
+            "新田開発"
+          ],
+          "evidence": [
+            "finance-background",
+            "yoshimune-1716",
+            "frugality-finance",
+            "rice-payment",
+            "agemai-name",
+            "stay-reduction",
+            "new-fields"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "享保の改革の法整備と人材登用",
+      "reading": "きょうほうのかいかくのほうせいびとじんざいとうよう",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀前半（公事方御定書1742年）",
+        "sortYear": 1716
+      },
+      "explanation": "公事方御定書は既存の法を整理し、裁判の手続きや刑罰などを定めた。足高の制は役職に必要な費用と家禄の不足を在職中に補い、少禄の人材も要職に登用できる仕組みだった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、徳川吉宗がそれまでの法を整理して制定した法典は何か。",
+          "answer": "**公事方御定書(くじかたおさだめがき)**。",
+          "keywords": [
+            "公事方御定書"
+          ],
+          "evidence": [
+            "court-law-arrangement"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、役職ごとの基準より家禄が少ない幕臣へ、不足分を幕府が支給した制度は何か。",
+          "answer": "**足高の制(たしだかのせい)**。",
+          "keywords": [
+            "足高の制"
+          ],
+          "evidence": [
+            "ashidaka-goal",
+            "ashidaka-condition",
+            "ashidaka-payment"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革の法整備と人材登用について、公事方御定書(くじかたおさだめがき)の下巻には、刑罰規定のほかに裁判に関するどのような情報があったか。",
+          "answer": "裁判の**手続きや判例**。",
+          "keywords": [
+            "手続きや判例"
+          ],
+          "evidence": [
+            "court-law-content"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革の法整備と人材登用について、足高の制(たしだかのせい)による不足分の支給は、どの期間に限られたか。",
+          "answer": "**在職中**に限られた。",
+          "keywords": [
+            "在職中"
+          ],
+          "evidence": [
+            "ashidaka-period"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革の法整備と人材登用について、公事方御定書(くじかたおさだめがき)はどのような法典だったか。",
+          "answer": "1742年、日本で吉宗の命によって**公事方御定書(くじかたおさだめがき)**が成立した。それまでの法を整理した法典で、裁判の手続きや判例、**刑罰規定**などを定めた。",
+          "keywords": [
+            "公事方御定書",
+            "刑罰規定"
+          ],
+          "evidence": [
+            "court-law-arrangement",
+            "court-law-1742",
+            "court-law-content"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革の法整備と人材登用について、足高の制(たしだかのせい)はどのような仕組みだったか。",
+          "answer": "18世紀前半の日本の享保の改革では、**足高の制(たしだかのせい)**により、役職ごとの基準より家禄が少ない幕臣に、**在職中に限り不足分を支給**した。これにより、少禄でも有能な人材を要職に登用できるようにした。",
+          "keywords": [
+            "足高の制",
+            "在職中に限り不足分を支給"
+          ],
+          "evidence": [
+            "yoshimune-1716",
+            "ashidaka-goal",
+            "ashidaka-condition",
+            "ashidaka-low-income",
+            "ashidaka-period"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀前半の日本の「享保の改革の法整備と人材登用」について説明せよ。",
+          "answer": "18世紀前半の日本では、1742年に吉宗の命で**公事方御定書(くじかたおさだめがき)**が成立し、それまでの法を整理して裁判の手続きや判例、**刑罰規定**などを定めた。**足高の制(たしだかのせい)**では、役職ごとの基準より家禄が少ない幕臣に**在職中に限り不足分を支給**し、有能な人材の登用を図った。",
+          "keywords": [
+            "公事方御定書",
+            "刑罰規定",
+            "足高の制",
+            "在職中に限り不足分を支給"
+          ],
+          "evidence": [
+            "yoshimune-1716",
+            "court-law-arrangement",
+            "court-law-1742",
+            "court-law-content",
+            "ashidaka-goal",
+            "ashidaka-condition",
+            "ashidaka-low-income",
+            "ashidaka-period"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "享保の改革の意見聴取と実学",
+      "reading": "きょうほうのかいかくのいけんちょうしゅとじつがく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀前半",
+        "sortYear": 1716
+      },
+      "explanation": "目安箱を通じた庶民の意見は、医療施設の開設にも結び付いた。キリスト教と関係のない漢訳洋書の輸入を認めることは、実学の奨励と天文学・医学などの知識の導入を支えた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、徳川吉宗が庶民の意見を取り入れるために設置したものは何か。",
+          "answer": "**目安箱(めやすばこ)**。",
+          "keywords": [
+            "目安箱"
+          ],
+          "evidence": [
+            "opinion-box"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、享保の改革の一環として、生活に困る人の医療を目的に開設された施設は何か。",
+          "answer": "**小石川養生所(こいしかわようじょうしょ)**。",
+          "keywords": [
+            "小石川養生所"
+          ],
+          "evidence": [
+            "medical-facility"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革の意見聴取と実学について、吉宗はどのような宗教上の条件を満たす漢訳洋書の輸入を認めたか。",
+          "answer": "**キリスト教と関係のない書籍**。",
+          "keywords": [
+            "キリスト教と関係のない書籍"
+          ],
+          "evidence": [
+            "import-easing"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の享保の改革の意見聴取と実学について、漢訳洋書から取り入れた新しい知識の代表的な分野は何か。",
+          "answer": "**天文学や医学**。",
+          "keywords": [
+            "天文学や医学"
+          ],
+          "evidence": [
+            "knowledge-fields"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革の意見聴取と実学について、目安箱(めやすばこ)はどのような役割を果たしたか。",
+          "answer": "18世紀前半の日本の享保の改革では、吉宗は**目安箱(めやすばこ)**を設置して庶民の意見を取り入れた。目安箱が契機となり、生活に困る人の医療を目的とする**小石川養生所(こいしかわようじょうしょ)**が開設された。",
+          "keywords": [
+            "目安箱",
+            "小石川養生所"
+          ],
+          "evidence": [
+            "yoshimune-1716",
+            "opinion-box",
+            "opinion-medicine"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の享保の改革の意見聴取と実学について、洋書の輸入はどのように変わったか。",
+          "answer": "吉宗は、日常生活に役立つ実学を奨励した。**漢訳洋書の輸入制限を緩和**し、**キリスト教と関係のない書籍**の輸入を認め、**天文学や医学**などの新しい知識を取り入れた。",
+          "keywords": [
+            "漢訳洋書の輸入制限を緩和",
+            "キリスト教と関係のない書籍",
+            "天文学や医学"
+          ],
+          "evidence": [
+            "practical-learning",
+            "import-easing",
+            "knowledge-fields"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀前半の日本の「享保の改革の意見聴取と実学」について説明せよ。",
+          "answer": "18世紀前半の日本で、吉宗は**目安箱(めやすばこ)**を設置して庶民の意見を取り入れ、それが契機となって、生活に困る人の医療を目的とする**小石川養生所(こいしかわようじょうしょ)**が開設された。実学を奨励して**漢訳洋書の輸入制限を緩和**し、**キリスト教と関係のない書籍**の輸入を認め、**天文学や医学**などの新しい知識を取り入れた。",
+          "keywords": [
+            "目安箱",
+            "小石川養生所",
+            "漢訳洋書の輸入制限を緩和",
+            "キリスト教と関係のない書籍",
+            "天文学や医学"
+          ],
+          "evidence": [
+            "yoshimune-1716",
+            "opinion-box",
+            "opinion-medicine",
+            "practical-learning",
+            "import-easing",
+            "knowledge-fields"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

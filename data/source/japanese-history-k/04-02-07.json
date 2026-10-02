@@ -1,0 +1,1031 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 2,
+    "title": "江戸時代"
+  },
+  "part": {
+    "number": 7,
+    "title": "田沼の改革と寛政の改革"
+  },
+  "integrationPromptPrefix": "18世紀後半の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_02節_07_田沼の改革と寛政の改革_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      266
+    ],
+    "note": "230頁トから235頁チ直前の本文・全関連注・図版・史料を最後まで通読した。231頁の飢饉図、232頁の御所参りコラムと一揆・打ちこわし注、234頁の藩政改革と幕末の騒動図、235頁の異学の禁と海防論の史料を含む。266頁は、234頁の享保期以降という藩政改革の大まかな時代枠を確認するため、同じ享保の改革1716年行のみ補足する。個別藩の改革開始年や政策実施年を創作しない。1772年は田沼の老中就任、1787年は定信登用に対応させ、すべての個別政策が同年に完成したとはしない。田沼時代の始まり1767年と老中就任1772年を同一にしない。田沼の先進性や保守派の無理解、定信や諸藩主の名君評価、緊縮の善悪、政策の正当性や一律の成否を正答にしない。天明飢饉の年表1782年と、本文1783年の噴火・翌年の本格化の違いから、開始単年は問わず18世紀後半の幅で示す。ラキ噴火をフランス革命の唯一原因にする説明、飢饉の死者数や食人、御所参りの参拝人数・リンゴ・露店・天皇との国民性比較は不採用。一揆の要求と都市の米価高を区別し、一揆を全て慈悲の請願や非武力とする評価、騒動参加者の道徳や商人の救済義務を一律に正当化する説明は採らない。棄捐令は1784年以前の債務という範囲を明示し、全借金が帳消しになったとはしない。1785年以降の低利返済という細かな追加条件は独立暗記にせず、古い債務の軽減と新規融資の拒否という関係を中心にする。旧里帰農は奨励と強制力のなさを扱い、全都市住民の強制帰村とはしない。寛政異学の禁は235頁史料の昌平坂の門人など儒学教育の場での規制に範囲を限り、233頁の全学問を全国一律に禁止したような表現は採用しない。昌平坂学問所を定信自身が作ったという時期固定を避ける。海防論の史料、幕末1866年の図版の細部、藩主・将軍の家系や生没年、干拓や交易商品の網羅は独立項目にしない。"
+  },
+  "facts": [
+    {
+      "id": "tanuma-1772",
+      "page": 230,
+      "quote": "安永元年（一七七二）に老中となった**田沼意次**が大胆な改革を進めました"
+    },
+    {
+      "id": "stock-associations",
+      "page": 230,
+      "quote": "田沼は**株仲間**（独占的に商売を許された商人）を公認し"
+    },
+    {
+      "id": "association-tax",
+      "page": 230,
+      "quote": "多額の税金を徴収し、"
+    },
+    {
+      "id": "monopoly-sales",
+      "page": 230,
+      "quote": "特定の商人のみが取り扱える**専売制**として流通を統制しました。"
+    },
+    {
+      "id": "nagasaki-easing",
+      "page": 230,
+      "quote": "また、長崎での貿易を緩和し、"
+    },
+    {
+      "id": "qing-exports",
+      "page": 230,
+      "quote": "清への俵物（煎海鼠、干鮑、鱶鰭の乾物）や銅の輸出が増大するなど、"
+    },
+    {
+      "id": "inba-investment",
+      "page": 230,
+      "quote": "新田開発のため、印旛沼の干拓に商人から出資させ、"
+    },
+    {
+      "id": "ezo-development",
+      "page": 230,
+      "quote": "蝦夷地を開発し、海産物の流通経路が開かれました。"
+    },
+    {
+      "id": "famine-name",
+      "page": 233,
+      "quote": "**天明の大飢饉**が起きました。"
+    },
+    {
+      "id": "famine-period",
+      "page": 233,
+      "quote": "天明三年（一七八三）に"
+    },
+    {
+      "id": "famine-climate",
+      "page": 233,
+      "quote": "天候不順による冷害が生じ、翌年から本格的な飢饉に突入し、"
+    },
+    {
+      "id": "frequent-resistance",
+      "page": 233,
+      "quote": "㉟**百姓一揆**や㊱**打ちこわし**が頻発したのです。"
+    },
+    {
+      "id": "famine-regions",
+      "page": 233,
+      "quote": "東北と関東を中心に"
+    },
+    {
+      "id": "peasant-definition",
+      "page": 232,
+      "quote": "農民が中心となり、幕府や領主に対して集団で反抗した運動。"
+    },
+    {
+      "id": "peasant-name",
+      "page": 232,
+      "quote": "**注㉟ 百姓一揆**"
+    },
+    {
+      "id": "peasant-demands",
+      "page": 232,
+      "quote": "不正をはたらく代官の排除、年貢の軽減、専売制の廃止などを訴えるものが多かった。"
+    },
+    {
+      "id": "urban-definition",
+      "page": 232,
+      "quote": "民衆が、豪商を襲い家屋などを破壊したこと。"
+    },
+    {
+      "id": "urban-name",
+      "page": 232,
+      "quote": "**注㊱ 打ちこわし**"
+    },
+    {
+      "id": "urban-price",
+      "page": 232,
+      "quote": "江戸中期以降、凶作などの米価高で生活難となった"
+    },
+    {
+      "id": "sadanobu-1787",
+      "page": 233,
+      "quote": "天明七年（一七八七）、十一代将軍・徳川家斉は老中に白河藩主の**松平定信**を登用しました。"
+    },
+    {
+      "id": "kansei-reform",
+      "page": 233,
+      "quote": "定信の六年に及ぶ一連の改革を**寛政の改革**といいます。"
+    },
+    {
+      "id": "grain-reserve",
+      "page": 233,
+      "quote": "定信は凶作や飢饉に備えて、各地に㊲**囲米**と呼ばれる米穀の備蓄を命じ、"
+    },
+    {
+      "id": "debt-relief",
+      "page": 233,
+      "quote": "借金苦の旗本や御家人を救済するために商人からの借金を帳消しにさせ㊳**（棄捐令）**"
+    },
+    {
+      "id": "old-debt-scope",
+      "page": 233,
+      "quote": "天明4年（1784）以前の借金は元金と利子ともに帳消しとし、"
+    },
+    {
+      "id": "new-credit-refused",
+      "page": 233,
+      "quote": "旗本らの債務は軽減したが、新規の融資は拒否され、"
+    },
+    {
+      "id": "return-to-village",
+      "page": 233,
+      "quote": "都市に流入した農民の帰郷を促し㊴**（旧里帰農令）**、農村の再生に努めました。"
+    },
+    {
+      "id": "return-without-force",
+      "page": 233,
+      "quote": "幕府は下層町人に帰村を奨励したが、強制力はなく、"
+    },
+    {
+      "id": "orthodox-learning",
+      "page": 235,
+      "quote": "朱子学を講義・研究し、人材を取り立てるよう心がけなくてはならない。"
+    },
+    {
+      "id": "heterodox-ban-name",
+      "page": 233,
+      "quote": "**寛政異学の禁**"
+    },
+    {
+      "id": "pupils-ban",
+      "page": 235,
+      "quote": "必ず門人たちに異学を禁じ、"
+    },
+    {
+      "id": "shoheizaka-pupils",
+      "page": 235,
+      "quote": "（昌平坂の）門人たち"
+    },
+    {
+      "id": "learning-other-schools",
+      "page": 235,
+      "quote": "自門（昌平坂）に限らず他門と申し合い、"
+    },
+    {
+      "id": "domain-reform-background",
+      "page": 234,
+      "quote": "享保期以降、幕府だけでなく諸藩も、財政難と頻発する百姓一揆に対応するため、藩政の改革に取り組んだ。"
+    },
+    {
+      "id": "domain-fields",
+      "page": 234,
+      "quote": "田畑を再開発して荒廃した農村を復興させ、"
+    },
+    {
+      "id": "domain-products",
+      "page": 234,
+      "quote": "特産物の生産を奨励し、専売制を導入して財政の立て直しを目指すなどした。"
+    },
+    {
+      "id": "domain-schools",
+      "page": 234,
+      "quote": "藩校を拡充させ、人材の育成に力を入れた藩もあった。"
+    },
+    {
+      "id": "kyoho-era-only",
+      "page": 266,
+      "quote": "| 1716 | 「　　」による享保の改革 |  |"
+    },
+    {
+      "id": "monopoly-goods",
+      "page": 230,
+      "quote": "銅や朝鮮人参などの座を設けて、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "田沼の改革",
+      "reading": "たぬまのかいかく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀後半（1772年に老中就任）",
+        "sortYear": 1772
+      },
+      "explanation": "田沼は商業への課税と商品の流通統制を幕府の財政政策に取り入れた。長崎貿易の緩和に加え、商人の出資による新田開発や蝦夷地の開発を通じて、生産と流通を広げようとした。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1772年の日本で、老中となり、商業を重視した改革を進めた人物は誰か。",
+          "answer": "**田沼意次(たぬまおきつぐ)**。",
+          "keywords": [
+            "田沼意次"
+          ],
+          "evidence": [
+            "tanuma-1772"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、田沼が公認した、独占的に商売を許された商人のまとまりを何というか。",
+          "answer": "**株仲間**。",
+          "keywords": [
+            "株仲間"
+          ],
+          "evidence": [
+            "stock-associations"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、特定の商人だけに銅や朝鮮人参などの取り扱いを認め、流通を統制した仕組みは何か。",
+          "answer": "**専売制**。",
+          "keywords": [
+            "専売制"
+          ],
+          "evidence": [
+            "monopoly-goods",
+            "monopoly-sales"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の田沼の改革で、幕府が公認した株仲間から徴収したものは何か。",
+          "answer": "**税金**。",
+          "keywords": [
+            "税金"
+          ],
+          "evidence": [
+            "stock-associations",
+            "association-tax"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の田沼の改革で、長崎貿易の制限はどのように変更されたか。",
+          "answer": "**制限を緩和**した。",
+          "keywords": [
+            "制限を緩和"
+          ],
+          "evidence": [
+            "nagasaki-easing"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "江戸時代の日本の田沼の改革で、長崎から俵物(たわらもの)や銅の輸出が増えた相手国はどこか。",
+          "answer": "**清**。",
+          "keywords": [
+            "清"
+          ],
+          "evidence": [
+            "qing-exports"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "江戸時代の日本の田沼の改革で、新田開発のための印旛沼(いんばぬま)の干拓へ、誰に出資させたか。",
+          "answer": "**商人**。",
+          "keywords": [
+            "商人"
+          ],
+          "evidence": [
+            "inba-investment"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の田沼の改革は、商業の仕組みをどのように財政政策へ取り入れたか。",
+          "answer": "1772年、日本で老中となった**田沼意次(たぬまおきつぐ)**は、商業を重視した政策を進めた。**株仲間**を公認して**税金**を徴収し、特定の商人だけが商品を扱う**専売制**で流通を統制した。",
+          "keywords": [
+            "田沼意次",
+            "株仲間",
+            "税金",
+            "専売制"
+          ],
+          "evidence": [
+            "tanuma-1772",
+            "stock-associations",
+            "association-tax",
+            "monopoly-sales"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の田沼の改革で、長崎貿易はどのように変わったか。",
+          "answer": "田沼は**長崎貿易を緩和**し、**清への俵物(たわらもの)や銅の輸出**が増加した。",
+          "keywords": [
+            "長崎貿易を緩和",
+            "清への俵物や銅の輸出"
+          ],
+          "evidence": [
+            "nagasaki-easing",
+            "qing-exports"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の田沼の改革で、新田開発と蝦夷地(えぞち)の開発はどのように進められたか。",
+          "answer": "田沼は新田開発のため、**印旛沼(いんばぬま)の干拓**へ**商人が出資**するようにした。**蝦夷地(えぞち)の開発**も進め、**海産物の流通経路**が開かれた。",
+          "keywords": [
+            "印旛沼の干拓",
+            "商人が出資",
+            "蝦夷地の開発",
+            "海産物の流通経路"
+          ],
+          "evidence": [
+            "inba-investment",
+            "ezo-development"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀後半の日本の「田沼の改革」について説明せよ。",
+          "answer": "1772年、日本で老中となった**田沼意次(たぬまおきつぐ)**は、**株仲間**を公認して**税金**を徴収し、**専売制**で商品の流通を統制した。**長崎貿易を緩和**すると、**清への俵物(たわらもの)や銅の輸出**が増加した。新田開発のため**印旛沼(いんばぬま)の干拓**へ**商人が出資**するようにし、**蝦夷地(えぞち)の開発**で**海産物の流通経路**も開かれた。",
+          "keywords": [
+            "田沼意次",
+            "株仲間",
+            "税金",
+            "専売制",
+            "長崎貿易を緩和",
+            "清への俵物や銅の輸出",
+            "印旛沼の干拓",
+            "商人が出資",
+            "蝦夷地の開発",
+            "海産物の流通経路"
+          ],
+          "evidence": [
+            "tanuma-1772",
+            "stock-associations",
+            "association-tax",
+            "monopoly-sales",
+            "nagasaki-easing",
+            "qing-exports",
+            "inba-investment",
+            "ezo-development"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "天明の飢饉と民衆の抵抗",
+      "reading": "てんめいのききんとみんしゅうのていこう",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀後半",
+        "sortYear": 1783
+      },
+      "explanation": "飢饉による生活難のなかで、農村と都市では異なる形の抵抗が起きた。農民の一揆は年貢や流通の規制などへの要求を掲げ、都市の打ちこわしは米価高で困窮した民衆が豪商を襲う形で現れた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "18世紀後半の日本で、東北と関東を中心に起きた大飢饉は何か。",
+          "answer": "**天明の大飢饉**。",
+          "keywords": [
+            "天明の大飢饉"
+          ],
+          "evidence": [
+            "famine-name",
+            "famine-period",
+            "famine-regions"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、農民を中心に、幕府や領主へ集団で反抗した運動を何というか。",
+          "answer": "**百姓一揆**。",
+          "keywords": [
+            "百姓一揆"
+          ],
+          "evidence": [
+            "peasant-name",
+            "peasant-definition"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、生活に困る都市の民衆が豪商を襲い、家屋などを破壊した行動を何というか。",
+          "answer": "**打ちこわし**。",
+          "keywords": [
+            "打ちこわし"
+          ],
+          "evidence": [
+            "urban-name",
+            "urban-definition"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天明の飢饉と民衆の抵抗で、都市の打ちこわしにつながる生活難を深めた、米の価格の変化は何か。",
+          "answer": "**米価高**。",
+          "keywords": [
+            "米価高"
+          ],
+          "evidence": [
+            "urban-price"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の天明の飢饉と民衆の抵抗で、百姓一揆が年貢や商品の流通規制について掲げた主な要求は何か。",
+          "answer": "**年貢の軽減や専売制の廃止**。",
+          "keywords": [
+            "年貢の軽減や専売制の廃止"
+          ],
+          "evidence": [
+            "peasant-demands"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の天明の飢饉と民衆の抵抗では、飢饉のなかでどのような動きが起きたか。",
+          "answer": "18世紀後半の日本では、冷害から**天明の大飢饉**が起こり、**百姓一揆**や**打ちこわし**が頻発した。",
+          "keywords": [
+            "天明の大飢饉",
+            "百姓一揆",
+            "打ちこわし"
+          ],
+          "evidence": [
+            "famine-name",
+            "famine-period",
+            "famine-climate",
+            "frequent-resistance"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の天明の飢饉と民衆の抵抗で、百姓一揆と打ちこわしにはどのような違いがあったか。",
+          "answer": "**百姓一揆**では農民が幕府や領主へ集団で反抗し、**年貢の軽減や専売制の廃止**などを求めた。都市では、凶作などによる**米価高**で民衆の生活が苦しくなると、豪商を襲って家屋を破壊する**打ちこわし**が起きた。",
+          "keywords": [
+            "百姓一揆",
+            "年貢の軽減や専売制の廃止",
+            "米価高",
+            "打ちこわし"
+          ],
+          "evidence": [
+            "peasant-name",
+            "peasant-definition",
+            "peasant-demands",
+            "urban-name",
+            "urban-definition",
+            "urban-price"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀後半の日本の「天明の飢饉と民衆の抵抗」について説明せよ。",
+          "answer": "18世紀後半の日本では、冷害から**天明の大飢饉**が起こり、民衆の抵抗が頻発した。**百姓一揆**では農民が幕府や領主へ集団で反抗し、**年貢の軽減や専売制の廃止**などを求めた。都市では凶作などによる**米価高**で民衆の生活が苦しくなり、豪商を襲って家屋を破壊する**打ちこわし**が起きた。",
+          "keywords": [
+            "天明の大飢饉",
+            "百姓一揆",
+            "年貢の軽減や専売制の廃止",
+            "米価高",
+            "打ちこわし"
+          ],
+          "evidence": [
+            "famine-name",
+            "famine-period",
+            "famine-climate",
+            "frequent-resistance",
+            "peasant-name",
+            "peasant-definition",
+            "peasant-demands",
+            "urban-name",
+            "urban-definition",
+            "urban-price"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "寛政の改革と救済",
+      "reading": "かんせいのかいかくときゅうさい",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀後半（1787年に定信登用）",
+        "sortYear": 1787
+      },
+      "explanation": "定信は飢饉への備蓄、幕臣の債務軽減、農村への帰村奨励を進めた。借金帳消しには対象時期があり、新規融資の拒否という問題も生じた。帰農は奨励によるもので、強制力はなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "1787年の日本の寛政の改革と救済について、老中に登用され改革を進めた人物は誰か。",
+          "answer": "**松平定信(まつだいらさだのぶ)**。",
+          "keywords": [
+            "松平定信"
+          ],
+          "evidence": [
+            "sadanobu-1787"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、松平定信が凶作や飢饉に備えて命じた米穀の備蓄を何というか。",
+          "answer": "**囲米(かこいまい)**。",
+          "keywords": [
+            "囲米"
+          ],
+          "evidence": [
+            "grain-reserve"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、旗本(はたもと)や御家人(ごけにん)の一定時期以前の借金を帳消しにした命令は何か。",
+          "answer": "**棄捐令(きえんれい)**。",
+          "keywords": [
+            "棄捐令"
+          ],
+          "evidence": [
+            "debt-relief",
+            "old-debt-scope"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、都市に流入した農民の帰郷を促し、農村再生を図った命令は何か。",
+          "answer": "**旧里帰農令(きゅうりきのうれい)**。",
+          "keywords": [
+            "旧里帰農令"
+          ],
+          "evidence": [
+            "return-to-village"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "短答",
+          "prompt": "江戸時代の日本の寛政の改革と救済で、棄捐令(きえんれい)による債務軽減後、新しい借金についてどのような問題が生じたか。",
+          "answer": "**新規の融資が拒否される**問題が生じた。",
+          "keywords": [
+            "新規の融資が拒否される"
+          ],
+          "evidence": [
+            "new-credit-refused"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の寛政の改革と救済で、旧里帰農令(きゅうりきのうれい)の帰村措置は、強制力の面でどのような制度だったか。",
+          "answer": "**強制力はなかった**。",
+          "keywords": [
+            "強制力はなかった"
+          ],
+          "evidence": [
+            "return-without-force"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の寛政の改革と救済について、改革の担い手と飢饉への備えを説明せよ。",
+          "answer": "1787年、日本で老中に登用された**松平定信(まつだいらさだのぶ)**は、**寛政の改革**を進めた。凶作や飢饉に備えて**囲米(かこいまい)**と呼ばれる米穀の備蓄を命じた。",
+          "keywords": [
+            "松平定信",
+            "寛政の改革",
+            "囲米"
+          ],
+          "evidence": [
+            "sadanobu-1787",
+            "kansei-reform",
+            "grain-reserve"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の寛政の改革と救済で、棄捐令(きえんれい)はどのような措置で、どのような問題も生じたか。",
+          "answer": "**棄捐令(きえんれい)**は、旗本(はたもと)・御家人(ごけにん)の**1784年以前の借金**について、**元金と利子を帳消し**にした。債務が軽減する一方、**新規の融資が拒否される**問題も生じた。",
+          "keywords": [
+            "棄捐令",
+            "1784年以前の借金",
+            "元金と利子を帳消し",
+            "新規の融資が拒否される"
+          ],
+          "evidence": [
+            "debt-relief",
+            "old-debt-scope",
+            "new-credit-refused"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の寛政の改革と救済で、旧里帰農令(きゅうりきのうれい)はどのような政策だったか。",
+          "answer": "**旧里帰農令(きゅうりきのうれい)**は、都市に流入した農民に**帰村を奨励**して農村の再生を図ったが、**強制力はなかった**。",
+          "keywords": [
+            "旧里帰農令",
+            "帰村を奨励",
+            "強制力はなかった"
+          ],
+          "evidence": [
+            "return-to-village",
+            "return-without-force"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀後半の日本の「寛政の改革と救済」について説明せよ。",
+          "answer": "1787年、日本で老中に登用された**松平定信(まつだいらさだのぶ)**は**寛政の改革**を進め、凶作や飢饉に備えて**囲米(かこいまい)**による米穀の備蓄を命じた。**棄捐令(きえんれい)**では、旗本(はたもと)・御家人(ごけにん)の**1784年以前の借金**の**元金と利子を帳消し**にしたが、**新規の融資が拒否される**問題も生じた。**旧里帰農令(きゅうりきのうれい)**では、農村の再生のため**帰村を奨励**したが、**強制力はなかった**。",
+          "keywords": [
+            "松平定信",
+            "寛政の改革",
+            "囲米",
+            "棄捐令",
+            "1784年以前の借金",
+            "元金と利子を帳消し",
+            "新規の融資が拒否される",
+            "旧里帰農令",
+            "帰村を奨励",
+            "強制力はなかった"
+          ],
+          "evidence": [
+            "sadanobu-1787",
+            "kansei-reform",
+            "grain-reserve",
+            "debt-relief",
+            "old-debt-scope",
+            "new-credit-refused",
+            "return-to-village",
+            "return-without-force"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "寛政の改革の学問統制",
+      "reading": "かんせいのかいかくのがくもんとうせい",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀後半の寛政期",
+        "sortYear": 1787
+      },
+      "explanation": "幕府は朱子学を正統な学問として講義・研究を奨励し、昌平坂の門人などに異学の禁止を求めた。この統制は儒学教育の場を対象とした。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "18世紀後半の日本の寛政の改革の学問統制で、幕府が講義・研究を奨励した儒学は何か。",
+          "answer": "**朱子学**。",
+          "keywords": [
+            "朱子学"
+          ],
+          "evidence": [
+            "orthodox-learning"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "18世紀後半の日本で、幕府が朱子学以外の異学を儒学教育の場から排除しようとした政策は何か。",
+          "answer": "**寛政異学の禁**。",
+          "keywords": [
+            "寛政異学の禁"
+          ],
+          "evidence": [
+            "heterodox-ban-name",
+            "pupils-ban"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "18世紀後半の日本の寛政の改革の学問統制で、異学を禁じるよう求められた門人は、どこの教育の場で学ぶ人々か。",
+          "answer": "**昌平坂(しょうへいざか)**。",
+          "keywords": [
+            "昌平坂"
+          ],
+          "evidence": [
+            "shoheizaka-pupils",
+            "pupils-ban"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の寛政の改革の学問統制は、どのような方針だったか。",
+          "answer": "18世紀後半の日本で、幕府は**朱子学**の講義・研究を奨励した。**寛政異学の禁**では、儒学教育の場で、朱子学以外の異学を禁じるよう求めた。",
+          "keywords": [
+            "朱子学",
+            "寛政異学の禁"
+          ],
+          "evidence": [
+            "sadanobu-1787",
+            "heterodox-ban-name",
+            "orthodox-learning",
+            "pupils-ban",
+            "learning-other-schools"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀後半の日本の「寛政の改革の学問統制」について説明せよ。",
+          "answer": "18世紀後半の日本で、幕府は**朱子学**の講義・研究を奨励し、**寛政異学の禁**によって異学を排除しようとした。**昌平坂(しょうへいざか)**の門人など、儒学教育の場で異学の禁止を求める統制だった。",
+          "keywords": [
+            "朱子学",
+            "寛政異学の禁",
+            "昌平坂"
+          ],
+          "evidence": [
+            "sadanobu-1787",
+            "heterodox-ban-name",
+            "orthodox-learning",
+            "pupils-ban",
+            "learning-other-schools",
+            "shoheizaka-pupils"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "藩政改革",
+      "reading": "はんせいかいかく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "18世紀以降の江戸時代",
+        "sortYear": 1716
+      },
+      "explanation": "諸藩の改革は幕府だけの改革とは別に進められた。農村の復興、特産物の生産と専売、人材育成などが、財政難や一揆への対応として行われた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革について、改革に取り組んだ背景となる財政と社会の問題は何か。",
+          "answer": "**財政難と百姓一揆**。",
+          "keywords": [
+            "財政難と百姓一揆"
+          ],
+          "evidence": [
+            "domain-reform-background"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革について、荒廃した農村を復興させるため、土地にどのような手を加えたか。",
+          "answer": "**田畑の再開発**。",
+          "keywords": [
+            "田畑の再開発"
+          ],
+          "evidence": [
+            "domain-fields"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の藩政改革について、専売制と組み合わせて生産を奨励した品物は、どのようなものか。",
+          "answer": "その土地の**特産物**。",
+          "keywords": [
+            "特産物"
+          ],
+          "evidence": [
+            "domain-products"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、諸藩が人材育成のため拡充した教育施設は何か。",
+          "answer": "**藩校**。",
+          "keywords": [
+            "藩校"
+          ],
+          "evidence": [
+            "domain-schools"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の藩政改革では、どのような背景の下で生産と流通を変えたか。",
+          "answer": "18世紀以降の日本で、諸藩は**財政難と百姓一揆**への対応として改革に取り組んだ。**田畑の再開発**で荒廃した農村を復興させ、**特産物の生産を奨励**し、**専売制**を導入して財政再建を図った。",
+          "keywords": [
+            "財政難と百姓一揆",
+            "田畑の再開発",
+            "特産物の生産を奨励",
+            "専売制"
+          ],
+          "evidence": [
+            "domain-reform-background",
+            "domain-fields",
+            "domain-products",
+            "kyoho-era-only"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代の日本の藩政改革では、人材育成のために何が行われたか。",
+          "answer": "諸藩のなかには、**藩校の拡充**を進め、**人材育成**に力を入れた藩もあった。",
+          "keywords": [
+            "藩校の拡充",
+            "人材育成"
+          ],
+          "evidence": [
+            "domain-schools"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "18世紀以降の日本の「藩政改革」について説明せよ。",
+          "answer": "18世紀以降の日本で、諸藩は**財政難と百姓一揆**に対応して改革に取り組んだ。**田畑の再開発**で農村を復興させ、**特産物の生産を奨励**し、**専売制**を導入して財政再建を図った。**藩校の拡充**による**人材育成**を進めた藩もあった。",
+          "keywords": [
+            "財政難と百姓一揆",
+            "田畑の再開発",
+            "特産物の生産を奨励",
+            "専売制",
+            "藩校の拡充",
+            "人材育成"
+          ],
+          "evidence": [
+            "domain-reform-background",
+            "domain-fields",
+            "domain-products",
+            "domain-schools",
+            "kyoho-era-only"
+          ],
+          "note": ""
+        }
+      ],
+      "integrationPromptPrefix": "18世紀以降の日本の"
+    }
+  ]
+}

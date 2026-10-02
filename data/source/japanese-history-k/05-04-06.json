@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 6,
+    "title": "戦時体制に入った日本"
+  },
+  "integrationPromptPrefix": "昭和期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_06_戦時体制に入った日本_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      364,
+      365,
+      366,
+      368,
+      409
+    ],
+    "note": "担当本文と隣組・内地外地・創氏改名・紀元二六〇〇年・零戦・五輪の関連コラムと全注記・図版説明を通読した。409頁は同じ大政翼賛会の組織年だけを補う。国家総動員法の権限移管と労働力・物資の動員、切符制・配給制・隣組による生活の変化、新体制運動と議会の継続、東京五輪の開催予定と辞退を選定した。東京五輪の辞退の昭和十三年は364頁の昭和十三年（一九三八）の西暦併記と照合し、1940年の予定と1938年の辞退を区別した。近衛の意図を軍の暴走を抑えるためだけと断定せず、ドイツやイタリアの議会が停止されたという比較も正答にしない。国家・植民地支配の正当化、同化が朝鮮人や台湾人の自由意思や一般的支持を得たという評価、参政権を一律に認められたとする単純化は採用しない。創氏改名の1939年実施は法令と施行年の混同に疑義があり、任意性のみで圧力がなかったとする解釈も扱わない。姓と氏の文化一般化や創氏改名を独立項目として問うだけの制度・時期根拠は不足するため見送った。零戦の命名、機数、軍事性能、撃墜・特攻・人物や小説の逸話、国家の優劣、紀元二六〇〇年の神話を史実とする断定、町内会や隣組の刊行時の現況は出題しない。五輪のアジア初などの最初の評価、代替開催地や戦後の大会年を追加暗記にしない。"
+  },
+  "facts": [
+    {
+      "id": "law-name",
+      "page": 364,
+      "quote": "**国家総動員法**を成立させ、"
+    },
+    {
+      "id": "law-year",
+      "page": 364,
+      "quote": "昭和十三年（一九三八）、"
+    },
+    {
+      "id": "law-cabinet",
+      "page": 364,
+      "quote": "近衛文麿内閣は昭和十三年（一九三八）、**国家総動員法**を成立させ、"
+    },
+    {
+      "id": "law-background",
+      "page": 364,
+      "quote": "大陸での戦闘が拡大し長期化すると、"
+    },
+    {
+      "id": "law-authority",
+      "page": 364,
+      "quote": "議会の権限を縮小し、その権限を内閣に移管するものです。"
+    },
+    {
+      "id": "law-mobilization",
+      "page": 364,
+      "quote": "政府は議会に諮ることなく、労働力や物資を動員することができるようになりました。"
+    },
+    {
+      "id": "controlled-economy",
+      "page": 364,
+      "quote": "国が経済や国民生活を統制するため、統制経済と呼ばれます。"
+    },
+    {
+      "id": "military-priority",
+      "page": 364,
+      "quote": "軍需品の生産と調達が優先され、"
+    },
+    {
+      "id": "civilian-production",
+      "page": 364,
+      "quote": "生活必需品や食料の生産が後回しになり、国民生活を圧迫しました。"
+    },
+    {
+      "id": "labor-dissolution",
+      "page": 364,
+      "quote": "昭和十五年（一九四〇）にはすべての労働組合は解散し、"
+    },
+    {
+      "id": "tickets",
+      "page": 364,
+      "quote": "砂糖、マッチ、木炭などが切符制"
+    },
+    {
+      "id": "rice-ration",
+      "page": 366,
+      "quote": "またその翌年から米が配給制になりました。"
+    },
+    {
+      "id": "neighborhood-name",
+      "page": 364,
+      "quote": "隣組（組）の結成を義務づけた。"
+    },
+    {
+      "id": "neighborhood-info",
+      "page": 364,
+      "quote": "回覧板を使った情報の伝達"
+    },
+    {
+      "id": "neighborhood-role",
+      "page": 364,
+      "quote": "食料や生活必需品の配給、資源回収、防空防火、健康の維持など、戦時体制における国民統制を担う末端組織として機能した。"
+    },
+    {
+      "id": "neighborhood-year",
+      "page": 364,
+      "quote": "日本政府は昭和15年（1940）、町内会などの下位組織である隣組（組）の結成を義務づけた。"
+    },
+    {
+      "id": "association-name",
+      "page": 366,
+      "quote": "新たに発足した大政翼賛会"
+    },
+    {
+      "id": "movement-name",
+      "page": 366,
+      "quote": "総力戦体制を作るための新体制運動を推進しました。"
+    },
+    {
+      "id": "movement-cabinet",
+      "page": 366,
+      "quote": "第二次近衛内閣は昭和十五年、"
+    },
+    {
+      "id": "party-dissolution",
+      "page": 366,
+      "quote": "これにより全政党が解党し、"
+    },
+    {
+      "id": "party-merger",
+      "page": 366,
+      "quote": "新たに発足した大政翼賛会にほとんどの政党が合流しました。"
+    },
+    {
+      "id": "association-direction",
+      "page": 366,
+      "quote": "大政翼賛会は政府に指導される結社"
+    },
+    {
+      "id": "diet-continuation",
+      "page": 366,
+      "quote": "帝国議会は停止されず、制限を受けながらも継続されました。"
+    },
+    {
+      "id": "association-year",
+      "page": 409,
+      "quote": "| 1940 |"
+    },
+    {
+      "id": "association-organization",
+      "page": 409,
+      "quote": "大政翼賛会を組織"
+    },
+    {
+      "id": "olympic-plan",
+      "page": 366,
+      "quote": "1940年東京オリンピックは、アジアで初めて開催されるオリンピックになる予定だった"
+    },
+    {
+      "id": "olympic-criticism",
+      "page": 366,
+      "quote": "日中戦争（日華事変）で国際的な批判を受けたうえに、"
+    },
+    {
+      "id": "olympic-materials",
+      "page": 366,
+      "quote": "戦時下にあって競技場などの建設資材の調達が困難となったため、"
+    },
+    {
+      "id": "olympic-withdrawal",
+      "page": 366,
+      "quote": "昭和十三年に開催を辞退することになりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "国家総動員法と統制経済",
+      "reading": "こっかそうどういんほうととうせいけいざい",
+      "category": "戦時の政治・経済",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1938年",
+        "sortYear": 1938
+      },
+      "explanation": "国家総動員法は、議会から内閣への権限移管を通じて、労働力や物資の動員を政府が進められる仕組みをつくった。戦時には、国が経済活動と国民生活を管理する統制経済が進められた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期の日本で、大陸での戦闘の拡大・長期化を受け、戦時体制へ移行するために成立した法律は何か。",
+          "answer": "**国家総動員法**。",
+          "keywords": [
+            "国家総動員法"
+          ],
+          "evidence": [
+            "law-background",
+            "law-name"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期の日本で、国が経済活動や国民生活を管理する戦時期の経済の仕組みを何というか。",
+          "answer": "**統制経済**。",
+          "keywords": [
+            "統制経済"
+          ],
+          "evidence": [
+            "controlled-economy"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "昭和期の日本の国家総動員法と統制経済について、国家総動員法が成立したのは何年か。",
+          "answer": "1938年。",
+          "keywords": [],
+          "evidence": [
+            "law-year",
+            "law-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "人物の確認",
+          "prompt": "昭和期の日本の国家総動員法と統制経済について、国家総動員法を成立させた内閣は何か。",
+          "answer": "**近衛文麿内閣(このえふみまろないかく)**。",
+          "keywords": [
+            "近衛文麿内閣"
+          ],
+          "evidence": [
+            "law-cabinet"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "制度の関係",
+          "prompt": "昭和期の日本の国家総動員法と統制経済について、国家総動員法は議会の権限をどこへ移したか。",
+          "answer": "**内閣**。",
+          "keywords": [
+            "内閣"
+          ],
+          "evidence": [
+            "law-authority"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制度の内容",
+          "prompt": "昭和期の日本の国家総動員法と統制経済について、政府が議会に諮らず動員できるようになった対象は何か。",
+          "answer": "**労働力や物資**。",
+          "keywords": [
+            "労働力や物資"
+          ],
+          "evidence": [
+            "law-mobilization"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "昭和期の日本で、国家総動員法の成立により政府の権限はどう変わったか。",
+          "answer": "大陸での**戦闘の拡大・長期化**を受け、日本の**近衛文麿内閣(このえふみまろないかく)**が**1938年**に**国家総動員法**を成立させた。**議会の権限を内閣に移管**し、政府は**議会に諮らず労働力や物資を動員**できるようになった。国が**経済や国民生活を統制**する**統制経済**へ移行した。",
+          "keywords": [
+            "戦闘の拡大・長期化",
+            "近衛文麿内閣",
+            "1938年",
+            "国家総動員法",
+            "議会の権限を内閣に移管",
+            "議会に諮らず労働力や物資を動員",
+            "経済や国民生活を統制",
+            "統制経済"
+          ],
+          "evidence": [
+            "law-background",
+            "law-cabinet",
+            "law-authority",
+            "law-mobilization",
+            "controlled-economy"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「国家総動員法と統制経済」について説明せよ。",
+          "answer": "**1938年**、日本では大陸の**戦闘の拡大・長期化**を受け、**近衛文麿内閣(このえふみまろないかく)**が**国家総動員法**を成立させた。**議会の権限を内閣に移管**することで、政府は**議会に諮らず労働力や物資を動員**できるようになった。国が**経済や国民生活を統制**する**統制経済**へ移行した。",
+          "keywords": [
+            "1938年",
+            "戦闘の拡大・長期化",
+            "近衛文麿内閣",
+            "国家総動員法",
+            "議会の権限を内閣に移管",
+            "議会に諮らず労働力や物資を動員",
+            "経済や国民生活を統制",
+            "統制経済"
+          ],
+          "evidence": [
+            "law-background",
+            "law-cabinet",
+            "law-authority",
+            "law-mobilization",
+            "controlled-economy"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "戦時下の国民生活",
+      "reading": "せんじかのこくみんせいかつ",
+      "category": "戦時の社会",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1940～1941年の生活統制",
+        "sortYear": 1940
+      },
+      "explanation": "軍需品の生産と調達が優先され、生活必需品や食料の生産は後回しにされた。切符制・配給制が導入され、隣組は情報の伝達や配給、防空防火などを担う地域の末端組織となった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制度の内容",
+          "prompt": "昭和期の日本の戦時下の国民生活について、生活必需品や食料に先んじて生産と調達が優先されたのは何か。",
+          "answer": "**軍需品**。",
+          "keywords": [
+            "軍需品"
+          ],
+          "evidence": [
+            "military-priority"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期の日本で、回覧板による情報伝達や防空防火などを担った、国民統制の末端組織は何か。",
+          "answer": "**隣組(となりぐみ)**。",
+          "keywords": [
+            "隣組"
+          ],
+          "evidence": [
+            "neighborhood-name",
+            "neighborhood-info"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果の確認",
+          "prompt": "昭和期の日本の戦時下の国民生活について、1940年にすべての労働組合はどうなったか。",
+          "answer": "**解散した**。",
+          "keywords": [
+            "解散した"
+          ],
+          "evidence": [
+            "labor-dissolution"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制度の内容",
+          "prompt": "昭和期の日本の戦時下の国民生活について、砂糖・マッチ・木炭などの入手にはどのような制度が導入されたか。",
+          "answer": "**切符制**。",
+          "keywords": [
+            "切符制"
+          ],
+          "evidence": [
+            "tickets"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制度の内容",
+          "prompt": "昭和期の日本の戦時下の国民生活について、砂糖などへの切符制導入の翌年、米にはどのような制度が導入されたか。",
+          "answer": "**配給制**。",
+          "keywords": [
+            "配給制"
+          ],
+          "evidence": [
+            "labor-dissolution",
+            "tickets",
+            "rice-ration"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "昭和期の日本の戦時下の国民生活は、軍需の優先によってどう変わったか。",
+          "answer": "**軍需品の生産・調達を優先**し、**生活必需品や食料の生産は後回し**となり、**国民生活を圧迫**した。**1940年**には砂糖・マッチ・木炭などに**切符制**が導入され、翌**1941年**から米は**配給制**になった。",
+          "keywords": [
+            "軍需品の生産・調達を優先",
+            "生活必需品や食料の生産は後回し",
+            "国民生活を圧迫",
+            "1940年",
+            "切符制",
+            "1941年",
+            "配給制"
+          ],
+          "evidence": [
+            "military-priority",
+            "civilian-production",
+            "labor-dissolution",
+            "tickets",
+            "rice-ration"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "昭和期の日本の戦時下の国民生活で、労働組合と地域組織はどう変わったか。",
+          "answer": "**1940年**に**労働組合はすべて解散**した。同年、**隣組(となりぐみ)の結成を義務化**し、隣組は**情報の伝達・配給・資源回収・防空防火**などを担う**国民統制の末端組織**となった。",
+          "keywords": [
+            "1940年",
+            "労働組合はすべて解散",
+            "隣組の結成を義務化",
+            "情報の伝達・配給・資源回収・防空防火",
+            "国民統制の末端組織"
+          ],
+          "evidence": [
+            "labor-dissolution",
+            "neighborhood-year",
+            "neighborhood-info",
+            "neighborhood-role"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「戦時下の国民生活」について説明せよ。",
+          "answer": "戦時下の日本は**軍需品の生産・調達を優先**し、**生活必需品や食料の生産は後回し**となり、**国民生活を圧迫**した。**1940年**には**労働組合はすべて解散**し、**隣組(となりぐみ)の結成を義務化**して、**情報の伝達・配給・資源回収・防空防火**などを担う**国民統制の末端組織**とした。**1940年**には砂糖などに**切符制**を導入し、翌**1941年**から米を**配給制**とした。",
+          "keywords": [
+            "軍需品の生産・調達を優先",
+            "生活必需品や食料の生産は後回し",
+            "国民生活を圧迫",
+            "1940年",
+            "労働組合はすべて解散",
+            "隣組の結成を義務化",
+            "情報の伝達・配給・資源回収・防空防火",
+            "国民統制の末端組織",
+            "切符制",
+            "1941年",
+            "配給制"
+          ],
+          "evidence": [
+            "military-priority",
+            "civilian-production",
+            "labor-dissolution",
+            "neighborhood-year",
+            "neighborhood-info",
+            "neighborhood-role",
+            "tickets",
+            "rice-ration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "新体制運動と大政翼賛会",
+      "reading": "しんたいせいうんどうとたいせいよくさんかい",
+      "category": "戦時の政治",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1940年",
+        "sortYear": 1940
+      },
+      "explanation": "第二次近衛内閣の新体制運動のもとで全政党が解党し、ほとんどの政党が大政翼賛会に合流した。大政翼賛会は政府に指導される結社となった一方、帝国議会は制限を受けながら継続した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "昭和期の日本で、総力戦体制をつくるために新たに発足した国民政治組織は何か。",
+          "answer": "**大政翼賛会(たいせいよくさんかい)**。",
+          "keywords": [
+            "大政翼賛会"
+          ],
+          "evidence": [
+            "association-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "1940年の日本で、第二次近衛内閣が総力戦体制をつくるために推進した運動は何か。",
+          "answer": "**新体制運動**。",
+          "keywords": [
+            "新体制運動"
+          ],
+          "evidence": [
+            "movement-cabinet",
+            "movement-name",
+            "association-year",
+            "association-organization"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果の確認",
+          "prompt": "昭和期の日本の新体制運動と大政翼賛会について、新体制運動のもとで既存の全政党はどうなったか。",
+          "answer": "**解党した**。",
+          "keywords": [
+            "解党した"
+          ],
+          "evidence": [
+            "party-dissolution"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "制度の内容",
+          "prompt": "昭和期の日本の新体制運動と大政翼賛会について、大政翼賛会はどのような立場の結社になったか。",
+          "answer": "**政府に指導される結社**。",
+          "keywords": [
+            "政府に指導される結社"
+          ],
+          "evidence": [
+            "association-direction"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "結果の確認",
+          "prompt": "昭和期の日本の新体制運動と大政翼賛会について、帝国議会の活動はどうなったか。",
+          "answer": "停止されず、**制限を受けながら継続**した。",
+          "keywords": [
+            "制限を受けながら継続"
+          ],
+          "evidence": [
+            "diet-continuation"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "昭和期の日本では、新体制運動から大政翼賛会へどのような政治の変化が起きたか。",
+          "answer": "**1940年**、**第二次近衛内閣(だいにじこのえないかく)**が**総力戦体制**をつくるために**新体制運動**を推進した。**全政党が解党**し、ほとんどの政党が新たに発足した**大政翼賛会(たいせいよくさんかい)に合流**した。",
+          "keywords": [
+            "1940年",
+            "第二次近衛内閣",
+            "総力戦体制",
+            "新体制運動",
+            "全政党が解党",
+            "大政翼賛会に合流"
+          ],
+          "evidence": [
+            "movement-cabinet",
+            "movement-name",
+            "party-dissolution",
+            "party-merger",
+            "association-year",
+            "association-organization"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "昭和期の日本で、大政翼賛会の発足後、政治組織と帝国議会はどのようになったか。",
+          "answer": "大政翼賛会は**政府に指導される結社**となった。帝国議会は停止されず、**制限を受けながら継続**した。",
+          "keywords": [
+            "政府に指導される結社",
+            "制限を受けながら継続"
+          ],
+          "evidence": [
+            "association-direction",
+            "diet-continuation"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「新体制運動と大政翼賛会」について説明せよ。",
+          "answer": "**1940年**、日本の**第二次近衛内閣(だいにじこのえないかく)**は**総力戦体制**をつくるために**新体制運動**を推進し、**全政党が解党**して、ほとんどの政党が新たに発足した**大政翼賛会(たいせいよくさんかい)に合流**した。大政翼賛会は**政府に指導される結社**となったが、帝国議会は停止されず、**制限を受けながら継続**した。",
+          "keywords": [
+            "1940年",
+            "第二次近衛内閣",
+            "総力戦体制",
+            "新体制運動",
+            "全政党が解党",
+            "大政翼賛会に合流",
+            "政府に指導される結社",
+            "制限を受けながら継続"
+          ],
+          "evidence": [
+            "movement-cabinet",
+            "movement-name",
+            "party-dissolution",
+            "party-merger",
+            "association-year",
+            "association-organization",
+            "association-direction",
+            "diet-continuation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "東京オリンピックの開催辞退",
+      "reading": "とうきょうおりんぴっくのかいさいじたい",
+      "category": "戦時の社会",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1940年の開催予定と1938年の辞退",
+        "sortYear": 1938
+      },
+      "explanation": "東京で1940年に開催する予定だったオリンピックは、日中戦争に伴う国際的批判と、戦時下の建設資材の調達難に直面した。日本は1938年に開催を辞退した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "対象の特定",
+          "prompt": "昭和期の日本で開催が予定され、後に日本が開催を辞退した夏季オリンピックは、どの都市の何年の大会か。",
+          "answer": "**1940年の東京オリンピック**。",
+          "keywords": [
+            "1940年の東京オリンピック"
+          ],
+          "evidence": [
+            "olympic-plan"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "背景の確認",
+          "prompt": "昭和期の日本で、1940年開催予定だった東京オリンピックの開催辞退について、日本が国際的な批判を受けた原因となった戦争は何か。",
+          "answer": "**日中戦争**。",
+          "keywords": [
+            "日中戦争"
+          ],
+          "evidence": [
+            "olympic-criticism"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "背景の確認",
+          "prompt": "昭和期の日本で、1940年開催予定だった東京オリンピックの開催辞退について、戦時下に競技場などの建設が難しくなった理由は何か。",
+          "answer": "**建設資材の調達が困難**になったため。",
+          "keywords": [
+            "建設資材の調達が困難"
+          ],
+          "evidence": [
+            "olympic-materials"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "昭和期の日本の東京オリンピックの開催辞退について、日本が開催を辞退したのは何年か。",
+          "answer": "1938年。",
+          "keywords": [],
+          "evidence": [
+            "olympic-withdrawal",
+            "law-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "内容の説明",
+          "prompt": "1930年代の日本で、東京オリンピックの開催辞退に至った背景を説明せよ。",
+          "answer": "**1940年**に日本の東京で開催予定だった大会は、**日中戦争**に伴う**国際的な批判**と、戦時下の**競技場などの建設資材の調達難**に直面した。日本は**1938年**に**開催を辞退**した。",
+          "keywords": [
+            "1940年",
+            "日中戦争",
+            "国際的な批判",
+            "競技場などの建設資材の調達難",
+            "1938年",
+            "開催を辞退"
+          ],
+          "evidence": [
+            "olympic-plan",
+            "olympic-criticism",
+            "olympic-materials",
+            "olympic-withdrawal",
+            "law-year"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "昭和期の日本の「東京オリンピックの開催辞退」について説明せよ。",
+          "answer": "日本は、**1940年**に東京で開催予定だったオリンピックを、**1938年**に**開催を辞退**した。背景には、**日中戦争**に伴う**国際的な批判**と、戦時下の**競技場などの建設資材の調達難**があった。",
+          "keywords": [
+            "1940年",
+            "1938年",
+            "開催を辞退",
+            "日中戦争",
+            "国際的な批判",
+            "競技場などの建設資材の調達難"
+          ],
+          "evidence": [
+            "olympic-plan",
+            "olympic-criticism",
+            "olympic-materials",
+            "olympic-withdrawal",
+            "law-year"
+          ]
+        }
+      ]
+    }
+  ]
+}

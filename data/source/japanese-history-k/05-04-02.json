@@ -1,0 +1,764 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 2,
+    "title": "満州事変と満州国建国"
+  },
+  "integrationPromptPrefix": "昭和初期の日本と中国に関わる",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_02_満州事変と満州国建国_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      352,
+      353,
+      354,
+      355,
+      361
+    ],
+    "note": "352頁ロ見出しから356頁ハ直前までの本文、関連する352頁冒頭の犬養毅注③、353頁注④⑤・塘沽の図、354頁の人物コラムと図版、355頁コラムを全て通読した。351頁の関東軍注と361頁の関連注も確認した。事件の爆破・当事者の発表・軍と政府の方針、建国と承認の変更・五・一五事件、国際連盟の判断と勧告・日本の脱退通告・軍の停戦を3項目にまとめた。1933年は本文の脱退を361頁の同事件の通告表記で限定し、脱退の発効年は補わない。1932年の五・一五事件は本文の同年を直前の1932年の建国記述に対応させる。1932年の溥儀は元首とし、建国時から皇帝だったとしない。リットン報告書の判断は同報告書の見解として答え、戦争の正当性を一般論として問わない。兵力差、面積、占領期間や戦争の天才という称賛、ソ連との戦術の成功評価、宣戦布告の有無だけで戦争を分類する説明、首相の異名・最期の発言・年齢、皇帝の家族や生没年・収容生活は出題しない。355頁の民衆全体の支持・抵抗なし・植民地支配との優劣比較・皇帝就任が自然との評価、侵略や支配の正当化、後の日中戦争を単一原因で説明する記述は全て採用しない。塘沽図は通読したが、冀東防共自治政府による管理は時期混同の疑義があり、地図の細かい撤退線や地名も出題しない。前項目の暗殺事件や次項目の恐慌本文、361頁の軍縮条約離脱・防共協定は出題対象に含めない。"
+  },
+  "facts": [
+    {
+      "id": "liutiaohu-name",
+      "page": 352,
+      "quote": "この自作自演の爆破事件が**柳条湖事件**です。"
+    },
+    {
+      "id": "manchurian-incident",
+      "page": 352,
+      "quote": "これを口実に軍事行動を起こし、満州事変が勃発しました。"
+    },
+    {
+      "id": "railway-bombing",
+      "page": 352,
+      "quote": "関東軍は奉天（現在の瀋陽）郊外の柳条湖付近で南満州鉄道のレールを爆破し、"
+    },
+    {
+      "id": "chinese-blame",
+      "page": 352,
+      "quote": "張学良の東北軍による破壊工作であると発表しました。"
+    },
+    {
+      "id": "non-expansion",
+      "page": 352,
+      "quote": "日本政府は戦線を拡大しない方針でしたが、"
+    },
+    {
+      "id": "army-disobedience",
+      "page": 352,
+      "quote": "関東軍はそれを無視して独断専行し、"
+    },
+    {
+      "id": "government-approval",
+      "page": 352,
+      "quote": "政府は関東軍のこのような行動を追認することになります。"
+    },
+    {
+      "id": "incident-date",
+      "page": 352,
+      "quote": "昭和六年（一九三一）九月十八日、"
+    },
+    {
+      "id": "manchukuo-name",
+      "page": 352,
+      "quote": "満州国を建国し、"
+    },
+    {
+      "id": "may-fifteen-name",
+      "page": 353,
+      "quote": "**五・一五事件**です。"
+    },
+    {
+      "id": "puyi-head",
+      "page": 352,
+      "quote": "清朝最後の皇帝であった愛新覚羅溥儀を元首（建国当初は満州国執政、後に満州国皇帝）として"
+    },
+    {
+      "id": "inukai-name",
+      "page": 352,
+      "quote": "**注③ 犬養毅（1855〜1932）**"
+    },
+    {
+      "id": "inukai-death",
+      "page": 353,
+      "quote": "犬養首相は同年五月十五日に海軍の将校に暗殺されてしまいます。"
+    },
+    {
+      "id": "inukai-policy",
+      "page": 352,
+      "quote": "③犬養毅内閣は、国民政府との対話による解決を目指していたため、満州国を承認しない方針でした。"
+    },
+    {
+      "id": "saito-recognition",
+      "page": 353,
+      "quote": "後継の斎藤実内閣は満州国を承認しました④。"
+    },
+    {
+      "id": "party-cabinets-end",
+      "page": 353,
+      "quote": "これにより、「憲政の常道」と呼ばれた政党内閣による政党政治は幕を下ろしました。"
+    },
+    {
+      "id": "manchukuo-year",
+      "page": 352,
+      "quote": "関東軍は昭和七年（一九三二）三月、"
+    },
+    {
+      "id": "capital-renaming",
+      "page": 352,
+      "quote": "長春に首都を置いて新京と命名しました。"
+    },
+    {
+      "id": "investigation",
+      "page": 353,
+      "quote": "満州事変を受け、国際連盟は現地にリットン調査団を派遣しました。"
+    },
+    {
+      "id": "japan-accepts-investigation",
+      "page": 353,
+      "quote": "日本はその調査を受け入れます。"
+    },
+    {
+      "id": "tanggu-truce",
+      "page": 353,
+      "quote": "同年、日本の関東軍は国民革命軍と塘沽停戦協定を結んだことで、柳条湖事件からの一連の軍事衝突は停止されました。"
+    },
+    {
+      "id": "league-resolution-year",
+      "page": 353,
+      "quote": "昭和八年（一九三三）の総会では、"
+    },
+    {
+      "id": "manchukuo-nonrecognition",
+      "page": 353,
+      "quote": "満州国を認めず、"
+    },
+    {
+      "id": "withdrawal-recommendation",
+      "page": 353,
+      "quote": "日本軍の満鉄沿線までの撤兵を勧告しました。"
+    },
+    {
+      "id": "japan-reaction",
+      "page": 353,
+      "quote": "日本はこの決定に反発し、国際連盟を脱退しました。"
+    },
+    {
+      "id": "notice-of-withdrawal",
+      "page": 361,
+      "quote": "昭和8年（1933）に国際連盟の脱退を通告した日本は、"
+    },
+    {
+      "id": "lytton-self-defense",
+      "page": 353,
+      "quote": "柳条湖事件は合法的な自衛の措置とは認められず、"
+    },
+    {
+      "id": "lytton-independence",
+      "page": 353,
+      "quote": "満州国建国は自発的な独立運動の結果とは認められないとし、"
+    },
+    {
+      "id": "lytton-report-name",
+      "page": 353,
+      "quote": "**注⑤ リットン報告書**"
+    },
+    {
+      "id": "manchuria-control",
+      "page": 352,
+      "quote": "満州全体を軍事制圧してしまったのです。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "柳条湖事件と満州事変",
+      "reading": "りゅうじょうこじけんとまんしゅうじへん",
+      "category": "軍事行動・政治",
+      "geographyLabel": "中国",
+      "chronology": {
+        "displayPeriod": "1931年9月18日とその後の軍事行動",
+        "sortYear": 1931
+      },
+      "explanation": "柳条湖事件は、関東軍による南満州鉄道のレールの爆破である。関東軍は中国側の破壊工作と発表し、これを口実に満州事変の軍事行動を起こした。政府の戦線不拡大の方針に反して関東軍が満州全体を軍事制圧し、政府がその行動を追認した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "レール爆破事件",
+          "prompt": "昭和初期、中国の満州で南満州鉄道のレールが爆破され、中国側の破壊工作だと発表された事件は何か。",
+          "answer": "**柳条湖事件(りゅうじょうこじけん)**。",
+          "keywords": [
+            "柳条湖事件"
+          ],
+          "evidence": [
+            "liutiaohu-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "爆破事件を口実とした軍事行動",
+          "prompt": "昭和初期、中国の満州で、柳条湖事件(りゅうじょうこじけん)を口実として起こされた一連の軍事行動を何と呼ぶか。",
+          "answer": "**満州事変**。",
+          "keywords": [
+            "満州事変"
+          ],
+          "evidence": [
+            "manchurian-incident"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "レール爆破の実行部隊",
+          "prompt": "昭和初期、中国の柳条湖事件と満州事変について、南満州鉄道のレールを爆破した日本の軍部隊は何か。",
+          "answer": "**関東軍(かんとうぐん)**。",
+          "keywords": [
+            "関東軍"
+          ],
+          "evidence": [
+            "railway-bombing"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "関東軍が工作の主体と発表した軍",
+          "prompt": "昭和初期、中国の柳条湖事件と満州事変について、関東軍はレールの爆破を誰の軍による破壊工作だと発表したか。",
+          "answer": "**張学良(ちょうがくりょう)の東北軍**。",
+          "keywords": [
+            "張学良の東北軍"
+          ],
+          "evidence": [
+            "chinese-blame"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政府の戦線に関する方針",
+          "prompt": "昭和初期の日本政府は、中国の柳条湖事件と満州事変で、戦線についてどのような方針をとったか。",
+          "answer": "**戦線を拡大しない方針**。",
+          "keywords": [
+            "戦線を拡大しない方針"
+          ],
+          "evidence": [
+            "non-expansion"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "政府による軍の行動の扱い",
+          "prompt": "昭和初期、中国の柳条湖事件と満州事変で、政府の方針を無視した関東軍の行動を日本政府は最終的にどう扱ったか。",
+          "answer": "関東軍の行動を**追認した**。",
+          "keywords": [
+            "追認した"
+          ],
+          "evidence": [
+            "government-approval"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "柳条湖事件の発生時期",
+          "prompt": "昭和初期、中国の柳条湖事件と満州事変について、柳条湖事件が起きたのはいつか。",
+          "answer": "1931年9月18日。",
+          "keywords": [],
+          "evidence": [
+            "incident-date",
+            "liutiaohu-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "爆破から軍事行動への経過",
+          "prompt": "昭和初期、中国の柳条湖事件と満州事変は、どのような経過で起きたか。",
+          "answer": "1931年9月18日、日本の**関東軍(かんとうぐん)**は中国の満州で**南満州鉄道のレールを爆破**し、**張学良(ちょうがくりょう)の東北軍**による破壊工作と発表した。この**自作自演の爆破**が**柳条湖事件(りゅうじょうこじけん)**で、関東軍はこれを口実に**満州事変**の軍事行動を起こした。",
+          "keywords": [
+            "関東軍",
+            "南満州鉄道のレールを爆破",
+            "張学良の東北軍",
+            "自作自演の爆破",
+            "柳条湖事件",
+            "満州事変"
+          ],
+          "evidence": [
+            "incident-date",
+            "railway-bombing",
+            "chinese-blame",
+            "liutiaohu-name",
+            "manchurian-incident"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "軍と政府の対応の違い",
+          "prompt": "昭和初期の日本で、中国の柳条湖事件と満州事変への政府と関東軍の対応はどう食い違ったか。",
+          "answer": "日本政府は**戦線を拡大しない方針**だったが、**関東軍は方針を無視して独断で行動**し、**満州全体を軍事制圧**した。政府は最終的に、関東軍の行動を**追認した**。",
+          "keywords": [
+            "戦線を拡大しない方針",
+            "関東軍は方針を無視して独断で行動",
+            "満州全体を軍事制圧",
+            "追認した"
+          ],
+          "evidence": [
+            "non-expansion",
+            "army-disobedience",
+            "manchuria-control",
+            "government-approval"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "事件と政府の対応の統合説明",
+          "prompt": "昭和初期の日本と中国に関わる「柳条湖事件と満州事変」について説明せよ。",
+          "answer": "1931年9月18日、日本の**関東軍(かんとうぐん)**は中国の満州で**南満州鉄道のレールを爆破**し、**張学良(ちょうがくりょう)の東北軍**による破壊工作と発表した。この**自作自演の爆破**が**柳条湖事件(りゅうじょうこじけん)**で、関東軍はこれを口実に**満州事変**を起こした。日本政府の**戦線を拡大しない方針**に反して**関東軍は方針を無視して独断で行動**して**満州全体を軍事制圧**し、政府はその行動を**追認した**。",
+          "keywords": [
+            "関東軍",
+            "南満州鉄道のレールを爆破",
+            "張学良の東北軍",
+            "自作自演の爆破",
+            "柳条湖事件",
+            "満州事変",
+            "戦線を拡大しない方針",
+            "関東軍は方針を無視して独断で行動",
+            "満州全体を軍事制圧",
+            "追認した"
+          ],
+          "evidence": [
+            "incident-date",
+            "railway-bombing",
+            "chinese-blame",
+            "liutiaohu-name",
+            "manchurian-incident",
+            "non-expansion",
+            "army-disobedience",
+            "manchuria-control",
+            "government-approval"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "満州国の成立と五・一五事件",
+      "reading": "まんしゅうこくのせいりつとごいちごじけん",
+      "category": "国家形成・内閣・政治事件",
+      "geographyLabel": "中国",
+      "chronology": {
+        "displayPeriod": "1932年の建国・五・一五事件と承認",
+        "sortYear": 1932
+      },
+      "explanation": "1932年、関東軍は愛新覚羅溥儀(あいしんかくらふぎ)を元首として満州国を建国し、長春(ちょうしゅん)を首都にして新京(しんきょう)と命名した。国民政府との対話を目指した犬養毅(いぬかいつよし)内閣は承認しない方針だったが、五・一五事件で首相が暗殺され、政党内閣による政党政治が終わった。後継の斎藤実(さいとうまこと)内閣は満州国を承認した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "満州で建国された国",
+          "prompt": "昭和初期、中国の満州で、清朝最後の皇帝を元首として建国された国は何か。",
+          "answer": "**満州国**。",
+          "keywords": [
+            "満州国"
+          ],
+          "evidence": [
+            "manchukuo-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "首相暗殺の事件名",
+          "prompt": "昭和初期の日本で、海軍の将校が首相を暗殺した事件は何か。",
+          "answer": "**五・一五事件**。",
+          "keywords": [
+            "五・一五事件"
+          ],
+          "evidence": [
+            "may-fifteen-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "満州国建国時の元首",
+          "prompt": "昭和初期、中国の満州国の成立と五・一五事件について、満州国の元首とされた清朝最後の皇帝は誰か。",
+          "answer": "**愛新覚羅溥儀(あいしんかくらふぎ)**。",
+          "keywords": [
+            "愛新覚羅溥儀"
+          ],
+          "evidence": [
+            "puyi-head"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "五・一五事件で殺害された首相",
+          "prompt": "昭和初期の日本の満州国の成立と五・一五事件について、五・一五事件で暗殺された首相は誰か。",
+          "answer": "**犬養毅(いぬかいつよし)**。",
+          "keywords": [
+            "犬養毅"
+          ],
+          "evidence": [
+            "inukai-name",
+            "inukai-death"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "犬養内閣の承認方針",
+          "prompt": "昭和初期の日本の満州国の成立と五・一五事件について、犬養毅(いぬかいつよし)内閣は満州国の承認についてどのような方針だったか。",
+          "answer": "**満州国を承認しない方針**。",
+          "keywords": [
+            "満州国を承認しない方針"
+          ],
+          "evidence": [
+            "inukai-policy"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "person",
+          "form": "満州国を承認した後継内閣",
+          "prompt": "昭和初期の日本の満州国の成立と五・一五事件について、犬養毅(いぬかいつよし)の後継として満州国を承認した内閣の首相は誰か。",
+          "answer": "**斎藤実(さいとうまこと)**。",
+          "keywords": [
+            "斎藤実"
+          ],
+          "evidence": [
+            "saito-recognition"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "result",
+          "form": "五・一五事件と政党政治",
+          "prompt": "昭和初期の日本の満州国の成立と五・一五事件について、五・一五事件により、政党内閣による政党政治はどうなったか。",
+          "answer": "**政党内閣による政党政治が終わった**。",
+          "keywords": [
+            "政党内閣による政党政治が終わった"
+          ],
+          "evidence": [
+            "party-cabinets-end"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "満州国の建国の概要",
+          "prompt": "昭和初期、中国の満州国はどのように建国されたか。",
+          "answer": "日本の**関東軍(かんとうぐん)**は1932年3月、中国の**満州**に、清朝最後の皇帝**愛新覚羅溥儀(あいしんかくらふぎ)**を元首として**満州国**を建国した。首都を**長春(ちょうしゅん)**に置き、**新京(しんきょう)**と命名した。",
+          "keywords": [
+            "関東軍",
+            "満州",
+            "愛新覚羅溥儀",
+            "満州国",
+            "長春",
+            "新京"
+          ],
+          "evidence": [
+            "manchukuo-year",
+            "puyi-head",
+            "manchukuo-name",
+            "capital-renaming"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "五・一五事件と政党内閣の終焉",
+          "prompt": "昭和初期の日本で、五・一五事件は政党内閣による政治をどのように変えたか。",
+          "answer": "1932年5月15日、**海軍の将校**が首相の**犬養毅(いぬかいつよし)**を暗殺した**五・一五事件**が起きた。これにより、**政党内閣による政党政治が終わった**。",
+          "keywords": [
+            "海軍の将校",
+            "犬養毅",
+            "五・一五事件",
+            "政党内閣による政党政治が終わった"
+          ],
+          "evidence": [
+            "manchukuo-year",
+            "inukai-name",
+            "inukai-death",
+            "may-fifteen-name",
+            "party-cabinets-end"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "満州国の承認方針の変化",
+          "prompt": "昭和初期の日本で、五・一五事件の前後に満州国の承認方針はどう変わったか。",
+          "answer": "**犬養毅(いぬかいつよし)内閣**は国民政府との**対話による解決**を目指し、**満州国を承認しない方針**だった。暗殺後、後継の**斎藤実(さいとうまこと)内閣**は**満州国を承認**した。",
+          "keywords": [
+            "犬養毅内閣",
+            "対話による解決",
+            "満州国を承認しない方針",
+            "斎藤実内閣",
+            "満州国を承認"
+          ],
+          "evidence": [
+            "inukai-policy",
+            "inukai-death",
+            "saito-recognition"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "建国と日本の内閣の統合説明",
+          "prompt": "昭和初期の日本と中国に関わる「満州国の成立と五・一五事件」について説明せよ。",
+          "answer": "1932年、日本の**関東軍(かんとうぐん)**は中国の**満州**に、清朝最後の皇帝**愛新覚羅溥儀(あいしんかくらふぎ)**を元首として**満州国**を建国した。日本の**犬養毅(いぬかいつよし)内閣**は**対話による解決**を目指して**満州国を承認しない方針**だったが、**五・一五事件**で犬養首相が暗殺され、**政党内閣による政党政治が終わった**。後継の**斎藤実(さいとうまこと)内閣**は**満州国を承認**した。",
+          "keywords": [
+            "関東軍",
+            "満州",
+            "愛新覚羅溥儀",
+            "満州国",
+            "犬養毅内閣",
+            "対話による解決",
+            "満州国を承認しない方針",
+            "五・一五事件",
+            "政党内閣による政党政治が終わった",
+            "斎藤実内閣",
+            "満州国を承認"
+          ],
+          "evidence": [
+            "manchukuo-year",
+            "puyi-head",
+            "manchukuo-name",
+            "inukai-policy",
+            "inukai-death",
+            "may-fifteen-name",
+            "party-cabinets-end",
+            "saito-recognition"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "国際連盟の対応と塘沽停戦協定",
+      "reading": "こくさいれんめいのたいおうとたんくていせんきょうてい",
+      "category": "国際機構・外交・停戦",
+      "geographyLabel": "中国",
+      "chronology": {
+        "displayPeriod": "1933年の総会・脱退通告と塘沽停戦協定",
+        "sortYear": 1933
+      },
+      "explanation": "国際連盟のリットン調査団は満州事変を調査し、報告書は柳条湖事件を合法的な自衛の措置と認めず、満州国建国を自発的な独立運動の結果と認めなかった。連盟の総会は満州国を認めず、撤兵を勧告し、日本は脱退を通告した。他方、関東軍と国民革命軍は塘沽停戦協定(たんくていせんきょうてい)を結び、一連の軍事衝突を停止した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "国際連盟が派遣した調査団",
+          "prompt": "昭和初期、満州事変の現地調査のため、国際連盟が中国の満州へ派遣した調査団は何か。",
+          "answer": "**リットン調査団**。",
+          "keywords": [
+            "リットン調査団"
+          ],
+          "evidence": [
+            "investigation"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "軍事衝突を停止した協定",
+          "prompt": "昭和初期、中国の満州事変で、日本の関東軍と国民革命軍が一連の軍事衝突を停止させた協定は何か。",
+          "answer": "**塘沽停戦協定(たんくていせんきょうてい)**。",
+          "keywords": [
+            "塘沽停戦協定"
+          ],
+          "evidence": [
+            "tanggu-truce"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "満州国への連盟の決定",
+          "prompt": "昭和初期の国際連盟の対応と塘沽停戦協定について、国際連盟の総会は満州国の建国をどう扱ったか。",
+          "answer": "満州国を**認めなかった**。",
+          "keywords": [
+            "認めなかった"
+          ],
+          "evidence": [
+            "manchukuo-nonrecognition"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本軍への撤兵勧告",
+          "prompt": "昭和初期の国際連盟の対応と塘沽停戦協定について、国際連盟の総会は中国にいる日本軍に何を勧告したか。",
+          "answer": "**満鉄沿線までの撤兵**。",
+          "keywords": [
+            "満鉄沿線までの撤兵"
+          ],
+          "evidence": [
+            "withdrawal-recommendation"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "連盟の決定に対する日本の行動",
+          "prompt": "昭和初期の国際連盟の対応と塘沽停戦協定について、国際連盟の決定に反発した日本は、同連盟に関して何を通告したか。",
+          "answer": "**国際連盟からの脱退**。",
+          "keywords": [
+            "国際連盟からの脱退"
+          ],
+          "evidence": [
+            "japan-reaction",
+            "notice-of-withdrawal"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "報告書の柳条湖事件に対する判断",
+          "prompt": "昭和初期の国際連盟の対応と塘沽停戦協定について、リットン報告書は柳条湖事件をどのように位置づけたか。",
+          "answer": "**合法的な自衛の措置とは認めなかった**。",
+          "keywords": [
+            "合法的な自衛の措置とは認めなかった"
+          ],
+          "evidence": [
+            "lytton-report-name",
+            "lytton-self-defense"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "報告書の二つの判断",
+          "prompt": "昭和初期、中国の満州事変に対するリットン報告書は、事件と建国をどのように判断したか。",
+          "answer": "報告書は、**柳条湖事件を合法的な自衛の措置とは認めず**、**満州国建国を自発的な独立運動の結果とは認めなかった**。",
+          "keywords": [
+            "柳条湖事件を合法的な自衛の措置とは認めず",
+            "満州国建国を自発的な独立運動の結果とは認めなかった"
+          ],
+          "evidence": [
+            "lytton-report-name",
+            "lytton-self-defense",
+            "lytton-independence"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "国際連盟と日本の対応",
+          "prompt": "昭和初期、中国の満州事変に対して国際連盟と日本はどのように対応したか。",
+          "answer": "国際連盟は**リットン調査団**を派遣し、日本は調査を受け入れた。1933年の総会は**満州国を認めず**、日本軍の**満鉄沿線までの撤兵**を勧告した。日本はその決定に反発し、**国際連盟からの脱退を通告**した。",
+          "keywords": [
+            "リットン調査団",
+            "満州国を認めず",
+            "満鉄沿線までの撤兵",
+            "国際連盟からの脱退を通告"
+          ],
+          "evidence": [
+            "investigation",
+            "japan-accepts-investigation",
+            "league-resolution-year",
+            "manchukuo-nonrecognition",
+            "withdrawal-recommendation",
+            "japan-reaction",
+            "notice-of-withdrawal"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "塘沽停戦協定と軍事衝突",
+          "prompt": "昭和初期、中国の満州事変で塘沽停戦協定はどのような役割を果たしたか。",
+          "answer": "1933年、日本の**関東軍(かんとうぐん)**と**国民革命軍**が**塘沽停戦協定(たんくていせんきょうてい)**を結び、柳条湖事件からの一連の**軍事衝突を停止**した。",
+          "keywords": [
+            "関東軍",
+            "国民革命軍",
+            "塘沽停戦協定",
+            "軍事衝突を停止"
+          ],
+          "evidence": [
+            "league-resolution-year",
+            "tanggu-truce"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "連盟の対応と停戦の統合説明",
+          "prompt": "昭和初期の日本と中国に関わる「国際連盟の対応と塘沽停戦協定」について説明せよ。",
+          "answer": "国際連盟の**リットン調査団**は中国の満州事変を調査し、報告書では**満州国建国を自発的な独立運動の結果とは認めなかった**。1933年、国際連盟総会は**満州国を認めず**、日本軍の**満鉄沿線までの撤兵**を勧告し、日本は**国際連盟からの脱退を通告**した。同年、日本の**関東軍(かんとうぐん)**と**国民革命軍**は**塘沽停戦協定(たんくていせんきょうてい)**を結び、**軍事衝突を停止**した。",
+          "keywords": [
+            "リットン調査団",
+            "満州国建国を自発的な独立運動の結果とは認めなかった",
+            "満州国を認めず",
+            "満鉄沿線までの撤兵",
+            "国際連盟からの脱退を通告",
+            "関東軍",
+            "国民革命軍",
+            "塘沽停戦協定",
+            "軍事衝突を停止"
+          ],
+          "evidence": [
+            "investigation",
+            "lytton-report-name",
+            "lytton-independence",
+            "league-resolution-year",
+            "manchukuo-nonrecognition",
+            "withdrawal-recommendation",
+            "japan-reaction",
+            "notice-of-withdrawal",
+            "tanggu-truce"
+          ]
+        }
+      ]
+    }
+  ]
+}

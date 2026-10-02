@@ -1,0 +1,1093 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 4,
+    "title": "昭和時代（戦前）"
+  },
+  "part": {
+    "number": 3,
+    "title": "世界恐慌と国際協調の終焉"
+  },
+  "integrationPromptPrefix": "昭和初期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_04節_03_世界恐慌と国際協調の終焉_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      356,
+      357,
+      358,
+      359,
+      360
+    ],
+    "note": "356頁ハ見出しから360頁ニ見出し直前の本文、357頁の取り付け騒ぎ写真と1937年11月時点の軍組織図、358頁注⑥、359頁農村欄、359～360頁の宮沢賢治の史料と図版説明を通読した。世界恐慌・ブロック経済、米国のニューディール、日本の財政政策とデフレ、農村への影響、ロンドン海軍軍縮条約と統帥権干犯問題を学ぶ。1930年は358頁に明記された昭和五年（一九三〇）と昭和恐慌への突入を対応させる。農村項目の1930年は昭和恐慌期の時期の目安であり、繭の暴落・各地の冷害・欠食児童・小作争議が一律にこの年に発生したとは問わない。高橋財政の開始年・恐慌脱出年は固定せず、「1931年に世界で最も早く脱出」という本文の年と最速断定は採用しない。408頁年表の昭和恐慌の年は当該本文と一致しないため、年表から補完しない。ブロック経済の関税と自由貿易の衰退を学ぶが、世界の国際協調がただちに完全に終わったという一般化、植民地保有の有無による各国の単純な分類、戦争・植民地拡大の必要性や正当性は正答にしない。金融政策の誤りや価格設定の失敗という評価表現、工業競争力の優劣、1931年回復の時期・順位、物価や兵力の細かな数値は問わない。統帥権干犯は当時の政友会などによる批判として扱い、条約が実際に天皇の指揮権を侵害したという法律判断を覚えさせない。統帥と軍政の役割は注⑥から学び、1937年時点の図を1930年の大本営編制として扱わない。浜口首相の襲撃や更迭の細部、宮沢賢治の詩句・数量・美化表現・個人的逸話は、今回の経済と政治の理解の優先度から独立問題にしない。"
+  },
+  "facts": [
+    {
+      "id": "world-depression-name",
+      "page": 356,
+      "quote": "この不況は**世界恐慌**と呼ばれています。"
+    },
+    {
+      "id": "block-economy-name",
+      "page": 356,
+      "quote": "これを**ブロック経済**といいます。"
+    },
+    {
+      "id": "world-crash-year",
+      "page": 356,
+      "quote": "昭和四年（一九二九）にニューヨーク証券取引所で起きた株価大暴落により、アメリカ経済は大混乱に陥りました。"
+    },
+    {
+      "id": "bank-chain-failures",
+      "page": 356,
+      "quote": "不安に思った人たちが預金を下ろすために銀行に殺到し、銀行が連鎖的に倒産し、金融システムが機能しなくなりました。"
+    },
+    {
+      "id": "company-failures-unemployment",
+      "page": 356,
+      "quote": "これにより多くの会社が倒産し、町は失業者であふれました。"
+    },
+    {
+      "id": "world-spread",
+      "page": 356,
+      "quote": "この混乱は世界に広がり、"
+    },
+    {
+      "id": "block-tariffs",
+      "page": 356,
+      "quote": "イギリスとフランスは、域内の関税を低くして、域外からの輸入品には高い関税を課しました。"
+    },
+    {
+      "id": "economic-enclosure",
+      "page": 356,
+      "quote": "このようにして関係する国を囲い込み、自給自足に持ち込むことで自らの経済圏を守ろうとしました。"
+    },
+    {
+      "id": "free-trade-decline",
+      "page": 356,
+      "quote": "自由貿易は一気に衰退していきます。"
+    },
+    {
+      "id": "new-deal-name",
+      "page": 356,
+      "quote": "**ニューディール政策**を実行しました。"
+    },
+    {
+      "id": "roosevelt-name",
+      "page": 356,
+      "quote": "アメリカのフランクリン・ルーズベルト大統領は"
+    },
+    {
+      "id": "new-deal-year",
+      "page": 356,
+      "quote": "昭和八年（一九三三）、経済を立て直すために"
+    },
+    {
+      "id": "public-works",
+      "page": 356,
+      "quote": "政府が大規模な公共事業を行って、"
+    },
+    {
+      "id": "employment-recovery",
+      "page": 356,
+      "quote": "雇用を回復させようとしたのです。"
+    },
+    {
+      "id": "government-intervention",
+      "page": 356,
+      "quote": "政府が積極的に経済介入するというのは、これまでの資本主義を修正することを意味します。"
+    },
+    {
+      "id": "showa-depression-name",
+      "page": 358,
+      "quote": "**昭和恐慌**に突入します。"
+    },
+    {
+      "id": "showa-depression-time",
+      "page": 358,
+      "quote": "昭和五年から日本は**昭和恐慌**に突入します。"
+    },
+    {
+      "id": "fiscal-year-1930",
+      "page": 358,
+      "quote": "昭和五年（一九三〇）、"
+    },
+    {
+      "id": "inoue-name",
+      "page": 358,
+      "quote": "当時の大蔵大臣・井上準之助にちなんで井上財政といいます。"
+    },
+    {
+      "id": "takahashi-name",
+      "page": 358,
+      "quote": "井上に代わって、恐慌脱出の指揮を執ったのは、新たに大蔵大臣に就任した高橋是清でした。"
+    },
+    {
+      "id": "gold-export-liberalization",
+      "page": 358,
+      "quote": "浜口雄幸内閣は輸出を強化して不況を脱するため、金輸出の解禁に踏み切り、金本位制に復帰しました。"
+    },
+    {
+      "id": "yen-appreciation",
+      "page": 358,
+      "quote": "実質的な円高になってしまい、"
+    },
+    {
+      "id": "austerity-deflation",
+      "page": 358,
+      "quote": "金本位制復帰のための緊縮財政と金融引き締め政策により、日本経済は深刻なデフレに陥りました。"
+    },
+    {
+      "id": "gold-export-ban",
+      "page": 358,
+      "quote": "高橋は金輸出の再禁止と、"
+    },
+    {
+      "id": "takahashi-expansion",
+      "page": 358,
+      "quote": "低金利政策、財政支出の拡大など積極的なデフレ対策を実行しました。これが高橋財政です。"
+    },
+    {
+      "id": "deflation-definition",
+      "page": 358,
+      "quote": "デフレ（デフレーション）とは、物価が持続的に下落することをいいます。"
+    },
+    {
+      "id": "deflation-effects",
+      "page": 358,
+      "quote": "デフレがひどくなると、企業の利益が減少し、賃金の低下を招き、消費が減退し経済全体が縮小してしまいます。"
+    },
+    {
+      "id": "silk-cocoon-price",
+      "page": 359,
+      "quote": "米国向けの生糸輸出が激減して繭の価格が暴落したほか、"
+    },
+    {
+      "id": "crop-price-decline",
+      "page": 359,
+      "quote": "農作物価格も大きく下落し、"
+    },
+    {
+      "id": "rural-return",
+      "page": 359,
+      "quote": "さらに大量の失業者が農村に帰省したことで、農家の家計は困窮した。"
+    },
+    {
+      "id": "cold-damage-regions",
+      "page": 359,
+      "quote": "特に冷害に襲われた北海道と東北では、"
+    },
+    {
+      "id": "cold-damage-living",
+      "page": 359,
+      "quote": "特に冷害に襲われた北海道と東北では、人々の生活は飢餓水準に陥り、"
+    },
+    {
+      "id": "hungry-children-tenancy-disputes",
+      "page": 359,
+      "quote": "学校に弁当を持参できない欠食児童が社会問題になり、小作争議が各地で頻発した。"
+    },
+    {
+      "id": "london-treaty-name",
+      "page": 358,
+      "quote": "**ロンドン海軍軍縮条約**に調印し、"
+    },
+    {
+      "id": "supreme-command-problem-name",
+      "page": 358,
+      "quote": "これが**統帥権干犯問題**です。"
+    },
+    {
+      "id": "auxiliary-ships",
+      "page": 358,
+      "quote": "補助艦を制限することが決まりました。"
+    },
+    {
+      "id": "naval-staff-opposition",
+      "page": 358,
+      "quote": "海軍軍令部（海軍の作戦を担当する部署）から不興を買ったほか、"
+    },
+    {
+      "id": "seiyukai-opposition",
+      "page": 358,
+      "quote": "野党である政友会から、"
+    },
+    {
+      "id": "london-year-cooperation",
+      "page": 358,
+      "quote": "昭和五年（一九三〇）、アメリカとイギリスと協調して"
+    },
+    {
+      "id": "military-spending-reduction",
+      "page": 358,
+      "quote": "政府は軍縮によって歳出を削減しようと、"
+    },
+    {
+      "id": "supreme-command-criticism",
+      "page": 358,
+      "quote": "⑥統帥部の承認なしに軍縮を約束したのは天皇の統帥権（軍の指揮権）を干犯することであると攻撃され、政治は混乱しました。"
+    },
+    {
+      "id": "supreme-command-roles",
+      "page": 358,
+      "quote": "作戦を立案し軍を指揮することを統帥（あるいは軍令）という。"
+    },
+    {
+      "id": "supreme-command-organizations",
+      "page": 358,
+      "quote": "陸軍の統帥機関は参謀本部、海軍の統帥機関は軍令部と称する。"
+    },
+    {
+      "id": "military-administration",
+      "page": 358,
+      "quote": "また軍に関する統帥以外の役割を担うのが軍政で、陸軍の軍政は陸軍省、海軍の軍政は海軍省が担った"
+    },
+    {
+      "id": "staff-authority-increase",
+      "page": 359,
+      "quote": "軍の兵力量の決定にまで統帥部の承認を要するという考えが強まったことは、統帥部の権限を強めることにつながりました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "世界恐慌とブロック経済",
+      "reading": "せかいきょうこうとぶろっくけいざい",
+      "category": "経済・国際関係",
+      "geographyLabel": "世界",
+      "integrationPromptPrefix": "昭和初期の世界の",
+      "chronology": {
+        "displayPeriod": "昭和初期（1929年の世界恐慌と各国の対応）",
+        "sortYear": 1929
+      },
+      "explanation": "米国の株価大暴落は、銀行の連鎖的な倒産や企業倒産・失業を伴う混乱となり、世界に広がった。イギリスとフランスは関係する国を経済圏に囲い込み、域内の関税を低く、域外からの輸入品の関税を高くするブロック経済をとった。こうした囲い込みによって自由貿易は衰退した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "世界に広がった不況",
+          "prompt": "昭和初期、米国の経済混乱が世界に広がって起きた深刻な不況を何というか。",
+          "answer": "**世界恐慌**。",
+          "evidence": [
+            "world-depression-name"
+          ],
+          "keywords": [
+            "世界恐慌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "経済圏の囲い込み",
+          "prompt": "昭和初期、イギリスとフランスが関係する国を経済圏に囲い込み、自給自足で自らの経済圏を守ろうとした方式を何というか。",
+          "answer": "**ブロック経済**。",
+          "evidence": [
+            "economic-enclosure",
+            "block-economy-name"
+          ],
+          "keywords": [
+            "ブロック経済"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "result",
+          "form": "銀行への預金引き出しと金融危機",
+          "prompt": "昭和初期の世界恐慌とブロック経済について、米国の株価大暴落の後、人々が預金引き出しのために銀行に殺到した結果、銀行にどのような事態が起きたか。",
+          "answer": "**銀行が連鎖的に倒産した**。",
+          "evidence": [
+            "bank-chain-failures"
+          ],
+          "keywords": [
+            "銀行が連鎖的に倒産した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "域内と域外の関税の違い",
+          "prompt": "昭和初期の世界恐慌とブロック経済について、イギリスとフランスは域内と域外からの輸入品の関税をどう変えたか。",
+          "answer": "**域内の関税を低くし、域外からの輸入品には高い関税を課した**。",
+          "evidence": [
+            "block-tariffs"
+          ],
+          "keywords": [
+            "域内の関税を低くし、域外からの輸入品には高い関税を課した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "世界恐慌の発端の年",
+          "prompt": "世界恐慌とブロック経済について、米国のニューヨークで、世界恐慌の発端となる株価大暴落が起きたのは何年か。",
+          "answer": "1929年。",
+          "evidence": [
+            "world-crash-year"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "金融危機から世界恐慌への広がり",
+          "prompt": "昭和初期の米国の経済混乱は、どのように世界恐慌へ広がったか。",
+          "answer": "1929年、米国の**ニューヨークでの株価大暴落**の後、預金引き出しのために人々が銀行に殺到し、**銀行が連鎖的に倒産した**。**企業倒産と失業**を伴う混乱が世界へ広がり、**世界恐慌**となった。",
+          "evidence": [
+            "world-crash-year",
+            "bank-chain-failures",
+            "company-failures-unemployment",
+            "world-spread",
+            "world-depression-name"
+          ],
+          "keywords": [
+            "ニューヨークでの株価大暴落",
+            "銀行が連鎖的に倒産した",
+            "企業倒産と失業",
+            "世界恐慌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ブロック経済の仕組みと貿易への影響",
+          "prompt": "昭和初期のイギリスとフランスによるブロック経済は、どのような仕組みで、貿易にどう影響したか。",
+          "answer": "イギリスとフランスは、関係する国を囲い込んで経済圏を守る**ブロック経済**をとり、**域内の関税を低くし、域外からの輸入品には高い関税を課した**。こうした囲い込みで**自由貿易が衰退した**。",
+          "evidence": [
+            "block-economy-name",
+            "economic-enclosure",
+            "block-tariffs",
+            "free-trade-decline"
+          ],
+          "keywords": [
+            "ブロック経済",
+            "域内の関税を低くし、域外からの輸入品には高い関税を課した",
+            "自由貿易が衰退した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "世界恐慌とブロック経済の統合説明",
+          "prompt": "昭和初期の世界の「世界恐慌とブロック経済」について説明せよ。",
+          "answer": "1929年、米国の**ニューヨークでの株価大暴落**を発端とする経済混乱が世界へ広がり、**世界恐慌**となった。イギリスとフランスは**ブロック経済**をとり、**域内の関税を低くし、域外からの輸入品には高い関税を課した**。こうした経済圏の囲い込みによって、**自由貿易が衰退した**。",
+          "evidence": [
+            "world-crash-year",
+            "world-spread",
+            "world-depression-name",
+            "block-economy-name",
+            "economic-enclosure",
+            "block-tariffs",
+            "free-trade-decline"
+          ],
+          "keywords": [
+            "ニューヨークでの株価大暴落",
+            "世界恐慌",
+            "ブロック経済",
+            "域内の関税を低くし、域外からの輸入品には高い関税を課した",
+            "自由貿易が衰退した"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "ニューディール政策",
+      "reading": "にゅーでぃーるせいさく",
+      "category": "経済・政治",
+      "geographyLabel": "米国",
+      "integrationPromptPrefix": "昭和初期の米国の",
+      "chronology": {
+        "displayPeriod": "昭和初期（1933年）",
+        "sortYear": 1933
+      },
+      "explanation": "フランクリン・ルーズベルト大統領は、経済を立て直すためにニューディール政策を実行した。政府が大規模な公共事業で雇用の回復を目指し、積極的に経済へ介入する政策であった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "米国の経済復興政策",
+          "prompt": "1933年の米国で、経済を立て直すために政府が積極的に経済へ介入した政策は何か。",
+          "answer": "**ニューディール政策**。",
+          "evidence": [
+            "new-deal-name",
+            "government-intervention",
+            "new-deal-year"
+          ],
+          "keywords": [
+            "ニューディール政策"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "政策を実行した大統領",
+          "prompt": "昭和初期の米国で、ニューディール政策を実行した大統領は誰か。",
+          "answer": "**フランクリン・ルーズベルト**。",
+          "evidence": [
+            "roosevelt-name"
+          ],
+          "keywords": [
+            "フランクリン・ルーズベルト"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政府による事業",
+          "prompt": "昭和初期の米国のニューディール政策で、政府はどのような事業を大規模に行ったか。",
+          "answer": "**公共事業**。",
+          "evidence": [
+            "public-works"
+          ],
+          "keywords": [
+            "公共事業"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "公共事業の目的",
+          "prompt": "昭和初期の米国のニューディール政策では、大規模な公共事業によって何を回復させようとしたか。",
+          "answer": "**雇用**。",
+          "evidence": [
+            "employment-recovery"
+          ],
+          "keywords": [
+            "雇用"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "経済における政府の役割",
+          "prompt": "昭和初期の米国のニューディール政策では、政府は経済にどのような役割を果たそうとしたか。",
+          "answer": "1933年、**フランクリン・ルーズベルト**大統領は**ニューディール政策**を実行し、政府が**大規模な公共事業**を行って**雇用の回復**を目指した。これは、政府が**積極的に経済へ介入**し、従来の資本主義を修正する政策だった。",
+          "evidence": [
+            "roosevelt-name",
+            "new-deal-year",
+            "new-deal-name",
+            "public-works",
+            "employment-recovery",
+            "government-intervention"
+          ],
+          "keywords": [
+            "フランクリン・ルーズベルト",
+            "ニューディール政策",
+            "大規模な公共事業",
+            "雇用の回復",
+            "積極的に経済へ介入"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "ニューディール政策の統合説明",
+          "prompt": "昭和初期の米国の「ニューディール政策」について説明せよ。",
+          "answer": "1933年、米国の**フランクリン・ルーズベルト**大統領は**ニューディール政策**を実行した。政府が**大規模な公共事業**によって**雇用の回復**を目指し、**積極的に経済へ介入**する政策だった。",
+          "evidence": [
+            "roosevelt-name",
+            "new-deal-year",
+            "new-deal-name",
+            "public-works",
+            "employment-recovery",
+            "government-intervention"
+          ],
+          "keywords": [
+            "フランクリン・ルーズベルト",
+            "ニューディール政策",
+            "大規模な公共事業",
+            "雇用の回復",
+            "積極的に経済へ介入"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "昭和恐慌と財政政策",
+      "reading": "しょうわきょうこうとざいせいせいさく",
+      "category": "経済・政治",
+      "chronology": {
+        "displayPeriod": "昭和初期（1930年の井上財政と、その後の高橋財政）",
+        "sortYear": 1930
+      },
+      "explanation": "金輸出を解禁して金本位制に復帰する井上財政のもとで、実質的な円高が生じ、緊縮財政と金融引き締めによって深刻なデフレに陥った。その後、高橋是清(たかはしこれきよ)は金輸出を再禁止し、低金利政策と財政支出の拡大による積極的な対策を実行した。デフレは物価の持続的な下落で、企業利益や賃金・消費の減少を伴い、経済全体の縮小につながる。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "日本の深刻な不況",
+          "prompt": "昭和初期の日本が、金本位制への復帰に伴う深刻なデフレなどで陥った不況を何というか。",
+          "answer": "**昭和恐慌**。",
+          "evidence": [
+            "showa-depression-name"
+          ],
+          "keywords": [
+            "昭和恐慌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "金本位制復帰時の大蔵大臣",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、金本位制への復帰を進めた当時の大蔵大臣は誰か。",
+          "answer": "**井上準之助(いのうえじゅんのすけ)**。",
+          "evidence": [
+            "inoue-name"
+          ],
+          "keywords": [
+            "井上準之助"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "積極的な恐慌対策を指揮した大蔵大臣",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、井上準之助(いのうえじゅんのすけ)に代わって恐慌脱出を指揮した大蔵大臣は誰か。",
+          "answer": "**高橋是清(たかはしこれきよ)**。",
+          "evidence": [
+            "takahashi-name"
+          ],
+          "keywords": [
+            "高橋是清"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "井上財政の金輸出政策",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、井上準之助(いのうえじゅんのすけ)のもとで金本位制に復帰する際、金の輸出はどう扱われたか。",
+          "answer": "**金輸出を解禁した**。",
+          "evidence": [
+            "gold-export-liberalization"
+          ],
+          "keywords": [
+            "金輸出を解禁した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "高橋財政の金輸出政策",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、高橋是清(たかはしこれきよ)は金の輸出をどう扱ったか。",
+          "answer": "**金輸出を再禁止した**。",
+          "evidence": [
+            "gold-export-ban"
+          ],
+          "keywords": [
+            "金輸出を再禁止した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "デフレの意味",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、デフレとは物価がどのような状態になることか。",
+          "answer": "**物価が持続的に下落すること**。",
+          "evidence": [
+            "deflation-definition"
+          ],
+          "keywords": [
+            "物価が持続的に下落すること"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "result",
+          "form": "金輸出解禁後の円の価値",
+          "prompt": "昭和初期の日本の昭和恐慌と財政政策について、井上財政の金輸出解禁後の価格設定で、円の価値はどうなったか。",
+          "answer": "**実質的な円高になった**。",
+          "evidence": [
+            "yen-appreciation"
+          ],
+          "keywords": [
+            "実質的な円高になった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "井上財政と昭和恐慌",
+          "prompt": "昭和初期の日本で、井上財政のもとではどのような政策がとられ、経済はどうなったか。",
+          "answer": "1930年、浜口雄幸(はまぐちおさち)内閣の大蔵大臣**井上準之助(いのうえじゅんのすけ)**のもとで、**金輸出の解禁**と**金本位制への復帰**が進められた。**実質的な円高**となり、**緊縮財政と金融引き締め**によって**深刻なデフレ**に陥った日本は、**昭和恐慌**に突入した。",
+          "evidence": [
+            "fiscal-year-1930",
+            "gold-export-liberalization",
+            "inoue-name",
+            "yen-appreciation",
+            "austerity-deflation",
+            "showa-depression-time"
+          ],
+          "keywords": [
+            "井上準之助",
+            "金輸出の解禁",
+            "金本位制への復帰",
+            "実質的な円高",
+            "緊縮財政と金融引き締め",
+            "深刻なデフレ",
+            "昭和恐慌"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "高橋財政の恐慌対策",
+          "prompt": "昭和初期の日本で、高橋是清(たかはしこれきよ)は昭和恐慌にどのような対策をとったか。",
+          "answer": "**高橋是清(たかはしこれきよ)**は**金輸出の再禁止**・**低金利政策**・**財政支出の拡大**による積極的なデフレ対策を実行した。これが**高橋財政**である。",
+          "evidence": [
+            "takahashi-name",
+            "gold-export-ban",
+            "takahashi-expansion"
+          ],
+          "keywords": [
+            "高橋是清",
+            "金輸出の再禁止",
+            "低金利政策",
+            "財政支出の拡大",
+            "高橋財政"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "デフレと経済活動の縮小",
+          "prompt": "昭和初期の日本の昭和恐慌で、デフレは経済活動にどのような影響を与えたか。",
+          "answer": "デフレは**物価が持続的に下落すること**であり、**企業の利益が減少**して**賃金が低下**し、**消費が減退**する。これにより、**経済全体が縮小**する。",
+          "evidence": [
+            "deflation-definition",
+            "deflation-effects"
+          ],
+          "keywords": [
+            "物価が持続的に下落すること",
+            "企業の利益が減少",
+            "賃金が低下",
+            "消費が減退",
+            "経済全体が縮小"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "昭和恐慌と財政政策の統合説明",
+          "prompt": "昭和初期の日本の「昭和恐慌と財政政策」について説明せよ。",
+          "answer": "1930年の日本では、**井上準之助(いのうえじゅんのすけ)**による**金輸出の解禁**と**金本位制への復帰**が進められた。**実質的な円高**となり、**緊縮財政と金融引き締め**によって**深刻なデフレ**に陥った日本は、**昭和恐慌**に突入した。その後、**高橋是清(たかはしこれきよ)**が**金輸出の再禁止**・**低金利政策**・**財政支出の拡大**による積極的なデフレ対策を実行した。",
+          "evidence": [
+            "fiscal-year-1930",
+            "gold-export-liberalization",
+            "inoue-name",
+            "yen-appreciation",
+            "austerity-deflation",
+            "showa-depression-time",
+            "takahashi-name",
+            "gold-export-ban",
+            "takahashi-expansion"
+          ],
+          "keywords": [
+            "井上準之助",
+            "金輸出の解禁",
+            "金本位制への復帰",
+            "実質的な円高",
+            "緊縮財政と金融引き締め",
+            "深刻なデフレ",
+            "昭和恐慌",
+            "高橋是清",
+            "金輸出の再禁止",
+            "低金利政策",
+            "財政支出の拡大"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "昭和恐慌期の農村",
+      "reading": "しょうわきょうこうきののうそん",
+      "category": "経済・社会・生活",
+      "chronology": {
+        "displayPeriod": "昭和初期（1930年に始まった昭和恐慌期）",
+        "sortYear": 1930
+      },
+      "explanation": "生糸輸出の激減による繭の価格暴落、農作物価格の下落、失業者の帰省が農家の家計を圧迫した。北海道と東北では冷害が困窮を深め、弁当を持参できない欠食児童(けっしょくじどう)が社会問題になり、小作争議も各地で頻発した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "生糸輸出の減少と価格暴落",
+          "prompt": "昭和初期の日本の昭和恐慌期の農村について、米国向け生糸の輸出が激減したとき、特に価格が暴落したものは何か。",
+          "answer": "**繭(まゆ)**。",
+          "evidence": [
+            "silk-cocoon-price"
+          ],
+          "keywords": [
+            "繭"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "冷害が生活を深刻にした地域",
+          "prompt": "昭和初期の日本の昭和恐慌期の農村について、冷害によって人々の生活が特に深刻になった地域はどこか。",
+          "answer": "**北海道と東北**。",
+          "evidence": [
+            "cold-damage-regions"
+          ],
+          "keywords": [
+            "北海道と東北"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "失業者の移動と農村家計",
+          "prompt": "昭和初期の日本の昭和恐慌期の農村について、農家の家計をさらに困窮させた、失業者の移動はどのようなものか。",
+          "answer": "**大量の失業者が農村に帰省した**。",
+          "evidence": [
+            "rural-return"
+          ],
+          "keywords": [
+            "大量の失業者が農村に帰省した"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "農村家計が困窮した経済的背景",
+          "prompt": "昭和初期の日本の昭和恐慌期の農村では、なぜ農家の家計が困窮したか。",
+          "answer": "1930年に始まった日本の昭和恐慌期には、米国向けの生糸輸出が激減して**繭の価格が暴落**し、**農作物価格も下落**した。さらに、**大量の失業者が農村に帰省**し、農家の家計を圧迫した。",
+          "evidence": [
+            "fiscal-year-1930",
+            "showa-depression-time",
+            "silk-cocoon-price",
+            "crop-price-decline",
+            "rural-return"
+          ],
+          "keywords": [
+            "繭の価格が暴落",
+            "農作物価格も下落",
+            "大量の失業者が農村に帰省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "冷害と農村の生活・社会への影響",
+          "prompt": "昭和初期の日本の昭和恐慌期の農村では、冷害と困窮が生活や社会にどう表れたか。",
+          "answer": "**北海道と東北**では、**冷害**が生活の困窮を深めた。学校に弁当を持参できない**欠食児童(けっしょくじどう)**が社会問題になり、**小作争議**が各地で頻発した。",
+          "evidence": [
+            "cold-damage-living",
+            "hungry-children-tenancy-disputes"
+          ],
+          "keywords": [
+            "北海道と東北",
+            "冷害",
+            "欠食児童",
+            "小作争議"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "昭和恐慌期の農村の統合説明",
+          "prompt": "昭和初期の日本の「昭和恐慌期の農村」について説明せよ。",
+          "answer": "1930年に始まった昭和恐慌期の日本の農村では、米国向けの生糸輸出が激減して**繭の価格が暴落**し、**農作物価格も下落**するとともに、**大量の失業者が農村に帰省**して家計を圧迫した。**北海道と東北**では**冷害**が生活の困窮を深めた。**欠食児童(けっしょくじどう)**が社会問題になり、**小作争議**が各地で頻発した。",
+          "evidence": [
+            "fiscal-year-1930",
+            "showa-depression-time",
+            "silk-cocoon-price",
+            "crop-price-decline",
+            "rural-return",
+            "cold-damage-living",
+            "hungry-children-tenancy-disputes"
+          ],
+          "keywords": [
+            "繭の価格が暴落",
+            "農作物価格も下落",
+            "大量の失業者が農村に帰省",
+            "北海道と東北",
+            "冷害",
+            "欠食児童",
+            "小作争議"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "ロンドン海軍軍縮条約と統帥権干犯問題",
+      "reading": "ろんどんかいぐんぐんしゅくじょうやくととうすいけんかんぱんもんだい",
+      "category": "政治・国際関係・軍事",
+      "chronology": {
+        "displayPeriod": "昭和初期（1930年）",
+        "sortYear": 1930
+      },
+      "explanation": "日本政府は米英と協調し、ロンドン海軍軍縮条約で補助艦を制限して歳出の削減を図った。海軍軍令部は不満を示し、政友会は統帥部の承認なしの軍縮を天皇の軍の指揮権を侵す行為と批判した。統帥は作戦立案と軍の指揮、軍政は軍に関するそれ以外の役割で、軍縮にも統帥部の承認が必要という考えは統帥部の権限を強めることにつながった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "米英と協調した海軍軍縮条約",
+          "prompt": "昭和初期、日本政府が米国・英国と協調して調印した海軍軍縮条約は何か。",
+          "answer": "**ロンドン海軍軍縮条約**。",
+          "evidence": [
+            "london-treaty-name"
+          ],
+          "keywords": [
+            "ロンドン海軍軍縮条約"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "天皇の軍の指揮権をめぐる批判",
+          "prompt": "昭和初期の日本で、政府が軍縮を約束したことを、天皇の軍の指揮権を侵す行為だと批判した問題を何というか。",
+          "answer": "**統帥権干犯問題(とうすいけんかんぱんもんだい)**。",
+          "evidence": [
+            "supreme-command-problem-name"
+          ],
+          "keywords": [
+            "統帥権干犯問題"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "軍縮で制限した対象",
+          "prompt": "昭和初期の日本のロンドン海軍軍縮条約と統帥権干犯問題について、条約で制限することが決まった艦船の種類は何か。",
+          "answer": "**補助艦**。",
+          "evidence": [
+            "auxiliary-ships"
+          ],
+          "keywords": [
+            "補助艦"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "条約に不満を示した海軍の部署",
+          "prompt": "昭和初期の日本のロンドン海軍軍縮条約と統帥権干犯問題について、調印に不満を示した海軍の作戦担当部署はどこか。",
+          "answer": "**海軍軍令部**。",
+          "evidence": [
+            "naval-staff-opposition"
+          ],
+          "keywords": [
+            "海軍軍令部"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "軍縮を批判した野党",
+          "prompt": "昭和初期の日本のロンドン海軍軍縮条約と統帥権干犯問題について、軍縮の約束を天皇の軍の指揮権を侵す行為と攻撃した野党は何か。",
+          "answer": "**政友会**。",
+          "evidence": [
+            "seiyukai-opposition"
+          ],
+          "keywords": [
+            "政友会"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "統帥部の権限への影響",
+          "prompt": "昭和初期の日本のロンドン海軍軍縮条約と統帥権干犯問題について、兵力量の決定にも統帥部の承認が必要という考えは、同部の権限にどう影響したか。",
+          "answer": "**統帥部の権限を強めることにつながった**。",
+          "evidence": [
+            "staff-authority-increase"
+          ],
+          "keywords": [
+            "統帥部の権限を強めることにつながった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "time",
+          "form": "条約の調印年",
+          "prompt": "日本のロンドン海軍軍縮条約と統帥権干犯問題について、日本政府が条約に調印したのは何年か。",
+          "answer": "1930年。",
+          "evidence": [
+            "london-year-cooperation",
+            "london-treaty-name"
+          ],
+          "keywords": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "政府の軍縮方針と条約の内容",
+          "prompt": "昭和初期の日本政府は、ロンドン海軍軍縮条約でどのような軍縮を進めようとしたか。",
+          "answer": "1930年、日本政府は**米国・英国と協調**して**ロンドン海軍軍縮条約**に調印し、**補助艦を制限**することになった。軍縮によって**歳出の削減**を目指した。",
+          "evidence": [
+            "london-year-cooperation",
+            "london-treaty-name",
+            "auxiliary-ships",
+            "military-spending-reduction"
+          ],
+          "keywords": [
+            "米国・英国と協調",
+            "ロンドン海軍軍縮条約",
+            "補助艦を制限",
+            "歳出の削減"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "統帥と軍政の違い",
+          "prompt": "昭和初期の日本で、ロンドン海軍軍縮条約をめぐる統帥権干犯問題の「統帥」は、軍政とどう異なるか。",
+          "answer": "**統帥は作戦立案と軍の指揮**を指し、陸軍では**参謀本部(さんぼうほんぶ)**、海軍では**軍令部**が担った。**軍政は軍に関する統帥以外の役割**で、陸軍では**陸軍省**、海軍では**海軍省**が担った。",
+          "evidence": [
+            "supreme-command-roles",
+            "supreme-command-organizations",
+            "military-administration"
+          ],
+          "keywords": [
+            "統帥は作戦立案と軍の指揮",
+            "参謀本部",
+            "軍令部",
+            "軍政は軍に関する統帥以外の役割",
+            "陸軍省",
+            "海軍省"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "条約への反応と統帥権干犯問題",
+          "prompt": "昭和初期の日本で、ロンドン海軍軍縮条約をめぐる統帥権干犯問題は、どのような批判と変化をもたらしたか。",
+          "answer": "**海軍軍令部**は条約に不満を示し、野党の**政友会**は統帥部の承認なしに軍縮を約束したことを、天皇の軍の指揮権を侵す行為と批判した。これが**統帥権干犯問題(とうすいけんかんぱんもんだい)**で、兵力量の決定にも統帥部の承認が必要という考えが強まり、**統帥部の権限を強めることにつながった**。",
+          "evidence": [
+            "naval-staff-opposition",
+            "seiyukai-opposition",
+            "supreme-command-criticism",
+            "supreme-command-problem-name",
+            "staff-authority-increase"
+          ],
+          "keywords": [
+            "海軍軍令部",
+            "政友会",
+            "統帥権干犯問題",
+            "統帥部の権限を強めることにつながった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "ロンドン海軍軍縮条約と統帥権干犯問題の統合説明",
+          "prompt": "昭和初期の日本の「ロンドン海軍軍縮条約と統帥権干犯問題」について説明せよ。",
+          "answer": "1930年、日本政府は**米国・英国と協調**して**ロンドン海軍軍縮条約**に調印し、**補助艦を制限**した。**海軍軍令部**は不満を示し、**政友会**は統帥部の承認なしの軍縮を天皇の軍の指揮権を侵す行為と批判し、**統帥権干犯問題(とうすいけんかんぱんもんだい)**となった。兵力量の決定にも統帥部の承認が必要という考えが強まり、**統帥部の権限を強めることにつながった**。",
+          "evidence": [
+            "london-year-cooperation",
+            "london-treaty-name",
+            "auxiliary-ships",
+            "naval-staff-opposition",
+            "seiyukai-opposition",
+            "supreme-command-criticism",
+            "supreme-command-problem-name",
+            "staff-authority-increase"
+          ],
+          "keywords": [
+            "米国・英国と協調",
+            "ロンドン海軍軍縮条約",
+            "補助艦を制限",
+            "海軍軍令部",
+            "政友会",
+            "統帥権干犯問題",
+            "統帥部の権限を強めることにつながった"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

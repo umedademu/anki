@@ -24,8 +24,8 @@ const integrationPrefix = (bank, unit) => unit?.integrationPromptPrefix ?? bank.
 export function validateJapaneseKBank(bank, excerpt) {
   assert.equal(bank.schemaVersion, 2);
   assert.equal(bank.subjectId, japaneseKSubjectId);
-  assert.ok([4, 5, 6].includes(bank.chapter.number));
-  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第4・5章では占領期以外の適切な出題文を指定してください。");
+  assert.ok([3, 4, 5, 6].includes(bank.chapter.number));
+  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第3～5章では占領期以外の適切な出題文を指定してください。");
   assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= (bank.chapter.number === 5 ? 4 : 2));
   assert.ok(Number.isInteger(bank.part.number) && bank.part.number > 0 && bank.part.number < partLetters.length);
   assert.ok(integrationPrefix(bank) && bank.source.file && bank.source.originalFile);
@@ -157,7 +157,7 @@ export async function loadJapaneseHistoryK() {
 // 作成用原稿を読み込む。本番の既存問題は公開処理でCloudflareから別途取得する。
 export async function loadJapaneseKAdditions() {
   const directory = path.join(root, "data/source/japanese-history-k");
-  const names = (await readdir(directory)).filter(name => /^(?:04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
+  const names = (await readdir(directory)).filter(name => /^(?:03|04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
   return Promise.all(names.map(async name => {
     const bank = JSON.parse(await readFile(path.join(directory, name), "utf8"));
     assert.equal(name, `${partCode(bank)}.json`, "原稿名と小項目の番号が一致しません。");

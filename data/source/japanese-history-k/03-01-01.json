@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 3,
+    "title": "第3章 中世"
+  },
+  "section": {
+    "number": 1,
+    "title": "鎌倉時代"
+  },
+  "part": {
+    "number": 1,
+    "title": "鎌倉幕府の幕開けと執権政治"
+  },
+  "integrationPromptPrefix": "鎌倉時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第3章_01節_01_鎌倉幕府の幕開けと執権政治_原文抜粋.md",
+    "originalFile": "sources/kokushi/3_中世.md",
+    "pages": [
+      120,
+      121,
+      122,
+      123,
+      124
+    ],
+    "note": "120頁の当該注②③⑥、121頁イ見出しから124頁末までの全本文・図版・制度の関係図・系図・注④⑤⑦⑧と180頁年表を通読した。120頁の章全体の導入・年表と建武の新政の注①は本項の抜粋から除く。図122頁の六波羅探題は次項の事件後の機関として読むが、本項で先に出題しない。守護・地頭の任命権獲得1185年と征夷大将軍への任命1192年を区別し、注⑤の成立年諸説を踏まえて幕府成立年を1192年だけに固定する問題は作らない。本文は時政を初代執権とする一方、注⑦は義時を初代と呼ぶ場合も示すため、初代を一人だけ選ばせない。将軍全員の暗殺という次項125頁の一般化は本項123頁の頼朝死去とも整合しないため採らない。源氏将軍家・北条氏の系譜や代数、暗殺の詳細、奥州征服の正当性、朝廷への威圧の善悪、紋の現在の用途、史料や人物への賛美は出題しない。122頁の官位推挙・関東御公事、地方機関名の一覧は通読したが、土地保障と警備・軍役の関係、中央機関の役割分担と合議の成立を優先し、薄い名称問題で増やさない。1185年・1192年・1225年は本文と図に直接示され、同章年表から新たな内容は足さない。12世紀末～13世紀という時期幅はそれらの記載に基づく。"
+  },
+  "facts": [
+    {
+      "id": "shugo-role",
+      "page": 120,
+      "quote": "諸国の治安・警備にあたった。"
+    },
+    {
+      "id": "shugo-placement",
+      "page": 121,
+      "quote": "国ごとの**守護**"
+    },
+    {
+      "id": "jito-role",
+      "page": 121,
+      "quote": "地頭には年貢を取り立てて土地と百姓を管理させました。"
+    },
+    {
+      "id": "appointment-1185",
+      "page": 121,
+      "quote": "頼朝は文治元年（一一八五）、京都の法皇のもとに軍を送って威圧し、義経追討のために、国ごとの**守護**と、荘園や公領ごとの**地頭**を任命する権限を認めさせました。"
+    },
+    {
+      "id": "shogun-title",
+      "page": 121,
+      "quote": "第八十二代**後鳥羽天皇**が頼朝を**征夷大将軍**に任命しました。"
+    },
+    {
+      "id": "shogun-1192",
+      "page": 121,
+      "quote": "そして、建久三年（一一九二）、第八十二代**後鳥羽天皇**が頼朝を**征夷大将軍**に任命しました。"
+    },
+    {
+      "id": "jito-placement",
+      "page": 121,
+      "quote": "荘園や公領ごとの**地頭**を任命する権限を認めさせました。"
+    },
+    {
+      "id": "court-and-bakufu",
+      "page": 121,
+      "quote": "これにより、朝廷と幕府が並び立つ時代に入ります。"
+    },
+    {
+      "id": "yoshitsune-conflict",
+      "page": 121,
+      "quote": "平氏の滅亡後、**源頼朝**は弟の**源義経**と対立しました。"
+    },
+    {
+      "id": "warriors-control",
+      "page": 121,
+      "quote": "これにより、頼朝は全国の武士を掌握しようとしました"
+    },
+    {
+      "id": "vassal-definition",
+      "page": 120,
+      "quote": "鎌倉幕府の将軍と直接、主従関係を結び、その家臣となった武士。"
+    },
+    {
+      "id": "honryo-ando",
+      "page": 122,
+      "quote": "領地の保護（**本領安堵**）"
+    },
+    {
+      "id": "shin-on-kyuyo",
+      "page": 122,
+      "quote": "給付（**新恩給与**）"
+    },
+    {
+      "id": "on-meaning",
+      "page": 121,
+      "quote": "御恩とは、将軍が御家人に従来の領地を保証し、新たな所領や一定の権利を"
+    },
+    {
+      "id": "peace-service",
+      "page": 123,
+      "quote": "平時には自らの負担で幕府の警備などを務め、"
+    },
+    {
+      "id": "military-service",
+      "page": 122,
+      "quote": "合戦参加（**軍役**）"
+    },
+    {
+      "id": "feudal-system",
+      "page": 123,
+      "quote": "土地の権利を基礎として、御恩と奉公の主従関係で成り立つ制度を**封建制度**といいます。"
+    },
+    {
+      "id": "reciprocal-relationship",
+      "page": 122,
+      "quote": "このように、将軍と御家人の関係は片務的なものではなく、両者が相互に利益を与え合う関係で成り立っていた。"
+    },
+    {
+      "id": "personal-relationship",
+      "page": 122,
+      "quote": "また、御家人は「幕府」という組織との関係ではなく、源頼朝（将軍）個人との主従関係を重視していた。"
+    },
+    {
+      "id": "shogun-vassal-bond",
+      "page": 121,
+      "quote": "頼朝は、**将軍と御家人の間に御恩と奉公**に代表される強い主従関係を結びました。"
+    },
+    {
+      "id": "samurai-dokoro",
+      "page": 121,
+      "quote": "軍事や警察にあたる**侍所**"
+    },
+    {
+      "id": "monchujo",
+      "page": 121,
+      "quote": "訴訟を取り扱う**問注所**"
+    },
+    {
+      "id": "mandokoro",
+      "page": 121,
+      "quote": "財政などの一般事務を行う**政所**"
+    },
+    {
+      "id": "hyojoshu-selection",
+      "page": 123,
+      "quote": "有力な御家人から**評定衆**を選び、"
+    },
+    {
+      "id": "collective-decision",
+      "page": 123,
+      "quote": "幕府の政治は、執権を中心として評定衆の合議（**評定**）により行われました。"
+    },
+    {
+      "id": "rensho-role",
+      "page": 122,
+      "quote": "連署は執権の補佐役"
+    },
+    {
+      "id": "hojo-inheritance",
+      "page": 122,
+      "quote": "義時以降、北条氏が世襲した。"
+    },
+    {
+      "id": "shikken-role",
+      "page": 122,
+      "quote": "鎌倉幕府で、将軍を補佐し政務を統轄した最高の職。"
+    },
+    {
+      "id": "yoshitoki-offices",
+      "page": 123,
+      "quote": "その後、義時は建保元年（一二一三）、侍所別当の**和田義盛**を攻め滅ぼして自ら侍所別当をも兼務するようになりました。政所と侍所の両方を押さえたことで、義時は幕府の実権を完全に掌握しました。"
+    },
+    {
+      "id": "yasutoki-council",
+      "page": 123,
+      "quote": "義時の次に執権となった**北条泰時**は、有力な御家人から**評定衆**を選び、"
+    },
+    {
+      "id": "council-1225",
+      "page": 122,
+      "quote": "※2　評定衆と連署は1225年に設置。以降、執権・連署・評定衆で行う評定が幕府の最高決裁機関となった（連署は執権の補佐役）。"
+    },
+    {
+      "id": "yoritomo-death",
+      "page": 123,
+      "quote": "建久十年（一一九九）に源頼朝が亡くなると、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "幕府の成立と守護・地頭",
+      "reading": "ばくふのせいりつとしゅごじとう",
+      "category": "幕府の成立と地方支配",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "12世紀末（1185年・1192年）",
+        "sortYear": 1185
+      },
+      "explanation": "源頼朝は、義経追討のために1185年に守護・地頭の任命権を認めさせた。守護は国ごとの治安・警備を、地頭は荘園・公領の土地管理と年貢徴収を担った。1192年の征夷大将軍への任命は任命権獲得とは別の出来事であり、朝廷と幕府が並び立つ政治が進んだ。幕府成立の時点については複数の見方がある。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "12世紀末の日本で、国ごとに置かれ、治安・警備を担った幕府の役職は何か。",
+          "answer": "**守護(しゅご)**。",
+          "keywords": [
+            "守護"
+          ],
+          "evidence": [
+            "shugo-placement",
+            "shugo-role"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "12世紀末の日本で、源頼朝(みなもとのよりとも)が任命権を得た役職のうち、年貢を取り立てて土地と農民を管理したものは何か。",
+          "answer": "**地頭(じとう)**。",
+          "keywords": [
+            "地頭"
+          ],
+          "evidence": [
+            "jito-role"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "12世紀末の日本の幕府の成立と守護・地頭に関して、国ごとの守護に対し、地頭はどのような土地に置かれたか。",
+          "answer": "**荘園・公領**。",
+          "keywords": [
+            "荘園・公領"
+          ],
+          "evidence": [
+            "jito-placement"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の幕府の成立と守護・地頭に関して、源頼朝(みなもとのよりとも)が守護・地頭の任命権を認めさせたのはいつか。",
+          "answer": "1185年。",
+          "keywords": [],
+          "evidence": [
+            "appointment-1185"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "12世紀末の日本で、後鳥羽天皇(ごとばてんのう)が源頼朝(みなもとのよりとも)を任命した官職は何か。",
+          "answer": "**征夷大将軍(せいいたいしょうぐん)**。",
+          "keywords": [
+            "征夷大将軍"
+          ],
+          "evidence": [
+            "shogun-title"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の幕府の成立と守護・地頭に関して、源頼朝(みなもとのよりとも)が征夷大将軍(せいいたいしょうぐん)に任命されたのはいつか。",
+          "answer": "1192年。",
+          "keywords": [],
+          "evidence": [
+            "shogun-1192"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "12世紀末の日本の幕府の成立と守護・地頭について、支配のしくみはどのように整えられたか。",
+          "answer": "12世紀末の日本で、源頼朝(みなもとのよりとも)は1185年に**守護**と**地頭**の任命権を認めさせた。守護は国ごとの治安・警備、地頭は**荘園・公領**の土地管理と年貢徴収を担い、1192年に頼朝は**征夷大将軍(せいいたいしょうぐん)**に任命されて、朝廷と幕府が並び立つ政治が進んだ。",
+          "keywords": [
+            "守護",
+            "地頭",
+            "荘園・公領",
+            "征夷大将軍"
+          ],
+          "evidence": [
+            "appointment-1185",
+            "shugo-placement",
+            "shugo-role",
+            "jito-role",
+            "jito-placement",
+            "shogun-1192",
+            "court-and-bakufu"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "12世紀末の日本の幕府の成立と守護・地頭では、任命権の獲得と源義経(みなもとのよしつね)との対立はどう関係していたか。",
+          "answer": "源頼朝(みなもとのよりとも)は弟の**源義経(みなもとのよしつね)**と対立し、1185年に義経追討のため**守護・地頭の任命権**を認めさせた。これらの役職を通じて全国の武士を掌握しようとした。",
+          "keywords": [
+            "源義経",
+            "守護・地頭の任命権"
+          ],
+          "evidence": [
+            "yoshitsune-conflict",
+            "appointment-1185",
+            "warriors-control"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「幕府の成立と守護・地頭」について説明せよ。",
+          "answer": "12世紀末の日本で、源頼朝(みなもとのよりとも)は義経追討のため、1185年に国ごとの**守護**と**荘園・公領**ごとの**地頭**を任命する権限を認めさせ、守護に治安・警備、地頭に土地管理と年貢徴収を担わせた。1192年に頼朝は**征夷大将軍(せいいたいしょうぐん)**に任命され、朝廷と幕府が並び立つ政治が進んだ。",
+          "keywords": [
+            "守護",
+            "荘園・公領",
+            "地頭",
+            "征夷大将軍"
+          ],
+          "evidence": [
+            "appointment-1185",
+            "shugo-placement",
+            "shugo-role",
+            "jito-role",
+            "jito-placement",
+            "shogun-1192",
+            "court-and-bakufu"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "御恩と奉公",
+      "reading": "ごおんとほうこう",
+      "category": "主従関係と土地の保障",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "12世紀末以降の鎌倉幕府",
+        "sortYear": 1192
+      },
+      "explanation": "将軍は御家人の従来の領地を保護し、新たな所領などを与えた。御家人は平時の警備や戦時の軍役を担い、将軍と御家人は相互に利益を与え合う関係を結んだ。土地の権利を基礎とするこうした主従関係を封建制度という。御家人は将軍個人との結び付きを重視していた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、将軍と直接の主従関係を結び、その家臣となった武士を何というか。",
+          "answer": "**御家人(ごけにん)**。",
+          "keywords": [
+            "御家人"
+          ],
+          "evidence": [
+            "vassal-definition"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、将軍が御家人の従来の領地を保護することを何というか。",
+          "answer": "**本領安堵(ほんりょうあんど)**。",
+          "keywords": [
+            "本領安堵"
+          ],
+          "evidence": [
+            "honryo-ando"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、将軍が御家人に新たな所領を与えることを何というか。",
+          "answer": "**新恩給与(しんおんきゅうよ)**。",
+          "keywords": [
+            "新恩給与"
+          ],
+          "evidence": [
+            "shin-on-kyuyo",
+            "on-meaning"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の御恩と奉公で、御家人は平時に自らの負担で幕府のために何を務めたか。",
+          "answer": "幕府の**警備**。",
+          "keywords": [
+            "警備"
+          ],
+          "evidence": [
+            "peace-service"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の御恩と奉公で、御家人は戦時に将軍のために何を担ったか。",
+          "answer": "**合戦への参加**。",
+          "keywords": [
+            "合戦への参加"
+          ],
+          "evidence": [
+            "military-service"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、土地の権利を基礎として、将軍と御家人が御恩と奉公の主従関係を結ぶ制度を何というか。",
+          "answer": "**封建制度(ほうけんせいど)**。",
+          "keywords": [
+            "封建制度"
+          ],
+          "evidence": [
+            "feudal-system"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の御恩と奉公では、御家人は将軍からどのような保障を受けたか。",
+          "answer": "12世紀末以降の日本の鎌倉幕府では、将軍が**御家人**の従来の領地を保護する**本領安堵**や、新たな所領を与える**新恩給与**を行った。",
+          "keywords": [
+            "御家人",
+            "本領安堵",
+            "新恩給与"
+          ],
+          "evidence": [
+            "shogun-1192",
+            "shogun-vassal-bond",
+            "vassal-definition",
+            "honryo-ando",
+            "shin-on-kyuyo",
+            "on-meaning"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の御恩と奉公では、御家人の奉公を通じて主従関係はどのように成り立っていたか。",
+          "answer": "御家人は平時に自らの負担で幕府の**警備**を務め、戦時には**合戦への参加**を担い、将軍との間で相互に利益を与え合った。御家人は**将軍個人との主従関係**を重視し、土地の権利を基礎とするこの関係は**封建制度**を成り立たせた。",
+          "keywords": [
+            "警備",
+            "合戦への参加",
+            "将軍個人との主従関係",
+            "封建制度"
+          ],
+          "evidence": [
+            "peace-service",
+            "military-service",
+            "reciprocal-relationship",
+            "personal-relationship",
+            "feudal-system"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「御恩と奉公」について説明せよ。",
+          "answer": "12世紀末以降の日本で、将軍は**御家人**の従来の領地を保護する**本領安堵**や、新たな所領を与える**新恩給与**を行い、御家人は平時の**警備**や戦時の**合戦への参加**を担った。両者は相互に利益を与え合い、御家人が**将軍個人との主従関係**を重視したこの仕組みは、土地の権利を基礎とする**封建制度**であった。",
+          "keywords": [
+            "御家人",
+            "本領安堵",
+            "新恩給与",
+            "警備",
+            "合戦への参加",
+            "将軍個人との主従関係",
+            "封建制度"
+          ],
+          "evidence": [
+            "shogun-1192",
+            "shogun-vassal-bond",
+            "vassal-definition",
+            "honryo-ando",
+            "shin-on-kyuyo",
+            "on-meaning",
+            "peace-service",
+            "military-service",
+            "reciprocal-relationship",
+            "personal-relationship",
+            "feudal-system"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "幕府の中央機関と執権政治",
+      "reading": "ばくふのちゅうおうきかんとしっけんせいじ",
+      "category": "中央機関と合議",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "12世紀末～13世紀（評定衆・連署は1225年）",
+        "sortYear": 1225
+      },
+      "explanation": "鎌倉幕府の中央では、侍所が軍事・警察、問注所が訴訟、政所が財政などの一般事務を分担した。頼朝の死後、北条氏が将軍を補佐する執権を世襲し、義時は政所と侍所を兼ねて実権を握った。泰時が有力御家人から評定衆を選び、執権・連署・評定衆による合議が政治の中心となった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、幕府の中央機関のうち軍事・警察を担ったものは何か。",
+          "answer": "**侍所(さむらいどころ)**。",
+          "keywords": [
+            "侍所"
+          ],
+          "evidence": [
+            "samurai-dokoro"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、幕府の中央機関のうち訴訟を取り扱ったものは何か。",
+          "answer": "**問注所(もんちゅうじょ)**。",
+          "keywords": [
+            "問注所"
+          ],
+          "evidence": [
+            "monchujo"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、幕府の中央機関のうち財政などの一般事務を担ったものは何か。",
+          "answer": "**政所(まんどころ)**。",
+          "keywords": [
+            "政所"
+          ],
+          "evidence": [
+            "mandokoro"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、有力な御家人から選ばれ、執権(しっけん)とともに幕府の政治を合議した人々を何というか。",
+          "answer": "**評定衆(ひょうじょうしゅう)**。",
+          "keywords": [
+            "評定衆"
+          ],
+          "evidence": [
+            "hyojoshu-selection",
+            "collective-decision"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "鎌倉時代の日本で、執権(しっけん)を補佐するために置かれた役職は何か。",
+          "answer": "**連署(れんしょ)**。",
+          "keywords": [
+            "連署"
+          ],
+          "evidence": [
+            "rensho-role"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "内容の確認",
+          "prompt": "鎌倉時代の日本の幕府の中央機関と執権政治で、将軍を補佐する執権(しっけん)を代々世襲し、幕府の実権を握った一族は何氏か。",
+          "answer": "**北条氏**。",
+          "keywords": [
+            "北条氏"
+          ],
+          "evidence": [
+            "hojo-inheritance",
+            "shikken-role"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の幕府の中央機関と執権政治では、中央機関はどのように役割を分担していたか。",
+          "answer": "12世紀末以降の日本の鎌倉幕府では、**侍所(さむらいどころ)**が軍事・警察、**問注所(もんちゅうじょ)**が訴訟、**政所(まんどころ)**が財政などの一般事務を担当した。",
+          "keywords": [
+            "侍所",
+            "問注所",
+            "政所"
+          ],
+          "evidence": [
+            "shogun-1192",
+            "samurai-dokoro",
+            "monchujo",
+            "mandokoro"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の幕府の中央機関と執権政治では、頼朝の死後、政治を主導するしくみはどう変わったか。",
+          "answer": "1199年の頼朝死去後、13世紀の日本では、**北条氏**が将軍を補佐し政務を統轄する**執権(しっけん)**を世襲し、北条義時(ほうじょうよしとき)は政所(まんどころ)と侍所(さむらいどころ)を兼ねて実権を握った。北条泰時(ほうじょうやすとき)が有力御家人から**評定衆(ひょうじょうしゅう)**を選び、1225年に置かれた評定衆と、執権を補佐する**連署**が執権とともに**合議（評定(ひょうじょう)）**で政治を行った。",
+          "keywords": [
+            "北条氏",
+            "執権",
+            "評定衆",
+            "連署",
+            "合議（評定）"
+          ],
+          "evidence": [
+            "yoritomo-death",
+            "hojo-inheritance",
+            "shikken-role",
+            "yoshitoki-offices",
+            "yasutoki-council",
+            "hyojoshu-selection",
+            "council-1225",
+            "rensho-role",
+            "collective-decision"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「幕府の中央機関と執権政治」について説明せよ。",
+          "answer": "12世紀末～13世紀の日本の鎌倉幕府では、**侍所(さむらいどころ)**が軍事・警察、**問注所(もんちゅうじょ)**が訴訟、**政所(まんどころ)**が財政などの一般事務を分担した。頼朝の死後、**北条氏**は将軍を補佐し政務を統轄する**執権(しっけん)**を世襲し、北条義時(ほうじょうよしとき)が政所と侍所を兼ねて実権を握った。1225年に置かれた**評定衆(ひょうじょうしゅう)**と、執権を補佐する**連署**が、執権とともに**合議（評定(ひょうじょう)）**で政治を行った。",
+          "keywords": [
+            "侍所",
+            "問注所",
+            "政所",
+            "北条氏",
+            "執権",
+            "評定衆",
+            "連署",
+            "合議（評定）"
+          ],
+          "evidence": [
+            "shogun-1192",
+            "samurai-dokoro",
+            "monchujo",
+            "mandokoro",
+            "yoritomo-death",
+            "hojo-inheritance",
+            "shikken-role",
+            "yoshitoki-offices",
+            "yasutoki-council",
+            "hyojoshu-selection",
+            "council-1225",
+            "rensho-role",
+            "collective-decision"
+          ]
+        }
+      ]
+    }
+  ]
+}

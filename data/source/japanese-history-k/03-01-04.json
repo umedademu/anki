@@ -1,0 +1,830 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 3,
+    "title": "第3章 中世"
+  },
+  "section": {
+    "number": 1,
+    "title": "鎌倉時代"
+  },
+  "part": {
+    "number": 4,
+    "title": "武士と民衆の生活"
+  },
+  "integrationPromptPrefix": "鎌倉時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第3章_01節_04_武士と民衆の生活_原文抜粋.md",
+    "originalFile": "sources/kokushi/3_中世.md",
+    "pages": [
+      121,
+      131,
+      132,
+      181
+    ],
+    "note": "131頁冒頭の関連注⑪とニ見出しから132頁末までの全本文・注⑫⑬・図版説明を通読した。133頁冒頭の東方見聞録注⑭は次小項目の蒙古襲来に対応するため含めない。180頁の年表も全文通読し、数字のない欄や空欄を埋めない。121頁の1192年征夷大将軍任命、181頁の1333年幕府滅亡の最小補助は12世紀末〜14世紀前半の鎌倉時代という時代幅だけに用い、成立年を唯一に断定したり、各農法・店・流通・金融・座の開始年を推定したりしない。181頁の建武の新政開始や幕府滅亡の単独の原因を作問へ持ち込まない。下地中分は注⑪に明示の13世紀中頃〜14世紀末を用い、鎌倉時代だけで終わったとせず、統合の前置きを中世へ調整する。武士の領地農村の館と農民の農耕、農業改善と専門職、定期市と常設店、陸海の運送、宋銭と金融業者、座の保護と独占を関連づける。すべての武士が自給・すべての女性や農民が同じ地位という一般化はしない。藍・楮・荏胡麻など商品作物の全用途、農具の全名称・技法、騎射三物の名前や動物射撃の珍事、建設工具の専門技術、文化財指定や作者・現蔵先は暗記対象にしない。車借と馬借は役割の比較を通常の説明にまとめ、薄い名称だけの独立項目を作らない。下地中分は年貢徴収を背景とした対立の解決とし、必ずすべての地頭が土地所有権を得た、幕府が常に命じた、荘園制度がこの時に一律に消滅したといった補完はしない。宋銭の材質、借上や土倉の原文にない利率・担保の細則、座の成立年・現在の金融制度・職業への評価も加えない。 最終点検で職人の説明には同じ131頁の農具作り・染色・建築の具体的役割も加え、職人名の一覧暗記は求めず、生産の分業が分かる説明にした。"
+  },
+  "facts": [
+    {
+      "id": "jito-conflict",
+      "page": 131,
+      "quote": "地頭の力が強くなると、地頭と荘園領主との間で対立が深まった。"
+    },
+    {
+      "id": "land-division",
+      "page": 131,
+      "quote": "荘園を二分してそれぞれが土地を支配し、お互いに相手の土地には関与しないことを取り決める「下地中分」という解決法がとられた。"
+    },
+    {
+      "id": "division-intervention",
+      "page": 131,
+      "quote": "幕府はこの方法を政策的に進め、ときに幕府が命じて中分を行うこともあった。"
+    },
+    {
+      "id": "division-period",
+      "page": 131,
+      "quote": "13世紀中頃（鎌倉中期）から14世紀末頃（南北朝末期）まで行われた。"
+    },
+    {
+      "id": "jito-tax",
+      "page": 131,
+      "quote": "地頭は、荘園の年貢を取り立てる権限を持つため、荘園領主との紛争も多くなりました。"
+    },
+    {
+      "id": "warrior-houses",
+      "page": 131,
+      "quote": "この時代の武士は、領地の農村に、堀や塀などで囲まれた館を構えて住み、土地を開墾して、農民を使って農耕させました。"
+    },
+    {
+      "id": "new-fields",
+      "page": 131,
+      "quote": "地頭などが積極的に新田を開発したことで、耕作面積は拡大しました。"
+    },
+    {
+      "id": "double-cropping",
+      "page": 131,
+      "quote": "麦を裏作とした二毛作が普及し、"
+    },
+    {
+      "id": "animal-farming",
+      "page": 131,
+      "quote": "牛馬が農耕に用いられるようになり、牛馬耕、"
+    },
+    {
+      "id": "iron-tools",
+      "page": 131,
+      "quote": "鎌や鋤などの鉄製の農具が普及し、"
+    },
+    {
+      "id": "fertilizer-productivity",
+      "page": 131,
+      "quote": "草木灰などの肥料も使われるようになって、農業生産が向上しました。"
+    },
+    {
+      "id": "specialist-crafts",
+      "page": 131,
+      "quote": "紙、絹布、麻布、土器などを作る手工業の専門職の職人が登場しました。"
+    },
+    {
+      "id": "periodic-market-name",
+      "page": 131,
+      "quote": "月に三度ほど定期市が開かれるようになりました（三斎市）。"
+    },
+    {
+      "id": "market-places",
+      "page": 131,
+      "quote": "寺社の周りや、交通の便利な場所などに"
+    },
+    {
+      "id": "peddlers",
+      "page": 131,
+      "quote": "各地の特産品は行商人によって運ばれ、都市部や遠隔地から運ばれた商品も売られるようになり、"
+    },
+    {
+      "id": "permanent-shops",
+      "page": 131,
+      "quote": "都市部では見世棚（小売店）という常設の小売店が現れました。"
+    },
+    {
+      "id": "land-transport",
+      "page": 131,
+      "quote": "車借や馬借が陸上の運搬で発展し、"
+    },
+    {
+      "id": "sea-transport",
+      "page": 131,
+      "quote": "大量輸送のために海上交通が活発となり、各地の港町では問丸という運送業者が飛躍し、後に問屋という卸売に発展します。"
+    },
+    {
+      "id": "cart-carriers",
+      "page": 131,
+      "quote": "牛に車を引かせて物資を運んだ運送業者。"
+    },
+    {
+      "id": "horse-carriers",
+      "page": 131,
+      "quote": "馬の背に荷物を載せて運んだ運送業者。"
+    },
+    {
+      "id": "song-coins",
+      "page": 131,
+      "quote": "宋から輸入された宋銭が使われるようになりました。"
+    },
+    {
+      "id": "money-economy",
+      "page": 131,
+      "quote": "定期市でも宋銭が広く流通し、貨幣経済が徐々に広がっていきます。"
+    },
+    {
+      "id": "lenders",
+      "page": 131,
+      "quote": "金融業者の借上、質屋の土倉など金を貸し出す業者も現れます。"
+    },
+    {
+      "id": "za-organization",
+      "page": 131,
+      "quote": "同業者たちが集団となり座を結成し、"
+    },
+    {
+      "id": "za-payments",
+      "page": 131,
+      "quote": "寺社や公家に貢納して保護を受け、"
+    },
+    {
+      "id": "za-privilege",
+      "page": 131,
+      "quote": "営業を独占する特権を得るようになりました。"
+    },
+    {
+      "id": "kamakura-era-start",
+      "page": 121,
+      "quote": "建久三年（一一九二）、第八十二代**後鳥羽天皇**が頼朝を**征夷大将軍**に任命しました。"
+    },
+    {
+      "id": "kamakura-era-end",
+      "page": 181,
+      "quote": "- 1333　後醍醐天皇が鎌倉幕府を滅ぼし、"
+    },
+    {
+      "id": "crafts-roles",
+      "page": 131,
+      "quote": "農具などを作る鍛冶屋、染物の紺屋、建物を建てる大工、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "下地中分",
+      "reading": "したじちゅうぶん",
+      "category": "土地支配と制度",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "13世紀中頃〜14世紀末",
+        "sortYear": 1250
+      },
+      "explanation": "地頭と荘園領主の対立に対し、荘園を二分して双方が別々に支配し、相手側の土地へ関与しない方法がとられた。幕府が政策的に進め、命令によって中分された例もあった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "中世の日本で、荘園を二分してそれぞれ別に支配し、相手の土地に関与しないと取り決めた解決法を何というか。",
+          "answer": "**下地中分(したじちゅうぶん)**。",
+          "keywords": [
+            "下地中分"
+          ],
+          "evidence": [
+            "land-division"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "中世の日本の下地中分は、誰と誰の対立を解決するための方法だったか。",
+          "answer": "**地頭と荘園領主**。",
+          "keywords": [
+            "地頭と荘園領主"
+          ],
+          "evidence": [
+            "jito-conflict"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "中世の日本の下地中分の背景として、地頭は荘園についてどのような徴収権限を持っていたか。",
+          "answer": "**年貢を取り立てる権限**。",
+          "keywords": [
+            "年貢を取り立てる権限"
+          ],
+          "evidence": [
+            "jito-tax"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "短答",
+          "prompt": "中世の日本で、下地中分が行われたのはいつか。",
+          "answer": "13世紀中頃〜14世紀末。",
+          "keywords": [],
+          "evidence": [
+            "division-period"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中世の日本で、下地中分はどのような方法だったか。",
+          "answer": "13世紀中頃〜14世紀末の日本で行われた**下地中分(したじちゅうぶん)**は、荘園の**土地を二分**して地頭と荘園領主がそれぞれ支配する方法だった。双方は**相手の土地には関与しない**と取り決めた。",
+          "keywords": [
+            "下地中分",
+            "土地を二分",
+            "相手の土地には関与しない"
+          ],
+          "evidence": [
+            "land-division",
+            "division-period"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中世の日本で、下地中分がとられた背景と幕府の対応を説明せよ。",
+          "answer": "地頭は**年貢を取り立てる権限**を持ち、その力が強まると**地頭と荘園領主**の対立が深まった。幕府は下地中分を政策的に進め、**幕府が命じた例**もあった。",
+          "keywords": [
+            "年貢を取り立てる権限",
+            "地頭と荘園領主",
+            "幕府が命じた例"
+          ],
+          "evidence": [
+            "jito-tax",
+            "jito-conflict",
+            "division-intervention"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "中世の日本の「下地中分」について説明せよ。",
+          "answer": "日本では、**年貢を取り立てる権限**を持つ地頭の力が強まり、**地頭と荘園領主**の対立が深まった。13世紀中頃〜14世紀末に行われた**下地中分(したじちゅうぶん)**は、荘園の**土地を二分**して双方が支配し、**相手の土地には関与しない**と取り決める方法だった。幕府も政策的に進め、**幕府が命じた例**もあった。",
+          "keywords": [
+            "年貢を取り立てる権限",
+            "地頭と荘園領主",
+            "下地中分",
+            "土地を二分",
+            "相手の土地には関与しない",
+            "幕府が命じた例"
+          ],
+          "evidence": [
+            "jito-tax",
+            "jito-conflict",
+            "land-division",
+            "division-period",
+            "division-intervention"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ],
+      "integrationPromptPrefix": "中世の日本の"
+    },
+    {
+      "id": "02",
+      "term": "武士の生活と生産の発達",
+      "reading": "ぶしのせいかつとせいさんのはったつ",
+      "category": "社会・産業",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末〜14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "武士には農村の館に住み、土地を開墾して農民に農耕させた者がいた。新田開発、二毛作、牛馬や鉄製農具、肥料の利用で農業生産が向上し、紙や布などを作る手工業の専門職も現れた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、麦を裏作として行った耕作方法を何というか。",
+          "answer": "**二毛作(にもうさく)**。",
+          "keywords": [
+            "二毛作"
+          ],
+          "evidence": [
+            "double-cropping"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、農耕で用いられるようになった動物は何か。",
+          "answer": "**牛馬**。",
+          "keywords": [
+            "牛馬"
+          ],
+          "evidence": [
+            "animal-farming"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、普及した鎌や鋤(すき)などの農具は何製だったか。",
+          "answer": "**鉄製**。",
+          "keywords": [
+            "鉄製"
+          ],
+          "evidence": [
+            "iron-tools"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、使われるようになった肥料の例は何か。",
+          "answer": "**草木灰(そうもくばい)**。",
+          "keywords": [
+            "草木灰"
+          ],
+          "evidence": [
+            "fertilizer-productivity"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、紙や布などの生産にはどのような担い手が現れたか。",
+          "answer": "**手工業の専門職の職人**。",
+          "keywords": [
+            "手工業の専門職の職人"
+          ],
+          "evidence": [
+            "specialist-crafts"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、農業生産はどのように向上したか。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、**新田開発**で耕作面積が拡大し、麦を裏作とする**二毛作(にもうさく)**が普及した。**牛馬**、**鉄製農具**、**草木灰(そうもくばい)などの肥料**も利用され、農業生産が向上した。",
+          "keywords": [
+            "新田開発",
+            "二毛作",
+            "牛馬",
+            "鉄製農具",
+            "草木灰などの肥料"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "new-fields",
+            "double-cropping",
+            "animal-farming",
+            "iron-tools",
+            "fertilizer-productivity"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、武士の住まいと農耕にはどのような特徴があったか。",
+          "answer": "武士には、**領地の農村に館を構え**、土地を開墾して**農民に農耕させた**者がいた。",
+          "keywords": [
+            "領地の農村に館を構え",
+            "農民に農耕させた"
+          ],
+          "evidence": [
+            "warrior-houses"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の武士の生活と生産の発達について、職人はどのような仕事をしたか。",
+          "answer": "**手工業の専門職の職人**が現れ、**農具作り・染色・建築**や、紙・布などの生産を担った。",
+          "keywords": [
+            "手工業の専門職の職人",
+            "農具作り・染色・建築"
+          ],
+          "evidence": [
+            "specialist-crafts",
+            "crafts-roles"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「武士の生活と生産の発達」について説明せよ。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、武士のなかには**領地の農村に館を構え**、土地を開墾して**農民に農耕させた**者がいた。**新田開発**で耕作面積が広がり、麦を裏作とする**二毛作(にもうさく)**、**牛馬**、**鉄製農具**、**草木灰(そうもくばい)などの肥料**の利用で農業生産が向上した。**農具作り・染色・建築**や紙・布などの生産を担う**手工業の専門職の職人**も現れた。",
+          "keywords": [
+            "領地の農村に館を構え",
+            "農民に農耕させた",
+            "新田開発",
+            "二毛作",
+            "牛馬",
+            "鉄製農具",
+            "草木灰などの肥料",
+            "農具作り・染色・建築",
+            "手工業の専門職の職人"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "warrior-houses",
+            "new-fields",
+            "double-cropping",
+            "animal-farming",
+            "iron-tools",
+            "fertilizer-productivity",
+            "specialist-crafts",
+            "crafts-roles"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "市と流通の発達",
+      "reading": "いちとりゅうつうのはったつ",
+      "category": "商業・交通",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末〜14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "寺社や交通の便利な場所で定期市が開かれ、行商人が特産品を運び、都市では常設店も現れた。陸上の運送業と海上の大量輸送が発達し、港町の問丸は後に卸売の問屋へ発展した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、月に三度ほど開かれた定期市を何というか。",
+          "answer": "**三斎市(さんさいいち)**。",
+          "keywords": [
+            "三斎市"
+          ],
+          "evidence": [
+            "periodic-market-name"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の市と流通の発達について、定期市はどのような場所に開かれたか。",
+          "answer": "**寺社の周りや交通の便利な場所**。",
+          "keywords": [
+            "寺社の周りや交通の便利な場所"
+          ],
+          "evidence": [
+            "market-places"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、都市部に現れた常設の小売店を何というか。",
+          "answer": "**見世棚(みせだな)**。",
+          "keywords": [
+            "見世棚"
+          ],
+          "evidence": [
+            "permanent-shops"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、港町で活動し、後に卸売の問屋へ発展した運送業者を何というか。",
+          "answer": "**問丸(といまる)**。",
+          "keywords": [
+            "問丸"
+          ],
+          "evidence": [
+            "sea-transport"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の市と流通の発達について、各地の特産品を運んだ商人はどのような人々か。",
+          "answer": "**行商人**。",
+          "keywords": [
+            "行商人"
+          ],
+          "evidence": [
+            "peddlers"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の市と流通の発達について、売買の場所と商人の活動にはどのような特徴があったか。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、**寺社の周りや交通の便利な場所**で、月に三度ほどの**三斎市(さんさいいち)**が開かれた。**行商人**が各地の特産品を運び、都市部や遠隔地の商品も売られ、都市には常設の小売店である**見世棚(みせだな)**が現れた。",
+          "keywords": [
+            "寺社の周りや交通の便利な場所",
+            "三斎市",
+            "行商人",
+            "見世棚"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "market-places",
+            "periodic-market-name",
+            "peddlers",
+            "permanent-shops"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の市と流通の発達について、陸上と海上の運送業はどのように発達したか。",
+          "answer": "陸上では、**車借(しゃしゃく)**が牛に車を引かせ、**馬借(ばしゃく)**が馬の背に荷を載せて物資を運んだ。大量輸送のため海上交通も活発となり、港町の**問丸(といまる)**は運送業者として活動し、後に卸売の**問屋**へ発展した。",
+          "keywords": [
+            "車借",
+            "馬借",
+            "問丸",
+            "問屋"
+          ],
+          "evidence": [
+            "land-transport",
+            "cart-carriers",
+            "horse-carriers",
+            "sea-transport"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「市と流通の発達」について説明せよ。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、**寺社の周りや交通の便利な場所**で、月に三度ほどの**三斎市(さんさいいち)**が開かれた。**行商人**が特産品を運び、都市部や遠隔地の商品も売られ、都市には常設の小売店である**見世棚(みせだな)**が現れた。陸上の運搬は**車借(しゃしゃく)**や**馬借(ばしゃく)**が担い、海上の大量輸送では港町の**問丸(といまる)**が活動し、後に卸売の**問屋**へ発展した。",
+          "keywords": [
+            "寺社の周りや交通の便利な場所",
+            "三斎市",
+            "行商人",
+            "見世棚",
+            "車借",
+            "馬借",
+            "問丸",
+            "問屋"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "market-places",
+            "periodic-market-name",
+            "peddlers",
+            "permanent-shops",
+            "land-transport",
+            "cart-carriers",
+            "horse-carriers",
+            "sea-transport"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "宋銭と座",
+      "reading": "そうせんとざ",
+      "category": "商業・金融",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末〜14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "宋から輸入された宋銭が定期市でも使われ、貨幣経済の広がりとともに貸金業者も現れた。同業者が結成する座は寺社や公家へ貢納し、保護と営業を独占する特権を得た。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、外国から輸入され、定期市でも広く流通した貨幣は何か。",
+          "answer": "**宋銭(そうせん)**。",
+          "keywords": [
+            "宋銭"
+          ],
+          "evidence": [
+            "song-coins",
+            "money-economy"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、同業者が集団となって結成した営業組織を何というか。",
+          "answer": "**座**。",
+          "keywords": [
+            "座"
+          ],
+          "evidence": [
+            "za-organization"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、質屋として金を貸し出した業者を何というか。",
+          "answer": "**土倉(どそう)**。",
+          "keywords": [
+            "土倉"
+          ],
+          "evidence": [
+            "lenders"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の宋銭と座について、座は寺社や公家の保護を受けるため、どのような負担をしたか。",
+          "answer": "**貢納(こうのう)**をした。",
+          "keywords": [
+            "貢納"
+          ],
+          "evidence": [
+            "za-payments"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の宋銭と座について、貨幣と金融業者にはどのような変化があったか。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、宋から輸入された**宋銭(そうせん)**が定期市でも広く流通し、**貨幣経済**が徐々に広がった。**借上(かしあげ)**や質屋の**土倉(どそう)**など、金を貸す業者も現れた。",
+          "keywords": [
+            "宋銭",
+            "貨幣経済",
+            "借上",
+            "土倉"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "song-coins",
+            "money-economy",
+            "lenders"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の宋銭と座について、座はどのような組織だったか。",
+          "answer": "同業者が集団となって**座**を結成し、**寺社や公家へ貢納**して保護を受けた。その見返りに**営業を独占する特権**を得た。",
+          "keywords": [
+            "座",
+            "寺社や公家へ貢納",
+            "営業を独占する特権"
+          ],
+          "evidence": [
+            "za-organization",
+            "za-payments",
+            "za-privilege"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「宋銭と座」について説明せよ。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代には、宋から輸入された**宋銭(そうせん)**が定期市でも流通し、**貨幣経済**が広がるなかで、**借上(かしあげ)**や質屋の**土倉(どそう)**などの貸金業者も現れた。同業者が結成する**座**は、**寺社や公家へ貢納**して保護を受け、**営業を独占する特権**を得た。",
+          "keywords": [
+            "宋銭",
+            "貨幣経済",
+            "借上",
+            "土倉",
+            "座",
+            "寺社や公家へ貢納",
+            "営業を独占する特権"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "song-coins",
+            "money-economy",
+            "lenders",
+            "za-organization",
+            "za-payments",
+            "za-privilege"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

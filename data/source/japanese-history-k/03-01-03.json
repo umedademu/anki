@@ -1,0 +1,610 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 3,
+    "title": "第3章 中世"
+  },
+  "section": {
+    "number": 1,
+    "title": "鎌倉時代"
+  },
+  "part": {
+    "number": 3,
+    "title": "鎌倉幕府の最盛期"
+  },
+  "integrationPromptPrefix": "鎌倉時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第3章_01節_03_鎌倉幕府の最盛期_原文抜粋.md",
+    "originalFile": "sources/kokushi/3_中世.md",
+    "pages": [
+      121,
+      129,
+      130,
+      181
+    ],
+    "note": "129頁ハ見出しから130頁末までの全本文・御成敗式目の文献史料を通読した。129頁冒頭の後鳥羽天皇の肖像と御製の解説は前小項目の承久の乱に属し、131頁冒頭の下地中分注⑪は次小項目の生活に属するため混ぜない。原文129頁末の御家という語は130頁に続くが、将軍派の処分の細部を出題せず、1247年の宝治合戦と1252年の宗尊親王の将軍就任に絞る。180頁の年表も全文通読したが、数字のない欄や空欄を埋めない。121頁の1192年征夷大将軍任命と181頁の1333年幕府滅亡の最小引用は、鎌倉時代全体の12世紀末〜14世紀前半という時代幅の確認だけに使用する。幕府成立年を1192年のみと断定せず、181頁の建武の新政の開始表記や後醍醐天皇による単独の滅亡原因を学習内容へ持ち込まない。得宗家の権力集中は時宗の執権期という本文の範囲に留め、正確な開始年を推定せず、鎌倉時代全体の枠内で説明する。史料の具体規定は前の妻の土地について一例だけを扱い、二十年の取得時効や罰則・神社祭祀・条数の細部は独立暗記にしない。女性の所領・財産や地頭/御家人となる例を扱い、すべての女性が同じ権利を持つ、女性の地位が一律に高い、公平な統治や北条氏の正当性、最初の武家法・最初の皇族将軍など唯一/初めての評価は正答にしない。皇族将軍による朝廷との改善を必然の唯一原因とせず、将軍の名目的な地位を制度上の特徴として扱う。貞時が御内人を滅ぼした経過、有力御家人との戦闘の詳細、人物の生没年、執権の代数や皇族将軍の人数は省く。"
+  },
+  "facts": [
+    {
+      "id": "law-date-name",
+      "page": 129,
+      "quote": "貞永元年（一二三二）、**御成敗式目（貞永式目）**を定めました。"
+    },
+    {
+      "id": "law-author",
+      "page": 129,
+      "quote": "三代執権となった**北条泰時**は貞永元年（一二三二）、"
+    },
+    {
+      "id": "law-foundation",
+      "page": 129,
+      "quote": "武家社会の慣習や頼朝以来の判例を成文化したものです。"
+    },
+    {
+      "id": "law-persons",
+      "page": 129,
+      "quote": "守護、地頭、御家人の権利義務、"
+    },
+    {
+      "id": "law-inheritance-judgment",
+      "page": 129,
+      "quote": "所領相続に関する規定、裁判の基準などを定めています。"
+    },
+    {
+      "id": "law-control",
+      "page": 129,
+      "quote": "幕府は御成敗式目により、御家人を掌握し統率することになります。"
+    },
+    {
+      "id": "women-property",
+      "page": 129,
+      "quote": "女性も領地を与えられ、自分の財産を持ち、"
+    },
+    {
+      "id": "women-positions",
+      "page": 129,
+      "quote": "地頭や御家人になる者も現れました。"
+    },
+    {
+      "id": "former-wife-land",
+      "page": 130,
+      "quote": "一、何の落ち度もない前の妻に与えた土地を、離別後に取り返すことはできない。"
+    },
+    {
+      "id": "tokiyori-office",
+      "page": 129,
+      "quote": "五代執権の**北条時頼**は、"
+    },
+    {
+      "id": "hoji-year",
+      "page": 130,
+      "quote": "宝治元年（一二四七）、"
+    },
+    {
+      "id": "hoji-name-outcome",
+      "page": 130,
+      "quote": "**三浦氏**を攻め、滅亡させました。これを**宝治合戦**といいます。"
+    },
+    {
+      "id": "hoji-tokiyori",
+      "page": 130,
+      "quote": "時頼は北条氏に次ぐ勢力を誇る**三浦氏**を攻め、滅亡させました。これを**宝治合戦**といいます。"
+    },
+    {
+      "id": "imperial-general-1252",
+      "page": 130,
+      "quote": "また時頼は建長四年（一二五二）、第八十八代**後嵯峨天皇**の第一皇子である**宗尊親王**を将軍に迎え入れることに成功しました。"
+    },
+    {
+      "id": "imperial-generals-name",
+      "page": 130,
+      "quote": "これにより、**皇族将軍**の道が開かれました。"
+    },
+    {
+      "id": "nominal-generals",
+      "page": 130,
+      "quote": "すでに将軍は名目的な地位であって実権はありませんでしたが、"
+    },
+    {
+      "id": "tokusou-family",
+      "page": 130,
+      "quote": "得宗家とは、北条氏嫡流で家督を相続する家のことです。"
+    },
+    {
+      "id": "tokusou-power",
+      "page": 130,
+      "quote": "北条**時宗**の執権期に北条**得宗家**に権力が集中していきました。"
+    },
+    {
+      "id": "miuchibito",
+      "page": 130,
+      "quote": "**御内人（得宗家直属の家臣）**"
+    },
+    {
+      "id": "tokusou-political-change",
+      "page": 130,
+      "quote": "合議制だったこれまでの執権政治から、北条得宗家による専制政治に移行します。これを**得宗専制政治**といいます。"
+    },
+    {
+      "id": "kamakura-era-start",
+      "page": 121,
+      "quote": "建久三年（一一九二）、第八十二代**後鳥羽天皇**が頼朝を**征夷大将軍**に任命しました。"
+    },
+    {
+      "id": "kamakura-era-end",
+      "page": 181,
+      "quote": "- 1333　後醍醐天皇が鎌倉幕府を滅ぼし、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "御成敗式目",
+      "reading": "ごせいばいしきもく",
+      "category": "制度・政策・法律",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1232年",
+        "sortYear": 1232
+      },
+      "explanation": "御成敗式目は武家社会の慣習と判例を成文化し、権利義務、所領相続、裁判の基準を定めた。女性が所領や財産を持つ例や地頭・御家人となる例もあり、史料には落ち度のない前の妻に与えた土地を離別後に取り返せない規定が見える。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1232年の日本で、鎌倉幕府が定めた武家法を何というか。",
+          "answer": "**御成敗式目(ごせいばいしきもく)**（貞永式目(じょうえいしきもく)）。",
+          "keywords": [
+            "御成敗式目"
+          ],
+          "evidence": [
+            "law-date-name"
+          ],
+          "acceptedAnswers": [
+            "御成敗式目",
+            "貞永式目"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、御成敗式目を定めた執権は誰か。",
+          "answer": "**北条泰時(ほうじょうやすとき)**。",
+          "keywords": [
+            "北条泰時"
+          ],
+          "evidence": [
+            "law-author",
+            "law-date-name"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の御成敗式目は、どのような慣習や判例を成文化したものか。",
+          "answer": "**武家社会の慣習や頼朝以来の判例**。",
+          "keywords": [
+            "武家社会の慣習や頼朝以来の判例"
+          ],
+          "evidence": [
+            "law-foundation"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の御成敗式目では、誰の権利義務が定められたか。",
+          "answer": "**守護・地頭・御家人**。",
+          "keywords": [
+            "守護・地頭・御家人"
+          ],
+          "evidence": [
+            "law-persons"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の御成敗式目に関わる武家社会では、女性の所領や財産はどのように扱われたか。",
+          "answer": "**女性も領地を与えられ、自分の財産を持つ例があった**。",
+          "keywords": [
+            "女性も領地を与えられ、自分の財産を持つ例があった"
+          ],
+          "evidence": [
+            "women-property"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の御成敗式目で、落ち度のない前の妻に与えた土地の、離別後の取り戻しについてどう定めたか。",
+          "answer": "**取り返すことはできなかった**。",
+          "keywords": [
+            "取り返すことはできなかった"
+          ],
+          "evidence": [
+            "former-wife-land"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、御成敗式目はどのような法だったか。",
+          "answer": "1232年、日本で**北条泰時(ほうじょうやすとき)**が定めた**御成敗式目(ごせいばいしきもく)**は、**武家社会の慣習や頼朝以来の判例**を成文化した武家法だった。守護・地頭・御家人の**権利義務**、**所領相続**、**裁判の基準**などを定め、幕府が御家人を掌握し統率する基準となった。",
+          "keywords": [
+            "北条泰時",
+            "御成敗式目",
+            "武家社会の慣習や頼朝以来の判例",
+            "権利義務",
+            "所領相続",
+            "裁判の基準"
+          ],
+          "evidence": [
+            "law-author",
+            "law-date-name",
+            "law-foundation",
+            "law-persons",
+            "law-inheritance-judgment",
+            "law-control"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本で、御成敗式目と女性の所領や立場にはどのような関係があったか。",
+          "answer": "武家社会では女性も領地を与えられ、**自分の財産**を持ち、**地頭や御家人**となる者も現れた。御成敗式目には、落ち度のない前の妻に与えた土地を**離別後に取り返せない**という規定があった。",
+          "keywords": [
+            "自分の財産",
+            "地頭や御家人",
+            "離別後に取り返せない"
+          ],
+          "evidence": [
+            "women-property",
+            "women-positions",
+            "former-wife-land"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「御成敗式目」について説明せよ。",
+          "answer": "1232年、日本で**北条泰時(ほうじょうやすとき)**が定めた**御成敗式目(ごせいばいしきもく)**は、**武家社会の慣習や頼朝以来の判例**を成文化した武家法だった。守護・地頭・御家人の**権利義務**、**所領相続**、**裁判の基準**などを定め、幕府が御家人を統率する基準となった。女性も領地と**自分の財産**を持つ例や**地頭や御家人**となる例があり、落ち度のない前の妻に与えた土地を**離別後に取り返せない**規定があった。",
+          "keywords": [
+            "北条泰時",
+            "御成敗式目",
+            "武家社会の慣習や頼朝以来の判例",
+            "権利義務",
+            "所領相続",
+            "裁判の基準",
+            "自分の財産",
+            "地頭や御家人",
+            "離別後に取り返せない"
+          ],
+          "evidence": [
+            "law-author",
+            "law-date-name",
+            "law-foundation",
+            "law-persons",
+            "law-inheritance-judgment",
+            "law-control",
+            "women-property",
+            "women-positions",
+            "former-wife-land"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "北条時頼と皇族将軍",
+      "reading": "ほうじょうときよりとこうぞくしょうぐん",
+      "category": "政治・朝廷と幕府",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1247〜1252年",
+        "sortYear": 1247
+      },
+      "explanation": "時頼の時期には三浦氏が滅ぼされ、北条氏の力が強まった。宗尊親王を迎えた皇族将軍のもとでも将軍の地位は名目的で、実権が将軍に戻ったわけではなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1247年の日本で、北条氏が三浦氏を攻めて滅亡させた戦いを何というか。",
+          "answer": "**宝治合戦(ほうじかっせん)**。",
+          "keywords": [
+            "宝治合戦"
+          ],
+          "evidence": [
+            "hoji-year",
+            "hoji-name-outcome"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、宝治合戦(ほうじかっせん)を行った五代執権は誰か。",
+          "answer": "**北条時頼(ほうじょうときより)**。",
+          "keywords": [
+            "北条時頼"
+          ],
+          "evidence": [
+            "tokiyori-office",
+            "hoji-tokiyori"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の北条時頼と皇族将軍について、1252年に将軍として迎えられた皇子は誰か。",
+          "answer": "**宗尊親王(むねたかしんのう)**。",
+          "keywords": [
+            "宗尊親王"
+          ],
+          "evidence": [
+            "imperial-general-1252"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本の北条時頼と皇族将軍について、当時の将軍の地位は実権の面でどのような状態だったか。",
+          "answer": "**名目的な地位で、実権はなかった**。",
+          "keywords": [
+            "名目的な地位で、実権はなかった"
+          ],
+          "evidence": [
+            "nominal-generals"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の北条時頼と皇族将軍について、宝治合戦(ほうじかっせん)では何が起きたか。",
+          "answer": "1247年の日本で、執権の**北条時頼(ほうじょうときより)**は**三浦氏**を攻めて滅亡させた。この戦いを**宝治合戦(ほうじかっせん)**という。",
+          "keywords": [
+            "北条時頼",
+            "三浦氏",
+            "宝治合戦"
+          ],
+          "evidence": [
+            "tokiyori-office",
+            "hoji-year",
+            "hoji-tokiyori"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の北条時頼と皇族将軍について、皇族将軍はどのように実現し、将軍の地位はどうなっていたか。",
+          "answer": "1252年に北条時頼は**宗尊親王(むねたかしんのう)**を将軍に迎え、**皇族将軍**の道が開かれた。当時すでに将軍は**名目的な地位で、実権はなかった**。",
+          "keywords": [
+            "宗尊親王",
+            "皇族将軍",
+            "名目的な地位で、実権はなかった"
+          ],
+          "evidence": [
+            "imperial-general-1252",
+            "imperial-generals-name",
+            "nominal-generals"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「北条時頼と皇族将軍」について説明せよ。",
+          "answer": "1247年の日本で、執権の**北条時頼(ほうじょうときより)**は**三浦氏**を滅ぼす**宝治合戦(ほうじかっせん)**を行った。1252年には**宗尊親王(むねたかしんのう)**を将軍に迎えて**皇族将軍**の道を開いたが、将軍はすでに**名目的な地位で、実権はなかった**。",
+          "keywords": [
+            "北条時頼",
+            "三浦氏",
+            "宝治合戦",
+            "宗尊親王",
+            "皇族将軍",
+            "名目的な地位で、実権はなかった"
+          ],
+          "evidence": [
+            "tokiyori-office",
+            "hoji-year",
+            "hoji-tokiyori",
+            "imperial-general-1252",
+            "imperial-generals-name",
+            "nominal-generals"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "得宗専制政治",
+      "reading": "とくそうせんせいせいじ",
+      "category": "制度・政治の変化",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "鎌倉時代（12世紀末〜14世紀前半）",
+        "sortYear": 1192
+      },
+      "explanation": "北条氏の嫡流である得宗家へ権力が集中し、合議制をとっていた執権政治は得宗家による専制政治へ変化した。得宗家の直属の家臣は御内人と呼ばれた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、北条氏の嫡流(ちゃくりゅう)として家督を相続した家を何というか。",
+          "answer": "**得宗家(とくそうけ)**。",
+          "keywords": [
+            "得宗家"
+          ],
+          "evidence": [
+            "tokusou-family"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、合議制の執権政治から、北条氏の嫡流(ちゃくりゅう)の家に権力が集中する政治へ移行した体制を何というか。",
+          "answer": "**得宗専制政治(とくそうせんせいせいじ)**。",
+          "keywords": [
+            "得宗専制政治"
+          ],
+          "evidence": [
+            "tokusou-political-change"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "鎌倉時代の日本で、北条得宗家の直属の家臣を何というか。",
+          "answer": "**御内人(みうちびと)**。",
+          "keywords": [
+            "御内人"
+          ],
+          "evidence": [
+            "miuchibito"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の得宗専制政治について、得宗家とその家臣の関係を説明せよ。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代に、北条氏の**嫡流(ちゃくりゅう)で家督を相続する家**である**得宗家(とくそうけ)**へ、**北条時宗(ほうじょうときむね)**の執権期に権力が集中した。得宗家直属の家臣は**御内人(みうちびと)**と呼ばれた。",
+          "keywords": [
+            "嫡流で家督を相続する家",
+            "得宗家",
+            "北条時宗",
+            "御内人"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "tokusou-family",
+            "tokusou-power",
+            "miuchibito"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "鎌倉時代の日本の得宗専制政治について、政治の仕組みはどのように変わったか。",
+          "answer": "**合議制の執権政治**から、北条**得宗家(とくそうけ)**による専制政治へ移行した。これを**得宗専制政治(とくそうせんせいせいじ)**という。",
+          "keywords": [
+            "合議制の執権政治",
+            "得宗家",
+            "得宗専制政治"
+          ],
+          "evidence": [
+            "tokusou-political-change"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "鎌倉時代の日本の「得宗専制政治」について説明せよ。",
+          "answer": "12世紀末〜14世紀前半の日本の鎌倉時代に、北条氏の**嫡流(ちゃくりゅう)で家督を相続する家**である**得宗家(とくそうけ)**へ、**北条時宗(ほうじょうときむね)**の執権期に権力が集中した。得宗家直属の家臣は**御内人(みうちびと)**と呼ばれ、**合議制の執権政治**から、得宗家による**得宗専制政治(とくそうせんせいせいじ)**へ移行した。",
+          "keywords": [
+            "嫡流で家督を相続する家",
+            "得宗家",
+            "北条時宗",
+            "御内人",
+            "合議制の執権政治",
+            "得宗専制政治"
+          ],
+          "evidence": [
+            "kamakura-era-start",
+            "kamakura-era-end",
+            "tokusou-family",
+            "tokusou-power",
+            "miuchibito",
+            "tokusou-political-change"
+          ],
+          "acceptedAnswers": [],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 2,
+    "title": "第2章 古代"
+  },
+  "section": {
+    "number": 1,
+    "title": "大和時代（古墳時代）"
+  },
+  "part": {
+    "number": 5,
+    "title": "世界最大の墓は仁徳天皇陵"
+  },
+  "integrationPromptPrefix": "古墳時代の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第2章_01節_05_世界最大の墓は仁徳天皇陵_原文抜粋.md",
+    "originalFile": "sources/kokushi/2_古代.md",
+    "pages": [
+      54,
+      64,
+      65
+    ],
+    "note": "64頁の図版とホ本文、65頁ヘ見出し前の続き・考察欄、関連54～55頁と115～118頁のまとめ・年表を最後まで読んだ。短い本文の情報量に合わせて、古墳の巨大化と大和から河内への築造地の移動、５世紀という時期、大仙陵古墳の前方後円墳という形と現在の所在地を１学習項目にまとめる。54頁は大和（奈良県）・河内（大阪府）の地理と同じ古墳築造の文脈の補助だけに用い、別の王権起源・鏡・副葬品の問題は加えない。時期専用問題を初期設定で除いても、通常の逆向き説明で５世紀を先に扱う。小項目名に仁徳天皇陵が出るため、それだけを答える名称問題を作らず、大仙陵古墳の呼称は遺跡の同定補助とする。名称から被葬者が確定しているとは扱わない。墳丘の長さ・高さ・体積・埴輪数・工期・動員数・試算費用、世界最大や他国との順位・優劣、ピラミッドや現代建造物との比較、現在の世界遺産状況は出題しない。年表の空欄から新しい名称・年代・築造者を補わない。"
+  },
+  "facts": [
+    {
+      "id": "daisen-example-location",
+      "page": 64,
+      "quote": "その最たるものが仁徳天皇陵（大仙陵古墳・大阪府堺市）です。"
+    },
+    {
+      "id": "giant-shape",
+      "page": 64,
+      "quote": "前方後円墳が最も巨大化し、"
+    },
+    {
+      "id": "giant-period",
+      "page": 64,
+      "quote": "五世紀になると、前方後円墳が最も巨大化し、"
+    },
+    {
+      "id": "building-center",
+      "page": 64,
+      "quote": "その築造地も大和から河内に移動します。"
+    },
+    {
+      "id": "yamato-location",
+      "page": 54,
+      "quote": "大和（奈良県）を本拠とした勢力をヤマト王権といい、"
+    },
+    {
+      "id": "kawachi-location",
+      "page": 54,
+      "quote": "大和と河内（大阪府）を中心とする近畿地方"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "古墳の巨大化と築造地の変化",
+      "reading": "こふんのきょだいかとちくぞうちのへんか",
+      "category": "古墳築造と地域の移動",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "5世紀",
+        "sortYear": 450
+      },
+      "explanation": "５世紀には前方後円墳(ぜんぽうこうえんふん)が最も巨大化し、築造の中心が大和(やまと)から河内(かわち)へ移った。大阪府堺市(さかいし)にある大仙陵古墳(だいせんりょうこふん)は、その巨大化を示す前方後円墳の例である。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "場所の確認",
+          "prompt": "古墳時代の日本の古墳の巨大化と築造地の変化に関して、大仙陵古墳(だいせんりょうこふん)の現在の所在地はどこか。",
+          "answer": "**大阪府堺市(さかいし)**。",
+          "keywords": [
+            "大阪府堺市"
+          ],
+          "evidence": [
+            "daisen-example-location"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "古墳時代の日本の古墳の巨大化と築造地の変化に関して、大仙陵古墳(だいせんりょうこふん)は何という形式の古墳か。",
+          "answer": "**前方後円墳(ぜんぽうこうえんふん)**。",
+          "keywords": [
+            "前方後円墳"
+          ],
+          "evidence": [
+            "giant-shape",
+            "daisen-example-location"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "place",
+          "form": "場所の確認",
+          "prompt": "古墳時代の日本の古墳の巨大化と築造地の変化に関して、巨大な古墳の築造の中心はどの地域からどの地域へ移ったか。",
+          "answer": "**大和(やまと)（奈良県）から河内(かわち)（大阪府）**へ移った。",
+          "keywords": [
+            "大和（奈良県）から河内（大阪府）"
+          ],
+          "evidence": [
+            "building-center",
+            "yamato-location",
+            "kawachi-location"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "時期の確認",
+          "prompt": "日本の古墳の巨大化と築造地の変化に関して、前方後円墳(ぜんぽうこうえんふん)が最も巨大化し、築造の中心が河内(かわち)へ移ったのは何世紀か。",
+          "answer": "5世紀。",
+          "keywords": [],
+          "evidence": [
+            "giant-period",
+            "building-center"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "古墳時代の日本の古墳の巨大化と築造地の変化には、どのような傾向が見られたか。",
+          "answer": "5世紀の日本では**前方後円墳(ぜんぽうこうえんふん)**が最も巨大化し、築造の中心が**大和(やまと)（奈良県）から河内(かわち)（大阪府）**へ移った。巨大な古墳の例が**大仙陵古墳(だいせんりょうこふん)**である。",
+          "keywords": [
+            "前方後円墳",
+            "大和（奈良県）から河内（大阪府）",
+            "大仙陵古墳"
+          ],
+          "evidence": [
+            "giant-period",
+            "building-center",
+            "yamato-location",
+            "kawachi-location",
+            "daisen-example-location"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古墳時代の日本の「古墳の巨大化と築造地の変化」について説明せよ。",
+          "answer": "5世紀の日本では**前方後円墳(ぜんぽうこうえんふん)**が最も巨大化し、築造の中心が**大和(やまと)（奈良県）から河内(かわち)（大阪府）**へ移った。**大阪府堺市(さかいし)**にある**大仙陵古墳(だいせんりょうこふん)**は、その巨大化を示す前方後円墳の例である。",
+          "keywords": [
+            "前方後円墳",
+            "大和（奈良県）から河内（大阪府）",
+            "大阪府堺市",
+            "大仙陵古墳"
+          ],
+          "evidence": [
+            "giant-period",
+            "building-center",
+            "yamato-location",
+            "kawachi-location",
+            "daisen-example-location"
+          ]
+        }
+      ]
+    }
+  ]
+}

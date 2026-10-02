@@ -182,6 +182,7 @@ try {
   assert.equal(await picker(5).locator("summary").textContent(), `第5章のパート：0 / ${groups.find(group => group.number === 5).decks.length}パート`);
   assert.equal(await picker(4).locator("summary").textContent(), `第4章のパート：0 / ${groups.find(group => group.number === 4).decks.length}パート`);
   assert.equal(await picker(3).locator("summary").textContent(), `第3章のパート：0 / ${groups.find(group => group.number === 3).decks.length}パート`);
+  assert.equal(await picker(2).locator("summary").textContent(), `第2章のパート：0 / ${groups.find(group => group.number === 2).decks.length}パート`);
   await assertSummary(defaultTerms);
   assert.equal(await page.locator("#question-style-filter").inputValue(), "");
   assert.equal(await page.locator("#question-type-field").isVisible(), true);

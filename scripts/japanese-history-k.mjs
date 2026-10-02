@@ -24,9 +24,9 @@ const integrationPrefix = (bank, unit) => unit?.integrationPromptPrefix ?? bank.
 export function validateJapaneseKBank(bank, excerpt) {
   assert.equal(bank.schemaVersion, 2);
   assert.equal(bank.subjectId, japaneseKSubjectId);
-  assert.ok([3, 4, 5, 6].includes(bank.chapter.number));
-  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第3～5章では占領期以外の適切な出題文を指定してください。");
-  assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= (bank.chapter.number === 5 ? 4 : 2));
+  assert.ok([2, 3, 4, 5, 6].includes(bank.chapter.number));
+  assert.ok(bank.chapter.number === 6 || bank.integrationPromptPrefix, "第2～5章では占領期以外の適切な出題文を指定してください。");
+  assert.ok(Number.isInteger(bank.section.number) && bank.section.number >= 1 && bank.section.number <= ([2, 5].includes(bank.chapter.number) ? 4 : 2));
   assert.ok(Number.isInteger(bank.part.number) && bank.part.number > 0 && bank.part.number < partLetters.length);
   assert.ok(integrationPrefix(bank) && bank.source.file && bank.source.originalFile);
   const pages = new Map([...excerpt.matchAll(/^## (\d+)\s*\n([\s\S]*?)(?=^## \d+\s*$|$(?![\s\S]))/gm)].map(match => [Number(match[1]), normalize(match[2])]));
@@ -60,7 +60,8 @@ export function validateJapaneseKBank(bank, excerpt) {
       assert.ok(!questionIds.has(id), `問題番号が重複しています: ${id}`); questionIds.add(id);
       assert.ok(!prompts.has(normalize(question.prompt)), `問題文が重複しています: ${id}`); prompts.add(normalize(question.prompt));
       assert.ok(types.has(question.type) && question.prompt && question.answer && question.form, `問題の必須項目が不足しています: ${id}`);
-      assert.ok(!/原文|本文|本書|この章|本章|前述|上記|前の問題/.test(question.prompt), `元資料や別の問題に依存しています: ${id}`);
+      const independentPrompt = question.prompt.replaceAll("日本書紀", "");
+      assert.ok(!/原文|本文|本書|この章|本章|前述|上記|前の問題/.test(independentPrompt), `元資料や別の問題に依存しています: ${id}`);
       assert.equal(["reverse", "integrated"].includes(question.type) ? question.type : "beginner", question.stage, `種類と段階が一致しません: ${id}`);
       assert.ok(question.evidence?.length && question.evidence.every(evidence => facts.has(evidence)), `原文の根拠が不足しています: ${id}`);
       assert.deepEqual(question.keywords, answerKeywords(question.answer), `重要語と強調が一致しません: ${id}`);
@@ -157,7 +158,7 @@ export async function loadJapaneseHistoryK() {
 // 作成用原稿を読み込む。本番の既存問題は公開処理でCloudflareから別途取得する。
 export async function loadJapaneseKAdditions() {
   const directory = path.join(root, "data/source/japanese-history-k");
-  const names = (await readdir(directory)).filter(name => /^(?:03|04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
+  const names = (await readdir(directory)).filter(name => /^(?:02|03|04|05|06)-\d{2}-\d{2}\.json$/.test(name) && name !== "06-01-01.json").sort();
   return Promise.all(names.map(async name => {
     const bank = JSON.parse(await readFile(path.join(directory, name), "utf8"));
     assert.equal(name, `${partCode(bank)}.json`, "原稿名と小項目の番号が一致しません。");

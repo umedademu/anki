@@ -1,0 +1,1356 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 3,
+    "title": "大正時代"
+  },
+  "part": {
+    "number": 4,
+    "title": "大戦終結と国際協調"
+  },
+  "integrationPromptPrefix": "第一次世界大戦後の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_03節_04_大戦終結と国際協調_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      341,
+      342,
+      343,
+      344
+    ],
+    "note": "341頁ニ見出しから344頁ホ見出し直前までの本文・関連コラム・注⑧⑨、国際連盟委員会と南洋諸島の図表、343頁の条約一覧・軍縮表を全て確認。1918年の十四カ条発表と大戦終結、1919年のパリ講和、1920年の連盟設立を区別し、年号問題を除いた通常B/Rでも統合の時期を学べる構成とした。1919年は本文の1918年の翌年から導く。ベルサイユ条約の全戦争責任をドイツに押し付けたという評価や第二次世界大戦の単独原因という単純化、列強・人種・国家の優劣を正答にしない。民族自決を東欧の全ての国家の唯一の原因とせず、個々の国の独立を1919年に固定しない。国際連盟の仕組みと日本の役割・提案は別の項目に分けた。日本の人種差別撤廃の提案を世界初とする断定は扱わず、規約提案と結果・移民排斥問題との関係を史実の記述として扱う。南洋諸島の現在の国家名、細かな島・経度、南洋庁の年、後の原爆投下の航空史、参加国数や条約の月日は出題しない。ワシントン会議は1921年の開催と1922年の九カ国・山東関係の条約を分け、日英同盟の失効日を1921年に固定しない。日本の山東旧ドイツ権益の返還は同会議で定められた中国関係の内容として扱い、薄い条約名称だけの別項目を設けない。ワシントン軍縮は主力艦の英米日5：5：3と日本の交渉に必要な7割・加藤友三郎のみを扱い、主力艦に航空母艦を含めた条約一覧の誤分類、排水量・建造禁止の年数・仏伊の細比率は問わない。ジュネーブ・ロンドン軍縮は各一行しかなく情報の水増しを避けて別出題を見送り、パリ不戦条約は戦争放棄と自衛戦争の例外という制度の理解を中心にした。1928年は原資料にある関連条約であり、大正時代内に発生したと限定しない。"
+  },
+  "facts": [
+    {
+      "id": "fourteen-name",
+      "page": 342,
+      "quote": "「十四カ条」の平和原則を発表した。"
+    },
+    {
+      "id": "wilson-president",
+      "page": 342,
+      "quote": "アメリカの第28代大統領のウィルソンは、"
+    },
+    {
+      "id": "fourteen-year",
+      "page": 342,
+      "quote": "大正7年（1918）1月に"
+    },
+    {
+      "id": "self-determination",
+      "page": 342,
+      "quote": "各民族はその政治的運命を自ら決定する権利を持つという民族自決の原則、"
+    },
+    {
+      "id": "fourteen-policies",
+      "page": 342,
+      "quote": "徹底した軍備の縮小、国際平和機構の創設"
+    },
+    {
+      "id": "eastern-europe",
+      "page": 343,
+      "quote": "東欧に多くの国家が誕生した。"
+    },
+    {
+      "id": "non-application",
+      "page": 343,
+      "quote": "しかし、アジアやアフリカには民族自決の原則は適用されなかった。"
+    },
+    {
+      "id": "war-end",
+      "page": 341,
+      "quote": "大正七年（一九一八）、連合国陣営の勝利で第一次世界大戦が終結し、"
+    },
+    {
+      "id": "peace-next-year",
+      "page": 341,
+      "quote": "翌年に⑧**パリ講和会議**が開かれ"
+    },
+    {
+      "id": "peace-name",
+      "page": 341,
+      "quote": "**パリ講和会議**が開かれ"
+    },
+    {
+      "id": "versailles-name",
+      "page": 341,
+      "quote": "**ベルサイユ条約**が締結されました。"
+    },
+    {
+      "id": "treaty-parties",
+      "page": 342,
+      "quote": "ベルサイユ条約はドイツと連合国の間で締結された。"
+    },
+    {
+      "id": "saionji",
+      "page": 342,
+      "quote": "日本からは主席全権として西園寺公望が参加した。"
+    },
+    {
+      "id": "german-territories",
+      "page": 341,
+      "quote": "ドイツはすべての植民地と本国の一部を失い、"
+    },
+    {
+      "id": "german-armaments",
+      "page": 341,
+      "quote": "軍備を制限され、"
+    },
+    {
+      "id": "german-indemnity",
+      "page": 341,
+      "quote": "巨額の賠償金が課されました。"
+    },
+    {
+      "id": "versailles-order",
+      "page": 343,
+      "quote": "パリ講和会議によってできた国際秩序をベルサイユ体制という。"
+    },
+    {
+      "id": "league-name",
+      "page": 344,
+      "quote": "**国際連盟**が設立され、"
+    },
+    {
+      "id": "league-year",
+      "page": 344,
+      "quote": "大正九年（一九二〇）に"
+    },
+    {
+      "id": "league-purpose",
+      "page": 344,
+      "quote": "アメリカのウィルソン大統領の提起により、世界平和と国際協調を達成するための組織として"
+    },
+    {
+      "id": "league-headquarters",
+      "page": 344,
+      "quote": "スイスのジュネーブに本部を置いて、発足しました。"
+    },
+    {
+      "id": "us-nonmembership",
+      "page": 344,
+      "quote": "国際連盟の提案国であるアメリカが、自国の議会での反対を受けて、国際連盟に加入することができず、"
+    },
+    {
+      "id": "league-permanent",
+      "page": 344,
+      "quote": "日本、イギリス、フランス、イタリアを常任理事国として、"
+    },
+    {
+      "id": "nitobe",
+      "page": 344,
+      "quote": "**新渡戸稲造**が事務局次長に就任しました。"
+    },
+    {
+      "id": "mandate",
+      "page": 344,
+      "quote": "ドイツが植民地支配していた太平洋の南洋諸島は、国際連盟から委任され、日本の委任統治になりました。"
+    },
+    {
+      "id": "racial-proposal",
+      "page": 344,
+      "quote": "我が国は人種差別撤廃を規約に盛り込むように提案しました。"
+    },
+    {
+      "id": "migration-problem",
+      "page": 344,
+      "quote": "アメリカやカナダなどで起きた日系移民排斥問題を解決するきっかけを作ることがその意図でしたが、"
+    },
+    {
+      "id": "proposal-rejected",
+      "page": 344,
+      "quote": "盛り込まれることはありませんでした。"
+    },
+    {
+      "id": "unanimity",
+      "page": 344,
+      "quote": "賛成多数ながらも全会一致を要する案件とされたため、"
+    },
+    {
+      "id": "washington-name",
+      "page": 344,
+      "quote": "⑨**ワシントン会議**が開かれて、"
+    },
+    {
+      "id": "washington-year-call",
+      "page": 344,
+      "quote": "大正十年（一九二一）にはアメリカの呼びかけにより、"
+    },
+    {
+      "id": "four-power-name",
+      "page": 343,
+      "quote": "四カ国条約"
+    },
+    {
+      "id": "pacific-status",
+      "page": 343,
+      "quote": "太平洋の現状維持を決めた条約。"
+    },
+    {
+      "id": "anglo-japan-expiry",
+      "page": 343,
+      "quote": "これにより日英同盟は失効した。"
+    },
+    {
+      "id": "nine-power-name",
+      "page": 343,
+      "quote": "九カ国条約"
+    },
+    {
+      "id": "nine-power-year",
+      "page": 343,
+      "quote": "九カ国条約（1922.2）"
+    },
+    {
+      "id": "nine-power-policy",
+      "page": 343,
+      "quote": "中国の領土と主権を尊重し、門戸開放、機会均等などを定めた。"
+    },
+    {
+      "id": "shandong-year",
+      "page": 343,
+      "quote": "山東懸案解決条約（1922.2）"
+    },
+    {
+      "id": "shandong-return",
+      "page": 343,
+      "quote": "日本が獲得した山東半島の旧ドイツ権益を中国に返還。"
+    },
+    {
+      "id": "washington-order",
+      "page": 344,
+      "quote": "アジア太平洋地域の国際秩序が定められた。その体制をワシントン体制という。"
+    },
+    {
+      "id": "japan-us-accord",
+      "page": 344,
+      "quote": "日本は米国に協調する路線をとった。"
+    },
+    {
+      "id": "naval-treaty-name",
+      "page": 344,
+      "quote": "ワシントン海軍軍縮条約"
+    },
+    {
+      "id": "naval-year",
+      "page": 343,
+      "quote": "ワシントン海軍軍縮条約（1922）"
+    },
+    {
+      "id": "naval-limit",
+      "page": 343,
+      "quote": "軍艦の保有量制限"
+    },
+    {
+      "id": "capital-ship-column",
+      "page": 343,
+      "quote": "|  | 主力艦（1万t〜3.5万t） | 比率 |"
+    },
+    {
+      "id": "british-ratio",
+      "page": 343,
+      "quote": "| イギリス | 52万5,000t | 5 |"
+    },
+    {
+      "id": "us-ratio",
+      "page": 343,
+      "quote": "| アメリカ | 52万5,000t | 5 |"
+    },
+    {
+      "id": "japan-ratio",
+      "page": 343,
+      "quote": "| 日本 | 31万5,000t | 3 |"
+    },
+    {
+      "id": "kato",
+      "page": 343,
+      "quote": "日本は対英米の7割を強く求めたが、全権・加藤友三郎は調印に踏み切った。"
+    },
+    {
+      "id": "paris-nonwar-name",
+      "page": 343,
+      "quote": "パリ不戦条約が締結され、"
+    },
+    {
+      "id": "paris-nonwar-year",
+      "page": 343,
+      "quote": "後の昭和3年（1928）、"
+    },
+    {
+      "id": "paris-nonwar-sponsors",
+      "page": 343,
+      "quote": "米国とフランスの提唱で"
+    },
+    {
+      "id": "war-renunciation",
+      "page": 343,
+      "quote": "国際紛争解決のための戦争の否定と国家の政策の手段としての戦争の放棄を宣言した条約。"
+    },
+    {
+      "id": "self-defense-exception",
+      "page": 343,
+      "quote": "同条約では戦争を違法とし、紛争は平和的に解決するものとしたが、自衛戦争は禁止されなかった。"
+    },
+    {
+      "id": "racial-proposal-timing",
+      "page": 344,
+      "quote": "国際連盟の設立にあたり、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "十四カ条と民族自決",
+      "reading": "じゅうよんかじょうとみんぞくじけつ",
+      "category": "平和原則・民族自決",
+      "geographyLabel": "アメリカ",
+      "integrationPromptPrefix": "第一次世界大戦期と戦後の世界の",
+      "chronology": {
+        "displayPeriod": "1918年の平和原則と大戦後の適用",
+        "sortYear": 1918
+      },
+      "explanation": "十四カ条は民族自決、軍備の縮小、国際平和機構の創設を掲げた。大戦後の東欧には多くの国家が誕生した一方、アジア・アフリカには民族自決の原則が適用されなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "発表された平和原則",
+          "prompt": "第一次世界大戦中、アメリカ大統領が発表した平和原則は何か。",
+          "answer": "**十四カ条**。",
+          "keywords": [
+            "十四カ条"
+          ],
+          "evidence": [
+            "fourteen-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "各民族が運命を決める原則",
+          "prompt": "第一次世界大戦中、アメリカの十四カ条に含まれた、各民族が政治的運命を自ら決定する権利を認める原則は何か。",
+          "answer": "**民族自決**。",
+          "keywords": [
+            "民族自決"
+          ],
+          "evidence": [
+            "self-determination"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "平和原則の提案者",
+          "prompt": "第一次世界大戦中、十四カ条と民族自決を掲げる平和原則を発表したアメリカ大統領は誰か。",
+          "answer": "**ウィルソン**。",
+          "keywords": [
+            "ウィルソン"
+          ],
+          "evidence": [
+            "wilson-president"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "平和原則発表の年",
+          "prompt": "第一次世界大戦中の十四カ条と民族自決について、アメリカが十四カ条の平和原則を発表したのは何年か。",
+          "answer": "1918年。",
+          "keywords": [],
+          "evidence": [
+            "fourteen-year",
+            "fourteen-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "提案の内容",
+          "prompt": "第一次世界大戦中、アメリカの十四カ条と民族自決はどのような平和原則だったか。",
+          "answer": "アメリカの**ウィルソン**は**1918年**に**十四カ条**を発表した。各民族が**政治的運命を自ら決定する権利**を持つという**民族自決**のほか、**軍備の縮小**と**国際平和機構の創設**を掲げた。",
+          "keywords": [
+            "ウィルソン",
+            "1918年",
+            "十四カ条",
+            "政治的運命を自ら決定する権利",
+            "民族自決",
+            "軍備の縮小",
+            "国際平和機構の創設"
+          ],
+          "evidence": [
+            "wilson-president",
+            "fourteen-year",
+            "fourteen-name",
+            "self-determination",
+            "fourteen-policies"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "民族自決の適用の地域差",
+          "prompt": "第一次世界大戦後、十四カ条と民族自決の原則は地域によってどのように適用されたか。",
+          "answer": "大戦後の**東欧には多くの国家が誕生**した。一方、**アジアやアフリカには民族自決の原則が適用されなかった**。",
+          "keywords": [
+            "東欧には多くの国家が誕生",
+            "アジアやアフリカには民族自決の原則が適用されなかった"
+          ],
+          "evidence": [
+            "eastern-europe",
+            "non-application"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦期と戦後の世界の「十四カ条と民族自決」について説明せよ。",
+          "answer": "アメリカの**ウィルソン**は**1918年**に**十四カ条**を発表し、各民族が**政治的運命を自ら決定する権利**を持つという**民族自決**、**軍備の縮小**、**国際平和機構の創設**を掲げた。大戦後の**東欧には多くの国家が誕生**した一方、**アジアやアフリカには民族自決の原則が適用されなかった**。",
+          "keywords": [
+            "ウィルソン",
+            "1918年",
+            "十四カ条",
+            "政治的運命を自ら決定する権利",
+            "民族自決",
+            "軍備の縮小",
+            "国際平和機構の創設",
+            "東欧には多くの国家が誕生",
+            "アジアやアフリカには民族自決の原則が適用されなかった"
+          ],
+          "evidence": [
+            "wilson-president",
+            "fourteen-year",
+            "fourteen-name",
+            "self-determination",
+            "fourteen-policies",
+            "eastern-europe",
+            "non-application"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "パリ講和会議とベルサイユ条約",
+      "reading": "ぱりこうわかいぎとべるさいゆじょうやく",
+      "category": "講和・国際秩序",
+      "geographyLabel": "ドイツ",
+      "integrationPromptPrefix": "第一次世界大戦後の欧州の",
+      "chronology": {
+        "displayPeriod": "1918年の終戦と1919年の講和",
+        "sortYear": 1919
+      },
+      "explanation": "第一次世界大戦の終結後、パリ講和会議でベルサイユ条約が結ばれた。敗戦国ドイツには領土の喪失、軍備の制限、賠償金が課され、戦後の国際秩序が形成された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "大戦後の講和会議",
+          "prompt": "第一次世界大戦の終結後、連合国が戦後処理のために開いた講和会議は何か。",
+          "answer": "**パリ講和会議**。",
+          "keywords": [
+            "パリ講和会議"
+          ],
+          "evidence": [
+            "peace-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "ドイツとの講和条約",
+          "prompt": "第一次世界大戦後、パリ講和会議でドイツと連合国の間に結ばれた講和条約は何か。",
+          "answer": "**ベルサイユ条約**。",
+          "keywords": [
+            "ベルサイユ条約"
+          ],
+          "evidence": [
+            "versailles-name",
+            "treaty-parties"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "日本の主席全権",
+          "prompt": "第一次世界大戦後のパリ講和会議とベルサイユ条約について、日本から主席全権として参加した人物は誰か。",
+          "answer": "**西園寺公望(さいおんじきんもち)**。",
+          "keywords": [
+            "西園寺公望"
+          ],
+          "evidence": [
+            "saionji"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "ドイツの軍備への措置",
+          "prompt": "第一次世界大戦後のパリ講和会議とベルサイユ条約で、敗戦国ドイツの軍備はどのように扱われたか。",
+          "answer": "**制限された**。",
+          "keywords": [
+            "制限された"
+          ],
+          "evidence": [
+            "german-armaments"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "ドイツに課された金銭負担",
+          "prompt": "第一次世界大戦後のパリ講和会議とベルサイユ条約で、敗戦国ドイツに課された大きな金銭的負担は何か。",
+          "answer": "**巨額の賠償金**。",
+          "keywords": [
+            "巨額の賠償金"
+          ],
+          "evidence": [
+            "german-indemnity"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "講和会議の年",
+          "prompt": "第一次世界大戦後のパリ講和会議とベルサイユ条約について、パリ講和会議が開かれたのは何年か。",
+          "answer": "1919年。",
+          "keywords": [],
+          "evidence": [
+            "war-end",
+            "peace-next-year"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦後秩序の名称",
+          "prompt": "第一次世界大戦後、パリ講和会議によってできた国際秩序を何というか。",
+          "answer": "**ベルサイユ体制**。",
+          "keywords": [
+            "ベルサイユ体制"
+          ],
+          "evidence": [
+            "versailles-order"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "終戦から講和への流れ",
+          "prompt": "第一次世界大戦後、パリ講和会議とベルサイユ条約はどのような流れで成立したか。",
+          "answer": "**1918年**に連合国の勝利で大戦が終結し、**1919年**に**パリ講和会議**が開かれ、**ドイツと連合国**の間で**ベルサイユ条約**が結ばれた。日本からは主席全権として**西園寺公望(さいおんじきんもち)**が参加した。この会議によってできた国際秩序は**ベルサイユ体制**と呼ばれた。",
+          "keywords": [
+            "1918年",
+            "1919年",
+            "パリ講和会議",
+            "ドイツと連合国",
+            "ベルサイユ条約",
+            "西園寺公望",
+            "ベルサイユ体制"
+          ],
+          "evidence": [
+            "war-end",
+            "peace-next-year",
+            "peace-name",
+            "versailles-name",
+            "treaty-parties",
+            "saionji",
+            "versailles-order"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "ドイツへの条約内容",
+          "prompt": "第一次世界大戦後のパリ講和会議とベルサイユ条約は、ドイツにどのような内容を課したか。",
+          "answer": "ドイツは**植民地と本国の一部を失い**、**軍備を制限**され、**巨額の賠償金**を課された。",
+          "keywords": [
+            "植民地と本国の一部を失い",
+            "軍備を制限",
+            "巨額の賠償金"
+          ],
+          "evidence": [
+            "german-territories",
+            "german-armaments",
+            "german-indemnity"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後の欧州の「パリ講和会議とベルサイユ条約」について説明せよ。",
+          "answer": "**1918年**に大戦が終結し、**1919年**に**パリ講和会議**が開かれ、日本からは**西園寺公望(さいおんじきんもち)**が主席全権として参加した。**ドイツと連合国**の間で結ばれた**ベルサイユ条約**により、ドイツは**植民地と本国の一部を失い**、**軍備を制限**され、**巨額の賠償金**を課された。この講和会議によってできた国際秩序は**ベルサイユ体制**と呼ばれた。",
+          "keywords": [
+            "1918年",
+            "1919年",
+            "パリ講和会議",
+            "西園寺公望",
+            "ドイツと連合国",
+            "ベルサイユ条約",
+            "植民地と本国の一部を失い",
+            "軍備を制限",
+            "巨額の賠償金",
+            "ベルサイユ体制"
+          ],
+          "evidence": [
+            "war-end",
+            "peace-next-year",
+            "peace-name",
+            "saionji",
+            "treaty-parties",
+            "versailles-name",
+            "german-territories",
+            "german-armaments",
+            "german-indemnity",
+            "versailles-order"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "国際連盟",
+      "reading": "こくさいれんめい",
+      "category": "国際機構",
+      "geographyLabel": "アメリカ",
+      "integrationPromptPrefix": "第一次世界大戦後の世界の",
+      "chronology": {
+        "displayPeriod": "1920年",
+        "sortYear": 1920
+      },
+      "explanation": "世界平和と国際協調のために国際連盟がつくられ、本部はジュネーブに置かれた。提案国アメリカは議会の反対によって加入しなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "国際協調の機構",
+          "prompt": "第一次世界大戦後、世界平和と国際協調のために設立された国際機構は何か。",
+          "answer": "**国際連盟**。",
+          "keywords": [
+            "国際連盟"
+          ],
+          "evidence": [
+            "league-name",
+            "league-purpose"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "本部の所在地",
+          "prompt": "第一次世界大戦後に発足した国際連盟の本部は、どの国のどの都市に置かれたか。",
+          "answer": "**スイスのジュネーブ**。",
+          "keywords": [
+            "スイスのジュネーブ"
+          ],
+          "evidence": [
+            "league-headquarters"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "米国が加入しなかった理由",
+          "prompt": "第一次世界大戦後、アメリカは国際連盟の提案国でありながら、なぜ加入できなかったか。",
+          "answer": "**自国の議会の反対**を受けたため。",
+          "keywords": [
+            "自国の議会の反対"
+          ],
+          "evidence": [
+            "us-nonmembership"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "設立年",
+          "prompt": "第一次世界大戦後の国際連盟が設立されたのは何年か。",
+          "answer": "1920年。",
+          "keywords": [],
+          "evidence": [
+            "league-year",
+            "league-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "設立の目的と構成",
+          "prompt": "第一次世界大戦後の国際連盟は、どのような国際機構として発足したか。",
+          "answer": "アメリカの**ウィルソン**の提案により、**世界平和と国際協調**のため、**1920年**に**国際連盟**が設立された。本部は**スイスのジュネーブ**に置かれた。",
+          "keywords": [
+            "ウィルソン",
+            "世界平和と国際協調",
+            "1920年",
+            "国際連盟",
+            "スイスのジュネーブ"
+          ],
+          "evidence": [
+            "league-purpose",
+            "league-year",
+            "league-name",
+            "league-headquarters"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "提案国の参加",
+          "prompt": "第一次世界大戦後の国際連盟へのアメリカの参加はどうなったか。",
+          "answer": "提案国の**アメリカは加入しなかった**。**自国の議会の反対**を受けたためだった。",
+          "keywords": [
+            "アメリカは加入しなかった",
+            "自国の議会の反対"
+          ],
+          "evidence": [
+            "us-nonmembership"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後の世界の「国際連盟」について説明せよ。",
+          "answer": "アメリカの**ウィルソン**の提案により、**世界平和と国際協調**のために**1920年**に**国際連盟**が設立され、本部は**スイスのジュネーブ**に置かれた。提案国の**アメリカは加入しなかった**が、それは**自国の議会の反対**を受けたためだった。",
+          "keywords": [
+            "ウィルソン",
+            "世界平和と国際協調",
+            "1920年",
+            "国際連盟",
+            "スイスのジュネーブ",
+            "アメリカは加入しなかった",
+            "自国の議会の反対"
+          ],
+          "evidence": [
+            "league-purpose",
+            "league-year",
+            "league-name",
+            "league-headquarters",
+            "us-nonmembership"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "国際連盟と日本",
+      "reading": "こくさいれんめいとにほん",
+      "category": "国際機構・日本外交",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "第一次世界大戦後の日本の",
+      "chronology": {
+        "displayPeriod": "1920年の国際連盟発足と日本の役割",
+        "sortYear": 1920
+      },
+      "explanation": "日本は国際連盟の常任理事国となり、新渡戸稲造が事務局次長に就任した。南洋諸島は日本の委任統治になった。日本は国際連盟の設立にあたり人種差別撤廃を規約に盛り込むよう提案したが、規約には採用されなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本の連盟内の地位",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、日本は連盟でどのような地位に就いたか。",
+          "answer": "**常任理事国**。",
+          "keywords": [
+            "常任理事国"
+          ],
+          "evidence": [
+            "league-permanent"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "連盟事務局の日本人",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、事務局次長となった日本人は誰か。",
+          "answer": "**新渡戸稲造(にとべいなぞう)**。",
+          "keywords": [
+            "新渡戸稲造"
+          ],
+          "evidence": [
+            "nitobe"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "南洋諸島の統治の形式",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、旧ドイツ領の南洋諸島は、日本によるどのような統治になったか。",
+          "answer": "国際連盟から委任された**委任統治**。",
+          "keywords": [
+            "委任統治"
+          ],
+          "evidence": [
+            "mandate"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "日本が規約に提案した内容",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、日本が規約に盛り込むよう提案した内容は何か。",
+          "answer": "**人種差別撤廃**。",
+          "keywords": [
+            "人種差別撤廃"
+          ],
+          "evidence": [
+            "racial-proposal"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "規約への反映",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、日本の人種差別撤廃の提案は、規約にどう反映されたか。",
+          "answer": "規約には**盛り込まれなかった**。",
+          "keywords": [
+            "盛り込まれなかった"
+          ],
+          "evidence": [
+            "proposal-rejected"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本の参加と役割",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、日本は連盟とどのように関わったか。",
+          "answer": "**1920年**に設立された国際連盟で、日本は**常任理事国**となり、**新渡戸稲造(にとべいなぞう)**が**事務局次長**に就任した。南洋諸島は、国際連盟から委任された日本の**委任統治**になった。",
+          "keywords": [
+            "1920年",
+            "常任理事国",
+            "新渡戸稲造",
+            "事務局次長",
+            "委任統治"
+          ],
+          "evidence": [
+            "league-year",
+            "league-name",
+            "league-permanent",
+            "nitobe",
+            "mandate"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "人種差別撤廃提案と結果",
+          "prompt": "第一次世界大戦後の国際連盟と日本について、日本の人種差別撤廃の提案はどのような背景と結果を持ったか。",
+          "answer": "日本は国際連盟の設立にあたり、アメリカやカナダなどでの**日系移民排斥問題の解決**を意図して、**人種差別撤廃**を規約に盛り込むよう提案した。**賛成多数**だったが、**全会一致を要する案件とされた**ため、規約には**盛り込まれなかった**。",
+          "keywords": [
+            "日系移民排斥問題の解決",
+            "人種差別撤廃",
+            "賛成多数",
+            "全会一致を要する案件とされた",
+            "盛り込まれなかった"
+          ],
+          "evidence": [
+            "racial-proposal",
+            "migration-problem",
+            "unanimity",
+            "proposal-rejected",
+            "racial-proposal-timing"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後の日本の「国際連盟と日本」について説明せよ。",
+          "answer": "**1920年**に設立された国際連盟で、日本は**常任理事国**となり、**新渡戸稲造(にとべいなぞう)**が**事務局次長**に就任した。南洋諸島は、日本の**委任統治**になった。日本は国際連盟の設立にあたり**日系移民排斥問題の解決**を意図して**人種差別撤廃**を規約に提案したが、**賛成多数**でも**全会一致を要する案件とされた**ため、規約には**盛り込まれなかった**。",
+          "keywords": [
+            "1920年",
+            "常任理事国",
+            "新渡戸稲造",
+            "事務局次長",
+            "委任統治",
+            "日系移民排斥問題の解決",
+            "人種差別撤廃",
+            "賛成多数",
+            "全会一致を要する案件とされた",
+            "盛り込まれなかった"
+          ],
+          "evidence": [
+            "league-year",
+            "league-name",
+            "league-permanent",
+            "nitobe",
+            "mandate",
+            "racial-proposal",
+            "migration-problem",
+            "unanimity",
+            "proposal-rejected",
+            "racial-proposal-timing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "ワシントン会議とアジア太平洋の秩序",
+      "reading": "わしんとんかいぎとあじあたいへいようのちつじょ",
+      "category": "国際会議・外交秩序",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "第一次世界大戦後のアジア太平洋の",
+      "chronology": {
+        "displayPeriod": "1921年の会議と1922年の条約",
+        "sortYear": 1921
+      },
+      "explanation": "ワシントン会議では、太平洋の現状維持、中国の領土・主権の尊重と門戸開放などが定められた。日英同盟は失効し、日本の山東権益の中国への返還も定められた。アジア太平洋の秩序が形成され、日本は米国との協調路線をとった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "米国が呼びかけた会議",
+          "prompt": "第一次世界大戦後、米国の呼びかけにより開かれ、アジア太平洋の国際秩序を定めた会議は何か。",
+          "answer": "**ワシントン会議**。",
+          "keywords": [
+            "ワシントン会議"
+          ],
+          "evidence": [
+            "washington-name",
+            "washington-year-call"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "太平洋の現状維持の条約",
+          "prompt": "第一次世界大戦後、ワシントン会議で太平洋の現状維持を決めた条約は何か。",
+          "answer": "**四カ国条約**。",
+          "keywords": [
+            "四カ国条約"
+          ],
+          "evidence": [
+            "four-power-name",
+            "pacific-status"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "中国の地位に関する条約",
+          "prompt": "第一次世界大戦後、ワシントン会議で中国の領土と主権の尊重、門戸開放、機会均等を定めた条約は何か。",
+          "answer": "**九カ国条約**。",
+          "keywords": [
+            "九カ国条約"
+          ],
+          "evidence": [
+            "nine-power-name",
+            "nine-power-policy"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "会議から生まれた体制",
+          "prompt": "第一次世界大戦後、ワシントン会議によって定められたアジア太平洋地域の国際秩序を何というか。",
+          "answer": "**ワシントン体制**。",
+          "keywords": [
+            "ワシントン体制"
+          ],
+          "evidence": [
+            "washington-order"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "result",
+          "form": "四カ国条約と同盟の変化",
+          "prompt": "第一次世界大戦後のワシントン会議とアジア太平洋の秩序で、四カ国条約の成立により失効した同盟は何か。",
+          "answer": "**日英同盟**。",
+          "keywords": [
+            "日英同盟"
+          ],
+          "evidence": [
+            "four-power-name",
+            "pacific-status",
+            "anglo-japan-expiry"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "会議と太平洋の関係",
+          "prompt": "第一次世界大戦後のワシントン会議とアジア太平洋の秩序では、太平洋の関係はどう変わったか。",
+          "answer": "**1921年**、米国の呼びかけで**ワシントン会議**が開かれた。この会議から成立した**四カ国条約**では**太平洋の現状維持**が定められ、**日英同盟は失効**した。",
+          "keywords": [
+            "1921年",
+            "ワシントン会議",
+            "四カ国条約",
+            "太平洋の現状維持",
+            "日英同盟は失効"
+          ],
+          "evidence": [
+            "washington-year-call",
+            "washington-name",
+            "four-power-name",
+            "pacific-status",
+            "anglo-japan-expiry"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "中国をめぐる条約内容",
+          "prompt": "第一次世界大戦後のワシントン会議とアジア太平洋の秩序では、中国の地位や山東権益はどのように扱われたか。",
+          "answer": "**1922年**の**九カ国条約**で、**中国の領土・主権の尊重**と**門戸開放・機会均等**が定められた。同年、同会議の別の条約で、日本が山東半島で獲得した**旧ドイツ権益の中国への返還**も定められた。",
+          "keywords": [
+            "1922年",
+            "九カ国条約",
+            "中国の領土・主権の尊重",
+            "門戸開放・機会均等",
+            "旧ドイツ権益の中国への返還"
+          ],
+          "evidence": [
+            "nine-power-year",
+            "nine-power-policy",
+            "shandong-year",
+            "shandong-return"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "形成された秩序と日本の路線",
+          "prompt": "第一次世界大戦後のワシントン会議とアジア太平洋の秩序では、どのような国際秩序と日本の外交路線が定まったか。",
+          "answer": "アジア太平洋地域に**ワシントン体制**が定められ、日本は**米国に協調する路線**をとった。",
+          "keywords": [
+            "ワシントン体制",
+            "米国に協調する路線"
+          ],
+          "evidence": [
+            "washington-order",
+            "japan-us-accord"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後のアジア太平洋の「ワシントン会議とアジア太平洋の秩序」について説明せよ。",
+          "answer": "**1921年**に米国の呼びかけで開催された**ワシントン会議**から成立した**四カ国条約**では、**太平洋の現状維持**が定められ、**日英同盟は失効**した。**1922年**には、**九カ国条約**で**中国の領土・主権の尊重**と**門戸開放・機会均等**が定められ、同会議の別の条約では日本が山東半島で獲得した**旧ドイツ権益の中国への返還**も定められた。アジア太平洋地域に**ワシントン体制**が定められ、日本は**米国に協調する路線**をとった。",
+          "keywords": [
+            "1921年",
+            "ワシントン会議",
+            "四カ国条約",
+            "太平洋の現状維持",
+            "日英同盟は失効",
+            "1922年",
+            "九カ国条約",
+            "中国の領土・主権の尊重",
+            "門戸開放・機会均等",
+            "旧ドイツ権益の中国への返還",
+            "ワシントン体制",
+            "米国に協調する路線"
+          ],
+          "evidence": [
+            "washington-year-call",
+            "washington-name",
+            "four-power-name",
+            "pacific-status",
+            "anglo-japan-expiry",
+            "nine-power-year",
+            "nine-power-policy",
+            "shandong-year",
+            "shandong-return",
+            "washington-order",
+            "japan-us-accord"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "ワシントン海軍軍縮条約",
+      "reading": "わしんとんかいぐんぐんしゅくじょうやく",
+      "category": "軍縮・条約",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "第一次世界大戦後の日本と欧米の",
+      "chronology": {
+        "displayPeriod": "1922年",
+        "sortYear": 1922
+      },
+      "explanation": "ワシントン海軍軍縮条約は主力艦の保有量を制限し、英米日を5：5：3の比率とした。日本は対英米7割を求めたが、全権の加藤友三郎は調印に踏み切った。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "主力艦保有量を制限した条約",
+          "prompt": "第一次世界大戦後、ワシントン会議で主力艦の保有量を制限するために結ばれた条約は何か。",
+          "answer": "**ワシントン海軍軍縮条約**。",
+          "keywords": [
+            "ワシントン海軍軍縮条約"
+          ],
+          "evidence": [
+            "naval-treaty-name",
+            "naval-limit",
+            "capital-ship-column"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "主力艦保有の比率",
+          "prompt": "第一次世界大戦後のワシントン海軍軍縮条約で、イギリス・アメリカ・日本の主力艦保有量の比率は、この順にいくつか。",
+          "answer": "**5：5：3**。",
+          "keywords": [
+            "5：5：3"
+          ],
+          "evidence": [
+            "capital-ship-column",
+            "british-ratio",
+            "us-ratio",
+            "japan-ratio"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "調印した日本の全権",
+          "prompt": "第一次世界大戦後のワシントン海軍軍縮条約について、日本の全権として調印に踏み切った人物は誰か。",
+          "answer": "**加藤友三郎(かとうともさぶろう)**。",
+          "keywords": [
+            "加藤友三郎"
+          ],
+          "evidence": [
+            "kato"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "条約締結の年",
+          "prompt": "第一次世界大戦後、日本などがワシントン海軍軍縮条約を締結したのは何年か。",
+          "answer": "1922年。",
+          "keywords": [],
+          "evidence": [
+            "naval-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "軍縮条約の内容",
+          "prompt": "第一次世界大戦後のワシントン海軍軍縮条約は、主力艦に関してどのような内容だったか。",
+          "answer": "**1922年**に結ばれた条約で、イギリス・アメリカ・日本の**主力艦の保有量を5：5：3に制限**した。",
+          "keywords": [
+            "1922年",
+            "主力艦の保有量を5：5：3に制限"
+          ],
+          "evidence": [
+            "naval-year",
+            "capital-ship-column",
+            "british-ratio",
+            "us-ratio",
+            "japan-ratio"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本の要求と調印",
+          "prompt": "第一次世界大戦後のワシントン海軍軍縮条約で、日本はどのような要求と判断をしたか。",
+          "answer": "日本は主力艦の保有量で**対英米の7割を要求**したが、全権の**加藤友三郎(かとうともさぶろう)**は**調印に踏み切った**。",
+          "keywords": [
+            "対英米の7割を要求",
+            "加藤友三郎",
+            "調印に踏み切った"
+          ],
+          "evidence": [
+            "kato"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後の日本と欧米の「ワシントン海軍軍縮条約」について説明せよ。",
+          "answer": "**1922年**に結ばれた条約は、イギリス・アメリカ・日本の**主力艦の保有量を5：5：3に制限**した。日本は**対英米の7割を要求**したが、全権の**加藤友三郎(かとうともさぶろう)**は**調印に踏み切った**。",
+          "keywords": [
+            "1922年",
+            "主力艦の保有量を5：5：3に制限",
+            "対英米の7割を要求",
+            "加藤友三郎",
+            "調印に踏み切った"
+          ],
+          "evidence": [
+            "naval-year",
+            "capital-ship-column",
+            "british-ratio",
+            "us-ratio",
+            "japan-ratio",
+            "kato"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "term": "パリ不戦条約",
+      "reading": "ぱりふせんじょうやく",
+      "category": "平和・条約",
+      "geographyLabel": "米国",
+      "integrationPromptPrefix": "第一次世界大戦後の世界の",
+      "chronology": {
+        "displayPeriod": "1928年",
+        "sortYear": 1928
+      },
+      "explanation": "パリ不戦条約は国家の政策手段として戦争を放棄し、紛争の平和的解決を掲げた。ただし自衛戦争は禁止されなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "戦争放棄を宣言した条約",
+          "prompt": "第一次世界大戦後、国家の政策手段として戦争を放棄し、紛争の平和的解決を掲げた条約は何か。",
+          "answer": "**パリ不戦条約**。",
+          "keywords": [
+            "パリ不戦条約"
+          ],
+          "evidence": [
+            "paris-nonwar-name",
+            "war-renunciation"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "提唱した国",
+          "prompt": "第一次世界大戦後のパリ不戦条約を提唱した二つの国はどこか。",
+          "answer": "**米国とフランス**。",
+          "keywords": [
+            "米国とフランス"
+          ],
+          "evidence": [
+            "paris-nonwar-sponsors"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "禁止されなかった戦争",
+          "prompt": "第一次世界大戦後のパリ不戦条約で、禁止されなかった戦争は何か。",
+          "answer": "**自衛戦争**。",
+          "keywords": [
+            "自衛戦争"
+          ],
+          "evidence": [
+            "self-defense-exception"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "締結年",
+          "prompt": "第一次世界大戦後のパリ不戦条約が締結されたのは何年か。",
+          "answer": "1928年。",
+          "keywords": [],
+          "evidence": [
+            "paris-nonwar-year",
+            "paris-nonwar-name"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "条約の理念と範囲",
+          "prompt": "第一次世界大戦後のパリ不戦条約は、どのような内容と限界を持ったか。",
+          "answer": "**1928年**に締結された条約は、**国家の政策手段として戦争を放棄**し、**紛争の平和的解決**を掲げた。ただし**自衛戦争は禁止されなかった**。",
+          "keywords": [
+            "1928年",
+            "国家の政策手段として戦争を放棄",
+            "紛争の平和的解決",
+            "自衛戦争は禁止されなかった"
+          ],
+          "evidence": [
+            "paris-nonwar-year",
+            "paris-nonwar-name",
+            "war-renunciation",
+            "self-defense-exception"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "第一次世界大戦後の世界の「パリ不戦条約」について説明せよ。",
+          "answer": "**1928年**、**米国とフランス**の提唱で締結され、**国家の政策手段として戦争を放棄**し、**紛争の平和的解決**を掲げた。ただし**自衛戦争は禁止されなかった**。",
+          "keywords": [
+            "1928年",
+            "米国とフランス",
+            "国家の政策手段として戦争を放棄",
+            "紛争の平和的解決",
+            "自衛戦争は禁止されなかった"
+          ],
+          "evidence": [
+            "paris-nonwar-year",
+            "paris-nonwar-sponsors",
+            "paris-nonwar-name",
+            "war-renunciation",
+            "self-defense-exception"
+          ]
+        }
+      ]
+    }
+  ]
+}

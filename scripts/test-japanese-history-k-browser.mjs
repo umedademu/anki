@@ -6,7 +6,7 @@ import { chromium } from "playwright";
 import { loadJapaneseHistoryK, loadJapaneseKAdditions, appendJapaneseKDecks } from "./japanese-history-k.mjs";
 import { filterQuestionTypes, resolveQuestionTypes } from "../public/question-types.js";
 import { groupSODecks } from "../public/so-chapters.js";
-import { getQuestionAnswerDisplayText } from "../public/learning-engine.js";
+import { getQuestionAnswerDisplayText, getQuestionPromptForDisplay } from "../public/learning-engine.js";
 
 const root = path.resolve(import.meta.dirname, "../public"), plan = await loadJapaneseHistoryK();
 const additions = await loadJapaneseKAdditions();
@@ -149,6 +149,7 @@ try {
   };
   const assertStudyDisplay = async (question, answerVisible) => {
     await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
+    assert.equal(await page.locator("#question-text").textContent(), getQuestionPromptForDisplay(question, answerVisible), "問題文の難読語の読みは回答前に隠し、回答後に表示します。");
     assert.equal(await page.locator("#context-card").isVisible(), false, "上部の用語枠は全段階で表示しません。");
     assert.equal(await page.locator("#question-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#answer-speech").getAttribute("aria-pressed"), "false");
@@ -290,7 +291,7 @@ try {
     await assertSummary(addition.terms);
     await page.locator("#start-study").click(); await shown("study-shell");
     const firstQuestion = addition.terms[0].stages.beginner[0];
-    assert.equal(await page.locator("#question-text").textContent(), firstQuestion.prompt);
+    assert.equal(await page.locator("#question-text").textContent(), getQuestionPromptForDisplay(firstQuestion, false));
     await assertStudyDisplay(firstQuestion, false);
     await page.locator("#next-action").click(); await assertStudyDisplay(firstQuestion, true);
     await page.locator("#good-action").click();
@@ -306,7 +307,7 @@ try {
     await page.locator("#start-study").click(); await shown("study-shell");
     const integratedQuestion = addition.terms[0].stages.integrated[0];
     assert.equal(await page.locator("#subject-name").textContent(), `日本史K｜${addition.definition.chapterGroups[0].title}`);
-    assert.equal(await page.locator("#question-text").textContent(), integratedQuestion.prompt);
+    assert.equal(await page.locator("#question-text").textContent(), getQuestionPromptForDisplay(integratedQuestion, false));
     await assertStudyDisplay(integratedQuestion, false);
     await page.locator("#next-action").click(); await assertStudyDisplay(integratedQuestion, true);
     if (addition.index.deckId === "book-06-02-06") {

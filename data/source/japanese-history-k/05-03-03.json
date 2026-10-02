@@ -1,0 +1,842 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 5,
+    "title": "第5章 近代"
+  },
+  "section": {
+    "number": 3,
+    "title": "大正時代"
+  },
+  "part": {
+    "number": 3,
+    "title": "ロシア革命と社会主義の成長"
+  },
+  "integrationPromptPrefix": "20世紀初頭の",
+  "source": {
+    "file": "sources/kokushi/試作/第5章_03節_03_ロシア革命と社会主義の成長_原文抜粋.md",
+    "originalFile": "sources/kokushi/5_近代.md",
+    "pages": [
+      340,
+      341,
+      346,
+      408
+    ],
+    "note": "340～341頁のハ本文、社会主義と共産主義コラム、注⑤⑥⑦を最後まで確認。346頁は同じ全国水平社の結成年を確認するコラムと、同じ治安維持法の思想抑圧への適用だけを関連根拠として追加した。408頁は同じシベリア出兵の年だけを補う。二月革命の王朝打倒と十月革命のレーニン・ソビエト政権成立を分け、十月革命で即座に一党独裁体制が完成したとの断定や、ボリシェビキが二月に王朝を倒したという混同は採用しない。共産党の当時の正式党名を問わず、革命指導者レーニンとして扱う。ソ連国名は原資料340～341頁をまたぐ表記を両頁の引用で保持した。社会主義・共産主義の期待の評価、世界初、専制者の人物逸話、マルクス主義の最終段階が実現したとの断定は正答にしない。ソビエト政権の大戦離脱を即座とする表現は扱わない。スターリンの就任・五カ年計画開始・粛清の具体年、世界恐慌の影響を一切受けなかったという断定、反対勢力全員の処刑・死者数は採用しない。スターリン項目の20世紀は1922年のソ連成立から広く示した時代であり、1922年を計画開始年とはしない。シベリア支援の人数・カロリー・好感の有無は不採用。日本共産党結成の1922年は本文の大正十一年と同じ年の西暦表記で裏付ける。治安維持法を革命運動だけに適用対象を限定せず、共産主義活動の主な抑圧・思想弾圧と1925年の制定を扱う。法律の制度対象・普通選挙法との比較は次の小項目に任せる。女性運動の開始年を1922年に固定せず、社会運動を共産党が組織したとまとめない。"
+  },
+  "facts": [
+    {
+      "id": "revolution-name",
+      "page": 340,
+      "quote": "**ロシア革命**と呼ばれる"
+    },
+    {
+      "id": "revolution-year",
+      "page": 340,
+      "quote": "大正六年（一九一七）に起きたロシア革命"
+    },
+    {
+      "id": "february-result",
+      "page": 340,
+      "quote": "ロマノフ王朝を打倒した二月革命"
+    },
+    {
+      "id": "october-leader",
+      "page": 340,
+      "quote": "レーニン率いる共産党"
+    },
+    {
+      "id": "soviet-government",
+      "page": 340,
+      "quote": "ソビエト政権が成立しました。"
+    },
+    {
+      "id": "union-name-first",
+      "page": 340,
+      "quote": "**ソビ**"
+    },
+    {
+      "id": "union-name-last",
+      "page": 341,
+      "quote": "**エト社会主義共和国連邦**（ソ連）が成立しました。"
+    },
+    {
+      "id": "union-year",
+      "page": 340,
+      "quote": "大正十一年（一九二二）"
+    },
+    {
+      "id": "union-republics",
+      "page": 340,
+      "quote": "複数の共和国から成る"
+    },
+    {
+      "id": "counter-revolution",
+      "page": 340,
+      "quote": "ソビエト政権は国内の反革命勢力を鎮圧して"
+    },
+    {
+      "id": "soviet-council",
+      "page": 341,
+      "quote": "ソ連の政治的基礎を成す評議会または会議のこと。"
+    },
+    {
+      "id": "stalin-leader",
+      "page": 341,
+      "quote": "レーニンの後任として指導者の地位に就いたスターリン"
+    },
+    {
+      "id": "five-year-name",
+      "page": 341,
+      "quote": "五カ年計画を実施し、工業や農業の改革に着手しました。"
+    },
+    {
+      "id": "state-plan",
+      "page": 341,
+      "quote": "スターリンの国家主導のもと五カ年計画を実施し、工業や農業の改革に着手しました。"
+    },
+    {
+      "id": "planned-economy",
+      "page": 341,
+      "quote": "この計画経済によって、"
+    },
+    {
+      "id": "stalin-repression",
+      "page": 341,
+      "quote": "スターリンは大規模な政治弾圧を実施して、"
+    },
+    {
+      "id": "siberia-name",
+      "page": 340,
+      "quote": "**シベリア出兵**などの干渉戦争を始めました。"
+    },
+    {
+      "id": "fear-spread",
+      "page": 340,
+      "quote": "日本や欧米列強は、社会主義の考え方が自国に広まると、支配体制が揺らぐと考えました。"
+    },
+    {
+      "id": "intervention-purpose",
+      "page": 340,
+      "quote": "我が国は欧米諸国と共同して、ロシア革命を阻止することで社会主義の広まりを防ごうと、"
+    },
+    {
+      "id": "british-french-request",
+      "page": 341,
+      "quote": "英仏は革命政権へ干渉するために日米両国にシベリア出兵を要請した。"
+    },
+    {
+      "id": "japan-us-expedition",
+      "page": 341,
+      "quote": "日本は米国とともに出兵して"
+    },
+    {
+      "id": "counter-support",
+      "page": 341,
+      "quote": "反革命勢力を支援し、"
+    },
+    {
+      "id": "withdrawal-criticism",
+      "page": 341,
+      "quote": "日本だけが撤兵を拒んだため、列強から批判された。"
+    },
+    {
+      "id": "siberia-year",
+      "page": 408,
+      "quote": "| 1918 | シベリア出兵"
+    },
+    {
+      "id": "jcp-name",
+      "page": 341,
+      "quote": "秘密裏に日本共産党が結成されました。"
+    },
+    {
+      "id": "jcp-year-japanese",
+      "page": 341,
+      "quote": "我が国では、大正十一年に"
+    },
+    {
+      "id": "jcp-branch",
+      "page": 341,
+      "quote": "コミンテルン日本支部として、秘密裏に日本共産党が結成されました。"
+    },
+    {
+      "id": "peace-law-name",
+      "page": 341,
+      "quote": "**治安維持法**を制定しました。"
+    },
+    {
+      "id": "peace-law-year",
+      "page": 341,
+      "quote": "大正十四年（一九二五）に**治安維持法**を制定しました。"
+    },
+    {
+      "id": "peace-law-application",
+      "page": 346,
+      "quote": "主に共産主義活動を抑圧するために適用され、思想弾圧に用いられた。"
+    },
+    {
+      "id": "horizontal-movement",
+      "page": 341,
+      "quote": "**全国水平社**による部落解放運動"
+    },
+    {
+      "id": "horizontal-year",
+      "page": 346,
+      "quote": "大正11年（1922）には全国水平社が結成された。"
+    },
+    {
+      "id": "labor-tenant",
+      "page": 341,
+      "quote": "労働者による**労働争議**や、農民による小作争議など権利の保障を求める運動が増えました。"
+    },
+    {
+      "id": "women-movement",
+      "page": 341,
+      "quote": "平塚らいてうの女性運動などが挙げられます。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "ロシア革命とソ連の成立",
+      "reading": "ろしあかくめいとそれんのせいりつ",
+      "category": "革命・国家形成",
+      "geographyLabel": "ロシア",
+      "integrationPromptPrefix": "20世紀初頭のロシアの",
+      "chronology": {
+        "displayPeriod": "1917年の革命と1922年のソ連成立",
+        "sortYear": 1917
+      },
+      "explanation": "二月革命はロマノフ王朝を倒し、十月革命はレーニンらによるソビエト政権の成立につながった。反革命勢力との対立を経て、複数の共和国から成るソ連が成立した。ソビエトは、ソ連の政治的基礎となった評議会を指す。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "二つの革命の総称",
+          "prompt": "第一次世界大戦中、ロシアの二月革命と十月革命を合わせて何と呼ぶか。",
+          "answer": "**ロシア革命**。",
+          "keywords": [
+            "ロシア革命"
+          ],
+          "evidence": [
+            "revolution-name"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "成立した連邦国家",
+          "prompt": "20世紀初頭、革命後のロシアを中心に成立した社会主義共和国の連邦国家は何か。",
+          "answer": "**ソビエト社会主義共和国連邦（ソ連）**。",
+          "keywords": [
+            "ソビエト社会主義共和国連邦（ソ連）"
+          ],
+          "evidence": [
+            "union-name-first",
+            "union-name-last"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "result",
+          "form": "二月革命で倒れた王朝",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立について、二月革命が打倒した王朝は何か。",
+          "answer": "**ロマノフ王朝**。",
+          "keywords": [
+            "ロマノフ王朝"
+          ],
+          "evidence": [
+            "february-result"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "person",
+          "form": "十月革命の指導者",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立について、十月革命を率いた共産主義勢力の指導者は誰か。",
+          "answer": "**レーニン**。",
+          "keywords": [
+            "レーニン"
+          ],
+          "evidence": [
+            "october-leader"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "ソビエトの政治上の意味",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立を理解する上で、ソビエトは政治上どのような組織を指すか。",
+          "answer": "**評議会または会議**。",
+          "keywords": [
+            "評議会または会議"
+          ],
+          "evidence": [
+            "soviet-council"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "time",
+          "form": "二つの革命が起きた年",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立について、二月革命と十月革命が起きたのは何年か。",
+          "answer": "1917年。",
+          "keywords": [],
+          "evidence": [
+            "revolution-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "二月革命と十月革命の違い",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立について、二月革命と十月革命はそれぞれどのような政権の転換をもたらしたか。",
+          "answer": "**1917年**のロシア革命では、二月革命が**ロマノフ王朝を打倒**した。十月革命では**レーニン**らによる**ソビエト政権**が成立した。",
+          "keywords": [
+            "1917年",
+            "ロマノフ王朝を打倒",
+            "レーニン",
+            "ソビエト政権"
+          ],
+          "evidence": [
+            "revolution-year",
+            "february-result",
+            "october-leader",
+            "soviet-government"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "連邦国家と政治的基礎",
+          "prompt": "20世紀初頭のロシア革命とソ連の成立について、革命後の国家はどのように成立し、どのような政治的基礎を持ったか。",
+          "answer": "ソビエト政権は**国内の反革命勢力を鎮圧**し、**1922年**に**複数の共和国**から成る**ソビエト社会主義共和国連邦（ソ連）**が成立した。**ソビエト**は政治的基礎となる**評議会または会議**を指す。",
+          "keywords": [
+            "国内の反革命勢力を鎮圧",
+            "1922年",
+            "複数の共和国",
+            "ソビエト社会主義共和国連邦（ソ連）",
+            "ソビエト",
+            "評議会または会議"
+          ],
+          "evidence": [
+            "counter-revolution",
+            "union-year",
+            "union-republics",
+            "union-name-first",
+            "union-name-last",
+            "soviet-council"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀初頭のロシアの「ロシア革命とソ連の成立」について説明せよ。",
+          "answer": "**1917年**のロシア革命で、二月革命は**ロマノフ王朝を打倒**し、十月革命では**レーニン**らによる**ソビエト政権**が成立した。ソビエト政権は**国内の反革命勢力を鎮圧**し、**1922年**に**複数の共和国**から成る**ソビエト社会主義共和国連邦（ソ連）**が成立した。政治的基礎となる**評議会または会議**を**ソビエト**という。",
+          "keywords": [
+            "1917年",
+            "ロマノフ王朝を打倒",
+            "レーニン",
+            "ソビエト政権",
+            "国内の反革命勢力を鎮圧",
+            "1922年",
+            "複数の共和国",
+            "ソビエト社会主義共和国連邦（ソ連）",
+            "評議会または会議",
+            "ソビエト"
+          ],
+          "evidence": [
+            "revolution-year",
+            "february-result",
+            "october-leader",
+            "soviet-government",
+            "counter-revolution",
+            "union-year",
+            "union-republics",
+            "union-name-first",
+            "union-name-last",
+            "soviet-council"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "スターリンと計画経済",
+      "reading": "すたーりんとけいかくけいざい",
+      "category": "経済政策・政治体制",
+      "geographyLabel": "ソ連",
+      "integrationPromptPrefix": "20世紀のソ連の",
+      "chronology": {
+        "displayPeriod": "ソ連成立後の20世紀",
+        "sortYear": 1922
+      },
+      "explanation": "スターリンのもとでは、国家主導の五カ年計画によって工業や農業の改革が進められた。一方で大規模な政治弾圧も行われた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "レーニンの後継者",
+          "prompt": "20世紀のソ連で、レーニンの後任として指導者となった人物は誰か。",
+          "answer": "**スターリン**。",
+          "keywords": [
+            "スターリン"
+          ],
+          "evidence": [
+            "stalin-leader"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "工業・農業を改革した計画",
+          "prompt": "20世紀のソ連で、スターリンが工業や農業の改革を進めるために実施した計画は何か。",
+          "answer": "**五カ年計画**。",
+          "keywords": [
+            "五カ年計画"
+          ],
+          "evidence": [
+            "five-year-name"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "計画を主導した主体",
+          "prompt": "20世紀のソ連のスターリンと計画経済について、五カ年計画を主導した主体は何か。",
+          "answer": "**国家**。",
+          "keywords": [
+            "国家"
+          ],
+          "evidence": [
+            "state-plan"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "政治上の対応",
+          "prompt": "20世紀のソ連のスターリンと計画経済について、スターリンは反対勢力に対してどのような政治上の措置を行ったか。",
+          "answer": "**大規模な政治弾圧**。",
+          "keywords": [
+            "大規模な政治弾圧"
+          ],
+          "evidence": [
+            "stalin-repression"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "経済改革の進め方",
+          "prompt": "20世紀のソ連のスターリンと計画経済について、経済改革はどのように進められたか。",
+          "answer": "**20世紀**のソ連では、**スターリン**が**国家主導**の**五カ年計画**による**計画経済**で、**工業や農業の改革**を進めた。",
+          "keywords": [
+            "20世紀",
+            "スターリン",
+            "国家主導",
+            "五カ年計画",
+            "計画経済",
+            "工業や農業の改革"
+          ],
+          "evidence": [
+            "stalin-leader",
+            "state-plan",
+            "planned-economy",
+            "union-year"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "反対勢力への対応",
+          "prompt": "20世紀のソ連のスターリンと計画経済について、反対勢力にはどのような対応が取られたか。",
+          "answer": "**スターリン**は反対勢力に対して**大規模な政治弾圧**を行った。",
+          "keywords": [
+            "スターリン",
+            "大規模な政治弾圧"
+          ],
+          "evidence": [
+            "stalin-leader",
+            "stalin-repression"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "20世紀のソ連の「スターリンと計画経済」について説明せよ。",
+          "answer": "**20世紀**のソ連では、**スターリン**が**国家主導**の**五カ年計画**による**計画経済**で、**工業や農業の改革**を進めた。一方で、反対勢力に対して**大規模な政治弾圧**を行った。",
+          "keywords": [
+            "20世紀",
+            "スターリン",
+            "国家主導",
+            "五カ年計画",
+            "計画経済",
+            "工業や農業の改革",
+            "大規模な政治弾圧"
+          ],
+          "evidence": [
+            "stalin-leader",
+            "state-plan",
+            "planned-economy",
+            "union-year",
+            "stalin-repression"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "シベリア出兵",
+      "reading": "しべりあしゅっぺい",
+      "category": "干渉戦争・外交",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "大正時代の日本の",
+      "chronology": {
+        "displayPeriod": "1918年の出兵とその後の対応",
+        "sortYear": 1918
+      },
+      "explanation": "日本や欧米列強は社会主義の広まりを警戒し、革命政権に対する干渉を進めた。日本は米国と出兵して反革命勢力を支援したが、撤兵を拒んだことから列強の批判を受けた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "革命政権への干渉出兵",
+          "prompt": "ロシア革命後、日本が反革命勢力を支援するために行った干渉出兵は何か。",
+          "answer": "**シベリア出兵**。",
+          "keywords": [
+            "シベリア出兵"
+          ],
+          "evidence": [
+            "siberia-name",
+            "counter-support"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "actor",
+          "form": "日本とともに出兵した国",
+          "prompt": "大正時代の日本のシベリア出兵で、日本とともに出兵した国はどこか。",
+          "answer": "**米国**。",
+          "keywords": [
+            "米国"
+          ],
+          "evidence": [
+            "japan-us-expedition"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "社会主義を警戒した事情",
+          "prompt": "大正時代のシベリア出兵で、日本や欧米列強が自国への社会主義の広まりを警戒したのはなぜか。",
+          "answer": "自国の**支配体制が揺らぐと考えた**ため。",
+          "keywords": [
+            "支配体制が揺らぐと考えた"
+          ],
+          "evidence": [
+            "fear-spread"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "time",
+          "form": "日本が出兵した年",
+          "prompt": "大正時代の日本がシベリア出兵を始めたのは何年か。",
+          "answer": "1918年。",
+          "keywords": [],
+          "evidence": [
+            "siberia-year"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "出兵の経緯と目的",
+          "prompt": "大正時代の日本のシベリア出兵は、どのような経緯と目的で行われたか。",
+          "answer": "**英仏の要請**を受け、日本は**1918年**に**米国とともに出兵**し、**反革命勢力を支援**した。日本や欧米列強は自国の**支配体制が揺らぐと考え**、**社会主義の広まりを防ぐ**ためにロシアの革命政権へ干渉した。",
+          "keywords": [
+            "英仏の要請",
+            "1918年",
+            "米国とともに出兵",
+            "反革命勢力を支援",
+            "支配体制が揺らぐと考え",
+            "社会主義の広まりを防ぐ"
+          ],
+          "evidence": [
+            "british-french-request",
+            "siberia-year",
+            "japan-us-expedition",
+            "counter-support",
+            "fear-spread",
+            "intervention-purpose"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "撤兵をめぐる対応",
+          "prompt": "大正時代の日本のシベリア出兵で、日本の撤兵をめぐる対応はどのように受け止められたか。",
+          "answer": "日本だけが**撤兵を拒んだ**ため、**列強から批判**された。",
+          "keywords": [
+            "撤兵を拒んだ",
+            "列強から批判"
+          ],
+          "evidence": [
+            "withdrawal-criticism"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "大正時代の日本の「シベリア出兵」について説明せよ。",
+          "answer": "日本は**英仏の要請**を受け、**1918年**に**米国とともに出兵**して**反革命勢力を支援**した。日本や欧米列強は自国の**支配体制が揺らぐと考え**、**社会主義の広まりを防ぐ**ためにロシアの革命政権へ干渉した。その後、日本だけが**撤兵を拒んだ**ため、**列強から批判**された。",
+          "keywords": [
+            "英仏の要請",
+            "1918年",
+            "米国とともに出兵",
+            "反革命勢力を支援",
+            "支配体制が揺らぐと考え",
+            "社会主義の広まりを防ぐ",
+            "撤兵を拒んだ",
+            "列強から批判"
+          ],
+          "evidence": [
+            "british-french-request",
+            "siberia-year",
+            "japan-us-expedition",
+            "counter-support",
+            "fear-spread",
+            "intervention-purpose",
+            "withdrawal-criticism"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "共産主義の拡大と日本の社会運動",
+      "reading": "きょうさんしゅぎのかくだいとにほんのしゃかいうんどう",
+      "category": "政党・思想・社会運動",
+      "geographyLabel": "日本",
+      "integrationPromptPrefix": "大正時代の日本の",
+      "chronology": {
+        "displayPeriod": "1922年の党・水平社結成と1925年の治安維持法",
+        "sortYear": 1922
+      },
+      "explanation": "日本共産党はコミンテルン日本支部として秘密裏に結成され、政府は共産主義活動を抑圧する治安維持法を制定した。それとは別に、権利の保障を求める労働・農民運動、全国水平社の部落解放運動や平塚らいてうの女性運動も展開された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "秘密裏に結成された政党",
+          "prompt": "大正時代の日本で、秘密裏に結成された共産主義の政党は何か。",
+          "answer": "**日本共産党**。",
+          "keywords": [
+            "日本共産党"
+          ],
+          "evidence": [
+            "jcp-name"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "部落解放運動の組織",
+          "prompt": "大正時代の日本で、部落解放運動に取り組んだ組織は何か。",
+          "answer": "**全国水平社**。",
+          "keywords": [
+            "全国水平社"
+          ],
+          "evidence": [
+            "horizontal-movement"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "共産主義活動の抑圧に用いた法律",
+          "prompt": "大正時代の日本で制定され、主に共産主義活動の抑圧や思想弾圧に用いられた法律は何か。",
+          "answer": "**治安維持法**。",
+          "keywords": [
+            "治安維持法"
+          ],
+          "evidence": [
+            "peace-law-name",
+            "peace-law-application"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "日本共産党と国際組織",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、日本共産党は、どの国際組織の日本支部として結成されたか。",
+          "answer": "**コミンテルン**。",
+          "keywords": [
+            "コミンテルン"
+          ],
+          "evidence": [
+            "jcp-branch"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "time",
+          "form": "治安維持法の制定年",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、治安維持法が制定されたのは何年か。",
+          "answer": "1925年。",
+          "keywords": [],
+          "evidence": [
+            "peace-law-year"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "relation",
+          "form": "労働者と農民の争議",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、労働者と農民はそれぞれどのような争議を増やしたか。",
+          "answer": "労働者は**労働争議**、農民は**小作争議**。",
+          "keywords": [
+            "労働争議",
+            "小作争議"
+          ],
+          "evidence": [
+            "labor-tenant"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "日本共産党の結成",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、日本共産党はどのように結成されたか。",
+          "answer": "日本では**1922年**に、**コミンテルン日本支部**として**日本共産党**が**秘密裏に結成**された。",
+          "keywords": [
+            "1922年",
+            "コミンテルン日本支部",
+            "日本共産党",
+            "秘密裏に結成"
+          ],
+          "evidence": [
+            "union-year",
+            "jcp-year-japanese",
+            "jcp-branch",
+            "jcp-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "共産主義活動への政府の対応",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、共産主義活動に対して政府はどのように対応したか。",
+          "answer": "日本では**1925年**に**治安維持法**が制定された。同法は**共産主義活動を抑圧**するために主に適用され、**思想弾圧**に用いられた。",
+          "keywords": [
+            "1925年",
+            "治安維持法",
+            "共産主義活動を抑圧",
+            "思想弾圧"
+          ],
+          "evidence": [
+            "peace-law-year",
+            "peace-law-application"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "社会的な権利を求める運動",
+          "prompt": "大正時代の共産主義の拡大と日本の社会運動について、社会的な権利を求める運動にはどのような動きがあったか。",
+          "answer": "**権利の保障**を求める**労働争議・小作争議**が増えた。**1922年**には**全国水平社**が結成され、**部落解放運動**を進めた。大正時代には**平塚らいてう**による**女性運動**も見られた。",
+          "keywords": [
+            "権利の保障",
+            "労働争議・小作争議",
+            "1922年",
+            "全国水平社",
+            "部落解放運動",
+            "平塚らいてう",
+            "女性運動"
+          ],
+          "evidence": [
+            "labor-tenant",
+            "horizontal-year",
+            "horizontal-movement",
+            "women-movement"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "全体の説明",
+          "prompt": "大正時代の日本の「共産主義の拡大と日本の社会運動」について説明せよ。",
+          "answer": "大正時代の日本では、**権利の保障**を求める**労働争議・小作争議**や、**平塚らいてう**による**女性運動**が見られた。**1922年**には**全国水平社**が結成されて**部落解放運動**を進め、同年に**コミンテルン日本支部**として**日本共産党**も**秘密裏に結成**された。**1925年**には**治安維持法**が制定され、主に**共産主義活動を抑圧**するために適用され、**思想弾圧**に用いられた。",
+          "keywords": [
+            "権利の保障",
+            "労働争議・小作争議",
+            "平塚らいてう",
+            "女性運動",
+            "1922年",
+            "全国水平社",
+            "部落解放運動",
+            "コミンテルン日本支部",
+            "日本共産党",
+            "秘密裏に結成",
+            "1925年",
+            "治安維持法",
+            "共産主義活動を抑圧",
+            "思想弾圧"
+          ],
+          "evidence": [
+            "labor-tenant",
+            "women-movement",
+            "horizontal-year",
+            "horizontal-movement",
+            "union-year",
+            "jcp-year-japanese",
+            "jcp-branch",
+            "jcp-name",
+            "peace-law-year",
+            "peace-law-application"
+          ]
+        }
+      ]
+    }
+  ]
+}

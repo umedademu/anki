@@ -1,0 +1,1411 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 4,
+    "title": "第4章 近世"
+  },
+  "section": {
+    "number": 2,
+    "title": "江戸時代"
+  },
+  "part": {
+    "number": 1,
+    "title": "関ヶ原の戦いと全国の統制"
+  },
+  "integrationPromptPrefix": "江戸時代前期の日本の",
+  "source": {
+    "file": "sources/kokushi/試作/第4章_02節_01_関ヶ原の戦いと全国の統制_原文抜粋.md",
+    "originalFile": "sources/kokushi/4_近世.md",
+    "pages": [
+      206,
+      207,
+      208,
+      209,
+      210,
+      211,
+      212,
+      213,
+      266
+    ],
+    "note": "206～213頁の本文・全関連注・系図・職制図・財政表・法度史料・図版・コラムを最後まで読み、214頁のロ見出しを境界として確認した。幕府成立、幕藩体制と経済基盤、大名区分と配置、政務役職、武家諸法度、参勤交代の政治と経済の影響、朝廷と寺院の統制の7項目にまとめる。武家諸法度制定は266頁の同じ出来事の1615年行だけで時期を補い、1635年寛永令および参勤交代の制度化とは区別する。大名区分と政治組織の17世紀前半という幅は、本文の幕府成立・全国支配体制の形成の時代範囲を示すもので、各役職の設置年を創作しない。官職の最高位という老中の注と大老を上に置く職制図の単純化、選任人数・月番の細部・領地比率・財政額・石高や兵力・御三家や全将軍の系図・遺訓は正答にしない。家康と信長の同盟年1561という図版記述、徳川氏の正当性や人物賛美、豊臣氏との戦争の正当化、堀の埋め立ての約束の評価や裏切りの是非は不採用。譜代/外様の配置は本文の傾向として扱い、外様の登用制限は原則としてと限定し、全員一律の処遇にしない。参勤交代の一年おきの往復は本文の標準的な制度として扱い、全藩の実行頻度を一律に断定する意図ではない。婚姻や城の規定は1635年寛永令の要約範囲のみとし、原文外の許可条件や条文は補わない。参勤交代以後の経済変化を1635年に全て完成したとはせず、本文の負担・販売・流通のつながりを扱う。213頁コラムの天皇への恐れ・長期政権の唯一原因・解釈の必然性・家康の先見性・天皇と将軍の正当性は出題しない。宗教・朝廷の統制は法と役職の具体的仕組みと史料の明示内容に絞り、学問条項から天皇の政治権限を一律に推論しない。"
+  },
+  "facts": [
+    {
+      "id": "sekigahara-year",
+      "page": 206,
+      "quote": "慶長五年（一六〇〇）、豊臣氏の支配を続けようとする"
+    },
+    {
+      "id": "sekigahara-name",
+      "page": 206,
+      "quote": "**関ヶ原の戦い**でこれを破りました。"
+    },
+    {
+      "id": "mitsunari-goal",
+      "page": 206,
+      "quote": "石田三成は、秀吉亡きあとの豊臣政権の維持を目指した。徳川家康が勢力を増すと、反徳川勢力を結集させ、西軍の中心となり、"
+    },
+    {
+      "id": "shogun-appointment",
+      "page": 206,
+      "quote": "慶長八年（一六〇三）、後陽成天皇はこの戦に勝利した家康を、征夷大将軍に任命しました。"
+    },
+    {
+      "id": "edo-establishment",
+      "page": 206,
+      "quote": "これにより江戸（東京都）を本拠とした**江戸幕府**が成立し、"
+    },
+    {
+      "id": "hidetada-transfer",
+      "page": 207,
+      "quote": "慶長10年（1605）には子の秀忠に将軍職を譲って駿府に隠退し、秀忠を後見した。"
+    },
+    {
+      "id": "hidetada-name",
+      "page": 208,
+      "quote": "二代将軍・徳川秀忠は"
+    },
+    {
+      "id": "osaka-name",
+      "page": 208,
+      "quote": "大坂の陣"
+    },
+    {
+      "id": "osaka-winter",
+      "page": 208,
+      "quote": "徳川家康は慶長19年（1614）、全国の大名に呼びかけて大坂城を攻囲し（大坂冬の陣）、"
+    },
+    {
+      "id": "osaka-summer",
+      "page": 208,
+      "quote": "翌元和元年（1615）に戦闘が再開され（大坂夏の陣）、大坂城は陥落し、豊臣秀頼とその母・淀君は自害した。"
+    },
+    {
+      "id": "national-rule",
+      "page": 208,
+      "quote": "元和元年（一六一五）、豊臣秀吉の遺児・豊臣秀頼を大坂城に攻め豊臣氏を滅ぼすと❷、全国を支配する体制を作りました。"
+    },
+    {
+      "id": "han-definition",
+      "page": 208,
+      "quote": "将軍より一万石以上の領地を与えられた大名の所領、またはその所領を統制する組織を**藩**といい、"
+    },
+    {
+      "id": "bakuryou",
+      "page": 208,
+      "quote": "幕府は直轄地である約四〇〇万石の**幕領**を持ち、"
+    },
+    {
+      "id": "bakuhan",
+      "page": 208,
+      "quote": "幕府が藩を統制して日本全土を支配する仕組みを**幕藩体制**といいます。"
+    },
+    {
+      "id": "mines",
+      "page": 208,
+      "quote": "また全国の主な鉱山も直轄地とし、収入源としました。"
+    },
+    {
+      "id": "minting",
+      "page": 208,
+      "quote": "そして、貨幣鋳造の権利も独占しました。"
+    },
+    {
+      "id": "shinpan",
+      "page": 208,
+      "quote": "大名を徳川家一門の**親藩**、"
+    },
+    {
+      "id": "fudai",
+      "page": 208,
+      "quote": "古くから家臣の**譜代大名**、"
+    },
+    {
+      "id": "tozama",
+      "page": 208,
+      "quote": "関ヶ原の戦い前後から従った**外様大名**に分類し、"
+    },
+    {
+      "id": "fudai-role",
+      "page": 209,
+      "quote": "譜代大名の多くは石高が小さいものの、重要地に配置され、幕府の要職に就いた。"
+    },
+    {
+      "id": "tozama-placement",
+      "page": 209,
+      "quote": "遠隔地に配置されることもあり、"
+    },
+    {
+      "id": "tozama-role",
+      "page": 209,
+      "quote": "原則として幕府の要職に就くことはできなかった。"
+    },
+    {
+      "id": "roju-role",
+      "page": 208,
+      "quote": "幕府の政治は主に**老中**が行い、"
+    },
+    {
+      "id": "wakadoshiyori-assistance",
+      "page": 209,
+      "quote": "若年寄（老中の補佐）"
+    },
+    {
+      "id": "wakadoshiyori-supervision",
+      "page": 209,
+      "quote": "若年寄は譜代大名から数名が選ばれ、旗本、御家人を監督した。"
+    },
+    {
+      "id": "kanjo-role",
+      "page": 210,
+      "quote": "勘定奉行は老中に属し、幕府財政の運営や、幕領の年貢の徴収などを担った。"
+    },
+    {
+      "id": "machi-role",
+      "page": 210,
+      "quote": "町奉行は老中に属し、江戸の町と町人を管轄し、江戸の行政・司法・警察など民政全般を司った。"
+    },
+    {
+      "id": "jisha-direct",
+      "page": 210,
+      "quote": "寺社奉行は将軍直属で"
+    },
+    {
+      "id": "jisha-role",
+      "page": 209,
+      "quote": "寺社奉行（寺社・寺社領の行政および司法、関東・京都以外の訴訟）"
+    },
+    {
+      "id": "jisha-people",
+      "page": 210,
+      "quote": "全国の寺社およびその領民を統括した。"
+    },
+    {
+      "id": "buke-purpose",
+      "page": 208,
+      "quote": "二代将軍・徳川秀忠は**武家諸法度**を定め、全国の大名らを統制すると、"
+    },
+    {
+      "id": "laws-1615",
+      "page": 266,
+      "quote": "| 1615 | 大坂夏の陣で豊臣氏が滅亡する<br>武家諸法度"
+    },
+    {
+      "id": "kan-ei-date",
+      "page": 210,
+      "quote": "文献史料　武家諸法度―寛永令（寛永十二年［一六三五］、部分要約）"
+    },
+    {
+      "id": "castle-repair",
+      "page": 210,
+      "quote": "一、諸国の城を修理するときは必ず幕府に申し出ること。"
+    },
+    {
+      "id": "new-castle",
+      "page": 210,
+      "quote": "新しく城を造ることは禁止する。"
+    },
+    {
+      "id": "marriage-permission",
+      "page": 210,
+      "quote": "一、幕府の許可なく結婚してはいけない。"
+    },
+    {
+      "id": "sankin-name",
+      "page": 208,
+      "quote": "**参勤交代**の制度を整えました。"
+    },
+    {
+      "id": "iemitsu-name",
+      "page": 208,
+      "quote": "三代将軍・徳川家光のころには"
+    },
+    {
+      "id": "sankin-regulation",
+      "page": 210,
+      "quote": "一、大名は自分の領地と江戸との交代勤務を定める。"
+    },
+    {
+      "id": "sankin-alternation",
+      "page": 208,
+      "quote": "以降、大名は一年おきに領地と江戸を行き来することになり、"
+    },
+    {
+      "id": "sankin-cost",
+      "page": 208,
+      "quote": "旅費と江戸での滞在費を各大名に負担させました。"
+    },
+    {
+      "id": "sankin-wives",
+      "page": 208,
+      "quote": "また、大名の妻子は江戸に住むことが義務づけられました。"
+    },
+    {
+      "id": "sankin-hostages",
+      "page": 208,
+      "quote": "これは、幕府が大名の妻子を、事実上の人質として江戸に留め置くことを意味します。"
+    },
+    {
+      "id": "sankin-products",
+      "page": 212,
+      "quote": "年貢米や特産品を大坂で販売して貨幣に交換した。"
+    },
+    {
+      "id": "edo-consumption",
+      "page": 212,
+      "quote": "参勤交代が制度化されたことで、諸大名とその家臣団が江戸に住むようになり、江戸は大消費都市になった。"
+    },
+    {
+      "id": "sankin-routes",
+      "page": 212,
+      "quote": "全国各地と大坂、また大坂と江戸という流通経路が確立し、貨幣経済や商工業が発展し、"
+    },
+    {
+      "id": "court-control",
+      "page": 208,
+      "quote": "**禁中並公家諸法度**を定めて、天皇と公家をも法的に統制しました。"
+    },
+    {
+      "id": "court-law-date",
+      "page": 210,
+      "quote": "文献史料　禁中並公家諸法度（元和元年［一六一五］、部分要約）"
+    },
+    {
+      "id": "kyoto-shoshidai",
+      "page": 208,
+      "quote": "幕府は京都所司代を置いて朝廷を監視し、"
+    },
+    {
+      "id": "imperial-learning",
+      "page": 210,
+      "quote": "一、天皇が修めるべき第一は御学問である。"
+    },
+    {
+      "id": "temple-control",
+      "page": 208,
+      "quote": "また、幕府は**寺院法度**を出して、宗派ごとに本山を通して寺を統制しました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "江戸幕府の成立",
+      "reading": "えどばくふのせいりつ",
+      "category": "政治・政権",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1600～1615年",
+        "sortYear": 1600
+      },
+      "explanation": "家康は関ヶ原の戦いで勝利し、征夷大将軍に任命されて江戸を本拠とする幕府を開いた。将軍職を秀忠へ譲り、大坂の陣で豊臣氏を滅ぼして全国支配の体制を整えた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1600年の日本で、豊臣政権を維持しようとする勢力を徳川家康が破った戦いは何か。",
+          "answer": "**関ヶ原の戦い(せきがはらのたたかい)**。",
+          "evidence": [
+            "sekigahara-year",
+            "sekigahara-name"
+          ],
+          "keywords": [
+            "関ヶ原の戦い"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "1600年の日本の江戸幕府の成立に関わる関ヶ原の戦いで、豊臣政権の維持を目指し、西軍の中心となった人物は誰か。",
+          "answer": "**石田三成(いしだみつなり)**。",
+          "evidence": [
+            "mitsunari-goal"
+          ],
+          "keywords": [
+            "石田三成"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "1603年の日本の江戸幕府の成立について、徳川家康が天皇から任命された官職は何か。",
+          "answer": "**征夷大将軍(せいいたいしょうぐん)**。",
+          "evidence": [
+            "shogun-appointment"
+          ],
+          "keywords": [
+            "征夷大将軍"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "1605年の日本の江戸幕府の成立に続く将軍職の継承で、家康から将軍職を譲られた子は誰か。",
+          "answer": "**徳川秀忠(とくがわひでただ)**。",
+          "evidence": [
+            "hidetada-transfer",
+            "hidetada-name"
+          ],
+          "keywords": [
+            "徳川秀忠"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "1614～1615年の日本で、家康が大坂城を攻囲し、豊臣氏との冬と夏の戦闘を行った一連の戦いは何か。",
+          "answer": "**大坂の陣(おおさかのじん)**。",
+          "evidence": [
+            "osaka-name",
+            "osaka-winter",
+            "osaka-summer"
+          ],
+          "keywords": [
+            "大坂の陣"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "16世紀末から17世紀前半の日本の江戸幕府の成立について、関ヶ原の戦いから開幕までの経過を説明せよ。",
+          "answer": "1600年の日本で、豊臣政権の維持を目指す**石田三成(いしだみつなり)**は、**関ヶ原の戦い(せきがはらのたたかい)**で**徳川家康**に敗れた。家康は1603年に**征夷大将軍(せいいたいしょうぐん)**に任命され、江戸を本拠として**江戸幕府**を開いた。",
+          "evidence": [
+            "sekigahara-year",
+            "sekigahara-name",
+            "mitsunari-goal",
+            "shogun-appointment",
+            "edo-establishment"
+          ],
+          "keywords": [
+            "石田三成",
+            "関ヶ原の戦い",
+            "徳川家康",
+            "征夷大将軍",
+            "江戸幕府"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "17世紀初頭の日本の江戸幕府の成立について、家康は将軍職の継承と豊臣氏への対応をどのように進めたか。",
+          "answer": "家康は1605年に子の**徳川秀忠(とくがわひでただ)**へ将軍職を譲った。1614～1615年の**大坂の陣(おおさかのじん)**で**豊臣氏を滅ぼし**、全国支配の体制を整えた。",
+          "evidence": [
+            "hidetada-transfer",
+            "hidetada-name",
+            "osaka-name",
+            "osaka-winter",
+            "osaka-summer",
+            "national-rule"
+          ],
+          "keywords": [
+            "徳川秀忠",
+            "大坂の陣",
+            "豊臣氏を滅ぼし"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "16世紀末から17世紀前半の日本の「江戸幕府の成立」について説明せよ。",
+          "answer": "1600年の日本で、豊臣政権の維持を目指す**石田三成(いしだみつなり)**は、**関ヶ原の戦い(せきがはらのたたかい)**で**徳川家康**に敗れた。家康は1603年に**征夷大将軍(せいいたいしょうぐん)**に任命され、江戸を本拠として**江戸幕府**を開き、1605年に子の**徳川秀忠(とくがわひでただ)**へ将軍職を譲った。1614～1615年の**大坂の陣(おおさかのじん)**で**豊臣氏を滅ぼし**、全国支配の体制を整えた。",
+          "evidence": [
+            "sekigahara-year",
+            "sekigahara-name",
+            "mitsunari-goal",
+            "shogun-appointment",
+            "edo-establishment",
+            "hidetada-transfer",
+            "hidetada-name",
+            "osaka-name",
+            "osaka-winter",
+            "osaka-summer",
+            "national-rule"
+          ],
+          "keywords": [
+            "石田三成",
+            "関ヶ原の戦い",
+            "徳川家康",
+            "征夷大将軍",
+            "江戸幕府",
+            "徳川秀忠",
+            "大坂の陣",
+            "豊臣氏を滅ぼし"
+          ],
+          "note": ""
+        }
+      ],
+      "integrationPromptPrefix": "16世紀末から17世紀前半の日本の"
+    },
+    {
+      "id": "02",
+      "term": "幕藩体制と幕府の経済基盤",
+      "reading": "ばくはんたいせいとばくふのけいざいきばん",
+      "category": "支配・経済",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "17世紀前半",
+        "sortYear": 1615
+      },
+      "explanation": "幕府が大名の領国を統制する一方、大名はそれぞれの所領を支配した。幕府は直轄地と主要な鉱山を持ち、貨幣鋳造の権利も独占して経済基盤を確保した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、大名の所領や、その所領を統治する組織を何と呼ぶか。",
+          "answer": "**藩**。",
+          "evidence": [
+            "han-definition"
+          ],
+          "keywords": [
+            "藩"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府が直接支配した土地を何と呼ぶか。",
+          "answer": "**幕領(ばくりょう)**。",
+          "evidence": [
+            "bakuryou"
+          ],
+          "keywords": [
+            "幕領"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、将軍が諸大名を統制し、幕府と各領国によって全国を支配した仕組みを何というか。",
+          "answer": "**幕藩体制**。",
+          "evidence": [
+            "bakuhan"
+          ],
+          "keywords": [
+            "幕藩体制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の幕藩体制と幕府の経済基盤について、幕府は全国の主な鉱山をどのような土地として管理したか。",
+          "answer": "**幕府の直轄地**とした。",
+          "evidence": [
+            "mines"
+          ],
+          "keywords": [
+            "幕府の直轄地"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の幕藩体制と幕府の経済基盤について、幕府が独占した貨幣に関する権利は何か。",
+          "answer": "**貨幣鋳造(かへいちゅうぞう)の権利**。",
+          "evidence": [
+            "minting"
+          ],
+          "keywords": [
+            "貨幣鋳造の権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の幕藩体制と幕府の経済基盤について、幕府と大名の領国の関係を説明せよ。",
+          "answer": "17世紀前半の日本では、大名の所領やその統治組織を**藩**といい、幕府が藩を統制して全国を支配する**幕藩体制**が整えられた。",
+          "evidence": [
+            "national-rule",
+            "han-definition",
+            "bakuhan"
+          ],
+          "keywords": [
+            "藩",
+            "幕藩体制"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の幕藩体制と幕府の経済基盤について、幕府の収入と貨幣の支配はどのように支えられたか。",
+          "answer": "幕府は直轄地である**幕領(ばくりょう)**を持ち、**全国の主な鉱山**も直轄地として収入源にした。また、**貨幣鋳造(かへいちゅうぞう)の権利**を独占した。",
+          "evidence": [
+            "bakuryou",
+            "mines",
+            "minting"
+          ],
+          "keywords": [
+            "幕領",
+            "全国の主な鉱山",
+            "貨幣鋳造の権利"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「幕藩体制と幕府の経済基盤」について説明せよ。",
+          "answer": "17世紀前半の日本では、大名の所領や統治組織である**藩**を幕府が統制する**幕藩体制**が整えられた。幕府は直轄地の**幕領(ばくりょう)**や**全国の主な鉱山**を収入源とし、**貨幣鋳造(かへいちゅうぞう)の権利**を独占した。",
+          "evidence": [
+            "national-rule",
+            "han-definition",
+            "bakuhan",
+            "bakuryou",
+            "mines",
+            "minting"
+          ],
+          "keywords": [
+            "藩",
+            "幕藩体制",
+            "幕領",
+            "全国の主な鉱山",
+            "貨幣鋳造の権利"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "大名の区分と配置",
+      "reading": "だいみょうのくぶんとはいち",
+      "category": "大名統制",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "17世紀前半",
+        "sortYear": 1615
+      },
+      "explanation": "幕府は徳川家との関係によって大名を区分した。譜代大名は重要地に配置されて要職を担い、外様大名は遠隔地に配置されることもあり、原則として要職に就けなかった。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、徳川家一門の大名はどの区分と呼ばれたか。",
+          "answer": "**親藩(しんぱん)**。",
+          "evidence": [
+            "shinpan"
+          ],
+          "keywords": [
+            "親藩"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、古くから徳川氏の家臣であった大名はどの区分と呼ばれたか。",
+          "answer": "**譜代大名(ふだいだいみょう)**。",
+          "evidence": [
+            "fudai"
+          ],
+          "keywords": [
+            "譜代大名"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、関ヶ原の戦い前後から徳川氏に従った大名はどの区分と呼ばれたか。",
+          "answer": "**外様大名(とざまだいみょう)**。",
+          "evidence": [
+            "tozama"
+          ],
+          "keywords": [
+            "外様大名"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の大名の区分と配置について、譜代大名(ふだいだいみょう)は幕府の政治でどのような職に就いたか。",
+          "answer": "**幕府の要職**。",
+          "evidence": [
+            "fudai-role"
+          ],
+          "keywords": [
+            "幕府の要職"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の大名の区分と配置について、外様大名(とざまだいみょう)の幕府の要職への登用は、原則としてどのように制限されたか。",
+          "answer": "**原則として幕府の要職に就けなかった**。",
+          "evidence": [
+            "tozama-role"
+          ],
+          "keywords": [
+            "原則として幕府の要職に就けなかった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の大名の区分と配置について、徳川家との関係による区分を説明せよ。",
+          "answer": "17世紀前半の日本で、幕府は大名を、徳川家一門の**親藩(しんぱん)**、古くから家臣であった**譜代大名(ふだいだいみょう)**、関ヶ原の戦い前後から従った**外様大名(とざまだいみょう)**に区分した。",
+          "evidence": [
+            "national-rule",
+            "shinpan",
+            "fudai",
+            "tozama"
+          ],
+          "keywords": [
+            "親藩",
+            "譜代大名",
+            "外様大名"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の大名の区分と配置について、譜代大名(ふだいだいみょう)と外様大名(とざまだいみょう)の配置や政治上の扱いにはどのような違いがあったか。",
+          "answer": "**譜代大名(ふだいだいみょう)**は**重要地**に配置され、**幕府の要職**に就いた。**外様大名(とざまだいみょう)**は遠隔地に配置されることもあり、**原則として幕府の要職に就けなかった**。",
+          "evidence": [
+            "fudai-role",
+            "tozama-placement",
+            "tozama-role"
+          ],
+          "keywords": [
+            "譜代大名",
+            "重要地",
+            "幕府の要職",
+            "外様大名",
+            "原則として幕府の要職に就けなかった"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「大名の区分と配置」について説明せよ。",
+          "answer": "17世紀前半の日本で、幕府は大名を、徳川家一門の**親藩(しんぱん)**、古くから家臣であった**譜代大名(ふだいだいみょう)**、関ヶ原の戦い前後から従った**外様大名(とざまだいみょう)**に区分した。**譜代大名(ふだいだいみょう)**は**重要地**に配置され、**幕府の要職**に就いた。**外様大名(とざまだいみょう)**は遠隔地に配置されることもあり、**原則として幕府の要職に就けなかった**。",
+          "evidence": [
+            "national-rule",
+            "shinpan",
+            "fudai",
+            "tozama",
+            "fudai-role",
+            "tozama-placement",
+            "tozama-role"
+          ],
+          "keywords": [
+            "親藩",
+            "譜代大名",
+            "外様大名",
+            "重要地",
+            "幕府の要職",
+            "原則として幕府の要職に就けなかった"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "幕府の政治組織",
+      "reading": "ばくふのせいじそしき",
+      "category": "政治組織",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "17世紀前半",
+        "sortYear": 1615
+      },
+      "explanation": "幕府の政務は老中が主に担い、若年寄は老中を補佐して旗本・御家人を監督した。三奉行は財政、江戸の民政、寺社・寺社領の行政や司法を分担した。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府の政務を主に担い、総括した役職は何か。",
+          "answer": "**老中(ろうじゅう)**。",
+          "evidence": [
+            "roju-role"
+          ],
+          "keywords": [
+            "老中"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、老中(ろうじゅう)を補佐した役職は何か。",
+          "answer": "**若年寄(わかどしより)**。",
+          "evidence": [
+            "wakadoshiyori-assistance"
+          ],
+          "keywords": [
+            "若年寄"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の幕府の政治組織について、若年寄(わかどしより)が監督した将軍直属の家臣の区分は何か。",
+          "answer": "**旗本(はたもと)・御家人(ごけにん)**。",
+          "evidence": [
+            "wakadoshiyori-supervision"
+          ],
+          "keywords": [
+            "旗本・御家人"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府の財政運営や幕領の年貢徴収を担った奉行は何か。",
+          "answer": "**勘定奉行(かんじょうぶぎょう)**。",
+          "evidence": [
+            "kanjo-role"
+          ],
+          "keywords": [
+            "勘定奉行"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、江戸の町と町人を管轄し、その行政・司法・警察を担った奉行は何か。",
+          "answer": "**町奉行(まちぶぎょう)**。",
+          "evidence": [
+            "machi-role"
+          ],
+          "keywords": [
+            "町奉行"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、将軍直属の役職として、寺社と寺社領の行政・司法を担った奉行は何か。",
+          "answer": "**寺社奉行(じしゃぶぎょう)**。",
+          "evidence": [
+            "jisha-direct",
+            "jisha-role"
+          ],
+          "keywords": [
+            "寺社奉行"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の幕府の政治組織について、老中(ろうじゅう)と若年寄(わかどしより)の役割を説明せよ。",
+          "answer": "17世紀前半の日本の幕府では、**老中(ろうじゅう)**が政務を主に担った。**若年寄(わかどしより)**は老中を補佐し、**旗本(はたもと)・御家人(ごけにん)**を監督した。",
+          "evidence": [
+            "national-rule",
+            "roju-role",
+            "wakadoshiyori-assistance",
+            "wakadoshiyori-supervision"
+          ],
+          "keywords": [
+            "老中",
+            "若年寄",
+            "旗本・御家人"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の幕府の政治組織について、三奉行はどのように仕事を分担したか。",
+          "answer": "**勘定奉行(かんじょうぶぎょう)**は幕府財政や幕領の年貢徴収を担い、**町奉行(まちぶぎょう)**は江戸の町と町人の行政・司法・警察を担当した。将軍直属の**寺社奉行(じしゃぶぎょう)**は、寺社と寺社領の行政・司法を担った。",
+          "evidence": [
+            "kanjo-role",
+            "machi-role",
+            "jisha-direct",
+            "jisha-role"
+          ],
+          "keywords": [
+            "勘定奉行",
+            "町奉行",
+            "寺社奉行"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「幕府の政治組織」について説明せよ。",
+          "answer": "17世紀前半の日本の幕府では、**老中(ろうじゅう)**が政務を主に担い、**若年寄(わかどしより)**が老中を補佐して**旗本(はたもと)・御家人(ごけにん)**を監督した。**勘定奉行(かんじょうぶぎょう)**は幕府財政や幕領の年貢徴収を担い、**町奉行(まちぶぎょう)**は江戸の町と町人の行政・司法・警察を担当した。将軍直属の**寺社奉行(じしゃぶぎょう)**は寺社と寺社領の行政・司法を担った。",
+          "evidence": [
+            "national-rule",
+            "roju-role",
+            "wakadoshiyori-assistance",
+            "wakadoshiyori-supervision",
+            "kanjo-role",
+            "machi-role",
+            "jisha-direct",
+            "jisha-role"
+          ],
+          "keywords": [
+            "老中",
+            "若年寄",
+            "旗本・御家人",
+            "勘定奉行",
+            "町奉行",
+            "寺社奉行"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "武家諸法度と大名統制",
+      "reading": "ぶけしょはっととだいみょうとうせい",
+      "category": "法令・大名統制",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1615・1635年",
+        "sortYear": 1615
+      },
+      "explanation": "武家諸法度は全国の大名を統制する法令だった。寛永令では、城の修理に申し出を求め、新しい築城を禁止し、婚姻にも幕府の許可を求めた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府が全国の大名を統制するため定めた法令は何か。",
+          "answer": "**武家諸法度(ぶけしょはっと)**。",
+          "evidence": [
+            "buke-purpose"
+          ],
+          "keywords": [
+            "武家諸法度"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "1635年の日本の武家諸法度と大名統制について、寛永令(かんえいれい)は城を修理するとき何を求めたか。",
+          "answer": "**幕府に申し出る**こと。",
+          "evidence": [
+            "kan-ei-date",
+            "castle-repair"
+          ],
+          "keywords": [
+            "幕府に申し出る"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "1635年の日本の武家諸法度と大名統制について、寛永令(かんえいれい)は新しく城を造ることをどう定めたか。",
+          "answer": "**新しい城の建築を禁止**した。",
+          "evidence": [
+            "kan-ei-date",
+            "new-castle"
+          ],
+          "keywords": [
+            "新しい城の建築を禁止"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "1635年の日本の武家諸法度と大名統制について、寛永令(かんえいれい)は大名の婚姻にどのような手続きを求めたか。",
+          "answer": "**幕府の許可を得る**こと。",
+          "evidence": [
+            "kan-ei-date",
+            "marriage-permission"
+          ],
+          "keywords": [
+            "幕府の許可を得る"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の武家諸法度と大名統制について、法令は大名の統制でどのような役割を果たしたか。",
+          "answer": "1615年、日本の江戸幕府は**武家諸法度(ぶけしょはっと)**を定めて**全国の大名を統制**した。1635年の**寛永令(かんえいれい)**には、大名の城や婚姻に関する規定が示された。",
+          "evidence": [
+            "buke-purpose",
+            "laws-1615",
+            "kan-ei-date",
+            "castle-repair",
+            "new-castle",
+            "marriage-permission"
+          ],
+          "keywords": [
+            "武家諸法度",
+            "全国の大名を統制",
+            "寛永令"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の武家諸法度と大名統制について、寛永令(かんえいれい)は城と婚姻をどのように統制したか。",
+          "answer": "寛永令は、**城の修理を幕府へ申し出る**ことを求め、**新しい城の建築を禁止**した。また、**大名の婚姻には幕府の許可**が必要とされた。",
+          "evidence": [
+            "castle-repair",
+            "new-castle",
+            "marriage-permission"
+          ],
+          "keywords": [
+            "城の修理を幕府へ申し出る",
+            "新しい城の建築を禁止",
+            "大名の婚姻には幕府の許可"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「武家諸法度と大名統制」について説明せよ。",
+          "answer": "1615年、日本の江戸幕府は**武家諸法度(ぶけしょはっと)**を定めて**全国の大名を統制**した。1635年の**寛永令(かんえいれい)**では、**城の修理を幕府へ申し出る**ことを求め、**新しい城の建築を禁止**した。**大名の婚姻には幕府の許可**が必要とされた。",
+          "evidence": [
+            "buke-purpose",
+            "laws-1615",
+            "kan-ei-date",
+            "castle-repair",
+            "new-castle",
+            "marriage-permission"
+          ],
+          "keywords": [
+            "武家諸法度",
+            "全国の大名を統制",
+            "寛永令",
+            "城の修理を幕府へ申し出る",
+            "新しい城の建築を禁止",
+            "大名の婚姻には幕府の許可"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "term": "参勤交代と経済への影響",
+      "reading": "さんきんこうたいとけいざいへのえいきょう",
+      "category": "大名統制・経済",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1635年以降",
+        "sortYear": 1635
+      },
+      "explanation": "参勤交代では大名の往復と江戸での生活に費用がかかり、妻子の江戸居住も求められた。大名が年貢米や特産品を大坂で販売して貨幣を得ることと、江戸が消費都市となることは、大坂・江戸と全国の流通を結び付けた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、大名が一年おきに領地と江戸を行き来する制度を何というか。",
+          "answer": "**参勤交代(さんきんこうたい)**。",
+          "evidence": [
+            "sankin-name",
+            "sankin-alternation"
+          ],
+          "keywords": [
+            "参勤交代"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "person",
+          "form": "短答",
+          "prompt": "江戸時代の日本の参勤交代と経済への影響について、制度を整えた三代将軍は誰か。",
+          "answer": "**徳川家光(とくがわいえみつ)**。",
+          "evidence": [
+            "iemitsu-name",
+            "sankin-name"
+          ],
+          "keywords": [
+            "徳川家光"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の参勤交代と経済への影響について、大名は往復と江戸での生活のため、どのような費用を負担したか。",
+          "answer": "**旅費と江戸での滞在費**。",
+          "evidence": [
+            "sankin-cost"
+          ],
+          "keywords": [
+            "旅費と江戸での滞在費"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の参勤交代と経済への影響について、大名の妻子の居住にはどのような義務があったか。",
+          "answer": "**妻子の江戸居住**が義務づけられた。",
+          "evidence": [
+            "sankin-wives"
+          ],
+          "keywords": [
+            "妻子の江戸居住"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "place",
+          "form": "短答",
+          "prompt": "江戸時代の日本の参勤交代と経済への影響について、大名が費用を得るため、年貢米や特産品を販売して貨幣に交換した都市はどこか。",
+          "answer": "**大坂(おおさか)**。",
+          "evidence": [
+            "sankin-products"
+          ],
+          "keywords": [
+            "大坂"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "result",
+          "form": "短答",
+          "prompt": "江戸時代の日本の参勤交代と経済への影響について、大名や家臣団の居住が広がった江戸は、どのような性格の都市になったか。",
+          "answer": "**大消費都市**。",
+          "evidence": [
+            "edo-consumption"
+          ],
+          "keywords": [
+            "大消費都市"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の参勤交代と経済への影響について、制度の内容と大名や妻子への統制を説明せよ。",
+          "answer": "1635年、日本で**徳川家光(とくがわいえみつ)**の時代に**参勤交代(さんきんこうたい)**が制度化され、大名は**一年おきに領地と江戸を往復**し、**旅費と江戸での滞在費**を負担した。幕府は**妻子の江戸居住**を義務づけ、**事実上の人質**として留め置いた。",
+          "evidence": [
+            "iemitsu-name",
+            "sankin-name",
+            "kan-ei-date",
+            "sankin-regulation",
+            "sankin-alternation",
+            "sankin-cost",
+            "sankin-wives",
+            "sankin-hostages"
+          ],
+          "keywords": [
+            "徳川家光",
+            "参勤交代",
+            "一年おきに領地と江戸を往復",
+            "旅費と江戸での滞在費",
+            "妻子の江戸居住",
+            "事実上の人質"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の参勤交代と経済への影響について、制度は都市と全国の流通にどのような影響を与えたか。",
+          "answer": "費用を用意するため、大名は**年貢米や特産品を大坂で販売し、貨幣に交換**した。江戸は**大消費都市**となり、**全国各地と大坂、大坂と江戸を結ぶ流通経路**が確立した。これにより**貨幣経済や商工業**が発展した。",
+          "evidence": [
+            "sankin-cost",
+            "sankin-products",
+            "edo-consumption",
+            "sankin-routes"
+          ],
+          "keywords": [
+            "年貢米や特産品を大坂で販売し、貨幣に交換",
+            "大消費都市",
+            "全国各地と大坂、大坂と江戸を結ぶ流通経路",
+            "貨幣経済や商工業"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「参勤交代と経済への影響」について説明せよ。",
+          "answer": "1635年、日本で**徳川家光(とくがわいえみつ)**の時代に**参勤交代(さんきんこうたい)**が制度化され、大名は**一年おきに領地と江戸を往復**し、**旅費と江戸での滞在費**を負担した。幕府は**妻子の江戸居住**を義務づけ、**事実上の人質**として留め置き、大名は**年貢米や特産品を大坂で販売し、貨幣に交換**して費用を用意した。江戸は**大消費都市**となり、**全国各地と大坂、大坂と江戸を結ぶ流通経路**が確立して、**貨幣経済や商工業**が発展した。",
+          "evidence": [
+            "iemitsu-name",
+            "sankin-name",
+            "kan-ei-date",
+            "sankin-regulation",
+            "sankin-alternation",
+            "sankin-cost",
+            "sankin-wives",
+            "sankin-hostages",
+            "sankin-products",
+            "edo-consumption",
+            "sankin-routes"
+          ],
+          "keywords": [
+            "徳川家光",
+            "参勤交代",
+            "一年おきに領地と江戸を往復",
+            "旅費と江戸での滞在費",
+            "妻子の江戸居住",
+            "事実上の人質",
+            "年貢米や特産品を大坂で販売し、貨幣に交換",
+            "大消費都市",
+            "全国各地と大坂、大坂と江戸を結ぶ流通経路",
+            "貨幣経済や商工業"
+          ],
+          "note": ""
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "term": "朝廷と寺院の統制",
+      "reading": "ちょうていとじいんのとうせい",
+      "category": "法令・朝廷・宗教",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "1615年の法令と江戸時代前期",
+        "sortYear": 1615
+      },
+      "explanation": "幕府は京都所司代と法令によって朝廷を統制した。禁中並公家諸法度は天皇と公家を法的に統制し、第一条は学問を天皇が第一に修めるものとした。寺院は宗派ごとの本山を通して統制された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府が天皇と公家を法的に統制するため定めた法令は何か。",
+          "answer": "**禁中並公家諸法度(きんちゅうならびにくげしょはっと)**。",
+          "evidence": [
+            "court-control"
+          ],
+          "keywords": [
+            "禁中並公家諸法度"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "短答",
+          "prompt": "江戸時代の日本で、幕府が京都に置き、朝廷を監視した役職は何か。",
+          "answer": "**京都所司代(きょうとしょしだい)**。",
+          "evidence": [
+            "kyoto-shoshidai"
+          ],
+          "keywords": [
+            "京都所司代"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "1615年の日本の朝廷と寺院の統制について、禁中並公家諸法度(きんちゅうならびにくげしょはっと)の第一条は、天皇が第一に修めるべきことを何としたか。",
+          "answer": "**学問**。",
+          "evidence": [
+            "court-law-date",
+            "imperial-learning"
+          ],
+          "keywords": [
+            "学問"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "短答",
+          "prompt": "江戸時代の日本の朝廷と寺院の統制について、幕府は宗派ごとの寺を、どの組織を通じて統制したか。",
+          "answer": "**本山(ほんざん)**。",
+          "evidence": [
+            "temple-control"
+          ],
+          "keywords": [
+            "本山"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の朝廷と寺院の統制について、幕府は朝廷を役職と法令でどのように統制したか。",
+          "answer": "日本の江戸幕府は、**京都所司代(きょうとしょしだい)**を置いて**朝廷を監視**した。1615年に**禁中並公家諸法度(きんちゅうならびにくげしょはっと)**を定めて**天皇と公家を法的に統制**し、第一条では天皇が第一に修めるべきことを**学問**とした。",
+          "evidence": [
+            "kyoto-shoshidai",
+            "court-control",
+            "court-law-date",
+            "imperial-learning"
+          ],
+          "keywords": [
+            "京都所司代",
+            "朝廷を監視",
+            "禁中並公家諸法度",
+            "天皇と公家を法的に統制",
+            "学問"
+          ],
+          "note": ""
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "江戸時代前期の日本の朝廷と寺院の統制について、幕府による寺院の統制はどのような仕組みだったか。",
+          "answer": "幕府は**寺院法度(じいんはっと)**を出し、宗派ごとの**本山(ほんざん)**を通じて寺を統制した。",
+          "evidence": [
+            "temple-control"
+          ],
+          "keywords": [
+            "寺院法度",
+            "本山"
+          ],
+          "note": ""
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "江戸時代前期の日本の「朝廷と寺院の統制」について説明せよ。",
+          "answer": "日本の江戸幕府は、**京都所司代(きょうとしょしだい)**を置いて**朝廷を監視**した。1615年に**禁中並公家諸法度(きんちゅうならびにくげしょはっと)**を定めて**天皇と公家を法的に統制**し、第一条では天皇が第一に修めるべきことを**学問**とした。幕府は**寺院法度(じいんはっと)**によって、宗派ごとの**本山(ほんざん)**を通じて寺を統制した。",
+          "evidence": [
+            "kyoto-shoshidai",
+            "court-control",
+            "court-law-date",
+            "imperial-learning",
+            "temple-control"
+          ],
+          "keywords": [
+            "京都所司代",
+            "朝廷を監視",
+            "禁中並公家諸法度",
+            "天皇と公家を法的に統制",
+            "学問",
+            "寺院法度",
+            "本山"
+          ],
+          "note": ""
+        }
+      ]
+    }
+  ]
+}

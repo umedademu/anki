@@ -37,7 +37,10 @@
     "book-02-01-03",
     "book-02-01-04",
     "book-02-01-05",
-    "book-02-01-06"
+    "book-02-01-06",
+    "book-02-01-07",
+    "book-02-01-08",
+    "book-02-02-01"
   ],
   "images": [
     {
@@ -2222,6 +2225,175 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-c06024cdfabb6cad2612",
+      "caption": "稲荷山古墳出土鉄剣の展示写真",
+      "note": "稲荷山古墳から出土した鉄剣の博物館での展示写真。鉄剣銘の名称への回答後に、文字を刻んだ鉄剣の全体の姿を確認する。埋葬時や製作時の写真ではなく、展示台や留め金を当時の付属品とは扱わない。銘文の全文読解・文字数・寸法・出土年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-07-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1005bf4fcc479f568e34",
+      "caption": "稲荷山古墳出土鉄剣の裏面の銘文",
+      "note": "稲荷山古墳出土鉄剣の裏面の銘文の写真。臣下が大王に仕えた由来を記すという製作目的と、製作・下賜の可能性への回答後に、文字を記した刀身を確認する。文字を全て読めることは要求せず、写真だけで製作者・製作地・下賜の有無を確定させない。現代の留め金を銘文の一部と扱わない。漢文の字形や臣下の個人名を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-07-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3a40994251413fd3ef9b",
+      "caption": "稲荷山古墳出土鉄剣の「獲加多支鹵大王」の文字",
+      "note": "稲荷山古墳出土鉄剣にある「獲加多支鹵大王」の文字の写真。漢字の音による人名の表記と、ワカタケル大王を含む共通点・全体説明への回答後に、文字史料の姿を確認する。江田船山の鉄刀との比較写真ではなく、鉄剣の裏表の全文や「治天下」の全てを写す写真とも扱わない。字形を暗記して読ませる問題は加えず、この写真だけで両銘文の一致や雄略天皇との対応を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-07-U01",
+          "questions": [
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-cfbf938600eb5c9574ae",
+      "caption": "江田船山古墳出土鉄刀の展示写真",
+      "note": "江田船山古墳から出土した鉄刀の展示写真。鉄刀銘の名称への回答後に、史料が刀身に記されていることを確認する。背後の解説板を刀の一部や古代の同時代史料とは扱わず、写真から全文を読めることも要求しない。稲荷山の鉄剣と出土地を取り違えないように説明を分ける。個別の官名・文字数・寸法・出土年は暗記対象に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-07-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6d7d9d08613a4f2c0aa3",
+      "caption": "江田船山古墳出土鉄刀の銘文（1930年刊行の写真）",
+      "note": "1930年刊行の『日本考古図録大成 第９輯』に載る江田船山古墳出土鉄刀の銘文の写真。日本列島の最初期の文字史料の説明への回答後に、刀身の文字を確認する。一つの刀の銘文を複数の区画に分けて掲載した写真で、四本の刀を並べた写真ではない。古代の撮影記録や現代語訳の本文とは扱わず、全ての漢字の読解や人名表記を新しい学習条件にしない。撮影者は断定せず、掲載資料の編著者と区別する。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-07-U01",
+          "questions": [
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像）",
+      "note": "登録済みのNASAの衛星画像を共有する。渡来人の名称、仏教伝来の百済という国名と、大陸文化の全体説明への回答後に、列島と半島の位置関係を確認する。渡来人の実際の航路・出身地・古代の国境・百済の領域・仏教公伝の場面を示す画像ではなく、画像だけで国名や渡来時期を判定させない。細部の地名や航路は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-08-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-af9cb1c60e957c836f52",
+      "caption": "論語の後世の刊本（注釈付きの元代刊本の影印）",
+      "note": "登録済みの論語の刊本の影印を共有する。儒学の名称と、儒学・漢字文化を含む大陸文化の説明への回答後に、論語という書物の姿の例を確認する。４～６世紀に日本へ持ち込まれた本そのもの、渡来の現場の記録、孔子の自筆とは扱わない。千字文や養蚕・機織り・鍛冶の技術を写す画像でもない。字体・注釈者・刊行時期は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-08-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9becf4d7ea45bcf5a5d9",
+      "caption": "土師器の一例（相作馬塚古墳出土の壺）",
+      "note": "相作馬塚古墳出土の土師器の壺の展示写真。土師器の名称への回答後に、土器の一例を確認する。接合・補修された展示状態を含み、弥生土器そのものとは扱わない。全ての土師器が同じ壺の形を持つとはせず、破片や展示台を製作技術の証拠にしない。器種の分類・出土地・破片数は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-08-U02",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-58767fa00fe82f5aaf8c",
+      "caption": "須恵器の一例（５世紀、森ヶ沢遺跡出土）",
+      "note": "森ヶ沢遺跡から出土した５世紀の須恵器の展示写真。須恵器の名称、土師器との違いと全体説明への回答後に、灰色の土器の一例を確認する。製作中の轆轤やのぼり窯、鉄製農具、農業の祭りを写す写真ではなく、色や形だけで全ての土器を分類させない。須恵器をこの一つの器形に限定せず、窯の温度・器種名・出土地は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-08-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f890fddeb93b87",
+      "caption": "奈良県飛鳥の現在の風景",
+      "note": "奈良県の飛鳥を望む現在の写真。飛鳥の所在地と、中心地を含む国家形成の説明への回答後に、地域の風景を確認する。古代の都や宮殿の復元図、律や令の本文、中央集権の実現を証明する資料とは扱わない。写る全ての建物・水田を飛鳥時代の遺存と断定せず、背景の山名・撮影地点は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-01-U01",
+          "questions": [
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5632ed277d7287380141",
+      "caption": "小型の円墳が並ぶ例（岩橋千塚古墳群の現在の姿）",
+      "note": "岩橋千塚古墳群の前山Ａ地区の円墳群の現在の写真。群集墳の名称と古墳造営の変化への回答後に、小型の墳丘が並ぶ例を確認する。古墳群の全ての分布や全てが同じ年代であることを示すものではなく、６～７世紀だけに築造が限定されるとも断定しない。現代の園路は古代のままではなく、薄葬令の本文や殉死の有無を証明する写真でもない。遺跡名・墳丘の数・墓の内部構造は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-01-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3894ca29fe9c67",
+      "caption": "氏寺の例である飛鳥寺（現在の本堂）",
+      "note": "飛鳥寺の現在の本堂の写真。氏寺の名称と蘇我氏の飛鳥寺を含む造営活動への回答後に、寺院の現在の姿を確認する。古代の建物がそのまま残る写真や創建時の伽藍の復元とは扱わず、６世紀の仏教公伝で贈られた仏像・経典そのものも写していない。仏教の受容や古墳の衰退を写真だけで証明させず、屋根や建築の細部は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-01-U02",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -3220,6 +3392,102 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NintokuTomb_Aerial_photograph_2007.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-7b6c2a80c593de4a8c95.jpg",
       "sha256": "7b6c2a80c593de4a8c958130663af529513c68c0572e335e4358a7c2484b9ad7"
+    },
+    {
+      "id": "JHKS-c06024cdfabb6cad2612",
+      "path": "term-images/japanese-history-k/JHKS-c06024cdfabb6cad2612.jpg",
+      "alt": "稲荷山古墳出土鉄剣の展示写真",
+      "caption": "稲荷山古墳出土鉄剣の展示写真",
+      "creator": "Ocdp",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Inariyama_sword_001.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c06024cdfabb6cad2612.jpg",
+      "sha256": "c06024cdfabb6cad26122a6bd21c23d6d33b856679cef811850971563503aaec"
+    },
+    {
+      "id": "JHKS-1005bf4fcc479f568e34",
+      "path": "term-images/japanese-history-k/JHKS-1005bf4fcc479f568e34.jpg",
+      "alt": "稲荷山古墳出土鉄剣の裏面の銘文",
+      "caption": "稲荷山古墳出土鉄剣の裏面の銘文",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%A8%B2%E8%8D%B7%E5%B1%B1%E5%8F%A4%E5%A2%B3%E5%87%BA%E5%9C%9F%E9%89%84%E5%89%A3_(%E8%A3%8F%E9%9D%A2).JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1005bf4fcc479f568e34.jpg",
+      "sha256": "1005bf4fcc479f568e34f456633efb98d90aa60c6099430406ea47e9c4f6a5cd"
+    },
+    {
+      "id": "JHKS-3a40994251413fd3ef9b",
+      "path": "term-images/japanese-history-k/JHKS-3a40994251413fd3ef9b.jpg",
+      "alt": "稲荷山古墳出土鉄剣の「獲加多支鹵大王」の文字",
+      "caption": "稲荷山古墳出土鉄剣の「獲加多支鹵大王」の文字",
+      "creator": "斑猫",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E9%87%91%E9%8C%AF%E9%8A%98%E9%89%84%E5%89%A3%E3%80%8C%E7%8D%B2%E5%8A%A0%E5%A4%9A%E6%94%AF%E9%B9%B5%E3%80%8D%E9%8A%98%E9%83%A8%E5%88%86.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3a40994251413fd3ef9b.jpg",
+      "sha256": "3a40994251413fd3ef9b52d44ecfe15f4524a7e913e109ec919d16a1ff76558c"
+    },
+    {
+      "id": "JHKS-cfbf938600eb5c9574ae",
+      "path": "term-images/japanese-history-k/JHKS-cfbf938600eb5c9574ae.jpg",
+      "alt": "江田船山古墳出土鉄刀の展示写真",
+      "caption": "江田船山古墳出土鉄刀の展示写真",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%B1%9F%E7%94%B0%E8%88%B9%E5%B1%B1%E5%8F%A4%E5%A2%B3%E5%87%BA%E5%9C%9F_%E9%8A%80%E8%B1%A1%E5%B5%8C%E9%8A%98%E5%A4%A7%E5%88%80.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-cfbf938600eb5c9574ae.jpg",
+      "sha256": "cfbf938600eb5c9574ae58bf694cca73627c553f57952f673e06dad87d74139d"
+    },
+    {
+      "id": "JHKS-6d7d9d08613a4f2c0aa3",
+      "path": "term-images/japanese-history-k/JHKS-6d7d9d08613a4f2c0aa3.jpg",
+      "alt": "江田船山古墳出土鉄刀の銘文（1930年刊行の写真）",
+      "caption": "江田船山古墳出土鉄刀の銘文（1930年刊行の写真）",
+      "creator": "撮影者不詳（後藤守一『日本考古図録大成 第９輯』）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Inscription_of_Iron_sword_with_silver_inlay_inscription_(Tokyo_National_Museum).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6d7d9d08613a4f2c0aa3.jpg",
+      "sha256": "6d7d9d08613a4f2c0aa38f4d06de92e2bc53eec306f43b8da727c2a700419fda"
+    },
+    {
+      "id": "JHKS-9becf4d7ea45bcf5a5d9",
+      "path": "term-images/japanese-history-k/JHKS-9becf4d7ea45bcf5a5d9.jpg",
+      "alt": "土師器の一例（相作馬塚古墳出土の壺）",
+      "caption": "土師器の一例（相作馬塚古墳出土の壺）",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%9B%B8%E4%BD%9C%E9%A6%AC%E5%A1%9A%E5%8F%A4%E5%A2%B3_%E5%9C%9F%E5%B8%AB%E5%99%A8_%E5%A3%BA.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9becf4d7ea45bcf5a5d9.jpg",
+      "sha256": "9becf4d7ea45bcf5a5d9569bf68c3f8d140bf83c64062139b4739a0899c2735f"
+    },
+    {
+      "id": "JHKS-58767fa00fe82f5aaf8c",
+      "path": "term-images/japanese-history-k/JHKS-58767fa00fe82f5aaf8c.jpg",
+      "alt": "須恵器の一例（５世紀、森ヶ沢遺跡出土）",
+      "caption": "須恵器の一例（５世紀、森ヶ沢遺跡出土）",
+      "creator": "Kinori",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sueki-MorigaswaIseki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-58767fa00fe82f5aaf8c.jpg",
+      "sha256": "58767fa00fe82f5aaf8cdabac944995fb615437f937cbd2f047d797a8869af79"
+    },
+    {
+      "id": "JHKS-5632ed277d7287380141",
+      "path": "term-images/japanese-history-k/JHKS-5632ed277d7287380141.jpg",
+      "alt": "小型の円墳が並ぶ例（岩橋千塚古墳群の現在の姿）",
+      "caption": "小型の円墳が並ぶ例（岩橋千塚古墳群の現在の姿）",
+      "creator": "Saigen Jiro",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Iwase-senzuka-kofungun-1.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5632ed277d7287380141.jpg",
+      "sha256": "5632ed277d72873801412f476dca4fef39f2103822efa66866564aa7f2965a8b"
     }
   ]
 }

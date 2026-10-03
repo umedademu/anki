@@ -31,6 +31,7 @@ let catalogEtag = "catalog-before", imageEtag = "images-before", stored = oldTex
 const writes = [];
 const env = {
   ACCESS_TOKEN: "test-only", READ_KEYS: JSON.stringify(["index.json", "term-images.json"]),
+  QUESTION_IDS: JSON.stringify([question.id]),
   PREVIOUS_IMAGES_HASH: hash(oldText), NEXT_IMAGES_HASH: hash(newText),
   BUCKET: {
     async get(key) { return key === "term-images.json" ? { etag: imageEtag, text: async () => stored } : null; },
@@ -54,4 +55,43 @@ assert.equal((await send(commit)).status, 200); assert.equal(stored, newText);
 assert.deepEqual(writes.map(value => value.key), ["term-images-history/japanese-history-k/images-before.json", "term-images.json"]);
 assert.equal(writes[0].text, oldText); assert.equal((await send(commit)).status, 409);
 assert.equal(writes.length, 2, "古い版による再送は画像一覧を上書きしません。");
+const bytes = Buffer.from([255, 216, 255, 224, 1, 2, 3, 4, 255, 217]);
+const sha256 = hash(bytes), id = "JHKS-" + sha256.slice(0, 20);
+const source = { ...asset, id, path: `term-images/japanese-history-k/${id}.jpg`, sourceFile: `data/source/japanese-history-k/images/${id}.jpg`, sha256 };
+const withSource = { ...selection, sources: [source], images: [{ ...selection.images[0], sourceAssetId: id }] };
+const prepared = buildJapaneseKImages(snapshot, withSource);
+assert.equal(prepared.addedAssets.length, 2); assert.equal(prepared.addedAssignments.length, 1);
+assert.equal(buildJapaneseKImages({ ...snapshot, images: prepared.manifest }, withSource).addedAssets.length, 0);
+assert.throws(() => buildJapaneseKImages(snapshot, { ...withSource, sources: [{ ...source, sha256: "bad" }] }));
+assert.throws(() => buildJapaneseKImages(snapshot, { ...withSource, sources: [{ ...source, sourceFile: "../outside.jpg" }] }));
+const binaries = new Map(), binaryWrites = [];
+stored = oldText; imageEtag = "images-before";
+const preparedText = JSON.stringify(prepared.manifest);
+const binaryEnv = { ...env, NEXT_IMAGES_HASH: hash(preparedText), NEW_IMAGES: JSON.stringify({ [source.path]: sha256 }), BUCKET: {
+  ...env.BUCKET,
+  async get(key) { if (binaries.has(key)) return { arrayBuffer: async () => binaries.get(key) }; return env.BUCKET.get(key); },
+  async put(key, value, options) {
+    if (key === source.path) {
+      assert.equal(options.onlyIf.get("If-None-Match"), "*");
+      if (binaries.has(key)) return null; binaries.set(key, value); binaryWrites.push(key); return { etag: "new-image" };
+    }
+    return env.BUCKET.put(key, value, options);
+  },
+} };
+const sendBinary = (body, authorization = "Bearer test-only") => storageWorker.fetch(new Request("https://test.invalid", { method: "POST", headers: { Authorization: authorization, "Content-Type": "application/json" }, body: JSON.stringify(body) }), binaryEnv);
+const imageRequest = { action: "image", key: source.path, base64: bytes.toString("base64") };
+const imageCommit = { ...commit, text: preparedText };
+assert.equal((await sendBinary(imageCommit)).status, 409, "画像本体を登録・照合する前に一覧を公開しません。");
+assert.equal((await sendBinary(imageRequest, "Bearer wrong")).status, 401);
+assert.equal((await sendBinary({ ...imageRequest, key: "term-images/old.webp" })).status, 403);
+assert.equal((await sendBinary({ ...imageRequest, base64: Buffer.from("wrong").toString("base64") })).status, 400);
+assert.equal((await sendBinary(imageRequest)).status, 200);
+assert.equal((await sendBinary(imageRequest)).status, 200); assert.equal(binaryWrites.length, 1);
+assert.equal((await (await sendBinary({ action: "image-check", key: source.path })).json()).sha256, sha256);
+const validBytes = binaries.get(source.path); binaries.set(source.path, bytes.subarray(0, 2));
+assert.equal((await sendBinary(imageRequest)).status, 409, "同じ保存先の既存画像は上書きしません。"); binaries.set(source.path, validBytes);
+binaryEnv.QUESTION_IDS = "[]"; assert.equal((await sendBinary(imageCommit)).status, 400, "点検した問題番号以外への追加を拒否します。");
+binaryEnv.QUESTION_IDS = env.QUESTION_IDS;
+assert.equal((await sendBinary(imageCommit)).status, 200);
+assert.equal(stored, preparedText);
 console.log("日本史Kの画像追加：元の問題・画像・他科目の保持、画像本体の共有、再実行、編集済み指定の拒否、認証・範囲・同時編集の拒否と旧一覧の保持を確認しました。");

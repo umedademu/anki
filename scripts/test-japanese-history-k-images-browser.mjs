@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
+import { createHash } from "node:crypto";
 import { readFile, mkdir } from "node:fs/promises";
 import path from "node:path";
 import { chromium } from "playwright";
@@ -23,13 +24,20 @@ const decks = await Promise.all(selection.deckIds.map(async id => {
 const result = buildJapaneseKImages({ catalog, images, decks }, selection);
 objects.set("term-images.json", Buffer.from(JSON.stringify(result.manifest)));
 const imageByQuestion = new Map(result.audit.map(value => [value.questionId, value]));
-for (const imagePath of new Set(result.audit.map(value => value.path))) await cloud(imagePath);
+for (const imagePath of new Set(result.audit.map(value => value.path))) {
+  const source = selection.sources?.find(value => value.path === imagePath);
+  // 新規画像の公開前の表示点検だけは、登録予定の画像本体を使用する。
+  if (source && !images.assets.some(asset => asset.path === imagePath)) {
+    const bytes = await readFile(new URL("../" + source.sourceFile, import.meta.url));
+    assert.equal(createHash("sha256").update(bytes).digest("hex"), source.sha256); objects.set(imagePath, bytes);
+  } else await cloud(imagePath);
+}
 const terms = decks.flatMap(deck => deck.chunks.flatMap(chunk => chunk.terms)).filter(term => Object.values(term.stages).flat().some(question => imageByQuestion.has(question.id)));
 const off = { history: { question: false, answer: false, explanation: false, mnemonic: false }, vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false } };
 const defaults = () => ({ autoSpeechEnabled: false, speechParts: off, setupPreferences: { subjects: {} }, studyTimeLimitSeconds: 600, ratingSoundVolume: 0 });
 let settings = defaults(), failManifest = false, failImages = false;
 const sessions = new Map(), progress = new Map(), requests = [], answers = [];
-const contentTypes = { ".js": "text/javascript", ".html": "text/html", ".css": "text/css", ".svg": "image/svg+xml", ".webp": "image/webp", ".json": "application/json" };
+const contentTypes = { ".js": "text/javascript", ".html": "text/html", ".css": "text/css", ".svg": "image/svg+xml", ".webp": "image/webp", ".jpg": "image/jpeg", ".json": "application/json" };
 const server = createServer(async (req, res) => {
   try {
     const url = new URL(req.url, "http://localhost"); requests.push(url.pathname);

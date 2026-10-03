@@ -1,15 +1,37 @@
 {
   "schemaVersion": 1,
   "subjectId": "japanese-history-k",
-  "deckIds": ["book-06-01-01", "book-06-01-02", "book-06-01-03"],
+  "deckIds": [
+    "book-06-01-01",
+    "book-06-01-02",
+    "book-06-01-03",
+    "book-06-01-04",
+    "book-06-01-05",
+    "book-06-01-06"
+  ],
   "images": [
     {
       "sourceAssetId": "WMJ-2e96e49ece3292",
       "caption": "ＧＨＱが置かれた第一生命館",
       "note": "機関と統治の拠点を結び付ける。最高司令官を答える前には人物写真を見せない。",
       "targets": [
-        {"termId": "JHK3-06-01-01-U01", "questions": ["B01", "B05", "B06", "R01", "R02", "I01"]},
-        {"termId": "JHK3-06-01-01-U08", "questions": ["B02"]}
+        {
+          "termId": "JHK3-06-01-01-U01",
+          "questions": [
+            "B01",
+            "B05",
+            "B06",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK3-06-01-01-U08",
+          "questions": [
+            "B02"
+          ]
+        }
       ]
     },
     {
@@ -17,72 +39,468 @@
       "caption": "マッカーサー",
       "note": "人物を問う問題と、その人物の統治・改革方針を説明する問題に限る。",
       "targets": [
-        {"termId": "JHK3-06-01-01-U01", "questions": ["B04", "R03"]},
-        {"termId": "JHK3-06-01-01-U02", "questions": ["R01", "I01"]}
+        {
+          "termId": "JHK3-06-01-01-U01",
+          "questions": [
+            "B04",
+            "R03"
+          ]
+        },
+        {
+          "termId": "JHK3-06-01-01-U02",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
       ]
     },
     {
       "sourceAssetId": "WMJ-620b29e90bdad3",
       "caption": "財閥家族の資産差し押さえ",
       "note": "占領期の財閥解体の実際の場面。独占禁止法の条文や役員兼任禁止を写した史料としては扱わない。",
-      "targets": [{"termId": "JHK3-06-01-01-U05", "questions": ["B01", "B02", "B03", "R01", "R02", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK3-06-01-01-U05",
+          "questions": [
+            "B01",
+            "B02",
+            "B03",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WMJ-1e37f069d2fbe8",
       "caption": "日本国憲法の原本・御名御璽と大臣の副署",
       "note": "公布・施行と制定を扱う問題に使う。基本原理や第九条の条文が掲載された頁としては扱わない。",
-      "targets": [{"termId": "JHK-06-01-02-U01", "questions": ["B02", "R02", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-02-U01",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WMJ-6a2947b2f92d00",
       "caption": "大日本帝国憲法の原本・御名御璽と大臣の副署",
       "note": "旧憲法の名称と、その改正手続きによる新憲法の制定を扱う問題に使う。",
-      "targets": [{"termId": "JHK-06-01-02-U01", "questions": ["B06", "R01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-02-U01",
+          "questions": [
+            "B06",
+            "R01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WM-cc1d0044bad3f8",
       "caption": "国際連合の旗",
       "note": "国際機関の識別と日本の加盟を補助する。常任理事国の構成や本部所在地の証拠画像にはしない。",
       "targets": [
-        {"termId": "JHK-06-01-03-U01", "questions": ["B01", "R01", "I01"]},
-        {"termId": "JHK-06-01-03-U08", "questions": ["I01"]}
+        {
+          "termId": "JHK-06-01-03-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-06-01-03-U08",
+          "questions": [
+            "I01"
+          ]
+        }
       ]
     },
     {
       "sourceAssetId": "WM-7ac9fb21e20ead",
       "caption": "毛沢東",
       "note": "建国の指導者を答えた後に肖像を表示する。国民党の指導者や台湾の問題には使わない。",
-      "targets": [{"termId": "JHK-06-01-03-U03", "questions": ["B02", "R01", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U03",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WM-72f7e0b15a8a15",
       "caption": "朝鮮戦争の写真（戦闘・避難・軍用機）",
       "note": "全体の説明を補助する。三八度線の位置を示す地図としては扱わない。",
-      "targets": [{"termId": "JHK-06-01-03-U04", "questions": ["R02", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U04",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WMJ-a66b80fb0da690",
       "caption": "サンフランシスコ講和条約の署名場面",
       "note": "1951年の講和条約の写真。最初の名称問題では署名者の名前を画像説明で先出ししない。1960年の安保改定とは区別する。",
-      "targets": [{"termId": "JHK-06-01-03-U06", "questions": ["B01", "B02", "R01", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U06",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WMJ-b7763d77abaa01",
       "caption": "改定された日米安全保障条約の署名原本",
       "note": "1960年の新安保条約の原本。1951年の旧安保条約を扱う学習項目には割り当てない。署名している瞬間の写真とは説明しない。",
-      "targets": [{"termId": "JHK-06-01-03-U09", "questions": ["B03", "R01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U09",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WMJ-9e8ddf244c91d4",
       "caption": "安保闘争・国会を取り囲むデモ隊",
       "note": "反対運動と政権への影響を扱う問題に使う。時期問題の回答前に画像説明から年を教えない。",
-      "targets": [{"termId": "JHK-06-01-03-U09", "questions": ["B01", "B06", "B07", "R02", "I01"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U09",
+          "questions": [
+            "B01",
+            "B06",
+            "B07",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     },
     {
       "sourceAssetId": "WM-e26619c846a635",
       "caption": "ケネディ",
       "note": "大統領の名前を答えた後だけ肖像を見せ、前の名称・主体問題では名前を先出ししない。",
-      "targets": [{"termId": "JHK-06-01-03-U12", "questions": ["B04"]}]
+      "targets": [
+        {
+          "termId": "JHK-06-01-03-U12",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2aabc94291c24c",
+      "caption": "池田勇人",
+      "note": "政策の名称問題には付けず、首相名を答えた後と政策を説明する問題に限る。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-04-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f411ac7f0142d45bcb3d",
+      "caption": "東京オリンピックの開閉会式で演奏する音楽隊",
+      "note": "防衛省の1964年の写真。2020年の大会ではない。新幹線や高速道路を写した写真とは説明しない。開催年を問う前の説明に年を入れない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-04-U03",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ab596f29fad3198b3ae1",
+      "caption": "大阪万博の会場",
+      "note": "1970年4月に撮影された会場。現在の記念公園や2025年の万博を当時の会場として流用しない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-04-U03",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d9803efa4ae3e0662822",
+      "caption": "街頭テレビに集まる人々",
+      "note": "1955年のプロレス中継の観客。1953年の放送開始日や1959年の御成婚パレードの写真とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-05-U01",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2efecdd94de7a76dd846",
+      "caption": "湯川秀樹",
+      "note": "受賞者とその受賞内容を結び付ける肖像。授賞式の場面とは説明せず、受賞年や分野を問う前の説明に答えを入れない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-05-U02",
+          "questions": [
+            "B01",
+            "B04",
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-be3ce6a9cd92ab73cb2c",
+      "caption": "川端康成",
+      "note": "1938年の肖像。1968年のノーベル賞授賞式の写真とは扱わず、受賞年を説明で先に教えない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-05-U02",
+          "questions": [
+            "B02",
+            "B06",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f0f0f321ac3b4a5e84d1",
+      "caption": "黒澤明",
+      "note": "1953年に七人の侍の撮影現場で撮られた監督の肖像。羅生門の一場面・映画賞授賞式の写真とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-05-U02",
+          "questions": [
+            "B03",
+            "B07",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-02a053b827366c0c4508",
+      "caption": "日韓基本条約の展示用の写し",
+      "note": "韓国の歴史博物館で2016年に撮影された条約の写し。原本や1965年の署名式ではない。写しの条約日付が次の年代問題の答えを先に示すため、年代問題の回答後から表示する。請求権協定の史料としては使わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-06-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5de53639034596",
+      "caption": "田中角栄",
+      "note": "日中共同声明に署名した首相の名前を答えた後だけ表示する。共同声明の名称問題では名前を先に教えない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-06-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3e91e117512c2416fa0c",
+      "caption": "福田赳夫",
+      "note": "日中平和友好条約を結んだ首相の肖像。1972年の共同声明の署名者や、条約に署名している瞬間の写真とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-06-U02",
+          "questions": [
+            "B04",
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0685afa060e64e",
+      "caption": "日中共同声明の署名原本",
+      "note": "1972年の共同声明の署名頁。写真内の田中角栄の署名が後の首相問題の答えを先に示すため、名前・年代問題を答えた後から表示する。1978年の平和友好条約ではなく、台湾に関する条文が載る頁でもない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-06-U02",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7b86bd3ce2052b25ec25",
+      "caption": "佐藤栄作",
+      "note": "小笠原諸島・沖縄返還と非核三原則を扱う首相の肖像。首相名を答える前の地域・年代問題には付けず、返還式の写真や島の位置を示す地図とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-01-06-U03",
+          "questions": [
+            "B04",
+            "B05",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "JHKS-f411ac7f0142d45bcb3d",
+      "path": "term-images/japanese-history-k/JHKS-f411ac7f0142d45bcb3d.jpg",
+      "alt": "東京オリンピックの開閉会式で演奏する音楽隊",
+      "caption": "東京オリンピックの開閉会式で演奏する音楽隊",
+      "creator": "防衛省",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sup_old_04_(JSDF_band_supported_Tokyo_1964_Olympic_ceremony).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f411ac7f0142d45bcb3d.jpg",
+      "sha256": "f411ac7f0142d45bcb3d29891b21c1f40d234f08e93d801590b3250ca6a0db1a"
+    },
+    {
+      "id": "JHKS-ab596f29fad3198b3ae1",
+      "path": "term-images/japanese-history-k/JHKS-ab596f29fad3198b3ae1.jpg",
+      "alt": "大阪万博の会場",
+      "caption": "大阪万博の会場",
+      "creator": "Szilas",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:1970_in_Japan-13.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ab596f29fad3198b3ae1.jpg",
+      "sha256": "ab596f29fad3198b3ae10a447e7b112ad6bfbd3fa04c1821fa9ffb6526bf0782"
+    },
+    {
+      "id": "JHKS-d9803efa4ae3e0662822",
+      "path": "term-images/japanese-history-k/JHKS-d9803efa4ae3e0662822.jpg",
+      "alt": "街頭テレビに集まる人々",
+      "caption": "街頭テレビに集まる人々",
+      "creator": "作者不明（アサヒグラフ掲載）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Street_televisions_in_Japan.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d9803efa4ae3e0662822.jpg",
+      "sha256": "d9803efa4ae3e06628223f35b75f6f335827ae0de80d8a712f9a131f8c20ff6d"
+    },
+    {
+      "id": "JHKS-2efecdd94de7a76dd846",
+      "path": "term-images/japanese-history-k/JHKS-2efecdd94de7a76dd846.jpg",
+      "alt": "湯川秀樹",
+      "caption": "湯川秀樹",
+      "creator": "作者不明（朝日新聞）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hideki_Yukawa_1949.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2efecdd94de7a76dd846.jpg",
+      "sha256": "2efecdd94de7a76dd846fd7e2a089c7422ba1a3247e0d836cfa4c2b5c4a09189"
+    },
+    {
+      "id": "JHKS-be3ce6a9cd92ab73cb2c",
+      "path": "term-images/japanese-history-k/JHKS-be3ce6a9cd92ab73cb2c.jpg",
+      "alt": "川端康成",
+      "caption": "川端康成",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yasunari_Kawabata_1938.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-be3ce6a9cd92ab73cb2c.jpg",
+      "sha256": "be3ce6a9cd92ab73cb2cf4f169f6d20b7127dc5669c41672978962811d7f74b3"
+    },
+    {
+      "id": "JHKS-f0f0f321ac3b4a5e84d1",
+      "path": "term-images/japanese-history-k/JHKS-f0f0f321ac3b4a5e84d1.jpg",
+      "alt": "黒澤明",
+      "caption": "黒澤明",
+      "creator": "映画の友",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Akirakurosawa-onthesetof7samurai-1953-page88_(cropped).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f0f0f321ac3b4a5e84d1.jpg",
+      "sha256": "f0f0f321ac3b4a5e84d1ea3e1ac083226f5fade55e7b3fb9f33a804a48105437"
+    },
+    {
+      "id": "JHKS-7b86bd3ce2052b25ec25",
+      "path": "term-images/japanese-history-k/JHKS-7b86bd3ce2052b25ec25.jpg",
+      "alt": "佐藤栄作",
+      "caption": "佐藤栄作",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Eisaku_Sato_19641109.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7b86bd3ce2052b25ec25.jpg",
+      "sha256": "7b86bd3ce2052b25ec2558c9e47204735fb70bfd286a1c855fc0d79d0de66d32"
+    },
+    {
+      "id": "JHKS-3e91e117512c2416fa0c",
+      "path": "term-images/japanese-history-k/JHKS-3e91e117512c2416fa0c.jpg",
+      "alt": "福田赳夫",
+      "caption": "福田赳夫",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Takeo_Fukuda_19761224.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3e91e117512c2416fa0c.jpg",
+      "sha256": "3e91e117512c2416fa0cdfb6a539e9ce121e853eb4c3f491549f327412520264"
+    },
+    {
+      "id": "JHKS-02a053b827366c0c4508",
+      "path": "term-images/japanese-history-k/JHKS-02a053b827366c0c4508.jpg",
+      "alt": "日韓基本条約の展示用の写し",
+      "caption": "日韓基本条約の展示用の写し",
+      "creator": "Motoko C. K.",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:A_copy_of_Treaty_on_Basic_Relations_between_Japan_and_the_Republic_of_Korea.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-02a053b827366c0c4508.jpg",
+      "sha256": "02a053b827366c0c45089bf657e32dccbcde1657be71bb65b8e5968a63be1cf9"
     }
   ]
 }

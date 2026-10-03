@@ -17,6 +17,18 @@ export function buildJapaneseKImages(snapshot, selection) {
   const next = structuredClone(images);
   const assets = new Map(images.assets.map(asset => [asset.id, asset]));
   assert.equal(assets.size, images.assets.length);
+  const addedAssets = [], addedAssignments = [], audit = [], seen = new Set();
+  const sourceIds = new Set();
+  for (const { sourceFile, sha256, ...asset } of selection.sources ?? []) {
+    assert.match(sha256, /^[a-f0-9]{64}$/);
+    assert.equal(asset.id, "JHKS-" + sha256.slice(0, 20));
+    assert.equal(asset.path, `term-images/japanese-history-k/${asset.id}.jpg`);
+    assert.equal(sourceFile, `data/source/japanese-history-k/images/${asset.id}.jpg`);
+    assert.ok(!sourceIds.has(asset.id), "新規画像の重複は登録しません。"); sourceIds.add(asset.id);
+    assert.ok(selection.images.some(choice => choice.sourceAssetId === asset.id), "未使用画像は登録しません。");
+    if (assets.has(asset.id)) assert.deepEqual(assets.get(asset.id), asset, "登録済みの画像は上書きしません。");
+    else { next.assets.push(asset); assets.set(asset.id, asset); addedAssets.push(asset); }
+  }
   const registered = new Map(images.assignments.map(value => [value.questionId, value]));
   assert.equal(registered.size, images.assignments.length);
   const questions = new Map();
@@ -31,7 +43,6 @@ export function buildJapaneseKImages(snapshot, selection) {
       }
     }
   }
-  const addedAssets = [], addedAssignments = [], audit = [], seen = new Set();
   for (const choice of selection.images) {
     const source = assets.get(choice.sourceAssetId);
     assert.ok(source, `Cloudflareに確認済み画像がありません: ${choice.sourceAssetId}`);

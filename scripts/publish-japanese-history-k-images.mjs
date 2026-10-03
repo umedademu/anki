@@ -49,12 +49,25 @@ try {
   }));
   const snapshot = { catalog, images, decks }, result = buildJapaneseKImages(snapshot, selection);
   const manifestText = JSON.stringify(result.manifest) + "\n";
+  const sourceBytes = new Map();
+  for (const source of selection.sources ?? []) {
+    const bytes = await readFile(new URL("../" + source.sourceFile, import.meta.url));
+    assert.equal(textHash(bytes), source.sha256, "点検済みの新規画像が変更されました。");
+    assert.ok(bytes.byteLength > 1000 && bytes.byteLength < 500000 && bytes[0] === 255 && bytes[1] === 216);
+    sourceBytes.set(source.path, bytes);
+  }
   // 画像本体も点検時の内容を記録し、同じ保存先の差し替えを検知する。
   const assetHashes = {};
   for (const path of new Set(result.audit.map(value => value.path))) {
     const response = await fetch(`${cloudBase}/${path}?japaneseKImages=${Date.now()}`, { cache: "no-store", signal: AbortSignal.timeout(30000) });
-    assert.ok(response.ok && response.headers.get("content-type")?.startsWith("image/"), path);
-    const bytes = Buffer.from(await response.arrayBuffer()); assert.ok(bytes.byteLength > 300);
+    let bytes;
+    if (response.status === 404 && sourceBytes.has(path) && !images.assets.some(asset => asset.path === path)) bytes = sourceBytes.get(path);
+    else {
+      assert.ok(response.ok && response.headers.get("content-type")?.startsWith("image/"), path);
+      bytes = Buffer.from(await response.arrayBuffer());
+    }
+    assert.ok(bytes.byteLength > 300);
+    if (sourceBytes.has(path)) assert.equal(textHash(bytes), textHash(sourceBytes.get(path)), "公開済みの画像本体は上書きしません。");
     assetHashes[path] = textHash(bytes);
   }
   const review = { selection: imageContentHash(selection), reads: Object.fromEntries([...reads].map(([key, value]) => [key, textHash(value.text)])), assets: assetHashes, next: textHash(manifestText) };
@@ -65,17 +78,22 @@ try {
     await writeFile(new URL("audit.json", work), JSON.stringify(result.audit, null, 2));
     await writeFile(new URL("review.json", work), JSON.stringify(review));
   }
-  console.log(`${selection.deckIds.length}小項目の${result.audit.length}問へ、${selection.images.length}枚の確認済み画像を割り当てます。`);
+  console.log(`今回の追加は${result.addedAssignments.length}問。累計${selection.deckIds.length}小項目・${result.audit.length}問へ${selection.images.length}枚の確認済み画像を割り当てます。`);
   if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
   else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
   else {
-    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, READ_KEYS: JSON.stringify([...reads.keys()]), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
+    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, READ_KEYS: JSON.stringify([...reads.keys()]), QUESTION_IDS: JSON.stringify(result.addedAssignments.map(item => item.questionId)), NEW_IMAGES: JSON.stringify(Object.fromEntries([...sourceBytes].map(([key, bytes]) => [key, textHash(bytes)]))), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
     deployAttempted = true;
     endpoint = (await wrangler("deploy")).match(/https:\/\/[a-z0-9.-]+\.workers\.dev/)?.[0]; assert.ok(endpoint);
     const checked = new Map();
     for (const [key, previous] of reads) {
       const current = await read(key); assert.equal(current.text, previous.text, `同時編集を検知しました: ${key}`); checked.set(key, current);
     }
+    for (const [key, bytes] of sourceBytes) {
+      await request({ action: "image", key, base64: bytes.toString("base64") });
+      assert.equal((await request({ action: "image-check", key })).sha256, textHash(bytes));
+    }
+    if (sourceBytes.size) console.log(`新しい画像${sourceBytes.size}枚をCloudflareへ登録・照合しました。既存の画像は保持しています。`);
     await request({ action: "commit", key: japaneseKImagesKey, text: manifestText, expectedEtag: checked.get(japaneseKImagesKey).etag, catalogEtag: checked.get("index.json").etag });
     assert.equal((await read(japaneseKImagesKey)).text, manifestText);
     for (const [key, previous] of reads) if (key !== japaneseKImagesKey) assert.equal((await read(key)).text, previous.text, key);

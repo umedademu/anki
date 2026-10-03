@@ -16,7 +16,10 @@
     "book-06-02-06",
     "book-06-02-07",
     "book-06-02-08",
-    "book-06-02-09"
+    "book-06-02-09",
+    "book-01-01-01",
+    "book-01-01-02",
+    "book-01-01-03"
   ],
   "images": [
     {
@@ -909,6 +912,175 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-f07e0fcb033dee",
+      "caption": "古事記の写本（真福寺本の影印）",
+      "note": "1371〜1372年書写の真福寺本を1924〜1925年に影印した頁。古事記という書物を確認する回答後の資料として用い、奈良時代の編纂時の原本や本居宣長の古事記伝とは扱わない。頁の読解や写本の年代を新しい試験知識に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-01-U01",
+          "questions": [
+            "B01",
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-aeed7cb7290df8",
+      "caption": "日本書紀の写本（神代巻の奥書・1286年）",
+      "note": "卜部兼方による1286年の神代巻の奥書。日本書紀の書物の姿を確認する説明問題に限る。720年成立時の原本や天武天皇の直筆、神話本文の該当頁とは扱わず、奥書の読解を求めない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-399de92c4cc70ffe9adb",
+      "caption": "伊邪那岐・伊邪那美の国生みを描いた明治時代の絵",
+      "note": "小林永濯が明治時代に描いた国生みの絵。Commonsで提供された部分画像を追加加工せず使う。二神の国生みの物語の復習に限り、奈良時代当時の絵や日本列島の地質学的な誕生の証拠とは扱わない。写真に見える槍の固有名や絵の制作年は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-01-U01",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-52bd58174efd77",
+      "caption": "アウストラロピテクスの頭骨（セディバ種）",
+      "note": "南アフリカで見つかったアウストラロピテクス・セディバのMH1頭骨。原文の猿人の例を確認する資料で、ルーシーやアファレンシスの標本と区別する。頭骨だけで二足歩行や石器使用を証明させず、種名や標本番号を出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-02-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-558a938ca99059",
+      "caption": "北京原人の頭骨（複製）",
+      "note": "周口店で1929年に見つかった北京原人の頭骨の複製。原人の例を答えた後と猿人・原人の説明問題に使う。実物化石や現生人類の頭骨とは扱わず、写真だけから火や言葉の使用を推測させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-02-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a1e57a622a7462a7d2c9",
+      "caption": "ネアンデルタール人の頭骨（展示標本）",
+      "note": "ジブラルタルのフォーブス採石場で1848年に発見された頭骨の展示写真。旧人の例であるネアンデルタール人の確認に限る。生きていた人物の顔の復元図やクロマニョン人、日本列島で見つかった頭骨とは扱わず、出土地・発見年を試験知識に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-02-U01",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a94dcaec2c1caf2c8282",
+      "caption": "ラスコー洞窟壁画の複製展示",
+      "note": "チェコ・ブルノのモラヴィア博物館のAnthropos館に展示されたラスコー壁画の複製。洞窟壁画という文化を答えた後と新人を含む説明問題に使う。フランスの洞窟内の実物写真や日本の壁画とは扱わず、ラスコーという地名や動物の種類の識別を出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-02-U01",
+          "questions": [
+            "B06",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WME-4d1a0356d6d9b6",
+      "caption": "大型動物の例・ナウマンゾウの展示骨格",
+      "note": "北海道博物館で2023年に撮影された、忠類で出土したナウマンゾウの展示骨格。原文の大型動物の具体例として回答後に示す。骨格写真を列島と大陸の接続や人の移動経路の証拠とは扱わず、出土地やゾウの種名を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-02-U02",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6b892dd7a1b5a3",
+      "caption": "岩宿遺跡の現在の保存地（2016年撮影）",
+      "note": "岩宿遺跡A地点の2016年の保存地の写真。遺跡名への回答後と発見の意義の説明問題に使う。1949年の発見当日の写真や発掘断面とは扱わず、関東ローム層・出土石器の実物が写真に示されるとはしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-03-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-bda7a40250cff360b5de",
+      "caption": "荒屋遺跡出土の細石刃などの石器",
+      "note": "東京国立博物館にある新潟県の荒屋遺跡出土の石器の展示。写真の３が細石刃、２が細石刃核であることを出典と展示資料で照合した。細石器への回答後と旧石器時代の全体説明に限り、写真中の削器をナイフ形石器と呼ばず、木や骨の柄にはめ込んだ完成品とは扱わない。遺跡名・各番号の読解は新しい出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-03-U02",
+          "questions": [
+            "B01",
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-710cd4d583da511f8b4c",
+      "caption": "日向林Ｂ遺跡出土の磨製石斧（旧石器時代）",
+      "note": "長野県信濃町の日向林B遺跡出土の石斧の展示写真。東京国立博物館の2004年の展示資料で旧石器時代の磨製石斧と照合した。刃先の研磨への回答後と石器の製作方法の説明に使う。縄文時代以降の一般的な磨製石器と混同せず、画像だけから世界最古や正確な年代を判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-03-U02",
+          "questions": [
+            "B06",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a1859826064cc4a52fae",
+      "caption": "黒曜石の標本",
+      "note": "黒曜石という石材の標本。黒曜石の名称・刃の鋭さ・利用を復習する回答後の資料に限る。日本産・神津島産や旧石器時代の加工品とは断定しない。原文の遠隔地への輸送や丸木舟の存在を標本だけで証明させず、写真の標本の大きさは新しい出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-01-03-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1319,6 +1491,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Segments_of_Vol._2_of_the_Man%E2%80%99y%C5%8Dsh%C5%AB_Poetry_Anthology_(Known_as_the_Kanazawa-bon_Man%E2%80%99y%C5%8Dsh%C5%AB).jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-d3aef045703a9c45122b.jpg",
       "sha256": "d3aef045703a9c45122b983c23c318c3e03d3d878e4f9f64ac33e8b02bb57242"
+    },
+    {
+      "id": "JHKS-399de92c4cc70ffe9adb",
+      "path": "term-images/japanese-history-k/JHKS-399de92c4cc70ffe9adb.jpg",
+      "alt": "伊邪那岐・伊邪那美の国生みを描いた明治時代の絵",
+      "caption": "伊邪那岐・伊邪那美の国生みを描いた明治時代の絵",
+      "creator": "小林永濯",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Izanami_and_Izanagi_create_the_1st_Japanese_isles,_Kobayashi_Eitaku_MFA_1880s.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-399de92c4cc70ffe9adb.jpg",
+      "sha256": "399de92c4cc70ffe9adbd84cfe642e41c219a53ba55f5dcddc3c00ac4739ec4b"
+    },
+    {
+      "id": "JHKS-a1e57a622a7462a7d2c9",
+      "path": "term-images/japanese-history-k/JHKS-a1e57a622a7462a7d2c9.jpg",
+      "alt": "ネアンデルタール人の頭骨（展示標本）",
+      "caption": "ネアンデルタール人の頭骨（展示標本）",
+      "creator": "AquilaGib",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Neanderthal_skull_from_Forbes%27_Quarry.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a1e57a622a7462a7d2c9.jpg",
+      "sha256": "a1e57a622a7462a7d2c92409bd91ddb79a276f5c089f12e8e7ef38e45eeaae50"
+    },
+    {
+      "id": "JHKS-a94dcaec2c1caf2c8282",
+      "path": "term-images/japanese-history-k/JHKS-a94dcaec2c1caf2c8282.jpg",
+      "alt": "ラスコー洞窟壁画の複製展示",
+      "caption": "ラスコー洞窟壁画の複製展示",
+      "creator": "DaBler",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cave_painting,_Anthropos_(2).jpeg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a94dcaec2c1caf2c8282.jpg",
+      "sha256": "a94dcaec2c1caf2c8282b19886309b903aa8c30b60d998caef4395dd173e3c26"
+    },
+    {
+      "id": "JHKS-bda7a40250cff360b5de",
+      "path": "term-images/japanese-history-k/JHKS-bda7a40250cff360b5de.jpg",
+      "alt": "荒屋遺跡出土の細石刃などの石器",
+      "caption": "荒屋遺跡出土の細石刃などの石器",
+      "creator": "Ismoon",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Araya_arch._site._Tools.Tokyo_National_Museum.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-bda7a40250cff360b5de.jpg",
+      "sha256": "bda7a40250cff360b5dea944865879f7b90b51f0f08d1da90aabf035f165dfb9"
+    },
+    {
+      "id": "JHKS-710cd4d583da511f8b4c",
+      "path": "term-images/japanese-history-k/JHKS-710cd4d583da511f8b4c.jpg",
+      "alt": "日向林Ｂ遺跡出土の磨製石斧（旧石器時代）",
+      "caption": "日向林Ｂ遺跡出土の磨製石斧（旧石器時代）",
+      "creator": "PHG",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:JapanesePolishedStoneAxes.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-710cd4d583da511f8b4c.jpg",
+      "sha256": "710cd4d583da511f8b4ceba32e979a7009977ff0e13a2d8891df6c832fc4c8c8"
+    },
+    {
+      "id": "JHKS-a1859826064cc4a52fae",
+      "path": "term-images/japanese-history-k/JHKS-a1859826064cc4a52fae.jpg",
+      "alt": "黒曜石の標本",
+      "caption": "黒曜石の標本",
+      "creator": "James St. John",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Obsidian_4.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a1859826064cc4a52fae.jpg",
+      "sha256": "a1859826064cc4a52fae4b36ec44383fd284f8a2170dcb0d9eda21f13e51361a"
     }
   ]
 }

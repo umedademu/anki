@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { buildJapaneseKImages } from "./japanese-history-k-images.mjs";
 import storageWorker from "./japanese-history-k-images-storage-worker.js";
 import { createHash } from "node:crypto";
+import { imageWriterVars } from "./japanese-history-k-images-config.mjs";
 
 const asset = { id: "old-picture", path: "term-images/old.webp", caption: "既存の説明", alt: "既存の説明", creator: "作者", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/", sourcePageUrl: "https://commons.wikimedia.org/wiki/File:Old.jpg" };
 const entry = { id: "book-06-01-01", version: "履歴は保持" };
@@ -94,4 +95,34 @@ binaryEnv.QUESTION_IDS = "[]"; assert.equal((await sendBinary(imageCommit)).stat
 binaryEnv.QUESTION_IDS = env.QUESTION_IDS;
 assert.equal((await sendBinary(imageCommit)).status, 200);
 assert.equal(stored, preparedText);
+// Cloudflareの一設定の容量上限を越える実際の登録件数を再現する。
+const manyImages = { [source.path]: sha256 };
+for (let index = 0; index < 39; index++) {
+  const key = `term-images/japanese-history-k/JHKS-${index.toString(16).padStart(20, "0")}.jpg`;
+  manyImages[key] = sha256; binaries.set(key, validBytes);
+}
+assert.ok(Buffer.byteLength(JSON.stringify(manyImages)) > 5120);
+const chunkVars = imageWriterVars({
+  NEW_IMAGES: manyImages,
+  READ_KEYS: [...Array.from({ length: 300 }, (_, index) => `読込対象😀/${index}.json`), "term-images.json"],
+  QUESTION_IDS: [...Array.from({ length: 300 }, (_, index) => `JHK-test-${index.toString().padStart(5, "0")}-B01`), question.id],
+});
+assert.ok(Number(chunkVars.NEW_IMAGES_PARTS) > 1); assert.ok(Number(chunkVars.READ_KEYS_PARTS) > 1); assert.ok(Number(chunkVars.QUESTION_IDS_PARTS) > 1);
+for (const [key, value] of Object.entries(chunkVars)) if (!key.endsWith("_PARTS")) assert.ok(Buffer.byteLength(value) <= 4000);
+stored = oldText; imageEtag = "images-before";
+const chunkEnv = { ...binaryEnv, ...chunkVars };
+const sendChunk = body => storageWorker.fetch(new Request("https://test.invalid", { method: "POST", headers: { Authorization: "Bearer test-only", "Content-Type": "application/json" }, body: JSON.stringify(body) }), chunkEnv);
+assert.equal((await sendChunk({ action: "read", key: "term-images.json" })).status, 200);
+assert.equal((await sendChunk({ action: "read", key: "another-subject.json" })).status, 403);
+assert.equal((await (await sendChunk({ action: "image-check", key: source.path })).json()).sha256, sha256);
+const lastPart = "QUESTION_IDS_" + (Number(chunkVars.QUESTION_IDS_PARTS) - 1), savedPart = chunkEnv[lastPart];
+delete chunkEnv[lastPart]; assert.equal((await sendChunk(imageCommit)).status, 400); assert.equal(stored, oldText);
+chunkEnv[lastPart] = savedPart;
+const secondPart = "NEW_IMAGES_1", savedImagesPart = chunkEnv[secondPart];
+chunkEnv[secondPart] = "x".repeat(4001); assert.equal((await sendChunk(imageCommit)).status, 400); assert.equal(stored, oldText);
+chunkEnv[secondPart] = savedImagesPart;
+const checkedKey = Object.keys(manyImages).at(-1); binaries.delete(checkedKey);
+assert.equal((await sendChunk(imageCommit)).status, 409); assert.equal(stored, oldText); binaries.set(checkedKey, validBytes);
+assert.equal((await sendChunk(imageCommit)).status, 200); assert.equal(stored, preparedText);
+console.log("容量上限を越える画像40枚の設定・日本語と絵文字を含む読込範囲・問題番号の分割、末尾の対象の保持、欠落と未照合画像の公開拒否を確認しました。");
 console.log("日本史Kの画像追加：元の問題・画像・他科目の保持、画像本体の共有、再実行、編集済み指定の拒否、認証・範囲・同時編集の拒否と旧一覧の保持を確認しました。");

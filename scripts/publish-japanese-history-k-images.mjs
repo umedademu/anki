@@ -4,6 +4,7 @@ import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { buildJapaneseKImages, imageContentHash, japaneseKImagesKey } from "./japanese-history-k-images.mjs";
+import { imageWriterVars } from "./japanese-history-k-images-config.mjs";
 
 const apply = process.argv.includes("--apply");
 const work = new URL("../.wrangler/japanese-history-k-images/", import.meta.url);
@@ -82,7 +83,7 @@ try {
   if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
   else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
   else {
-    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, READ_KEYS: JSON.stringify([...reads.keys()]), QUESTION_IDS: JSON.stringify(result.addedAssignments.map(item => item.questionId)), NEW_IMAGES: JSON.stringify(Object.fromEntries([...sourceBytes].map(([key, bytes]) => [key, textHash(bytes)]))), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
+    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, ...imageWriterVars({ READ_KEYS: [...reads.keys()], QUESTION_IDS: result.addedAssignments.map(item => item.questionId), NEW_IMAGES: Object.fromEntries([...sourceBytes].map(([key, bytes]) => [key, textHash(bytes)])) }), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
     deployAttempted = true;
     endpoint = (await wrangler("deploy")).match(/https:\/\/[a-z0-9.-]+\.workers\.dev/)?.[0]; assert.ok(endpoint);
     const checked = new Map();
@@ -105,6 +106,7 @@ try {
 } finally {
   if (deployAttempted) {
     try { await wrangler("delete", "--force"); console.log("作業用の保存窓口を削除しました。"); }
+    catch (error) { if (!error.message.includes("[code: 10090]")) throw error; console.log("作業用の保存窓口は存在しないことを確認しました。"); }
     finally { await unlink(configPath).catch(error => { if (error.code !== "ENOENT") throw error; }); }
   }
 }

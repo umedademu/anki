@@ -1,4 +1,5 @@
 // 作業中だけ使用する、確認済みの関連画像一覧専用の保存窓口。
+import { readImageWriterSetting } from "./japanese-history-k-images-config.mjs";
 const keyForImages = "term-images.json";
 const digest = async text => [...new Uint8Array(await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text)))].map(value => value.toString(16).padStart(2, "0")).join("");
 const binaryDigest = async bytes => [...new Uint8Array(await crypto.subtle.digest("SHA-256", bytes))].map(value => value.toString(16).padStart(2, "0")).join("");
@@ -6,8 +7,13 @@ export default {
   async fetch(request, env) {
     if (request.method !== "POST" || request.headers.get("Authorization") !== `Bearer ${env.ACCESS_TOKEN}`) return new Response("Unauthorized", { status: 401 });
     const { action, key, text, base64, expectedEtag, catalogEtag } = await request.json();
-    const allowedRead = JSON.parse(env.READ_KEYS);
-    const newImages = JSON.parse(env.NEW_IMAGES ?? "{}");
+    let allowedRead, newImages, questionIds;
+    try {
+      allowedRead = readImageWriterSetting(env, "READ_KEYS", []);
+      newImages = readImageWriterSetting(env, "NEW_IMAGES", {});
+      questionIds = readImageWriterSetting(env, "QUESTION_IDS", []);
+      if (!Array.isArray(allowedRead) || !Array.isArray(questionIds) || !newImages || typeof newImages !== "object" || Array.isArray(newImages)) throw Error("Invalid configuration");
+    } catch { return new Response("Invalid configuration", { status: 400 }); }
     if (action === "image" && Object.hasOwn(newImages, key)) {
       if (!/^term-images\/japanese-history-k\/JHKS-[a-f0-9]{20}\.jpg$/.test(key) || typeof base64 !== "string" || base64.length > 700000) return new Response("Invalid image", { status: 400 });
       let bytes; try { bytes = Uint8Array.from(atob(base64), value => value.charCodeAt(0)); } catch { return new Response("Invalid image", { status: 400 }); }
@@ -36,7 +42,7 @@ export default {
       JSON.stringify(value.termFallbacks) !== JSON.stringify(old.termFallbacks) ||
       JSON.stringify(value.assets.slice(0, old.assets.length)) !== JSON.stringify(old.assets) ||
       JSON.stringify(value.assignments.slice(0, old.assignments.length)) !== JSON.stringify(old.assignments) ||
-      !value.assignments.slice(old.assignments.length).every(item => JSON.parse(env.QUESTION_IDS).includes(item.questionId))) return new Response("Invalid scope", { status: 400 });
+      !value.assignments.slice(old.assignments.length).every(item => questionIds.includes(item.questionId))) return new Response("Invalid scope", { status: 400 });
     for (const [imageKey, expectedHash] of Object.entries(newImages)) {
       const object = await env.BUCKET.get(imageKey);
       if (!object || await binaryDigest(await object.arrayBuffer()) !== expectedHash) return new Response("Unverified image", { status: 409 });

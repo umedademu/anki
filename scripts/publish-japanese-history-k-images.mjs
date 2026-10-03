@@ -78,7 +78,7 @@ try {
     await writeFile(new URL("audit.json", work), JSON.stringify(result.audit, null, 2));
     await writeFile(new URL("review.json", work), JSON.stringify(review));
   }
-  console.log(`今回の追加は${result.addedAssignments.length}問。累計${selection.deckIds.length}小項目・${result.audit.length}問へ${selection.images.length}枚の確認済み画像を割り当てます。`);
+  console.log(`今回の追加は${result.addedAssignments.length}問。累計${selection.deckIds.length}小項目・${result.audit.length}問へ${Object.keys(assetHashes).length}枚の確認済み画像を割り当てます。`);
   if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
   else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
   else {

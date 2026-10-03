@@ -13,7 +13,10 @@
     "book-06-02-03",
     "book-06-02-04",
     "book-06-02-05",
-    "book-06-02-06"
+    "book-06-02-06",
+    "book-06-02-07",
+    "book-06-02-08",
+    "book-06-02-09"
   ],
   "images": [
     {
@@ -762,6 +765,150 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-e55a7010add73e06be23",
+      "caption": "阪神・淡路大震災で倒壊した阪神高速道路（1995年）",
+      "note": "神戸市が撮影した1995年１月17日の灘区の道路被害。1995年の震災名への回答後に使用し、2011年の津波被害と区別する。倒壊構造や道路名の細目を新しい試験知識として問わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-07-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2ddb3b65fa0ba69e7397",
+      "caption": "東日本大震災の津波被害を受けた仙台空港",
+      "note": "2011年の津波被害を受けた宮城県の仙台空港。国土交通省の写真を掲載した世界銀行の書籍の出版年は2014年であり、写真の撮影年とは扱わない。一地点の写真から関東〜東北の被災範囲全体を証明するものではないため、地域範囲だけを問う問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-07-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-68a422dba8f9e1c97f49",
+      "caption": "事故後の福島第一原子力発電所（2011年3月16日）",
+      "note": "2011年３月16日撮影の福島第一原子力発電所の衛星画像。福島第二原子力発電所や事故前の施設と区別する。写っている白いものから放射性物質の濃度や拡散範囲を推測させず、避難区域の地図としても使わない。Commons提供の切り出し画像を追加加工せず使用する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-07-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-575f3f568b43bb",
+      "caption": "１年延期後に開かれた東京五輪の開会式（2021年）",
+      "note": "2021年７月23日の開会式。大会名に含まれる2020は当初の予定年で、写真の開催年ではない。1964年の大会と区別し、延期期間への回答後と延期の事情を説明する問題だけに付ける。新型コロナウイルスの姿や延期決定の会議を写した写真とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-07-U02",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-37ad2d6f49977c",
+      "caption": "日経平均株価の推移（1970年以降）",
+      "note": "1970年以降の株価の指標の推移。1980年代後半の上昇とその後の下落を復習する説明問題に限る。地価を含む図や景気そのものの指標ではなく、横軸の概略目盛りから原文の1986〜1989年を導かせない。後年の相場の数値は新しい出題範囲に含めない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-08-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a4b50912464cd60ed6ca",
+      "caption": "破綻前のリーマン・ブラザーズ本社（2007年）",
+      "note": "2007年８月12日、ニューヨークで撮影された破綻前の本社。社名が読み取れる写真を選び、2008年の破綻当日の出来事を写した写真とは扱わない。社名と破綻を答えた後と金融危機の説明問題に付け、金融緩和・財政出動そのものの場面ではない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-08-U02",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4fbda9da93cc1190d27f",
+      "caption": "安倍晋三",
+      "note": "前回の外交の問題で使った2012年の公式肖像を共有する。アベノミクスの政策名を答えた後とその政策を含む説明問題に限り、少子高齢化の費用負担や税収だけを問う問題には付けない。肖像から政策の成果を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-08-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-62548fffad3012f6e475",
+      "caption": "平成の天皇の肖像",
+      "note": "在チェコ日本国大使館が掲載した在位中の肖像。出典は2002年より前または2001年頃としており、2016年のビデオメッセージや2019年の退位当日の写真とは扱わない。人物の確認に使い、加齢による公務への支障を写真から推測させない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-09-U01",
+          "questions": [
+            "B05",
+            "R01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ff8485c8285beab8d3de",
+      "caption": "新元号「令和」の発表（2019年4月）",
+      "note": "2019年４月１日の新元号発表。新元号名への回答後と移行の全体説明に付ける。写真の菅義偉は発表した当時の官房長官で、皇位を継承した天皇ではない。発表日を改元日や皇位継承の日とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-09-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d3aef045703a9c45122b",
+      "caption": "万葉集の写本（巻二・金沢本）",
+      "note": "平安時代・12世紀の万葉集巻二の写本。元号の出典となった書物を答えた後と出典の特徴を説明する問題に限る。巻五の梅花の歌の序という令和の典拠そのものを写した頁ではなく、写真にある歌や書写年代は新しい試験知識として問わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-09-U01",
+          "questions": [
+            "B06",
+            "R03"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1088,6 +1235,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Family_photo_of_G20_Osaka_Summit_by_Daniel_Scavino_Jr.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-d00aae0a51858ccf9cd5.jpg",
       "sha256": "d00aae0a51858ccf9cd5e7a0fa7b29cb1911cf5c9e9c83e35060f78d7ae0c848"
+    },
+    {
+      "id": "JHKS-e55a7010add73e06be23",
+      "path": "term-images/japanese-history-k/JHKS-e55a7010add73e06be23.jpg",
+      "alt": "阪神・淡路大震災で倒壊した阪神高速道路（1995年）",
+      "caption": "阪神・淡路大震災で倒壊した阪神高速道路（1995年）",
+      "creator": "神戸市",
+      "license": "CC BY 2.1 jp",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.1/jp/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hanshin_Expressway_Nada_b059.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e55a7010add73e06be23.jpg",
+      "sha256": "e55a7010add73e06be237b1b0340e26f3bc74d95c51410faa3538b9c2c78d1a2"
+    },
+    {
+      "id": "JHKS-2ddb3b65fa0ba69e7397",
+      "path": "term-images/japanese-history-k/JHKS-2ddb3b65fa0ba69e7397.jpg",
+      "alt": "東日本大震災の津波被害を受けた仙台空港",
+      "caption": "東日本大震災の津波被害を受けた仙台空港",
+      "creator": "国土交通省／世界銀行『Learning from Megadisasters』（2014年）",
+      "license": "CC BY 3.0 igo",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/igo/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sendai_Airport_after_the_tsunami.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2ddb3b65fa0ba69e7397.jpg",
+      "sha256": "2ddb3b65fa0ba69e73972f73636cfae9cb928a3034f9663dc06e5060b21af80b"
+    },
+    {
+      "id": "JHKS-68a422dba8f9e1c97f49",
+      "path": "term-images/japanese-history-k/JHKS-68a422dba8f9e1c97f49.jpg",
+      "alt": "事故後の福島第一原子力発電所（2011年3月16日）",
+      "caption": "事故後の福島第一原子力発電所（2011年3月16日）",
+      "creator": "Digital Globe",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fukushima_I_by_Digital_Globe_crop.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-68a422dba8f9e1c97f49.jpg",
+      "sha256": "68a422dba8f9e1c97f49cc2357fc944f7e011c2f60136fe660e2d1b55df328b3"
+    },
+    {
+      "id": "JHKS-a4b50912464cd60ed6ca",
+      "path": "term-images/japanese-history-k/JHKS-a4b50912464cd60ed6ca.jpg",
+      "alt": "破綻前のリーマン・ブラザーズ本社（2007年）",
+      "caption": "破綻前のリーマン・ブラザーズ本社（2007年）",
+      "creator": "David Shankbone",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Lehman_Brothers_Times_Square_by_David_Shankbone.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a4b50912464cd60ed6ca.jpg",
+      "sha256": "a4b50912464cd60ed6caae7da87c77703503185c4fd938be469012a9461a7076"
+    },
+    {
+      "id": "JHKS-62548fffad3012f6e475",
+      "path": "term-images/japanese-history-k/JHKS-62548fffad3012f6e475.jpg",
+      "alt": "平成の天皇の肖像",
+      "caption": "平成の天皇の肖像",
+      "creator": "在チェコ日本国大使館",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Akihito_Formal_portrait.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-62548fffad3012f6e475.jpg",
+      "sha256": "62548fffad3012f6e475b27551f1b7a9706bbfa91b745a47e64a53ccbaf37c66"
+    },
+    {
+      "id": "JHKS-ff8485c8285beab8d3de",
+      "path": "term-images/japanese-history-k/JHKS-ff8485c8285beab8d3de.jpg",
+      "alt": "新元号「令和」の発表（2019年4月）",
+      "caption": "新元号「令和」の発表（2019年4月）",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yoshihide_Suga_announcing_new_imperial_era_Reiwa.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ff8485c8285beab8d3de.jpg",
+      "sha256": "ff8485c8285beab8d3de3ad0540f1f7a830f5bcd5e9890311b69d46e5d932009"
+    },
+    {
+      "id": "JHKS-d3aef045703a9c45122b",
+      "path": "term-images/japanese-history-k/JHKS-d3aef045703a9c45122b.jpg",
+      "alt": "万葉集の写本（巻二・金沢本）",
+      "caption": "万葉集の写本（巻二・金沢本）",
+      "creator": "藤原定信",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Segments_of_Vol._2_of_the_Man%E2%80%99y%C5%8Dsh%C5%AB_Poetry_Anthology_(Known_as_the_Kanazawa-bon_Man%E2%80%99y%C5%8Dsh%C5%AB).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d3aef045703a9c45122b.jpg",
+      "sha256": "d3aef045703a9c45122b983c23c318c3e03d3d878e4f9f64ac33e8b02bb57242"
     }
   ]
 }

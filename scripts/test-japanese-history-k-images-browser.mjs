@@ -149,7 +149,7 @@ try {
     }
     await page.close();
   }
-  assert.equal(seen.size, result.audit.length); assert.equal(photographed.size, selection.images.length);
+  assert.equal(seen.size, result.audit.length); assert.equal(photographed.size, new Set(result.audit.map(value => JSON.stringify([value.path, value.caption]))).size);
   assert.ok(answers.length >= seen.size);
   for (const failure of ["manifest", "image"]) {
     failManifest = failure === "manifest"; failImages = failure === "image";

@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "japanese-history-k",
+  "deckIds": ["book-06-01-01", "book-06-01-02", "book-06-01-03"],
+  "images": [
+    {
+      "sourceAssetId": "WMJ-2e96e49ece3292",
+      "caption": "ＧＨＱが置かれた第一生命館",
+      "note": "機関と統治の拠点を結び付ける。最高司令官を答える前には人物写真を見せない。",
+      "targets": [
+        {"termId": "JHK3-06-01-01-U01", "questions": ["B01", "B05", "B06", "R01", "R02", "I01"]},
+        {"termId": "JHK3-06-01-01-U08", "questions": ["B02"]}
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b98b79405ef696",
+      "caption": "マッカーサー",
+      "note": "人物を問う問題と、その人物の統治・改革方針を説明する問題に限る。",
+      "targets": [
+        {"termId": "JHK3-06-01-01-U01", "questions": ["B04", "R03"]},
+        {"termId": "JHK3-06-01-01-U02", "questions": ["R01", "I01"]}
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-620b29e90bdad3",
+      "caption": "財閥家族の資産差し押さえ",
+      "note": "占領期の財閥解体の実際の場面。独占禁止法の条文や役員兼任禁止を写した史料としては扱わない。",
+      "targets": [{"termId": "JHK3-06-01-01-U05", "questions": ["B01", "B02", "B03", "R01", "R02", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WMJ-1e37f069d2fbe8",
+      "caption": "日本国憲法の原本・御名御璽と大臣の副署",
+      "note": "公布・施行と制定を扱う問題に使う。基本原理や第九条の条文が掲載された頁としては扱わない。",
+      "targets": [{"termId": "JHK-06-01-02-U01", "questions": ["B02", "R02", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WMJ-6a2947b2f92d00",
+      "caption": "大日本帝国憲法の原本・御名御璽と大臣の副署",
+      "note": "旧憲法の名称と、その改正手続きによる新憲法の制定を扱う問題に使う。",
+      "targets": [{"termId": "JHK-06-01-02-U01", "questions": ["B06", "R01"]}]
+    },
+    {
+      "sourceAssetId": "WM-cc1d0044bad3f8",
+      "caption": "国際連合の旗",
+      "note": "国際機関の識別と日本の加盟を補助する。常任理事国の構成や本部所在地の証拠画像にはしない。",
+      "targets": [
+        {"termId": "JHK-06-01-03-U01", "questions": ["B01", "R01", "I01"]},
+        {"termId": "JHK-06-01-03-U08", "questions": ["I01"]}
+      ]
+    },
+    {
+      "sourceAssetId": "WM-7ac9fb21e20ead",
+      "caption": "毛沢東",
+      "note": "建国の指導者を答えた後に肖像を表示する。国民党の指導者や台湾の問題には使わない。",
+      "targets": [{"termId": "JHK-06-01-03-U03", "questions": ["B02", "R01", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WM-72f7e0b15a8a15",
+      "caption": "朝鮮戦争の写真（戦闘・避難・軍用機）",
+      "note": "全体の説明を補助する。三八度線の位置を示す地図としては扱わない。",
+      "targets": [{"termId": "JHK-06-01-03-U04", "questions": ["R02", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WMJ-a66b80fb0da690",
+      "caption": "サンフランシスコ講和条約の署名場面",
+      "note": "1951年の講和条約の写真。最初の名称問題では署名者の名前を画像説明で先出ししない。1960年の安保改定とは区別する。",
+      "targets": [{"termId": "JHK-06-01-03-U06", "questions": ["B01", "B02", "R01", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WMJ-b7763d77abaa01",
+      "caption": "改定された日米安全保障条約の署名原本",
+      "note": "1960年の新安保条約の原本。1951年の旧安保条約を扱う学習項目には割り当てない。署名している瞬間の写真とは説明しない。",
+      "targets": [{"termId": "JHK-06-01-03-U09", "questions": ["B03", "R01"]}]
+    },
+    {
+      "sourceAssetId": "WMJ-9e8ddf244c91d4",
+      "caption": "安保闘争・国会を取り囲むデモ隊",
+      "note": "反対運動と政権への影響を扱う問題に使う。時期問題の回答前に画像説明から年を教えない。",
+      "targets": [{"termId": "JHK-06-01-03-U09", "questions": ["B01", "B06", "B07", "R02", "I01"]}]
+    },
+    {
+      "sourceAssetId": "WM-e26619c846a635",
+      "caption": "ケネディ",
+      "note": "大統領の名前を答えた後だけ肖像を見せ、前の名称・主体問題では名前を先出ししない。",
+      "targets": [{"termId": "JHK-06-01-03-U12", "questions": ["B04"]}]
+    }
+  ]
+}

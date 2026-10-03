@@ -1,0 +1,89 @@
+import assert from "node:assert/strict";
+import { createHash, randomBytes } from "node:crypto";
+import { spawn } from "node:child_process";
+import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { buildJapaneseKImages, imageContentHash, japaneseKImagesKey } from "./japanese-history-k-images.mjs";
+
+const apply = process.argv.includes("--apply");
+const work = new URL("../.wrangler/japanese-history-k-images/", import.meta.url);
+await mkdir(work, { recursive: true });
+const cloudBase = "https://pub-76ffbe2829114a5cbaa433db45872267.r2.dev";
+const configPath = new URL("writer.json", work), token = randomBytes(32).toString("hex");
+const selection = JSON.parse(await readFile(new URL("../data/source/japanese-history-k/image-assignments.json", import.meta.url), "utf8"));
+let endpoint, deployAttempted = false;
+const textHash = text => createHash("sha256").update(text).digest("hex");
+async function wrangler(...args) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [fileURLToPath(new URL("../node_modules/wrangler/bin/wrangler.js", import.meta.url)), ...args, "--config", fileURLToPath(configPath)], { stdio: ["ignore", "pipe", "pipe"] });
+    let output = ""; child.stdout.on("data", part => { output += part; }); child.stderr.on("data", part => { output += part; });
+    child.on("error", reject); child.on("close", code => code === 0 ? resolve(output) : reject(new Error(output.replaceAll(token, "[非公開]"))));
+  });
+}
+async function request(input) {
+  for (let attempt = 0; ; attempt++) {
+    const response = await fetch(endpoint, { method: "POST", headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(input), signal: AbortSignal.timeout(45000) });
+    if (input.action === "read" && [404, 429, 500, 502, 503, 504].includes(response.status) && attempt < 5) {
+      await response.arrayBuffer(); await new Promise(resolve => setTimeout(resolve, Math.min(8000, 2000 * (attempt + 1)))); continue;
+    }
+    assert.ok(response.ok, `Cloudflareの${input.action}が失敗しました（${response.status}）。`);
+    return response.json();
+  }
+}
+async function read(key) {
+  if (endpoint) return request({ action: "read", key });
+  const response = await fetch(`${cloudBase}/${key}?japaneseKImages=${Date.now()}`, { cache: "no-store", signal: AbortSignal.timeout(30000) });
+  assert.ok(response.ok, `Cloudflareの取得に失敗しました: ${key}`);
+  return { text: await response.text(), etag: response.headers.get("etag") };
+}
+const reads = new Map();
+async function json(key) { const value = await read(key); reads.set(key, value); return JSON.parse(value.text); }
+try {
+  const [catalog, images] = await Promise.all([json("index.json"), json(japaneseKImagesKey)]);
+  const subject = catalog.subjects.find(value => value.id === "japanese-history-k"); assert.ok(subject);
+  const decks = await Promise.all(selection.deckIds.map(async id => {
+    const entry = subject.decks.find(value => value.id === id); assert.ok(entry, id);
+    const index = await json(entry.indexPath);
+    const chunks = await Promise.all(index.chunks.map(chunk => json(chunk.path)));
+    return { entry, index, chunks };
+  }));
+  const snapshot = { catalog, images, decks }, result = buildJapaneseKImages(snapshot, selection);
+  const manifestText = JSON.stringify(result.manifest) + "\n";
+  // 画像本体も点検時の内容を記録し、同じ保存先の差し替えを検知する。
+  const assetHashes = {};
+  for (const path of new Set(result.audit.map(value => value.path))) {
+    const response = await fetch(`${cloudBase}/${path}?japaneseKImages=${Date.now()}`, { cache: "no-store", signal: AbortSignal.timeout(30000) });
+    assert.ok(response.ok && response.headers.get("content-type")?.startsWith("image/"), path);
+    const bytes = Buffer.from(await response.arrayBuffer()); assert.ok(bytes.byteLength > 300);
+    assetHashes[path] = textHash(bytes);
+  }
+  const review = { selection: imageContentHash(selection), reads: Object.fromEntries([...reads].map(([key, value]) => [key, textHash(value.text)])), assets: assetHashes, next: textHash(manifestText) };
+  if (apply && result.addedAssignments.length) assert.deepEqual(review, JSON.parse(await readFile(new URL("review.json", work), "utf8")), "確認後に問題・画像・指定が変わりました。公開せず再点検してください。");
+  if (!apply) {
+    await writeFile(new URL("snapshot.json", work), JSON.stringify(snapshot));
+    await writeFile(new URL("manifest.json", work), manifestText);
+    await writeFile(new URL("audit.json", work), JSON.stringify(result.audit, null, 2));
+    await writeFile(new URL("review.json", work), JSON.stringify(review));
+  }
+  console.log(`${selection.deckIds.length}小項目の${result.audit.length}問へ、${selection.images.length}枚の確認済み画像を割り当てます。`);
+  if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
+  else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
+  else {
+    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, READ_KEYS: JSON.stringify([...reads.keys()]), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
+    deployAttempted = true;
+    endpoint = (await wrangler("deploy")).match(/https:\/\/[a-z0-9.-]+\.workers\.dev/)?.[0]; assert.ok(endpoint);
+    const checked = new Map();
+    for (const [key, previous] of reads) {
+      const current = await read(key); assert.equal(current.text, previous.text, `同時編集を検知しました: ${key}`); checked.set(key, current);
+    }
+    await request({ action: "commit", key: japaneseKImagesKey, text: manifestText, expectedEtag: checked.get(japaneseKImagesKey).etag, catalogEtag: checked.get("index.json").etag });
+    assert.equal((await read(japaneseKImagesKey)).text, manifestText);
+    for (const [key, previous] of reads) if (key !== japaneseKImagesKey) assert.equal((await read(key)).text, previous.text, key);
+    console.log("Cloudflareの画像一覧だけを条件付きで更新・全文照合しました。既存画像・他科目の割り当て・問題・学習履歴を保持しています。");
+  }
+} finally {
+  if (deployAttempted) {
+    try { await wrangler("delete", "--force"); console.log("作業用の保存窓口を削除しました。"); }
+    finally { await unlink(configPath).catch(error => { if (error.code !== "ENOENT") throw error; }); }
+  }
+}

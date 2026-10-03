@@ -28,7 +28,10 @@
     "book-01-02-06",
     "book-01-02-07",
     "book-01-03-01",
-    "book-01-03-02"
+    "book-01-03-02",
+    "book-01-03-03",
+    "book-01-03-04",
+    "book-01-03-05"
   ],
   "images": [
     {
@@ -1678,6 +1681,235 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-09c125b547dedb",
+      "caption": "アテネのアクロポリス（現在の遺跡写真）",
+      "note": "2004年のアテネのアクロポリスの写真。ポリスの名称と、アテネを含む説明への回答後に、都市国家の具体例の場所を確認する。紀元前８世紀の成立時の写真や民主政の議決の場面ではない。参政権を得る過程・平民の兵役・ペルシャの攻撃を写真だけで証明させず、神殿の個別名称・様式を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-ac91ddc2885db8",
+      "caption": "アレクサンドロスを描いたモザイク（ポンペイ出土・部分）",
+      "note": "ポンペイのモザイクの人物の部分。マケドニアの王と遠征を含む説明への回答後に付ける。本人の同時代の写真や、インダス川までの領土を示す地図ではなく、後世に描かれた肖像表現である。出土場所を本人の出生地と取り違えず、甲冑の模様・戦闘の名称・遠征経路の細部は暗記させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b9ab98b6fe5f9e3192ce",
+      "caption": "ヘレニズム時代の彫刻の例（サモトラケのニケ）",
+      "note": "ルーヴル美術館のサモトラケのニケの写真。紀元前２世紀のヘレニズム時代の彫刻の具体例として、文化の名称とその発展の説明への回答後に使う。アレクサンドロス本人の像や遠征当時の記録とは扱わない。復元を経た現在の展示姿であり、写真だけでギリシャと各地の文化の融合やインド・中国・日本への影響を証明させず、作品名・女神名・制作年代を新しい試験知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U02",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4a029eabfe315f",
+      "caption": "カエサルの肖像彫刻（現在の展示写真）",
+      "note": "カエサルの肖像彫刻の写真。ユリウス暦を制定した人物名への回答後の補助とする。同時代に作られた本人の顔の正確な記録とは断定せず、暦の制定場面や暦法・共和政の仕組みを写真だけで示すものではない。彫刻の個別名・制作年代・所蔵地は新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U03",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0fbdedb82e08d16359f8",
+      "caption": "ローマの水道橋の例（ポン・デュ・ガールの現在の写真）",
+      "note": "ローマの水道を支えたポン・デュ・ガールの現在の写真。水道・道路網の整備を含む説明への回答後に、水道施設の具体例を確認する。写真の施設は水道橋で、ローマ法の条文や共和政から帝政への変化を写す資料ではない。道路網全体・度量衡の統一・ユリウス暦をこの一枚で証明させず、施設名・高さ・建設年は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U03",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-01c12219cd641a",
+      "caption": "西ローマ帝国の領土の概略（395年・赤色部分）",
+      "note": "東西分裂直後の395年の西ローマ帝国の領土を赤色で示す現代の概略図。西ローマ帝国の名称と東西の存続の説明への回答後に使う。476年の滅亡時の領土やゲルマン人の侵入経路を示す図ではない。現代の国々を古代の国境と取り違えず、属州や現在の国名、細かい境界線は暗記させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-03-U03",
+          "questions": [
+            "B06",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-da7665a91001b5",
+      "caption": "始皇帝を描いた後世の肖像画",
+      "note": "始皇帝を描いた肖像画。中国を統一した人物名への回答後に付ける。本人の同時代の肖像や実際の容姿の記録とは扱わない。衣服・冠・背景から秦の制度・匈奴の侵入・長城の築造を判定させず、人物名と後世の肖像表現の対応に限る。元資料の画作者と制作年代を断定しない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fa28df0e17a70d6ed78e",
+      "caption": "度量衡の統一を伝える秦の重り（河南博物院）",
+      "note": "河南博物院所蔵の秦の鉄製の重り。始皇帝26年の度量衡統一の詔を記した資料と所蔵館の解説で照合した。度量衡の名称と統一政策の説明への回答後に使う。重さの基準に関わる一例で、長さ・容積の全てを一枚で表す器具や貨幣ではない。重さの数値・整理番号・銘文の読解は新しい試験知識にせず、郡県制や匈奴だけの問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U01",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-0daaf5eec0a118",
+      "caption": "孔子を描いた前漢時代の墓の壁画（山東省）",
+      "note": "山東省東平県の前漢時代の墓で発見された孔子の壁画。人物名と孔子の教えを含む説明への回答後に使う。孔子の生存時の肖像や実際の顔の正確な記録ではなく、前漢時代の表現である。孝・仁・礼の意味、儒教の普及や弟子による編纂を壁画から判定させず、墓名・撮影年・図中の他の人物は暗記させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U02",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-af9cb1c60e957c836f52",
+      "caption": "論語の後世の刊本（注釈付きの元代刊本の影印）",
+      "note": "注釈付きの論語の元代刊本の影印。書物の名称と教えをまとめた書物を含む説明への回答後に使う。孔子や弟子の自筆、漢代の原本、論語本文だけの頁とは扱わず、後世の注釈を含むことを明示する。影印の発行年は元の説明に揺れがあるため断定しない。頁の読解・注釈者名・版の年代は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U02",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-68982816faaefc",
+      "caption": "シルクロードの主要な陸路の概略（現代の国境を併記）",
+      "note": "東アジアから中央アジア・地中海東岸へ向かう主要な陸路を示す現代の図。交易路の名称と東西の文化交流を含む説明への回答後に使う。現代の国境を漢代の国境と取り違えず、図の線が長安からローマまでの全行程を直接示すとはしない。海路や枝道の全てを網羅する図ではなく、蔡倫の製紙法の伝播経路も示さない。経由国や細部の地名の暗記は加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-6286948ef37b65",
+      "caption": "蔡倫を描いた後世の図",
+      "note": "蔡倫を描いた後世の図。製紙法を考案した人物名への回答後に付ける。後漢の蔡倫の同時代の肖像や紙造りの工程を直接記録した図ではない。周囲の人物・道具・動物の意味、紙の材料や製法を絵から判定させず、人物名と後世の表現の対応に限る。原図の作者と制作年代は断定しない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U02",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-847e94940afb17",
+      "caption": "中国皇帝から授けられた印の例（金印「漢委奴国王」）",
+      "note": "福岡市博物館の記録で、後漢の皇帝から奴国へ授与された印と考えられる金印と確認した。印と印面の形を、印綬・文書の封印・王の称号と冊封を含む回答後に付ける。印綬のうち印の具体例で、綬や57年の授与場面を写した写真ではない。中国皇帝へ献上する貢物の写真とは区別し、授与の向きを説明に明記する。印面の読解・鈕の動物・発見地や発見年は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-04-U03",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "JHK-01-03-04-U04",
+          "questions": [
+            "B02",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島の地形（現代の衛星画像、九州は本州の南西側）",
+      "note": "登録済みのNASAの衛星画像を共有する。日向を九州南部とする回答後に、列島内の九州の位置を確認する。古代の行政区分や神武東征の航路を描いた地図ではなく、日向の範囲・橿原宮の所在地を直接表示しない。伝説の移動を史実と証明せず、画像の島の名称や境界を新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-05-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f07e0fcb033dee",
+      "caption": "古事記の写本（14世紀の真福寺本の影印）",
+      "note": "14世紀の真福寺本古事記の写本を1924〜1925年に影印した資料。伝説を伝える古事記の書物としての姿を、史料の成立と記述を説明した回答後に確認する。奈良時代の成立時の原本や、神武東征の実際の場面の記録ではない。写真の頁が神武東征の該当箇所であるとは扱わず、書写年・筆者・文字の読解は新しい試験知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-05-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a3bc79f714610ca3555a",
+      "caption": "神武天皇の伝説を描いた後世の錦絵（月岡芳年）",
+      "note": "月岡芳年の大日本名将鑑「神武天皇」の明治時代の錦絵。伝説と史料の全体説明への回答後に付ける。神話の成立当時の絵や神武天皇の実在・東征を証明する考古資料ではない。図中の鳥や人物・服装・武器、絵にある年代表現を新しい暗記対象にせず、「天下を一軒の家に見立てる」表現をこの場面の描写と取り違えさせない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-05-U01",
+          "questions": [
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2448,6 +2680,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Moat_in_Yoshinogari_Historical_Park_(Replica).jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-86e2a2d7f1facad58768.jpg",
       "sha256": "86e2a2d7f1facad5876856a153946b926b793e160cd17c2db9251315c423b6f8"
+    },
+    {
+      "id": "JHKS-b9ab98b6fe5f9e3192ce",
+      "path": "term-images/japanese-history-k/JHKS-b9ab98b6fe5f9e3192ce.jpg",
+      "alt": "ヘレニズム時代の彫刻の例（サモトラケのニケ）",
+      "caption": "ヘレニズム時代の彫刻の例（サモトラケのニケ）",
+      "creator": "© Rijin S / Wikimedia Commons",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Winged_Victory_of_Samothrace_(1).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b9ab98b6fe5f9e3192ce.jpg",
+      "sha256": "b9ab98b6fe5f9e3192ce66d30e4fbbf166f40c0c166d01a5a165c9ebfa69bcbc"
+    },
+    {
+      "id": "JHKS-0fbdedb82e08d16359f8",
+      "path": "term-images/japanese-history-k/JHKS-0fbdedb82e08d16359f8.jpg",
+      "alt": "ローマの水道橋の例（ポン・デュ・ガールの現在の写真）",
+      "caption": "ローマの水道橋の例（ポン・デュ・ガールの現在の写真）",
+      "creator": "Benh LIEU SONG",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pont_du_Gard_BLS.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0fbdedb82e08d16359f8.jpg",
+      "sha256": "0fbdedb82e08d16359f842dfd43ffee3ad5191177ed57323dc11d878a37e040d"
+    },
+    {
+      "id": "JHKS-fa28df0e17a70d6ed78e",
+      "path": "term-images/japanese-history-k/JHKS-fa28df0e17a70d6ed78e.jpg",
+      "alt": "度量衡の統一を伝える秦の重り（河南博物院）",
+      "caption": "度量衡の統一を伝える秦の重り（河南博物院）",
+      "creator": "Gary Todd",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Qin_Iron_Weight.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fa28df0e17a70d6ed78e.jpg",
+      "sha256": "fa28df0e17a70d6ed78ed41e84f0f7c1f14c35e5b73083b7e687d20befd31bfa"
+    },
+    {
+      "id": "JHKS-af9cb1c60e957c836f52",
+      "path": "term-images/japanese-history-k/JHKS-af9cb1c60e957c836f52.jpg",
+      "alt": "論語の後世の刊本（注釈付きの元代刊本の影印）",
+      "caption": "論語の後世の刊本（注釈付きの元代刊本の影印）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Analects_LunYu_Rongo2.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-af9cb1c60e957c836f52.jpg",
+      "sha256": "af9cb1c60e957c836f52b317a59e0e2bfbbfe58ac92fec324091ff100b21d914"
+    },
+    {
+      "id": "JHKS-a3bc79f714610ca3555a",
+      "path": "term-images/japanese-history-k/JHKS-a3bc79f714610ca3555a.jpg",
+      "alt": "神武天皇の伝説を描いた後世の錦絵（月岡芳年）",
+      "caption": "神武天皇の伝説を描いた後世の錦絵（月岡芳年）",
+      "creator": "月岡芳年",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Jimmu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a3bc79f714610ca3555a.jpg",
+      "sha256": "a3bc79f714610ca3555a4779a17525b97e7c9001bdbfe1c067528c5ceeb06dd2"
     }
   ]
 }

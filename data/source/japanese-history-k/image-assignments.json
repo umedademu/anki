@@ -22,7 +22,10 @@
     "book-01-01-03",
     "book-01-02-01",
     "book-01-02-02",
-    "book-01-02-03"
+    "book-01-02-03",
+    "book-01-02-04",
+    "book-01-02-05",
+    "book-01-02-06"
   ],
   "images": [
     {
@@ -1271,6 +1274,251 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-4f848dc2c9330cba523f",
+      "caption": "羊の放牧の例（現在のトルコ）",
+      "note": "トルコで撮影された現在の羊の群れの放牧。家畜の羊と群れの管理という具体例を回答後に確認する。紀元前8000〜7000年の牧畜開始を写した資料や、当時の羊の品種・家畜化の過程の証拠とは扱わない。現在の服装・放牧地を古代の西アジアの姿とはしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-04-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-122fa90706d28baa5704",
+      "caption": "水田稲作の例（現在の中国・雲南）",
+      "note": "現在の中国・雲南の水田の写真。稲作・水田稲作の名称への回答後と農耕文化の説明に使う。長江中流域の起源地や約1万2000年前の農地そのものではない。現代の棚田の形を当時の水田の形と同一視せず、稲作の開始年代・文化の伝来経路・北方の粟と黍を写真から証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-04-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-01-02-05-U05",
+          "questions": [
+            "B05",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6d5d1a6dd43dade0f8b9",
+      "caption": "楔形文字を刻んだ粘土板（ギルス出土）",
+      "note": "ルーヴル美術館AO 4238の粘土板。所蔵館の記録でギルス出土の紀元前2420〜2400年ごろの楔形文字の手紙と照合した。文字による歴史資料の例と、粘土板に刻む楔形文字の例に限る。ハンムラビ法典・太陰暦・都市の城壁の写真とは扱わず、手紙の読解・人物名・出土地を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-04-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-01-02-05-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-91ddb09d142483",
+      "caption": "ナイル川流域の位置（現代の地形画像）",
+      "note": "ナイル川流域を示す現代の地形画像。河川名への回答後とエジプト文明の位置の復習に付ける。古代の領土図や氾濫の記録とは扱わず、養分・土地境界の変化・太陽暦の成立をこの画像だけで証明させない。湖や支流の名称は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U01",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-8e78ff93a90ffe",
+      "caption": "エジプト・ギザのピラミッド（現在の写真）",
+      "note": "ギザのピラミッドの現在の写真。ファラオによる建設事業を含む説明問題に限る。王が建設させた建造物の具体例で、紀元前3000年の統一時点の写真や王本人の肖像とは扱わない。写真だけで王の権力の大きさを測らず、各ピラミッドの王名・形の細分類を暗記させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-136acaec3bc558",
+      "caption": "神聖文字の例（エジプト・セティ１世の神殿）",
+      "note": "アビドスのセティ１世の神殿にある神聖文字の写真。エジプトの文字の名称を確認する回答後の資料とする。柱に描かれた人物像と周囲の文字を区別し、神殿の建立年・人物の識別・文字の読解を新しい出題に加えない。ナイル川の氾濫や測量を写した場面ではない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-d61148af476e62",
+      "caption": "ハンムラビ法典の碑（ルーヴル美術館）",
+      "note": "ルーヴル美術館のハンムラビ法典碑SB 8の正面。法典名と成立を含む説明問題への回答後に使う。上部の浮彫と下部の法文を区別し、座る神をハンムラビ王と取り違えない。細かい条文を画面で読める資料とはせず、刑罰や身分差を写真だけで解読させない。石碑なので楔形文字の粘土板とは区別する。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U03",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6167d0562f77a9157c34",
+      "caption": "モヘンジョダロの遺跡（現在の保存地）",
+      "note": "モヘンジョダロの現在の保存地を写す遺跡写真。都市名への回答後と遺跡を含む説明問題に付ける。古代の街全体の復元図ではなく、遠景の仏塔には後世のものが含まれる。全体の道路が碁盤の目状であることや下水道の構造・文字の未解読をこの一枚から証明させず、都市名と遺跡の姿の対応に限る。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U04",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-235f3f7f0b0e4742dc4f",
+      "caption": "インダス文字を刻んだ印章",
+      "note": "クリーブランド美術館1973.160のインダス文明の印章。上部のインダス文字と動物の図像を区別し、文字の名称と未解読の説明への回答後に使う。出土地をモヘンジョダロと断定せず、印影の複製展示とは区別する。印章の文面を解読させず、牛の種類・印章の用途・年代を新しい試験知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U04",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f690938e9fe98bb3e3fb",
+      "caption": "甲骨文字を刻んだ牛の骨（殷の時代）",
+      "note": "英国図書館Or 7694の殷の時代の牛の骨。骨に刻まれた甲骨文字の実例として、文字名と祭祀・文字の説明への回答後に使う。亀の甲羅の写真や、紙・竹簡の書写資料とは区別する。占いの問い・骨の個別整理番号・文字の読解を新しい必須知識に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U05",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-91a9d163550247",
+      "caption": "殷の青銅器の例（後母戊鼎）",
+      "note": "中国国家博物館の後母戊鼎の写真。殷の青銅器の名称と祭器を含む説明問題への回答後に使う。日本の弥生時代の銅鐸や春秋戦国時代の鉄製農具とは区別する。器名・重量・装飾の名称は出題に加えず、すべての青銅器が同じ形だったとはしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-05-U05",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-d98a334d97b7b0",
+      "caption": "釈迦を表した現代の仏像（インド・ラバングラ）",
+      "note": "インド・シッキム州ラバングラの仏像の写真。仏教と釈迦の名称・成立を含む説明問題に付ける。2006〜2013年に整備された現代の像で、釈迦が生きていた時代の肖像や実際の姿を記録した資料とは扱わない。仏像の手の形や服装だけから、大乗・上座部の教えや伝播経路を判定させず、二派や伝来年代だけの問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-06-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-bf59ee2ec2aec8",
+      "caption": "イエスを描いた宗教画（エルサレムの教会）",
+      "note": "エルサレムの聖墳墓教会のドームに描かれたイエスの宗教画。キリスト教の名称と成立の説明への回答後に限る。本人の同時代の肖像や処刑当時の記録、313年の公認を写した場面ではない。絵の象徴・他の人物・教会名の暗記を追加せず、ローマ帝国の公認年だけを問う問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-06-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ce05fda99ad3ca3194bd",
+      "caption": "旧約聖書に含まれる申命記の写本（アレッポ写本）",
+      "note": "10世紀のヘブライ語聖書のアレッポ写本の申命記の頁。旧約聖書の名称と新約聖書との関係を確認する回答後の資料とする。古代パレスチナの原本・イエスの自筆とは扱わず、申命記は旧約聖書に含まれる書であり聖書全体の別名ではない。頁の読解・書写年代・筆者は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-06-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-ffbdbbe492949e",
+      "caption": "新約聖書のマタイによる福音書の写本（４世紀前半）",
+      "note": "ミシガン大学所蔵P. Mich. inv. 1570のパピルス写本。所蔵館の記録で４世紀前半のマタイによる福音書26章19〜37節と照合した。新約聖書名への回答後と全体説明に付ける。イエス自身の手稿や新約聖書全体とは扱わず、写真の該当箇所から神の愛の教えの全体を読解させない。書写年代や言語を新しい出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-06-U02",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4fcd378497152e",
+      "caption": "コーランの写本（12世紀のアル＝アンダルス）",
+      "note": "アル＝アンダルスで書かれた12世紀のコーランの写本の頁。聖典名と社会の規律を含む説明問題への回答後に使う。７世紀の成立時の原本やムハンマドの自筆とは扱わない。アラビア文字・装飾の読解や書写地の暗記を求めず、偶像崇拝の禁止・神への服従・伝播範囲を写真だけから読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-06-U03",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1849,6 +2097,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stone_axe_edo_tokyo_museum.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-106114ff6137d1a4c4de.jpg",
       "sha256": "106114ff6137d1a4c4de2abbbfddb3ca7b0cd753a291b1d58bcc5c794694d92c"
+    },
+    {
+      "id": "JHKS-4f848dc2c9330cba523f",
+      "path": "term-images/japanese-history-k/JHKS-4f848dc2c9330cba523f.jpg",
+      "alt": "羊の放牧の例（現在のトルコ）",
+      "caption": "羊の放牧の例（現在のトルコ）",
+      "creator": "Zeynel Cebeci",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sheep_flock_in_grasland_in_E%C4%9Fribel_02.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4f848dc2c9330cba523f.jpg",
+      "sha256": "4f848dc2c9330cba523f60421248cf533f84bc2d088c4337f87b9ff8f1353058"
+    },
+    {
+      "id": "JHKS-122fa90706d28baa5704",
+      "path": "term-images/japanese-history-k/JHKS-122fa90706d28baa5704.jpg",
+      "alt": "水田稲作の例（現在の中国・雲南）",
+      "caption": "水田稲作の例（現在の中国・雲南）",
+      "creator": "Colin W",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Terrace_Rice_Fields,_Yunan_China_-_panoramio.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-122fa90706d28baa5704.jpg",
+      "sha256": "122fa90706d28baa570452568c61fbd5d4102e8fec1212a4bb44333806e28938"
+    },
+    {
+      "id": "JHKS-6d5d1a6dd43dade0f8b9",
+      "path": "term-images/japanese-history-k/JHKS-6d5d1a6dd43dade0f8b9.jpg",
+      "alt": "楔形文字を刻んだ粘土板（ギルス出土）",
+      "caption": "楔形文字を刻んだ粘土板（ギルス出土）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Letter_Luenna_Louvre_AO4238.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6d5d1a6dd43dade0f8b9.jpg",
+      "sha256": "6d5d1a6dd43dade0f8b9b29ce0c92d5e71ce4154d55d1db91cfe1c6ffbb51d0f"
+    },
+    {
+      "id": "JHKS-6167d0562f77a9157c34",
+      "path": "term-images/japanese-history-k/JHKS-6167d0562f77a9157c34.jpg",
+      "alt": "モヘンジョダロの遺跡（現在の保存地）",
+      "caption": "モヘンジョダロの遺跡（現在の保存地）",
+      "creator": "Nikesh chawla",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Excavated_ruins_of_Mohenjo-daro.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6167d0562f77a9157c34.jpg",
+      "sha256": "6167d0562f77a9157c34eb7fb5f641add092a976aaf5e80325c90fef204dc2b1"
+    },
+    {
+      "id": "JHKS-235f3f7f0b0e4742dc4f",
+      "path": "term-images/japanese-history-k/JHKS-235f3f7f0b0e4742dc4f.jpg",
+      "alt": "インダス文字を刻んだ印章",
+      "caption": "インダス文字を刻んだ印章",
+      "creator": "Cleveland Museum of Art",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pakistan,_Indus_Valley_civilization_-_Seal_with_Two-Horned_Bull_and_Inscription_-_1973.160_-_Cleveland_Museum_of_Art.tif",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-235f3f7f0b0e4742dc4f.jpg",
+      "sha256": "235f3f7f0b0e4742dc4f3d1c77a96334667b3130aabeecbc82cd17dfc466e901"
+    },
+    {
+      "id": "JHKS-f690938e9fe98bb3e3fb",
+      "path": "term-images/japanese-history-k/JHKS-f690938e9fe98bb3e3fb.jpg",
+      "alt": "甲骨文字を刻んだ牛の骨（殷の時代）",
+      "caption": "甲骨文字を刻んだ牛の骨（殷の時代）",
+      "creator": "British Library",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chinese_oracle_bone_(16th-10th_C_BC)_-_BL_Or._7694.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f690938e9fe98bb3e3fb.jpg",
+      "sha256": "f690938e9fe98bb3e3fb518c1c8cedf383162d6efcdddd20f8283fd2447d6391"
+    },
+    {
+      "id": "JHKS-ce05fda99ad3ca3194bd",
+      "path": "term-images/japanese-history-k/JHKS-ce05fda99ad3ca3194bd.jpg",
+      "alt": "旧約聖書に含まれる申命記の写本（アレッポ写本）",
+      "caption": "旧約聖書に含まれる申命記の写本（アレッポ写本）",
+      "creator": "Shlomo ben Buya'a ほか",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Aleppo_Codex_(Deut).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ce05fda99ad3ca3194bd.jpg",
+      "sha256": "ce05fda99ad3ca3194bd38cc99f418cdaf1756c5bc6fc2e2524e4616da99af56"
     }
   ]
 }

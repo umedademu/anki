@@ -25,7 +25,10 @@
     "book-01-02-03",
     "book-01-02-04",
     "book-01-02-05",
-    "book-01-02-06"
+    "book-01-02-06",
+    "book-01-02-07",
+    "book-01-03-01",
+    "book-01-03-02"
   ],
   "images": [
     {
@@ -1519,6 +1522,162 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-1a10cb836de2611b0716",
+      "caption": "天孫降臨を描いた後世の挿絵",
+      "note": "『少年日本歴史読本』に掲載された天孫降臨の後世の挿絵。地上へ降りた邇邇芸命の名称と物語を含む回答後に付ける。Commonsの著者欄は原書著者の萩野由之であり、画作者とは断定しない。神話成立当時の記録や神の実際の姿、稲作の考古学的な伝来の証拠とは扱わない。周囲の人物・服装・武器を暗記させず、天照大御神だけの名称問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-07-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-17fcca7a5dcb4fcdf0db",
+      "caption": "稲穂の形（現在の写真）",
+      "note": "現在の稲穂の接写。穂の形と、日本書紀が稲穂を持たせたとする神話の説明を結び付ける回答後の具体例とする。神話の降臨時の稲穂、弥生時代の出土米・当時の品種、稲作の起源や伝来経路を写す証拠とは扱わない。写真の品種や撮影地を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-07-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像、左が朝鮮半島）",
+      "note": "NASAの現代の衛星画像。左側の朝鮮半島と右側の日本列島、北部九州の位置関係を回答後に確認する。伝来の矢印や古代の国境を描いた地図ではなく、朝鮮半島経由の説だけを確定した事実とはしない。沖縄諸島経由・大陸から直接の説を含む元の回答を維持し、年代や土器型式の一致を画像から証明させない。炭素年代測定の方法・炭化物だけの問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-01-U01",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-19f1e724a16a129ab12f",
+      "caption": "板付遺跡の復元集落（福岡市）",
+      "note": "福岡市の板付遺跡の現在の復元集落。水田跡と縄文時代晩期の土器の発見を説明した回答後に、遺跡名と場所の姿を対応させる。写真は復元住居と周囲を写しており、水田遺構や土器の共伴を写した発掘写真ではない。写真だけで文化の連続性や開始年代を証明させず、現在の復元建物や背景の街を当時の原物と取り違えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2d6300d9e82cd74f7e24",
+      "caption": "弥生土器の形（吉野ヶ里遺跡の復元品展示）",
+      "note": "吉野ヶ里遺跡の展示写真で、土器の表示に「復元品」とあることを確認した。弥生土器の名称と道具を含む全体説明への回答後に形の具体例として使う。古代の原物のままの出土品とは扱わず、赤褐色・薄手・固いという性質を一枚の色や見た目だけで一律に判定させない。展示される各器形・用途や出土地の暗記は加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-46b6071da5ff6e509ece",
+      "caption": "石包丁の形（保久良神社境内出土）",
+      "note": "本山村誌掲載の保久良神社境内出土の石包丁の写真。石包丁の名称への回答後に輪郭と穴のある道具の形を確認する。台所の金属製包丁や鉄器とは区別し、写真の道具を板付遺跡出土品とはしない。出土地・穴の数・石材・写真の出版年は新しい暗記対象にせず、全ての石包丁が同じ形だったとはしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4334a012a1bd96c9f21f",
+      "caption": "石包丁による穂摘みの使い方（博物館の再現展示）",
+      "note": "滋賀県立安土城考古博物館の石包丁の使用法を示す再現展示。稲穂を摘む道具の説明への回答後に、指に結び付けた石包丁の持ち方と穂摘みを補う。現在の展示であって、弥生人を撮影した写真や使用中の出土品とは扱わない。紐の素材や細かい手順を試験知識に加えず、石包丁の形の名称問題には別の出土品の写真を使う。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-26f9d63ffde966339de4",
+      "caption": "吉野ヶ里遺跡の高床倉庫（復元）",
+      "note": "吉野ヶ里遺跡で復元された高床倉庫。床を地面から離した構造を、施設名への回答後に確認する。現在の復元建物で当時の木材が残った建物ではない。物見櫓や竪穴住居とは区別し、写真だけで鼠除けの有無・湿気・共同管理の制度の全てを証明させない。復元根拠の細部や柱の本数は暗記させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-86e2a2d7f1facad58768",
+      "caption": "吉野ヶ里遺跡の環濠と柵（復元）",
+      "note": "吉野ヶ里歴史公園の復元された環濠と柵。集落を守る溝と柵の構造を環濠集落の名称・成立の説明への回答後に確認する。現代の復元部分で、発掘状態の遺構や戦闘を撮影した写真ではない。土地や水の権利をめぐる争い、首長の役割、傷ついた人骨の存在を写真だけで証明させず、復元の寸法を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-81f2178da5d1d1",
+      "caption": "吉野ヶ里遺跡の復元集落（佐賀県）",
+      "note": "吉野ヶ里歴史公園の現在の復元集落の全景。佐賀県の遺跡名と集落を含む説明への回答後に使う。弥生時代の建物の原物が一式残った姿や、戦闘・人骨・金属製武器の発掘写真ではない。全ての高床建物を倉庫とは扱わず、土地や水の権利・首長の役割だけの問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ffdbdc39386b4d",
+      "caption": "弥生時代後期の銅鐸（３世紀）",
+      "note": "弥生時代後期の銅鐸の写真。銅鐸名と青銅器・祭祀を含む説明への回答後に使う。現在の寺院の梵鐘や鉄製農具とは区別し、鉄器・近畿地方・大陸だけを答える問題には付けない。写真だけで祭りの内容・分布・伝来経路を証明させず、装飾や個別型式は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-03-02-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2181,6 +2340,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Aleppo_Codex_(Deut).jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-ce05fda99ad3ca3194bd.jpg",
       "sha256": "ce05fda99ad3ca3194bd38cc99f418cdaf1756c5bc6fc2e2524e4616da99af56"
+    },
+    {
+      "id": "JHKS-1a10cb836de2611b0716",
+      "path": "term-images/japanese-history-k/JHKS-1a10cb836de2611b0716.jpg",
+      "alt": "天孫降臨を描いた後世の挿絵",
+      "caption": "天孫降臨を描いた後世の挿絵",
+      "creator": "画作者不詳（原書著者：萩野由之）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ninigi.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1a10cb836de2611b0716.jpg",
+      "sha256": "1a10cb836de2611b0716eb527084f593074bf1857e35c3ab9bc2e644c81e12b3"
+    },
+    {
+      "id": "JHKS-17fcca7a5dcb4fcdf0db",
+      "path": "term-images/japanese-history-k/JHKS-17fcca7a5dcb4fcdf0db.jpg",
+      "alt": "稲穂の形（現在の写真）",
+      "caption": "稲穂の形（現在の写真）",
+      "creator": "Ramesh Kunnappully",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rice_Panicle.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-17fcca7a5dcb4fcdf0db.jpg",
+      "sha256": "17fcca7a5dcb4fcdf0dbe6b9d6b7151f96272944572c7534fe537aec47cf3675"
+    },
+    {
+      "id": "JHKS-57159f7f398ffd6602ee",
+      "path": "term-images/japanese-history-k/JHKS-57159f7f398ffd6602ee.jpg",
+      "alt": "日本列島と朝鮮半島の位置（現代の衛星画像、左が朝鮮半島）",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像、左が朝鮮半島）",
+      "creator": "NASA",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan_satellite.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-57159f7f398ffd6602ee.jpg",
+      "sha256": "57159f7f398ffd6602eea854b99e9430d9b31e2a05e77f9e3bf4258f611e996c"
+    },
+    {
+      "id": "JHKS-19f1e724a16a129ab12f",
+      "path": "term-images/japanese-history-k/JHKS-19f1e724a16a129ab12f.jpg",
+      "alt": "板付遺跡の復元集落（福岡市）",
+      "caption": "板付遺跡の復元集落（福岡市）",
+      "creator": "Muyo",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Itazuke_Ruins.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-19f1e724a16a129ab12f.jpg",
+      "sha256": "19f1e724a16a129ab12f0e58241a20c953dd55998b28619d1d18f251d6b841ae"
+    },
+    {
+      "id": "JHKS-2d6300d9e82cd74f7e24",
+      "path": "term-images/japanese-history-k/JHKS-2d6300d9e82cd74f7e24.jpg",
+      "alt": "弥生土器の形（吉野ヶ里遺跡の復元品展示）",
+      "caption": "弥生土器の形（吉野ヶ里遺跡の復元品展示）",
+      "creator": "Abasaa",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yayoi_pottery_(Yoshinogari_Site).JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2d6300d9e82cd74f7e24.jpg",
+      "sha256": "2d6300d9e82cd74f7e24e95b78f8301faa805ea1520905f2f5d37347238a809b"
+    },
+    {
+      "id": "JHKS-46b6071da5ff6e509ece",
+      "path": "term-images/japanese-history-k/JHKS-46b6071da5ff6e509ece.jpg",
+      "alt": "石包丁の形（保久良神社境内出土）",
+      "caption": "石包丁の形（保久良神社境内出土）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E4%BF%9D%E4%B9%85%E8%89%AF%E7%A5%9E%E7%A4%BE%E5%A2%83%E5%86%85%E5%87%BA%E5%9C%9F%E3%81%AE%E7%9F%B3%E5%8C%85%E4%B8%81.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-46b6071da5ff6e509ece.jpg",
+      "sha256": "46b6071da5ff6e509ece80588af070506efc911867cefd81f4060c20c0ccb9da"
+    },
+    {
+      "id": "JHKS-4334a012a1bd96c9f21f",
+      "path": "term-images/japanese-history-k/JHKS-4334a012a1bd96c9f21f.jpg",
+      "alt": "石包丁による穂摘みの使い方（博物館の再現展示）",
+      "caption": "石包丁による穂摘みの使い方（博物館の再現展示）",
+      "creator": "あずきごはん",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%9F%B3%E5%8C%85%E4%B8%81%E3%81%AE%E4%BD%BF%E3%81%84%E6%96%B9.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4334a012a1bd96c9f21f.jpg",
+      "sha256": "4334a012a1bd96c9f21f8cd7cb7d4fa713beac874f50d0ca04c551f08b073e08"
+    },
+    {
+      "id": "JHKS-26f9d63ffde966339de4",
+      "path": "term-images/japanese-history-k/JHKS-26f9d63ffde966339de4.jpg",
+      "alt": "吉野ヶ里遺跡の高床倉庫（復元）",
+      "caption": "吉野ヶ里遺跡の高床倉庫（復元）",
+      "creator": "Saigen Jiro",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yoshinogari-iseki_takayukashiki-souko.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-26f9d63ffde966339de4.jpg",
+      "sha256": "26f9d63ffde966339de446110cae6e4c682f041bac9cf3eba104181a1da3b609"
+    },
+    {
+      "id": "JHKS-86e2a2d7f1facad58768",
+      "path": "term-images/japanese-history-k/JHKS-86e2a2d7f1facad58768.jpg",
+      "alt": "吉野ヶ里遺跡の環濠と柵（復元）",
+      "caption": "吉野ヶ里遺跡の環濠と柵（復元）",
+      "creator": "Motokoka",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Moat_in_Yoshinogari_Historical_Park_(Replica).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-86e2a2d7f1facad58768.jpg",
+      "sha256": "86e2a2d7f1facad5876856a153946b926b793e160cd17c2db9251315c423b6f8"
     }
   ]
 }

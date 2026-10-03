@@ -46,7 +46,10 @@
     "book-02-02-04",
     "book-02-02-05",
     "book-02-02-06",
-    "book-02-03-01"
+    "book-02-03-01",
+    "book-02-03-02",
+    "book-02-03-03",
+    "book-02-03-04"
   ],
   "images": [
     {
@@ -2784,6 +2787,185 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-83a191b6023fcf5dd2dc",
+      "caption": "藤原不比等を描いた後世の人物画（菊池容斎）",
+      "note": "菊池容斎の後世の藤原不比等の人物画。人物名、律令編纂などの役割と政治基盤の説明への回答後に示す。不比等の生前の容貌や律令編纂の現場、藤原四子の集合図ではなく、服装・持ち物・作者は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-02-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7b600f57585ab54f5bdb",
+      "caption": "文武天皇を描いた後世の人物画（江戸時代）",
+      "note": "江戸時代に描かれた文武天皇の人物画。宮子が嫁いだ天皇の名前と、藤原不比等の娘を通じた皇室との関係の説明への回答後に示す。奈良時代の同時代肖像や宮子・光明子の絵、家系図ではなく、絵の服装から婚姻・血縁を判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-02-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-1d243f5f73987d",
+      "caption": "聖武天皇を描いた後世の人物画（鎌倉時代）",
+      "note": "鎌倉時代の聖武天皇の人物画を共有する。光明子が皇后となった天皇の名前への回答後に、人物の後世の描写を確認する。文武天皇や光明皇后の肖像、８世紀の写実的記録とはしない。服装や持ち物から皇室との関係・仏教政策を判定させず、作者や制作時期を覚える必要はない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-02-U01",
+          "questions": [
+            "B06"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-dab3ea9c5a6f46",
+      "caption": "国分寺の例・備中国分寺の現在の境内（江戸時代の再建建物を含む）",
+      "note": "国分寺の例として現在の備中国分寺の境内写真を共有する。国分寺と国分尼寺という二種類の寺院の名称への回答後に、国分寺の一例を確認する。岡山県と総社市の解説で、写る五重塔や現在の建物は江戸時代の再興であると照合した。741年の建立時の姿や国分尼寺の写真ではなく、全国の寺院配置図でもない。寺名・塔の階数・再建年は追加の出題条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-03-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-a2fa2bab085920",
+      "caption": "東大寺の現在の大仏殿（江戸時代の再建）",
+      "note": "東大寺の大仏殿の現在の外観写真を共有する。都の総国分寺として大仏が建立された寺院の名称への回答後に示す。東大寺の解説で現在の建物は江戸時代の再建と照合した。８世紀の創建時の建物がそのまま残る写真や国分尼寺とせず、屋根・柱・装飾・再建年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-03-U01",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-69cba73edb488afb104c",
+      "caption": "東大寺の大仏（後世の修復を含む現在の姿）",
+      "note": "東大寺の大仏を写した写真。開眼供養の年、寺院と大仏造営の進め方と仏教政策の全体説明への回答後に示す。東大寺の解説でも頭部などの後世の修復を確認した。現在の大仏を752年に完成した姿のままや当時の開眼供養の実景とせず、京都の方広寺や鎌倉の大仏と取り違えない。現在の供物・装飾・周囲の像や仏の名は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-03-U01",
+          "questions": [
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25da7fae12097c293096",
+      "caption": "奈良時代の開墾地の図（東大寺領・759年の鳴戸村墾田図）",
+      "note": "東大寺領の開墾地を記した759年の越中国射水郡鳴戸村墾田図。社寺などの私有地拡大、荘園の名称、土地の管理と政策の全体説明への回答後に、奈良時代の土地把握の具体例を示す。e国宝の作品記録で年代と対象を照合した。723年や743年の法令本文、後世の不輸不入の荘園図、全国の土地配置図ではない。この図だけで租の納付や三世一身法の失敗、朝廷の税収増加を証明させず、面積・朱印・地名・条里の全文読解や759年の暗記を要求しない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-03-U02",
+          "questions": [
+            "B05",
+            "B06",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-44d0bf1fc52ff7ada886",
+      "caption": "孝謙天皇・称徳天皇を描いた後世の人物画（18世紀）",
+      "note": "18世紀の孝謙天皇・称徳天皇の人物画。同じ人物が退位後に再び即位したという関係、重祚の用語と政権変化の説明への回答後に示す。聖武天皇が譲位した相手の補助としても使う。二人の別の天皇を比較した写真や重祚の儀式の同時代記録とせず、絵だけで即位・共治体制を証明させない。服装・玉座・作者・制作年代は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-03-U01",
+          "questions": [
+            "R03"
+          ]
+        },
+        {
+          "termId": "JHK-02-03-04-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-266808112d82669a18e0",
+      "caption": "道鏡を描いた後世の人物画（菊池容斎・19世紀）",
+      "note": "菊池容斎が1847年に描いた和気清麻呂像の中の道鏡の部分を、Commonsで公開された状態のまま使う。法王の称号、称徳天皇との共治体制や道鏡の政治参加の説明への回答後に示す。自分で画像を切り抜いていない。８世紀の肖像や政治の現場の記録とはしない。絵の表情で人格や野望の有無を判断させず、服装から位階・権限を判定させない。作者・制作年や元の絵の構図は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-04-U01",
+          "questions": [
+            "B04",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ef5bc5d6b104654d59a9",
+      "caption": "宇佐神宮の現在の境内",
+      "note": "宇佐神宮の現在の境内写真。宇佐八幡宮神託事件の名称、神託の報告と事件の全体説明への回答後に、関係する神社の現在の姿を示す。写る中心の社殿を元画像の題名だけで本殿と断定せず、769年の建物がそのまま残る写真や神託の現場の記録ともしない。現在の社殿や装飾の名称・造営年は追加の暗記条件にせず、写真から神託の内容・報告の真偽を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-04-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-dcb309a3aebc296867b9",
+      "caption": "和気清麻呂を描いた後世の版画（1887年・尾形月耕）",
+      "note": "尾形月耕による1887年の和気清麻呂の版画。宇佐へ派遣された人物の名称と、報告が政治的にどう扱われたかの説明への回答後に示す。神託を受ける場面の後世の表現で、８世紀の同時代肖像や神託が実際に起きたことの証拠ではない。描かれた神像・装飾・作者・制作年を出題に加えず、絵の内容から清麻呂の報告の真偽や流罪の理由を判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-04-U02",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f385019d9977014975fd",
+      "caption": "光仁天皇を描いた後世の人物画（1937年刊の掲載図）",
+      "note": "1937年刊の書物に掲載された光仁天皇の後世の人物画。称徳天皇の後の天皇の名称と、皇位継承や道鏡の地位の変化の説明への回答後に示す。天智天皇や桓武天皇の人物画、生前の容貌の証拠や皇統の系図とはしない。絵の見た目だけで天武系から天智系への変化を確定させず、掲載書の名称・刊行年・服装は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-04-U02",
+          "questions": [
+            "B05",
+            "R03"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -4010,6 +4192,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Daigokuden_16-9.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-7062332add381afe1286.jpg",
       "sha256": "7062332add381afe1286f16c79643f8643fd2d1b668a1baa0e551b418d5f111b"
+    },
+    {
+      "id": "JHKS-83a191b6023fcf5dd2dc",
+      "path": "term-images/japanese-history-k/JHKS-83a191b6023fcf5dd2dc.jpg",
+      "alt": "藤原不比等を描いた後世の人物画（菊池容斎）",
+      "caption": "藤原不比等を描いた後世の人物画（菊池容斎）",
+      "creator": "菊池容斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fujiwara-Fuhito.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-83a191b6023fcf5dd2dc.jpg",
+      "sha256": "83a191b6023fcf5dd2dc04bbedbb1519e91de1537173ad9726e6a8edf116fa2c"
+    },
+    {
+      "id": "JHKS-7b600f57585ab54f5bdb",
+      "path": "term-images/japanese-history-k/JHKS-7b600f57585ab54f5bdb.jpg",
+      "alt": "文武天皇を描いた後世の人物画（江戸時代）",
+      "caption": "文武天皇を描いた後世の人物画（江戸時代）",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Monmu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7b600f57585ab54f5bdb.jpg",
+      "sha256": "7b600f57585ab54f5bdb83ad8a8e592415c03f967ba573ca16caa1bf617bc1cf"
+    },
+    {
+      "id": "JHKS-69cba73edb488afb104c",
+      "path": "term-images/japanese-history-k/JHKS-69cba73edb488afb104c.jpg",
+      "alt": "東大寺の大仏（後世の修復を含む現在の姿）",
+      "caption": "東大寺の大仏（後世の修復を含む現在の姿）",
+      "creator": "百楽兎",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Todaiji_Daibutsu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-69cba73edb488afb104c.jpg",
+      "sha256": "69cba73edb488afb104c96a02916887461f95d6910191b42e2f60b5c643ca723"
+    },
+    {
+      "id": "JHKS-25da7fae12097c293096",
+      "path": "term-images/japanese-history-k/JHKS-25da7fae12097c293096.jpg",
+      "alt": "奈良時代の開墾地の図（東大寺領・759年の鳴戸村墾田図）",
+      "caption": "奈良時代の開墾地の図（東大寺領・759年の鳴戸村墾田図）",
+      "creator": "作者不明／奈良国立博物館所蔵",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Naruto_map.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-25da7fae12097c293096.jpg",
+      "sha256": "25da7fae12097c293096736872218e9ffe7c25390c2114501de6f7503822a975"
+    },
+    {
+      "id": "JHKS-44d0bf1fc52ff7ada886",
+      "path": "term-images/japanese-history-k/JHKS-44d0bf1fc52ff7ada886.jpg",
+      "alt": "孝謙天皇・称徳天皇を描いた後世の人物画（18世紀）",
+      "caption": "孝謙天皇・称徳天皇を描いた後世の人物画（18世紀）",
+      "creator": "住吉広保",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Empress_Sh%C5%8Dtoku.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-44d0bf1fc52ff7ada886.jpg",
+      "sha256": "44d0bf1fc52ff7ada886c8c1d48d05c7240c59bac98835b2ae6a34b3f0b5912b"
+    },
+    {
+      "id": "JHKS-266808112d82669a18e0",
+      "path": "term-images/japanese-history-k/JHKS-266808112d82669a18e0.jpg",
+      "alt": "道鏡を描いた後世の人物画（菊池容斎・19世紀）",
+      "caption": "道鏡を描いた後世の人物画（菊池容斎・19世紀）",
+      "creator": "菊池容斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:D%C5%8Dky%C5%8D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-266808112d82669a18e0.jpg",
+      "sha256": "266808112d82669a18e0bf1932ecfbac50a4153fd95b33e9f634239076a3871b"
+    },
+    {
+      "id": "JHKS-ef5bc5d6b104654d59a9",
+      "path": "term-images/japanese-history-k/JHKS-ef5bc5d6b104654d59a9.jpg",
+      "alt": "宇佐神宮の現在の境内",
+      "caption": "宇佐神宮の現在の境内",
+      "creator": "sk01",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E5%AE%87%E4%BD%90%E7%A5%9E%E5%AE%AE_%E6%9C%AC%E6%AE%BF_-_panoramio.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ef5bc5d6b104654d59a9.jpg",
+      "sha256": "ef5bc5d6b104654d59a9e2ea3cc1ebc675aefbed1e278247efcbfb3c6e280db4"
+    },
+    {
+      "id": "JHKS-dcb309a3aebc296867b9",
+      "path": "term-images/japanese-history-k/JHKS-dcb309a3aebc296867b9.jpg",
+      "alt": "和気清麻呂を描いた後世の版画（1887年・尾形月耕）",
+      "caption": "和気清麻呂を描いた後世の版画（1887年・尾形月耕）",
+      "creator": "尾形月耕",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wake_no_Kiyomaro_no_Ason_at_the_Usa_Hachiman_Shrine_by_Ogata_Gekk%C5%8D,_1887,_Honolulu_Museum_of_Art.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-dcb309a3aebc296867b9.jpg",
+      "sha256": "dcb309a3aebc296867b9c2e97840a1fa43b0d8484cf18bfcac3f2858d82adc7b"
+    },
+    {
+      "id": "JHKS-f385019d9977014975fd",
+      "path": "term-images/japanese-history-k/JHKS-f385019d9977014975fd.jpg",
+      "alt": "光仁天皇を描いた後世の人物画（1937年刊の掲載図）",
+      "caption": "光仁天皇を描いた後世の人物画（1937年刊の掲載図）",
+      "creator": "明治天皇聖徳奉讃会（掲載書の編者）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Konin.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f385019d9977014975fd.jpg",
+      "sha256": "f385019d9977014975fd48853a45f248f666e6eb2bb42ad7ff9dfe5759ab62ed"
     }
   ]
 }

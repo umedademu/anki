@@ -14,7 +14,7 @@ const labels = { identify: "用語", time: "時期", place: "場所", person: "�
 export const contentHash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const normalize = text => String(text).normalize("NFKC").replace(/\*\*|\s/g, "");
 const withoutReadings = text => String(text).replace(/\([ぁ-ゖー]+\)/g, "");
-const answerPeriods = text => String(text).match(/(?:約)?(?:\d{1,3}(?:\.\d+)?万(?:\d{1,4})?|\d{4,6}|数万)年前|\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/g) ?? [];
+const answerPeriods = text => String(text).match(/紀元前後|(?:約)?(?:\d{1,3}(?:\.\d+)?万(?:\d{1,4})?|\d{4,6}|数万)年前|\d{3,4}(?:[〜～~－-]\d{3,4})?年|\d{1,2}世紀/g) ?? [];
 const answerKeywords = answer => [...new Set([...answer.matchAll(/\*\*([^*]+)\*\*/g)].map(match => withoutReadings(match[1])))];
 const displayQuote = quote => quote.replace(/<sup>\s*\d+\s*<\/sup>/gi, "").replace(/<br\s*\/?>/gi, "、").replace(/^\|\s*|\s*\|$/g, "").replace(/\s*\|\s*/g, "／");
 const partCode = bank => [bank.chapter.number, bank.section.number, bank.part.number].map(number => String(number).padStart(2, "0")).join("-");

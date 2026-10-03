@@ -1,0 +1,953 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 1,
+    "title": "第1章 原始"
+  },
+  "section": {
+    "number": 2,
+    "title": "縄文時代"
+  },
+  "part": {
+    "number": 5,
+    "title": "ユーラシア大陸の状況"
+  },
+  "integrationPromptPrefix": "古代の",
+  "source": {
+    "file": "sources/kokushi/試作/第1章_02節_05_ユーラシア大陸の状況_原文抜粋.md",
+    "originalFile": "sources/kokushi/1_原始.md",
+    "pages": [
+      33,
+      34,
+      35
+    ],
+    "note": "33頁ホから36頁ヘ見出し前までの本文・課題・関連注⑦～⑩・図版・ハンムラビ法典の史料を通読した。36頁ヘ前の注⑫は宗教の起こりへ分ける。18頁・50～52頁も通読し、別出来事の年表・建国伝承や史料にない年代を今回へ補わない。エジプト、メソポタミア、ハンムラビ法典の史料、インダス流域の都市、中国の農耕・王朝と文字に分け、各文明の地域・文化・政治を通常説明で先に学べるようにする。中国の農耕の地域差、殷の文字と祭器、周の衰退後の鉄器利用は説明を分け、農耕から格差や侵略が必然的に生まれたとはしない。水田稲作の無肥料連作・畑作の一律の収穫差、文字二種の合体からアルファベットが生まれたという単純化、文明や民族の優劣、朝鮮と日本の技術の早遅を正答にしない。暦は河川の氾濫や月の満ち欠けとの関係を学び、日数・進法の数値一覧は増問しない。ハンムラビ法典は史料が定める扱いと身分による違いを読む対象とし、罰や差別を現在の正しい規範として評価しない。条文番号・奴隷の値段の割合は独立暗記にしない。インダス文字は資料の未解読という記述の範囲で扱い、文字数・文字を読んだ内容・外部の解読説を加えない。アーリア人の侵入やバラモンの記述も通読したが、短い説明から現代カースト制度の全体や同一性を補わない。周の成立年の細かい単年は採用せず、殷を滅ぼしたこととその後の衰退・春秋戦国時代への移行を扱う。中国の農耕の起源を紀元前6000年と一律に固定せず、作物の地域差を学ぶ。紀元前17世紀ごろは殷の成立にだけ結び付け、青銅器や甲骨文字の使用開始年にしない。春秋・戦国全体の開始も紀元前8世紀へ固定しない。本文の紀元前3000年ごろ、紀元前2500年ごろ、紀元前18世紀、紀元前17世紀ごろを各出来事の時期として通常の説明回答へ置き、全制度が同時に始まったとはしない。引用は元掲載頁の短い連続部分とし、後続の基礎正答の名称を前の引用で見せない。"
+  },
+  "facts": [
+    {
+      "id": "egypt-river",
+      "page": 33,
+      "quote": "エジプトでは、ナイル川が毎年氾濫したため、"
+    },
+    {
+      "id": "egypt-farming",
+      "page": 33,
+      "quote": "流域に養分が行き渡ることから、農業が発達しました。"
+    },
+    {
+      "id": "egypt-measuring",
+      "page": 33,
+      "quote": "川の氾濫で土地の境界が分からなくなるため、測量の技術が発達した"
+    },
+    {
+      "id": "egypt-sky-purpose",
+      "page": 33,
+      "quote": "川の氾濫の時期を知るため"
+    },
+    {
+      "id": "egypt-calendar",
+      "page": 34,
+      "quote": "天文学が生み出され、十進法や、一年を三六五日とする太陽暦が作られ、"
+    },
+    {
+      "id": "egypt-writing",
+      "page": 34,
+      "quote": "象形文字の⑦神聖文字（ヒエログリフ）も用いられました。"
+    },
+    {
+      "id": "egypt-kingdom",
+      "page": 34,
+      "quote": "紀元前三〇〇〇年ごろには統一王国ができ、"
+    },
+    {
+      "id": "egypt-ruler",
+      "page": 34,
+      "quote": "王（ファラオ）が絶大な権力を握って、巨大ピラミッドや神殿を建設しました。"
+    },
+    {
+      "id": "mesopotamia-rivers",
+      "page": 34,
+      "quote": "ティグリス川とユーフラテス川に挟まれたメソポタミア（現在のイラク）"
+    },
+    {
+      "id": "mesopotamia-cities",
+      "page": 34,
+      "quote": "紀元前三〇〇〇年ごろ、いくつもの都市国家が生まれました。"
+    },
+    {
+      "id": "mesopotamia-buildings",
+      "page": 34,
+      "quote": "城壁に囲まれた都市には、神殿や王宮が作られました。"
+    },
+    {
+      "id": "cuneiform",
+      "page": 34,
+      "quote": "⑧楔形文字が粘土板に刻まれました。"
+    },
+    {
+      "id": "lunar-calendar",
+      "page": 34,
+      "quote": "月の満ち欠けから太陰暦を発明して"
+    },
+    {
+      "id": "hammurabi-law",
+      "page": 34,
+      "quote": "紀元前十八世紀にメソポタミアを統一したハンムラビ王は「ハンムラビ法典」を制定しました。"
+    },
+    {
+      "id": "hammurabi-accusation",
+      "page": 35,
+      "quote": "他人を殺人の罪で訴えても、その罪を証明できないときには、訴えた者は死刑となる。"
+    },
+    {
+      "id": "hammurabi-slave",
+      "page": 35,
+      "quote": "奴隷の目を潰し、あるいは骨を折った者は、その奴隷の値段の半分を支払う。"
+    },
+    {
+      "id": "hammurabi-same-status",
+      "page": 35,
+      "quote": "同じ身分の他人の歯を折った者は、その歯を折られる。"
+    },
+    {
+      "id": "indus-river-period",
+      "page": 34,
+      "quote": "インド北西部を流れるインダス川流域では、紀元前二五〇〇年ごろに、"
+    },
+    {
+      "id": "indus-city",
+      "page": 34,
+      "quote": "モヘンジョダロに代表される都市を中心とした文化が栄えました。"
+    },
+    {
+      "id": "indus-planning",
+      "page": 34,
+      "quote": "都市は、碁盤の目状の道路、下水道の水路が整備されているのが特徴です。"
+    },
+    {
+      "id": "indus-writing-name",
+      "page": 34,
+      "quote": "⑨インダス文字が用いられました。"
+    },
+    {
+      "id": "indus-writing-study",
+      "page": 34,
+      "quote": "長文の文字史料がなく、使用語との関連も発見されず、いまだ解読されていない。"
+    },
+    {
+      "id": "china-rice",
+      "page": 34,
+      "quote": "南方の長江流域では水田稲作の文化、"
+    },
+    {
+      "id": "china-millet",
+      "page": 34,
+      "quote": "北方の黄河流域では粟と黍を中心とする畑作農業の文化が発展しました。"
+    },
+    {
+      "id": "shang-rise",
+      "page": 35,
+      "quote": "紀元前十七世紀ごろ、黄河流域に殷（商）の国が興り、"
+    },
+    {
+      "id": "shang-bronze",
+      "page": 35,
+      "quote": "青銅器を祭器として用いたほか、"
+    },
+    {
+      "id": "oracle-writing-name",
+      "page": 35,
+      "quote": "注⑩ 甲骨文字"
+    },
+    {
+      "id": "oracle-writing-use",
+      "page": 35,
+      "quote": "殷の遺跡から出土した、占いに用いた亀甲や獣骨に刻まれた象形文字で、漢字の遡る古い形を示している。"
+    },
+    {
+      "id": "zhou-conquest",
+      "page": 35,
+      "quote": "周が殷を滅ぼし、"
+    },
+    {
+      "id": "zhou-decline",
+      "page": 35,
+      "quote": "やがて周が衰退すると、"
+    },
+    {
+      "id": "zhou-transition",
+      "page": 35,
+      "quote": "春秋戦国時代に入りました。"
+    },
+    {
+      "id": "iron-use",
+      "page": 35,
+      "quote": "この時代に、鉄器が作られるようになり、武器や農具として利用されました。"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "エジプト文明",
+      "reading": "えじぷとぶんめい",
+      "category": "古代文明と社会の特徴",
+      "geographyLabel": "エジプト",
+      "integrationPromptPrefix": "古代エジプトの",
+      "chronology": {
+        "displayPeriod": "紀元前3000年ごろの統一王国",
+        "sortYear": -3000
+      },
+      "explanation": "ナイル川の氾濫は流域に養分を運び、農業を支えた。一方、土地の境界を確かめる測量や、氾濫の時期を知る天文学・太陽暦も発達した。統一王国ではファラオが力を持ち、神聖文字やピラミッド・神殿の建設が見られた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "古代のエジプト文明で、流域の農業を支えた毎年の氾濫が起きる大河は何か。",
+          "answer": "**ナイル川**。",
+          "keywords": [
+            "ナイル川"
+          ],
+          "evidence": [
+            "egypt-river"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代エジプトで用いられた、ヒエログリフとも呼ばれる象形文字は何か。",
+          "answer": "**神聖文字**。",
+          "keywords": [
+            "神聖文字"
+          ],
+          "evidence": [
+            "egypt-writing"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "紀元前3000年ごろに統一王国ができたエジプトで、王を指す呼び名は何か。",
+          "answer": "**ファラオ**。",
+          "keywords": [
+            "ファラオ"
+          ],
+          "evidence": [
+            "egypt-ruler"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "内容の確認",
+          "prompt": "古代のエジプト文明で、ナイル川の氾濫が農業の発達に役立ったのは、流域に何が行き渡ったためか。",
+          "answer": "**養分**。",
+          "keywords": [
+            "養分"
+          ],
+          "evidence": [
+            "egypt-farming"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "cause",
+          "form": "内容の確認",
+          "prompt": "古代のエジプト文明で、川の氾濫後に測量が必要になったのは、何が分からなくなったためか。",
+          "answer": "**土地の境界**。",
+          "keywords": [
+            "土地の境界"
+          ],
+          "evidence": [
+            "egypt-measuring"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "古代エジプトの統一王国では、王の立場と建設事業はどのようなものだったか。",
+          "answer": "紀元前3000年ごろ、エジプトに**統一王国**ができ、**ファラオ**と呼ばれる王が大きな権力を持った。王は**ピラミッドや神殿**を建設した。",
+          "keywords": [
+            "統一王国",
+            "ファラオ",
+            "ピラミッドや神殿"
+          ],
+          "evidence": [
+            "egypt-kingdom",
+            "egypt-ruler"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "エジプト文明では、ナイル川と農業・技術はどのように関係していたか。",
+          "answer": "**ナイル川**の氾濫で流域に**養分**が行き渡り、農業が発達した。氾濫で**土地の境界**が分からなくなるため**測量**が発達し、氾濫の時期を知るために**天文学や太陽暦**が作られた。**神聖文字**も使われた。",
+          "keywords": [
+            "ナイル川",
+            "養分",
+            "土地の境界",
+            "測量",
+            "天文学や太陽暦",
+            "神聖文字"
+          ],
+          "evidence": [
+            "egypt-river",
+            "egypt-farming",
+            "egypt-measuring",
+            "egypt-sky-purpose",
+            "egypt-calendar",
+            "egypt-writing"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古代エジプトの「エジプト文明」について説明せよ。",
+          "answer": "紀元前3000年ごろのエジプトには**統一王国**ができ、**ファラオ**と呼ばれる王が大きな権力を持って**ピラミッドや神殿**を建設した。**ナイル川**の氾濫で流域に**養分**が行き渡り農業が発達し、**土地の境界**を確かめる**測量**や、氾濫の時期を知るための**天文学や太陽暦**も発達した。**神聖文字**も用いられた。",
+          "keywords": [
+            "統一王国",
+            "ファラオ",
+            "ピラミッドや神殿",
+            "ナイル川",
+            "養分",
+            "土地の境界",
+            "測量",
+            "天文学や太陽暦",
+            "神聖文字"
+          ],
+          "evidence": [
+            "egypt-kingdom",
+            "egypt-ruler",
+            "egypt-river",
+            "egypt-farming",
+            "egypt-measuring",
+            "egypt-sky-purpose",
+            "egypt-calendar",
+            "egypt-writing"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "term": "メソポタミア文明",
+      "reading": "めそぽたみあぶんめい",
+      "category": "古代文明と社会の特徴",
+      "geographyLabel": "メソポタミア",
+      "integrationPromptPrefix": "古代メソポタミアの",
+      "chronology": {
+        "displayPeriod": "紀元前3000年ごろの都市国家",
+        "sortYear": -3000
+      },
+      "explanation": "ティグリス川とユーフラテス川に挟まれたメソポタミアに都市国家が生まれた。都市には城壁、神殿、王宮があり、粘土板に楔形文字(くさびがたもじ)が刻まれた。月の満ち欠けに基づく太陰暦も発明された。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代のティグリス川とユーフラテス川に挟まれた、現在のイラクにあたる地域は何か。",
+          "answer": "**メソポタミア**。",
+          "keywords": [
+            "メソポタミア"
+          ],
+          "evidence": [
+            "mesopotamia-rivers"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代メソポタミアで粘土板に刻まれた文字は何か。",
+          "answer": "**楔形文字(くさびがたもじ)**。",
+          "keywords": [
+            "楔形文字"
+          ],
+          "evidence": [
+            "cuneiform"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代メソポタミアで、月の満ち欠けに基づいて発明された暦は何か。",
+          "answer": "**太陰暦**。",
+          "keywords": [
+            "太陰暦"
+          ],
+          "evidence": [
+            "lunar-calendar"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "紀元前3000年ごろのメソポタミア文明で、いくつも生まれた国家の形態は何か。",
+          "answer": "**都市国家**。",
+          "keywords": [
+            "都市国家"
+          ],
+          "evidence": [
+            "mesopotamia-cities"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "メソポタミア文明の都市と国家は、どのような地域に生まれ、どのような施設を持ったか。",
+          "answer": "**ティグリス川とユーフラテス川**に挟まれた**メソポタミア**では、紀元前3000年ごろにいくつもの**都市国家**が生まれた。都市は**城壁**に囲まれ、**神殿や王宮**が作られた。",
+          "keywords": [
+            "ティグリス川とユーフラテス川",
+            "メソポタミア",
+            "都市国家",
+            "城壁",
+            "神殿や王宮"
+          ],
+          "evidence": [
+            "mesopotamia-rivers",
+            "mesopotamia-cities",
+            "mesopotamia-buildings"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "メソポタミア文明の文字と暦には、どのような特徴があったか。",
+          "answer": "**楔形文字(くさびがたもじ)**が**粘土板**に刻まれた。**月の満ち欠け**から**太陰暦**が発明された。",
+          "keywords": [
+            "楔形文字",
+            "粘土板",
+            "月の満ち欠け",
+            "太陰暦"
+          ],
+          "evidence": [
+            "cuneiform",
+            "lunar-calendar"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古代メソポタミアの「メソポタミア文明」について説明せよ。",
+          "answer": "紀元前3000年ごろ、**ティグリス川とユーフラテス川**に挟まれた**メソポタミア**に、いくつもの**都市国家**が生まれた。都市は**城壁**に囲まれ、**神殿や王宮**が作られた。**楔形文字(くさびがたもじ)**が**粘土板**に刻まれ、**月の満ち欠け**に基づく**太陰暦**も発明された。",
+          "keywords": [
+            "ティグリス川とユーフラテス川",
+            "メソポタミア",
+            "都市国家",
+            "城壁",
+            "神殿や王宮",
+            "楔形文字",
+            "粘土板",
+            "月の満ち欠け",
+            "太陰暦"
+          ],
+          "evidence": [
+            "mesopotamia-rivers",
+            "mesopotamia-cities",
+            "mesopotamia-buildings",
+            "cuneiform",
+            "lunar-calendar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "term": "ハンムラビ法典",
+      "reading": "はんむらびほうてん",
+      "category": "古代文明と社会の特徴",
+      "geographyLabel": "メソポタミア",
+      "integrationPromptPrefix": "古代メソポタミアの",
+      "chronology": {
+        "displayPeriod": "紀元前18世紀",
+        "sortYear": -1800
+      },
+      "explanation": "ハンムラビ王が制定した法典の史料には、同じ身分の者への加害と奴隷への加害で異なる扱いが示される。殺人の訴えを証明できない場合の処罰も定めていた。条文は当時の法の内容を知る史料として読める。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "紀元前18世紀にメソポタミアを統一した王が制定した法典は何か。",
+          "answer": "**ハンムラビ法典**。",
+          "keywords": [
+            "ハンムラビ法典"
+          ],
+          "evidence": [
+            "hammurabi-law"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "古代メソポタミアのハンムラビ法典の史料では、奴隷の目や骨を傷つけた場合、どのような方法で償うと定めたか。",
+          "answer": "**金銭の支払い**。",
+          "keywords": [
+            "金銭の支払い"
+          ],
+          "evidence": [
+            "hammurabi-slave"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "古代メソポタミアのハンムラビ法典の史料では、同じ身分の他人の歯を折った者は、どのような罰を受けるとしたか。",
+          "answer": "**自分の歯も折られる**。",
+          "keywords": [
+            "自分の歯も折られる"
+          ],
+          "evidence": [
+            "hammurabi-same-status"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "古代メソポタミアのハンムラビ法典の史料では、殺人の罪で他人を訴えても証明できないとき、誰が死刑になるとしたか。",
+          "answer": "**訴えた者**。",
+          "keywords": [
+            "訴えた者"
+          ],
+          "evidence": [
+            "hammurabi-accusation"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "古代メソポタミアのハンムラビ法典の史料は、身体への加害をどのように扱っているか。",
+          "answer": "**同じ身分**の者の歯を折れば**自分の歯も折られる**一方、**奴隷**の目や骨を傷つけた場合は**金銭の支払い**を定めている。史料からは、**身分による扱いの違い**が読み取れる。",
+          "keywords": [
+            "同じ身分",
+            "自分の歯も折られる",
+            "奴隷",
+            "金銭の支払い",
+            "身分による扱いの違い"
+          ],
+          "evidence": [
+            "hammurabi-same-status",
+            "hammurabi-slave"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "ハンムラビ法典の成立と、殺人の訴えの証明についての定めを説明せよ。",
+          "answer": "紀元前18世紀に**メソポタミア**を統一した**ハンムラビ王**が**ハンムラビ法典**を制定した。史料では、他人を殺人の罪で訴えても証明できなければ、**訴えた者が死刑**になるとした。",
+          "keywords": [
+            "メソポタミア",
+            "ハンムラビ王",
+            "ハンムラビ法典",
+            "訴えた者が死刑"
+          ],
+          "evidence": [
+            "hammurabi-law",
+            "hammurabi-accusation"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古代メソポタミアの「ハンムラビ法典」について説明せよ。",
+          "answer": "紀元前18世紀に**メソポタミア**を統一した**ハンムラビ王**が制定したのが**ハンムラビ法典**である。史料は、**同じ身分**の者の歯を折れば**自分の歯も折られる**一方、**奴隷**の目や骨を傷つけた場合には**金銭の支払い**を定め、**身分による扱いの違い**を示している。他人を殺人の罪で訴えても証明できなければ、**訴えた者が死刑**になるとした。",
+          "keywords": [
+            "メソポタミア",
+            "ハンムラビ王",
+            "ハンムラビ法典",
+            "同じ身分",
+            "自分の歯も折られる",
+            "奴隷",
+            "金銭の支払い",
+            "身分による扱いの違い",
+            "訴えた者が死刑"
+          ],
+          "evidence": [
+            "hammurabi-law",
+            "hammurabi-same-status",
+            "hammurabi-slave",
+            "hammurabi-accusation"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "term": "インダス川流域の都市",
+      "reading": "いんだすがわりゅういきのとし",
+      "category": "古代文明と社会の特徴",
+      "geographyLabel": "インド",
+      "integrationPromptPrefix": "古代インドの",
+      "chronology": {
+        "displayPeriod": "紀元前2500年ごろ",
+        "sortYear": -2500
+      },
+      "explanation": "インド北西部のインダス川流域では、モヘンジョダロに代表される都市の文化が栄えた。碁盤の目状の道路と下水道が整備され、インダス文字が使われた。文字の内容を解読できていないため、資料から分かる都市の特徴と未解明の部分は区別される。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "紀元前2500年ごろ、インド北西部で都市を中心とした文化が栄えたのは、どの川の流域か。",
+          "answer": "**インダス川**。",
+          "keywords": [
+            "インダス川"
+          ],
+          "evidence": [
+            "indus-river-period"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代インドのインダス川流域で、紀元前2500年ごろの都市を中心とした文化の代表例として挙げられる都市は何か。",
+          "answer": "**モヘンジョダロ**。",
+          "keywords": [
+            "モヘンジョダロ"
+          ],
+          "evidence": [
+            "indus-city"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "古代インドのインダス川流域の都市では、道路はどのような形に整備されていたか。",
+          "answer": "**碁盤の目状**。",
+          "keywords": [
+            "碁盤の目状"
+          ],
+          "evidence": [
+            "indus-planning"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代インドのモヘンジョダロなどの都市で用いられ、長文の史料や使用語との関連が見つからず解読されていない文字は何か。",
+          "answer": "**インダス文字**。",
+          "keywords": [
+            "インダス文字"
+          ],
+          "evidence": [
+            "indus-writing-name",
+            "indus-writing-study"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "古代インドのインダス川流域の都市には、どのような特徴があったか。",
+          "answer": "紀元前2500年ごろの**インド北西部のインダス川流域**では、**モヘンジョダロ**に代表される都市の文化が栄えた。**碁盤の目状の道路**と**下水道**が整備され、**インダス文字**が用いられた。",
+          "keywords": [
+            "インド北西部のインダス川流域",
+            "モヘンジョダロ",
+            "碁盤の目状の道路",
+            "下水道",
+            "インダス文字"
+          ],
+          "evidence": [
+            "indus-river-period",
+            "indus-city",
+            "indus-planning",
+            "indus-writing-name"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "古代インドのインダス文字について、史料からどのような限界があるか。",
+          "answer": "**長文の文字史料がなく**、**使用語との関連も発見されていない**ため、**インダス文字は未解読**である。",
+          "keywords": [
+            "長文の文字史料がなく",
+            "使用語との関連も発見されていない",
+            "インダス文字は未解読"
+          ],
+          "evidence": [
+            "indus-writing-study",
+            "indus-writing-name"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古代インドの「インダス川流域の都市」について説明せよ。",
+          "answer": "紀元前2500年ごろの**インド北西部のインダス川流域**では、**モヘンジョダロ**に代表される都市の文化が栄え、**碁盤の目状の道路**と**下水道**が整備されていた。**インダス文字**が使われたが、**長文の文字史料がなく**、**使用語との関連も発見されていない**ため、**インダス文字は未解読**である。",
+          "keywords": [
+            "インド北西部のインダス川流域",
+            "モヘンジョダロ",
+            "碁盤の目状の道路",
+            "下水道",
+            "インダス文字",
+            "長文の文字史料がなく",
+            "使用語との関連も発見されていない",
+            "インダス文字は未解読"
+          ],
+          "evidence": [
+            "indus-river-period",
+            "indus-city",
+            "indus-planning",
+            "indus-writing-name",
+            "indus-writing-study"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "term": "中国の古代文明",
+      "reading": "ちゅうごくのこだいぶんめい",
+      "category": "古代文明と社会の特徴",
+      "geographyLabel": "中国",
+      "integrationPromptPrefix": "古代中国の",
+      "chronology": {
+        "displayPeriod": "紀元前17世紀ごろの殷の成立と古代中国の農耕・文化",
+        "sortYear": -1700
+      },
+      "explanation": "長江流域の水田稲作と黄河流域の粟(あわ)・黍(きび)の畑作という地域差があった。殷(いん)は青銅器を祭器に用い、占いに使う亀甲(きっこう)や獣骨に甲骨文字(こうこつもじ)を刻んだ。周(しゅう)が殷を滅ぼした後、周の衰退とともに春秋戦国時代へ移り、鉄器が武器や農具に使われた。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "紀元前17世紀ごろに中国の黄河流域に興り、商とも呼ばれる国は何か。",
+          "answer": "**殷(いん)**。",
+          "keywords": [
+            "殷"
+          ],
+          "evidence": [
+            "shang-rise"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代中国の殷(いん)で、占いに用いた亀甲(きっこう)や獣骨に刻まれた象形文字は何か。",
+          "answer": "**甲骨文字(こうこつもじ)**。",
+          "keywords": [
+            "甲骨文字"
+          ],
+          "evidence": [
+            "oracle-writing-name",
+            "oracle-writing-use"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "中国の古代文明で、殷(いん)が祭器(さいき)として用いた金属器は何か。",
+          "answer": "**青銅器**。",
+          "keywords": [
+            "青銅器"
+          ],
+          "evidence": [
+            "shang-bronze"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "中国の古代文明で、北方の黄河流域の畑作を中心とする文化では、主にどの穀物を作ったか。",
+          "answer": "**粟(あわ)と黍(きび)**。",
+          "keywords": [
+            "粟と黍"
+          ],
+          "evidence": [
+            "china-millet"
+          ]
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "中国の古代文明で、南方の長江流域では、どのような農耕の文化が発展したか。",
+          "answer": "**水田稲作**。",
+          "keywords": [
+            "水田稲作"
+          ],
+          "evidence": [
+            "china-rice"
+          ]
+        },
+        {
+          "id": "B06",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "用語の特定",
+          "prompt": "古代中国で、殷(いん)を滅ぼした国は何か。",
+          "answer": "**周(しゅう)**。",
+          "keywords": [
+            "周"
+          ],
+          "evidence": [
+            "zhou-conquest"
+          ]
+        },
+        {
+          "id": "B07",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "中国の古代文明で、春秋戦国時代に作られるようになった鉄器は、どのような用途に利用されたか。",
+          "answer": "**武器や農具**。",
+          "keywords": [
+            "武器や農具"
+          ],
+          "evidence": [
+            "iron-use"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中国の古代文明で、農耕の文化にはどのような地域差があったか。",
+          "answer": "古代中国の農耕文化には、南方の**長江流域の水田稲作**と、北方の**黄河流域の粟(あわ)と黍(きび)の畑作**という地域差があった。",
+          "keywords": [
+            "長江流域の水田稲作",
+            "黄河流域の粟と黍の畑作"
+          ],
+          "evidence": [
+            "china-rice",
+            "china-millet"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中国の古代文明で、殷(いん)の祭器と文字はどのように使われたか。",
+          "answer": "紀元前17世紀ごろ、中国の黄河流域で**殷(いん)**が興った。殷では**青銅器を祭器(さいき)**として用い、占いに用いた**亀甲(きっこう)や獣骨**に**甲骨文字(こうこつもじ)**を刻んだ。",
+          "keywords": [
+            "殷",
+            "青銅器を祭器",
+            "亀甲や獣骨",
+            "甲骨文字"
+          ],
+          "evidence": [
+            "shang-rise",
+            "shang-bronze",
+            "oracle-writing-name",
+            "oracle-writing-use"
+          ]
+        },
+        {
+          "id": "R03",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "中国の古代文明では、殷(いん)から周(しゅう)を経て社会はどのように変化したか。",
+          "answer": "**周(しゅう)**が**殷(いん)**を滅ぼし、その後、周が衰退すると**春秋戦国時代**に入った。この時代には**鉄器**が作られ、**武器や農具**に用いられた。",
+          "keywords": [
+            "周",
+            "殷",
+            "春秋戦国時代",
+            "鉄器",
+            "武器や農具"
+          ],
+          "evidence": [
+            "zhou-conquest",
+            "zhou-decline",
+            "zhou-transition",
+            "iron-use"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "古代中国の「中国の古代文明」について説明せよ。",
+          "answer": "紀元前17世紀ごろ、中国の黄河流域に**殷(いん)**が興った。中国の農耕文化には**長江流域の水田稲作**と**黄河流域の粟(あわ)と黍(きび)の畑作**という地域差があり、殷では**青銅器を祭器(さいき)**とし、占いに用いた**亀甲(きっこう)や獣骨**に**甲骨文字(こうこつもじ)**を刻んだ。**周(しゅう)**が殷を滅ぼした後、周の衰退とともに**春秋戦国時代**へ入り、**鉄器**が**武器や農具**に用いられた。",
+          "keywords": [
+            "殷",
+            "長江流域の水田稲作",
+            "黄河流域の粟と黍の畑作",
+            "青銅器を祭器",
+            "亀甲や獣骨",
+            "甲骨文字",
+            "周",
+            "春秋戦国時代",
+            "鉄器",
+            "武器や農具"
+          ],
+          "evidence": [
+            "china-rice",
+            "china-millet",
+            "shang-rise",
+            "shang-bronze",
+            "oracle-writing-name",
+            "oracle-writing-use",
+            "zhou-conquest",
+            "zhou-decline",
+            "zhou-transition",
+            "iron-use"
+          ]
+        }
+      ]
+    }
+  ]
+}

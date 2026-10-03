@@ -10,7 +10,10 @@
     "book-06-01-06",
     "book-06-02-01",
     "book-06-02-02",
-    "book-06-02-03"
+    "book-06-02-03",
+    "book-06-02-04",
+    "book-06-02-05",
+    "book-06-02-06"
   ],
   "images": [
     {
@@ -575,6 +578,190 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-ddb19cb5b2a8e4f3ed44",
+      "caption": "内戦期のモガディシュの街並み",
+      "note": "1993〜1995年にソマリアで撮影された街並み。内戦開始年の1988年や正式政府成立の2012年を写した写真とは扱わない。国の大陸上の位置を示す地図や現在の情勢を示す写真ではない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-04-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5f2cea314d21955a990a",
+      "caption": "紛争中のサラエボで給水を待つ人々",
+      "note": "1992年、紛争中のサラエボで水を得るために並ぶ住民。ユーゴスラビア紛争の生活への影響を補足する。1991年の開戦の瞬間や国家分裂を示す地図ではなく、給水の細目を新しい試験知識として問わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-04-U02",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-49fea209ccff9647c62c",
+      "caption": "プーチン",
+      "note": "2012年の公式肖像。2014年のクリミアで軍事介入や編入を行う瞬間の写真、または半島の地図としては扱わない。人物名を答えた後とその人物の関与を説明する問題に限る。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-04-U04",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fdd362c79fe95290c9d2",
+      "caption": "細川護熙",
+      "note": "1993年に就任した首相の公式肖像。出典では撮影日不詳のため、ファイル名を撮影日と断定しない。首相名を答える前の成立年問題には付けず、政権交代の現場写真とも扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4fbda9da93cc1190d27f",
+      "caption": "安倍晋三",
+      "note": "2012年の公式肖像。首相名を答えた後とその人物の政権・外交方針を説明する問いに使用する。2016年の外交構想提唱やクアッド共同訓練そのものの現場写真ではない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U01",
+          "questions": [
+            "B07",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-06-02-06-U05",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e49c39097fd61cfcc8ff",
+      "caption": "小泉純一郎",
+      "note": "2002年頃の公式肖像。日朝平壌宣言に関する日本側の人物問題を答えた後に使用する。相手の名前や宣言年・被害者帰国の事実を先に教えず、会談や帰国の場面としては扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fbfe197606a32872fa4f",
+      "caption": "金正日",
+      "note": "2011年のロシア訪問中の金正日の肖像。2002年の日朝会談の現場写真ではなく、金正恩・金日成と区別する。相手側の人物問題を答えた後だけ使用する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U02",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-65ee523fde557383d336",
+      "caption": "尖閣諸島・魚釣島の航空写真（1978年撮影）",
+      "note": "1978年撮影の国土画像情報４枚に基づく魚釣島の航空写真（Commons掲載の合成画像）を、追加加工せず使用する。2010年の漁船衝突や2012年の国有化の場面ではなく、主権や取り締まり機関を証明する史料でもない。国土交通省の出典明示条件に沿って撮影元の出典を明記する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U03",
+          "questions": [
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0b911b52185fd117b741",
+      "caption": "2018年の米朝首脳会談（初回）",
+      "note": "2018年６月12日、シンガポールでの初回会談の会場。2019年の２度目の会談や決裂を写した写真ではない。初回年への回答後と二つの会談を区別する説明問題に限る。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-05-U04",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-99b05030a919c8",
+      "caption": "ユーロの紙幣と硬貨",
+      "note": "2006年に撮影された通貨。2002年の発行当日の写真ではない。紙幣内の年を発行年の直接証拠とは扱わず、通貨名と発行年を問い終えた後から表示する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-06-U01",
+          "questions": [
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-ecb852c2827860",
+      "caption": "国連平和維持活動の青いヘルメット",
+      "note": "国連ＰＫＯを識別する装備。日本の自衛隊の実際の派遣、法律制定や特定の地域の停戦監視の場面を示す写真ではない。法律名・制定年の問いへ一律には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-06-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d00aae0a51858ccf9cd5",
+      "caption": "Ｇ20大阪サミットの参加者（2019年）",
+      "note": "2019年の大阪での首脳会合。1999年のＧ20会合開始や1975年の第１回先進国首脳会議の写真としては扱わない。各国首脳に加え招待国・機関の代表も写っているため、写真の人数を加盟国数と結び付けない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-06-U03",
+          "questions": [
+            "B06",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -781,6 +968,126 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_Air_Self-Defense_Force_bids_farewell_to_Sather_Airmen_DVIDS134712.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-957e8baba07151ee6fd1.jpg",
       "sha256": "957e8baba07151ee6fd11b782911602e068f3d81c007dbc06eb7532ba5c39485"
+    },
+    {
+      "id": "JHKS-ddb19cb5b2a8e4f3ed44",
+      "path": "term-images/japanese-history-k/JHKS-ddb19cb5b2a8e4f3ed44.jpg",
+      "alt": "内戦期のモガディシュの街並み",
+      "caption": "内戦期のモガディシュの街並み",
+      "creator": "CT Snow",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pictures_from_an_armed_convoy_trip_in_Mogadishu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ddb19cb5b2a8e4f3ed44.jpg",
+      "sha256": "ddb19cb5b2a8e4f3ed44748f984bc758e5cd4439a04ceb05fafa6ece6e5d3b64"
+    },
+    {
+      "id": "JHKS-5f2cea314d21955a990a",
+      "path": "term-images/japanese-history-k/JHKS-5f2cea314d21955a990a.jpg",
+      "alt": "紛争中のサラエボで給水を待つ人々",
+      "caption": "紛争中のサラエボで給水を待つ人々",
+      "creator": "Mikhail Evstafiev",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Evstafiev-bosnia-sarajevo-water-line.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5f2cea314d21955a990a.jpg",
+      "sha256": "5f2cea314d21955a990aa1d6d6253e7c689e7cbe01d0ab2ec520e429c982b037"
+    },
+    {
+      "id": "JHKS-49fea209ccff9647c62c",
+      "path": "term-images/japanese-history-k/JHKS-49fea209ccff9647c62c.jpg",
+      "alt": "プーチン",
+      "caption": "プーチン",
+      "creator": "ロシア大統領報道・情報局",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Vladimir_Putin_-_2012.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-49fea209ccff9647c62c.jpg",
+      "sha256": "49fea209ccff9647c62cc1dbf6ee5edde34f602b6f46a4e9dc1a2166c5e04b21"
+    },
+    {
+      "id": "JHKS-fdd362c79fe95290c9d2",
+      "path": "term-images/japanese-history-k/JHKS-fdd362c79fe95290c9d2.jpg",
+      "alt": "細川護熙",
+      "caption": "細川護熙",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Morihiro_Hosokawa_19930809.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fdd362c79fe95290c9d2.jpg",
+      "sha256": "fdd362c79fe95290c9d21d7099d14421558a327c9ce2514b6b04fea57e41d43d"
+    },
+    {
+      "id": "JHKS-4fbda9da93cc1190d27f",
+      "path": "term-images/japanese-history-k/JHKS-4fbda9da93cc1190d27f.jpg",
+      "alt": "安倍晋三",
+      "caption": "安倍晋三",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shinz%C5%8D_Abe_20120501.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4fbda9da93cc1190d27f.jpg",
+      "sha256": "4fbda9da93cc1190d27f4d15880c464b19a7a979ebb9f2d9a19da7483d24c817"
+    },
+    {
+      "id": "JHKS-e49c39097fd61cfcc8ff",
+      "path": "term-images/japanese-history-k/JHKS-e49c39097fd61cfcc8ff.jpg",
+      "alt": "小泉純一郎",
+      "caption": "小泉純一郎",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Junichiro_Koizumi_20010426.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e49c39097fd61cfcc8ff.jpg",
+      "sha256": "e49c39097fd61cfcc8ff07a286f7020b10d05603aa1e6965188193d1ca17ea34"
+    },
+    {
+      "id": "JHKS-fbfe197606a32872fa4f",
+      "path": "term-images/japanese-history-k/JHKS-fbfe197606a32872fa4f.jpg",
+      "alt": "金正日",
+      "caption": "金正日",
+      "creator": "ロシア大統領報道・情報局",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kim_Jong-il_on_August_24,_2011.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fbfe197606a32872fa4f.jpg",
+      "sha256": "fbfe197606a32872fa4ff02f891116dab5178e48e7e923082dfe4c51ed0ef5c4"
+    },
+    {
+      "id": "JHKS-65ee523fde557383d336",
+      "path": "term-images/japanese-history-k/JHKS-65ee523fde557383d336.jpg",
+      "alt": "尖閣諸島・魚釣島の航空写真（1978年撮影）",
+      "caption": "尖閣諸島・魚釣島の航空写真（1978年撮影）",
+      "creator": "国土画像情報（カラー空中写真）国土交通省",
+      "license": "出典明示",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template:AerialPhotograph-mlitJP",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Senkaku-uotsuri.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-65ee523fde557383d336.jpg",
+      "sha256": "65ee523fde557383d336076c59ecdbb4ae803ec4cb319a8c9db4b78b34080b26"
+    },
+    {
+      "id": "JHKS-0b911b52185fd117b741",
+      "path": "term-images/japanese-history-k/JHKS-0b911b52185fd117b741.jpg",
+      "alt": "2018年の米朝首脳会談（初回）",
+      "caption": "2018年の米朝首脳会談（初回）",
+      "creator": "Voice of America",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Trump-Kim_Summit_June_2018_v4.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0b911b52185fd117b741.jpg",
+      "sha256": "0b911b52185fd117b741bbe0fe7fbf03e137f105df866f3140e58347c49e8a8c"
+    },
+    {
+      "id": "JHKS-d00aae0a51858ccf9cd5",
+      "path": "term-images/japanese-history-k/JHKS-d00aae0a51858ccf9cd5.jpg",
+      "alt": "Ｇ20大阪サミットの参加者（2019年）",
+      "caption": "Ｇ20大阪サミットの参加者（2019年）",
+      "creator": "Dan Scavino",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Family_photo_of_G20_Osaka_Summit_by_Daniel_Scavino_Jr.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d00aae0a51858ccf9cd5.jpg",
+      "sha256": "d00aae0a51858ccf9cd5e7a0fa7b29cb1911cf5c9e9c83e35060f78d7ae0c848"
     }
   ]
 }

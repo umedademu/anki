@@ -93,7 +93,10 @@ try {
       await request({ action: "image", key, base64: bytes.toString("base64") });
       assert.equal((await request({ action: "image-check", key })).sha256, textHash(bytes));
     }
-    if (sourceBytes.size) console.log(`新しい画像${sourceBytes.size}枚をCloudflareへ登録・照合しました。既存の画像は保持しています。`);
+    if (sourceBytes.size) {
+      const newImages = [...sourceBytes.keys()].filter(path => !images.assets.some(asset => asset.path === path)).length;
+      console.log(`画像本体${sourceBytes.size}枚をCloudflareで照合しました。新規登録は${newImages}枚で、既存の画像は保持しています。`);
+    }
     await request({ action: "commit", key: japaneseKImagesKey, text: manifestText, expectedEtag: checked.get(japaneseKImagesKey).etag, catalogEtag: checked.get("index.json").etag });
     assert.equal((await read(japaneseKImagesKey)).text, manifestText);
     for (const [key, previous] of reads) if (key !== japaneseKImagesKey) assert.equal((await read(key)).text, previous.text, key);

@@ -19,7 +19,10 @@
     "book-06-02-09",
     "book-01-01-01",
     "book-01-01-02",
-    "book-01-01-03"
+    "book-01-01-03",
+    "book-01-02-01",
+    "book-01-02-02",
+    "book-01-02-03"
   ],
   "images": [
     {
@@ -1081,6 +1084,193 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-a0ceda140de449",
+      "caption": "縄文土器の例・中期の火焔型土器",
+      "note": "笹山遺跡出土の中期の火焔型土器。縄文土器という容器の形・利用を復習する問題に付ける。草創期の大平山元Ⅰ遺跡の無文土器や世界最古の土器そのものとは扱わない。写真だけで焼成温度・もろさ・使用内容を証明させず、装飾の型名や出土地の暗記は新しい出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-01-U01",
+          "questions": [
+            "B02",
+            "B03",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-01-02-03-U02",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-edc92f0f041ac2a04474",
+      "caption": "大平山元Ⅰ遺跡の無文土器片の展示",
+      "note": "大平山元Ⅰ遺跡出土の土器片を紹介する展示写真。無文の土器を含む説明と模様への回答後に付ける。実物か複製かは出典に明記がないため、実物とは断定しない。黒い部分を年代測定に使った炭化物と断定せず、測定方法や試料だけを問う問題には付けない。年代は原文のまま維持し、写真の大きさ・色から古さを判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-01-U02",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4e58792e483999173dec",
+      "caption": "木の実の例・ドングリ（現在の写真）",
+      "note": "現在の木の実の具体例としてドングリの写真を示す。樹種・撮影地を日本産と断定せず、縄文時代の出土した木の実や当時の森の復元写真とも扱わない。栽培・あく抜き・海進や森の養分をこの写真だけで証明させず、木の実を含む問題に限る。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-02-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4db5d0fbf6999cce45ee",
+      "caption": "縄文時代の石鏃（矢の先端）",
+      "note": "メトロポリタン美術館の1975.268.249。公式記録で日本の縄文後期の石製の矢じりと照合した。矢の先に付ける道具の具体例として、弓矢への回答後と狩猟の説明問題に限る。弓や矢柄の完成品・落とし穴の写真とは扱わず、この一点の形をすべての石鏃の形とはしない。表面の整理番号や材質の細目は試験知識に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-02-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-8eb1fd4a3a1f885ddd20",
+      "caption": "竪穴建物の復元（三内丸山遺跡の大型建物）",
+      "note": "三内丸山遺跡の大型竪穴建物の現在の復元。竪穴式住居という住まいの具体例と定住の説明に使う。縄文当時の建物がそのまま残った写真や、すべての住居がこの大きさだったという資料とは扱わない。屋根や用途は復元・解釈を含み、農耕・牧畜や栗の栽培を写真から証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-02-U02",
+          "questions": [
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-01-02-03-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-27115f2e8aa759",
+      "caption": "貝塚の例・東名遺跡の貝層展示",
+      "note": "佐賀県の東名遺跡の貝層の展示。貝殻が多く残る様子と貝塚から生活を調べる説明に限る。モースが発掘した大森貝塚とは別の遺跡で、現在の写真を縄文時代当時の記録とは扱わない。展示の約8000年前という年代や出土地は新しい必須知識に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-42eb5169345642caa342",
+      "caption": "エドワード・S・モースの肖像",
+      "note": "1878年のPopular Science Monthly第13巻に掲載されたモースの肖像画。人物名への回答後と大森貝塚の研究史の説明に使う。縄文時代の人物や発掘現場の写真とは扱わず、掲載年・肖像の作者を出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fc9aba414a51b1acfce6",
+      "caption": "大森貝塚遺跡庭園（現在の保存地）",
+      "note": "大森貝塚遺跡庭園の現在の保存地。大森貝塚の名称への回答後と調査の全体説明に限る。モースが明治時代に発掘した当日の写真や、縄文当時の景観とは扱わない。園内の整備された展示を未加工の発掘断面と取り違えず、前の東名遺跡の貝層の写真と区別する。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U01",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3bd34b415d0705bdad4b",
+      "caption": "骨角器の例・縄文時代の骨製銛頭（後世の墨書あり）",
+      "note": "メトロポリタン美術館の1975.268.307。公式記録で日本の縄文晩期の骨製の銛頭と照合した。骨角器の素材と漁労の道具を復習する問題に使い、釣針そのものや柄の付いた銛の完成品とは扱わない。表面の墨書を縄文時代の文字や祭祀の証拠にせず、その読解や記入年を出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-626158d241a165",
+      "caption": "三内丸山遺跡の復元建物",
+      "note": "三内丸山遺跡の2014年の写真で、大型掘立柱建物と大型竪穴建物の復元が見える。遺跡名への回答後と集落の住まいを説明する問題に付ける。縄文時代の建物そのものが残った写真や柱穴の発掘写真とは扱わず、背の高い柱の建物を一般的な竪穴住居とはしない。栗の管理や遠方との交易だけを問う問題には付けない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U03",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-106114ff6137d1a4c4de",
+      "caption": "縄文時代の石斧（左側の３点は磨製石斧）",
+      "note": "江戸東京博物館の縄文時代の石斧の展示。出典では左側の３点が磨製石斧、右側の４点が打製石斧である。伐採用の道具の名称への回答後に限り、前回の日向林B遺跡の旧石器時代の石斧と区別する。実際の伐採を写した写真や、すべての石斧が磨製である資料とは扱わない。写真作者とWikimedia Commonsを併記し、元画像・利用条件を保持する。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-69c17194ff9e7d",
+      "caption": "縄文時代の土偶（宮城県出土）",
+      "note": "宮城県の恵比須田出土の土偶。出土品の形を確認する回答後の資料として使う。土器や人物の肖像とは区別し、祭祀の目的・精霊の信仰や屈葬・抜歯の意味を写真だけから断定させない。土偶の細分類、出土地、目の装飾の説明は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-01-02-03-U04",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1563,6 +1753,102 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Obsidian_4.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-a1859826064cc4a52fae.jpg",
       "sha256": "a1859826064cc4a52fae4b36ec44383fd284f8a2170dcb0d9eda21f13e51361a"
+    },
+    {
+      "id": "JHKS-edc92f0f041ac2a04474",
+      "path": "term-images/japanese-history-k/JHKS-edc92f0f041ac2a04474.jpg",
+      "alt": "大平山元Ⅰ遺跡の無文土器片の展示",
+      "caption": "大平山元Ⅰ遺跡の無文土器片の展示",
+      "creator": "Mccunicano",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Odai_Yamamoto_I_potsherds.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-edc92f0f041ac2a04474.jpg",
+      "sha256": "edc92f0f041ac2a04474b9240b7cbc3c7ed990e91df3868092fc2c87918699ec"
+    },
+    {
+      "id": "JHKS-4e58792e483999173dec",
+      "path": "term-images/japanese-history-k/JHKS-4e58792e483999173dec.jpg",
+      "alt": "木の実の例・ドングリ（現在の写真）",
+      "caption": "木の実の例・ドングリ（現在の写真）",
+      "creator": "Titus Tscharntke",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Acorns_from_the_tree.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4e58792e483999173dec.jpg",
+      "sha256": "4e58792e483999173decc7bd59130908ecd9319a176613acb363a4908b771f6f"
+    },
+    {
+      "id": "JHKS-4db5d0fbf6999cce45ee",
+      "path": "term-images/japanese-history-k/JHKS-4db5d0fbf6999cce45ee.jpg",
+      "alt": "縄文時代の石鏃（矢の先端）",
+      "caption": "縄文時代の石鏃（矢の先端）",
+      "creator": "The Metropolitan Museum of Art",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:MET_1975_268_249_F_sf.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4db5d0fbf6999cce45ee.jpg",
+      "sha256": "4db5d0fbf6999cce45ee6ace6530e3a932ec333bbef9f03093c98bc073350009"
+    },
+    {
+      "id": "JHKS-42eb5169345642caa342",
+      "path": "term-images/japanese-history-k/JHKS-42eb5169345642caa342.jpg",
+      "alt": "エドワード・S・モースの肖像",
+      "caption": "エドワード・S・モースの肖像",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:PSM_V13_D008_Edward_S_Morse.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-42eb5169345642caa342.jpg",
+      "sha256": "42eb5169345642caa342bdeff802bc8850ec12f290e8d4d6bcba34bec115bc89"
+    },
+    {
+      "id": "JHKS-fc9aba414a51b1acfce6",
+      "path": "term-images/japanese-history-k/JHKS-fc9aba414a51b1acfce6.jpg",
+      "alt": "大森貝塚遺跡庭園（現在の保存地）",
+      "caption": "大森貝塚遺跡庭園（現在の保存地）",
+      "creator": "Daderot",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Omori_Shell_Mounds_Garden_-_Omori,_Tokyo,_Japan_-_DSC05698.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fc9aba414a51b1acfce6.jpg",
+      "sha256": "fc9aba414a51b1acfce6129a9778b6732812968de880a009c9667aedde2fa1ab"
+    },
+    {
+      "id": "JHKS-3bd34b415d0705bdad4b",
+      "path": "term-images/japanese-history-k/JHKS-3bd34b415d0705bdad4b.jpg",
+      "alt": "骨角器の例・縄文時代の骨製銛頭（後世の墨書あり）",
+      "caption": "骨角器の例・縄文時代の骨製銛頭（後世の墨書あり）",
+      "creator": "The Metropolitan Museum of Art",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E9%8A%9B%E9%A0%ADHarpoon_head_MET.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3bd34b415d0705bdad4b.jpg",
+      "sha256": "3bd34b415d0705bdad4b39a4bd2fe53449a2ff161ffe31758bc994e80750636c"
+    },
+    {
+      "id": "JHKS-8eb1fd4a3a1f885ddd20",
+      "path": "term-images/japanese-history-k/JHKS-8eb1fd4a3a1f885ddd20.jpg",
+      "alt": "竪穴建物の復元（三内丸山遺跡の大型建物）",
+      "caption": "竪穴建物の復元（三内丸山遺跡の大型建物）",
+      "creator": "小池 隆",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E4%B8%89%E5%86%85%E4%B8%B8%E5%B1%B1%E9%81%BA%E8%B7%A1%E5%A4%A7%E5%9E%8B%E7%AB%AA%E7%A9%B4%E4%BD%8F%E5%B1%85.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8eb1fd4a3a1f885ddd20.jpg",
+      "sha256": "8eb1fd4a3a1f885ddd20924997c347282f27c84e4f31cd7ec0500fe46942f637"
+    },
+    {
+      "id": "JHKS-106114ff6137d1a4c4de",
+      "path": "term-images/japanese-history-k/JHKS-106114ff6137d1a4c4de.jpg",
+      "alt": "縄文時代の石斧（左側の３点は磨製石斧）",
+      "caption": "縄文時代の石斧（左側の３点は磨製石斧）",
+      "creator": "Chris 73 / Wikimedia Commons",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stone_axe_edo_tokyo_museum.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-106114ff6137d1a4c4de.jpg",
+      "sha256": "106114ff6137d1a4c4de2abbbfddb3ca7b0cd753a291b1d58bcc5c794694d92c"
     }
   ]
 }

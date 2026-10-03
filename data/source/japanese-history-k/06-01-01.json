@@ -212,6 +212,141 @@
       "id": "landlord-result",
       "page": 413,
       "quote": "これにより地主は没落し"
+    },
+    {
+      "id": "ghq-name-only",
+      "page": 413,
+      "quote": "**連合国軍総司令部（ＧＨＱ）**を置いて日本の占領統治にあたりました。"
+    },
+    {
+      "id": "five-name-only",
+      "page": 412,
+      "quote": "**五大改革指令**"
+    },
+    {
+      "id": "five-civil-and-labor",
+      "page": 412,
+      "quote": "①婦人参政権の付与、②労働組合結成の奨励、"
+    },
+    {
+      "id": "five-recommendation-period",
+      "page": 412,
+      "quote": "マッカーサー元帥は昭和20年（1945）10月11日、幣原喜重郎首相に次の5項目の改革を口頭で勧告した。"
+    },
+    {
+      "id": "five-labor-only",
+      "page": 412,
+      "quote": "②労働組合結成の奨励"
+    },
+    {
+      "id": "five-school-only",
+      "page": 412,
+      "quote": "③学校教育の自由主義化"
+    },
+    {
+      "id": "five-oppressive-only",
+      "page": 412,
+      "quote": "④圧制的な諸制度の廃止"
+    },
+    {
+      "id": "five-economy-only",
+      "page": 412,
+      "quote": "⑤経済機構の民主化。"
+    },
+    {
+      "id": "police-abolition-only",
+      "page": 413,
+      "quote": "特別高等警察などの機関が廃止され、"
+    },
+    {
+      "id": "political-prisoners-release-only",
+      "page": 413,
+      "quote": "拘束されていた政治犯が釈放されました。"
+    },
+    {
+      "id": "suffrage-granted-only",
+      "page": 413,
+      "quote": "新選挙法により、婦人参政権を認め、"
+    },
+    {
+      "id": "zaibatsu-shares-sale-only",
+      "page": 413,
+      "quote": "持株会社を解体してその所有する株式を売却し、"
+    },
+    {
+      "id": "zaibatsu-stock-and-officers-ban-only",
+      "page": 413,
+      "quote": "財閥関係会社間の株式保有と役員兼任を禁止し、"
+    },
+    {
+      "id": "antitrust-policy-without-year",
+      "page": 413,
+      "quote": "独占禁止法を成立させ、持株会社やカルテルを禁止するなど、財閥の再結成を阻止する措置をとった。"
+    },
+    {
+      "id": "land-reform-name-only",
+      "page": 413,
+      "quote": "農業については**農地改革**を行い、"
+    },
+    {
+      "id": "land-purchase-only",
+      "page": 413,
+      "quote": "政府が不在地主の小作地を強制的に安く買い上げ、"
+    },
+    {
+      "id": "land-sale-only",
+      "page": 413,
+      "quote": "小作人に売り渡しました。"
+    },
+    {
+      "id": "purge-action-only",
+      "page": 415,
+      "quote": "軍国主義者らを公職から追放し、政治上の活動を禁止した。"
+    },
+    {
+      "id": "purge-targets-only",
+      "page": 415,
+      "quote": "その対象は軍人、国会議員から民間団体職員まで多岐にわたり"
+    },
+    {
+      "id": "press-name-only",
+      "page": 415,
+      "quote": "一般のメディアには**プレス・コード（検閲基準）**が適用されました。"
+    },
+    {
+      "id": "press-authority-only",
+      "page": 415,
+      "quote": "占領期間中はＧＨＱによる厳しい言論統制が敷かれました。"
+    },
+    {
+      "id": "press-atomic-criticism-only",
+      "page": 415,
+      "quote": "原子爆弾の使用に対する批判をはじめ、三〇の項目が禁止対象になりました。"
+    },
+    {
+      "id": "press-publication-ban-only",
+      "page": 415,
+      "quote": "記事中にこれらの項目に該当する部分があると、発行禁止とされました"
+    },
+    {
+      "id": "education-law-and-year-only",
+      "page": 416,
+      "quote": "昭和22年（1947）に教育基本法が制定され、教育改革が実施された。"
+    },
+    {
+      "id": "school-law-only",
+      "page": 416,
+      "quote": "また同じ時期に学校教育法が制定され、"
+    },
+    {
+      "id": "educational-opportunity-only",
+      "page": 416,
+      "quote": "教育の機会均等"
+    },
+    {
+      "id": "coeducation-only",
+      "page": 416,
+      "quote": "男女共学が定められ、"
     }
   ],
   "units": [
@@ -232,12 +367,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "敗戦後の日本を占領統治し、最高司令官の指令を日本政府に実行させた機関を、日本語の名称と略称で答えなさい。",
-          "answer": "連合国軍総司令部（ＧＨＱ）。",
+          "answer": "**連合国軍総司令部（ＧＨＱ）**。",
           "evidence": [
-            "ghq",
-            "indirect"
+            "ghq-name-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "連合国軍総司令部（ＧＨＱ）"
+          ],
           "note": ""
         },
         {
@@ -259,11 +395,13 @@
           "type": "cause",
           "form": "原因",
           "prompt": "連合国軍総司令部（ＧＨＱ）による日本の占領開始につながった、日本が受諾した宣言は何か。",
-          "answer": "ポツダム宣言。",
+          "answer": "**ポツダム宣言**。",
           "evidence": [
             "occupation"
           ],
-          "keywords": [],
+          "keywords": [
+            "ポツダム宣言"
+          ],
           "note": ""
         },
         {
@@ -272,11 +410,13 @@
           "type": "person",
           "form": "人物",
           "prompt": "日本の占領統治を担った連合国軍総司令部（ＧＨＱ）の最高司令官は誰か。",
-          "answer": "マッカーサー。",
+          "answer": "**マッカーサー**。",
           "evidence": [
             "ghq"
           ],
-          "keywords": [],
+          "keywords": [
+            "マッカーサー"
+          ],
           "note": ""
         },
         {
@@ -285,11 +425,14 @@
           "type": "content",
           "form": "内容",
           "prompt": "連合国軍総司令部（ＧＨＱ）が占領下の日本で進めた改革の二つの柱は何か。",
-          "answer": "非軍事化と民主的傾向の復活・強化。",
+          "answer": "**非軍事化**と**民主的傾向の復活・強化**。",
           "evidence": [
             "reform-pillars"
           ],
-          "keywords": [],
+          "keywords": [
+            "非軍事化",
+            "民主的傾向の復活・強化"
+          ],
           "note": ""
         },
         {
@@ -298,11 +441,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "連合国軍総司令部（ＧＨＱ）が日本政府を残し、その政府を通して改革を進めた統治方式は何か。",
-          "answer": "間接統治。",
+          "answer": "**間接統治**。",
           "evidence": [
             "indirect"
           ],
-          "keywords": [],
+          "keywords": [
+            "間接統治"
+          ],
           "note": ""
         },
         {
@@ -400,12 +545,15 @@
           "stage": "beginner",
           "type": "identify",
           "form": "名称",
-          "prompt": "日本の占領期に、マッカーサーが婦人参政権の付与や学校教育の自由主義化などを勧告した改革方針を何というか。",
-          "answer": "五大改革指令。",
+          "prompt": "日本の占領期に、マッカーサーが婦人参政権の付与や労働組合結成の奨励などを勧告した改革方針を何というか。",
+          "answer": "**五大改革指令**。",
           "evidence": [
-            "five"
+            "five-name-only",
+            "five-civil-and-labor"
           ],
-          "keywords": [],
+          "keywords": [
+            "五大改革指令"
+          ],
           "note": ""
         },
         {
@@ -416,7 +564,7 @@
           "prompt": "日本の占領期に五大改革指令が勧告されたのは、何年何月か。",
           "answer": "1945年10月。",
           "evidence": [
-            "five"
+            "five-recommendation-period"
           ],
           "keywords": [],
           "note": ""
@@ -427,12 +575,15 @@
           "type": "content",
           "form": "内容",
           "prompt": "五大改革指令の労働政策と関連して、占領下の日本で成立した二つの法律は何か。",
-          "answer": "労働基準法と労働組合法。",
+          "answer": "**労働基準法**と**労働組合法**。",
           "evidence": [
-            "five",
+            "five-labor-only",
             "labor"
           ],
-          "keywords": [],
+          "keywords": [
+            "労働基準法",
+            "労働組合法"
+          ],
           "note": ""
         },
         {
@@ -441,11 +592,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の五大改革指令は、学校教育についてどのような方針を掲げたか。",
-          "answer": "学校教育の自由主義化。",
+          "answer": "**学校教育の自由主義化**。",
           "evidence": [
-            "five"
+            "five-school-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "学校教育の自由主義化"
+          ],
           "note": ""
         },
         {
@@ -454,13 +607,15 @@
           "type": "relation",
           "form": "関連",
           "prompt": "日本の占領期に行われた治安維持法や特別高等警察の廃止に対応する、五大改革指令の方針は何か。",
-          "answer": "圧制的な諸制度の廃止。",
+          "answer": "**圧制的な諸制度の廃止**。",
           "evidence": [
-            "five",
-            "liberty",
-            "peace-law"
+            "five-oppressive-only",
+            "police-abolition-only",
+            "peace-law-abolition"
           ],
-          "keywords": [],
+          "keywords": [
+            "圧制的な諸制度の廃止"
+          ],
           "note": ""
         },
         {
@@ -469,13 +624,15 @@
           "type": "relation",
           "form": "関連",
           "prompt": "日本の占領期に行われた財閥解体や農地改革に対応する、五大改革指令の経済面の方針は何か。",
-          "answer": "経済機構の民主化。",
+          "answer": "**経済機構の民主化**。",
           "evidence": [
-            "five",
+            "five-economy-only",
             "zaibatsu",
-            "land"
+            "land-reform-name-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "経済機構の民主化"
+          ],
           "note": ""
         },
         {
@@ -558,11 +715,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の政治的自由の回復において、治安維持法はどのように扱われたか。",
-          "answer": "廃止された。",
+          "answer": "**廃止**された。",
           "evidence": [
             "peace-law-abolition"
           ],
-          "keywords": [],
+          "keywords": [
+            "廃止"
+          ],
           "note": ""
         },
         {
@@ -571,11 +730,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で政治的自由の回復が進められる中、自由を妨げる法律などの無効化とともに廃止された警察機関は何か。",
-          "answer": "特別高等警察。",
+          "answer": "**特別高等警察**。",
           "evidence": [
-            "liberty"
+            "police-abolition-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "特別高等警察"
+          ],
           "note": ""
         },
         {
@@ -584,11 +745,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "占領下の日本で政治的自由の回復が進められる中、拘束されていた政治犯はどのように扱われたか。",
-          "answer": "釈放された。",
+          "answer": "**釈放**された。",
           "evidence": [
-            "liberty"
+            "political-prisoners-release-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "釈放"
+          ],
           "note": ""
         },
         {
@@ -597,11 +760,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "日本の占領期の政治的自由の回復に関連し、神社と国家を分離したＧＨＱの指令を何というか。",
-          "answer": "神道指令(しんとうしれい)。",
+          "answer": "**神道指令(しんとうしれい)**。",
           "evidence": [
             "shinto"
           ],
-          "keywords": [],
+          "keywords": [
+            "神道指令"
+          ],
           "note": ""
         },
         {
@@ -610,11 +775,14 @@
           "type": "result",
           "form": "結果",
           "prompt": "日本の占領期の政治的自由の回復によって、政党の活動はどう変化したか。",
-          "answer": "政党が政治活動を再開した。",
+          "answer": "**政党**が**政治活動を再開**した。",
           "evidence": [
             "peace-law"
           ],
-          "keywords": [],
+          "keywords": [
+            "政党",
+            "政治活動を再開"
+          ],
           "note": ""
         },
         {
@@ -696,11 +864,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で、新選挙法によって女性にも認められた政治参加の権利を何というか。",
-          "answer": "婦人参政権。",
+          "answer": "**婦人参政権**。",
           "evidence": [
-            "suffrage"
+            "suffrage-granted-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "婦人参政権"
+          ],
           "note": ""
         },
         {
@@ -709,11 +879,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "占領下の日本で婦人参政権を認めた新選挙法は、選挙権の対象をどのように定めたか。",
-          "answer": "二十歳以上の男女。",
+          "answer": "**二十歳以上の男女**。",
           "evidence": [
             "suffrage"
           ],
-          "keywords": [],
+          "keywords": [
+            "二十歳以上の男女"
+          ],
           "note": ""
         },
         {
@@ -784,12 +956,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で、企業集団を分散させ、支配一族の影響力を排除するためにＧＨＱの指令で行われた改革は何か。",
-          "answer": "財閥解体。",
+          "answer": "**財閥解体**。",
           "evidence": [
-            "zaibatsu",
-            "zaibatsu-method"
+            "zaibatsu"
           ],
-          "keywords": [],
+          "keywords": [
+            "財閥解体"
+          ],
           "note": ""
         },
         {
@@ -798,11 +971,13 @@
           "type": "cause",
           "form": "原因",
           "prompt": "日本の占領期に財閥解体の対象となった財閥は、戦争とのどのような関係を理由に標的とされたか。",
-          "answer": "戦争を支えたとされたため。",
+          "answer": "**戦争を支えた**とされたため。",
           "evidence": [
             "zaibatsu-cause"
           ],
-          "keywords": [],
+          "keywords": [
+            "戦争を支えた"
+          ],
           "note": ""
         },
         {
@@ -811,11 +986,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の財閥解体では、持株会社が所有していた株式はどう扱われたか。",
-          "answer": "売却された。",
+          "answer": "**売却**された。",
           "evidence": [
-            "zaibatsu-method"
+            "zaibatsu-shares-sale-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "売却"
+          ],
           "note": ""
         },
         {
@@ -824,11 +1001,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の財閥解体では、財閥関係会社間の株式保有と役員兼任はどう扱われたか。",
-          "answer": "禁止された。",
+          "answer": "**禁止**された。",
           "evidence": [
-            "zaibatsu-method"
+            "zaibatsu-stock-and-officers-ban-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "禁止"
+          ],
           "note": ""
         },
         {
@@ -837,11 +1016,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で財閥解体後の再結成を防ぐため、持株会社やカルテルを禁止した法律は何か。",
-          "answer": "独占禁止法。",
+          "answer": "**独占禁止法**。",
           "evidence": [
-            "antitrust"
+            "antitrust-policy-without-year"
           ],
-          "keywords": [],
+          "keywords": [
+            "独占禁止法"
+          ],
           "note": ""
         },
         {
@@ -951,12 +1132,14 @@
           "stage": "beginner",
           "type": "identify",
           "form": "名称",
-          "prompt": "占領下の日本で、政府が地主の小作地を買い上げて小作人に売り渡した改革は何か。",
-          "answer": "農地改革。",
+          "prompt": "占領下の日本で、農村の土地所有を変えるために行われた改革は何か。",
+          "answer": "**農地改革**。",
           "evidence": [
-            "land"
+            "land-reform-name-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "農地改革"
+          ],
           "note": ""
         },
         {
@@ -978,11 +1161,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "日本の占領期の農地改革で、政府が買い上げた小作地は、どのような地主の所有地だったか。",
-          "answer": "不在地主。",
+          "answer": "**不在地主**。",
           "evidence": [
-            "land"
+            "land-purchase-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "不在地主"
+          ],
           "note": ""
         },
         {
@@ -991,11 +1176,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "日本の占領期の農地改革で、政府が買い上げた土地を売り渡した相手は誰か。",
-          "answer": "小作人。",
+          "answer": "**小作人**。",
           "evidence": [
-            "land"
+            "land-sale-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "小作人"
+          ],
           "note": ""
         },
         {
@@ -1004,11 +1191,13 @@
           "type": "result",
           "form": "結果",
           "prompt": "日本の占領期の農地改革の結果、それまでの地主の勢力はどう変化したか。",
-          "answer": "没落した。",
+          "answer": "**没落**した。",
           "evidence": [
             "landlord-result"
           ],
-          "keywords": [],
+          "keywords": [
+            "没落"
+          ],
           "note": ""
         },
         {
@@ -1088,11 +1277,28 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で、戦争犯罪などに加担したとされた政治家や軍人を裁いた「東京裁判」の正式名称は何か。",
-          "answer": "極東国際軍事裁判。",
+          "answer": "**極東国際軍事裁判**。",
           "evidence": [
             "trial"
           ],
-          "keywords": [],
+          "keywords": [
+            "極東国際軍事裁判"
+          ],
+          "note": ""
+        },
+        {
+          "id": "B05",
+          "stage": "beginner",
+          "type": "identify",
+          "form": "名称",
+          "prompt": "占領下の日本でＧＨＱが軍国主義者らを公の職務から排除し、政治活動を禁じた措置は何か。",
+          "answer": "**公職追放**。",
+          "evidence": [
+            "purge-action-only"
+          ],
+          "keywords": [
+            "公職追放"
+          ],
           "note": ""
         },
         {
@@ -1103,8 +1309,7 @@
           "prompt": "日本の占領期の東京裁判と公職追放について、東京裁判が開廷し、公職追放が行われたのは何年か。",
           "answer": "1946年。",
           "evidence": [
-            "year-1946",
-            "purge"
+            "year-1946"
           ],
           "keywords": [],
           "note": ""
@@ -1115,11 +1320,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の東京裁判と公職追放に関連する戦犯の区分で、Ａ級戦犯はどの罪に問われた人たちか。",
-          "answer": "平和に対する罪。",
+          "answer": "**平和に対する罪**。",
           "evidence": [
             "class-a"
           ],
-          "keywords": [],
+          "keywords": [
+            "平和に対する罪"
+          ],
           "note": ""
         },
         {
@@ -1128,24 +1335,14 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の東京裁判と公職追放に関連する戦犯の区分で、ＢＣ級戦犯はどの罪に問われた人たちか。",
-          "answer": "通例の戦争犯罪と人道に対する罪。",
+          "answer": "**通例の戦争犯罪**と**人道に対する罪**。",
           "evidence": [
             "class-bc"
           ],
-          "keywords": [],
-          "note": ""
-        },
-        {
-          "id": "B05",
-          "stage": "beginner",
-          "type": "identify",
-          "form": "名称",
-          "prompt": "占領下の日本でＧＨＱが軍国主義者らを公の職務から排除し、政治活動を禁じた措置は何か。",
-          "answer": "公職追放。",
-          "evidence": [
-            "purge"
+          "keywords": [
+            "通例の戦争犯罪",
+            "人道に対する罪"
           ],
-          "keywords": [],
           "note": ""
         },
         {
@@ -1154,11 +1351,14 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の東京裁判と公職追放について、公職追放の対象は軍人のほか、どのような人々に及んだか。",
-          "answer": "国会議員や民間団体職員。",
+          "answer": "**国会議員**や**民間団体職員**。",
           "evidence": [
-            "purge"
+            "purge-targets-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "国会議員",
+            "民間団体職員"
+          ],
           "note": ""
         },
         {
@@ -1247,12 +1447,14 @@
           "stage": "beginner",
           "type": "identify",
           "form": "名称",
-          "prompt": "占領下の日本で、ＧＨＱが一般のメディアに適用した検閲基準を何というか。",
-          "answer": "プレス・コード。",
+          "prompt": "占領下の日本で、一般のメディアに適用された検閲基準を何というか。",
+          "answer": "**プレス・コード**。",
           "evidence": [
-            "press"
+            "press-name-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "プレス・コード"
+          ],
           "note": ""
         },
         {
@@ -1261,11 +1463,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "日本の占領期にプレス・コードによって一般のメディアを統制した機関はどこか。",
-          "answer": "ＧＨＱ。",
+          "answer": "**ＧＨＱ**。",
           "evidence": [
-            "press"
+            "press-authority-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "ＧＨＱ"
+          ],
           "note": ""
         },
         {
@@ -1274,11 +1478,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期のプレス・コードでは、原子爆弾の使用について、どのような報道内容が禁止されたか。",
-          "answer": "原子爆弾の使用に対する批判。",
+          "answer": "**原子爆弾の使用に対する批判**。",
           "evidence": [
-            "press-example"
+            "press-atomic-criticism-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "原子爆弾の使用に対する批判"
+          ],
           "note": ""
         },
         {
@@ -1287,11 +1493,13 @@
           "type": "result",
           "form": "結果",
           "prompt": "日本の占領期のプレス・コードの禁止項目に該当する内容が記事に含まれると、そのメディアはどう扱われたか。",
-          "answer": "発行禁止とされた。",
+          "answer": "**発行禁止**とされた。",
           "evidence": [
-            "press-example"
+            "press-publication-ban-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "発行禁止"
+          ],
           "note": ""
         },
         {
@@ -1369,12 +1577,15 @@
           "type": "identify",
           "form": "名称",
           "prompt": "占領下の日本で1947年に進められた教育改革では、どの二つの法律が制定されたか。",
-          "answer": "教育基本法と学校教育法。",
+          "answer": "**教育基本法**と**学校教育法**。",
           "evidence": [
-            "education",
-            "school"
+            "education-law-and-year-only",
+            "school-law-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "教育基本法",
+            "学校教育法"
+          ],
           "note": ""
         },
         {
@@ -1383,11 +1594,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の教育改革では、教育を受ける機会について、どのような原則が定められたか。",
-          "answer": "教育の機会均等。",
+          "answer": "**教育の機会均等**。",
           "evidence": [
-            "education"
+            "educational-opportunity-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "教育の機会均等"
+          ],
           "note": ""
         },
         {
@@ -1396,11 +1609,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の教育改革では、男女の学び方について、どのような原則が定められたか。",
-          "answer": "男女共学。",
+          "answer": "**男女共学**。",
           "evidence": [
-            "education"
+            "coeducation-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "男女共学"
+          ],
           "note": ""
         },
         {
@@ -1409,11 +1624,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の教育改革で、義務教育の期間は何年から何年へ変わったか。",
-          "answer": "6年から9年。",
+          "answer": "**6年から9年**。",
           "evidence": [
-            "education"
+            "compulsory-schooling"
           ],
-          "keywords": [],
+          "keywords": [
+            "6年から9年"
+          ],
           "note": ""
         },
         {
@@ -1422,11 +1639,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の教育改革で導入された学制は、小学校・中学校・高等学校・大学をそれぞれ何年としたか。",
-          "answer": "小学校6年、中学校3年、高等学校3年、大学4年。",
+          "answer": "**小学校6年、中学校3年、高等学校3年、大学4年**。",
           "evidence": [
             "school"
           ],
-          "keywords": [],
+          "keywords": [
+            "小学校6年、中学校3年、高等学校3年、大学4年"
+          ],
           "note": ""
         },
         {
@@ -1435,11 +1654,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "日本の占領期の教育改革で、国定教科書に代わって始まった教科書の制度は何か。",
-          "answer": "教科書検定。",
+          "answer": "**教科書検定**。",
           "evidence": [
             "textbooks"
           ],
-          "keywords": [],
+          "keywords": [
+            "教科書検定"
+          ],
           "note": ""
         },
         {
@@ -1503,7 +1724,8 @@
           "prompt": "日本の占領期の「教育改革」について説明せよ。",
           "answer": "1947年の日本では**教育基本法**が制定され、**教育の機会均等**と**男女共学**が定められた。義務教育は**6年から9年**へ延長され、**学校教育法**によって**小学校6年、中学校3年、高等学校3年、大学4年**の学制が導入された。**国定教科書**に代わり、**民間の出版社**が作成した教科書を**政府が検定**する**教科書検定**の制度が始まった。",
           "evidence": [
-            "education",
+            "education-principles",
+            "compulsory-schooling",
             "school",
             "textbooks"
           ],

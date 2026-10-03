@@ -27,7 +27,7 @@
       426,
       457
     ],
-    "note": "当該小項目の本文と関連注記だけを用いる。同章年表は同じ出来事の時期補助に限る。評価的な逸話、資料に説明のない制度、矛盾する独立回復年の年表行は出題しない。"
+    "note": "当該小項目の本文と関連注記だけを用いる。同章年表は同じ出来事の時期補助に限る。評価的な逸話、資料に説明のない制度、矛盾する独立回復年の年表行は出題しない。 第五福竜丸の乗員の細かい人数、残留日本兵の人数と評価的な逸話、ベトナム戦争の開戦時期の細かい定義は出題しない。"
   },
   "facts": [
     {
@@ -158,12 +158,12 @@
     {
       "id": "security-opposition-start",
       "page": 423,
-      "quote": "これに反対したのは、日本共産党と社会党でした。アメリカの戦争に巻き込まれるというのが主な反対理由で、安保条約自体に反対でした。やがて労働組合や学生団体を巻き"
+      "quote": "これに反対したのは、日本共産党と社会党でした。アメリカの戦争に巻き込まれるというのが主な反対理由で、安保条約自体に反対でした。"
     },
     {
       "id": "security-opposition-end",
       "page": 424,
-      "quote": "込んだ大規模な反対運動に発展し、国会で条約を承認する採決が行われると、国会は連日デモ隊に取り囲まれる事態となりました。これが安保闘争です。岸首相は安保改定を実現させると総辞職しました。"
+      "quote": "大規模な反対運動に発展し、国会で条約を承認する採決が行われると、国会は連日デモ隊に取り囲まれる事態となりました。これが安保闘争です。岸首相は安保改定を実現させると総辞職しました。"
     },
     {
       "id": "fifth-incident",
@@ -234,6 +234,246 @@
       "id": "cold-warsaw",
       "page": 421,
       "quote": "昭和三十年（一九五五）にワルシャワ条約機構（ＷＰＯ）を発足させてＮＡＴＯに対抗しました。"
+    },
+    {
+      "id": "un-name-purpose",
+      "page": 421,
+      "quote": "国際平和を維持するために**国際連合（国連）**を設立しました。"
+    },
+    {
+      "id": "un-security-name",
+      "page": 421,
+      "quote": "国連には安全保障理事会が設置され"
+    },
+    {
+      "id": "un-permanent-members",
+      "page": 421,
+      "quote": "連合国の米・ソ（現在はロシア）・英・仏・中の主要五カ国が、その常任理事国となり"
+    },
+    {
+      "id": "un-headquarters",
+      "page": 421,
+      "quote": "本部は米国のニューヨークに置いた。"
+    },
+    {
+      "id": "cold-name-short",
+      "page": 421,
+      "quote": "冷たい戦争が始まりました。これを⑧**冷戦**といいます"
+    },
+    {
+      "id": "cold-fields",
+      "page": 421,
+      "quote": "この対立は経済、思想、宣伝など、武力行使を除くあらゆる分野で激しく展開された。"
+    },
+    {
+      "id": "cold-main-states",
+      "page": 421,
+      "quote": "第二次世界大戦後、米国とソ連の関係は緊張を増し、核戦力を背景にした敵対関係が続いた。"
+    },
+    {
+      "id": "china-civil-context",
+      "page": 421,
+      "quote": "中国では、抗日で一時共闘していた二つの勢力が内戦を始めました。"
+    },
+    {
+      "id": "china-state-name",
+      "page": 421,
+      "quote": "中華人民共和国の成立を宣言し"
+    },
+    {
+      "id": "china-mao",
+      "page": 421,
+      "quote": "毛沢東が中華人民共和国の成立を宣言し"
+    },
+    {
+      "id": "china-chiang",
+      "page": 421,
+      "quote": "蔣介石率いる国民党"
+    },
+    {
+      "id": "china-taiwan",
+      "page": 421,
+      "quote": "国民党は敗退して海を渡って台湾に落ちのびました。"
+    },
+    {
+      "id": "korea-start-date",
+      "page": 422,
+      "quote": "昭和二十五年（一九五〇）六月に"
+    },
+    {
+      "id": "korea-war-name",
+      "page": 422,
+      "quote": "**朝鮮戦争**が勃発しました。"
+    },
+    {
+      "id": "korea-un-support",
+      "page": 422,
+      "quote": "アメリカを中心とする国連軍が南に加勢し"
+    },
+    {
+      "id": "japan-police-reserve",
+      "page": 422,
+      "quote": "マッカーサー元帥の指示により日本に**警察予備隊**が発足しました。"
+    },
+    {
+      "id": "japan-support-base",
+      "page": 422,
+      "quote": "日本は朝鮮半島の後方支援基地となり"
+    },
+    {
+      "id": "japan-demand-name",
+      "page": 422,
+      "quote": "日本経済の復興を後押ししました（**特需景気**）。"
+    },
+    {
+      "id": "japan-self-defense-successor",
+      "page": 422,
+      "quote": "**自衛隊**になります。"
+    },
+    {
+      "id": "peace-treaty-name",
+      "page": 422,
+      "quote": "**サンフランシスコ講和条約**に署名しました。"
+    },
+    {
+      "id": "peace-independence",
+      "page": 422,
+      "quote": "我が国は独立を回復しました。"
+    },
+    {
+      "id": "security-bases",
+      "page": 422,
+      "quote": "**日米安全保障条約**も同時に締結されたため、その後も日本国内に米軍基地が残りました。"
+    },
+    {
+      "id": "peace-yoshida",
+      "page": 422,
+      "quote": "**吉田茂**首相がサンフランシスコ講和会議に出席し、**サンフランシスコ講和条約**に署名しました。"
+    },
+    {
+      "id": "peace-sign-date",
+      "page": 422,
+      "quote": "昭和二十六年（一九五一）九月八日"
+    },
+    {
+      "id": "fifty-five-socialist-unification",
+      "page": 423,
+      "quote": "日本社会党は左右両派に分裂していたところ、昭和30年（1955）に統一を果たした。"
+    },
+    {
+      "id": "fifty-five-conservative-merger",
+      "page": 423,
+      "quote": "保守合同が実現し、自由民主党（自民党）が成立した。"
+    },
+    {
+      "id": "fifty-five-hatoyama",
+      "page": 423,
+      "quote": "鳩山一郎首相の下で"
+    },
+    {
+      "id": "soviet-declaration-restoration",
+      "page": 423,
+      "quote": "**日ソ共同宣言**を結び、ソ連との国交を回復し"
+    },
+    {
+      "id": "soviet-declaration-date",
+      "page": 423,
+      "quote": "昭和三十一年（一九五六）"
+    },
+    {
+      "id": "soviet-hatoyama",
+      "page": 423,
+      "quote": "鳩山一郎首相は"
+    },
+    {
+      "id": "security-opposition-participants",
+      "page": 423,
+      "quote": "労働組合や学生団体"
+    },
+    {
+      "id": "security-opposition-demonstration",
+      "page": 424,
+      "quote": "大規模な反対運動に発展し、国会で条約を承認する採決が行われると、国会は連日デモ隊に取り囲まれる事態となりました。これが**安保闘争**です。"
+    },
+    {
+      "id": "security-revision-date",
+      "page": 423,
+      "quote": "昭和三十五年（一九六〇）、日米安全保障条約を改定し"
+    },
+    {
+      "id": "security-defense-duty",
+      "page": 423,
+      "quote": "米国の日本防衛義務が明記された"
+    },
+    {
+      "id": "fifth-ship",
+      "page": 422,
+      "quote": "日本のまぐろ漁船の第五福竜丸が"
+    },
+    {
+      "id": "fifth-fallout",
+      "page": 422,
+      "quote": "米国の水爆実験の「死の灰」を浴び"
+    },
+    {
+      "id": "fifth-date",
+      "page": 422,
+      "quote": "昭和29年（1954）"
+    },
+    {
+      "id": "fifth-bikini-test",
+      "page": 422,
+      "quote": "ビキニ環礁での米国の水爆実験の「死の灰」を浴び"
+    },
+    {
+      "id": "fifth-ban-movement",
+      "page": 422,
+      "quote": "日本では原水爆禁止運動が高まり"
+    },
+    {
+      "id": "fifth-conference-date",
+      "page": 422,
+      "quote": "昭和30年（1955）に第1回原水爆禁止世界大会が"
+    },
+    {
+      "id": "africa-independence-year",
+      "page": 424,
+      "quote": "これにより昭和35年（1960）、フランス植民地を中心にアフリカの17カ国が独立したため、この年を「アフリカの年」という。"
+    },
+    {
+      "id": "asia-indonesia-colonizer",
+      "page": 424,
+      "quote": "かつてオランダの植民地だったインドネシア"
+    },
+    {
+      "id": "asia-philippines-colonizer",
+      "page": 424,
+      "quote": "アメリカの植民地だったフィリピン"
+    },
+    {
+      "id": "asia-malaya-colonizer",
+      "page": 424,
+      "quote": "イギリスの植民地だったマラヤ（後のマレーシア）"
+    },
+    {
+      "id": "cuba-crisis-name",
+      "page": 426,
+      "quote": "キューバにミサイルを置いたことで核戦争の手前まで進展した⑪**キューバ危機**"
+    },
+    {
+      "id": "cuba-crisis-date",
+      "page": 426,
+      "quote": "昭和三十七年（一九六二）に"
+    },
+    {
+      "id": "cuba-missiles-soviet",
+      "page": 426,
+      "quote": "ソ連がキューバにミサイルを置いた"
+    },
+    {
+      "id": "vietnam-north-support",
+      "page": 426,
+      "quote": "ソ連と中国の支援を受けた北ベトナム"
     }
   ],
   "units": [
@@ -247,7 +487,7 @@
         "sortYear": 1945
       },
       "geographyLabel": "ニューヨーク",
-      "explanation": "国際連盟が世界大戦を阻止できなかった反省から国際連合が設立された。総会の多数決と安全保障理事会の常任理事国の拒否権を区別して学ぶ。",
+      "explanation": "国際連盟が世界大戦を阻止できなかった反省から国際連合が設立された。国連の総会は多数決を採用し、安全保障理事会の常任理事国は拒否権を持った。",
       "questions": [
         {
           "id": "B01",
@@ -260,7 +500,7 @@
             "国際連合（国連）"
           ],
           "evidence": [
-            "un-establish"
+            "un-name-purpose"
           ]
         },
         {
@@ -286,7 +526,7 @@
             "安全保障理事会"
           ],
           "evidence": [
-            "un-security"
+            "un-security-name"
           ]
         },
         {
@@ -295,10 +535,12 @@
           "type": "actor",
           "form": "主体",
           "prompt": "国際連合（国連）の設立時に、安全保障理事会の常任理事国となった主要五カ国はどこか。",
-          "answer": "アメリカ・ソ連・イギリス・フランス・中国。",
-          "keywords": [],
+          "answer": "**アメリカ・ソ連・イギリス・フランス・中国**。",
+          "keywords": [
+            "アメリカ・ソ連・イギリス・フランス・中国"
+          ],
           "evidence": [
-            "un-security"
+            "un-permanent-members"
           ]
         },
         {
@@ -326,7 +568,7 @@
             "ニューヨーク"
           ],
           "evidence": [
-            "un-league"
+            "un-headquarters"
           ]
         },
         {
@@ -411,7 +653,7 @@
         "sortYear": 1949
       },
       "geographyLabel": "アメリカ",
-      "explanation": "西側と東側の対立を、思想だけでなく軍事同盟・核兵器の競争・ドイツの分断につなげて整理する。",
+      "explanation": "冷戦の東西対立のもと、軍事同盟の形成や核兵器の開発競争が進み、分割統治されていたドイツではベルリンの壁が作られた。",
       "questions": [
         {
           "id": "B01",
@@ -424,8 +666,8 @@
             "冷戦"
           ],
           "evidence": [
-            "cold-definition",
-            "cold-name"
+            "cold-name-short",
+            "cold-fields"
           ]
         },
         {
@@ -433,11 +675,14 @@
           "stage": "beginner",
           "type": "actor",
           "form": "主体",
-          "prompt": "第二次世界大戦後の冷戦で、西側と東側の中心となった二国はどこか。",
-          "answer": "アメリカとソ連。",
-          "keywords": [],
+          "prompt": "第二次世界大戦後の冷戦で、中心となって対立した二つの国はどこか。",
+          "answer": "**アメリカ**と**ソ連**。",
+          "keywords": [
+            "アメリカ",
+            "ソ連"
+          ],
           "evidence": [
-            "cold-definition"
+            "cold-main-states"
           ]
         },
         {
@@ -583,7 +828,7 @@
         "sortYear": 1949
       },
       "geographyLabel": "中国",
-      "explanation": "抗日で共闘していた国民党と共産党の内戦から、中華人民共和国の成立と国民党の台湾への移動を結び付ける。",
+      "explanation": "抗日で一時共闘していた国民党と共産党は、その後に内戦を始めた。内戦の結果、中華人民共和国が成立し、国民党は台湾へ移った。",
       "questions": [
         {
           "id": "B01",
@@ -596,8 +841,8 @@
             "中華人民共和国"
           ],
           "evidence": [
-            "china-civil",
-            "china-result"
+            "china-civil-context",
+            "china-state-name"
           ]
         },
         {
@@ -611,8 +856,7 @@
             "毛沢東"
           ],
           "evidence": [
-            "china-civil",
-            "china-result"
+            "china-mao"
           ]
         },
         {
@@ -626,7 +870,7 @@
             "蔣介石"
           ],
           "evidence": [
-            "china-civil"
+            "china-chiang"
           ]
         },
         {
@@ -640,7 +884,7 @@
             "台湾"
           ],
           "evidence": [
-            "china-result"
+            "china-taiwan"
           ]
         },
         {
@@ -678,7 +922,7 @@
           "stage": "reverse",
           "type": "reverse",
           "form": "複合説明",
-          "prompt": "中華人民共和国の成立によって、中国の二つの勢力はどうなったか。",
+          "prompt": "中国の内戦の結果、中華人民共和国の成立と国民党の動向はどうなったか。",
           "answer": "1949年に**毛沢東(もうたくとう)**が**中華人民共和国**の成立を宣言した。敗退した国民党は海を渡って**台湾**へ移った。",
           "keywords": [
             "毛沢東",
@@ -723,7 +967,7 @@
         "sortYear": 1950
       },
       "geographyLabel": "朝鮮半島",
-      "explanation": "朝鮮半島の分割占領、南北の国家成立、国連軍と中国の介入、休戦後も分断が続いたことを整理する。",
+      "explanation": "第二次世界大戦後の朝鮮半島は分割占領され、南北に国家が成立した。朝鮮戦争には国連軍と中国の義勇軍が加勢し、休戦後も朝鮮半島の分断は続いた。",
       "questions": [
         {
           "id": "B02",
@@ -734,7 +978,8 @@
           "answer": "1950年6月。",
           "keywords": [],
           "evidence": [
-            "korea-start"
+            "korea-start-date",
+            "korea-war-name"
           ]
         },
         {
@@ -776,7 +1021,7 @@
             "アメリカ"
           ],
           "evidence": [
-            "korea-support"
+            "korea-un-support"
           ]
         },
         {
@@ -830,7 +1075,7 @@
           "type": "reverse",
           "form": "複合説明",
           "prompt": "朝鮮戦争では、何が起こったか。",
-          "answer": "1950年6月、**北朝鮮軍**が三八度線を突破して南へ侵攻し、アメリカを中心とする**国連軍**と中国の**義勇軍**がそれぞれ南北に加勢した。三八度線付近で膠着状態となり、1953年に**休戦協定**が結ばれたが、**朝鮮半島の分断**は続いた。",
+          "answer": "1950年6月、**北朝鮮軍**が三八度線を突破して南へ侵攻し、アメリカを中心とする**国連軍**と中国の**義勇軍**がそれぞれ南北に加勢した。三八度線付近で膠着状態(こうちゃくじょうたい)となり、1953年に**休戦協定**が結ばれたが、**朝鮮半島の分断**は続いた。",
           "keywords": [
             "北朝鮮軍",
             "国連軍",
@@ -850,7 +1095,7 @@
           "type": "integrated",
           "form": "統合説明",
           "prompt": "第二次世界大戦後の「朝鮮戦争」について説明せよ。",
-          "answer": "第二次世界大戦後の朝鮮半島は**北緯三八度線**を境に北を**ソ連**、南を**アメリカ**が占領し、北に**北朝鮮**、南に**韓国**が成立した。1950年6月に**北朝鮮軍**が南へ侵攻し、アメリカを中心とする**国連軍**が韓国側に、中国の**義勇軍**が北朝鮮側に加勢した。三八度線付近で膠着状態となり、1953年に**休戦協定**が結ばれたが、**朝鮮半島の分断**は続いた。",
+          "answer": "第二次世界大戦後の朝鮮半島は**北緯三八度線**を境に北を**ソ連**、南を**アメリカ**が占領し、北に**北朝鮮**、南に**韓国**が成立した。1950年6月に**北朝鮮軍**が南へ侵攻し、アメリカを中心とする**国連軍**が韓国側に、中国の**義勇軍**が北朝鮮側に加勢した。三八度線付近で膠着状態(こうちゃくじょうたい)となり、1953年に**休戦協定**が結ばれたが、**朝鮮半島の分断**は続いた。",
           "keywords": [
             "北緯三八度線",
             "ソ連",
@@ -883,7 +1128,7 @@
         "sortYear": 1950
       },
       "geographyLabel": "日本",
-      "explanation": "朝鮮戦争の影響を、警察予備隊から自衛隊への変化と、米軍の物資調達による日本経済の復興に分けて学ぶ。",
+      "explanation": "朝鮮戦争に伴い、日本では警察予備隊が発足し、後に自衛隊となった。日本が後方支援基地となって米軍の物資調達が行われ、日本経済の復興が後押しされた。",
       "questions": [
         {
           "id": "B01",
@@ -896,7 +1141,7 @@
             "警察予備隊"
           ],
           "evidence": [
-            "japan-rearm"
+            "japan-police-reserve"
           ]
         },
         {
@@ -910,7 +1155,8 @@
             "特需景気"
           ],
           "evidence": [
-            "japan-demand"
+            "japan-support-base",
+            "japan-demand-name"
           ]
         },
         {
@@ -922,7 +1168,6 @@
           "answer": "1950年。",
           "keywords": [],
           "evidence": [
-            "japan-rearm",
             "japan-rearm-year"
           ]
         },
@@ -937,7 +1182,7 @@
             "自衛隊"
           ],
           "evidence": [
-            "japan-rearm"
+            "japan-self-defense-successor"
           ]
         },
         {
@@ -1035,7 +1280,7 @@
         "sortYear": 1951
       },
       "geographyLabel": "日本",
-      "explanation": "講和条約の署名と発効を区別する。同時に結ばれた安保条約で米軍基地が残ったこと、独立回復後も米国統治が続いた地域を整理する。",
+      "explanation": "講和条約への署名後、その発効によって日本は独立を回復した。同時に結ばれた日米安全保障条約により米軍基地は残り、沖縄・奄美群島(あまみぐんとう)・小笠原諸島(おがさわらしょとう)は引き続き米国統治下に置かれた。",
       "questions": [
         {
           "id": "B01",
@@ -1048,7 +1293,8 @@
             "サンフランシスコ講和条約"
           ],
           "evidence": [
-            "peace-sign"
+            "peace-treaty-name",
+            "peace-independence"
           ]
         },
         {
@@ -1062,7 +1308,7 @@
             "日米安全保障条約"
           ],
           "evidence": [
-            "security-original"
+            "security-bases"
           ]
         },
         {
@@ -1076,7 +1322,7 @@
             "吉田茂"
           ],
           "evidence": [
-            "peace-sign"
+            "peace-yoshida"
           ]
         },
         {
@@ -1088,8 +1334,9 @@
           "answer": "1951年9月。",
           "keywords": [],
           "evidence": [
-            "peace-sign",
-            "security-original"
+            "peace-sign-date",
+            "peace-treaty-name",
+            "security-bases"
           ]
         },
         {
@@ -1110,7 +1357,7 @@
           "type": "place",
           "form": "地域",
           "prompt": "サンフランシスコ講和条約と日米安全保障条約の締結後、日本の独立回復後もアメリカの統治下に置かれた主な三地域はどこか。",
-          "answer": "**沖縄・奄美群島・小笠原諸島**。",
+          "answer": "**沖縄・奄美群島(あまみぐんとう)・小笠原諸島(おがさわらしょとう)**。",
           "keywords": [
             "沖縄・奄美群島・小笠原諸島"
           ],
@@ -1153,7 +1400,7 @@
           "type": "reverse",
           "form": "複合説明",
           "prompt": "サンフランシスコ講和条約と日米安全保障条約によって、日本の独立回復後の米国との関係はどうなったか。",
-          "answer": "同時に結ばれた**日米安全保障条約**によって、日本国内に**米軍基地**が残った。**沖縄・奄美群島・小笠原諸島**は、引き続き**アメリカの統治下**に置かれた。",
+          "answer": "同時に結ばれた**日米安全保障条約**によって、日本国内に**米軍基地**が残った。**沖縄・奄美群島(あまみぐんとう)・小笠原諸島(おがさわらしょとう)**は、引き続き**アメリカの統治下**に置かれた。",
           "keywords": [
             "日米安全保障条約",
             "米軍基地",
@@ -1185,7 +1432,7 @@
           "type": "integrated",
           "form": "統合説明",
           "prompt": "第二次世界大戦後の「サンフランシスコ講和条約と日米安全保障条約」について説明せよ。",
-          "answer": "**吉田茂(よしだしげる)**首相が1951年9月にサンフランシスコ講和条約に署名し、1952年4月の発効で**日本の独立回復**が実現した。同時に結ばれた**日米安全保障条約**によって日本国内に**米軍基地**が残り、**沖縄・奄美群島・小笠原諸島**は引き続き**アメリカの統治下**に置かれた。**ソ連**は講和会議に参加したが、**中華人民共和国の不参加**を理由に署名しなかった。",
+          "answer": "**吉田茂(よしだしげる)**首相が1951年9月にサンフランシスコ講和条約に署名し、1952年4月の発効で**日本の独立回復**が実現した。同時に結ばれた**日米安全保障条約**によって日本国内に**米軍基地**が残り、**沖縄・奄美群島(あまみぐんとう)・小笠原諸島(おがさわらしょとう)**は引き続き**アメリカの統治下**に置かれた。**ソ連**は講和会議に参加したが、**中華人民共和国の不参加**を理由に署名しなかった。",
           "keywords": [
             "吉田茂",
             "日本の独立回復",
@@ -1214,7 +1461,7 @@
         "sortYear": 1955
       },
       "geographyLabel": "日本",
-      "explanation": "社会党の再統一と保守合同を結び付ける。二大政党の形でも社会党と自民党の勢力は対等でなかったことを学ぶ。",
+      "explanation": "社会党の再統一と保守合同により、社会党と自民党の二大政党による体制が成立した。社会党の勢力は自民党の約半分で、自民党の長期政権となった。",
       "questions": [
         {
           "id": "B01",
@@ -1227,7 +1474,8 @@
             "55年体制"
           ],
           "evidence": [
-            "fifty-five",
+            "fifty-five-socialist-unification",
+            "fifty-five-conservative-merger",
             "fifty-five-name"
           ]
         },
@@ -1242,7 +1490,8 @@
             "鳩山一郎"
           ],
           "evidence": [
-            "fifty-five"
+            "fifty-five-hatoyama",
+            "fifty-five-conservative-merger"
           ]
         },
         {
@@ -1265,7 +1514,7 @@
           "stage": "beginner",
           "type": "result",
           "form": "結果",
-          "prompt": "日本の55年体制で、社会党との勢力差によって長期政権となった政党は何か。",
+          "prompt": "戦後日本の55年体制で、実際に長期政権を担った政党は何か。",
           "answer": "**自由民主党（自民党）**。",
           "keywords": [
             "自由民主党（自民党）"
@@ -1342,7 +1591,7 @@
         "sortYear": 1956
       },
       "geographyLabel": "日本",
-      "explanation": "日ソ間の戦争状態の終結、国交回復、ソ連の賛成による日本の国連加盟をつないで学ぶ。",
+      "explanation": "日ソ共同宣言は日ソ間の戦争状態の終結を明記し、日本はソ連との国交を回復した。ソ連の賛成を得て、日本は国際連合に加盟した。",
       "questions": [
         {
           "id": "B01",
@@ -1355,7 +1604,7 @@
             "日ソ共同宣言"
           ],
           "evidence": [
-            "soviet-declaration"
+            "soviet-declaration-restoration"
           ]
         },
         {
@@ -1367,7 +1616,8 @@
           "answer": "1956年。",
           "keywords": [],
           "evidence": [
-            "soviet-declaration"
+            "soviet-declaration-date",
+            "soviet-declaration-restoration"
           ]
         },
         {
@@ -1381,7 +1631,8 @@
             "鳩山一郎"
           ],
           "evidence": [
-            "soviet-declaration"
+            "soviet-hatoyama",
+            "soviet-declaration-restoration"
           ]
         },
         {
@@ -1448,7 +1699,7 @@
         "sortYear": 1960
       },
       "geographyLabel": "日本",
-      "explanation": "安保改定で新しく明記された米国の防衛義務と、戦争に巻き込まれることへの反対運動を区別し、岸内閣の総辞職まで整理する。",
+      "explanation": "新安保条約には米国の日本防衛義務が明記された。一方、アメリカの戦争に巻き込まれることを懸念する反対運動が拡大し、安保改定を実現した岸内閣は総辞職した。",
       "questions": [
         {
           "id": "B01",
@@ -1461,8 +1712,8 @@
             "安保闘争"
           ],
           "evidence": [
-            "security-opposition-start",
-            "security-opposition-end"
+            "security-opposition-participants",
+            "security-opposition-demonstration"
           ]
         },
         {
@@ -1474,9 +1725,9 @@
           "answer": "1960年。",
           "keywords": [],
           "evidence": [
-            "security-revision",
-            "security-opposition-start",
-            "security-opposition-end"
+            "security-revision-date",
+            "security-opposition-participants",
+            "security-opposition-demonstration"
           ]
         },
         {
@@ -1504,7 +1755,7 @@
             "日本を防衛する義務"
           ],
           "evidence": [
-            "security-terms"
+            "security-defense-duty"
           ]
         },
         {
@@ -1581,7 +1832,8 @@
           ],
           "evidence": [
             "security-opposition-start",
-            "security-opposition-end"
+            "security-opposition-end",
+            "security-opposition-participants"
           ]
         },
         {
@@ -1604,7 +1856,8 @@
             "security-revision",
             "security-terms",
             "security-opposition-start",
-            "security-opposition-end"
+            "security-opposition-end",
+            "security-opposition-participants"
           ]
         }
       ]
@@ -1619,7 +1872,7 @@
         "sortYear": 1954
       },
       "geographyLabel": "日本",
-      "explanation": "水爆実験による日本漁船の被害と、日本の原水爆禁止運動・広島の大会開催をつなげる。乗員の細かい人数は暗記対象にしない。",
+      "explanation": "第五福竜丸(だいごふくりゅうまる)事件で日本の漁船が水爆実験の被害を受け、日本では原水爆禁止運動が高まった。広島では第1回原水爆禁止世界大会が開かれた。",
       "questions": [
         {
           "id": "B01",
@@ -1627,12 +1880,13 @@
           "type": "identify",
           "form": "用語の特定",
           "prompt": "第二次世界大戦後、米国の水爆実験の「死の灰」を浴びた日本のまぐろ漁船は何か。",
-          "answer": "**第五福竜丸**。",
+          "answer": "**第五福竜丸(だいごふくりゅうまる)**。",
           "keywords": [
             "第五福竜丸"
           ],
           "evidence": [
-            "fifth-incident"
+            "fifth-ship",
+            "fifth-fallout"
           ]
         },
         {
@@ -1640,11 +1894,13 @@
           "stage": "beginner",
           "type": "time",
           "form": "時期",
-          "prompt": "日本の第五福竜丸事件が起きたのはいつか。",
+          "prompt": "日本の第五福竜丸(だいごふくりゅうまる)事件が起きたのはいつか。",
           "answer": "1954年。",
           "keywords": [],
           "evidence": [
-            "fifth-incident"
+            "fifth-date",
+            "fifth-ship",
+            "fifth-fallout"
           ]
         },
         {
@@ -1652,13 +1908,13 @@
           "stage": "beginner",
           "type": "place",
           "form": "地域",
-          "prompt": "日本の第五福竜丸事件で、「死の灰」を生じさせた米国の水爆実験はどこで行われたか。",
-          "answer": "**ビキニ環礁**。",
+          "prompt": "日本の第五福竜丸(だいごふくりゅうまる)事件で、「死の灰」を生じさせた米国の水爆実験はどこで行われたか。",
+          "answer": "**ビキニ環礁(びきにかんしょう)**。",
           "keywords": [
             "ビキニ環礁"
           ],
           "evidence": [
-            "fifth-incident"
+            "fifth-bikini-test"
           ]
         },
         {
@@ -1666,13 +1922,13 @@
           "stage": "beginner",
           "type": "result",
           "form": "結果",
-          "prompt": "第五福竜丸事件の後、日本で高まった核兵器に反対する運動は何か。",
+          "prompt": "第五福竜丸(だいごふくりゅうまる)事件の後、日本で高まった核兵器に反対する運動は何か。",
           "answer": "**原水爆禁止運動**。",
           "keywords": [
             "原水爆禁止運動"
           ],
           "evidence": [
-            "fifth-movement"
+            "fifth-ban-movement"
           ]
         },
         {
@@ -1680,11 +1936,11 @@
           "stage": "beginner",
           "type": "time",
           "form": "時期",
-          "prompt": "日本の第五福竜丸事件後、第1回原水爆禁止世界大会が開かれたのはいつか。",
+          "prompt": "日本の第五福竜丸(だいごふくりゅうまる)事件後、第1回原水爆禁止世界大会が開かれたのはいつか。",
           "answer": "1955年。",
           "keywords": [],
           "evidence": [
-            "fifth-movement"
+            "fifth-conference-date"
           ]
         },
         {
@@ -1692,7 +1948,7 @@
           "stage": "beginner",
           "type": "place",
           "form": "地域",
-          "prompt": "日本の第五福竜丸事件後、第1回原水爆禁止世界大会が開かれた都市はどこか。",
+          "prompt": "日本の第五福竜丸(だいごふくりゅうまる)事件後、第1回原水爆禁止世界大会が開かれた都市はどこか。",
           "answer": "**広島**。",
           "keywords": [
             "広島"
@@ -1706,8 +1962,8 @@
           "stage": "reverse",
           "type": "reverse",
           "form": "複合説明",
-          "prompt": "日本の第五福竜丸事件では、何が起こったか。",
-          "answer": "1954年、マーシャル諸島付近で操業していた日本のまぐろ漁船が、**ビキニ環礁**での米国の**水爆実験**の「死の灰」を浴びた。乗員が急性放射能症となり、死者も出た。",
+          "prompt": "日本の第五福竜丸(だいごふくりゅうまる)事件では、何が起こったか。",
+          "answer": "1954年、マーシャル諸島付近で操業していた日本のまぐろ漁船が、**ビキニ環礁(びきにかんしょう)**での米国の**水爆実験**の「死の灰」を浴びた。乗員が急性放射能症となり、死者も出た。",
           "keywords": [
             "ビキニ環礁",
             "水爆実験"
@@ -1721,7 +1977,7 @@
           "stage": "reverse",
           "type": "reverse",
           "form": "複合説明",
-          "prompt": "第五福竜丸事件は、日本社会にどのような影響を与えたか。",
+          "prompt": "第五福竜丸(だいごふくりゅうまる)事件は、日本社会にどのような影響を与えたか。",
           "answer": "日本で**原水爆禁止運動**が高まり、1955年に**広島**で第1回**原水爆禁止世界大会**が開かれた。",
           "keywords": [
             "原水爆禁止運動",
@@ -1738,7 +1994,7 @@
           "type": "integrated",
           "form": "統合説明",
           "prompt": "第二次世界大戦後の「第五福竜丸事件」について説明せよ。",
-          "answer": "1954年、マーシャル諸島付近で操業していた日本のまぐろ漁船が、**ビキニ環礁**での米国の**水爆実験**の「死の灰」を浴び、乗員が急性放射能症となって死者も出た。日本で**原水爆禁止運動**が高まり、1955年に**広島**で第1回**原水爆禁止世界大会**が開催された。",
+          "answer": "1954年、マーシャル諸島付近で操業していた日本のまぐろ漁船が、**ビキニ環礁(びきにかんしょう)**での米国の**水爆実験**の「死の灰」を浴び、乗員が急性放射能症となって死者も出た。日本で**原水爆禁止運動**が高まり、1955年に**広島**で第1回**原水爆禁止世界大会**が開催された。",
           "keywords": [
             "ビキニ環礁",
             "水爆実験",
@@ -1763,7 +2019,7 @@
         "sortYear": 1949
       },
       "geographyLabel": "アジア",
-      "explanation": "第二次世界大戦後の独立を、旧宗主国との関係とアフリカの年に結び付ける。残留日本兵の人数や評価的な逸話は求めない。",
+      "explanation": "第二次世界大戦後、アジアでは旧植民地の独立が進んだ。アフリカでも独立が相次ぎ、1960年にはフランス植民地を中心に多くの国が独立して、アフリカの年と呼ばれた。",
       "questions": [
         {
           "id": "B01",
@@ -1776,7 +2032,7 @@
             "アフリカの年"
           ],
           "evidence": [
-            "africa-year"
+            "africa-independence-year"
           ]
         },
         {
@@ -1790,7 +2046,7 @@
             "オランダ"
           ],
           "evidence": [
-            "asia-independence"
+            "asia-indonesia-colonizer"
           ]
         },
         {
@@ -1804,7 +2060,7 @@
             "アメリカ"
           ],
           "evidence": [
-            "asia-independence"
+            "asia-philippines-colonizer"
           ]
         },
         {
@@ -1818,7 +2074,7 @@
             "イギリス"
           ],
           "evidence": [
-            "asia-independence"
+            "asia-malaya-colonizer"
           ]
         },
         {
@@ -1915,7 +2171,7 @@
         "sortYear": 1962
       },
       "geographyLabel": "キューバ",
-      "explanation": "米ソの対立を、ミサイル配置・海上封鎖・交渉の条件・核戦争の回避の順に整理する。",
+      "explanation": "ソ連のミサイル配置をめぐり、米国の海上封鎖によって対立が深まった。交渉では米国がキューバへ侵攻しないことを条件にソ連がミサイル撤去へ同意し、核戦争は回避された。",
       "questions": [
         {
           "id": "B01",
@@ -1928,7 +2184,7 @@
             "キューバ危機"
           ],
           "evidence": [
-            "cuba-year"
+            "cuba-crisis-name"
           ]
         },
         {
@@ -1940,7 +2196,8 @@
           "answer": "1962年。",
           "keywords": [],
           "evidence": [
-            "cuba-year"
+            "cuba-crisis-date",
+            "cuba-crisis-name"
           ]
         },
         {
@@ -1954,7 +2211,7 @@
             "ソ連"
           ],
           "evidence": [
-            "cuba-year"
+            "cuba-missiles-soviet"
           ]
         },
         {
@@ -2053,7 +2310,7 @@
         "sortYear": 1965
       },
       "geographyLabel": "ベトナム",
-      "explanation": "南北の支援国、米軍の撤退、共産主義勢力による統一を整理する。開戦時期の細かい定義は問わない。",
+      "explanation": "北ベトナムはソ連と中国、南ベトナムはアメリカの支援を受けて戦った。米軍が撤退した後、共産主義勢力がベトナムを統一した。",
       "questions": [
         {
           "id": "B02",
@@ -2067,7 +2324,7 @@
             "中国"
           ],
           "evidence": [
-            "vietnam"
+            "vietnam-north-support"
           ]
         },
         {

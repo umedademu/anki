@@ -24,11 +24,29 @@ async function cloudJson(key) {
 const original = await cloudJson("index.json");
 const existing = original.subjects.find(subject => subject.id === plan.subject.id);
 assert.ok(existing, "Cloudflare上の既存日本史Kを使います。");
-const catalog = appendJapaneseKDecks(original, additions);
+// 改訂中の原稿も手元の試験通信だけに組み合わせ、公開側のデータは書き換えない。
+const testingCatalog = structuredClone(original);
+const testingSubject = testingCatalog.subjects.find(subject => subject.id === plan.subject.id);
+for (const authored of [plan, ...additions]) {
+  const position = testingSubject.decks.findIndex(deck => deck.id === authored.index.deckId);
+  if (position < 0) continue;
+  const registered = testingSubject.decks[position];
+  assert.equal(authored.index.version, registered.version, "改訂の画面試験でも既存の履歴版を保持します。");
+  assert.equal(authored.index.termCount, registered.termCount);
+  assert.equal(authored.index.questionCount, registered.questionCount);
+  testingSubject.decks[position] = structuredClone(authored.subject.decks[0]);
+}
+const catalog = appendJapaneseKDecks(testingCatalog, additions);
 const combinedSubject = catalog.subjects.find(subject => subject.id === plan.subject.id);
 const groups = groupSODecks(combinedSubject.decks, combinedSubject.chapterGroups);
 assert.deepEqual(groups.map(group => group.number), [1, 2, 3, 4, 5, 6], "第１章を含む全章を原文の順に表示します。");
 const plansById = new Map([plan, ...additions].map(value => [value.index.deckId, value]));
+const termsByQuestionId = new Map([plan, ...additions].flatMap(value => value.terms.flatMap(term =>
+  Object.values(term.stages).flat().map(question => [question.id, term]),
+)));
+const decksByQuestionId = new Map([plan, ...additions].flatMap(value => value.terms.flatMap(term =>
+  Object.values(term.stages).flat().map(question => [question.id, value.subject.decks[0]]),
+)));
 objects.set("index.json", JSON.stringify(catalog));
 for (const object of plan.objects) objects.set(object.key, JSON.stringify(object.value));
 for (const addition of additions) for (const object of addition.objects) objects.set(object.key, JSON.stringify(object.value));
@@ -156,6 +174,16 @@ try {
     assert.equal(await page.locator("#answer-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#overview-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#answer-panel").isVisible(), answerVisible);
+    const progressName = page.locator("#deck-progress-name");
+    if (question.stage === "beginner" && !answerVisible) {
+      assert.equal(await progressName.textContent(), "日本史K", "基礎問題では小項目名を正答のヒントにしません。");
+      assert.equal(await progressName.getAttribute("title"), "日本史K", "説明表示にも小項目名を残しません。");
+    } else {
+      const deckName = decksByQuestionId.get(question.id).datasetLabel.split("｜").slice(1).join("｜");
+      assert.ok(deckName.length > 0);
+      assert.equal(await progressName.textContent(), deckName.replaceAll("｜", " "), "回答後や説明問題では正しい小項目名を確認できます。");
+      assert.equal(await progressName.getAttribute("title"), deckName, "説明表示も正しい小項目名に戻ります。");
+    }
     const layout = await page.evaluate(() => ({
       width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
       overflow: [...document.querySelectorAll("body *")].flatMap(element => {
@@ -167,6 +195,10 @@ try {
     assert.ok(layout.scrollWidth <= layout.width, `${question.id} ${answerVisible ? "回答後" : "出題中"}：画面幅を超えています。${JSON.stringify(layout)}`);
     await assertTextClearOfButtons(answerVisible ? ["question-text", "answer-text", "term-overview-text"] : ["question-text"]);
     if (answerVisible) {
+      const period = termsByQuestionId.get(question.id).chronology.displayPeriod;
+      const tags = await page.locator("#term-tags span").allTextContents();
+      const periodTag = `#${period.replaceAll(" ", "")}`;
+      assert.equal(tags.includes(periodTag), question.stage !== "beginner", "基礎の解説では共通の時期表示から後の正答を先に教えません。説明段階では時期表示を確認できます。");
       assert.equal(await page.locator("#answer-text").textContent(), plain(getQuestionAnswerDisplayText(question)));
       if (question.stage !== "beginner") assert.ok(await page.locator("#answer-text strong").count() > 0, "説明回答の重要語が太字で表示されます。");
       assert.doesNotMatch(await page.locator("#answer-text").textContent(), /\*\*/);
@@ -239,6 +271,7 @@ try {
   assert.equal(await page.locator("#question-text").textContent(), plan.terms[0].stages.beginner[0].prompt);
   assert.equal(await page.locator("#term-overview").isVisible(), false);
   await assertStudyDisplay(plan.terms[0].stages.beginner[0], false);
+  await page.screenshot({ path: path.join(images, "book-06-01-01-beginner-mobile.png"), fullPage: true });
   await page.locator("#next-action").click();
   await assertStudyDisplay(plan.terms[0].stages.beginner[0], true);
   await page.screenshot({ path: path.join(images, "answer-mobile.png"), fullPage: true });
@@ -302,6 +335,9 @@ try {
     const firstQuestion = addition.terms[0].stages.beginner[0];
     assert.equal(await page.locator("#question-text").textContent(), getQuestionPromptForDisplay(firstQuestion, false));
     await assertStudyDisplay(firstQuestion, false);
+    if (/^book-06-01-0[2-6]$/.test(addition.index.deckId)) {
+      await page.screenshot({ path: path.join(images, `${addition.index.deckId}-beginner-mobile.png`), fullPage: true });
+    }
     await page.locator("#next-action").click(); await assertStudyDisplay(firstQuestion, true);
     await page.locator("#good-action").click();
     await page.waitForFunction(prompt => document.querySelector("#question-text").textContent !== prompt, firstQuestion.prompt);
@@ -343,7 +379,7 @@ try {
   assert.deepEqual(audioAttempts, [], "画面の移動や再読み込みを含め、一度も音声を再生しません。");
   assert.equal(requests.some(url => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
   assert.ok([...sessions.keys()].every(key => [oldVersion, plan.index.version, ...additions.map(item => item.index.version)].includes(key)));
-  console.log(`日本史Kの画面確認：${combinedSubject.decks.length}小項目・${combinedSubject.questionCount}問の選択、全小項目の出題・回答・保存再開・統合説明、GHQの全説明問題習得後の移行、用語枠非表示と太字、既存記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
+  console.log(`日本史Kの画面確認：${combinedSubject.decks.length}小項目・${combinedSubject.questionCount}問の選択、全小項目の出題・回答・保存再開・統合説明、GHQの全説明問題習得後の移行、用語枠非表示と太字、基礎の回答前に小項目名と説明表示を隠し回答後に戻す表示、既存記録保持、スマートフォン幅、世界史SOの章表示、音声停止を確認しました。`);
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.309";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.310";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.309";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.309";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.309";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.309";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.309";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.309";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.309";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.309";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.309";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.310";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.310";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.310";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.310";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.310";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.310";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.310";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.310";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.310";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.309";
+} from "./original-session.js?v=0.310";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.309";
+} from "./speech.js?v=0.310";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.309";
+} from "./deck-selection.js?v=0.310";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -4116,8 +4116,10 @@ async function returnToSubjectSelection() {
 }
 
 function renderTermTags(term, question, visible) {
+  const showsPeriodTag = state.activeSubjectId !== "japanese-history-k" ||
+    question.stage !== "beginner";
   const tags = [
-    term.chronology?.displayPeriod,
+    showsPeriodTag ? term.chronology?.displayPeriod : "",
     ...getMacroRegionTags(term),
     term.geography?.regionDetail,
     term.era,
@@ -4784,7 +4786,11 @@ function renderQuestion() {
   state.routineTransition = null;
   const currentDeckEntry = deckForQuestion(question.id)?.entry;
   if (currentDeckEntry) {
-    const currentDeckName = deckDisplayLabel(currentDeckEntry);
+    const hidesDeckName = state.activeSubjectId === "japanese-history-k" &&
+      question.stage === "beginner" && !state.answerVisible;
+    const currentDeckName = hidesDeckName
+      ? state.subject.title
+      : deckDisplayLabel(currentDeckEntry);
     elements.deckProgressName.textContent = currentDeckName.replaceAll("｜", " ");
     elements.deckProgressName.title = currentDeckName;
   }

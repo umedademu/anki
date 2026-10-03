@@ -92,6 +92,106 @@
       "id": "local-autonomy",
       "page": 418,
       "quote": "地方自治法の制定により地方自治が強化され、知事や市町村長が公選されるようになり、地方行政に影響力を持った内務省が廃止された。"
+    },
+    {
+      "id": "constitutional-new-name-only",
+      "page": 418,
+      "quote": "日本国憲法が成立したことが分かる。"
+    },
+    {
+      "id": "constitutional-promulgation-only",
+      "page": 417,
+      "quote": "そして、昭和天皇の裁可を経て昭和二十一年（一九四六）十一月三日に**日本国憲法**として公布され、"
+    },
+    {
+      "id": "constitutional-enforcement-only",
+      "page": 417,
+      "quote": "昭和二十二年（一九四七）五月三日に施行されました。"
+    },
+    {
+      "id": "government-rejected-draft-only",
+      "page": 416,
+      "quote": "日本政府は部分的な修正でよいと考え、改正案を用意しましたが、ＧＨＱはこれを却下し、ＧＨＱが作成した憲法草案を日本政府に交付して憲法改正を要求しました。"
+    },
+    {
+      "id": "constitutional-two-houses",
+      "page": 417,
+      "quote": "衆議院で若干の修正を加えて可決し、貴族院に送付しました。"
+    },
+    {
+      "id": "imperial-deliberation-end",
+      "page": 417,
+      "quote": "帝国議会での審議が終わりました。"
+    },
+    {
+      "id": "emperor-symbol-only",
+      "page": 417,
+      "quote": "天皇は日本国および日本国民統合の象徴とし、"
+    },
+    {
+      "id": "emperor-state-acts-only",
+      "page": 417,
+      "quote": "内閣総理大臣の任命、衆議院の解散、法律の公布などの天皇の権能は「国事に関する行為」として明記した。"
+    },
+    {
+      "id": "diet-highest-organ-only",
+      "page": 417,
+      "quote": "また、国会を国権の最高機関とし、"
+    },
+    {
+      "id": "cabinet-responsibility-only",
+      "page": 417,
+      "quote": "内閣が国会に対して責任を負う議院内閣制が導入された。"
+    },
+    {
+      "id": "article-nine-war-renunciation",
+      "page": 417,
+      "quote": "第九条には戦争の放棄、"
+    },
+    {
+      "id": "article-nine-no-forces",
+      "page": 417,
+      "quote": "戦力の不保持"
+    },
+    {
+      "id": "article-nine-no-belligerency",
+      "page": 417,
+      "quote": "交戦権の否認などが明記されました。"
+    },
+    {
+      "id": "civil-law-rights-only",
+      "page": 418,
+      "quote": "改正民法では個人の権利が強化され、"
+    },
+    {
+      "id": "civil-law-marriage-only",
+      "page": 418,
+      "quote": "結婚には戸主の同意は不要となり、両性の合意のみで成立することになった。"
+    },
+    {
+      "id": "criminal-imperial-offences-only",
+      "page": 418,
+      "quote": "大逆罪や不敬罪など皇室に対する罪"
+    },
+    {
+      "id": "criminal-adultery-only",
+      "page": 418,
+      "quote": "男女不公平だった姦通罪を廃止した。"
+    },
+    {
+      "id": "local-public-election-only",
+      "page": 418,
+      "quote": "知事や市町村長が公選されるようになり、"
+    },
+    {
+      "id": "local-law-and-election-only",
+      "page": 418,
+      "quote": "地方自治法の制定により地方自治が強化され、知事や市町村長が公選されるようになり、"
+    },
+    {
+      "id": "local-ministry-abolition-only",
+      "page": 418,
+      "quote": "地方行政に影響力を持った内務省が廃止された。"
     }
   ],
   "units": [
@@ -112,12 +212,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "戦後の日本で、従来の憲法の改正手続きを経て成立した新しい憲法は何か。",
-          "answer": "日本国憲法。",
+          "answer": "**日本国憲法**。",
           "evidence": [
-            "amendment-procedure",
-            "constitutional-dates"
+            "constitutional-new-name-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "日本国憲法"
+          ],
           "note": ""
         },
         {
@@ -128,7 +229,7 @@
           "prompt": "戦後の日本国憲法の制定で、この憲法が公布されたのは何年何月何日か。",
           "answer": "1946年11月3日。",
           "evidence": [
-            "constitutional-dates"
+            "constitutional-promulgation-only"
           ],
           "keywords": [],
           "note": ""
@@ -141,7 +242,7 @@
           "prompt": "戦後の日本国憲法の制定で、この憲法が施行されたのは何年何月何日か。",
           "answer": "1947年5月3日。",
           "evidence": [
-            "constitutional-dates"
+            "constitutional-enforcement-only"
           ],
           "keywords": [],
           "note": ""
@@ -152,11 +253,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "戦後の日本国憲法の制定過程で、日本政府の部分修正案を却下し、独自の草案を交付した機関はどこか。",
-          "answer": "ＧＨＱ。",
+          "answer": "**ＧＨＱ**。",
           "evidence": [
-            "draft-request"
+            "government-rejected-draft-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "ＧＨＱ"
+          ],
           "note": ""
         },
         {
@@ -165,11 +268,14 @@
           "type": "actor",
           "form": "主体",
           "prompt": "戦後の日本国憲法の制定過程で、衆議院と貴族院で改正案を審議した議会は何か。",
-          "answer": "帝国議会。",
+          "answer": "**帝国議会**。",
           "evidence": [
-            "constitutional-deliberation"
+            "constitutional-two-houses",
+            "imperial-deliberation-end"
           ],
-          "keywords": [],
+          "keywords": [
+            "帝国議会"
+          ],
           "note": ""
         },
         {
@@ -178,11 +284,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法の制定では、どの憲法の改正手続きが用いられたか。",
-          "answer": "大日本帝国憲法。",
+          "answer": "**大日本帝国憲法**。",
           "evidence": [
             "amendment-procedure"
           ],
-          "keywords": [],
+          "keywords": [
+            "大日本帝国憲法"
+          ],
           "note": ""
         },
         {
@@ -267,11 +375,15 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法の基本原理となった、三つの原理は何か。",
-          "answer": "国民主権、基本的人権の尊重、平和主義。",
+          "answer": "**国民主権**、**基本的人権の尊重**、**平和主義**。",
           "evidence": [
             "basic-principles"
           ],
-          "keywords": [],
+          "keywords": [
+            "国民主権",
+            "基本的人権の尊重",
+            "平和主義"
+          ],
           "note": ""
         },
         {
@@ -280,11 +392,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法の基本原理では、天皇の地位は日本国および日本国民統合の何とされたか。",
-          "answer": "象徴。",
+          "answer": "**象徴**。",
           "evidence": [
-            "emperor-position"
+            "emperor-symbol-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "象徴"
+          ],
           "note": ""
         },
         {
@@ -293,11 +407,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法の基本原理では、天皇による内閣総理大臣の任命や法律の公布などは、どのような行為として明記されたか。",
-          "answer": "国事に関する行為。",
+          "answer": "**国事に関する行為**。",
           "evidence": [
-            "emperor-position"
+            "emperor-state-acts-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "国事に関する行為"
+          ],
           "note": ""
         },
         {
@@ -306,11 +422,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "戦後の日本国憲法の基本原理では、国権の最高機関とされたのはどの機関か。",
-          "answer": "国会。",
+          "answer": "**国会**。",
           "evidence": [
-            "parliamentary-government"
+            "diet-highest-organ-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "国会"
+          ],
           "note": ""
         },
         {
@@ -319,11 +437,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "戦後の日本国憲法で、内閣が国会に対して責任を負う仕組みとして導入された制度は何か。",
-          "answer": "議院内閣制。",
+          "answer": "**議院内閣制**。",
           "evidence": [
-            "parliamentary-government"
+            "cabinet-responsibility-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "議院内閣制"
+          ],
           "note": ""
         },
         {
@@ -429,11 +549,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "戦後の日本で、戦争を放棄する原則を明記した憲法の条文は何か。",
-          "answer": "日本国憲法第九条。",
+          "answer": "**日本国憲法第九条**。",
           "evidence": [
-            "article-nine"
+            "article-nine-war-renunciation"
           ],
-          "keywords": [],
+          "keywords": [
+            "日本国憲法第九条"
+          ],
           "note": ""
         },
         {
@@ -442,11 +564,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法第九条は、戦力の保持についてどのように定めたか。",
-          "answer": "戦力の不保持。",
+          "answer": "**戦力の不保持**。",
           "evidence": [
-            "article-nine"
+            "article-nine-no-forces"
           ],
-          "keywords": [],
+          "keywords": [
+            "戦力の不保持"
+          ],
           "note": ""
         },
         {
@@ -455,11 +579,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本国憲法第九条では、国家の交戦権はどのように扱われたか。",
-          "answer": "交戦権の否認。",
+          "answer": "**交戦権の否認**。",
           "evidence": [
-            "article-nine"
+            "article-nine-no-belligerency"
           ],
-          "keywords": [],
+          "keywords": [
+            "交戦権の否認"
+          ],
           "note": ""
         },
         {
@@ -521,11 +647,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "戦後の日本で、憲法改正にともなう法整備により個人の権利が強化されたのは、どの法律の改正によるものか。",
-          "answer": "民法。",
+          "answer": "**民法**。",
           "evidence": [
-            "civil-law"
+            "civil-law-rights-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "民法"
+          ],
           "note": ""
         },
         {
@@ -534,11 +662,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本の憲法改正にともなう法整備で、結婚に必要とされなくなったのは、誰の同意か。",
-          "answer": "戸主(こしゅ)の同意。",
+          "answer": "**戸主(こしゅ)の同意**。",
           "evidence": [
-            "civil-law"
+            "civil-law-marriage-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "戸主の同意"
+          ],
           "note": ""
         },
         {
@@ -547,11 +677,14 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本の憲法改正にともなう法整備で、改正刑法が廃止した皇室に対する二つの罪は何か。",
-          "answer": "大逆罪(たいぎゃくざい)と不敬罪(ふけいざい)。",
+          "answer": "**大逆罪(たいぎゃくざい)**と**不敬罪(ふけいざい)**。",
           "evidence": [
-            "criminal-law"
+            "criminal-imperial-offences-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "大逆罪",
+            "不敬罪"
+          ],
           "note": ""
         },
         {
@@ -560,11 +693,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本の憲法改正にともなう法整備で、男女不公平だったとして改正刑法が廃止した罪は何か。",
-          "answer": "姦通罪(かんつうざい)。",
+          "answer": "**姦通罪(かんつうざい)**。",
           "evidence": [
-            "criminal-law"
+            "criminal-adultery-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "姦通罪"
+          ],
           "note": ""
         },
         {
@@ -573,11 +708,13 @@
           "type": "content",
           "form": "内容",
           "prompt": "戦後の日本の憲法改正にともなう法整備で、知事や市町村長はどのように選ばれるようになったか。",
-          "answer": "公選されるようになった。",
+          "answer": "**公選**されるようになった。",
           "evidence": [
-            "local-autonomy"
+            "local-public-election-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "公選"
+          ],
           "note": ""
         },
         {
@@ -586,11 +723,13 @@
           "type": "identify",
           "form": "名称",
           "prompt": "戦後の日本で、憲法改正にともなう法整備により知事や市町村長が公選されるようになったのは、どの法律の制定によるものか。",
-          "answer": "地方自治法。",
+          "answer": "**地方自治法**。",
           "evidence": [
-            "local-autonomy"
+            "local-law-and-election-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "地方自治法"
+          ],
           "note": ""
         },
         {
@@ -599,11 +738,13 @@
           "type": "actor",
           "form": "主体",
           "prompt": "戦後の日本の憲法改正にともなう法整備で、地方行政に影響力を持ち、廃止された省はどこか。",
-          "answer": "内務省。",
+          "answer": "**内務省**。",
           "evidence": [
-            "local-autonomy"
+            "local-ministry-abolition-only"
           ],
-          "keywords": [],
+          "keywords": [
+            "内務省"
+          ],
           "note": ""
         },
         {

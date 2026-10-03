@@ -7,7 +7,10 @@
     "book-06-01-03",
     "book-06-01-04",
     "book-06-01-05",
-    "book-06-01-06"
+    "book-06-01-06",
+    "book-06-02-01",
+    "book-06-02-02",
+    "book-06-02-03"
   ],
   "images": [
     {
@@ -391,6 +394,187 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-b1c596d0bc3241",
+      "caption": "民主化を求めるデモの参加者",
+      "note": "1989年５月10日の北京でのデモ参加者。６月４日の武力鎮圧や胡耀邦本人の肖像ではない。人名・軍隊名・事件の日付を説明から先に教えない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-01-U01",
+          "questions": [
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-09d0b61722cb85",
+      "caption": "ゴルバチョフ",
+      "note": "1991年の肖像。改革・情報公開・撤退やマルタ会談の現場を写した写真とは扱わず、人物名を答えた後とその人物の政策を説明する問いに限る。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-06-02-02-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-5e5ed3973f6041",
+      "caption": "ベルリンの壁の上に集まった人々",
+      "note": "1989年11月、ブランデンブルク門付近の壁。出典の正確な撮影日の記述には疑義があるため日付を断定しない。1990年の統一式典や1871年の帝国成立とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-59bc573609bd8345dcf3",
+      "caption": "ブッシュ大統領（父）",
+      "note": "冷戦終結時の米国大統領ジョージ・Ｈ・Ｗ・ブッシュの1992年の肖像。2003年のイラク戦争時の息子ジョージ・Ｗ・ブッシュと区別し、人物問題の回答後だけ表示する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ebc6906abdee0b07006f",
+      "caption": "マルタ会談のブッシュ大統領とゴルバチョフ",
+      "note": "1989年12月３日のマルタ会談での両首脳。両者の人名を問い終えた説明問題に限る。地中海の位置を示す地図や宣言文の史料ではない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U03",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d3381d5ee44ff5944d61",
+      "caption": "エリツィン",
+      "note": "1993年のSTART II署名式での肖像をCommonsが切り出した写真。1991年のソ連崩壊時の署名式やクーデターの場面ではない。人物問題の回答後だけ表示し、本体を追加加工しない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U04",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-5e0c5e48b1aff0",
+      "caption": "独立国家共同体の発足に伴う旧ソ連諸国の会合",
+      "note": "1991年12月のアルマアタでの11か国の会合。ロシア・ウクライナ・ベラルーシの３か国による先行する協定署名の瞬間とは扱わない。出典の正確な日付には疑義があるため日を断定しない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-02-U04",
+          "questions": [
+            "B04",
+            "B07",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ab1d50b226f40de9ec8b",
+      "caption": "湾岸戦争に参加した米軍の戦車",
+      "note": "1991年２月24日、湾岸戦争の地上作戦中の米軍戦車。2003年のイラク戦争ではない。多国籍軍の構成全体やイラクのクウェート侵攻そのものを示す写真とは扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-03-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-183e91060f8b9b44bb31",
+      "caption": "イラク戦争中のバグダッドを巡回する米軍の戦車",
+      "note": "2003年11月13日のイラク戦争中の巡回。開戦の瞬間や大量破壊兵器の存在・国連査察結果を示す写真とは扱わず、湾岸戦争の写真と分ける。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-03-U01",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-61896a9289679ad33016",
+      "caption": "同時多発テロで煙が上がる世界貿易センタービル",
+      "note": "2001年９月11日の世界貿易センターを遠方から撮った写真。被害者の接写や別の年の事故ではない。建物名・日付を問う前には表示せず、都市名やアフガニスタン攻撃の理由も説明から先に教えない。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-03-U02",
+          "questions": [
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-775e0b729d91768bc40f",
+      "caption": "海上自衛隊の補給艦「ときわ」による洋上補給",
+      "note": "2006年３月15日、海上自衛隊ときわによる米艦への燃料補給。戦前の日本海軍や近年の演習ではない。水の補給もこの場面で確認できるとは説明せず、物資問題に答えた後から表示する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-03-U03",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-957e8baba07151ee6fd1",
+      "caption": "イラクに派遣された航空自衛隊員と輸送機",
+      "note": "2008年12月８日、バグダッドで航空自衛隊の最終運航前に撮られた隊員と輸送機。陸上自衛隊の給水や学校修復の作業写真ではない。横断幕の航空自衛隊の終了時期を自衛隊全体の派遣期間とは扱わず、期間問題を答えた後から表示する。",
+      "targets": [
+        {
+          "termId": "JHK-06-02-03-U03",
+          "questions": [
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -501,6 +685,102 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:A_copy_of_Treaty_on_Basic_Relations_between_Japan_and_the_Republic_of_Korea.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-02a053b827366c0c4508.jpg",
       "sha256": "02a053b827366c0c45089bf657e32dccbcde1657be71bb65b8e5968a63be1cf9"
+    },
+    {
+      "id": "JHKS-59bc573609bd8345dcf3",
+      "path": "term-images/japanese-history-k/JHKS-59bc573609bd8345dcf3.jpg",
+      "alt": "ブッシュ大統領（父）",
+      "caption": "ブッシュ大統領（父）",
+      "creator": "ジョージ・H・W・ブッシュ大統領図書館・博物館",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Official_portrait_of_President_George_H_W_Bush_January_1992.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-59bc573609bd8345dcf3.jpg",
+      "sha256": "59bc573609bd8345dcf37912181ea1552ef161b3ba350470cf253fc3c8f951c7"
+    },
+    {
+      "id": "JHKS-ebc6906abdee0b07006f",
+      "path": "term-images/japanese-history-k/JHKS-ebc6906abdee0b07006f.jpg",
+      "alt": "マルタ会談のブッシュ大統領とゴルバチョフ",
+      "caption": "マルタ会談のブッシュ大統領とゴルバチョフ",
+      "creator": "Yuriy Somov / Юрий Сомов",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:RIAN_archive_29280_George_Bush_and_Mikhail_Gorbachev.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ebc6906abdee0b07006f.jpg",
+      "sha256": "ebc6906abdee0b07006f2ffa29312fcf0d6b791b77a232b66f32b0c1bea8cae0"
+    },
+    {
+      "id": "JHKS-d3381d5ee44ff5944d61",
+      "path": "term-images/japanese-history-k/JHKS-d3381d5ee44ff5944d61.jpg",
+      "alt": "エリツィン",
+      "caption": "エリツィン",
+      "creator": "Susan Biddle",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Boris_Yeltsin_1993.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d3381d5ee44ff5944d61.jpg",
+      "sha256": "d3381d5ee44ff5944d6177604ed50919708aaf009ab3bb428821d4881bb64af8"
+    },
+    {
+      "id": "JHKS-ab1d50b226f40de9ec8b",
+      "path": "term-images/japanese-history-k/JHKS-ab1d50b226f40de9ec8b.jpg",
+      "alt": "湾岸戦争に参加した米軍の戦車",
+      "caption": "湾岸戦争に参加した米軍の戦車",
+      "creator": "米国国防総省・SSgt. Masters",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Two_Marine_Corps_M-1A1_Abrams_main_battle_tanks_move_across_the_desert_during_the_ground_phase_of_Operation_Desert_Storm_-_DPLA_-_ff6d02040bda6719fce2434d1acbc703.jpeg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ab1d50b226f40de9ec8b.jpg",
+      "sha256": "ab1d50b226f40de9ec8be785d3f76e113d2ccef1072cc12ef1d70b6d3dd5fce2"
+    },
+    {
+      "id": "JHKS-183e91060f8b9b44bb31",
+      "path": "term-images/japanese-history-k/JHKS-183e91060f8b9b44bb31.jpg",
+      "alt": "イラク戦争中のバグダッドを巡回する米軍の戦車",
+      "caption": "イラク戦争中のバグダッドを巡回する米軍の戦車",
+      "creator": "米国空軍・John Houghton",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:M1A1_abrams_front.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-183e91060f8b9b44bb31.jpg",
+      "sha256": "183e91060f8b9b44bb31affc922e56b3b2ee74117144a45becc30b068d117a4c"
+    },
+    {
+      "id": "JHKS-61896a9289679ad33016",
+      "path": "term-images/japanese-history-k/JHKS-61896a9289679ad33016.jpg",
+      "alt": "同時多発テロで煙が上がる世界貿易センタービル",
+      "caption": "同時多発テロで煙が上がる世界貿易センタービル",
+      "creator": "Michael Foran",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:WTC_smoking_on_9-11.jpeg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-61896a9289679ad33016.jpg",
+      "sha256": "61896a9289679ad33016ac7c19e59693280d777436b29c8692864229975cb96d"
+    },
+    {
+      "id": "JHKS-775e0b729d91768bc40f",
+      "path": "term-images/japanese-history-k/JHKS-775e0b729d91768bc40f.jpg",
+      "alt": "海上自衛隊の補給艦「ときわ」による洋上補給",
+      "caption": "海上自衛隊の補給艦「ときわ」による洋上補給",
+      "creator": "米国海軍・Ryan C. Finkle",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:AOE423.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-775e0b729d91768bc40f.jpg",
+      "sha256": "775e0b729d91768bc40f1f6ea4d5a40c1dbb7db556adb51b3416387f24a0ccd4"
+    },
+    {
+      "id": "JHKS-957e8baba07151ee6fd1",
+      "path": "term-images/japanese-history-k/JHKS-957e8baba07151ee6fd1.jpg",
+      "alt": "イラクに派遣された航空自衛隊員と輸送機",
+      "caption": "イラクに派遣された航空自衛隊員と輸送機",
+      "creator": "米国空軍・Brian Davidson",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_Air_Self-Defense_Force_bids_farewell_to_Sather_Airmen_DVIDS134712.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-957e8baba07151ee6fd1.jpg",
+      "sha256": "957e8baba07151ee6fd11b782911602e068f3d81c007dbc06eb7532ba5c39485"
     }
   ]
 }

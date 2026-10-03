@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 2,
+  "subjectId": "japanese-history-k",
+  "subjectTitle": "日本史K",
+  "chapter": {
+    "number": 1,
+    "title": "第1章 原始"
+  },
+  "section": {
+    "number": 3,
+    "title": "弥生時代"
+  },
+  "part": {
+    "number": 5,
+    "title": "日向三代と神武天皇の東征伝説"
+  },
+  "integrationPromptPrefix": "日本の記紀が伝える",
+  "source": {
+    "file": "sources/kokushi/試作/第1章_03節_05_日向三代と神武天皇の東征伝説_原文抜粋.md",
+    "originalFile": "sources/kokushi/1_原始.md",
+    "pages": [
+      19,
+      49,
+      50,
+      51,
+      52
+    ],
+    "note": "18頁・37～52頁の本文・関連注・図説明・文献史料・課題を通読した。49頁ホ見出しから50頁末に加え、続く51～52頁の東征の物語・日本書紀建国の詔・考察・章末までを、本小項目の関連する続きとして原表記のまま保存する。19頁は同じ古事記・日本書紀が完成した約1300年前の奈良時代という成立背景だけを補助として収録する。具体的な外部の712年・720年を加えず、約1300年前を神武天皇が実際に東征した年へ転用しない。東征は史料が伝える物語として扱い、日向から東へ進んで橿原宮で治める移動と、日本書紀の建国の詔に表れた統治像を学ぶ。神話から編纂時の信仰やものの見方を知るという史料の役割を中心に、1学習項目へ絞り、神々の名前・系譜・三代の人数・行程の全地名一覧・八咫烏や霊剣の奇跡の暗記では水増ししない。紀元前660年という伝承を実在人物の即位年、列島の政治統合年、考古学上の時代の開始年とはしない。建国記念の日の換算や現代制度を問わず、日の御子の寿命・神から人になった瞬間を現実の人類史としない。建国詔の表現は文書に示された考えとして扱い、国家や支配の正当化、天皇の賛美、全時代・全日本人の同じ信仰や建国理念の永続を客観的事実として暗記させない。史料の建国の理想を問う際は、必要な短い原句を問題文に示す。公開引用では後の基礎主答を先に明かさない連続箇所を選び、原文抜粋の評価や伝承の記述自体は削除・補正しない。19頁の同じ古事記に関する編纂時の信仰・価値観の読み取りの短句も、52頁の神話を史料とする説明の関連補足として原表記で収録する。"
+  },
+  "facts": [
+    {
+      "id": "chronicle-period",
+      "page": 19,
+      "quote": "今から約一三〇〇年前の奈良時代、"
+    },
+    {
+      "id": "chronicle-completion",
+      "page": 19,
+      "quote": "二つの書物が完成しました。「古事記」と「日本書紀」です。"
+    },
+    {
+      "id": "kojiki-expedition",
+      "page": 50,
+      "quote": "続けて『古事記』は神武天皇の東征について記しています"
+    },
+    {
+      "id": "expedition-departure",
+      "page": 51,
+      "quote": "一行は、日向（九州南部）をお発ちになり、"
+    },
+    {
+      "id": "expedition-east",
+      "page": 51,
+      "quote": "東にお進みになります。"
+    },
+    {
+      "id": "expedition-end",
+      "page": 51,
+      "quote": "これで、御子は長い東征を終え、橿原宮にて天下をお治めになりました。"
+    },
+    {
+      "id": "nihonshoki-proclamation",
+      "page": 52,
+      "quote": "『日本書紀』神武天皇の建国の詔（抄録）"
+    },
+    {
+      "id": "proclamation-phrase",
+      "page": 52,
+      "quote": "八紘を掩ひて宇と為さむこと、"
+    },
+    {
+      "id": "proclamation-translation",
+      "page": 52,
+      "quote": "四方の国々を統合して都を開き、天下を覆って我が家とすることは、"
+    },
+    {
+      "id": "home-metaphor",
+      "page": 51,
+      "quote": "日本列島の人々が、あたかも一軒の家に住むように仲良く暮らすことを国の理想とする考えです。"
+    },
+    {
+      "id": "myth-as-source",
+      "page": 52,
+      "quote": "そこから私たちは、その時代の人々の信仰やものの見方などを知ることができるのです。"
+    },
+    {
+      "id": "compilers-views",
+      "page": 19,
+      "quote": "「古事記」を読むと、編纂時の日本人の信仰や価値観を知ることができますし、"
+    }
+  ],
+  "units": [
+    {
+      "id": "01",
+      "term": "神武東征伝説の史料",
+      "reading": "じんむとうせいでんせつのしりょう",
+      "category": "伝承と史料の読み取り",
+      "geographyLabel": "日本",
+      "chronology": {
+        "displayPeriod": "約1300年前の奈良時代に完成した記紀が伝える東征の伝説",
+        "sortYear": 700
+      },
+      "explanation": "『古事記』は神武天皇(じんむてんのう)の一行が日向(ひむか)から東へ進み、橿原宮(かしはらのみや)で天下を治めたという伝説を伝える。『日本書紀』の建国の詔(みことのり)には、国々を統合して都を開き、天下を我が家に見立てる考えが示される。こうした神話は、編纂時の人々の信仰やものの見方を知る史料になる。",
+      "questions": [
+        {
+          "id": "B01",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "『古事記』の神武(じんむ)東征伝説の史料で、一行が出発した日向(ひむか)は、日本のどの地域として示されるか。",
+          "answer": "**九州南部**。",
+          "keywords": [
+            "九州南部"
+          ],
+          "evidence": [
+            "expedition-departure"
+          ]
+        },
+        {
+          "id": "B02",
+          "stage": "beginner",
+          "type": "place",
+          "form": "内容の確認",
+          "prompt": "『古事記』の神武(じんむ)東征伝説の史料で、東征を終えた神武天皇が天下を治めた宮はどこか。",
+          "answer": "**橿原宮(かしはらのみや)**。",
+          "keywords": [
+            "橿原宮"
+          ],
+          "evidence": [
+            "expedition-end"
+          ]
+        },
+        {
+          "id": "B03",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "『日本書紀』の神武(じんむ)東征伝説の史料にある建国の詔(みことのり)の「八紘(はっこう)を掩ひて(おおいて)宇(いえ)と為さむ」は、天下をどのようなまとまりに見立てる表現か。",
+          "answer": "**一軒の家**。",
+          "keywords": [
+            "一軒の家"
+          ],
+          "evidence": [
+            "nihonshoki-proclamation",
+            "proclamation-phrase",
+            "proclamation-translation",
+            "home-metaphor"
+          ],
+          "acceptedAnswers": [
+            "我が家"
+          ]
+        },
+        {
+          "id": "B04",
+          "stage": "beginner",
+          "type": "content",
+          "form": "内容の確認",
+          "prompt": "日本の神武(じんむ)東征伝説の史料のような記紀(きき)の神話から、編纂時の人々の何を読み取れるか。",
+          "answer": "**信仰やものの見方**。",
+          "keywords": [
+            "信仰やものの見方"
+          ],
+          "evidence": [
+            "myth-as-source",
+            "compilers-views"
+          ],
+          "acceptedAnswers": [
+            "信仰や価値観"
+          ]
+        },
+        {
+          "id": "R01",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "神武(じんむ)東征の伝説を伝える記紀(きき)は、どの時代の史料で、どのような移動を記しているか。",
+          "answer": "約1300年前の奈良時代の日本で、**古事記・日本書紀**が完成した。**古事記**は、神武天皇(じんむてんのう)の一行が**日向(ひむか)の九州南部から東へ進み**、**橿原宮(かしはらのみや)**で天下を治めたという伝説を伝える。",
+          "keywords": [
+            "古事記・日本書紀",
+            "古事記",
+            "日向の九州南部から東へ進み",
+            "橿原宮"
+          ],
+          "evidence": [
+            "chronicle-period",
+            "chronicle-completion",
+            "kojiki-expedition",
+            "expedition-departure",
+            "expedition-east",
+            "expedition-end"
+          ]
+        },
+        {
+          "id": "R02",
+          "stage": "reverse",
+          "type": "reverse",
+          "form": "逆向きの説明",
+          "prompt": "『日本書紀』の神武天皇(じんむてんのう)の建国の詔(みことのり)は、どのような統治像を示し、神話はどのような史料となるか。",
+          "answer": "**日本書紀の建国の詔(みことのり)**は、**四方の国々を統合して都を開く**ことと、**天下を我が家に見立てる**考えを示す。これらの神話は、編纂時の人々の**信仰やものの見方**を知る史料となる。",
+          "keywords": [
+            "日本書紀の建国の詔",
+            "四方の国々を統合して都を開く",
+            "天下を我が家に見立てる",
+            "信仰やものの見方"
+          ],
+          "evidence": [
+            "nihonshoki-proclamation",
+            "proclamation-phrase",
+            "proclamation-translation",
+            "home-metaphor",
+            "myth-as-source",
+            "compilers-views"
+          ]
+        },
+        {
+          "id": "I01",
+          "stage": "integrated",
+          "type": "integrated",
+          "form": "統合説明",
+          "prompt": "日本の記紀が伝える「神武東征伝説の史料」について説明せよ。",
+          "answer": "約1300年前の奈良時代の日本で完成した**古事記・日本書紀**は、神武(じんむ)東征の伝説を伝える。**古事記**は一行が**日向(ひむか)の九州南部から東へ進み**、**橿原宮(かしはらのみや)**で天下を治めたと記し、**日本書紀の建国の詔(みことのり)**は**四方の国々を統合して都を開く**ことと、**天下を我が家に見立てる**考えを示す。これらの神話は、編纂時の人々の**信仰やものの見方**を知る史料となる。",
+          "keywords": [
+            "古事記・日本書紀",
+            "古事記",
+            "日向の九州南部から東へ進み",
+            "橿原宮",
+            "日本書紀の建国の詔",
+            "四方の国々を統合して都を開く",
+            "天下を我が家に見立てる",
+            "信仰やものの見方"
+          ],
+          "evidence": [
+            "chronicle-period",
+            "chronicle-completion",
+            "kojiki-expedition",
+            "expedition-departure",
+            "expedition-east",
+            "expedition-end",
+            "nihonshoki-proclamation",
+            "proclamation-phrase",
+            "proclamation-translation",
+            "home-metaphor",
+            "myth-as-source",
+            "compilers-views"
+          ]
+        }
+      ]
+    }
+  ]
+}

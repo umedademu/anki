@@ -43,7 +43,10 @@
     "book-02-02-01",
     "book-02-02-02",
     "book-02-02-03",
-    "book-02-02-04"
+    "book-02-02-04",
+    "book-02-02-05",
+    "book-02-02-06",
+    "book-02-03-01"
   ],
   "images": [
     {
@@ -2550,6 +2553,237 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-34a0de3af09c62",
+      "caption": "天武天皇を描いた後世の絵（集古十種の掲載図）",
+      "note": "『集古十種』に掲載された天武天皇の後世の人物画。壬申の乱で勝利した大海人皇子が天武天皇となったという人名と経緯への回答後に、天武天皇の描写を確認する。生前の容貌や672年の戦闘を記録した絵、大友皇子との比較図ではない。服装や冠・制作時期・画集名は新しい暗記条件にせず、政治上の勝利や律令の内容を絵から確定させない。作者は断定せず、元画像の出版資料の表示を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-05-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c4e18e5405053e",
+      "caption": "藤原宮跡の発掘調査の様子（2012年の写真）",
+      "note": "藤原宮跡の発掘調査を写した2012年の写真。藤原京の名称、都の造営と律令国家の建設の説明への回答後に、都の遺跡の現在の調査の様子を確認する。古代の造営中の風景、宮殿の復元図、藤原京全体の条坊や全域を示す図ではない。写真の仮設の通路・覆いや調査用の設備を古代のものとせず、都の耐用年数や国家制度を遺構から判定させない。撮影年・出土物や区画の細部は暗記条件に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-05-U01",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f3cddc79b71aca",
+      "caption": "国府の例・武蔵国府跡（柱配置を表示した現在の整備地）",
+      "note": "武蔵国府跡の国衙地区で建物の柱配置を示す現在の史跡整備地の写真。国府の名称と国司・郡司による地方行政の説明への回答後に、国府という役所の跡の例を確認する。府中市の保存整備資料とも照合した。赤い柱を奈良時代からそのまま残る木柱とせず、周辺の住宅やガラスの施設を古代の役所に含めない。全国の国府が同じ規模や配置だったともせず、国司と郡司の人選や職務を柱から読み取らせない。武蔵という国名や柱数・復元の細部は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-05-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c990e9886ff3bef3da59",
+      "caption": "大宰府政庁跡の現在の姿（再建後の遺構と整備表示を含む）",
+      "note": "大宰府政庁跡の現在の全景の写真。大宰府の名称、軍事を含む担当分野、九州の地方行政の説明への回答後に、政庁の遺跡の広がりを確認する。太宰府市の説明で７世紀からの三期の建物があり、現在見える遺構には10世紀の再建期のものも含まれることを確認した。８世紀初めの政庁の建物をそのまま写す写真や太宰府天満宮、水城の写真とはしない。軍隊の活動や唐・新羅との交渉を写しているともせず、全ての礎石を同じ時期のものと断定しない。政庁の寸法・再建年・周囲の山名は暗記条件に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-05-U03",
+          "questions": [
+            "B04",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b05f142924a7775276e9",
+      "caption": "旧唐書の後世の刊本（本紀の一頁）",
+      "note": "国立公文書館所蔵の後世の旧唐書の刊本の画像。Commonsが提供する文書の３頁目の表示用画像をそのまま使う。旧唐書の名称と、日本の国号を記す史料の説明への回答後に、書物の一頁の姿を確認する。写っているのは本紀の代宗の部分で、日本の国号の記述や703年の遣唐使の当該記事を写した頁ではない。唐代の外交文書そのものや使節が持参した国書とも扱わない。漢文の全文読解、他の皇帝の名前、刊行・所蔵の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-06-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5ab73cc9476241ea14f3",
+      "caption": "三国史記の後世の刊本",
+      "note": "三国史記の後世の刊本を写した写真。三国史記の名称と、新羅へ来た日本の使者を記す史料の説明への回答後に、書物の形を確認する。７世紀末の日本の使者の記事がこの見開きに載っているとはしない。編纂時の原稿や当時の使者が持った文書、遣隋使の国書とも扱わず、目録や始祖に関する本文を日本の国号の記述として読ませない。漢文の読解・別の王名・版の時期・所蔵者を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-06-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b8a5bc5862bd5929c7ac",
+      "caption": "富本銭の出土品（武陵地１号古墳出土）",
+      "note": "武陵地１号古墳から出土した富本銭の写真。富本銭の名称と、和同開珎に先行するが流通の程度は不明であるという説明への回答後に、貨幣の姿を確認する。高森町の資料でもこの古墳からの出土を照合した。飛鳥池遺跡出土のものや現代の復元品と取り違えず、出土した一枚だけから流通の広さや使用目的を断定させない。出土地・材質の配合・文字の字体や図柄の意味、製作年の特定は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-06-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b048428f9cea37",
+      "caption": "和同開珎の銀銭（表裏の写真）",
+      "note": "和同開珎の銀銭の表と裏を写した写真。銀銭と銅銭という種類、和同開珎の流通の説明への回答後に、銀銭の一例を確認する。元画像の説明と奈良文化財研究所の貨幣の解説とも照合した。左右は銀銭と銅銭の比較ではなく表裏であり、色だけで金属や価値を判断させない。出土地や流通範囲、唐・渤海での出土、鋳造開始年をこの一枚から証明させず、文字の読み順や寸法は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-06-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-267d0e86020f4162e36b",
+      "caption": "和同開珎の銅銭（貨幣博物館の展示写真）",
+      "note": "和同開珎の銅銭の貨幣博物館での展示写真。鋳造開始年と古代貨幣の全体説明への回答後に、銅銭の一例を確認する。銀銭と別の説明を付け、銀銭の表裏写真と取り違えない。色や傷みから金属・価値・発行年を判定させず、写っている一枚が708年に鋳造されたと特定する資料とも扱わない。富本銭との流通の違いはソースの記述に基づき、銭文の字体、材質の配合、製作技法や博物館名は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-02-06-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5d4883674ebea8f911e1",
+      "caption": "平城京の区画を示す後世の図（1897年刊）",
+      "note": "1897年に刊行された河田羆ほか編の平城京の区画図。条坊制の名称、都の区画と平城京の全体説明への回答後に、縦横の道路による区画の形を補助する。奈良時代に作られた原図や発掘調査の最新成果を表した図ではない。図には刊行時期の周辺の地形や集落なども含まれ、全てを710年の配置と断定しない。縮尺や細かい道路・寺院名を読めることは要求せず、奈良盆地全体での位置や遷都の理由をこの図だけから判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U01",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7062332add381afe1286",
+      "caption": "平城宮の第一次大極殿（2010年完成の復元建物）",
+      "note": "2010年に復元が完成した平城宮の第一次大極殿の現在の外観。大極殿の名称と、大内裏の役割・朝廷の儀式の説明への回答後に、建物の復元された姿を確認する。平城宮跡歴史公園と奈良文化財研究所の解説とも照合した。奈良時代の建物がそのまま残る写真、朱雀門、平城京全体の復元図ではない。Commonsの提供元で既に16対9に整えられた写真をそのまま使い、自分で加工はしない。屋根・装飾・柱や瓦の数・復元年は追加の暗記条件にせず、儀式の具体的な内容や平城京遷都の理由を外観から判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U01",
+          "questions": [
+            "B05",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f07e0fcb033dee",
+      "caption": "古事記の写本（14世紀の真福寺本の影印）",
+      "note": "登録済みの真福寺本古事記の写本の影印を共有する。古事記の名称、万葉仮名と漢文の折衷、記紀の表記と読者の違いの説明への回答後に、本文の一例を確認する。14世紀の写本を1924～1925年に影印したもので、712年の原稿や太安万侶の自筆とはしない。書き入れや訓読の全てを原著のままとせず、字体や注釈の全文読解、写本や影印の制作年は追加の暗記条件にしない。写本の見た目から想定読者や文学的性格を確定させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U02",
+          "questions": [
+            "B01",
+            "B06",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-aeed7cb7290df8",
+      "caption": "日本書紀の後世の写本（神代巻・13世紀）",
+      "note": "登録済みの日本書紀神代巻の卜部家に伝来した13世紀の写本の画像を共有する。日本書紀の名称と記紀の全体説明への回答後に、漢文の本文と書き入れのある写本の一例を確認する。e国宝の作品解説とも照合し、720年に編纂された原稿や舎人親王の自筆としない。元画像のファイル名にある奥書という部分名を今回の説明では限定せず、写真にある全てを編纂時の本文や奥書として読ませない。国外向けの性格や漢文編年体の全ての構成を一頁から確定させず、筆者・写本の年・字体や注記は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-a85d4e335e97a1",
+      "caption": "太安万侶を描いた後世の人物画",
+      "note": "太安万侶を描いた後世の人物画。古事記の神話や伝承を文字にしたと伝えられる人物の名前と、記紀の編纂に関わった人物の説明への回答後に、太安万侶の描写を確認する。稗田阿礼や舎人親王を写した絵ではなく、三人の比較図や太安万侶の生前の容貌を証明する記録でもない。服装・持ち物・作者や画集名を新たに覚えさせず、この絵だけで古事記の編纂方法や古人の実際の見た目を確定させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U02",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-aad8faa6f2229a",
+      "caption": "風土記の例・播磨国風土記の後世の写本",
+      "note": "天理図書館所蔵の播磨国風土記の後世の写本の画像。風土記に記された内容と編纂の説明への回答後に、地方の記録という書物の一例を確認する。奈良時代の編纂時の原稿や全国の風土記の比較図とはしない。写っている一部分だけで全ての地域・産物を網羅する資料とせず、ソースにない地名・神話・産物の具体的な読解を出題しない。写本の成立年や所蔵者・巻数は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-e2769a2d224535",
+      "caption": "万葉集の後世の写本（平安時代の元暦校本）",
+      "note": "東京国立博物館の元暦校本万葉集の写真。万葉集の編者と歌の担い手、万葉集を含む全体説明への回答後に、和歌集の書物の姿を確認する。博物館の作品記録でも平安時代の写本で1184年に校正されたことを照合した。８世紀の編纂時の原稿や大伴家持の自筆とはしない。写真の歌や注記を全文読めることは要求せず、写本の校正や注記を全て奈良時代の表記ともしない。一頁だけで全身分の歌を確認できる資料ともせず、写本名・成立や校正の年・写真の歌そのものを新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-03-01-U03",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -3692,6 +3926,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:View_of_Naniwa_Palace_Park_from_Osaka_Museum_of_History.JPG",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-261818d6ef04d530f083.jpg",
       "sha256": "261818d6ef04d530f083657f362c86af35be35e77770a4f38b0c90d3e978d300"
+    },
+    {
+      "id": "JHKS-c990e9886ff3bef3da59",
+      "path": "term-images/japanese-history-k/JHKS-c990e9886ff3bef3da59.jpg",
+      "alt": "大宰府政庁跡の現在の姿（再建後の遺構と整備表示を含む）",
+      "caption": "大宰府政庁跡の現在の姿（再建後の遺構と整備表示を含む）",
+      "creator": "Saigen Jiro",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Dazaifu_(government)_zenkei.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c990e9886ff3bef3da59.jpg",
+      "sha256": "c990e9886ff3bef3da59cad00af63dbd7814fc695199795250ca22bf80e0383b"
+    },
+    {
+      "id": "JHKS-b8a5bc5862bd5929c7ac",
+      "path": "term-images/japanese-history-k/JHKS-b8a5bc5862bd5929c7ac.jpg",
+      "alt": "富本銭の出土品（武陵地１号古墳出土）",
+      "caption": "富本銭の出土品（武陵地１号古墳出土）",
+      "creator": "じゃ・いあん",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E5%AF%8C%E6%9C%AC%E9%8A%AD.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b8a5bc5862bd5929c7ac.jpg",
+      "sha256": "b8a5bc5862bd5929c7ac2989a57f3cfe7aaa0a22642982ef300bd604cf9e0e96"
+    },
+    {
+      "id": "JHKS-267d0e86020f4162e36b",
+      "path": "term-images/japanese-history-k/JHKS-267d0e86020f4162e36b.jpg",
+      "alt": "和同開珎の銅銭（貨幣博物館の展示写真）",
+      "caption": "和同開珎の銅銭（貨幣博物館の展示写真）",
+      "creator": "PHGCOM",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Wadokaichin_copper_coin.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-267d0e86020f4162e36b.jpg",
+      "sha256": "267d0e86020f4162e36bc90946501974845ed355418d33f4581e3ecf459ce5fe"
+    },
+    {
+      "id": "JHKS-b05f142924a7775276e9",
+      "path": "term-images/japanese-history-k/JHKS-b05f142924a7775276e9.jpg",
+      "alt": "旧唐書の後世の刊本（本紀の一頁）",
+      "caption": "旧唐書の後世の刊本（本紀の一頁）",
+      "creator": "劉昫など／国立公文書館所蔵",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NAJDA-281-0003_%E6%97%A7%E5%94%90%E6%9B%B84.pdf",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b05f142924a7775276e9.jpg",
+      "sha256": "b05f142924a7775276e915f0ec472ef5a01ff26f8eb847acc32d0fe0ed5dd8e9"
+    },
+    {
+      "id": "JHKS-5ab73cc9476241ea14f3",
+      "path": "term-images/japanese-history-k/JHKS-5ab73cc9476241ea14f3.jpg",
+      "alt": "三国史記の後世の刊本",
+      "caption": "三国史記の後世の刊本",
+      "creator": "Gomanari",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Samguk.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5ab73cc9476241ea14f3.jpg",
+      "sha256": "5ab73cc9476241ea14f31966b5c413c0c55e9fcd0d6b484c90129b61f199047b"
+    },
+    {
+      "id": "JHKS-5d4883674ebea8f911e1",
+      "path": "term-images/japanese-history-k/JHKS-5d4883674ebea8f911e1.jpg",
+      "alt": "平城京の区画を示す後世の図（1897年刊）",
+      "caption": "平城京の区画を示す後世の図（1897年刊）",
+      "creator": "河田羆ほか",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Heijo_City_(Year_710)_map.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5d4883674ebea8f911e1.jpg",
+      "sha256": "5d4883674ebea8f911e124b9b7eb20e7538caacd0317f05056604d4de0aa3fb9"
+    },
+    {
+      "id": "JHKS-7062332add381afe1286",
+      "path": "term-images/japanese-history-k/JHKS-7062332add381afe1286.jpg",
+      "alt": "平城宮の第一次大極殿（2010年完成の復元建物）",
+      "caption": "平城宮の第一次大極殿（2010年完成の復元建物）",
+      "creator": "名古屋太郎",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Daigokuden_16-9.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7062332add381afe1286.jpg",
+      "sha256": "7062332add381afe1286f16c79643f8643fd2d1b668a1baa0e551b418d5f111b"
     }
   ]
 }

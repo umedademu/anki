@@ -31,7 +31,10 @@
     "book-01-03-02",
     "book-01-03-03",
     "book-01-03-04",
-    "book-01-03-05"
+    "book-01-03-05",
+    "book-02-01-01",
+    "book-02-01-02",
+    "book-02-01-03"
   ],
   "images": [
     {
@@ -1910,6 +1913,199 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-1f21e7209f820e9dc305",
+      "caption": "纒向遺跡の建物跡（柱の位置を復元した現在の展示）",
+      "note": "桜井市が辻地区の建物跡に柱の位置を復元した現在の展示。纒向遺跡の名称への回答後に、遺跡の姿を確認する。古代の柱がそのまま残っている写真、古墳の墳丘、卑弥呼の宮殿と断定された建物としては扱わない。建物名・柱の本数・規模を新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-88e6778c58570a2fbd06",
+      "caption": "箸墓古墳の空中写真（1979年度）",
+      "note": "箸墓古墳を上から写した1979年度の空中写真。古墳の名称と、前方後円墳の出現を含む説明への回答後に、墳丘の形を確認する。３世紀当時の写真や造営現場の記録ではなく、埋葬された人物を卑弥呼と断定しない。古墳名と形の補助に限り、写真だけで豪族連合や大和・河内全体の分布を証明させない。寸法・撮影年・被葬者名は新しい暗記対象にしない。国土画像情報の出典と撮影年度を表示する。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-626904939997e00dbea6",
+      "caption": "三角縁神獣鏡の例（神原神社古墳出土）",
+      "note": "神原神社古墳から出土した三角縁神獣鏡の写真。青銅鏡の名称と地域間のつながりを含む説明への回答後に、鏡の形を確認する。同じ鋳型の複数の鏡を比較した写真ではなく、この一枚で政治的なつながりを直接証明するものではない。卑弥呼が魏から授かった鏡と断定せず、鏡の銘文の読解・出土地・年代・文様の分類は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ac3600762b050e890a66",
+      "caption": "円筒埴輪などの展示（杉山古墳出土）",
+      "note": "杉山古墳から出土した円筒埴輪などの展示写真。埴輪の名称への回答後に、円筒形の焼き物の例を確認する。古墳上に実際に並んでいた状態を写す写真ではなく、展示時の接合・補修を含む出土資料の姿である。朝顔形の名称・個々の出土位置・展示背景の古墳の規模を新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-043262d3fe74aab0c7ea",
+      "caption": "馬をかたどった埴輪（６世紀、東京国立博物館の展示）",
+      "note": "東京国立博物館で撮影された６世紀の馬形埴輪。埴輪と騎馬文化を含む全体説明への回答後に、馬をかたどった土製品の例を確認する。３世紀の最初の古墳の副葬品や鉄製の馬具そのものの写真とは扱わない。鞍・鐙などの個別名称や年代の識別は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U02",
+          "questions": [
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-409ed6e20205b095f3c8",
+      "caption": "勾玉の形の例（古墳時代の展示資料）",
+      "note": "東京国立博物館の古墳時代の勾玉の展示写真。早い時期の副葬品の種類への回答後に、勾玉の形の一例を確認する。複数の時期・出土地の資料を含む展示で、全てを同じ墓の出土品や古墳時代初期の遺物と断定しない。銅鏡・銅剣も写っている写真とは扱わず、材質の種類・色・出土地は新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U02",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1719f9ebc42e016d20c0",
+      "caption": "古墳から出土した馬具の例（上島古墳）",
+      "note": "出雲市の上島古墳から出土した馬具の展示写真。遅い時期の副葬品と騎馬文化への変化を含む回答後に、馬具の実例を確認する。全ての金具を鉄製の農具と扱わず、３世紀の最初の古墳の副葬品とも混同しない。金具ごとの名称・使い方、出土地や製作地は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-01-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-db07df9ada29cd",
+      "caption": "『魏志』倭人伝の本文（後世に伝わる版面）",
+      "note": "既存の倭人伝本文の画像を共有する。卑弥呼と邪馬台国の政治・外交、および中国の正史という史料の説明への回答後に、文字資料としての姿を確認する。陳寿の自筆原稿や３世紀の刊行原本とは扱わず、版面の製作年代は断定しない。字の読解や画像からの所在地の判定は求めず、人物の肖像や政治・外交の実際の場面を写した画像とも扱わない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-02-U01",
+          "questions": [
+            "R01",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-02-01-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像）",
+      "note": "登録済みのNASAの衛星画像を共有し、九州説・畿内説の説明と朝鮮半島南部との交流への回答後に、列島と半島の位置関係を確認する。邪馬台国の所在地・倭人伝の道のり・古代の国境や勢力圏は示さない。九州説と畿内説のどちらも断定せず、高句麗・百済・新羅・任那の領土や鉄資源の輸送経路を写す地図とも扱わない。細部の地名・現代の国境は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-02-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-02-01-03-U01",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d49a14a50723560222ce",
+      "caption": "七支刀の写真（1930年刊行の『石上神宮宝物誌』より）",
+      "note": "石上神宮所蔵の七支刀を1930年刊行の『石上神宮宝物誌』に掲載した写真。七支刀銘文の名称と交流の説明への回答後に、銘文を持つ刀の全体の形を確認する。古代に撮影された写真、文字が読める銘文の拡大写真、授与の現場や実戦での使用場面とは扱わない。寸法・枝刃の数・銘文の読解は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-03-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4c0e3d28b9aae161eda2",
+      "caption": "七支刀の複製の展示（ソウル、2016年）",
+      "note": "ソウルの博物館で2016年に撮影された七支刀の複製の展示。百済との交流と七支刀・好太王碑の全体説明への回答後に、形を確認する。石上神宮の原品の現在の実物写真や４世紀当時の授与場面とは扱わず、模型の表現をそのまま古代の状態と断定しない。銘文の読解・復元細部・展示館名・複製の製作年を出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-03-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6a155dc79ea807f306b7",
+      "caption": "好太王碑の全景（1903年刊行資料の写真）",
+      "note": "好太王碑の全景を1903年刊行資料に載せた写真。碑文の名称と高句麗側の史料の説明への回答後に、石碑としての姿を確認する。５世紀の建立時や日本との戦闘場面の写真ではなく、脇に立つ人物を好太王と扱わない。写真だけで碑文の記述が全て史実であると証明せず、人物・碑の高さ・写真の刊行年は新しい暗記対象にしない。撮影者は断定せず、作者欄には元画像の表記を保つ。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-03-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6b6bd831fb9a598b2e63",
+      "caption": "好太王碑に刻まれた文字の一部（2001年の写真）",
+      "note": "2001年に撮影された好太王碑の文字の一部。高句麗側の史料の立場と誇張の可能性への回答後に、石に刻まれた史料の姿を確認する。写真の文字を全て読ませたり、この部分を倭に関する記事の全文と扱ったりしない。碑文の誇張や真偽を画像だけで見分ける問題にはせず、文字の読み・行数・拓本との比較は新しい必須知識にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-03-U02",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2740,6 +2936,138 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Jimmu.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-a3bc79f714610ca3555a.jpg",
       "sha256": "a3bc79f714610ca3555a4779a17525b97e7c9001bdbfe1c067528c5ceeb06dd2"
+    },
+    {
+      "id": "JHKS-1f21e7209f820e9dc305",
+      "path": "term-images/japanese-history-k/JHKS-1f21e7209f820e9dc305.jpg",
+      "alt": "纒向遺跡の建物跡（柱の位置を復元した現在の展示）",
+      "caption": "纒向遺跡の建物跡（柱の位置を復元した現在の展示）",
+      "creator": "Saigen Jiro",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Makimuku_Site,_Tatemono-D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1f21e7209f820e9dc305.jpg",
+      "sha256": "1f21e7209f820e9dc30530f2e513ea267478744e273d9bfc78ac00b6d2c11c82"
+    },
+    {
+      "id": "JHKS-88e6778c58570a2fbd06",
+      "path": "term-images/japanese-history-k/JHKS-88e6778c58570a2fbd06.jpg",
+      "alt": "箸墓古墳の空中写真（1979年度）",
+      "caption": "箸墓古墳の空中写真（1979年度）",
+      "creator": "国土画像情報（カラー空中写真）・国土交通省を基に作成（https://service.gsi.go.jp/map-photos/）",
+      "license": "Attribution",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template_talk:AerialPhotograph-mlitJP#Permission_information",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hashihaka_kohun_aerial.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-88e6778c58570a2fbd06.jpg",
+      "sha256": "88e6778c58570a2fbd06faa313d89e2bff0f83e07f862396b79f07a1859395b2"
+    },
+    {
+      "id": "JHKS-626904939997e00dbea6",
+      "path": "term-images/japanese-history-k/JHKS-626904939997e00dbea6.jpg",
+      "alt": "三角縁神獣鏡の例（神原神社古墳出土）",
+      "caption": "三角縁神獣鏡の例（神原神社古墳出土）",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%A5%9E%E5%8E%9F%E7%A5%9E%E7%A4%BE%E5%8F%A4%E5%A2%B3_%E4%B8%89%E8%A7%92%E7%B8%81%E7%A5%9E%E7%8D%A3%E9%8F%A1.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-626904939997e00dbea6.jpg",
+      "sha256": "626904939997e00dbea6a65e47cd8f2f4b22664d0ff3c5f2453a9de8c455de55"
+    },
+    {
+      "id": "JHKS-ac3600762b050e890a66",
+      "path": "term-images/japanese-history-k/JHKS-ac3600762b050e890a66.jpg",
+      "alt": "円筒埴輪などの展示（杉山古墳出土）",
+      "caption": "円筒埴輪などの展示（杉山古墳出土）",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%9D%89%E5%B1%B1%E5%8F%A4%E5%A2%B3_%E5%86%86%E7%AD%92%E5%9F%B4%E8%BC%AA%E3%83%BB%E6%9C%9D%E9%A1%94%E5%BD%A2%E5%9F%B4%E8%BC%AA.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ac3600762b050e890a66.jpg",
+      "sha256": "ac3600762b050e890a6699e06dfb60f1aca6d3360ac1339ecd5e65aebc5dba52"
+    },
+    {
+      "id": "JHKS-043262d3fe74aab0c7ea",
+      "path": "term-images/japanese-history-k/JHKS-043262d3fe74aab0c7ea.jpg",
+      "alt": "馬をかたどった埴輪（６世紀、東京国立博物館の展示）",
+      "caption": "馬をかたどった埴輪（６世紀、東京国立博物館の展示）",
+      "creator": "PHG",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:HaniwaHorse.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-043262d3fe74aab0c7ea.jpg",
+      "sha256": "043262d3fe74aab0c7eaca4b5845a9b841b1e6a83f5047d5db20d30cc34d0f32"
+    },
+    {
+      "id": "JHKS-409ed6e20205b095f3c8",
+      "path": "term-images/japanese-history-k/JHKS-409ed6e20205b095f3c8.jpg",
+      "alt": "勾玉の形の例（古墳時代の展示資料）",
+      "caption": "勾玉の形の例（古墳時代の展示資料）",
+      "creator": "Kakidai",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Magatamas.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-409ed6e20205b095f3c8.jpg",
+      "sha256": "409ed6e20205b095f3c8e5cb1e2b21c546efe0e227c403fd18dc555affb54dca"
+    },
+    {
+      "id": "JHKS-1719f9ebc42e016d20c0",
+      "path": "term-images/japanese-history-k/JHKS-1719f9ebc42e016d20c0.jpg",
+      "alt": "古墳から出土した馬具の例（上島古墳）",
+      "caption": "古墳から出土した馬具の例（上島古墳）",
+      "creator": "Saigen Jiro",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E4%B8%8A%E5%B3%B6%E5%8F%A4%E5%A2%B3_%E9%A6%AC%E5%85%B7.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1719f9ebc42e016d20c0.jpg",
+      "sha256": "1719f9ebc42e016d20c0c7bd17c0bc899b08ef109d0a0c5cfe8a9a686c4e74c2"
+    },
+    {
+      "id": "JHKS-d49a14a50723560222ce",
+      "path": "term-images/japanese-history-k/JHKS-d49a14a50723560222ce.jpg",
+      "alt": "七支刀の写真（1930年刊行の『石上神宮宝物誌』より）",
+      "caption": "七支刀の写真（1930年刊行の『石上神宮宝物誌』より）",
+      "creator": "撮影者不詳（石上神宮編『石上神宮宝物誌』）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Seven-Branched_Sword.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d49a14a50723560222ce.jpg",
+      "sha256": "d49a14a50723560222ce6f96b925cee379f21b4ad63ef777b191a5089786042b"
+    },
+    {
+      "id": "JHKS-4c0e3d28b9aae161eda2",
+      "path": "term-images/japanese-history-k/JHKS-4c0e3d28b9aae161eda2.jpg",
+      "alt": "七支刀の複製の展示（ソウル、2016年）",
+      "caption": "七支刀の複製の展示（ソウル、2016年）",
+      "creator": "Gary Todd",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chiljido_Seven-Branched_Sword_(30110320331).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4c0e3d28b9aae161eda2.jpg",
+      "sha256": "4c0e3d28b9aae161eda2e2cfbde17c23f23a44d48d8fd1765bc28b1808035763"
+    },
+    {
+      "id": "JHKS-6a155dc79ea807f306b7",
+      "path": "term-images/japanese-history-k/JHKS-6a155dc79ea807f306b7.jpg",
+      "alt": "好太王碑の全景（1903年刊行資料の写真）",
+      "caption": "好太王碑の全景（1903年刊行資料の写真）",
+      "creator": "최현진（元画像の作者表記）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gwanggaeto_Stele_1903.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6a155dc79ea807f306b7.jpg",
+      "sha256": "6a155dc79ea807f306b7a72d5ba128a140a64799f9150b2c67a70e6776779845"
+    },
+    {
+      "id": "JHKS-6b6bd831fb9a598b2e63",
+      "path": "term-images/japanese-history-k/JHKS-6b6bd831fb9a598b2e63.jpg",
+      "alt": "好太王碑に刻まれた文字の一部（2001年の写真）",
+      "caption": "好太王碑に刻まれた文字の一部（2001年の写真）",
+      "creator": "Straitgate",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gwanggaeto_stele,_inscription.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6b6bd831fb9a598b2e63.jpg",
+      "sha256": "6b6bd831fb9a598b2e63e0d38b8f86aabbf06480fe1d8dcc090e20572fb641d8"
     }
   ]
 }

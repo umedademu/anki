@@ -34,7 +34,10 @@
     "book-01-03-05",
     "book-02-01-01",
     "book-02-01-02",
-    "book-02-01-03"
+    "book-02-01-03",
+    "book-02-01-04",
+    "book-02-01-05",
+    "book-02-01-06"
   ],
   "images": [
     {
@@ -2106,6 +2109,119 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-f07e0fcb033dee",
+      "caption": "古事記の写本の複製（真福寺本、1924～1925年刊）",
+      "note": "14世紀の真福寺本を1924～1925年に複製した版面。記紀の二つの歴史書の名称への回答後に、古事記の姿の例を確認する。８世紀の原本や編纂者の自筆ではなく、画像の部分を皇室と豪族の婚姻の系譜そのものとは扱わない。写本名・複製年・文字の読解は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-04-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-aeed7cb7290df8",
+      "caption": "日本書紀の写本（神代巻の奥書・1286年）",
+      "note": "後世の写本の神代巻と奥書の画像。記紀の史料としての立場と王権拡大の全体説明への回答後に、伝承を伝える書物の姿を確認する。８世紀の原本、王権拡大と同時代の記録、四道将軍派遣や日本武尊の遠征の該当箇所の画像とは扱わない。伝承の全てが史実であることを証明せず、文字の読解や写本の年代は出題に加えない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-04-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-43e206d778f4c72cf277",
+      "caption": "崇神天皇を描いた後世の肖像（1895年刊行資料）",
+      "note": "1895年刊行の『大日本帝紀要略』に載る、崇神天皇を描いた後世の肖像。四道将軍派遣を伝えられる天皇の名称への回答後に、後世の表現例を確認する。同時代の肖像や実際の容貌、将軍派遣の現場を記録した絵とは扱わず、伝承の史実性の証明にも使わない。容貌・服装・刊行年は新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-04-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1319819395da78949274",
+      "caption": "日本武尊を描いた後世の絵（高橋由一、明治時代）",
+      "note": "明治時代に高橋由一が日本武尊を描いた絵。皇子の名称と遠征伝承の意味への回答後に、後世に伝承を表現した一例を確認する。同時代の肖像・実際の西征や東征の記録・古墳時代の服装の復元とは扱わない。戦いの場所や武器の細部、画家名を新しい必須知識にせず、伝承の事実性もこの絵から断定しない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-04-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-7b03f90a398df6",
+      "caption": "大阪府堺市にある大仙陵古墳（現代の市街地からの眺め）",
+      "note": "堺市の市街地の中にある大仙陵古墳を望む現代の写真。現在の所在地への回答後に、古墳と周囲の姿を確認する。前方後円墳の全体の形や５世紀の町の様子を示す写真とは扱わず、写真だけで所在地・築造年代・被葬者を判定させない。大和から河内への築造地の変化を直接証明する資料でもない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-05-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7b6c2a80c593de4a8c95",
+      "caption": "大仙陵古墳の空中写真（2007年）",
+      "note": "2007年に撮影された大仙陵古墳の空中写真。前方後円墳の形式と古墳の巨大化の説明への回答後に、前方部と後円部を持つ墳丘と濠の形を確認する。５世紀当時の写真・造営現場の記録ではなく、被葬者を仁徳天皇と確定しない。世界の墓の順位や築造の中心の移動を、この一枚で証明させない。寸法・撮影年・濠の数は新しい暗記条件にしない。国土画像情報の出典と著作権表示を添える。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-05-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5f55b97f6d4302",
+      "caption": "南朝の宋と北朝の北魏の位置（歴史地図）",
+      "note": "宋が中国南部、北魏が北部に位置することを確認するための歴史地図。北魏と高句麗の名称、および東アジアの情勢の説明への回答後に使う。朝貢や冊封、軍事指揮権の実効支配を証明する地図ではない。特定の年の国境を厳密に示すものとせず、宋を10世紀以後の宋と混同しない。細かい地名や境界線の形、図に出る他国の名称は新しい暗記対象にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-06-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像）",
+      "note": "登録済みのNASAの衛星画像を共有し、倭王武が上表文で述べた地域と活動の説明への回答後に、列島と朝鮮半島の位置関係だけを確認する。上表文の原本や５世紀の国境・勢力圏・軍事指揮権の範囲・渡航経路を示す資料ではない。上表文の征服や服従の主張を、この画像で事実と確定しない。細かい地名・国数・経路は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-01-06-U02",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -3068,6 +3184,42 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gwanggaeto_stele,_inscription.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-6b6bd831fb9a598b2e63.jpg",
       "sha256": "6b6bd831fb9a598b2e63e0d38b8f86aabbf06480fe1d8dcc090e20572fb641d8"
+    },
+    {
+      "id": "JHKS-43e206d778f4c72cf277",
+      "path": "term-images/japanese-history-k/JHKS-43e206d778f4c72cf277.jpg",
+      "alt": "崇神天皇を描いた後世の肖像（1895年刊行資料）",
+      "caption": "崇神天皇を描いた後世の肖像（1895年刊行資料）",
+      "creator": "画家不詳（三英舎刊『大日本帝紀要略』）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Sujin.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-43e206d778f4c72cf277.jpg",
+      "sha256": "43e206d778f4c72cf277c13dd9f9ebd9d21bd902b3d2c3e98cc37d5d886175d5"
+    },
+    {
+      "id": "JHKS-1319819395da78949274",
+      "path": "term-images/japanese-history-k/JHKS-1319819395da78949274.jpg",
+      "alt": "日本武尊を描いた後世の絵（高橋由一、明治時代）",
+      "caption": "日本武尊を描いた後世の絵（高橋由一、明治時代）",
+      "creator": "高橋由一",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yamato_Takeru_by_Takahashi_Yuichi_(Geidai_Museum).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1319819395da78949274.jpg",
+      "sha256": "1319819395da789492740dc6d40795bbf44c16877f613f73d2683e2f014d6b81"
+    },
+    {
+      "id": "JHKS-7b6c2a80c593de4a8c95",
+      "path": "term-images/japanese-history-k/JHKS-7b6c2a80c593de4a8c95.jpg",
+      "alt": "大仙陵古墳の空中写真（2007年）",
+      "caption": "大仙陵古墳の空中写真（2007年）",
+      "creator": "© 国土画像情報（カラー空中写真）・国土交通省を基に作成（https://service.gsi.go.jp/map-photos/）",
+      "license": "Attribution",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/Template_talk:AerialPhotograph-mlitJP#Permission_information",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NintokuTomb_Aerial_photograph_2007.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7b6c2a80c593de4a8c95.jpg",
+      "sha256": "7b6c2a80c593de4a8c958130663af529513c68c0572e335e4358a7c2484b9ad7"
     }
   ]
 }

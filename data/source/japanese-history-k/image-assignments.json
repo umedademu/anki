@@ -94,7 +94,10 @@
     "book-04-02-09",
     "book-04-02-10",
     "book-04-02-11",
-    "book-04-02-12"
+    "book-04-02-12",
+    "book-04-02-13",
+    "book-04-02-14",
+    "book-04-02-15"
   ],
   "images": [
     {
@@ -6648,6 +6651,266 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-5b7b72c5e5c3fe",
+      "caption": "大塩平八郎の肖像（伝菊池容斎筆）",
+      "note": "既存画像を共有する。公開元の人物名・作品と史料編纂所の伝菊池容斎筆の画像記録を確認した。大坂町奉行所の元役人と幕領大坂での反乱の回答後に人物を示す。役職や反乱の参加者全員を肖像から判定させない。容姿・衣服・画中の道具・画家を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-13-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-a55fd9027a9829",
+      "caption": "大塩の乱を描いた冊子の挿絵（19世紀）",
+      "note": "既存画像を共有する。大阪歴史博物館の『出潮引汐奸賊聞集記』の挿絵の解説と公開元の炎中を行軍する構図に照合した。飢饉・米の買い占め・反乱の説明への回答後に図を示す。出来事を聞き書きした冊子の挿絵であり、反乱当日の実況写真や飢饉の実写にはしない。1837年を制作年と断定せず、人数・旗の文字・個人の身分を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-13-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0c4282f881ddd37b2111",
+      "caption": "水野忠邦の肖像（椿椿山筆）",
+      "note": "東京都立大学図書館の水野家文書F1-9「水野忠邦公御肖像」と公開元の椿椿山筆という作品記録に照合した。改革を進めた老中と人返しの法の説明への回答後に人物を示す。人返しや株仲間の政策を服装・顔つきから判断させず、肖像の画家・制作年を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-13-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3f68f6e446124d278e1a",
+      "caption": "鍋島直正の肖像写真（幕末）",
+      "note": "公開元の川崎道民撮影と佐賀市の鍋島直正公肖像写真の記録に照合した。佐賀藩主と藩政改革・洋式砲術の回答後に人物を示す。撮影年には1859年または1861年頃という推定があるため幕末とする。写真を大砲製作中の実況や他藩の藩主に代用せず、容姿・衣服・写真技法を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-13-U03",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-95e84b8b874e83452797",
+      "caption": "佐賀藩の反射炉の復元模型（築地反射炉跡・現代の写真）",
+      "note": "佐賀市の築地反射炉跡の解説と公開元の所在地・図像に照合した。佐賀藩の製錬炉と洋式砲術の回答後に炉の模型を示す。当時の炉の現存遺構ではなく、現在の跡地に設置された復元模型と明記する。韮山や萩の現存反射炉の写真を佐賀の炉として代用しない。模型の寸法・煉瓦の数・大砲の口径・写真撮影年は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-13-U03",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e36d7a5eb674818a6801",
+      "caption": "孝明天皇の肖像（1900年刊の書物より）",
+      "note": "公開元の1900年刊『日本：慣習と国政に関する評論』に掲載された孝明天皇の図版という記録に照合した。海防の勅と外交への朝廷の発言、公武合体と攘夷に関する回答後に人物を示す。1900年は掲載書の刊行年であり原画の制作年や海防の勅の年としない。掲載書の著者名を原画の画家に流用せず作者不詳とする。勅の古文の解読・衣服・肖像の制作年・天皇の代数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-14-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-04-02-15-U04",
+          "questions": [
+            "B05",
+            "R02",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25ced5b3773f66f99476",
+      "caption": "仁孝天皇の肖像（19世紀・没後の作品）",
+      "note": "公開元の豊岡治資筆・19世紀の仁孝天皇の宸影と、泉涌寺の肖像を研究した大学の論文の画家の記録に照合した。1837年の窮民救済と天皇の文書による発言の回答後に仁孝天皇を示す。孝明天皇や光格天皇と混同しない。仁孝没後の作品であり、窮民救済の指示を出している場面や勅の原本にはしない。容姿・衣服・制作年・画家・代数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-14-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-bafa90e314733a",
+      "caption": "ペリーの肖像写真（19世紀）",
+      "note": "既存画像を共有する。公開元のペリーの写真とメトロポリタン美術館のBradyによる肖像写真の作品記録を確認した。浦賀来航と和親条約の経緯への回答後に人物を示す。日本への来航時に撮影した実況や1853年浦賀の写真とは説明しない。顔つき・衣服・撮影年・写真家を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-49b017356c3a98",
+      "caption": "日米和親条約の批准書の複製展示（現代の写真）",
+      "note": "既存画像を共有する。公開元の外交史料館の展示と外務省の和親条約批准書の交換・複製の解説に照合した。1854年の条約名と限定された外国との接触の回答後に書物を示す。1855年の批准書を1854年の調印時に書かれた原本として説明せず、写真撮影年も条約締結年にしない。複製展示であることを明記し、古文や署名・印の解読を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U01",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b7982fb667bb0d",
+      "caption": "日米修好通商条約の複製展示（現代の写真）",
+      "note": "既存画像を共有する。公開元の条約名と外務省外交史料館の常設展示は精密な複製であるという記録に照合した。1858年の条約名と自由貿易・不平等条約の説明への回答後に書物を示す。和親条約の批准書とは区別し、展示された署名部分から関税自主権や裁判の条文が全て読めるとはしない。写真を調印の実況にせず、署名・古文・展示施設を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U02",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f1e3f04b2d693a28412c",
+      "caption": "タウンゼント・ハリスの肖像写真（19世紀）",
+      "note": "公開元の米国議会図書館のBrady-Handy写真・LC-DIG-cwpbh-01612・1855～1865年の記録に照合した。下田に来た総領事と通商条約の交渉の回答後にハリスを示す。1856年の下田で撮影した写真や調印の実況とは断定せず、ペリーの写真と区別する。容姿・写真技法・撮影年・写真家を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U02",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-7211cb22131493",
+      "caption": "井伊直弼の肖像（狩野永岳筆）",
+      "note": "既存画像を共有する。公開元の人物名と狩野永岳筆という作品記録に照合した。勅許なしの通商条約調印と安政の大獄の回答後に人物を示す。公開元の1860年と万治元年の不整合な年号を表示に流用しない。調印や弾圧の実況画とはせず、家紋・装束・画家・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U02",
+          "questions": [
+            "B03"
+          ]
+        },
+        {
+          "termId": "JHK-04-02-15-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-38566e0e56843c58e92f",
+      "caption": "吉田松陰の肖像（松浦松洞筆・1859年・部分）",
+      "note": "山口県文書館の絹本着色吉田松陰像（自賛）の解説で松浦松洞筆・1859年5月の作品と同じ肖像に照合した。松下村塾で教え、安政の大獄で処刑された人物と弾圧の説明への回答後に人物を示す。公開元の作者不詳という表示を流用せず、確認できた原画の作者を記録した。処刑場面にはしない。掛軸の文字・画家・装束・制作月を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U03",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-40d940a230fa2c3cd5ee",
+      "caption": "桜田門外の変を描いた絵（制作年不詳）",
+      "note": "公開元の図を加工せずに登録する。作者欄に付記された事件年は制作年の証明とはせず、作者不詳と記録する。公開元の書籍からの桜田門外の変の図という記録と構図に照合した。事件名と安政の大獄から暗殺に至る説明への回答後に図を示す。題名の1860年は事件年であり原画の作成年とは断定しない。作者・材質・制作年を確定できないため作者不詳・制作年不詳として扱い、明治期の別の絵巻の画家や年を流用しない。個々の人物の名前・装備・図中の文の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U03",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-732575955351c72b5352",
+      "caption": "徳川家茂の肖像（19世紀）",
+      "note": "公開元の九州国立博物館の2008年刊「島津の国宝と篤姫の時代」の徳川家茂像という記録に照合した。和宮が嫁いだ将軍と公武合体の回答後に家茂を示す。家定など他の将軍と混同せず、和宮との婚礼の実況や二人の肖像にしない。2008年は掲載図録の刊行年であり原画の制作年とはしない。容姿・家紋・画家・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U04",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-44686a221f83bd716b6f",
+      "caption": "開港後の横浜を描いた『横浜海岸図会』（1860年）",
+      "note": "公開元の1860年の『横浜海岸図会』・二代歌川広重という作品記録と画中の書名・船・港の構図に照合した。開港後の主要貿易港と貿易の説明への回答後に横浜の図を示す。初代広重の東海道五十三次と区別する。図だけから最大の貿易量やイギリスの割合、輸出入の品目の数量を証明するとはせず、船名・外国人の名前・建物や画中文字を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U05",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-929e72e1676dd67d068f",
+      "caption": "幕末の小判の例・万延小判（現代の写真）",
+      "note": "公開元の万延小判の現代の写真と日本銀行貨幣博物館の幕末の貨幣改鋳の解説に照合した。小判の金含有量を減らす対応と物価上昇の説明への回答後に幕末の小判の例を示す。金含有量の減少を金の含有率の低下と混同しない。単独の写真を改鋳前後の実測比較や金含有率の分析結果にはせず、万延小判の名前・重量・純度・刻印の解読は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-15-U06",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -9506,6 +9769,138 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Narutaki.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-053d3888f5961dfb9fa5.jpg",
       "sha256": "053d3888f5961dfb9fa54b36132aaa6548e64ddc8d56db9dab5002408c7b98fc"
+    },
+    {
+      "id": "JHKS-0c4282f881ddd37b2111",
+      "path": "term-images/japanese-history-k/JHKS-0c4282f881ddd37b2111.jpg",
+      "alt": "水野忠邦の肖像（椿椿山筆）",
+      "caption": "水野忠邦の肖像（椿椿山筆）",
+      "creator": "椿椿山",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mizuno_Tadakuni.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0c4282f881ddd37b2111.jpg",
+      "sha256": "0c4282f881ddd37b21114cdd4cc2e93e47dc92cd1463b19135b2dd919bd01a80"
+    },
+    {
+      "id": "JHKS-3f68f6e446124d278e1a",
+      "path": "term-images/japanese-history-k/JHKS-3f68f6e446124d278e1a.jpg",
+      "alt": "鍋島直正の肖像写真（幕末）",
+      "caption": "鍋島直正の肖像写真（幕末）",
+      "creator": "川崎道民",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nabeshima_Naomasa.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3f68f6e446124d278e1a.jpg",
+      "sha256": "3f68f6e446124d278e1a74d7a7d09088d30ef043f3c248c285b0657d717f41cc"
+    },
+    {
+      "id": "JHKS-e36d7a5eb674818a6801",
+      "path": "term-images/japanese-history-k/JHKS-e36d7a5eb674818a6801.jpg",
+      "alt": "孝明天皇の肖像（1900年刊の書物より）",
+      "caption": "孝明天皇の肖像（1900年刊の書物より）",
+      "creator": "作者不詳（『日本：慣習と国政に関する評論』の図版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Koumei.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e36d7a5eb674818a6801.jpg",
+      "sha256": "e36d7a5eb674818a68011ce97eba731ae7be1c9b564e1a950abb924deae72507"
+    },
+    {
+      "id": "JHKS-25ced5b3773f66f99476",
+      "path": "term-images/japanese-history-k/JHKS-25ced5b3773f66f99476.jpg",
+      "alt": "仁孝天皇の肖像（19世紀・没後の作品）",
+      "caption": "仁孝天皇の肖像（19世紀・没後の作品）",
+      "creator": "豊岡治資",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Nink%C5%8D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-25ced5b3773f66f99476.jpg",
+      "sha256": "25ced5b3773f66f994763c01f93d50b8c7e67bd2c1c962e3921891d390eb5c53"
+    },
+    {
+      "id": "JHKS-f1e3f04b2d693a28412c",
+      "path": "term-images/japanese-history-k/JHKS-f1e3f04b2d693a28412c.jpg",
+      "alt": "タウンゼント・ハリスの肖像写真（19世紀）",
+      "caption": "タウンゼント・ハリスの肖像写真（19世紀）",
+      "creator": "Brady-Handy",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Townsend_Harris.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f1e3f04b2d693a28412c.jpg",
+      "sha256": "f1e3f04b2d693a28412c5ae2b62d75139abbc42a487ab7f3a26251287a7dd503"
+    },
+    {
+      "id": "JHKS-44686a221f83bd716b6f",
+      "path": "term-images/japanese-history-k/JHKS-44686a221f83bd716b6f.jpg",
+      "alt": "開港後の横浜を描いた『横浜海岸図会』（1860年）",
+      "caption": "開港後の横浜を描いた『横浜海岸図会』（1860年）",
+      "creator": "二代歌川広重",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hiroshige_II_-_%E6%A9%AB%E6%BF%B1%E6%B5%B7%E5%B2%B8%E5%9C%96%E6%9C%83_(View_of_the_Coast_at_Yokohama)_(1860).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-44686a221f83bd716b6f.jpg",
+      "sha256": "44686a221f83bd716b6f07843c34a138b839ca2939fee275ae5cbb2de12bcc72"
+    },
+    {
+      "id": "JHKS-929e72e1676dd67d068f",
+      "path": "term-images/japanese-history-k/JHKS-929e72e1676dd67d068f.jpg",
+      "alt": "幕末の小判の例・万延小判（現代の写真）",
+      "caption": "幕末の小判の例・万延小判（現代の写真）",
+      "creator": "As6022014",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Manen-koban.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-929e72e1676dd67d068f.jpg",
+      "sha256": "929e72e1676dd67d068f15ee5c676c39c89b050d1fba124a26f05d76da0fc02e"
+    },
+    {
+      "id": "JHKS-732575955351c72b5352",
+      "path": "term-images/japanese-history-k/JHKS-732575955351c72b5352.jpg",
+      "alt": "徳川家茂の肖像（19世紀）",
+      "caption": "徳川家茂の肖像（19世紀）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokugawa_Iemochi.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-732575955351c72b5352.jpg",
+      "sha256": "732575955351c72b53529b87abf1de25b0f9745973310bdba9e479e5bed343ae"
+    },
+    {
+      "id": "JHKS-95e84b8b874e83452797",
+      "path": "term-images/japanese-history-k/JHKS-95e84b8b874e83452797.jpg",
+      "alt": "佐賀藩の反射炉の復元模型（築地反射炉跡・現代の写真）",
+      "caption": "佐賀藩の反射炉の復元模型（築地反射炉跡・現代の写真）",
+      "creator": "Pekachu",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tsuiji_Reverberatory_furnace_Saga.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-95e84b8b874e83452797.jpg",
+      "sha256": "95e84b8b874e8345279700b7fab527b5c09267cf0dccb02df7aa063dabd47d40"
+    },
+    {
+      "id": "JHKS-38566e0e56843c58e92f",
+      "path": "term-images/japanese-history-k/JHKS-38566e0e56843c58e92f.jpg",
+      "alt": "吉田松陰の肖像（松浦松洞筆・1859年・部分）",
+      "caption": "吉田松陰の肖像（松浦松洞筆・1859年・部分）",
+      "creator": "松浦松洞",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yoshida_Shoin2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-38566e0e56843c58e92f.jpg",
+      "sha256": "38566e0e56843c58e92f6f0b05517c646a40c716e4eb408986ac386ef8961535"
+    },
+    {
+      "id": "JHKS-40d940a230fa2c3cd5ee",
+      "path": "term-images/japanese-history-k/JHKS-40d940a230fa2c3cd5ee.jpg",
+      "alt": "桜田門外の変を描いた絵（制作年不詳）",
+      "caption": "桜田門外の変を描いた絵（制作年不詳）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sakuradamon_incident_1860_silk.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-40d940a230fa2c3cd5ee.jpg",
+      "sha256": "40d940a230fa2c3cd5eeda1e8c5cb6f93c4765eff82fd1e84574e0e6627b02f4"
     }
   ]
 }

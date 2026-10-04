@@ -79,7 +79,10 @@
     "book-04-01-01",
     "book-04-01-02",
     "book-04-01-03",
-    "book-04-01-04"
+    "book-04-01-04",
+    "book-04-01-05",
+    "book-04-01-06",
+    "book-04-01-07"
   ],
   "images": [
     {
@@ -5293,6 +5296,266 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-8c640388a5e577869cc4",
+      "caption": "賤ヶ岳の戦いを題材にした歌川豊宣の版画（1883年）",
+      "note": "公開元の歌川豊宣・1883年の記録と画中の「賤ヶ嶽大合戦之図」を確認した。戦いの名前への回答後に後世の描写を示す。1583年の実況図や武将の正確な位置・顔立ちの証拠にはしない。絵師・制作年・甲冑・旗・文字の解読を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-05-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-259c4100f201c6c62280",
+      "caption": "大坂城の天守（1931年の復興・2005年の写真）",
+      "note": "大坂城を本拠地としたことと統一事業の説明への回答後に城を具体化する。現在の天守は1931年の復興であり、秀吉が建てた天守がそのまま残る写真ではない。公開元の撮影者Midoriと2005年を確認した。現在の石垣も含めて秀吉当時の姿と断定せず、構造・階数・復興年・撮影年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-05-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-7298115209c872",
+      "caption": "豊臣秀吉の肖像（1601年・没後の作品）",
+      "note": "既存の高台寺の肖像を共有する。高台寺の解説で狩野光信と慶長６年の賛に照合した。統一事業・官職・朝鮮への出兵と死後の撤退の説明への回答後に人物を確認する。1585年の任官や1598年の死の実況ではない。衣冠から官職を判定させず、作者・賛文・服装・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-05-U01",
+          "questions": [
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-04-01-05-U02",
+          "questions": [
+            "B02",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-04-01-06-U03",
+          "questions": [
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4eef1d021565216c0023",
+      "caption": "聚楽第図屏風（16世紀）",
+      "note": "三井記念美術館の資料番号2318にある16世紀・創建と同時期の屏風と画像を照合した。聚楽第と朝廷との関係への回答後に宮殿の描写を確認する。この図を1588年の天皇行幸や起請文提出のその瞬間の実況と断定しない。門の名前・人物数・画家・所蔵先・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-05-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f81dd9049c7892",
+      "caption": "1592年の検地帳の複製（秀吉清正記念館の展示）",
+      "note": "既存の検地帳の写真を共有する。名古屋市の展示目録と博物館の解説で1592年の津島北口の資料、展示が複製であることに照合した。太閤検地・石高と年貢や軍役の基準への回答後に記録の姿を確認する。原文の解読・人名・数字・展示館・この地域での実施年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-06-U01",
+          "questions": [
+            "B01",
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9106c44dbc2055c38180",
+      "caption": "刀狩令の条書の一部（1588年・早稲田大学図書館所蔵）",
+      "note": "早稲田大学図書館の文庫12 00087・天正16年の刀狩条書の記録と、画像の定・諸国百姓・刀などの部分を照合した。公開元が提供する第一頁のJPEG画像を使う。刀狩と兵農分離の説明への回答後に、その政策の文書の一部を示す。身分統制令そのものや秀吉の署名・朱印がこの部分に見えるとはしない。原文の解読・筆者・文書番号を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-06-U01",
+          "questions": [
+            "B02",
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-1a050a2665afcd",
+      "caption": "イエズス会の標章（現代に描いた図）",
+      "note": "日本史Kで既に使う同じ標章と説明を共有する。長崎の寄進と秀吉の危険視への回答後に関係する宗教団体を確認する。標章は長崎の港や寄進の文書・1587年の法令を描く資料ではない。図の文字・光線・色などの象徴を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-06-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-eb653c59548707",
+      "caption": "ポルトガル人の行列を描いた南蛮屏風（17世紀初）",
+      "note": "既に使う同じ屏風の片側と説明を共有する。貿易の継続・宗教との違いや南蛮文化への回答後に来航した人々を具体化する。国立美術館の1600～1625年という記録と照合済みで、画面は主に行列の側である。もう片側の船・1587年の法令・金平糖などの全輸入品がこの画像に写るとはしない。服装・人物数・荷物の中身を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-06-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-04-01-07-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-57159f7f398ffd6602ee",
+      "caption": "日本列島と朝鮮半島の位置（現代の衛星画像、左が朝鮮半島）",
+      "note": "日本史Kで既に使うNASAの衛星画像と説明を共有する。出兵先と日本・朝鮮の関係への回答後に地理的位置を確認する。現代の画像であり16世紀の航路・戦闘配置・漢城の陥落や北京への実際の遷都を表す図ではない。海岸の形・現代の国境・撮影方向を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-06-U03",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d7ff70c0dcfdef5364bf",
+      "caption": "大型天守の例・姫路城（17世紀初の建物・2009年の写真）",
+      "note": "姫路市の解説で17世紀初・1609年に整った天守と確認した。天守の権威と城郭文化への回答後に大きな建物を具体化する。秀吉がこの天守を建てたとはせず、17世紀初までを含むこの文化の時期の例として使う。写真だけで城下町の全体・経済基盤や政治効果を証明させず、建築者・完成年・階数・撮影年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U01",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-dc9c0384de6b859e18dd",
+      "caption": "狩野永徳『洛中洛外図屏風』上杉本の右隻（16世紀）",
+      "note": "米沢市上杉博物館の解説で狩野永徳・上杉本と照合した右隻を使う。洛中洛外図と文化の説明への回答後に京都の町と金箔の描写を確認する。別の作者の舟木本や一双全体とはしない。川や個別の建物名・人物数・所蔵先を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U01",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-30b0c4edefef38",
+      "caption": "狩野永徳『唐獅子図屏風』の右隻（16世紀）",
+      "note": "既存の屏風を共有する。皇居三の丸尚蔵館の記録で右隻が永徳・16世紀、左隻が別の画家・17世紀であることに照合した。金箔を使う屏風絵への回答後に装飾を確認する。洛中洛外図の絵としては扱わず、獅子の数・細かな画材・制作年・左隻の作者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ad2d9a7ccb12cf",
+      "caption": "千利休の肖像（1595年・没後の作品）",
+      "note": "既存の肖像を共有する。表千家と長谷川等伯を紹介する資料で人物・画家、1595年の没後の作品と確認した。茶の湯を大成した人物とその変化への回答後に人物を確認する。衣装や賛文を茶室そのものの写真とせず、原文の解読・画家・制作年・所蔵先を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b5d3b833989d18382fb4",
+      "caption": "草庵風茶室の例・待庵の原寸大復元模型",
+      "note": "公開元の復元模型という記録と森美術館の原寸大再現の解説に照合した。侘び茶・草庵風茶室への回答後に小規模な建物を具体化する。現在残る待庵の実物や16世紀の写真ではなく、利休の作という伝承を確実な建築者の断定にしない。写真の記録は2026年で、2018年の制作・展示紹介を撮影年として流用しない。畳数・出入口名・制作年・模型の作者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U02",
+          "questions": [
+            "B02",
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-a7639781097641",
+      "caption": "阿国歌舞伎図屏風のかぶき者（17世紀初・部分）",
+      "note": "既存の切り抜き画像を共有する。東京国立博物館の解説で阿国歌舞伎図屏風・17世紀初・舞台のかぶき者という描写に照合した。出雲の阿国と芸能の説明への回答後に舞台上の人物の描写を確認する。阿国本人の確実な肖像と断定せず、観客の身分や浄瑠璃の三味線演奏をこの部分から判定させない。衣装・刀・人物比定・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1e78b2ad2a1a0b3ada2e",
+      "caption": "三味線の例（現代の写真）",
+      "note": "公開元の三味線という記録と三本の弦・胴・棹が写ることを確認した。浄瑠璃に用いる楽器名への回答後に形を確認する。現代の写真であり16世紀の伝来品や当時の舞台の実物とはしない。装飾に特化して演奏用でない候補は避けた。部品名・弦の材質・流派・撮影者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25237a18f36bf42beeb2",
+      "caption": "金平糖の例（現代の写真）",
+      "note": "公開元の金平糖の写真と形を照合した。南蛮文化の影響への回答後に食品の一例を具体化する。現代の写真であり16世紀に輸入した現物ではない。カステラなど回答中の全食品が写ることにせず、色の数・製法・材料・撮影年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-07-U03",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -7479,6 +7742,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Ogimachi3.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-195ec2cda56a53ab7c85.jpg",
       "sha256": "195ec2cda56a53ab7c852f1dc716877b4d784e568b35423537dfede6767d66f6"
+    },
+    {
+      "id": "JHKS-8c640388a5e577869cc4",
+      "path": "term-images/japanese-history-k/JHKS-8c640388a5e577869cc4.jpg",
+      "alt": "賤ヶ岳の戦いを題材にした歌川豊宣の版画（1883年）",
+      "caption": "賤ヶ岳の戦いを題材にした歌川豊宣の版画（1883年）",
+      "creator": "歌川豊宣",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Battle_of_Shizugatake.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8c640388a5e577869cc4.jpg",
+      "sha256": "8c640388a5e577869cc4e80664df981ef0d3db02fe8d0b5ebe08e5d3fbb2695f"
+    },
+    {
+      "id": "JHKS-259c4100f201c6c62280",
+      "path": "term-images/japanese-history-k/JHKS-259c4100f201c6c62280.jpg",
+      "alt": "大坂城の天守（1931年の復興・2005年の写真）",
+      "caption": "大坂城の天守（1931年の復興・2005年の写真）",
+      "creator": "Midori",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_Nishinomaru_Garden_April_2005.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-259c4100f201c6c62280.jpg",
+      "sha256": "259c4100f201c6c6228014cd6f331638314aaccb563a33198118f5fae755953f"
+    },
+    {
+      "id": "JHKS-4eef1d021565216c0023",
+      "path": "term-images/japanese-history-k/JHKS-4eef1d021565216c0023.jpg",
+      "alt": "聚楽第図屏風（16世紀）",
+      "caption": "聚楽第図屏風（16世紀）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Jurakudai-Palace-Kyoto-Folding-Screen.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4eef1d021565216c0023.jpg",
+      "sha256": "4eef1d021565216c0023d60434bfcee8bfa645dd5c4b44da4a4fb54f8a6e57ea"
+    },
+    {
+      "id": "JHKS-dc9c0384de6b859e18dd",
+      "path": "term-images/japanese-history-k/JHKS-dc9c0384de6b859e18dd.jpg",
+      "alt": "狩野永徳『洛中洛外図屏風』上杉本の右隻（16世紀）",
+      "caption": "狩野永徳『洛中洛外図屏風』上杉本の右隻（16世紀）",
+      "creator": "狩野永徳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kan%C5%8D_Eitoku_-_Rakuch%C5%AB_rakugai_zu_(Uesugi)_-_right_screen.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-dc9c0384de6b859e18dd.jpg",
+      "sha256": "dc9c0384de6b859e18ddf5e5d6450eadc6ddb499e5318420b15439e91e8b130c"
+    },
+    {
+      "id": "JHKS-9106c44dbc2055c38180",
+      "path": "term-images/japanese-history-k/JHKS-9106c44dbc2055c38180.jpg",
+      "alt": "刀狩令の条書の一部（1588年・早稲田大学図書館所蔵）",
+      "caption": "刀狩令の条書の一部（1588年・早稲田大学図書館所蔵）",
+      "creator": "豊臣秀吉（発令）、早稲田大学図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:WUL-bunko12_00087_%E8%B1%8A%E8%87%A3%E7%A7%80%E5%90%89%E5%88%80%E7%8B%A9%E6%9D%A1%E6%9B%B8.pdf",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9106c44dbc2055c38180.jpg",
+      "sha256": "9106c44dbc2055c38180183e3014509e6abeb339a316d54e2c3d05e40670551d"
+    },
+    {
+      "id": "JHKS-d7ff70c0dcfdef5364bf",
+      "path": "term-images/japanese-history-k/JHKS-d7ff70c0dcfdef5364bf.jpg",
+      "alt": "大型天守の例・姫路城（17世紀初の建物・2009年の写真）",
+      "caption": "大型天守の例・姫路城（17世紀初の建物・2009年の写真）",
+      "creator": "663highland",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Himeji_Castle_04s3200.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d7ff70c0dcfdef5364bf.jpg",
+      "sha256": "d7ff70c0dcfdef5364bf8da0b3374f54d7b7ff8d488a1e3f38c2a61e1a6e6ba0"
+    },
+    {
+      "id": "JHKS-b5d3b833989d18382fb4",
+      "path": "term-images/japanese-history-k/JHKS-b5d3b833989d18382fb4.jpg",
+      "alt": "草庵風茶室の例・待庵の原寸大復元模型",
+      "caption": "草庵風茶室の例・待庵の原寸大復元模型",
+      "creator": "番記者",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E8%8C%B6%E5%AE%A4%E3%80%8C%E5%BE%85%E5%BA%B5%E3%80%8D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b5d3b833989d18382fb4.jpg",
+      "sha256": "b5d3b833989d18382fb424de94f8819ad6220af316b501cca8cd299c86655feb"
+    },
+    {
+      "id": "JHKS-1e78b2ad2a1a0b3ada2e",
+      "path": "term-images/japanese-history-k/JHKS-1e78b2ad2a1a0b3ada2e.jpg",
+      "alt": "三味線の例（現代の写真）",
+      "caption": "三味線の例（現代の写真）",
+      "creator": "Timothy Takemoto",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shamisen.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1e78b2ad2a1a0b3ada2e.jpg",
+      "sha256": "1e78b2ad2a1a0b3ada2e07a608174f1c39dfc7b7b8021dadee6514e8167bdd35"
+    },
+    {
+      "id": "JHKS-25237a18f36bf42beeb2",
+      "path": "term-images/japanese-history-k/JHKS-25237a18f36bf42beeb2.jpg",
+      "alt": "金平糖の例（現代の写真）",
+      "caption": "金平糖の例（現代の写真）",
+      "creator": "Islandsislands",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Konpeito_Candy.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-25237a18f36bf42beeb2.jpg",
+      "sha256": "25237a18f36bf42beeb214cba0bdb2b562aab04611b3897244843a1cd4212bb3"
     }
   ]
 }

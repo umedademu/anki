@@ -91,7 +91,10 @@
     "book-04-02-06",
     "book-04-02-07",
     "book-04-02-08",
-    "book-04-02-09"
+    "book-04-02-09",
+    "book-04-02-10",
+    "book-04-02-11",
+    "book-04-02-12"
   ],
   "images": [
     {
@@ -6334,6 +6337,317 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-bbffa7341000c3",
+      "caption": "『古事記伝』の展示（本居宣長記念館・現代の写真）",
+      "note": "既存画像を共有する。公開元の本居宣長記念館での展示という記録と書名に照合した。国学の古典研究と宣長の注釈書の回答後に書物を示す。撮影年を刊行年とせず、この展示品を初版本や全て自筆の原稿とは断定しない。巻数・装丁・所蔵先・本文の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3de8bd78cac195",
+      "caption": "本居宣長の自画像（1773年・部分）",
+      "note": "既存画像を共有する。奈良国立博物館の古事記展の目録と本居宣長記念館の自画像の解説で、1773年・44歳の自画像と照合した。宣長の名前と国学の研究の回答後に人物を示す。実際の研究作業の実況や古事記伝完成時の姿とはせず、人物の容姿・年齢・画中の梅・装束を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U01",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-32b2139c51be668af69d",
+      "caption": "賀茂真淵の肖像（1939年刊の書物より）",
+      "note": "公開元の1939年刊『國文学名家肖像集』の図版という記録に照合した。万葉集を研究した宣長の師の回答後に賀茂真淵を示す。1939年は掲載書の刊行年であり肖像原画の作成年としない。公開元の投稿者名を原画作者に流用せず作者不詳とした。容姿・掲載書の名称・刊行年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U01",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-99288747163b0f",
+      "caption": "『解体新書』の展示（現代の写真）",
+      "note": "既存画像を共有する。公開元の書名と開かれた展示の図版に照合した。蘭語の解剖書を翻訳した書物の回答後に書物の姿を示す。撮影年を刊行年にせず、撮影された本を初版本と断定しない。図版の器官名・医学的知識・古文の解読・巻数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U02",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-33b2b7d78cf77d",
+      "caption": "杉田玄白の肖像（石川大浪筆・19世紀）",
+      "note": "既存画像を共有する。早稲田大学図書館の石川大浪筆・文化９年（1812）の目録と同じ肖像に照合した。前野良沢とともに翻訳した杉田玄白の回答後に玄白を示す。二人を写した肖像や翻訳中の実況とはせず、公開元の18世紀という年代を採用しない。容姿・画家・年齢・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U02",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-053d3888f5961dfb9fa5",
+      "caption": "鳴滝塾の建物を描いた図（19世紀）",
+      "note": "長崎大学附属図書館の武藤文庫の鳴滝塾舎之図と建物・山・構図を照合し、成瀬石痴の作品と確認した。シーボルトの医学・一般科学の教育の回答後に塾舎を示す。作者は1838年生まれであり公開元の1820年を作成年に流用しない。後の画家が描いた図で、1824年開塾時に制作した実況画と断定しない。建物の間取り・画家・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-8c4913995b2c62",
+      "caption": "伊能忠敬の肖像（1821年頃・没後の作品）",
+      "note": "既存画像を共有する。香取市の伊能忠敬像の解説で、忠敬没後、地図献上時に弟子青木勝次郎が描いたと推定される作品と確認した。全国を測量した人物と測量・日本地図の説明への回答後に忠敬を示す。全国踏査中の実況ではなく、確定した作成年として断言しない。容姿・掛軸の文字・画家・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U02",
+          "questions": [
+            "B04",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f65e6dcd6362becca862",
+      "caption": "『東海道中膝栗毛』の展示（現代の写真）",
+      "note": "公開元の太田宿中山道会館での『東海道中膝栗毛』の展示という記録と書名に照合した。日常生活を面白く描く滑稽本と十返舎一九の作品の回答後に書物を示す。現代の展示写真であり写真の本を初版本とは断定しない。物語の細かな筋・登場人物・図中文字・展示場所・撮影年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U03",
+          "questions": [
+            "B04",
+            "B06",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fac046564821569f9cfc",
+      "caption": "『南総里見八犬伝』の挿絵（1830年刊）",
+      "note": "公開元の国立国会図書館所蔵の『南総里見八犬伝』第七輯巻之七・1830年刊・柳川重宣画という記録に照合した。読本と馬琴の作品の回答後に本の挿絵を示す。芝居の役者絵とは区別し、現実の歴史事件や人物の肖像に代用しない。挿絵の小文吾と牛の場面の解読・筋書き・絵師・作中の地名を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U03",
+          "questions": [
+            "B05",
+            "B07",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0a367d1336c9ed43292b",
+      "caption": "鈴木春信の錦絵『夜の梅』（1766年頃）",
+      "note": "メトロポリタン美術館のJP1506・1766年頃・錦絵という作品記録と同じ図柄に照合した。多色刷りの錦絵と鈴木春信の回答後に具体例を示す。春信の18世紀の錦絵の起源と19世紀の化政期の風景画を区別する。色数・空摺の技法・衣服・作品名・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U04",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-15a66d846e47539b233a",
+      "caption": "北斎『冨嶽三十六景・神奈川沖浪裏』（1830～1832年頃）",
+      "note": "メトロポリタン美術館のJP2972・1830～1832年頃の原作版画と照合した。北斎の作品と構図の説明への回答後に大波と富士の図を示す。昭和期のアダチ版復刻の候補は採用しない。この図だけを欧州の画家への影響の全証拠とはせず、版の色・船の数・細かな地点・欧州の画家名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U04",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ea1bc1a74462052ac2b6",
+      "caption": "広重『東海道五十三次・日本橋 朝之景』（1833～1835年頃）",
+      "note": "日本史Kの交通の項目で点検済みの原作版画を共有する。公開元のボストン美術館の記録と東京富士美術館の同図柄の解説に照合した。広重の作品と化政文化の絵画への回答後に風景画を示す。錦絵の創始者を広重とせず、全街道の経路図にも代用しない。画中の行列の人物名・色の違い・作品の細かな年代を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U04",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6fd38af5aeaa37",
+      "caption": "寺子屋を描いた『文学万代の宝』（1844～1848年頃）",
+      "note": "既存画像を共有する。東京都立図書館の同図柄の資料の一寸子花里画・1844～1848年頃・寺子屋の学習場面に照合した。寺子屋と読み書きそろばんの教育への回答後に学ぶ姿を示す。そろばんが全ての場面に描かれていると断言せず、全ての子どもの家族の身分・施設の所有形態は絵から推定しない。図中の文字・人数・絵師を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U05",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2526fe707881ad",
+      "caption": "藩校の例・水戸弘道館の正庁（1841年建築・現代の写真）",
+      "note": "日本史Kで点検済みの藩校の画像を共有する。茨城県教育委員会の指定建造物の記録で正庁・1841年建築と照合した。藩士に学問を教える藩校の回答後に施設の例を示す。寺子屋と混同せず、学校一般の性格を建物の形だけから判定させない。校名・建築年・間取りを新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-10-U05",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25422b0cb5280ce5a0b8",
+      "caption": "光格天皇の肖像（19世紀）",
+      "note": "公開元の豊岡治資筆の光格天皇肖像・倉吉博物館の図録という記録と同館の展覧会報告に照合した。閑院宮から猶子となり皇位を継承した経緯への回答後に光格天皇を示す。親子関係や男系継承を容姿から推定させず、継承の実況画とはしない。服装・画家・制作年・天皇の代数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-11-U01",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3dbdbe497524dec17b5d",
+      "caption": "後桃園天皇の肖像（18世紀）",
+      "note": "京都文化博物館の陽明文庫展の後桃園天皇宸影・18世紀という記録と公開元の近衛家の作品紹介に照合した。後桃園に皇子がいなかったことと朝廷・幕府の協議への回答後に後桃園を示す。光格の肖像と混同せず、皇子の有無や継承の制度を絵から判定させない。服装・代数・所蔵先を暗記条件にしない。公開元が提供する幅500画素のJPEGを加工せず使用する。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-11-U01",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a8019c9162662493e1c3",
+      "caption": "ラクスマンの肖像（1793年）",
+      "note": "公開元の函館市中央図書館所蔵の1793年のロシア来航者の図と画中文字のラクスマンに照合した。1792年根室での通商要求とその後の書状の説明への回答後に人物を示す。1793年は函館での肖像の年であり根室来航年を1793年に置き換えない。画中文字の解読・容姿・服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f4d032dc1c711ca3abf1",
+      "caption": "レザノフの肖像（19世紀初め）",
+      "note": "公開元のレザノフ・作者不詳という記録とロシア国立歴史博物館の19世紀初めの肖像の記録に照合した。1804年長崎の通商要求と幕府の対ロシア政策の回答後に人物を示す。長崎で描かれた交渉場面やラクスマンの肖像には代用しない。制作年の1803年という推定に疑問符があるため19世紀初めとし、勲章・服装・容姿・画家を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U01",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-902352d90acb4fabc6b3",
+      "caption": "間宮林蔵を描いた後世の肖像（1910年）",
+      "note": "つくばみらい市の間宮林蔵顕彰会の記録で、1910年に松岡映丘が資料と子孫を参考に描いた後世の肖像と照合した。北蝦夷の調査とロシア南下への警戒の回答後に人物を示す。江戸期の本人写真や生前の写実肖像とはせず、測量の実地作業の実況や境界線の地図には代用しない。容姿・制作年・衣服・子孫の名前を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U01",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-8ca07e35b63eca",
+      "caption": "アヘン戦争の海戦を描いた版画（1841年の戦闘・1843年刊）",
+      "note": "既存画像を共有する。英国国立海事博物館の1841年１月７日の戦闘・1843年５月刊・ダンカンの作品記録と照合した。清がイギリスに敗れたことと打払令から薪水給与令への緩和の説明への回答後に海外の戦争の図を示す。日本への外国船来航やモリソン事件の図には代用せず、後年のアロー戦争とも区別する。船名・戦場の地点・兵器・版画制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b0928dfe4bd296c9994c",
+      "caption": "高野長英の肖像（椿椿山筆）",
+      "note": "奥州市高野長英記念館の椿椿山筆の高野長英像の記録と同じ肖像に照合した。蛮社の獄で弾圧された蘭学者と強硬策批判の回答後に長英を示す。逮捕場面や外国船砲撃の実況に代用せず、公開元のあいまいな年代を確定年として流用しない。容姿・画家・所蔵館・古文の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U03",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-8297e94226f1c2b95b85",
+      "caption": "渡辺崋山の肖像（19世紀・没後の作品）",
+      "note": "田原市博物館の椿椿山筆の渡辺崋山像と同じ肖像に照合した。蛮社の獄の名称と弾圧の背景への回答後に崋山を示す。所蔵館の記録は1853年、公開元は1854年と異なるため19世紀・没後の作品とし、逮捕や1837年の事件の実況画とはしない。容姿・画家・服装・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-12-U03",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -9036,6 +9350,162 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Higaki-Kwaisen.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-7ff4c524b0b0337723c9.jpg",
       "sha256": "7ff4c524b0b0337723c93c67d595e20d40a74865d7ebf078c7f42a5f49728907"
+    },
+    {
+      "id": "JHKS-32b2139c51be668af69d",
+      "path": "term-images/japanese-history-k/JHKS-32b2139c51be668af69d.jpg",
+      "alt": "賀茂真淵の肖像（1939年刊の書物より）",
+      "caption": "賀茂真淵の肖像（1939年刊の書物より）",
+      "creator": "作者不詳（『國文学名家肖像集』の図版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kamo_no_Mabuchi.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-32b2139c51be668af69d.jpg",
+      "sha256": "32b2139c51be668af69de735243da3df7f4d02c847577eb2f1aaba854dadb8f1"
+    },
+    {
+      "id": "JHKS-0a367d1336c9ed43292b",
+      "path": "term-images/japanese-history-k/JHKS-0a367d1336c9ed43292b.jpg",
+      "alt": "鈴木春信の錦絵『夜の梅』（1766年頃）",
+      "caption": "鈴木春信の錦絵『夜の梅』（1766年頃）",
+      "creator": "鈴木春信",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:MET_DP119555.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0a367d1336c9ed43292b.jpg",
+      "sha256": "0a367d1336c9ed43292b7b16a9ee16c53be1c601f2959962d144a0db0c31be1b"
+    },
+    {
+      "id": "JHKS-15a66d846e47539b233a",
+      "path": "term-images/japanese-history-k/JHKS-15a66d846e47539b233a.jpg",
+      "alt": "北斎『冨嶽三十六景・神奈川沖浪裏』（1830～1832年頃）",
+      "caption": "北斎『冨嶽三十六景・神奈川沖浪裏』（1830～1832年頃）",
+      "creator": "葛飾北斎",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E5%86%A8%E5%B6%BD%E4%B8%89%E5%8D%81%E5%85%AD%E6%99%AF_%E7%A5%9E%E5%A5%88%E5%B7%9D%E6%B2%96%E6%B5%AA%E8%A3%8F-Under_the_Wave_off_Kanagawa_(Kanagawa_oki_nami_ura),_also_known_as_The_Great_Wave,_from_the_series_Thirty-six_Views_of_Mount_Fuji_(Fugaku_sanj%C5%ABrokkei)_MET_DP141067.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-15a66d846e47539b233a.jpg",
+      "sha256": "15a66d846e47539b233af0a541087b28293f717d2e6c3714f0786f0717057687"
+    },
+    {
+      "id": "JHKS-f65e6dcd6362becca862",
+      "path": "term-images/japanese-history-k/JHKS-f65e6dcd6362becca862.jpg",
+      "alt": "『東海道中膝栗毛』の展示（現代の写真）",
+      "caption": "『東海道中膝栗毛』の展示（現代の写真）",
+      "creator": "Asturio Cantabrio",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokaidochu_Hizakurige_2021-10_ac.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f65e6dcd6362becca862.jpg",
+      "sha256": "f65e6dcd6362becca862f83aa2bc441143e0b1a1c8b95108574b7f28b93dff38"
+    },
+    {
+      "id": "JHKS-fac046564821569f9cfc",
+      "path": "term-images/japanese-history-k/JHKS-fac046564821569f9cfc.jpg",
+      "alt": "『南総里見八犬伝』の挿絵（1830年刊）",
+      "caption": "『南総里見八犬伝』の挿絵（1830年刊）",
+      "creator": "曲亭馬琴（作）、柳川重宣（画）、国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nans%C5%8D_Satomi_Hakkenden_-_Rampaging_cattle.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fac046564821569f9cfc.jpg",
+      "sha256": "fac046564821569f9cfca816a4348b970571cfea2646c0035989b033d6cd2966"
+    },
+    {
+      "id": "JHKS-25422b0cb5280ce5a0b8",
+      "path": "term-images/japanese-history-k/JHKS-25422b0cb5280ce5a0b8.jpg",
+      "alt": "光格天皇の肖像（19世紀）",
+      "caption": "光格天皇の肖像（19世紀）",
+      "creator": "豊岡治資",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_K%C5%8Dkaku.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-25422b0cb5280ce5a0b8.jpg",
+      "sha256": "25422b0cb5280ce5a0b857161b3e8ef87364a7dd7ce9ac454a3327735802bdee"
+    },
+    {
+      "id": "JHKS-3dbdbe497524dec17b5d",
+      "path": "term-images/japanese-history-k/JHKS-3dbdbe497524dec17b5d.jpg",
+      "alt": "後桃園天皇の肖像（18世紀）",
+      "caption": "後桃園天皇の肖像（18世紀）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-Momozono.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3dbdbe497524dec17b5d.jpg",
+      "sha256": "3dbdbe497524dec17b5d2469c1a765b2e1d5e65584cd8497ff29bfc64108ed28"
+    },
+    {
+      "id": "JHKS-a8019c9162662493e1c3",
+      "path": "term-images/japanese-history-k/JHKS-a8019c9162662493e1c3.jpg",
+      "alt": "ラクスマンの肖像（1793年）",
+      "caption": "ラクスマンの肖像（1793年）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Adam_Kirillovich_Laksman.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a8019c9162662493e1c3.jpg",
+      "sha256": "a8019c9162662493e1c3ec4544fe15b5c349c16df1ea7d3181dc478969ccf11a"
+    },
+    {
+      "id": "JHKS-f4d032dc1c711ca3abf1",
+      "path": "term-images/japanese-history-k/JHKS-f4d032dc1c711ca3abf1.jpg",
+      "alt": "レザノフの肖像（19世紀初め）",
+      "caption": "レザノフの肖像（19世紀初め）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rezanov_np.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f4d032dc1c711ca3abf1.jpg",
+      "sha256": "f4d032dc1c711ca3abf1a14d357cca6029afcf919da7b7868f5e1137d336682a"
+    },
+    {
+      "id": "JHKS-902352d90acb4fabc6b3",
+      "path": "term-images/japanese-history-k/JHKS-902352d90acb4fabc6b3.jpg",
+      "alt": "間宮林蔵を描いた後世の肖像（1910年）",
+      "caption": "間宮林蔵を描いた後世の肖像（1910年）",
+      "creator": "松岡映丘",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mamiya_Rinzo.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-902352d90acb4fabc6b3.jpg",
+      "sha256": "902352d90acb4fabc6b3f690898b4c40f6ea8f49c864f56e58ef1d763a00f9d4"
+    },
+    {
+      "id": "JHKS-b0928dfe4bd296c9994c",
+      "path": "term-images/japanese-history-k/JHKS-b0928dfe4bd296c9994c.jpg",
+      "alt": "高野長英の肖像（椿椿山筆）",
+      "caption": "高野長英の肖像（椿椿山筆）",
+      "creator": "椿椿山",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Takano_Choei.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b0928dfe4bd296c9994c.jpg",
+      "sha256": "b0928dfe4bd296c9994cc9d080a962907bef881838f947704f36b197d6454015"
+    },
+    {
+      "id": "JHKS-8297e94226f1c2b95b85",
+      "path": "term-images/japanese-history-k/JHKS-8297e94226f1c2b95b85.jpg",
+      "alt": "渡辺崋山の肖像（19世紀・没後の作品）",
+      "caption": "渡辺崋山の肖像（19世紀・没後の作品）",
+      "creator": "椿椿山",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Watanabe_Kazan.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8297e94226f1c2b95b85.jpg",
+      "sha256": "8297e94226f1c2b95b855448aa9ca1411c2cae0c2ebe26c0371b2ad2353fd966"
+    },
+    {
+      "id": "JHKS-053d3888f5961dfb9fa5",
+      "path": "term-images/japanese-history-k/JHKS-053d3888f5961dfb9fa5.jpg",
+      "alt": "鳴滝塾の建物を描いた図（19世紀）",
+      "caption": "鳴滝塾の建物を描いた図（19世紀）",
+      "creator": "成瀬石痴",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Narutaki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-053d3888f5961dfb9fa5.jpg",
+      "sha256": "053d3888f5961dfb9fa54b36132aaa6548e64ddc8d56db9dab5002408c7b98fc"
     }
   ]
 }

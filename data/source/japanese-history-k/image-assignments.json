@@ -100,7 +100,10 @@
     "book-04-02-15",
     "book-04-02-16",
     "book-05-01-01",
-    "book-05-01-02"
+    "book-05-01-02",
+    "book-05-01-03",
+    "book-05-01-04",
+    "book-05-01-05"
   ],
   "images": [
     {
@@ -7281,6 +7284,313 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-29cee8ffd18ac1e3cf4b",
+      "caption": "織機を使う工場労働を描いた版画（1835年）",
+      "note": "公開元の1835年刊『History of the cotton manufacture in Great Britain』のアロム原画・ティングル版刻の織機と工場労働の図に照合した。綿織物工業の機械化と雇用、大量生産品の市場拡大を学んだ回答後に工場の姿を示す。紡績と織布を同一工程にせず、画中の人数・服装から賃金や一日の労働時間を断定しない。写真や18世紀の実況図とは説明せず、工業製品の輸出先そのものを描いた図とはしない。工場名・装置の部品・版画家は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        },
+        {
+          "termId": "JHK-05-01-03-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        },
+        {
+          "termId": "JHK-05-01-05-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-5d566e41fd1eb2",
+      "caption": "水力紡績機の展示（現代の写真）",
+      "note": "既存の世界史の画像を共有する。公開元のトヨタ産業技術記念館の展示機械・Kekeroの2024年の写真に照合した。紡績機や織機による大量生産への回答後に機械の姿を示す。展示写真を18世紀イギリスで撮影された写真とはせず、水力紡績機を蒸気機関そのものや織機とは説明しない。展示施設名・機械の部品・回転の仕組みは暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3703f856b7b11a2d32c9",
+      "caption": "ワットの蒸気機関を描いた図（1877～1878年刊）",
+      "note": "公開元の『Popular Science Monthly』第12巻（1877～1878年刊）の蒸気機関の図とシリンダー・梁・回転部分の描写に照合した。蒸気を動力として使った熱機関とその導入時期の回答後に機械の姿を示す。ファイル名の1780年は調速機の記録と整合しないため機械の確定した製造年にせず、刊行年代と発明・導入年代を区別する。図の文字・弁・調速機の構造やワットという人物名を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U01",
+          "questions": [
+            "B04",
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-8048ad8faa4e45",
+      "caption": "鉄道開業を描いた後世の絵（1875年頃・ドビン筆）",
+      "note": "既存の世界史の画像を共有する。公開元のジョン・ドビンの1875年頃の作品、1825年のストックトン・ダーリントン鉄道開業の記録と列車の図像に照合した。蒸気機関車などの輸送と社会の変化への回答後に鉄道を示す。絵は後世の作品であり、18世紀末の紡績機の動力導入や蒸気船そのものを描く図にはしない。鉄道名・画中の車両数・乗客・画家を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U01",
+          "questions": [
+            "B06",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1d803e5954a0ba955656",
+      "caption": "政治参加を求めるチャーティストの集会（1848年）",
+      "note": "公開元のウィリアム・エドワード・キルバーンの1848年のダゲレオタイプと、英国王室コレクションのケニントン・コモンの政治改革を求める集会の記録に照合した。労働者による政治参加の要求を説明する回答後に集会の姿を示す。特定の労働組合の結成や社会主義の集会の写真とはせず、すべての参加者の職業や人数を写真から断定しない。チャーティズムの固有名・六項目の要求・会場・撮影技法を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U02",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-646b281356e765",
+      "caption": "リンカーンの肖像写真（1863年・ガードナー撮影）",
+      "note": "既存の世界史の画像を共有する。公開元のアレクサンダー・ガードナーが1863年11月８日にワシントンで撮影した肖像の記録に照合した。奴隷制拡大への反対と南北戦争の経過を学んだ回答後に人物を示す。通称Gettysburg portraitを撮影地ゲティスバーグや演説の実況の意味にせず、帽子・服装・撮影日・写真家を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U03",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-df43df951dadca",
+      "caption": "奴隷解放宣言を記した装飾版画（1864年）",
+      "note": "既存の世界史の画像を共有する。公開元と米国議会図書館pga.04067のW. Robertsの装飾版画・1864年刊という作品記録と本文の構図に照合した。宣言名と奴隷制の変化の説明への回答後に史料の姿を示す。リンカーン自筆の原文書や憲法改正そのものとはせず、宣言の年と複製版画の刊行年を区別する。周囲の教育・農業の絵を黒人への差別が直ちに解消した証拠とはしない。英文や署名・装飾を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U03",
+          "questions": [
+            "B04",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f01531fe8a19d24c3ca6",
+      "caption": "アメリカ合衆国の領土拡大を示す歴史地図（シェパード作）",
+      "note": "公開元のウィリアム・ロバート・シェパードの領土拡大の歴史地図と、図中の1803年以降の取得範囲を照合した。買取・割譲・併合と太平洋への領域拡大の回答後に北米の位置関係を示す。独立当時の同時代地図とはせず、各色の取得年や欄外の海外地域まで追加の学習対象にしない。領土拡大を先住民の同意や迫害がなかった証拠とはしない。地図の英語・各州名・個別条約の名前は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-03-U04",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-ce7e6c5794eabf",
+      "caption": "インド大反乱の地域を示す歴史地図（1912年刊）",
+      "note": "既存の世界史の画像を共有する。公開元の『The Cambridge Modern History Atlas』の1912年刊「North India: The Mutiny 1857-9」と地理表示に照合した。反乱名、背景と結果への回答後に北インドの位置を示す。1857年に作られた地図とはせず、反乱が起きた年と後世の地図の刊行年を区別する。地図の英語表現を反乱の唯一の見方として教えず、町名・凡例の色・戦闘年の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-b8b2e9d860fc61",
+      "caption": "東インド諸島の地理図（19世紀初め・支配領域の境界図ではない）",
+      "note": "既存の世界史の画像を共有する。公開元のオランダ国立公文書館4.MIKO/1・19世紀初めの東インド諸島の地理図という記録とジャワ島周辺の描写に照合した。植民地の名前と領域拡大の回答後に島々の位置関係を示す。描かれたオーストラリアやフィリピンまでオランダ領だったとはせず、17世紀や20世紀初頭の政治境界をそのまま示す地図にはしない。現代のインドネシアの国境を図から答えさせず、外国語・島名・航海線は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-79260898f062dd004f81",
+      "caption": "フランス領インドシナ南部とシャム周辺の地図（1902年）",
+      "note": "公開元のフランス国立図書館Gallica bpt6k11001831/f74・ポール・プレの1902年の植民地地図帳と図中の「II. FEUILLE SUD」に照合した。ベトナム南部の植民地化と植民地形成の回答後に南部の位置関係を示す。北部やラオスを含むインドシナ全域の地図とはせず、1902年の境界と現在の国境を同一視しない。植民地の地図を現地の住民が支配に同意した証拠とはせず、フランス語・港名・境界の細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U03",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-9c09b81d9ba362",
+      "caption": "シャム王国のラーマ５世の肖像写真",
+      "note": "既存の世界史の画像を共有する。公開元の米国議会図書館ggbain.05360・Bain News Serviceのラーマ５世（チュラロンコーン）の写真の記録に照合した。独立を維持したシャムと国王による近代化の回答後に人物を示す。欧米視察の現場や領土割譲の調印の写真とはせず、撮影年を断定しない。勲章・服装・別名・撮影者や国境の形は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U03",
+          "questions": [
+            "B04",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-f3eaa1fca6651e",
+      "caption": "クリミア戦争中のイギリス軍の宿営地（1855年・バラクラヴァ）",
+      "note": "既存の世界史の画像を共有する。公開元の1855年のバラクラヴァのイギリス軍宿営地とRobertson／Beatoの作品の記録に照合した。戦争名とロシアの南下政策への列強の介入の説明への回答後に戦争当時の写真を示す。ロシア軍の宿営地や沿海州・ウラジオストクの写真とはせず、写真だけでロシアの敗北や全参戦国を判定させない。テントの数・地形・撮影者・撮影地は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U04",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-185835adbe021510278d",
+      "caption": "インドのアヘン工場を描いた版画（19世紀・パトナ）",
+      "note": "公開元のWellcome Collection L0016696と25044iのW.S. Sherwillの原画に基づくパトナのアヘン工場の乾燥室の版画という記録に照合した。イギリス・インド・清の貿易の説明への回答後にインド側のアヘン生産を示す。大西洋の奴隷貿易の図、三地点全体の航路図や清への密輸の現場写真とはせず、印刷された19世紀の図と明記する。撮影年と制作年を同一視せず、工場名・製造工程・作者・丸い容器の数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U05",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-8ca07e35b63eca",
+      "caption": "アヘン戦争の海戦を描いた版画（1841年の戦闘・1843年刊）",
+      "note": "既存の世界史と日本史Kで点検済みの画像を共有する。公開元のEdward Duncanの1843年刊の作品と1841年１月７日の海戦の記録に照合した。戦争名、展開と結果の回答後に海戦の姿を示す。条約の調印、アヘン没収の現場、1840年の開戦当日の図とはせず、描いた戦闘と版画の刊行年代を区別する。艦名・旗・船の数・武器の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U06",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-d9808e4e71c065",
+      "caption": "林則徐の肖像（19世紀・ラムクワ筆）",
+      "note": "既存の世界史の画像を共有する。公開元のLam Qua筆の林則徐の19世紀の肖像と人物像に照合した。アヘンの没収・処分を行った人物と開戦の背景の回答後に人物を示す。没収処分の現場を写す図とはせず、1839年を肖像の確定した制作年に流用しない。服装・画家・所蔵館は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U06",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-b251ea267ee770",
+      "caption": "南京条約の調印を描いた版画（1846年刊）",
+      "note": "既存の世界史の画像を共有する。公開元のジョン・プラット原画・ジョン・バーネット版刻、1846年４月20日刊の南京条約調印の作品記録に照合した。条約名と香港の取得への回答後に調印の図を示す。1842年の調印の写真とはせず、翌年の追加条約や関税自主権・領事裁判権をここで直接定めた史料の図には代用しない。代表者の名前・旗・船名・刊行日・画家を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-04-U06",
+          "questions": [
+            "B04",
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a8019c9162662493e1c3",
+      "caption": "ラクスマンの肖像（1793年）",
+      "note": "前回までに登録・点検済みの肖像を共有する。公開元の函館市中央図書館の寛政５年の乗組員肖像の記録と題記に照合した。1792年の来航者と通商要求の回答後に人物を示す。1792年の来航と1793年の肖像制作を区別し、人物を父エリクの肖像と混同しない。パイプ・古い日本語・服装・作者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-05-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f4d032dc1c711ca3abf1",
+      "caption": "レザノフの肖像（19世紀初め）",
+      "note": "前回までに登録・点検済みの肖像を共有する。公開元の1800年頃のニコライ・レザノフの肖像と人物像に照合した。1804年の来航者と欧米列強の日本遠征への回答後に人物を示す。1804年に撮影された写真やラクスマンと二人がそろった図とはせず、1804年を制作年に流用しない。勲章・服装・画家の名前は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-05-U01",
+          "questions": [
+            "B05",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d88b8675d8794aef582b",
+      "caption": "捕鯨の様子を描いた版画（米国議会図書館所蔵）",
+      "note": "公開元の米国議会図書館LCCN2003654260の捕鯨版画と画中の小舟・帆船・捕鯨作業に照合した。下欄のB. Russellの原画の記載を作者欄に区別して記録し、目録中の未検証の関係者名を確定した作者にしない。鯨油を目的とした捕鯨と日本開国要求の背景の回答後に捕鯨の姿を示す。日本で薪・水を補給した現場、日本の港やペリー艦隊の写真とはせず、制作年を断定しない。捕鯨の技法・鯨の種類・艦名・作者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-05-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -10391,6 +10701,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Magna_Carta_(British_Library_Cotton_MS_Augustus_II.106).jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-d18df549f403f09b1235.jpg",
       "sha256": "d18df549f403f09b12352f6192f2178b070c832762260c50a91534fdb0988569"
+    },
+    {
+      "id": "JHKS-29cee8ffd18ac1e3cf4b",
+      "path": "term-images/japanese-history-k/JHKS-29cee8ffd18ac1e3cf4b.jpg",
+      "alt": "織機を使う工場労働を描いた版画（1835年）",
+      "caption": "織機を使う工場労働を描いた版画（1835年）",
+      "creator": "T.アロム（原画）／J.ティングル（版刻）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Powerloom_weaving_in_1835.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-29cee8ffd18ac1e3cf4b.jpg",
+      "sha256": "29cee8ffd18ac1e3cf4bf5fc06e0f766779100e7a780f86eb16a3ec2ceae0ad9"
+    },
+    {
+      "id": "JHKS-1d803e5954a0ba955656",
+      "path": "term-images/japanese-history-k/JHKS-1d803e5954a0ba955656.jpg",
+      "alt": "政治参加を求めるチャーティストの集会（1848年）",
+      "caption": "政治参加を求めるチャーティストの集会（1848年）",
+      "creator": "ウィリアム・エドワード・キルバーン",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:William_Edward_Kilburn_-_View_of_the_Great_Chartist_Meeting_on_Kennington_Common_-_Google_Art_Project.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1d803e5954a0ba955656.jpg",
+      "sha256": "1d803e5954a0ba955656fdf4a078a532c3b28edc29404b2489feb05897ea5a7b"
+    },
+    {
+      "id": "JHKS-3703f856b7b11a2d32c9",
+      "path": "term-images/japanese-history-k/JHKS-3703f856b7b11a2d32c9.jpg",
+      "alt": "ワットの蒸気機関を描いた図（1877～1878年刊）",
+      "caption": "ワットの蒸気機関を描いた図（1877～1878年刊）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:PSM_V12_D152_Watt_steam_engine_1780.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3703f856b7b11a2d32c9.jpg",
+      "sha256": "3703f856b7b11a2d32c9f92ea96ce82074e50e54115f00a0cc344532e53b435b"
+    },
+    {
+      "id": "JHKS-d88b8675d8794aef582b",
+      "path": "term-images/japanese-history-k/JHKS-d88b8675d8794aef582b.jpg",
+      "alt": "捕鯨の様子を描いた版画（米国議会図書館所蔵）",
+      "caption": "捕鯨の様子を描いた版画（米国議会図書館所蔵）",
+      "creator": "B.ラッセル（原画の記載）／版画制作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sperm_whaling_with_its_varieties_LCCN2003654260.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d88b8675d8794aef582b.jpg",
+      "sha256": "d88b8675d8794aef582b60533724a01769e448ad623d5b400e8d8f0e9b71d39a"
+    },
+    {
+      "id": "JHKS-185835adbe021510278d",
+      "path": "term-images/japanese-history-k/JHKS-185835adbe021510278d.jpg",
+      "alt": "インドのアヘン工場を描いた版画（19世紀・パトナ）",
+      "caption": "インドのアヘン工場を描いた版画（19世紀・パトナ）",
+      "creator": "W.S.シェルウィル（原画）／Wellcome Collection（画像提供）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:A_busy_drying_room_in_the_opium_factory_at_Patna,_India._Lit_Wellcome_L0016696.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-185835adbe021510278d.jpg",
+      "sha256": "185835adbe021510278dea9400f674343aeaff0bca754460b1713adc1b5aeb4e"
+    },
+    {
+      "id": "JHKS-f01531fe8a19d24c3ca6",
+      "path": "term-images/japanese-history-k/JHKS-f01531fe8a19d24c3ca6.jpg",
+      "alt": "アメリカ合衆国の領土拡大を示す歴史地図（シェパード作）",
+      "caption": "アメリカ合衆国の領土拡大を示す歴史地図（シェパード作）",
+      "creator": "ウィリアム・ロバート・シェパード",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Territorial_Expansion_of_the_United_States_since_1803.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f01531fe8a19d24c3ca6.jpg",
+      "sha256": "f01531fe8a19d24c3ca60fb690c1484b8977808ac4dc3227ca20fd702a63216a"
+    },
+    {
+      "id": "JHKS-79260898f062dd004f81",
+      "path": "term-images/japanese-history-k/JHKS-79260898f062dd004f81.jpg",
+      "alt": "フランス領インドシナ南部とシャム周辺の地図（1902年）",
+      "caption": "フランス領インドシナ南部とシャム周辺の地図（1902年）",
+      "creator": "ポール・プレ",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Indochina_1902.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-79260898f062dd004f81.jpg",
+      "sha256": "79260898f062dd004f81ce94748447135f53648cd6ec805a99302c94a1e880b2"
     }
   ]
 }

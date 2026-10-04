@@ -58,7 +58,10 @@
     "book-02-04-05",
     "book-02-04-06",
     "book-02-04-07",
-    "book-02-04-08"
+    "book-02-04-08",
+    "book-03-01-01",
+    "book-03-01-02",
+    "book-03-01-03"
   ],
   "images": [
     {
@@ -3600,6 +3603,177 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-ca0539053f0bae402027",
+      "caption": "伝源頼朝坐像（東京国立博物館所蔵・13～14世紀）",
+      "note": "東京国立博物館所蔵の木造伝源頼朝坐像の写真。将軍の官職名、幕府の成立と御恩の保障の説明への回答後に、将軍という政治の担い手を具体化する。e国宝で13～14世紀の没後の像と確認した。人物の特定を断定せず「伝源頼朝」の表記を保ち、本人を直接写したものや任命の場面とはしない。像の服装から守護・地頭の権限や本領安堵・新恩給与を読み取らせず、制作年・所蔵館・作者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-01-U01",
+          "questions": [
+            "B05",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-03-01-01-U02",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7816466b6504457b4d4c",
+      "caption": "源義経を描いた後世の人物画（中尊寺所蔵）",
+      "note": "前回登録した源義経の人物画を共有する。義経追討と守護・地頭の任命権の関係への回答後に、頼朝と対立した弟の名を結び付ける。戦国期または江戸期の後世の作品で、1185年の同時代肖像や追討の現場、任命権を認めた文書ではない。顔や武具から政治的な対立の理由を判断させず、所蔵寺院・絵の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-01-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5f2c93edad6641",
+      "caption": "北条泰時を描いた後世の人物画（栗原信充）",
+      "note": "栗原信充の北条泰時の人物画を既存の画像本体から共有する。頼朝没後の合議のしくみ、御成敗式目を定めた執権名と法の概要への回答後に、政治の担い手を確認する。元画像の1929年は刊行資料の情報として扱い、13世紀の同時代像や御成敗式目の制定現場とは説明しない。義時・時頼・時宗と区別し、衣装から連署・評定衆の職務や女性の所領規定を判定させない。絵の作者・刊行年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-01-U03",
+          "questions": [
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-03-01-03-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e79451e51f84d4925c8c",
+      "caption": "後鳥羽上皇の肖像（水無瀬神宮所蔵）",
+      "note": "水無瀬神宮に伝わる後鳥羽上皇像。上皇の名、義時討伐の院宣と承久の乱の経過への回答後に、朝廷側の人物を確認する。元画像の作者と所蔵先を公開記録と照合した。院宣の原本や挙兵そのものを描く場面、後醍醐天皇・後白河法皇の肖像ではない。肖像の表情・服装から戦いの勝敗や配流先を推定させず、作者・所蔵神社・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-02-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-805fcb65493c45f1f808",
+      "caption": "北条政子を描いた後世の人物画（菊池容斎・19世紀）",
+      "note": "菊池容斎の前賢故実に描かれた北条政子の人物画。吾妻鏡と承久記に記された頼朝の御恩と、御家人の結集の説明への回答後に政子を確認する。19世紀の後世の図で、1221年にその場で記録された演説の場面や吾妻鏡の本文ではない。画中の机・書物・手の動きから演説の言葉や御家人との位置関係を証明させず、衣装・作者・本の題名は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-02-U01",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c51213b64774abf97a99",
+      "caption": "北条義時の花押（1690年序の花押集の掲載図）",
+      "note": "1690年の序を持つ花押藪に掲載された北条義時の花押の図。討伐対象となった執権の名称への回答後に、義時に帰される署名の印の具体例として示す。元画像の出典を国立国会図書館の書誌情報と照合し、13世紀の院宣の原本や義時の肖像とは説明しない。後世の花押集の図から、当時の本人の筆跡や院宣の受取人を直接証明させない。花押の字形・読み方・花押集の編著者や年代を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-02-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7a247c51f7331d66b45c",
+      "caption": "六波羅探題跡を示す近代の碑（現在の京都・六波羅蜜寺）",
+      "note": "六波羅蜜寺にある六波羅探題跡を示す石碑の現在の写真。機関の名と承久の乱後の朝廷への対応・支配拡大の説明への回答後に、京都の拠点名を結び付ける。京都市の石碑解説で1915年建立・2011年移設の記念碑と照合した。鎌倉期に使用された庁舎や創設当時の碑ではなく、現在の寺院の建物を探題の建物と取り違えない。碑から西国地頭の配置や庁舎の正確な範囲を判断させず、建立・移設年・現在地の寺院名は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-02-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f1146d92496102",
+      "caption": "御成敗式目の本文（東洋文庫所蔵・17世紀の伝本）",
+      "note": "東洋文庫所蔵の御成敗式目の伝本の写真を共有する。法の名、慣習と判例の成文化、対象となる権利義務と全体説明への回答後に、武家法が文章で伝わる具体例を示す。公開画像で17世紀の伝本と確認し、1232年に泰時が書いた原本や同時代の制定現場とはしない。写真の見開きだけで女性・前妻の所領の規定が写っていると断定せず、古文の解読、各条文番号、書写者・所蔵館・伝本の年代は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-03-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-af07d4bb781fe6f15016",
+      "caption": "北条時頼を描いた後世の肖像（1732年）",
+      "note": "1732年の後世の北条時頼の肖像。五代執権の名、宝治合戦と最盛期の政治の全体説明への回答後に、時頼を結び付ける。1247年の戦いの実景や同時代の生前像ではなく、義時・泰時・時宗の像でもない。僧形や表情から三浦氏との対立・勝因・将軍の権限を判断させず、肖像の作者・制作年・出家の経緯は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-03-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-35499a76741f7677d293",
+      "caption": "宗尊親王を描いた後世の刊行図（義烈百人一首・1850年）",
+      "note": "1850年刊の義烈百人一首に描かれた宗尊親王。将軍となった皇子の名と皇族将軍の説明への回答後に、政治の担い手を確認する。公開元の信州地域史料アーカイブの目録で刊行年・題名・編輯者と画家の扱いを照合した。1252年の任命の現場や同時代の肖像ではない。刊行図の古文・歌の読解、衣装から将軍の実権を判定すること、編輯者・画家・刊行年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-03-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-14a6caf1e846710e5044",
+      "caption": "北条時宗の肖像（13世紀末ごろ）",
+      "note": "北条時宗の肖像。時宗の時期に政治権力が集中した得宗家と御内人の説明、得宗専制政治の全体説明への回答後に、具体的な政治の担い手を結び付ける。元画像で13世紀末ごろの肖像と確認し、得宗専制の政治会議を描いた場面や御内人の集団肖像ではない。顔や僧形から権力集中や御内人の制度を証明させず、元寇・寺院の創建・作者・肖像の制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-03-U03",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -5162,6 +5336,102 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Minamoto_no_Yoshitsune.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-7816466b6504457b4d4c.jpg",
       "sha256": "7816466b6504457b4d4c5d7daa2d749656b09e0e439da59db1a68f885936296e"
+    },
+    {
+      "id": "JHKS-ca0539053f0bae402027",
+      "path": "term-images/japanese-history-k/JHKS-ca0539053f0bae402027.jpg",
+      "alt": "伝源頼朝坐像（東京国立博物館所蔵・13～14世紀）",
+      "caption": "伝源頼朝坐像（東京国立博物館所蔵・13～14世紀）",
+      "creator": "Myshkin.（撮影）／像の作者不明",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Seated_Portrait_of_Minamoto_no_Yoritomo_(Presumed)_3.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ca0539053f0bae402027.jpg",
+      "sha256": "ca0539053f0bae40202720eaa066ef981be22bd6c8ef2d9f17d8c85f0b12960d"
+    },
+    {
+      "id": "JHKS-e79451e51f84d4925c8c",
+      "path": "term-images/japanese-history-k/JHKS-e79451e51f84d4925c8c.jpg",
+      "alt": "後鳥羽上皇の肖像（水無瀬神宮所蔵）",
+      "caption": "後鳥羽上皇の肖像（水無瀬神宮所蔵）",
+      "creator": "藤原信実",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-Toba.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e79451e51f84d4925c8c.jpg",
+      "sha256": "e79451e51f84d4925c8cb221225185a751eed722d54076d1d078b9f803e0ca3d"
+    },
+    {
+      "id": "JHKS-7a247c51f7331d66b45c",
+      "path": "term-images/japanese-history-k/JHKS-7a247c51f7331d66b45c.jpg",
+      "alt": "六波羅探題跡を示す近代の碑（現在の京都・六波羅蜜寺）",
+      "caption": "六波羅探題跡を示す近代の碑（現在の京都・六波羅蜜寺）",
+      "creator": "掬茶",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Monument_of_the_Rokuhara_Tandai_Site.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7a247c51f7331d66b45c.jpg",
+      "sha256": "7a247c51f7331d66b45ca3f593488c24d3b10e944e8a4b327527304a44ca0bd8"
+    },
+    {
+      "id": "JHKS-805fcb65493c45f1f808",
+      "path": "term-images/japanese-history-k/JHKS-805fcb65493c45f1f808.jpg",
+      "alt": "北条政子を描いた後世の人物画（菊池容斎・19世紀）",
+      "caption": "北条政子を描いた後世の人物画（菊池容斎・19世紀）",
+      "creator": "菊池容斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hojo_Masako.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-805fcb65493c45f1f808.jpg",
+      "sha256": "805fcb65493c45f1f808c07b38d986144ea1aa6e991faf0604917d7656a458ec"
+    },
+    {
+      "id": "JHKS-35499a76741f7677d293",
+      "path": "term-images/japanese-history-k/JHKS-35499a76741f7677d293.jpg",
+      "alt": "宗尊親王を描いた後世の刊行図（義烈百人一首・1850年）",
+      "caption": "宗尊親王を描いた後世の刊行図（義烈百人一首・1850年）",
+      "creator": "緑亭川柳（編輯）・北斎卍老人等（画）／NPO長野県図書館等協働機構",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Prince_Munetaka.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-35499a76741f7677d293.jpg",
+      "sha256": "35499a76741f7677d293288251a56abda33646ca67644c2007853fe2d9b2519d"
+    },
+    {
+      "id": "JHKS-c51213b64774abf97a99",
+      "path": "term-images/japanese-history-k/JHKS-c51213b64774abf97a99.jpg",
+      "alt": "北条義時の花押（1690年序の花押集の掲載図）",
+      "caption": "北条義時の花押（1690年序の花押集の掲載図）",
+      "creator": "丸山可澄（編著）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hojo_Yoshitoki_kao.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c51213b64774abf97a99.jpg",
+      "sha256": "c51213b64774abf97a99e72e97859d14d9e62dc1661ff4a6d44837550f85f7af"
+    },
+    {
+      "id": "JHKS-af07d4bb781fe6f15016",
+      "path": "term-images/japanese-history-k/JHKS-af07d4bb781fe6f15016.jpg",
+      "alt": "北条時頼を描いた後世の肖像（1732年）",
+      "caption": "北条時頼を描いた後世の肖像（1732年）",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:H%C5%8Dj%C5%8D_Tokiyori.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-af07d4bb781fe6f15016.jpg",
+      "sha256": "af07d4bb781fe6f1501685fa6b165fc380b5d75a12bfa8c069058b54efdcbb4e"
+    },
+    {
+      "id": "JHKS-14a6caf1e846710e5044",
+      "path": "term-images/japanese-history-k/JHKS-14a6caf1e846710e5044.jpg",
+      "alt": "北条時宗の肖像（13世紀末ごろ）",
+      "caption": "北条時宗の肖像（13世紀末ごろ）",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:H%C5%8Dj%C5%8D_Tokimune.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-14a6caf1e846710e5044.jpg",
+      "sha256": "14a6caf1e846710e504478468e6e79472839e551120d81967673a57338c04e1a"
     }
   ]
 }

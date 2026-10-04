@@ -67,7 +67,10 @@
     "book-03-01-06",
     "book-03-01-07",
     "book-03-01-08",
-    "book-03-02-01"
+    "book-03-02-01",
+    "book-03-02-02",
+    "book-03-02-03",
+    "book-03-02-04"
   ],
   "images": [
     {
@@ -4239,6 +4242,238 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-47494042a2c497",
+      "caption": "伝足利尊氏像（浄土寺所蔵・後世の肖像）",
+      "note": "第22回と同じ浄土寺の伝足利尊氏像を再利用する。観応の擾乱の名称と、高師直・足利直義との対立と南朝との和議への回答後に、尊氏を確認する。第22回に照合した文化遺産データベースの16世紀という記録と人物特定の不確かさを維持し、必ず「伝」を残す。直義や師直の肖像と取り違えず、抗争の現場や和議を描いた絵とはしない。表情から心理・勝敗を推測させず、衣装・所蔵先・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-02-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-aae7d3699ab5ed469601",
+      "caption": "後光厳天皇の肖像（天子摂関御影）",
+      "note": "天子摂関御影の後光厳天皇の肖像。北朝再建のため即位させた天皇の名称と、その対応の説明への回答後に、天皇を具体化する。宮内庁の出品記録で天子摂関御影が14世紀の作品と確認した。後醍醐・後小松天皇と取り違えず、1352年の即位の現場や北朝の再建の手続を描くものとはしない。人物画から天皇不在の理由や将軍任命の制度を判断させず、巻別の作者・衣装・肖像の制作年・天皇代数は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-02-U01",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b974ee32e3db6f",
+      "caption": "足利義満の肖像",
+      "note": "第22回と同じ義満の肖像を再利用する。政治権限の集中の説明、南北朝合一の名称と条件、日明貿易での日本国王の称号と通交の説明への回答後に、各活動の担い手を結び付ける。僧形の像を権限の一覧、神器の譲渡の場面、国書の実物とはしない。衣装や顔から天皇の幼少・裁判権・課税権・両統迭立の履行を読み取らせず、金閣の建立や画家・制作年・出家年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-02-U02",
+          "questions": [
+            "R01",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-03-02-02-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-03-02-03-U02",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c1f5d5bc1e2e31435eee",
+      "caption": "後小松天皇の肖像（江戸時代の人物画）",
+      "note": "江戸時代の後小松天皇の肖像。南北朝合一で神器を受けた天皇と、その後の皇位継承への回答後に、合一の相手を確認する。公開元の人物名・江戸期という分類と引用文献の国立国会図書館書誌を照合し、14世紀の幼少時の肖像や合一の現場とはしない。後光厳・後亀山天皇と取り違えず、成年の姿から即位時の年齢を推定させない。約束の不履行や神器の実物を絵だけで証明させず、画家・制作年・衣装は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-02-U03",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2fe40035869312",
+      "caption": "倭寇図巻に描かれた襲撃（明代の絵巻）",
+      "note": "既存の倭寇図巻の画像を共有する。武装貿易船団の名称と明の海禁の全体説明への回答後に、沿岸を襲う活動の図像の具体例を示す。東京大学史料編纂所の公開解説で、明代末期までに作られたと推定される作品と確認した。公開画像に14世紀・16世紀という異なる記載があるため、特定の制作年や14世紀の前期倭寇の実況と断定しない。服装や顔から全員を日本人・明国人・朝鮮人に分類せず、倭寇を単一民族全体の性質として覚えさせない。港・戦い・武器の名称や正当性は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-03-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9e48284c97edf97a5551",
+      "caption": "明の洪武帝の肖像",
+      "note": "洪武帝の肖像。日本へ求めた朝貢と倭寇取り締まり、および沿岸の活動への対応への回答後に、明の政治の担い手を具体化する。公開元の人物名を照合し、永楽帝や日本の足利義満と取り違えない。写真公開年を制作年にしない。海禁の規定を描いた図や日本へ送られた国書の実物ではなく、服装や顔から政策・外交要求の内容を判断させない。肖像の制作年・画家・服装・身体的特徴・生涯や王朝成立年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-03-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-19a64162a444dc",
+      "caption": "戊子入明記に写された勘合の図（15世紀）",
+      "note": "天与清啓の戊子入明記に写された勘合の図を既存画像から共有する。証明書の名称と朝貢形式・持参する仕組みへの回答後に、勘合が記録される具体例を示す。京都国立博物館の解説で1468年の記録に形を写した図と確認し、現存する発行勘合の実物とはしない。図の字形・番号・朱印・大きさ・書き方・照合先の名称を新しく暗記させず、紙面の解読を正答条件にしない。国書や御成敗式目と取り違えない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-03-U02",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a6da8d21a290d2b6768d",
+      "caption": "足利義持の肖像（伝土佐行秀筆）",
+      "note": "足利義持の肖像。明との国交を断った四代将軍と国交断絶の説明、日明貿易の開始と中断の全体説明への回答後に、義満と義持を区別する。公開元と山口県の文化財解説にある1414年賛の神護寺の義持像を照合し、土佐行秀への作者比定は「伝」とする。別寺の模本と混同せず、表情から朝貢形式への不満を推定したり、肖像の制作年を国交断絶年と置き換えたりしない。人物画を国交断絶の文書として扱わず、衣装・賛・作者・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-03-U02",
+          "questions": [
+            "B05",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5dc517ef04eaf1184e58",
+      "caption": "永楽通宝の写真",
+      "note": "永楽通宝の写真。明銭という総称と、日明貿易の輸入品・国内の流通の説明への回答後に、銅銭の実物の具体例を示す。造幣博物館・日本銀行貨幣博物館の解説で永楽通宝が輸入・利用された貨幣と照合した。写真の一枚の出土地・輸入経路や真贋を断定せず、模鋳銭をすべて明からの輸入銭と一般化しない。明銭は永楽通宝だけの別称ではなく、宋銭・江戸期の寛永通宝とは区別する。銭文の字体・直径・鋳造年・材質割合・交換比率・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-03-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7eb7b47b0da18af045f6",
+      "caption": "尚円王の御後絵（後世の肖像）",
+      "note": "尚円王の御後絵の写真。金丸が即位して移った王統の名称と第一尚氏からの交代への回答後に、金丸と尚円を同じ人物として結び付ける。首里城公園の公開展示で初代尚円王御後絵と王統の関係を確認した。公開画像の1796年という記載を本人の生前の制作年にせず、御後絵の模写・再制作や戦前撮影の存在を踏まえ、細かな制作年・現所在を断定しない。作者は公開元の表記と明記し、尚巴志や尚真の肖像と取り違えない。画中の随員や衣装から即位の事情や明の冊封を証明させず、画家・肖像の年代・冠の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-70503bc4b5779be0e6d0",
+      "caption": "復元された首里城正殿（2016年の写真）",
+      "note": "2016年撮影の復元首里城正殿。王宮の名称と、三山統一後の政治体制の説明への回答後に、首里城を具体化する。首里城公園の解説で1992年の復元は18世紀の再建後の正殿をモデルとしたものと確認し、1429年の建物の現存写真ではないと明記する。写真を現在の再建状況や15世紀の建築・祭祀の実景として扱わず、首里城と那覇港を同じ場所とはしない。屋根・龍の数・建築年・火災年・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3d4176bddf90dd107d35",
+      "caption": "三線の写真（2007年）",
+      "note": "現代の三線の写真。楽器名と琉歌の伴奏への説明の回答後に、三線の実物の形を示す。公開元で三線と確認し、写真の胴の皮は人工素材であることを選定記録に残す。15世紀の現存品や琉歌を実際に演奏している場面ではない。楽器の素材・弦の数・奏法・音階・撮影者を新しい暗記条件にせず、三味線・琵琶の写真と取り違えない。漆器や染織の献上の現場を写す写真でもない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-24a8b49eb177166eb4e3",
+      "caption": "那覇から出航する朝貢船を描いた1831年の版画",
+      "note": "那覇から中国へ向かう朝貢船の出航を描いた1831年刊の版画。那覇港の名称と、中継貿易の港・琉球文化の全体説明への回答後に、港の活動の具体例を示す。公開元の航海記の書誌と画中の表題・刊行年を照合した。15世紀の中継貿易の実景、明への出航を同時代に描いた絵ではなく、清朝の時代の船の描写であることを選定記録に残す。帆船の形から全貿易航路・貨物を復元させず、船種の比定・行先の地名・描写年・版画家・刊行年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ecdec81e2e80558df06a",
+      "caption": "十三湊遺跡から出土した陶磁器",
+      "note": "十三湊遺跡から出土した陶磁器の写真。アイヌが往来した津軽の港名と交易の説明への回答後に、中世の港町の遺物の具体例を示す。青森県の県史資料で写真の出土先と陶磁器の種類を確認し、出土品を並べて撮影した写真と扱う。写真の各品をアイヌ所有品や直接物々交換された品と断定せず、交易相手・交換の現場・民族別の生活全体を遺物だけで証明させない。十三湖を示す景観写真やコシャマインの戦いの遺物とはしない。産地・窯・器種・出土区画・寸法は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U03",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0acd5ecdb741260c0229",
+      "caption": "熊送りの儀礼を描いた19世紀の絵",
+      "note": "蝦夷島奇観に描かれた熊送りの儀礼の19世紀の写し絵。イオマンテの名称と、魂を神々の世界に送り返す世界観の説明への回答後に、儀礼が図像として伝わる具体例を示す。公開元では平沢屏山の原画に基づくとされるが、原画・写しの関係を断定せず作者欄でも不詳と明記する。15世紀の実況、コシャマインの戦いや和人との交易の現場ではなく、アイヌ文化すべてを一様な儀礼へ一般化しない。大英博物館の関連資料一覧で資料番号・19世紀の写し絵という記録を照合した。作者や写しの系統が不確かなため確定は避ける。儀礼の細かな手順・参加者・道具・古文・画家・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-04-U03",
+          "questions": [
+            "B03",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -6029,6 +6264,138 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ashikaga_Motouji.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-f115f5649c7504adc290.jpg",
       "sha256": "f115f5649c7504adc290c5c381752b7f9bbf1722c197d11c3b6c9b8fa84b0458"
+    },
+    {
+      "id": "JHKS-aae7d3699ab5ed469601",
+      "path": "term-images/japanese-history-k/JHKS-aae7d3699ab5ed469601.jpg",
+      "alt": "後光厳天皇の肖像（天子摂関御影）",
+      "caption": "後光厳天皇の肖像（天子摂関御影）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-K%C5%8Dgon.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-aae7d3699ab5ed469601.jpg",
+      "sha256": "aae7d3699ab5ed469601a91852f96417c590fe1689e16b14512881e6ceab8b17"
+    },
+    {
+      "id": "JHKS-c1f5d5bc1e2e31435eee",
+      "path": "term-images/japanese-history-k/JHKS-c1f5d5bc1e2e31435eee.jpg",
+      "alt": "後小松天皇の肖像（江戸時代の人物画）",
+      "caption": "後小松天皇の肖像（江戸時代の人物画）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-Komatsu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c1f5d5bc1e2e31435eee.jpg",
+      "sha256": "c1f5d5bc1e2e31435eee60a2093ca39f64ff6109f7d8814d2bb3f9f4562f7cf9"
+    },
+    {
+      "id": "JHKS-a6da8d21a290d2b6768d",
+      "path": "term-images/japanese-history-k/JHKS-a6da8d21a290d2b6768d.jpg",
+      "alt": "足利義持の肖像（伝土佐行秀筆）",
+      "caption": "足利義持の肖像（伝土佐行秀筆）",
+      "creator": "伝土佐行秀",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ashikaga_Yoshimochi.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a6da8d21a290d2b6768d.jpg",
+      "sha256": "a6da8d21a290d2b6768d0d08e3f5a77408c5f94f5bb84d4955e8f3f71469b2b5"
+    },
+    {
+      "id": "JHKS-9e48284c97edf97a5551",
+      "path": "term-images/japanese-history-k/JHKS-9e48284c97edf97a5551.jpg",
+      "alt": "明の洪武帝の肖像",
+      "caption": "明の洪武帝の肖像",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hongwu1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9e48284c97edf97a5551.jpg",
+      "sha256": "9e48284c97edf97a5551290539fddd1dae5eb7d5aa3af2785cfa736d5839aca5"
+    },
+    {
+      "id": "JHKS-5dc517ef04eaf1184e58",
+      "path": "term-images/japanese-history-k/JHKS-5dc517ef04eaf1184e58.jpg",
+      "alt": "永楽通宝の写真",
+      "caption": "永楽通宝の写真",
+      "creator": "Donald Trung",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yongle_Tongbao_Ming_era_coinage_minted_for_export.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5dc517ef04eaf1184e58.jpg",
+      "sha256": "5dc517ef04eaf1184e582a21255fc31f96e8f8d2bc33042f3c7aa3d54ba088d0"
+    },
+    {
+      "id": "JHKS-7eb7b47b0da18af045f6",
+      "path": "term-images/japanese-history-k/JHKS-7eb7b47b0da18af045f6.jpg",
+      "alt": "尚円王の御後絵（後世の肖像）",
+      "caption": "尚円王の御後絵（後世の肖像）",
+      "creator": "向元瑚（公開元の作者表記）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:King_Sho_En.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7eb7b47b0da18af045f6.jpg",
+      "sha256": "7eb7b47b0da18af045f6a22c7465a455508c47d8d7eb19f9077f1485c83b71eb"
+    },
+    {
+      "id": "JHKS-70503bc4b5779be0e6d0",
+      "path": "term-images/japanese-history-k/JHKS-70503bc4b5779be0e6d0.jpg",
+      "alt": "復元された首里城正殿（2016年の写真）",
+      "caption": "復元された首里城正殿（2016年の写真）",
+      "creator": "CEphoto, Uwe Aranas",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Naha_Okinawa_Japan_Shuri-Castle-01.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-70503bc4b5779be0e6d0.jpg",
+      "sha256": "70503bc4b5779be0e6d0a9d6d2188aace9eee7302ca764df4cc5658f0ca1f4d0"
+    },
+    {
+      "id": "JHKS-3d4176bddf90dd107d35",
+      "path": "term-images/japanese-history-k/JHKS-3d4176bddf90dd107d35.jpg",
+      "alt": "三線の写真（2007年）",
+      "caption": "三線の写真（2007年）",
+      "creator": "TimDuncan",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sanshin.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3d4176bddf90dd107d35.jpg",
+      "sha256": "3d4176bddf90dd107d352ae14936ba5b00f75ab844d9fe9d962bfff93fc7c739"
+    },
+    {
+      "id": "JHKS-24a8b49eb177166eb4e3",
+      "path": "term-images/japanese-history-k/JHKS-24a8b49eb177166eb4e3.jpg",
+      "alt": "那覇から出航する朝貢船を描いた1831年の版画",
+      "caption": "那覇から出航する朝貢船を描いた1831年の版画",
+      "creator": "ウィリアム・スミス（原画）、F・フィンデン（版刻）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Departure_of_a_Loo_Choo_(Ryukyu)_Junk_with_Tribute_to_Pekin_(Peking,_China)_1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-24a8b49eb177166eb4e3.jpg",
+      "sha256": "24a8b49eb177166eb4e332466832b129d1150e2f28e92292020f6bb3e8e0d9ae"
+    },
+    {
+      "id": "JHKS-ecdec81e2e80558df06a",
+      "path": "term-images/japanese-history-k/JHKS-ecdec81e2e80558df06a.jpg",
+      "alt": "十三湊遺跡から出土した陶磁器",
+      "caption": "十三湊遺跡から出土した陶磁器",
+      "creator": "青森県環境生活部（写真提供・撮影者不詳）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tosaminato_Site_(Aomori_Prefecture_Department_of_Environment_and_Public_Affairs).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ecdec81e2e80558df06a.jpg",
+      "sha256": "ecdec81e2e80558df06ade33d99ec360c5e0dce1e488f2b0b0fcd042bd9ef02c"
+    },
+    {
+      "id": "JHKS-0acd5ecdb741260c0229",
+      "path": "term-images/japanese-history-k/JHKS-0acd5ecdb741260c0229.jpg",
+      "alt": "熊送りの儀礼を描いた19世紀の絵",
+      "caption": "熊送りの儀礼を描いた19世紀の絵",
+      "creator": "作者不詳（平沢屏山の原画に基づくとされる）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:AinuBearSacrificeCirca1870.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0acd5ecdb741260c0229.jpg",
+      "sha256": "0acd5ecdb741260c02298d7c397c146ce392a794519a368ba32cb66331c60c06"
     }
   ]
 }

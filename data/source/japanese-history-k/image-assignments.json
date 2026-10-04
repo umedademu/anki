@@ -52,7 +52,10 @@
     "book-02-03-04",
     "book-02-03-05",
     "book-02-04-01",
-    "book-02-04-02"
+    "book-02-04-02",
+    "book-02-04-03",
+    "book-02-04-04",
+    "book-02-04-05"
   ],
   "images": [
     {
@@ -3198,6 +3201,198 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-6e11572f58c7a1bbfdb9",
+      "caption": "藤原良房を描いた後世の人物画（菊池容斎）",
+      "note": "菊池容斎が描いた後世の藤原良房の人物画。臣下として初めて摂政となった人物の名称と、良房から基経への担い手の変化の説明への回答後に示す。９世紀の同時代肖像や清和天皇の絵、摂政就任の場面ではない。元画像の1903年という記録を容斎自身の制作年と断定せず、前賢故実の後世の掲載図として扱う。服装・姿勢で役職や政治の権限を判定させず、作者・刊行年・衣の模様は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-03-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b04bd0db5ade4c85949b",
+      "caption": "藤原基経を描いた後世の人物画（菊池容斎）",
+      "note": "菊池容斎が描いた後世の藤原基経の人物画。関白に任命された人物名と、摂政・関白の成立の全体説明への回答後に示す。９世紀の本人の写実的記録や光孝天皇・藤原良房の人物画ではなく、関白への任命の実景ともしない。元画像の1903年という記録は容斎の生没年と区別する。柱や服装から天皇の成人・官職の権限を判定させず、絵の細部・作者・掲載年は追加の出題条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-03-U01",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9848101b6d452639fa97",
+      "caption": "応天門の変を描いた後世の絵巻（12世紀・門と群衆の場面）",
+      "note": "12世紀の伴大納言絵巻の、門と群衆を描いた場面。応天門の変の名称と、事件が藤原氏の権力拡大の背景となった説明への回答後に示す。出光美術館の解説で866年の事件を描いた12世紀の絵巻と照合した。９世紀の同時代記録、藤原氏の婚姻関係の図、犯人や事件の真相を確定する証拠ではない。写る門・群衆や個々の人物を見ただけで大伴氏・紀氏の没落を判定させず、絵巻名・作者・制作年・登場人物は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-03-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3d6d409253ca68",
+      "caption": "藤原道長を描いた後世の人物画（13世紀）",
+      "note": "Commonsで道長とされる13世紀の人物画を共有する。全盛期の父子名、娘の婚姻と藤原氏の政治基盤の全体説明への回答後に、道長を表した後世の描写を確認する。頼通本人の像や娘たちの婚姻図、11世紀の同時代肖像とはしない。服装・座席・表情で外祖父の地位や官職独占を証明させず、絵の作者・制作年・模様は追加の出題条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-03-U02",
+          "questions": [
+            "B02",
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-4e6d063fbb79f6",
+      "caption": "藤原頼通を描いた後世の絵巻の一場面（14世紀）",
+      "note": "駒競行幸絵巻の14世紀の頼通の描写としてCommonsに公開された画像を共有する。藤原氏の全盛期と摂関家の成立の説明、平等院鳳凰堂を建てた人物名への回答後に示す。11世紀の生前の肖像や道長の絵、鳳凰堂建立の場面ではなく、絵だけで摂政・関白の独占と世襲を証明させない。提供元で公開された状態の画像をそのまま使い、独自に切り抜かない。絵巻の題名・制作年・衣装は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-03-U02",
+          "questions": [
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-02-04-04-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3dd16f7b4c660a",
+      "caption": "菅原道真を描いた後世の天神像（15世紀）",
+      "note": "荏柄天神社に伝わる15世紀の束帯天神像を共有する。遣唐使中止を建議した人物の名称、中止の背景と全体説明への回答後に示す。894年の同時代肖像や中止建議の現場ではなく、天神信仰で道真を描いた後世の絵である。絵から唐の国力低下・航海の危険・中止年を判定させず、神社名・絵の題名・服装・制作年は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b3f5c5de42a65b570962",
+      "caption": "古今和歌集の後世の写本（関戸本の断簡・11世紀）",
+      "note": "古今和歌集の関戸本の写本断簡。初の勅撰和歌集の名称と、和歌集・随筆・物語の代表作と作者の説明への回答後に示す。所蔵館の作品記録で11世紀中期から後期の書写と照合した。905年の編纂時の原本、紀貫之の自筆、後世の新古今和歌集とはしない。伝藤原行成という書写者の伝承を和歌集の編者と混同させず、書風・詩歌の全文・料紙の色・書写者・所蔵館・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-fbca651aae6b28",
+      "caption": "仮名文学の例・源氏物語絵巻の詞書（12世紀）",
+      "note": "五島美術館に伝わる12世紀の源氏物語絵巻の詞書の断簡として公開された画像を共有する。仮名の作られ方と性質、仮名文学の発展の説明への回答後に、仮名が文学に使われた例を示す。10世紀以前の仮名の発明過程を描く図、紫式部の自筆原稿、古今和歌集や新古今和歌集の頁とはしない。提供元の画像にある印刷文字も含めてそのまま使用し、独自に加工しない。文字の全文読解や漢字からの変形手順、絵巻の作者・所蔵館・制作年は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U02",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5315cd82a75f0b",
+      "caption": "清少納言を描いた後世の人物画（土佐光起・17世紀）",
+      "note": "土佐光起が描いた17世紀の清少納言図を共有する。清少納言が書いた随筆の名称への回答後に、作品と作者を結び付ける。枕草子の本文が写った画像、紫式部や平安時代の同時代肖像とはしない。簾を上げる場面の細部を読解条件にせず、絵から随筆の全文・成立時期を判定させない。絵の作者・制作年・簾の故事は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U02",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-31653130b54529",
+      "caption": "源氏物語絵巻「東屋」の場面（12世紀の大和絵の例）",
+      "note": "徳川美術館に伝わる12世紀の源氏物語絵巻の東屋の場面を共有する。源氏物語の名称、大和絵の名称、唐絵と大和絵の区別と国風文化の全体説明への回答後に、物語を絵画化した例を確認する。紫式部本人の肖像や自筆、11世紀の執筆場面、唐絵の写真ではない。大和絵は日本の題材に基づく区分として扱い、単に日本で描かれた絵なら大和絵とする説明はしない。東屋の筋・人物名・絵の構図・作者・制作年は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U02",
+          "questions": [
+            "B05",
+            "B06",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c944ab925f4dcda6171e",
+      "caption": "平等院鳳凰堂の阿弥陀如来像（平安時代の像・1915年刊の掲載写真）",
+      "note": "平等院鳳凰堂の本尊阿弥陀如来像の写真。浄土信仰の名称、死後の極楽浄土への期待と信仰の広まりの説明への回答後に、信仰された仏の彫刻の具体例を示す。平等院の解説で1053年に納められた定朝の像と確認した。９世紀の像や大日如来、鎌倉の大仏、ハワイの平等院の模造像とはしない。写真そのものは1915年刊の図録の掲載写真で、1053年の建立場面の写真ではない。光背や手の形・仏師・造像年は追加の暗記条件にせず、写真だけで末法思想や社会不安の原因を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U03",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-47ccb2c357de03",
+      "caption": "平等院鳳凰堂（修理を経て残る平安時代の建物）",
+      "note": "宇治の平等院鳳凰堂の現在の外観写真を共有する。寺院の所在地、11世紀の浄土信仰の高まりと全体説明への回答後に示す。元画像の説明にある1153年という建立年は採用せず、平等院の公式説明で1053年の建立と現在までの修理を照合した。江戸時代だけの再建建物やハワイの複製寺院、９世紀に建てられた寺と取り違えない。写真から末法思想・国司の徴税・藤原氏の婚姻関係を判定させず、現在の色・屋根の鳳凰・池・建立年は追加の出題条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-04-U03",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25da7fae12097c293096",
+      "caption": "奈良時代の開墾地の図（東大寺領・759年の鳴戸村墾田図）",
+      "note": "既存の759年の東大寺領の鳴戸村墾田図を共有する。初期荘園の発展という背景を含む班田制衰退と国司徴税の説明への回答後に、寺院が開墾地を把握した奈良時代の具体例を示す。平安時代の寄進地系荘園の寄進状、不輸・不入の特権の証文、902年の荘園整理令や743年の法令本文ではない。班田制の衰退・農民の逃亡と偽籍・課税対象の転換・整理令の成否をこの図だけで証明させず、地名・面積・朱印・制作年は追加の暗記条件にしない。法律名や特権の定義だけを尋ねる問題には割り当てない。",
+      "targets": [
+        {
+          "termId": "JHK-02-04-05-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -4616,6 +4811,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Five-storied_Pagoda,_Toji_20210721.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-1841dbffc2dc92e7d198.jpg",
       "sha256": "1841dbffc2dc92e7d19844b8c99c333a76b251f7589a159b118df76a1135c716"
+    },
+    {
+      "id": "JHKS-6e11572f58c7a1bbfdb9",
+      "path": "term-images/japanese-history-k/JHKS-6e11572f58c7a1bbfdb9.jpg",
+      "alt": "藤原良房を描いた後世の人物画（菊池容斎）",
+      "caption": "藤原良房を描いた後世の人物画（菊池容斎）",
+      "creator": "菊池容斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fujiwara_no_Yoshifusa.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6e11572f58c7a1bbfdb9.jpg",
+      "sha256": "6e11572f58c7a1bbfdb925d3a90f21f03d8d92a166f751acf8a8ea8eeb24941a"
+    },
+    {
+      "id": "JHKS-b04bd0db5ade4c85949b",
+      "path": "term-images/japanese-history-k/JHKS-b04bd0db5ade4c85949b.jpg",
+      "alt": "藤原基経を描いた後世の人物画（菊池容斎）",
+      "caption": "藤原基経を描いた後世の人物画（菊池容斎）",
+      "creator": "菊池容斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fujiwara_no_Mototsune.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b04bd0db5ade4c85949b.jpg",
+      "sha256": "b04bd0db5ade4c85949bf701fddb73c6c963b5e94988732ef773dd971c135b42"
+    },
+    {
+      "id": "JHKS-9848101b6d452639fa97",
+      "path": "term-images/japanese-history-k/JHKS-9848101b6d452639fa97.jpg",
+      "alt": "応天門の変を描いた後世の絵巻（12世紀・門と群衆の場面）",
+      "caption": "応天門の変を描いた後世の絵巻（12世紀・門と群衆の場面）",
+      "creator": "伝常磐光長",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ban_Dainagon_Ekotoba_-_Crowd_and_a_gate.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9848101b6d452639fa97.jpg",
+      "sha256": "9848101b6d452639fa972ce16d46b31f1749340106f7fe64e67c32cc1e7a6620"
+    },
+    {
+      "id": "JHKS-b3f5c5de42a65b570962",
+      "path": "term-images/japanese-history-k/JHKS-b3f5c5de42a65b570962.jpg",
+      "alt": "古今和歌集の後世の写本（関戸本の断簡・11世紀）",
+      "caption": "古今和歌集の後世の写本（関戸本の断簡・11世紀）",
+      "creator": "伝藤原行成／メトロポリタン美術館所蔵",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Four_Poems_from_the_Sekido_Version_of_the_Collection_of_Poems_Ancient_and_Modern_(Sekido-bon_Kokin_wakash%C5%AB)_MET_LC-2020_88_sr1-015.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b3f5c5de42a65b570962.jpg",
+      "sha256": "b3f5c5de42a65b570962ae8faca04605601c308a5778f49522823c74cce87592"
+    },
+    {
+      "id": "JHKS-c944ab925f4dcda6171e",
+      "path": "term-images/japanese-history-k/JHKS-c944ab925f4dcda6171e.jpg",
+      "alt": "平等院鳳凰堂の阿弥陀如来像（平安時代の像・1915年刊の掲載写真）",
+      "caption": "平等院鳳凰堂の阿弥陀如来像（平安時代の像・1915年刊の掲載写真）",
+      "creator": "定朝（像）／1915年刊行図録の掲載写真（撮影者不明）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Byodoin_Monastery_Amida_of_Howodo_(313).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c944ab925f4dcda6171e.jpg",
+      "sha256": "c944ab925f4dcda6171e571593d288490b8d097b91afb525a9d3f5f2e4eca518"
     }
   ]
 }

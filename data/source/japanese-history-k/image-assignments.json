@@ -61,7 +61,10 @@
     "book-02-04-08",
     "book-03-01-01",
     "book-03-01-02",
-    "book-03-01-03"
+    "book-03-01-03",
+    "book-03-01-04",
+    "book-03-01-05",
+    "book-03-01-06"
   ],
   "images": [
     {
@@ -3774,6 +3777,166 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-baa5d1f504abed8c2ace",
+      "caption": "日置北郷の下地中分絵図（1324年）",
+      "note": "1324年の日置北郷の下地中分絵図。領家側と地頭側が土地を分けた具体例として、下地中分の名称、対立した双方、土地を分け互いの支配に干渉しないしくみへの回答後に示す。文化遺産オンラインと歴史民俗博物館の記録で題名・年代・所蔵先を照合した。東郷荘の1258年の絵図や幕府の命令文書とは取り違えない。地図の方位、赤線の細部、地名・古文の解読、制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-04-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-411cac7be3c21d882cd1",
+      "caption": "宋銭の一例・北宋の崇寧通宝（開封博物館の展示）",
+      "note": "開封博物館で撮影された北宋の崇寧通宝。宋銭の名称と、貨幣経済の発達・土倉の説明への回答後に、宋で鋳造された銭の形を結び付ける。日本で出土した銭、日本の土倉で使用された特定の銭、南宋に鋳造された銭とは説明しない。写真だけから日本での流通経路や借金のしくみを証明させず、銭の銘文の解読、銭種・鋳造年・展示館・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-04-U04",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-ffacbc931c6195",
+      "caption": "フビライ・ハンの没後の肖像（元世祖像・伝阿尼哥）",
+      "note": "既存の元世祖像を共有する。国号を元とした皇帝と大都への回答後に、フビライという政治の担い手を確認する。公開元と国立故宮博物院の説明を照合し、没後の像として扱い、作者は阿尼哥の親筆と断定せず「伝」の表記を残す。肖像の服装から都の位置やイスラム商人の活動を判断させず、作者・所蔵館・制作時期は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U01",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4426685a6d7a61",
+      "caption": "マルコ・ポーロを描いた後世のモザイク（1867年）",
+      "note": "既存のジェノヴァのマルコ・ポーロのモザイクを共有する。東方見聞録と、日本を実際に訪れず伝聞でジパングを記した説明への回答後に、著者を具体化する。1867年の後世の作品で、13世紀の生前肖像や著書の原本ではない。手にした本を東方見聞録の原本と断定せず、絵から日本訪問や黄金の宮殿の実在を証明させない。作品の所在地・作者・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U01",
+          "questions": [
+            "B04",
+            "B05",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-14a6caf1e846710e5044",
+      "caption": "北条時宗の肖像（13世紀末ごろ）",
+      "note": "前回登録した同じ北条時宗の肖像を再利用する。元の服属要求を拒んだ執権の名と、返書を送らず異国警固番役を命じた説明への回答後に人物を結び付ける。国書の原本、使者との対面、九州警固の現場を描いた場面ではない。僧形や表情から政策の内容を判断させず、寺院の創建や作者・制作時期は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U02",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e68b3a17718b2d15f341",
+      "caption": "「敵国降伏」の額を掲げる筥崎宮の楼門（2023年の写真）",
+      "note": "現在伝わる敵国降伏の額を掲げる筥崎宮の楼門の写真。亀山上皇の祈り、筥崎宮への敵国降伏の書、時宗による経文・寺社への奉納の説明への回答後に、祈願に関係する具体的な寺社を示す。筥崎宮の公式解説で楼門は1594年の建立と確認した。楼門や現在の額を13世紀の当初の建物・亀山上皇の直筆原本とは説明しない。祈願で勝敗が決まったことの証拠とせず、額の古文の解読、建立年・所在地・撮影年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U02",
+          "questions": [
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-e6739450c72280",
+      "caption": "蒙古襲来絵詞に描かれた文永の役の陸上戦（13世紀）",
+      "note": "既存の蒙古襲来絵詞の陸上戦の場面を共有する。文永の役の名称、元軍の集団戦法とてつはうで日本側が苦戦した説明への回答後に、戦いの場面を確認する。三の丸尚蔵館の作品記録と歴史民俗博物館の模本記録で前巻の文永の役の場面と照合した。弘安の海上戦や1847年の蒙古襲来図と取り違えない。絵巻には錯簡・欠失や後世の手が入った可能性があるため、配置や兵の人数・弾の構造を厳密な戦場記録として読み取らせない。人物名・古文・絵の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U03",
+          "questions": [
+            "B01",
+            "B06",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3f0a331a308cdc7dc355",
+      "caption": "元寇防塁・石築地の整備後の写真（福岡市今津・2013年）",
+      "note": "福岡市今津に残る元寇防塁の整備後の写真。博多湾岸に築いた石築地の名称と場所、弘安の役までに防備を強めた説明への回答後に、防壁の具体例を示す。福岡市の文化財解説で文永の役の後の築造と、現在は一部を整備公開していることを確認した。2013年の写真であり、1281年の全長・高さ・配置をそのまま写した記録とはしない。写真だけから元軍の進路・城壁の当時の寸法を判断させず、地区名・整備年・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U03",
+          "questions": [
+            "B04",
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1aeb14a2a79524675099",
+      "caption": "蒙古襲来絵詞の海上戦の場面（13世紀）",
+      "note": "蒙古襲来絵詞の、日本側が元軍の船へ攻めかかる海上戦の場面。日本側の小型船による奇襲と、二度の蒙古襲来への防備の全体説明への回答後に、海で戦ったことを結び付ける。公開画像の場面と三の丸尚蔵館の作品記録を照合し、13世紀の絵巻と扱う。商人の問丸の船や遣唐使船、文永の陸上戦の場面ではない。絵の船の大きさ・人数・武具から軍の正確な規模を判定させず、描かれた個々の人物名・詞書の解読・制作年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U03",
+          "questions": [
+            "B07",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-38f27d993ebdc3",
+      "caption": "蒙古襲来を描いた後世の絵（菊池容斎・1847年）",
+      "note": "既存の菊池容斎の蒙古襲来図を共有する。二度の蒙古襲来の総称への回答後に、後世に元寇が描かれた一例として示す。東京国立博物館の所蔵記録で1847年の作品と照合した。13世紀の蒙古襲来絵詞、実際の暴風や船の沈没をその場で記録した絵とは説明しない。写真や図の題名から文永・弘安の個別の役を特定させず、風の描写を勝敗の唯一の原因や神の介入の証拠としない。作者・制作年・船の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-05-U03",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-adfc52e8e59e527adc0d",
+      "caption": "北条貞時を描いた後世の人物画（栗原信充）",
+      "note": "栗原信充による北条貞時の後世の人物画。永仁の徳政令を出した執権名、所領の回復を図っても御家人制を立て直せなかった説明への回答後に、政治の担い手を確認する。元画像の1929年は刊行資料の情報として扱い、1297年の同時代肖像・命令文書や発令の場面とは説明しない。時宗・時頼・泰時と区別し、服装や表情から徳政令の内容・効き目を証明させない。画像の作者・刊行年・読み取りにくい文字は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-01-06-U01",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -5432,6 +5595,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:H%C5%8Dj%C5%8D_Tokimune.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-14a6caf1e846710e5044.jpg",
       "sha256": "14a6caf1e846710e504478468e6e79472839e551120d81967673a57338c04e1a"
+    },
+    {
+      "id": "JHKS-baa5d1f504abed8c2ace",
+      "path": "term-images/japanese-history-k/JHKS-baa5d1f504abed8c2ace.jpg",
+      "alt": "日置北郷の下地中分絵図（1324年）",
+      "caption": "日置北郷の下地中分絵図（1324年）",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Map_Dividing_the_Hiokikitag%C5%8D_Estate_in_Satsuma.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-baa5d1f504abed8c2ace.jpg",
+      "sha256": "baa5d1f504abed8c2ace1bb884d06492af901d94ff45ebb2aea049135400d515"
+    },
+    {
+      "id": "JHKS-411cac7be3c21d882cd1",
+      "path": "term-images/japanese-history-k/JHKS-411cac7be3c21d882cd1.jpg",
+      "alt": "宋銭の一例・北宋の崇寧通宝（開封博物館の展示）",
+      "caption": "宋銭の一例・北宋の崇寧通宝（開封博物館の展示）",
+      "creator": "Windmemories",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:20241025_%22Chongning_Tongbao%22_Coin,_Northern_Song_Dynasty.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-411cac7be3c21d882cd1.jpg",
+      "sha256": "411cac7be3c21d882cd107c0be9a764f93555b621968178c68020cd1139e370c"
+    },
+    {
+      "id": "JHKS-e68b3a17718b2d15f341",
+      "path": "term-images/japanese-history-k/JHKS-e68b3a17718b2d15f341.jpg",
+      "alt": "「敵国降伏」の額を掲げる筥崎宮の楼門（2023年の写真）",
+      "caption": "「敵国降伏」の額を掲げる筥崎宮の楼門（2023年の写真）",
+      "creator": "そらみみ",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Romon_Gate_of_Hakozaki_Shrine_2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e68b3a17718b2d15f341.jpg",
+      "sha256": "e68b3a17718b2d15f341bd32d314cc9c6199ec529a6d5b2db73897eaaf5063de"
+    },
+    {
+      "id": "JHKS-3f0a331a308cdc7dc355",
+      "path": "term-images/japanese-history-k/JHKS-3f0a331a308cdc7dc355.jpg",
+      "alt": "元寇防塁・石築地の整備後の写真（福岡市今津・2013年）",
+      "caption": "元寇防塁・石築地の整備後の写真（福岡市今津・2013年）",
+      "creator": "震天動地",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Genko_Borui_in_Imazu.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3f0a331a308cdc7dc355.jpg",
+      "sha256": "3f0a331a308cdc7dc35513848f03b49f1d760c6c5cac2a83d8947b74acadcbba"
+    },
+    {
+      "id": "JHKS-1aeb14a2a79524675099",
+      "path": "term-images/japanese-history-k/JHKS-1aeb14a2a79524675099.jpg",
+      "alt": "蒙古襲来絵詞の海上戦の場面（13世紀）",
+      "caption": "蒙古襲来絵詞の海上戦の場面（13世紀）",
+      "creator": "作者不明",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mokoshuraiekotoba.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1aeb14a2a79524675099.jpg",
+      "sha256": "1aeb14a2a7952467509916b1c5d6606322f987cfe2be991f53577b550a188c4f"
+    },
+    {
+      "id": "JHKS-adfc52e8e59e527adc0d",
+      "path": "term-images/japanese-history-k/JHKS-adfc52e8e59e527adc0d.jpg",
+      "alt": "北条貞時を描いた後世の人物画（栗原信充）",
+      "caption": "北条貞時を描いた後世の人物画（栗原信充）",
+      "creator": "栗原信充",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:H%C5%8Dj%C5%8D_Sadatoki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-adfc52e8e59e527adc0d.jpg",
+      "sha256": "adfc52e8e59e527adc0d594ba93fafdafd3fc79c478f03fd44e0f2dc78ba51f8"
     }
   ]
 }

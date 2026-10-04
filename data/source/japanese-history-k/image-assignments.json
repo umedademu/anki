@@ -73,7 +73,10 @@
     "book-03-02-04",
     "book-03-02-05",
     "book-03-02-06",
-    "book-03-02-07"
+    "book-03-02-07",
+    "book-03-02-08",
+    "book-03-02-09",
+    "book-04-01-01"
   ],
   "images": [
     {
@@ -4693,6 +4696,319 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-0d040fd88d8bb1",
+      "caption": "再建された鹿苑寺金閣（現代の写真）",
+      "note": "既存の金閣の写真を共有する。北山文化を代表する建物・義満の時代の文化とその全体説明への回答後に、外観を具体化する。寺院と京都市の文化財解説で鹿苑寺の舎利殿と照合し、現在の建物は1950年の焼失後に再建された金閣なので、そのことを画像説明に残す。室町時代の建物そのものの未改修の現存写真や義満の住居全体とはしない。銀閣・東求堂と区別し、外観から室内の寝殿造や禅宗様の全細部を読み取らせない。再建年・撮影年・作者・階数・金箔の量を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b974ee32e3db6f",
+      "caption": "足利義満の肖像",
+      "note": "第22回以降と同じ義満の肖像を共有する。北山文化の時代の三代将軍の名前と能の庇護者への回答後に、関連する将軍を確認する。元の人物比定を維持し、義政・義教の肖像として使わない。肖像は金閣建設や観阿弥・世阿弥の上演の現場ではない。衣装・肖像の作者・制作年代・所蔵先・顔立ちを新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U01",
+          "questions": [
+            "B02"
+          ]
+        },
+        {
+          "termId": "JHK-03-02-08-U02",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f4c477c94cccc9",
+      "caption": "能の上演（現代の写真）",
+      "note": "既存の能の上演写真を共有する。能の名称と猿楽からの発展・観阿弥と世阿弥の大成の説明への回答後に、舞台の例を示す。公開元の能の上演という記録と実際の舞台を照合した。現代の上演であり、中世の猿楽の実況や観阿弥・世阿弥本人の演技の写真ではない。狂言と同じ芸能として扱わず、演目・役者・楽器名・面の種類・流派・撮影地・撮影年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ae66167e0b5390cf3e6f",
+      "caption": "狂言の上演（現代の写真）",
+      "note": "ギオンコーナーでの狂言の上演。能の合間の喜劇という狂言の名称と、能の理論書・狂言を区別する説明への回答後に、狂言の舞台を具体化する。会場の公式解説で狂言の上演と確認し、公開元は2007年の写真と記録している。現代の舞台を室町時代の実況にはしない。演目名・登場人物・縄の使い方・役者名・衣装・流派を新しい暗記条件にせず、能・歌舞伎・文楽・京舞の写真とは説明しない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U02",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0f0ad3508ef677",
+      "caption": "慈照寺銀閣（現代の写真）",
+      "note": "既存の銀閣の写真を共有する。東山文化の代表建物と義政・書院造・美意識の説明への回答後に、外観を確認する。寺院の公式解説で室町期の銀閣と東求堂が現存すると照合したが、外観写真は書院造の床の間・違い棚・付書院のすべてを示す室内写真ではない。鹿苑寺金閣や東求堂の外観と取り違えず、池や現在の庭園の全要素を義政の時代のままと断定しない。修復年・建物の寸法・屋根の細部・銀箔の有無・撮影者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-e02a00a4ec1447",
+      "caption": "伝足利義政像（15世紀）",
+      "note": "第24回と同じ伝足利義政像を共有する。東山文化の八代将軍の名前への回答後に、関連する将軍を確認する。e国宝の人物比定が伝足利義政であるため「伝」を維持する。確実な本人の生前の写生とせず、義満の像や銀閣内部の図として使わない。人物比定・画家・肖像の制作年・衣装・画中の建物の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e2ec35adb167f42b9c74",
+      "caption": "龍安寺の石庭（現代の写真）",
+      "note": "龍安寺の石庭。枯山水の名称と代表寺院、石や砂で自然や宇宙観を表す説明への回答後に、水を使わない庭の具体例を示す。京都市の文化財解説で龍安寺の方丈庭園と照合した。現代の写真であり、石庭の制作年・作者・作意は断定しない。別の寺院の庭を龍安寺としない。石の個数・配置の意味・作者・寺院の創建年・撮影年は新しい暗記条件にせず、写真だけで特定の宇宙観を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U04",
+          "questions": [
+            "B01",
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-83cc42a6252bcfec20e2",
+      "caption": "雪舟『秋冬山水図』の冬景（15世紀末～16世紀初）",
+      "note": "雪舟等楊の秋冬山水図の冬景。水墨画を大成した人物名と明で学んだことを含む説明への回答後に、実際の作品を示す。東京国立博物館・e国宝の解説で15世紀末～16世紀初の冬景と照合し、公開元の2022年という日時を制作年としない。画面の垂直の崖線を含む冬景が一致することを確認した。日本や明の特定地点の実景・留学中の写生と断定しない。落款の解読・作品名・制作年・所蔵先・描画技法の細かな名称を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U04",
+          "questions": [
+            "B04",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-279e0b57ecaf57",
+      "caption": "宗祇の肖像（後世の作品）",
+      "note": "既存の宗祇の肖像を共有する。連歌を大成した人物の名前と連歌の広まりへの回答後に、担い手を確認する。公開元の人物名と慶長期という分類、国立国会図書館のジャパンサーチの関連肖像案内を照合した。宗祇の没後の作品として扱い、本人の生前の写生・連歌会の実景とはしない。特定の所蔵先や画家を新たに断定せず、賛・落款・衣装・肖像の年代・所蔵先を新しい暗記条件にしない。18世紀の与謝蕪村の俳画を連歌の画像として代用しない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U05",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b7c3ab68fe178df3fc54",
+      "caption": "足利学校の入口・入徳門（現代の写真）",
+      "note": "足利学校の入徳門。学校の再興者と学習内容、創設者には諸説があることの説明への回答後に、教育施設を具体化する。足利市の解説で現存する入徳門と復原された施設を区別し、写真の門の額が入徳であることを確認した。学校門と取り違えず、上杉憲実の再興当時に建てた門・学校の創設年が確定した証拠とはしない。門の建築年・額の解読・復原年・所在地の細かな位置を新しい暗記条件にせず、写真から易学・漢籍・兵法の授業内容を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U05",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b51395d45588b0bca570",
+      "caption": "『浦島太郎』絵巻の一場面（16世紀末～17世紀初）",
+      "note": "ボドリアン図書館が提供する浦島太郎の絵巻の一場面。御伽草子の名称と読み物の普及、文化・教育の全体説明への回答後に、絵を伴う物語の例を示す。図書館の画像提供記録にある資料番号MS. Jap. c.4(R)、16世紀末～17世紀初という説明を採用する。15世紀の学校で実際に使用した教材や当時の庶民全員が読んだ本の証拠とはしない。物語中の蓬莱の宮殿を実際の日本の建物・竜宮の実在する遺跡と説明しない。絵の制作年・所蔵先・本文解読・登場人物の数・画家は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-08-U05",
+          "questions": [
+            "B05",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5b17282d971299",
+      "caption": "応仁の乱を題材にした歌川芳虎の版画（19世紀）",
+      "note": "第24回と同じ応仁の乱の版画を共有する。全国に戦乱が広がる契機の名称と下剋上・戦国大名成立の説明への回答後に、戦乱を題材にした後世の絵を示す。19世紀の作品という説明を維持し、15世紀の戦場の実況や戦国大名のすべての出自を描いた図とはしない。戦乱の広がりを旗や兵数から証明させず、家紋・軍勢の配置・衣装・画家・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-09-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-14425bd7d3924f666848",
+      "caption": "一乗谷朝倉氏遺跡の復原町並（現代の写真）",
+      "note": "一乗谷朝倉氏遺跡の復原町並。城下町の名称と政治・経済・文化の中心となる役割、武士・商工業者の集住の説明への回答後に、町並みを具体化する。福井県の博物館の遺跡解説で武家屋敷・町屋の復原と確認した。現在の復原施設であり、戦国期の建物がそのまま現存する町や領国全体の写真とはしない。写真の一部分だけで城下町の全区画や山城を示したことにせず、朝倉氏・復原年・特定の商売・建物の寸法・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-09-U02",
+          "questions": [
+            "B02",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b3eea4c8d3e2fe1e884d",
+      "caption": "治水施設の一例・信玄堤の現在の景観",
+      "note": "治水施設の具体例として信玄堤の現在の景観を示す。戦国大名が治水で農業を盛んにした目的と領国支配の説明への回答後に、川と堤の関係を具体化する。甲斐市・山梨県の解説で治水と耕地の安定との関係を確認したが、写真は2012年の現代の景観であり、戦国時代の川や堤の形がそのまま残った証拠にはしない。河畔の木々を戦国期の植林と断定しない。信玄堤の名称・築堤年・水防施設の細かな名前・撮影地・撮影者を新しい暗記条件にせず、写真だけで農業政策・荘園や御料地の減少を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-09-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-83bca4fcdf534e",
+      "caption": "十字軍の戦いを描いた14世紀の写本挿絵",
+      "note": "既存の十字軍の写本挿絵を共有する。十字軍の名称と教皇・聖地・東ローマ帝国の背景、文化交流の全体説明への回答後に、後世に描かれた戦いの例を示す。フランス国立図書館の解説でギヨーム・ド・ティールの海外史、Français 22495 fol.154v、14世紀の写本と照合した。図書館も紋章は装飾上の想像と説明する。11世紀の第一回十字軍の実況、特定の都市の攻略図・勝敗や民族の外見を正確に表す絵とはしない。甲冑・紋章・人物の肌色・軍勢の配置・回次・戦闘地・写本名を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-12f3a161df70534079eb",
+      "caption": "レオナルド・ダ・ヴィンチ『モナ・リザ』（16世紀）",
+      "note": "レオナルド・ダ・ヴィンチのモナ・リザ。ルネサンスの名称・特徴と芸術家の代表作、全体説明への回答後に、具体的な作品を示す。ルーヴル美術館の作品情報で作者と16世紀の作品と照合した。公開元がすでに切り出し・色調調整した提供画像をそのまま使用し、こちらでは加工しない。モデルの名前・技法・制作年・所在地・画面の風景を新しい暗記条件にせず、絵だけで古典復興や教皇・国王・商人の庇護のすべてを証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U02",
+          "questions": [
+            "B01",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e10c98a37667e7e43fd0",
+      "caption": "ミケランジェロ『ダビデ像』の写真",
+      "note": "ミケランジェロのダビデ像の写真。彫刻と作者の対応、芸術家と作品・庇護者の説明への回答後に、彫刻作品を示す。アカデミア美術館の作品解説と公開元の像・撮影記録を照合した。彫刻作者のミケランジェロと現代の撮影者Rico Heilを区別して記録する。ドナテッロの別のダビデ像や現代の別作品とはしない。素材・像高・聖書の物語・体の細部・制作年・写真の撮影年は新しい暗記条件にせず、この一作品だけで庇護者のすべてを示したことにしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U02",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-a4e2ee856d0c73",
+      "caption": "ルターの肖像（16世紀）",
+      "note": "既存のルターの肖像を共有する。贖宥状を批判した人物、改革者の総称と信仰者の平等への回答後に、人物を確認する。ウフィツィ美術館の所蔵紹介と公開元のルター・16世紀の記録を照合した。カルヴァンやイエズス会創設者の肖像として使わず、肖像の服装や表情から教義・贖宥状批判を読み取らせない。画家・制作年・帽子・所蔵先・人物の顔立ちは新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U03",
+          "questions": [
+            "B02",
+            "B04",
+            "B07"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-66b7668364f43b",
+      "caption": "『九十五カ条の論題』の印刷本（1517年）",
+      "note": "既存の九十五カ条の論題の印刷本を共有する。1517年に発表した文書の名前と贖宥状批判・宗教改革の説明への回答後に、印刷された文書を具体化する。公開元の1517年のニュルンベルク印刷・ベルリン国立図書館の記録と、米国議会図書館の同文書の解説を照合した。ルターの手稿、教会の扉に貼った現物・贖宥状そのものとは説明しない。ラテン語・印刷者・活字・印刷地・資料番号の暗記や古文解読を要求しない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U03",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4e580929f56701",
+      "caption": "活版印刷の作業を描いた18世紀の版画",
+      "note": "既存の活版印刷の作業図を共有する。宗教改革の情報を広めた技術と普及への回答後に、印刷作業を具体化する。公開元の作者ダニエル・ホドヴィエツキと18世紀の版画という記録を確認した。宗教改革より後世の例であり、1517年のルターの文書の実際の印刷現場・グーテンベルク本人の工房を描く図とはしない。作業者の人数・器具の細かな名称・印刷速度・作者・制作年を新しい暗記条件にせず、図から普及の範囲を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U03",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-1a050a2665afcd",
+      "caption": "イエズス会の標章（現代に描いた図）",
+      "note": "既存のイエズス会の標章を共有する。カトリックの改革と海外・日本への布教、宗教改革の全体説明への回答後に、団体を確認する。公開元の記録とイエズス会の公式案内の標章を照合する。現代の図案であり、16世紀の現存する旗・日本への航路図・プロテスタントの標章とはしない。IHSの語源・釘や十字の意味・図案の制作年・作者・構成要素の数を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-01-01-U03",
+          "questions": [
+            "B06",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -6735,6 +7051,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D1%81%D1%8F%D0%BA%D1%83.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-e72cf4322bf0a208617e.jpg",
       "sha256": "e72cf4322bf0a208617e69f3ce9ca8acc0b3c530cb58632ba31c4ac72fc9ac0c"
+    },
+    {
+      "id": "JHKS-83cc42a6252bcfec20e2",
+      "path": "term-images/japanese-history-k/JHKS-83cc42a6252bcfec20e2.jpg",
+      "alt": "雪舟『秋冬山水図』の冬景（15世紀末～16世紀初）",
+      "caption": "雪舟『秋冬山水図』の冬景（15世紀末～16世紀初）",
+      "creator": "雪舟等楊（作品）、東京国立博物館（画像提供）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sesshu_%22Autumn_And_Winter_Landscapes%22_Winter.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-83cc42a6252bcfec20e2.jpg",
+      "sha256": "83cc42a6252bcfec20e21824fe373e2aca1479413a6b24465fd50362c748893e"
+    },
+    {
+      "id": "JHKS-e2ec35adb167f42b9c74",
+      "path": "term-images/japanese-history-k/JHKS-e2ec35adb167f42b9c74.jpg",
+      "alt": "龍安寺の石庭（現代の写真）",
+      "caption": "龍安寺の石庭（現代の写真）",
+      "creator": "Mariafdafranco",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ryoanji.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e2ec35adb167f42b9c74.jpg",
+      "sha256": "e2ec35adb167f42b9c74ea4686234db04007f1635bc7cac2a1dea6eccf352fcf"
+    },
+    {
+      "id": "JHKS-ae66167e0b5390cf3e6f",
+      "path": "term-images/japanese-history-k/JHKS-ae66167e0b5390cf3e6f.jpg",
+      "alt": "狂言の上演（現代の写真）",
+      "caption": "狂言の上演（現代の写真）",
+      "creator": "lienyuan lee",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%A5%87%E5%9C%92%E8%A7%92%E7%8B%82%E8%A8%80%E8%A1%A8%E6%BC%94_Kyogen_Performance_at_Goin_Corner_-_panoramio.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ae66167e0b5390cf3e6f.jpg",
+      "sha256": "ae66167e0b5390cf3e6f2688c1396282cf29ba2a5fb6404d8a5c41b4d7e05e12"
+    },
+    {
+      "id": "JHKS-b7c3ab68fe178df3fc54",
+      "path": "term-images/japanese-history-k/JHKS-b7c3ab68fe178df3fc54.jpg",
+      "alt": "足利学校の入口・入徳門（現代の写真）",
+      "caption": "足利学校の入口・入徳門（現代の写真）",
+      "creator": "竹太郎",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:AshikagaGakkoGate.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b7c3ab68fe178df3fc54.jpg",
+      "sha256": "b7c3ab68fe178df3fc54469e467756322430ca64155d5b4b64299ddcf35fc795"
+    },
+    {
+      "id": "JHKS-b51395d45588b0bca570",
+      "path": "term-images/japanese-history-k/JHKS-b51395d45588b0bca570.jpg",
+      "alt": "『浦島太郎』絵巻の一場面（16世紀末～17世紀初）",
+      "caption": "『浦島太郎』絵巻の一場面（16世紀末～17世紀初）",
+      "creator": "作者不詳（画像提供：ボドリアン図書館）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Urashima_Taro_handscroll_from_Bodleian_Library_2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b51395d45588b0bca570.jpg",
+      "sha256": "b51395d45588b0bca57047b223dce4e9892101a3dc711b191924d80dfb5505e8"
+    },
+    {
+      "id": "JHKS-14425bd7d3924f666848",
+      "path": "term-images/japanese-history-k/JHKS-14425bd7d3924f666848.jpg",
+      "alt": "一乗谷朝倉氏遺跡の復原町並（現代の写真）",
+      "caption": "一乗谷朝倉氏遺跡の復原町並（現代の写真）",
+      "creator": "shikabane taro",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E4%B8%80%E4%B9%97%E8%B0%B7%E6%9C%9D%E5%80%89%E6%B0%8F%E9%81%BA%E8%B7%A1_-_panoramio.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-14425bd7d3924f666848.jpg",
+      "sha256": "14425bd7d3924f66684818072674e9d9c556878adf2c053c7cc60958eb2450ff"
+    },
+    {
+      "id": "JHKS-b3eea4c8d3e2fe1e884d",
+      "path": "term-images/japanese-history-k/JHKS-b3eea4c8d3e2fe1e884d.jpg",
+      "alt": "治水施設の一例・信玄堤の現在の景観",
+      "caption": "治水施設の一例・信玄堤の現在の景観",
+      "creator": "さかおり",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Outside_of_Shingen_embankment.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b3eea4c8d3e2fe1e884d.jpg",
+      "sha256": "b3eea4c8d3e2fe1e884d427a9fd1957c56985158b108ddcd3e1146702bce34c7"
+    },
+    {
+      "id": "JHKS-12f3a161df70534079eb",
+      "path": "term-images/japanese-history-k/JHKS-12f3a161df70534079eb.jpg",
+      "alt": "レオナルド・ダ・ヴィンチ『モナ・リザ』（16世紀）",
+      "caption": "レオナルド・ダ・ヴィンチ『モナ・リザ』（16世紀）",
+      "creator": "レオナルド・ダ・ヴィンチ（作品）、C2RMF（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mona_Lisa,_by_Leonardo_da_Vinci,_from_C2RMF_retouched.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-12f3a161df70534079eb.jpg",
+      "sha256": "12f3a161df70534079eb582149d17862f83b86987232d9c944e81123499e4389"
+    },
+    {
+      "id": "JHKS-e10c98a37667e7e43fd0",
+      "path": "term-images/japanese-history-k/JHKS-e10c98a37667e7e43fd0.jpg",
+      "alt": "ミケランジェロ『ダビデ像』の写真",
+      "caption": "ミケランジェロ『ダビデ像』の写真",
+      "creator": "ミケランジェロ（彫刻）、Rico Heil（撮影）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Michelangelo%27s_David.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e10c98a37667e7e43fd0.jpg",
+      "sha256": "e10c98a37667e7e43fd0d5de74dcf97595b8acab46e4e1df47661c193f3289ba"
     }
   ]
 }

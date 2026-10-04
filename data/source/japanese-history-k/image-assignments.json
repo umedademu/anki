@@ -85,7 +85,10 @@
     "book-04-01-07",
     "book-04-02-01",
     "book-04-02-02",
-    "book-04-02-03"
+    "book-04-02-03",
+    "book-04-02-04",
+    "book-04-02-05",
+    "book-04-02-06"
   ],
   "images": [
     {
@@ -5799,6 +5802,295 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-c7156bc61d762c0d6b42",
+      "caption": "後水尾天皇の肖像（18世紀・没後の作品、部分）",
+      "note": "宮内庁書陵部の作品記録で後水尾天皇・尾形光琳・1701年以降の没後の肖像と照合した。紫衣事件と譲位の説明への回答後に関係する天皇を示す。出家後の姿を描く後世の作品の部分であり、1627年の事件や1629年の譲位の実況ではない。服装・落款の解読・画家・制作年代を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-04-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-44b75d52905185043c19",
+      "caption": "明正天皇を描いた後世の人物画（1894年刊の書物より）",
+      "note": "公開元の人物名と1894年刊『御歴代百廿一天皇御尊影』の図版という記録に照合した。後水尾天皇の譲位後に即位した明正天皇の名前と朝廷統制の説明への回答後に人物を示す。生前の写生・写真や1629年の即位の実況図と断定しない。容姿・書物の表記・天皇の代数・出版年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-04-U01",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4024a9859da13a0c8c4c",
+      "caption": "徳川綱吉の肖像（18世紀の作品）",
+      "note": "東京国立博物館の大徳川展目録で法隆寺の綱吉像・18世紀の作品と照合した。文治政治と綱吉の政策の説明への回答後に人物を確認する。綱吉自身の筆の別作品や政策実施の実況ではない。衣服・画家・所蔵先・制作年代を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-38851e10e59507a3944b",
+      "caption": "元禄小判の表と裏（現代の写真）",
+      "note": "日本銀行貨幣博物館と公開元の元禄小判という記録を表裏の写真に照合した。含金量を減らした改鋳と財政・物価への影響の回答後に貨幣の実物例を示す。慶長小判や正徳の良質貨幣とは区別し、写真だけで含金量・発行量・物価上昇を判定させない。刻印・重量・撮影者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U01",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-aa763fd7876488d46d1a",
+      "caption": "新井白石を描いた後世の人物画（1914年刊の書物より）",
+      "note": "公開元の新井白石という人物名と1914年刊の書物の図版という記録に照合した。人物名・正徳の治・家宣と家継の時代の政策の回答後に白石を確認する。出版社を肖像の画家とせず、別作品の画家の記録を流用しない。生前の写真・正徳の政策実施の場面ではなく、服装・画家・出版年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3c72e93c68d0f0553d8c",
+      "caption": "近松門左衛門の記念像（近松公園・現代の写真）",
+      "note": "公開元の本文で近松公園の記念像・撮影者Suguri Fと確認した。既存画像の作者欄が具体的な撮影者を欠いていたため、正しい撮影者と利用条件を記録した新規画像として登録する。近松と『曽根崎心中』の組合せの回答後に人物の記念像を示す。当人の写真や元禄期の上演・作品の登場人物とはせず、公園名・像の作者・撮影者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4784637543dc50bc418c",
+      "caption": "井原西鶴『日本永代蔵』の挿絵（1688年の刊本）",
+      "note": "国立国会図書館が案内する岩瀬文庫の1688年刊『日本永代蔵』の記録と公開元の書物名に照合した。西鶴の浮世草子と文学の組合せの回答後に刊本の挿絵を示す。西鶴本人の肖像ではなく、挿絵の人物・場面・文章の読解を新しい出題条件にしない。写真の撮影年と刊行年を混同しない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U03",
+          "questions": [
+            "B03",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-109f36be307f78",
+      "caption": "与謝蕪村が描いた松尾芭蕉の肖像（没後の作品）",
+      "note": "既存の肖像を共有する。公開元の芭蕉・蕪村筆という記録と画像の署名に照合した。芭蕉と『奥の細道』、元禄の文学の説明への回答後に人物を確認する。後世の画家による肖像であり、芭蕉の旅の実況や当人の写真とはしない。賛文・服装・画家の名前を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U03",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1e78b2ad2a1a0b3ada2e",
+      "caption": "三味線の例（現代の写真）",
+      "note": "第27回で点検した同じ写真を共有する。三味線の名前と人形浄瑠璃の語り・音楽の説明への回答後に楽器の姿を確認する。元禄の上演の実況や人形浄瑠璃専用の楽器と断定しない。材質・奏法・楽器の各部・撮影者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U03",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-538bdd16ebc17aa9767c",
+      "caption": "菱川師宣『見返り美人図』（17世紀）",
+      "note": "東京国立博物館のA-60・菱川師宣・17世紀の『見返り美人図』に照合した。師宣と浮世絵、美人画の説明への回答後に作品の一例を示す。この絵は肉筆画であり、木版の多色刷りの錦絵と説明しない。作品名・衣服の文様・寸法・所蔵先を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U04",
+          "questions": [
+            "B01",
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-bad5dea48de07ddbb9ae",
+      "caption": "俵屋宗達『風神雷神図屏風』の右隻（17世紀）",
+      "note": "文化庁の建仁寺所蔵・俵屋宗達筆の作品記録と右隻の風神の図柄に照合した。大和絵の伝統と装飾画の説明への回答後に宗達の作品例を示す。光琳による模写とは区別し、雷神はこの右隻には写っていない。作品名・左右・神の持ち物・制作年代・文化財指定を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U04",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ed8ce2b7f3d88b",
+      "caption": "尾形光琳『燕子花図屏風』の右隻（18世紀）",
+      "note": "既存の画像を共有する。根津美術館の作品記録と右隻の花の配置に照合した。宗達と光琳、大和絵と装飾画の説明への回答後に光琳の作品例を示す。屏風一双の全体ではなく、師宣の浮世絵や宗達の作品とも混同しない。作品名・花の種類・配置・所蔵先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U04",
+          "questions": [
+            "B04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-8f4b917180e75dceefee",
+      "caption": "中江藤樹の肖像の複製（閑谷学校の展示）",
+      "note": "公開元の中江藤樹・閑谷学校の複製展示という記録に照合した。陽明学の人物名と儒学の流派の説明への回答後に藤樹を確認する。文化財の原本の所蔵先と複製の展示先を混同せず、この写真を生前の写真・原画の直接撮影とはしない。服装・画家・展示先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U05",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9b64005a50274e2ce4e7",
+      "caption": "山鹿素行を描いた島田墨仙の人物画（1942年）",
+      "note": "国立美術館の作品記録で島田墨仙・1942年の山鹿素行を描く作品と照合した。『中朝事実』の著者と古学の直接研究の説明への回答後に人物を確認する。17世紀の生前の写生や写真とはせず、画中の書物を『中朝事実』の実物と断定しない。画家・制作年・服装・書物の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U05",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ca26d2cb91e4be41357e",
+      "caption": "徳川光圀の肖像（1701年・没後の作品）",
+      "note": "徳川ミュージアムの所蔵記録で狩野常信・1701年の徳川光圀像と照合した。光圀と『大日本史』の編纂の回答後に人物を確認する。没後の作品であり、書物を編纂している実況や生前の写真ではない。公開元の登録年を制作年に流用せず、画家・賛文の解読・所蔵先・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U05",
+          "questions": [
+            "B07",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-38587b28f47f785fd24c",
+      "caption": "関孝和の肖像（一関市博物館所蔵）",
+      "note": "一関市博物館の所蔵記録と関孝和の肖像という公開元の記録に照合した。和算を大成した関孝和の名前への回答後に人物を確認する。制作年不詳の肖像であり、生前の写生と断定しない。関孝和の図柄を使う現代の切手の候補とは区別し、机の道具・画家・所蔵先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U06",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-852c3fbc8a701d",
+      "caption": "貞享暦による暦の例（1729年版・国立科学博物館の展示）",
+      "note": "既存の画像を共有する。博物館の展示紹介で1729年版の貞享暦の例と照合した。渋川春海による改暦と授時暦の経度差の修正の説明への回答後に暦の姿を確認する。既存の享保の改革という説明を日本史Kでは流用せず、1685年の改暦時の原本や渋川自身の筆とはしない。暦の解読・版の年・出版者・展示先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-05-U06",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-edba1e38f06d15",
+      "caption": "徳川吉宗の肖像（1929年・没後の作品）",
+      "note": "既存の肖像を共有する。江戸東京博物館の天下泰平展目録で狩野忠信・昭和４年の徳川吉宗像と照合した。吉宗と享保の改革、財政政策の説明への回答後に人物を確認する。18世紀に描かれた生前の肖像とはせず、上米や新田開発をこの絵だけで証明させない。服装・画家・1929年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-06-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-bd86e29ecc5750962913",
+      "caption": "公事方御定書の校正本『棠蔭秘鑑』の目録（1841年）",
+      "note": "国立公文書館の解説で天保12年・1841年に勘定所が校正した『棠蔭秘鑑』の公事方御定書と確認した。公事方御定書の名前と裁判手続・判例、法整備の説明への回答後に目録の一頁を示す。1742年の編纂原本そのものとはせず、この頁を足高の制の資料や全条文と扱わない。『棠蔭秘鑑』の名前・目録の解読・校正年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-06-U02",
+          "questions": [
+            "B01",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1967f5e5cc52df4077f6",
+      "caption": "小石川養生所で使われた井戸（現代の写真）",
+      "note": "小石川植物園の公式案内で養生所の井戸が現在も残ると確認した。小石川養生所の名前と目安箱への意見による設置の回答後に残る遺構を示す。現在の写真であり、養生所全体の建物・当時の覆屋や目安箱そのものの写真とはしない。植生・井戸の構造・撮影者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-06-U03",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -8165,6 +8457,186 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Iemitu.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-a9ee8cb746e2007d9684.jpg",
       "sha256": "a9ee8cb746e2007d96847186a642db7af918064781921c6c96466bace77a0d73"
+    },
+    {
+      "id": "JHKS-c7156bc61d762c0d6b42",
+      "path": "term-images/japanese-history-k/JHKS-c7156bc61d762c0d6b42.jpg",
+      "alt": "後水尾天皇の肖像（18世紀・没後の作品、部分）",
+      "caption": "後水尾天皇の肖像（18世紀・没後の作品、部分）",
+      "creator": "尾形光琳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-Mizunoo3.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c7156bc61d762c0d6b42.jpg",
+      "sha256": "c7156bc61d762c0d6b42014ec44f60c2eeacf6a7e1341eb18961dcf925b3a8ed"
+    },
+    {
+      "id": "JHKS-44b75d52905185043c19",
+      "path": "term-images/japanese-history-k/JHKS-44b75d52905185043c19.jpg",
+      "alt": "明正天皇を描いた後世の人物画（1894年刊の書物より）",
+      "caption": "明正天皇を描いた後世の人物画（1894年刊の書物より）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Meisho_of_Japan.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-44b75d52905185043c19.jpg",
+      "sha256": "44b75d52905185043c1986250e56b22d5477426e2fbc608ca919fcdd38ef8ea9"
+    },
+    {
+      "id": "JHKS-4024a9859da13a0c8c4c",
+      "path": "term-images/japanese-history-k/JHKS-4024a9859da13a0c8c4c.jpg",
+      "alt": "徳川綱吉の肖像（18世紀の作品）",
+      "caption": "徳川綱吉の肖像（18世紀の作品）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokugawa_Tsunayoshi_H%C5%8Dry%C5%AB-ji.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4024a9859da13a0c8c4c.jpg",
+      "sha256": "4024a9859da13a0c8c4cc9151fc94e78f17e4382b2d12ce6f1218ac887b74ebd"
+    },
+    {
+      "id": "JHKS-aa763fd7876488d46d1a",
+      "path": "term-images/japanese-history-k/JHKS-aa763fd7876488d46d1a.jpg",
+      "alt": "新井白石を描いた後世の人物画（1914年刊の書物より）",
+      "caption": "新井白石を描いた後世の人物画（1914年刊の書物より）",
+      "creator": "作者不詳（有朋堂書店刊の書物の図版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Arai_Hakuseki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-aa763fd7876488d46d1a.jpg",
+      "sha256": "aa763fd7876488d46d1af0b5a135d0f64d0ace1fc68e60dbc073f179cd353e71"
+    },
+    {
+      "id": "JHKS-38851e10e59507a3944b",
+      "path": "term-images/japanese-history-k/JHKS-38851e10e59507a3944b.jpg",
+      "alt": "元禄小判の表と裏（現代の写真）",
+      "caption": "元禄小判の表と裏（現代の写真）",
+      "creator": "As6022014",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Genroku-koban.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-38851e10e59507a3944b.jpg",
+      "sha256": "38851e10e59507a3944bbfb6c8edf345498365a7d4224d252b342b97debc9fca"
+    },
+    {
+      "id": "JHKS-4784637543dc50bc418c",
+      "path": "term-images/japanese-history-k/JHKS-4784637543dc50bc418c.jpg",
+      "alt": "井原西鶴『日本永代蔵』の挿絵（1688年の刊本）",
+      "caption": "井原西鶴『日本永代蔵』の挿絵（1688年の刊本）",
+      "creator": "Asturio Cantabrio（撮影）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nippon_Eitaigura_Ihara_Saikaku.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4784637543dc50bc418c.jpg",
+      "sha256": "4784637543dc50bc418cc9315f75667cbafe7e732229a147ed3fa436013a2aa9"
+    },
+    {
+      "id": "JHKS-538bdd16ebc17aa9767c",
+      "path": "term-images/japanese-history-k/JHKS-538bdd16ebc17aa9767c.jpg",
+      "alt": "菱川師宣『見返り美人図』（17世紀）",
+      "caption": "菱川師宣『見返り美人図』（17世紀）",
+      "creator": "菱川師宣",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hishikawa_Moronobu_-_Beauty_Looking_Back_-_Google_Art_Project.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-538bdd16ebc17aa9767c.jpg",
+      "sha256": "538bdd16ebc17aa9767c9ee444c8fb45ee22ee81539acb3236c832e959c1ceb6"
+    },
+    {
+      "id": "JHKS-bad5dea48de07ddbb9ae",
+      "path": "term-images/japanese-history-k/JHKS-bad5dea48de07ddbb9ae.jpg",
+      "alt": "俵屋宗達『風神雷神図屏風』の右隻（17世紀）",
+      "caption": "俵屋宗達『風神雷神図屏風』の右隻（17世紀）",
+      "creator": "俵屋宗達",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tawaraya_S%C5%8Dtatsu_-_The_Gods_of_Wind_and_Thunder_(right_screen).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-bad5dea48de07ddbb9ae.jpg",
+      "sha256": "bad5dea48de07ddbb9ae825a5aca6ee4e5b03e537c190ebed43c077ac3a2bea9"
+    },
+    {
+      "id": "JHKS-8f4b917180e75dceefee",
+      "path": "term-images/japanese-history-k/JHKS-8f4b917180e75dceefee.jpg",
+      "alt": "中江藤樹の肖像の複製（閑谷学校の展示）",
+      "caption": "中江藤樹の肖像の複製（閑谷学校の展示）",
+      "creator": "作者不詳（肖像）、Reggaeman（複製展示の撮影）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nakae_Toju_portrait.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8f4b917180e75dceefee.jpg",
+      "sha256": "8f4b917180e75dceefeee349f7b33d3e964084c627a6af1fa7a92168cbfe6e36"
+    },
+    {
+      "id": "JHKS-9b64005a50274e2ce4e7",
+      "path": "term-images/japanese-history-k/JHKS-9b64005a50274e2ce4e7.jpg",
+      "alt": "山鹿素行を描いた島田墨仙の人物画（1942年）",
+      "caption": "山鹿素行を描いた島田墨仙の人物画（1942年）",
+      "creator": "島田墨仙",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shimada_Bokusen_-_Yamaga_Sok%C5%8D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9b64005a50274e2ce4e7.jpg",
+      "sha256": "9b64005a50274e2ce4e7a75338c441870f34026ffc9f9313d1d0ee10e5c985e3"
+    },
+    {
+      "id": "JHKS-ca26d2cb91e4be41357e",
+      "path": "term-images/japanese-history-k/JHKS-ca26d2cb91e4be41357e.jpg",
+      "alt": "徳川光圀の肖像（1701年・没後の作品）",
+      "caption": "徳川光圀の肖像（1701年・没後の作品）",
+      "creator": "狩野常信",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mitsukuni_Tokugawa.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ca26d2cb91e4be41357e.jpg",
+      "sha256": "ca26d2cb91e4be41357e0dc67d7402b4c7f7545d71ff55d29033dce168d130db"
+    },
+    {
+      "id": "JHKS-38587b28f47f785fd24c",
+      "path": "term-images/japanese-history-k/JHKS-38587b28f47f785fd24c.jpg",
+      "alt": "関孝和の肖像（一関市博物館所蔵）",
+      "caption": "関孝和の肖像（一関市博物館所蔵）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Seki_Kowa.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-38587b28f47f785fd24c.jpg",
+      "sha256": "38587b28f47f785fd24caeea911da24d4a1658b029d140034a3ac10e6e66e74a"
+    },
+    {
+      "id": "JHKS-bd86e29ecc5750962913",
+      "path": "term-images/japanese-history-k/JHKS-bd86e29ecc5750962913.jpg",
+      "alt": "公事方御定書の校正本『棠蔭秘鑑』の目録（1841年）",
+      "caption": "公事方御定書の校正本『棠蔭秘鑑』の目録（1841年）",
+      "creator": "勘定所（校正）、国立公文書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NAJDA-181-0089_%E6%A3%A0%E8%94%AD%E7%A7%98%E9%91%91_%E5%85%83.pdf",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-bd86e29ecc5750962913.jpg",
+      "sha256": "bd86e29ecc575096291371b0356964f0fb8da1ec95a4b35e20ebd25b3cc517fc"
+    },
+    {
+      "id": "JHKS-1967f5e5cc52df4077f6",
+      "path": "term-images/japanese-history-k/JHKS-1967f5e5cc52df4077f6.jpg",
+      "alt": "小石川養生所で使われた井戸（現代の写真）",
+      "caption": "小石川養生所で使われた井戸（現代の写真）",
+      "creator": "ZCU（撮影）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Old_water_well_of_Koishikawa_Yojosho.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1967f5e5cc52df4077f6.jpg",
+      "sha256": "1967f5e5cc52df4077f673a3d917031840becbb23968d85f2aff3eccec8a6c4c"
+    },
+    {
+      "id": "JHKS-3c72e93c68d0f0553d8c",
+      "path": "term-images/japanese-history-k/JHKS-3c72e93c68d0f0553d8c.jpg",
+      "alt": "近松門左衛門の記念像（近松公園・現代の写真）",
+      "caption": "近松門左衛門の記念像（近松公園・現代の写真）",
+      "creator": "Suguri F（撮影）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chikamatsu2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3c72e93c68d0f0553d8c.jpg",
+      "sha256": "3c72e93c68d0f0553d8ca3d2d5102d838bb4912e6048e77de9846f465d2af6bd"
     }
   ]
 }

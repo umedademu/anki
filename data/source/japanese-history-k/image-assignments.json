@@ -70,7 +70,10 @@
     "book-03-02-01",
     "book-03-02-02",
     "book-03-02-03",
-    "book-03-02-04"
+    "book-03-02-04",
+    "book-03-02-05",
+    "book-03-02-06",
+    "book-03-02-07"
   ],
   "images": [
     {
@@ -4474,6 +4477,222 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-dbc37e0dc23f9bd20098",
+      "caption": "正長の土一揆に関連する柳生の徳政碑の拓本",
+      "note": "柳生の徳政碑の拓本。正長の土一揆の名称・借金帳消しの要求と土一揆の全体説明への回答後に、地域に残った記録を具体化する。奈良市の解説で1428年の正長の土一揆との関連を確認したが、碑を刻んだ年代には諸説があるので1428年の建立と断定しない。公開元の1943年刊の書籍の拓影で、2023年の公開年を原碑の年代にしない。幕府が出した嘉吉の徳政令の原本ではなく、碑文の解読・字形・所在地・刻銘の年代を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-05-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9564a869c86c599fe3d1",
+      "caption": "足利義教の肖像（15世紀・没後の作品）",
+      "note": "足利義教の肖像。六代将軍の名前・日明貿易の再開・赤松氏による暗殺とその説明への回答後に、担い手を結び付ける。九州国立博物館の公開解説で15世紀の没後の肖像と確認した。公開元で人物部分を切り出した別画像をそのまま保存し、こちらでは加工しない。肖像は本人の生前の写生や暗殺現場・貿易の記録ではない。義持・義政と取り違えず、賛・花押・衣装・寺名・肖像の制作年・画家を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-05-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-e02a00a4ec1447",
+      "caption": "伝足利義政像（15世紀）",
+      "note": "既存の伝足利義政像を共有する。義政の代の細川氏と山名氏の対立・将軍の威権の低下と、将軍継嗣の義視・義尚の問題への回答後に、関連する将軍を確認する。e国宝は被写体と作者をそれぞれ伝足利義政・伝土佐光信とするため、人物名に必ず「伝」を残す。弟や息子、細川勝元・山名持豊の肖像と取り違えず、継嗣争いの現場・飢饉の記録とはしない。画中の建物を銀閣の実景と決め付けず、人物比定・画家・制作年・衣装・建築を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-05-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-03-02-06-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5b17282d971299",
+      "caption": "応仁の乱を題材にした歌川芳虎の版画（19世紀）",
+      "note": "既存の重編応仁記大合戦の版画を共有する。主戦場の京都・戦乱の広がりと応仁の乱の全体説明への回答後に、後世の人々が戦乱を絵にした例を示す。画面の表題と署名、公開元の年代を照合した。15世紀の戦場の実況ではなく、19世紀の版画と明記する。人物や旗を実際の東軍・西軍の配置の証拠にせず、刀・鎧・家紋・人数・軍勢の進路・建物の焼け方・画家・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-06-U01",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-4a1b269c9b66a0",
+      "caption": "赤色の範囲が山城国（現代の位置図）",
+      "note": "既存の山城国の位置図を共有する。将軍領がほぼ山城国一国となったこと、山城国一揆の名称と自治の説明への回答後に、山城国の位置を確認する。赤色が対象範囲で、隣国の色は山城国の領域ではないと説明する。現代に作られた位置図であり、将軍の直轄地や国一揆の実際の支配範囲を正確に描いた同時代の地図ではない。加賀国の一向一揆と取り違えず、国境・隣国・全都道府県・図の色・地図の作者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-06-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        },
+        {
+          "termId": "JHK-03-02-06-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-10c01b7dcc6bed34988e",
+      "caption": "後柏原天皇の肖像（19世紀の作品）",
+      "note": "後柏原天皇の肖像。即位礼の費用を本願寺や幕府の献金で賄ったことと朝廷の窮乏の説明への回答後に、天皇を確認する。公開元の19世紀という分類と画中の作者署名を確認し、作者は公開元の表記と明記する。応仁の乱の同時代の肖像や即位礼・献金の現場の絵とはしない。後奈良天皇の像として使わず、表情から財政事情を推定させない。肖像の制作年・所蔵先・画家・衣装・天皇代数は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-06-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3490d52f1ca19628be95",
+      "caption": "惣の自治を伝える菅浦文書の一通",
+      "note": "菅浦文書の一通。惣の名称と有力農民による自治の説明への回答後に、惣が文書を残した具体例を示す。文化遺産データベース・滋賀大学の公開解説で菅浦文書が惣の自治や村の運営を伝える文書群と照合した。ただし掲載する一通の文書種別を年貢納付の領収書・寄合の議事録・座の特権状と断定しない。紙面の解読・署名・年号・村名・保存数・文書の種類を新しい暗記条件にせず、原文の古文を読めなければ答えられない問題にはしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-06-U04",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-abb37aa50c41f3c29edf",
+      "caption": "祇園祭の山鉾巡行（2009年の京都）",
+      "note": "2009年の京都の祇園祭の山鉾巡行。町衆が復興した祭りの名称と都市の自治の説明への回答後に、祭りの具体例を示す。京都市の解説で応仁の乱後の1500年の復興と町組の関わりを照合した。現代の参加者を中世の町衆と同一視せず、現代の写真を1500年の復興の実景としない。山鉾の名称・装飾・人員・巡行路・再開年・撮影者を新しい暗記条件にせず、惣・座・町衆を同じ組織にまとめない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-06-U04",
+          "questions": [
+            "B06",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f362bc0fca1c844f3a5b",
+      "caption": "牛を使った耕作（19世紀末ごろの日本の写真）",
+      "note": "牛が農具を引く耕作の写真。牛馬耕の名称と農業技術の発展の説明への回答後に、家畜の力で耕す仕組みを具体化する。公開元の説明は1890年ごろの日本の写真で、2016年は画像を電子化した日時であると記録する。室町時代の実景や中世の農具そのものの現存写真とはしない。牛車の運搬や人力の耕作と区別する。農具の細かな形式・家畜の品種・衣装・撮影地・撮影年・撮影者は新しい暗記条件にせず、写真から二毛作の回数や肥料の使用を証明させない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-306d8d45faef50c36461",
+      "caption": "商品作物の一例・桑（現代の写真）",
+      "note": "現代の桑の写真。商品作物の例と手工業の発展の説明への回答後に、桑が実際の植物であることを具体化する。撮影者自身の公開記録で2009年の日本の桑の写真と確認し、室町時代の栽培の実景や中世の農地とはしない。葉の形・樹種の細かな分類・撮影地・撮影者を新しい暗記条件にしない。桑・漆・麻の問いに対して写真の桑だけを商品作物の唯一の例としない。写真にない刀剣・綿・茶の特徴を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U01",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5dc517ef04eaf1184e58",
+      "caption": "永楽通宝の写真",
+      "note": "第23回と同じ永楽通宝の画像を再利用する。明銭の輸入・貨幣経済の浸透と定期市の発展の説明への回答後に、銅銭の実物の例を示す。造幣博物館と日本銀行貨幣博物館の解説を照合した第23回の選定理由を維持する。写真の一枚の出土地・輸入経路・真贋を断定せず、宋銭や江戸期の寛永通宝と取り違えない。銭文・鋳造年・直径・交換比率・撮影者を新しい暗記条件にせず、銭の写真から六斎市の開催回数を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-efe6ffbed9755dc052f6",
+      "caption": "一遍聖絵に描かれた備前福岡の市（13世紀）",
+      "note": "一遍聖絵の備前福岡の市。貨幣経済・定期市と金融の全体説明への回答後に、市の具体的な活動を示す。瀬戸内市の解説で備前福岡の市の図像と確認し、九州の福岡・博多ではないと区別する。13世紀に描かれた先行する市の例で、室町時代の六斎市の実況としない。絵から月六回という開催頻度や商品名・通貨額・座の独占・為替の手続を判断させない。絵の制作年・作者・露店の数・地名の細かな位置を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U02",
+          "questions": [
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b364d6ebb204a4c54ef7",
+      "caption": "石山寺縁起絵巻に描かれた牛車での資材運搬（14世紀）",
+      "note": "石山寺縁起絵巻の第１巻に描かれた牛車による建築資材の運搬。馬借と車借の名称と輸送の全体説明への回答後に、車による荷物運搬の形を具体化する。石山寺の公開解説で第１巻が1324～1326年ごろの制作で高階隆兼筆とみられることを照合した。物語の場面は奈良時代の寺院建設であり、絵の制作年代と描かれた物語の年代を混同しない。室町の特定の車借契約の実録や乗用牛車・牛馬耕の場面とはしない。資材の種類・車の数・画家・制作年・寺院建設年・積載量を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U03",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e72cf4322bf0a208617e",
+      "caption": "石山寺縁起絵巻に描かれた馬での荷物運搬",
+      "note": "石山寺縁起絵巻に描かれた馬での荷物運搬。馬借・車借・廻船業者・問屋の役割の説明への回答後に、馬の背に荷物を載せる輸送を具体化する。福井県の図説福井県史で同じ図を石山寺縁起絵巻の街道をゆく馬借と確認した。牛車・廻船業者の場面ではなく、正長の土一揆の実際の参加者や特定の運送契約の実録とも断定しない。馬の数・荷物の種類・駄賃・関所の場所・拠点・絵の作者・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-03-02-07-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -6396,6 +6615,126 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:AinuBearSacrificeCirca1870.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-0acd5ecdb741260c0229.jpg",
       "sha256": "0acd5ecdb741260c02298d7c397c146ce392a794519a368ba32cb66331c60c06"
+    },
+    {
+      "id": "JHKS-9564a869c86c599fe3d1",
+      "path": "term-images/japanese-history-k/JHKS-9564a869c86c599fe3d1.jpg",
+      "alt": "足利義教の肖像（15世紀・没後の作品）",
+      "caption": "足利義教の肖像（15世紀・没後の作品）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ashikaga_Yoshinori_cropped.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9564a869c86c599fe3d1.jpg",
+      "sha256": "9564a869c86c599fe3d11f03578ee4e90715e058658ca92285fe08ef489c15f6"
+    },
+    {
+      "id": "JHKS-dbc37e0dc23f9bd20098",
+      "path": "term-images/japanese-history-k/JHKS-dbc37e0dc23f9bd20098.jpg",
+      "alt": "正長の土一揆に関連する柳生の徳政碑の拓本",
+      "caption": "正長の土一揆に関連する柳生の徳政碑の拓本",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rubbing_of_Nara_Yagyu_Hoso_Jizo_Tokusei-Hibun.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-dbc37e0dc23f9bd20098.jpg",
+      "sha256": "dbc37e0dc23f9bd20098750709a9affb57dcfc656824c146ab48aa15ce19afdd"
+    },
+    {
+      "id": "JHKS-10c01b7dcc6bed34988e",
+      "path": "term-images/japanese-history-k/JHKS-10c01b7dcc6bed34988e.jpg",
+      "alt": "後柏原天皇の肖像（19世紀の作品）",
+      "caption": "後柏原天皇の肖像（19世紀の作品）",
+      "creator": "土佐光武（公開元の作者表記）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emperor_Go-Kashiwabara.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-10c01b7dcc6bed34988e.jpg",
+      "sha256": "10c01b7dcc6bed34988e58270f6e878310d46bdcd3ed2a1d012517985ac080b8"
+    },
+    {
+      "id": "JHKS-3490d52f1ca19628be95",
+      "path": "term-images/japanese-history-k/JHKS-3490d52f1ca19628be95.jpg",
+      "alt": "惣の自治を伝える菅浦文書の一通",
+      "caption": "惣の自治を伝える菅浦文書の一通",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sugaura_monjo.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3490d52f1ca19628be95.jpg",
+      "sha256": "3490d52f1ca19628be95c6563545187607a4bc290a7d69cdf27347e0299b825b"
+    },
+    {
+      "id": "JHKS-abb37aa50c41f3c29edf",
+      "path": "term-images/japanese-history-k/JHKS-abb37aa50c41f3c29edf.jpg",
+      "alt": "祇園祭の山鉾巡行（2009年の京都）",
+      "caption": "祇園祭の山鉾巡行（2009年の京都）",
+      "creator": "CorpseReviver",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kyoto_Gion_Matsuri_J09_049.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-abb37aa50c41f3c29edf.jpg",
+      "sha256": "abb37aa50c41f3c29edfd16180d14df80f8a75ad3b8387a7a35fecd0ca40d78e"
+    },
+    {
+      "id": "JHKS-f362bc0fca1c844f3a5b",
+      "path": "term-images/japanese-history-k/JHKS-f362bc0fca1c844f3a5b.jpg",
+      "alt": "牛を使った耕作（19世紀末ごろの日本の写真）",
+      "caption": "牛を使った耕作（19世紀末ごろの日本の写真）",
+      "creator": "撮影者不詳（出典：QUT Digital Collections）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan-Farmer_ploughing.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f362bc0fca1c844f3a5b.jpg",
+      "sha256": "f362bc0fca1c844f3a5bd623e3bbf1d6279b313cf535dc346516269e29cffec9"
+    },
+    {
+      "id": "JHKS-306d8d45faef50c36461",
+      "path": "term-images/japanese-history-k/JHKS-306d8d45faef50c36461.jpg",
+      "alt": "商品作物の一例・桑（現代の写真）",
+      "caption": "商品作物の一例・桑（現代の写真）",
+      "creator": "takami torao（Koiroha）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kuwa03.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-306d8d45faef50c36461.jpg",
+      "sha256": "306d8d45faef50c36461c149f68db94ba8856f944fd9b476213d45619e60c5eb"
+    },
+    {
+      "id": "JHKS-efe6ffbed9755dc052f6",
+      "path": "term-images/japanese-history-k/JHKS-efe6ffbed9755dc052f6.jpg",
+      "alt": "一遍聖絵に描かれた備前福岡の市（13世紀）",
+      "caption": "一遍聖絵に描かれた備前福岡の市（13世紀）",
+      "creator": "円伊",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ippen_shonin_eden_IV_-_Hukuoka.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-efe6ffbed9755dc052f6.jpg",
+      "sha256": "efe6ffbed9755dc052f65b21c5ba8a9b24c6aedf2c58dd413a47456580734464"
+    },
+    {
+      "id": "JHKS-b364d6ebb204a4c54ef7",
+      "path": "term-images/japanese-history-k/JHKS-b364d6ebb204a4c54ef7.jpg",
+      "alt": "石山寺縁起絵巻に描かれた牛車での資材運搬（14世紀）",
+      "caption": "石山寺縁起絵巻に描かれた牛車での資材運搬（14世紀）",
+      "creator": "作者不詳（高階隆兼筆とされる）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ishiyamadera_engi_emaki_-_Scroll_1_Section_3.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b364d6ebb204a4c54ef7.jpg",
+      "sha256": "b364d6ebb204a4c54ef7e761492cf1268c2746b9b2aeea9ab531a79dc68f57e9"
+    },
+    {
+      "id": "JHKS-e72cf4322bf0a208617e",
+      "path": "term-images/japanese-history-k/JHKS-e72cf4322bf0a208617e.jpg",
+      "alt": "石山寺縁起絵巻に描かれた馬での荷物運搬",
+      "caption": "石山寺縁起絵巻に描かれた馬での荷物運搬",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%D0%91%D0%B0%D1%81%D1%8F%D0%BA%D1%83.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e72cf4322bf0a208617e.jpg",
+      "sha256": "e72cf4322bf0a208617e69f3ce9ca8acc0b3c530cb58632ba31c4ac72fc9ac0c"
     }
   ]
 }

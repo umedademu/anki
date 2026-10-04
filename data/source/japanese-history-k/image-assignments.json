@@ -82,7 +82,10 @@
     "book-04-01-04",
     "book-04-01-05",
     "book-04-01-06",
-    "book-04-01-07"
+    "book-04-01-07",
+    "book-04-02-01",
+    "book-04-02-02",
+    "book-04-02-03"
   ],
   "images": [
     {
@@ -5556,6 +5559,246 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-b61a62f3f89c8e",
+      "caption": "徳川家康の肖像（17世紀の作品）",
+      "note": "既存の狩野探幽の肖像を共有する。公式展示目録で人物と17世紀の作品に照合した。征夷大将軍への任官と幕府成立の説明への回答後に人物を確認する。1603年の任官の実況・当人の写真とはせず、衣冠・賛文・画家・制作年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U01",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3573b3b94ec1a8",
+      "caption": "関ヶ原の戦いを描いた屏風（1854年の模写）",
+      "note": "既存の屏風を共有する。東京文化財研究所の記録で嘉永７年・翫月亭峩山（狩野梅春）による模写と照合した。戦いの名前・幕府成立への流れの回答後に描写を確認する。1600年の実況図や正確な陣形、石田三成の確実な肖像ではない。画面の文字・位置・人数・模写の制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-94ddffb76c311150bc40",
+      "caption": "徳川秀忠の肖像",
+      "note": "公開元の人物名と狩野派の肖像という記録を画像に照合した。将軍職の継承・家康と秀忠の時代の説明への回答後に秀忠を確認する。1605年の任官の実況や大坂の陣の場面ではない。同じ人物を描いた別の19世紀の冷泉為恭の作品と混同せず、服装・画家・制作年・所蔵先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-13e646f00812044a77fb",
+      "caption": "江戸幕府の貨幣の例・慶長小判の表と裏",
+      "note": "日本銀行の貨幣史と公開元の慶長小判の記録に照合した。貨幣鋳造と幕府の経済基盤への回答後に貨幣の一例を示す。この写真だけで鉱山支配や鋳造権の独占が証明できるとはしない。慶長小判の名前・発行年・刻印の解読・重量・撮影者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U02",
+          "questions": [
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b6a3af0b9b3b2b202ba7",
+      "caption": "武家諸法度の写本の一頁（早稲田大学図書館所蔵）",
+      "note": "早稲田大学図書館の武家諸法度・書写年不明という記録と画像の表題・文武弓馬などの部分に照合した。公開元が提供する第二頁のJPEGを使う。大名統制の法令と改訂の説明への回答後に文書の姿を確認する。1615年の発令原本や1635年の改訂原本と断定せず、参勤交代の条文がこの部分に見えるとは説明しない。原文の解読・写本の作成年・頁番号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U05",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b66274e2941e3b",
+      "caption": "大名の江戸城登城を描いた『徳川盛世録』の図（1889年）",
+      "note": "既存の図を共有する。東京都立図書館の解説で幕府儀式を後世に記録した1889年の書物と照合した。参勤交代と大名統制の説明への回答後に江戸城への登城を具体化する。国元と江戸の往復を直接記録した行列図や1635年の実況ではなく、妻子の居住・旅費・都市の経済をこの図だけで証明させない。建物名・人数・作者・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U06",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a9ee8cb746e2007d9684",
+      "caption": "徳川家光の肖像（1746年・没後の作品）",
+      "note": "東京国立博物館の作品目録で池田継政・1746年・金山寺の徳川家光像と照合した。参勤交代の制度化を問う回答後に人物を確認する。1635年の制度化の場面や生前の写生ではない。公開元の2008年の登録日を絵の制作年として流用せず、画家・所蔵先・没後の制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-01-U06",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0da1bc241ff98d",
+      "caption": "朱印船の復元模型（国立歴史民俗博物館）",
+      "note": "既存の模型の写真を共有する。国立歴史民俗博物館の展示紹介で朱印船の模型と照合した。貿易の名前と東南アジアへの進出の説明への回答後に船の姿を確認する。当時の船がそのまま残る実物や朱印状そのものではなく、個別の航路・交易品・日本町の位置を模型から判定させない。船体・帆の数・模型の製作者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-02-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ad11ae4188ef7f",
+      "caption": "島原・天草一揆の原城攻囲を描いた図（17世紀）",
+      "note": "既存の図を共有する。長崎県と仙台市博物館の記録で原城攻囲図・17世紀の作品と照合した。一揆の名前・鎮圧の流れへの回答後に城を取り囲む描写を確認する。反乱開始の1637年に描いた実況や正確な距離の地図とはせず、公開元の文化財指定の誤記も説明に引き継がない。重税や信仰を絵だけで証明させず、軍勢の位置・数字・作品の指定区分を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-02-U02",
+          "questions": [
+            "B01",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-02f6b12a8f577c",
+      "caption": "絵踏に用いたキリスト像の踏絵（17世紀）",
+      "note": "既存の踏絵を共有する。東京国立博物館の資料番号C-1011・17世紀・長崎奉行関係資料の記録と像の図柄に照合した。絵踏という方法と宗門改の説明への回答後に道具を示す。方法の名前「絵踏」と物の名前「踏絵」を混同せず、宗門改帳の代わりや実際に人が踏む場面とはしない。材質・寸法・制作年・資料番号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-02-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c0e17a6851a8e2",
+      "caption": "川原慶賀が描いた出島と長崎湾の屏風（1836年頃）",
+      "note": "既存の屏風写真を共有する。所蔵館の調査で川原慶賀・1836年頃の出島と長崎湾の描写と照合した。鎖国下にも残った対外窓口・出島・清とオランダとの交易の説明への回答後に港を具体化する。1641年の移転の実況図ではなく、画中の全船を特定の国籍・年の入港船と断定しない。湾全体が出島とはせず、描かれた建物・船数・画家・制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-02-U03",
+          "questions": [
+            "B01",
+            "B04",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-04-02-03-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2b57a780732c3a534cd4",
+      "caption": "長崎の唐人屋敷を描いた図",
+      "note": "公開元の唐人屋敷という記録と、囲われた屋敷を描く画面に照合した。屋敷の名前・密貿易と布教の抑制・長崎の窓口の説明への回答後に場所を確認する。図中の1688は創設についての説明であり絵の制作年に流用しない。出島や唐船の現物、オランダ風説書そのものとはせず、政策が完全に成功した証拠とも扱わない。英文の解読・門の位置・建物数・創設年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-03-U01",
+          "questions": [
+            "B03",
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-342c9cc4a63c97",
+      "caption": "対馬と朝鮮半島の位置（現代の地図）",
+      "note": "既存の位置図を共有する。対馬藩を介した朝鮮との関係と釜山の交易の説明への回答後に地域の位置を確認する。現代の国名と地図を朝鮮王朝の国境図・交易権の範囲や倭館の敷地図とはしない。現代の行政区分・航路・距離・地図の作者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-03-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b7c2fbc48a1f90",
+      "caption": "朝鮮通信使の行列を描いた17世紀の絵巻（部分）",
+      "note": "既存の絵巻の写真を共有する。青森県立図書館の紹介に掲載された同画像と、通信使の行列・17世紀の記録を照合した。使節の名前と将軍への祝意・朝鮮との関係の回答後に行列を確認する。画家の帰属を断定せず、18世紀の特定の使節団の実況や将軍本人の肖像としては使わない。人数・旗の文字・服装・画家・所蔵先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-03-U02",
+          "questions": [
+            "B02",
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-87af4c888a4a29c19880",
+      "caption": "琉球の謝恩使の行列を描いた図（1832年）",
+      "note": "沖縄県公文書館と琉球大学図書館の解説で1832年・琉球国王の即位に伴う謝恩使の行列と照合した。慶賀使と謝恩使の違い・幕府との関係への回答後に謝恩使の具体例を示す。慶賀使の行列や1609年の侵攻、中国への朝貢の実況とはしない。国王の名前・人数・楽器・服装・1832年を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-03-U03",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-bea8f0d8912566",
+      "caption": "幕末に築かれた松前城（1961年再建の天守）",
+      "note": "既存の城の写真を共有する。松前の公式案内で幕末の築城と1961年の天守再建を確認した。対アイヌ交易を認められた松前藩の名前への回答後に関係する場所を具体化する。1669年の城・シャクシャイン本人や戦いの現場、商場知行制を直接示す写真としては使わない。築城年・再建年・建築構造を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-03-U04",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -7850,6 +8093,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Konpeito_Candy.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-25237a18f36bf42beeb2.jpg",
       "sha256": "25237a18f36bf42beeb214cba0bdb2b562aab04611b3897244843a1cd4212bb3"
+    },
+    {
+      "id": "JHKS-94ddffb76c311150bc40",
+      "path": "term-images/japanese-history-k/JHKS-94ddffb76c311150bc40.jpg",
+      "alt": "徳川秀忠の肖像",
+      "caption": "徳川秀忠の肖像",
+      "creator": "作者不詳（狩野派）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hidetada.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-94ddffb76c311150bc40.jpg",
+      "sha256": "94ddffb76c311150bc40134eb24936031c0bd60b8f6ac7ba5725a261dc3ba3ff"
+    },
+    {
+      "id": "JHKS-13e646f00812044a77fb",
+      "path": "term-images/japanese-history-k/JHKS-13e646f00812044a77fb.jpg",
+      "alt": "江戸幕府の貨幣の例・慶長小判の表と裏",
+      "caption": "江戸幕府の貨幣の例・慶長小判の表と裏",
+      "creator": "As6673",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Keicho-koban.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-13e646f00812044a77fb.jpg",
+      "sha256": "13e646f00812044a77fb31421fcc7dccccdec8e5cff0204d7b77ec6e38e9d927"
+    },
+    {
+      "id": "JHKS-2b57a780732c3a534cd4",
+      "path": "term-images/japanese-history-k/JHKS-2b57a780732c3a534cd4.jpg",
+      "alt": "長崎の唐人屋敷を描いた図",
+      "caption": "長崎の唐人屋敷を描いた図",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tojin-yashiki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2b57a780732c3a534cd4.jpg",
+      "sha256": "2b57a780732c3a534cd412aaad2c49390a80146c3ab8cab5f6609b0074b3b3f3"
+    },
+    {
+      "id": "JHKS-b6a3af0b9b3b2b202ba7",
+      "path": "term-images/japanese-history-k/JHKS-b6a3af0b9b3b2b202ba7.jpg",
+      "alt": "武家諸法度の写本の一頁（早稲田大学図書館所蔵）",
+      "caption": "武家諸法度の写本の一頁（早稲田大学図書館所蔵）",
+      "creator": "作者不詳（写本）、早稲田大学図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:WUL-wa03_02532_0007_%E6%AD%A6%E5%AE%B6%E8%AB%B8%E6%B3%95%E5%BA%A6_1.pdf",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b6a3af0b9b3b2b202ba7.jpg",
+      "sha256": "b6a3af0b9b3b2b202ba73afc9e3495bcae1b411312a9f2de6bff4939468eeaf5"
+    },
+    {
+      "id": "JHKS-87af4c888a4a29c19880",
+      "path": "term-images/japanese-history-k/JHKS-87af4c888a4a29c19880.jpg",
+      "alt": "琉球の謝恩使の行列を描いた図（1832年）",
+      "caption": "琉球の謝恩使の行列を描いた図（1832年）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ryukyu_1832.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-87af4c888a4a29c19880.jpg",
+      "sha256": "87af4c888a4a29c19880d5e9595d38c563940674218fc0c217d5f826cdc92f7d"
+    },
+    {
+      "id": "JHKS-a9ee8cb746e2007d9684",
+      "path": "term-images/japanese-history-k/JHKS-a9ee8cb746e2007d9684.jpg",
+      "alt": "徳川家光の肖像（1746年・没後の作品）",
+      "caption": "徳川家光の肖像（1746年・没後の作品）",
+      "creator": "池田継政",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Iemitu.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a9ee8cb746e2007d9684.jpg",
+      "sha256": "a9ee8cb746e2007d96847186a642db7af918064781921c6c96466bace77a0d73"
     }
   ]
 }

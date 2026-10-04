@@ -88,7 +88,10 @@
     "book-04-02-03",
     "book-04-02-04",
     "book-04-02-05",
-    "book-04-02-06"
+    "book-04-02-06",
+    "book-04-02-07",
+    "book-04-02-08",
+    "book-04-02-09"
   ],
   "images": [
     {
@@ -6091,6 +6094,246 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-31d1686a06a628002e00",
+      "caption": "田沼意次の肖像（勝林寺所蔵・制作年不詳）",
+      "note": "千代田区の講座案内の田沼意次公・勝林寺所蔵の肖像と照合した。人物名と商品流通・商業課税を重視した政策の回答後に田沼を確認する。制作年不詳として扱い、公開元の2024年という登録年を作成年としない。別候補の鈴木白華筆の肖像は作者の生没年と利用条件の根拠を確定できず採用しない。容姿・画家・所蔵先を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-07-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-245bdc91588e098fe412",
+      "caption": "印旛沼の現在の風景（現代の写真）",
+      "note": "公開元の印旛沼・印西市からの撮影という記録に照合した。田沼の干拓計画と商人の出資の回答後に場所の現在の姿を示す。近現代の改修・干拓を経た現代の風景であり、田沼期の形状や当時の工事の実況とはしない。水面の形・地形・現在の施設・撮影地の細かな名称を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-07-U01",
+          "questions": [
+            "B07",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-950354bcf9f76d",
+      "caption": "松平定信の自画像（1787年）",
+      "note": "既存画像を共有する。東京文化財研究所の年紀資料で天明７年・源定信自写の記録と照合した。定信と寛政の改革・救済策の回答後に人物を示す。救済の実施場面や囲米の写真ではなく、落款・服装・作成年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-07-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-25cad936b16304a999da",
+      "caption": "湯島聖堂の入徳門と、奥の再建された大成殿（現代の写真）",
+      "note": "公開元の入徳門・湯島聖堂という記録と筑波大学の研究紹介の大成殿再建の説明に照合した。昌平坂学問所と朱子学の奨励・寛政異学の禁の回答後に関連施設を示す。孔子を祀る湯島聖堂の門と奥の大成殿であり、昌平坂学問所の授業校舎そのものとはしない。奥の大成殿は1935年の再建で、門も同年再建と一括説明しない。施設の配置・再建年・建築様式を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-07-U04",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2526fe707881ad",
+      "caption": "藩校の例・水戸弘道館の正庁（1841年建築・現代の写真）",
+      "note": "既存画像を共有する。茨城県教育委員会の指定建造物の説明で1841年建築・藩校の正庁と照合した。藩校の整備と人材育成の回答後に藩校の例を示す。寛政の改革の年に開校した施設とはせず、学校一般の目的をこの建物だけで証明させない。校名・建築年・所蔵先を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-07-U05",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d8d1899c6a2f267fb8e4",
+      "caption": "武士の大小の刀の外装の例（19世紀・東京富士美術館所蔵）",
+      "note": "東京富士美術館の黒蝋色塗鞘大小拵・19世紀の作品記録と照合した。武士の義務と名字・帯刀の特権の説明への回答後に大小の刀の外装の例を示す。刀身は見えず、写真から刃の材質や武士の行政能力を推測させない。外装の作品名・金具の作者・細工・時代の細分を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-08-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-872ead57e81331",
+      "caption": "『江戸名所図会』の本問屋・鶴屋の店先（1834年）",
+      "note": "既存画像を共有する。国土地理院の鶴屋の解説と横浜市歴史博物館の出陳目録の1834年刊の本問屋の図に照合した。城下町の町人と自治参加の説明への回答後に町人の店先の例を示す。図だけから町屋敷の所有・自治参加資格や個々の人物の身分を判定させない。地本問屋の出版店の図を織物の問屋制家内工業の貸付・買取の証拠には使わず、白黒の名所図会の挿絵を錦絵と説明しない。店名・図中文字・著者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-08-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5bb805ca1837ab8235d0",
+      "caption": "年貢の納入を確認した文書（1624年・早稲田大学図書館所蔵）",
+      "note": "早稲田大学図書館の新庄文書の目録で井伊直孝の年貢皆済状・1624年と照合した。村方三役と年貢の徴収・納入の説明への回答後に年貢納入を確認する文書の一例を示す。この紙を五人組帳や村方三役の全役割の証明とはしない。井伊・新庄の名前、書かれた対象年・発給年・文書名・古文書の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-08-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-631e2a411b37d2c86721",
+      "caption": "年貢米俵の復元展示（高山陣屋・現代の写真）",
+      "note": "高山陣屋の御蔵の案内、高山市の観光案内の実物大見本の説明と文化庁の復元展示の報告に照合した。本百姓の年貢負担と村の年貢・連帯責任の説明への回答後に米俵の復元展示を示す。当時から残る米入りの俵や囲米の実物とはせず、展示の斗数・容積・銘文を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-08-U02",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1edae987f51102e72b28",
+      "caption": "千歯こきの例（現代の写真）",
+      "note": "公開元の千歯こきという記録と東北歴史博物館の脱穀用の歯の説明に照合した。千歯こきの名前と農業技術の発達の回答後に道具の形を示す。現代の写真であり撮影された道具の製造年を江戸期と断定しない。稲から穀粒を取る用途と鍬の深耕の用途を混同せず、歯の数・展示先・構造の細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7b2c0b5e26a57ec55e1d",
+      "caption": "備中鍬の例（現代の写真）",
+      "note": "公開元の備中鍬という記録と東北歴史博物館の数本の刃による深い耕起の説明に照合した。備中鍬の名前と千歯こき・金肥を含む農業技術の回答後に深耕の道具を示す。現代の写真であり道具そのものを江戸期の遺物と断定しない。脱穀具と混同せず、刃の数・柄の長さ・撮影地を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U01",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-0bae4b55158e93",
+      "caption": "綿の実（現代の写真）",
+      "note": "既存画像を共有する。公開元の綿の実という記録と写真の綿毛に照合した。麻・綿の栽培と現金収入を生む商品作物の説明への回答後に綿の一例を示す。麻や織物そのものの写真ではなく、撮影地を江戸時代の日本の綿畑と説明しない。綿毛の形・撮影国・品種を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ea1bc1a74462052ac2b6",
+      "caption": "広重『東海道五十三次・日本橋 朝之景』（1833～1835年頃）",
+      "note": "ボストン美術館の公開元記録と東京富士美術館の同図柄の日本橋・朝之景の解説に照合した。五街道の起点・日本橋と陸上交通の説明への回答後に橋の図を示す。五街道の全経路図ではなく、道の本数や現在の橋の外観をこの絵から推測させない。版による色の違い・画家・作品名・描かれた行列の人物名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U03",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-12376091933d9205a155",
+      "caption": "飛脚が行き交う街道を描いた広重『東海道五十三次・平塚 縄手道』（1833～1835年頃）",
+      "note": "公開元の広重・平塚の図と文化庁の同図柄の解説の早飛脚と駕籠舁が行き交う場面に照合した。飛脚の名前への回答後に街道を行く姿を示す。人物すべてを飛脚とはせず、空の駕籠の担ぎ手と区別する。平塚宿の問屋場や郵便制度の創設をこの場面だけで説明せず、地名・画中の山・衣服を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4275d50cd7e2320ac37d",
+      "caption": "宿場の人馬の継立を描いた広重『東海道五十三次・藤枝』（1833～1834年頃）",
+      "note": "ロサンゼルス郡立美術館のM.71.100.26・藤枝の人馬の継立の作品記録に照合した。宿場での人馬の用意と問屋場、飛脚を含む交通制度の説明への回答後に荷を継ぐ場面を示す。建物のすべてを宿泊施設とせず、馬や人の数・荷の中身・料金・図中文字・作品名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U03",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-969d3d4f4cf85df01f85",
+      "caption": "出女の取締りが行われた箱根関所の復元建物（現代の写真）",
+      "note": "箱根町の関所の案内と神奈川県の2007年復元の説明に照合した。関所の名前と統制の説明への回答後に出女の取締りが行われた施設の復元例を示す。箱根では入鉄砲を調べず出女を厳しく取り締まったため、この施設が両方を調べたと説明しない。問いの関所一般の役割と各地の具体的な運用を区別する。江戸期から残る全建物とはせず、復元年・関所ごとの検査手順を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U03",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7ff4c524b0b0337723c9",
+      "caption": "菱垣廻船の出帆を描いた図（含粋亭芳豊・19世紀）",
+      "note": "大阪市立図書館の菱垣新綿番船川口出帆之図・含粋亭芳豊の記録と西宮市の同図柄の資料に照合した。菱垣廻船と樽廻船の運送品の区別の回答後に菱垣廻船の出帆の一例を示す。新綿を運ぶ船の図であり樽廻船による酒の輸送や東廻り・西廻り航路の全経路図には代用しない。運送費の安さ・荷の数量・船の構造・作品名を暗記条件にしない。公開元の登録年を制作年としない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-09-U04",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -8637,6 +8880,162 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chikamatsu2.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-3c72e93c68d0f0553d8c.jpg",
       "sha256": "3c72e93c68d0f0553d8ca3d2d5102d838bb4912e6048e77de9846f465d2af6bd"
+    },
+    {
+      "id": "JHKS-31d1686a06a628002e00",
+      "path": "term-images/japanese-history-k/JHKS-31d1686a06a628002e00.jpg",
+      "alt": "田沼意次の肖像（勝林寺所蔵・制作年不詳）",
+      "caption": "田沼意次の肖像（勝林寺所蔵・制作年不詳）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%94%B0%E6%B2%BC%E6%84%8F%E6%AC%A1%E3%81%AE%E8%82%96%E5%83%8F%E7%94%BB.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-31d1686a06a628002e00.jpg",
+      "sha256": "31d1686a06a628002e00fab5d246462568d68f46cb696cf9539dec0d1e1ff8d2"
+    },
+    {
+      "id": "JHKS-245bdc91588e098fe412",
+      "path": "term-images/japanese-history-k/JHKS-245bdc91588e098fe412.jpg",
+      "alt": "印旛沼の現在の風景（現代の写真）",
+      "caption": "印旛沼の現在の風景（現代の写真）",
+      "creator": "EXECUTOR",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Lake_Inba.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-245bdc91588e098fe412.jpg",
+      "sha256": "245bdc91588e098fe412baf0ca0cb9ea68a03d441928f1f2a21b9d3b04c926fa"
+    },
+    {
+      "id": "JHKS-25cad936b16304a999da",
+      "path": "term-images/japanese-history-k/JHKS-25cad936b16304a999da.jpg",
+      "alt": "湯島聖堂の入徳門と、奥の再建された大成殿（現代の写真）",
+      "caption": "湯島聖堂の入徳門と、奥の再建された大成殿（現代の写真）",
+      "creator": "Reggaeman",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yushima_Seido_01.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-25cad936b16304a999da.jpg",
+      "sha256": "25cad936b16304a999dab37ddf26ca287dbfd7ec4f983cfc5c2daedcb88a4884"
+    },
+    {
+      "id": "JHKS-d8d1899c6a2f267fb8e4",
+      "path": "term-images/japanese-history-k/JHKS-d8d1899c6a2f267fb8e4.jpg",
+      "alt": "武士の大小の刀の外装の例（19世紀・東京富士美術館所蔵）",
+      "caption": "武士の大小の刀の外装の例（19世紀・東京富士美術館所蔵）",
+      "creator": "石黒政美・柳川直政（金具）、東京富士美術館（画像提供）",
+      "license": "CC0",
+      "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E9%BB%92%E8%9D%8B%E8%89%B2%E5%A1%97%E9%9E%98%E5%A4%A7%E5%B0%8F%E6%8B%B5,_Black_Waxed_Scabbards_with_Sword_Fittings.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d8d1899c6a2f267fb8e4.jpg",
+      "sha256": "d8d1899c6a2f267fb8e43d6084ae250c4363925ac6845e7c432237c82f417657"
+    },
+    {
+      "id": "JHKS-631e2a411b37d2c86721",
+      "path": "term-images/japanese-history-k/JHKS-631e2a411b37d2c86721.jpg",
+      "alt": "年貢米俵の復元展示（高山陣屋・現代の写真）",
+      "caption": "年貢米俵の復元展示（高山陣屋・現代の写真）",
+      "creator": "big-ashb",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E5%B9%B4%E8%B2%A2%E7%B1%B3%E4%BF%B5_(30736313125).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-631e2a411b37d2c86721.jpg",
+      "sha256": "631e2a411b37d2c86721d05566490009d89d4e593dafbb004faf71e22708439e"
+    },
+    {
+      "id": "JHKS-5bb805ca1837ab8235d0",
+      "path": "term-images/japanese-history-k/JHKS-5bb805ca1837ab8235d0.jpg",
+      "alt": "年貢の納入を確認した文書（1624年・早稲田大学図書館所蔵）",
+      "caption": "年貢の納入を確認した文書（1624年・早稲田大学図書館所蔵）",
+      "creator": "井伊直孝（発給）、早稲田大学図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:WUL-ri05_15547_0004_%E4%BA%95%E4%BC%8A%E7%9B%B4%E5%AD%9D%E5%B9%B4%E8%B2%A2%E7%9A%86%E6%B8%88%E7%8A%B6.pdf",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5bb805ca1837ab8235d0.jpg",
+      "sha256": "5bb805ca1837ab8235d027ed2ae2d971eb2e42daa0435d816282346efcbbac53"
+    },
+    {
+      "id": "JHKS-1edae987f51102e72b28",
+      "path": "term-images/japanese-history-k/JHKS-1edae987f51102e72b28.jpg",
+      "alt": "千歯こきの例（現代の写真）",
+      "caption": "千歯こきの例（現代の写真）",
+      "creator": "katorisi",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_old_threshing_machine,Senba-koki,Katori-city,Japan.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1edae987f51102e72b28.jpg",
+      "sha256": "1edae987f51102e72b28f5395bbe6a7071f98ae596fc76ac71c78d4581f6ad61"
+    },
+    {
+      "id": "JHKS-7b2c0b5e26a57ec55e1d",
+      "path": "term-images/japanese-history-k/JHKS-7b2c0b5e26a57ec55e1d.jpg",
+      "alt": "備中鍬の例（現代の写真）",
+      "caption": "備中鍬の例（現代の写真）",
+      "creator": "katorisi",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese-hoe-biccyukuwa,katori-city,japan.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7b2c0b5e26a57ec55e1d.jpg",
+      "sha256": "7b2c0b5e26a57ec55e1d4186c3ff7d9663abcd4ffbf2e3449f547fbeb5378edd"
+    },
+    {
+      "id": "JHKS-ea1bc1a74462052ac2b6",
+      "path": "term-images/japanese-history-k/JHKS-ea1bc1a74462052ac2b6.jpg",
+      "alt": "広重『東海道五十三次・日本橋 朝之景』（1833～1835年頃）",
+      "caption": "広重『東海道五十三次・日本橋 朝之景』（1833～1835年頃）",
+      "creator": "歌川広重",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hiroshige-53-Stations-Hoeido-01-Nihonbashi-MFA-02.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ea1bc1a74462052ac2b6.jpg",
+      "sha256": "ea1bc1a74462052ac2b677627c35db23f759612a32235652010e8985df4a1c19"
+    },
+    {
+      "id": "JHKS-12376091933d9205a155",
+      "path": "term-images/japanese-history-k/JHKS-12376091933d9205a155.jpg",
+      "alt": "飛脚が行き交う街道を描いた広重『東海道五十三次・平塚 縄手道』（1833～1835年頃）",
+      "caption": "飛脚が行き交う街道を描いた広重『東海道五十三次・平塚 縄手道』（1833～1835年頃）",
+      "creator": "歌川広重",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hiroshige-53-Stations-Hoeido-08-Hiratsuka-BM.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-12376091933d9205a155.jpg",
+      "sha256": "12376091933d9205a155e734a3695c9b642e34455e72a0ab22c2043270851540"
+    },
+    {
+      "id": "JHKS-4275d50cd7e2320ac37d",
+      "path": "term-images/japanese-history-k/JHKS-4275d50cd7e2320ac37d.jpg",
+      "alt": "宿場の人馬の継立を描いた広重『東海道五十三次・藤枝』（1833～1834年頃）",
+      "caption": "宿場の人馬の継立を描いた広重『東海道五十三次・藤枝』（1833～1834年頃）",
+      "creator": "歌川広重",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Changing_Horses_and_Porters_at_Fujieda_Station_LACMA_M.71.100.26.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4275d50cd7e2320ac37d.jpg",
+      "sha256": "4275d50cd7e2320ac37dee5e70b8461de011faed5bea6d890d9ab04ebfe1bde4"
+    },
+    {
+      "id": "JHKS-969d3d4f4cf85df01f85",
+      "path": "term-images/japanese-history-k/JHKS-969d3d4f4cf85df01f85.jpg",
+      "alt": "出女の取締りが行われた箱根関所の復元建物（現代の写真）",
+      "caption": "出女の取締りが行われた箱根関所の復元建物（現代の写真）",
+      "creator": "Steph Gray",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hakone_Sekisho.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-969d3d4f4cf85df01f85.jpg",
+      "sha256": "969d3d4f4cf85df01f85db7005b7f6d36d4fcd2c16fb62cca6da25fd2990b192"
+    },
+    {
+      "id": "JHKS-7ff4c524b0b0337723c9",
+      "path": "term-images/japanese-history-k/JHKS-7ff4c524b0b0337723c9.jpg",
+      "alt": "菱垣廻船の出帆を描いた図（含粋亭芳豊・19世紀）",
+      "caption": "菱垣廻船の出帆を描いた図（含粋亭芳豊・19世紀）",
+      "creator": "含粋亭芳豊",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Higaki-Kwaisen.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7ff4c524b0b0337723c9.jpg",
+      "sha256": "7ff4c524b0b0337723c93c67d595e20d40a74865d7ebf078c7f42a5f49728907"
     }
   ]
 }

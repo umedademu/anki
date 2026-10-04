@@ -97,7 +97,10 @@
     "book-04-02-12",
     "book-04-02-13",
     "book-04-02-14",
-    "book-04-02-15"
+    "book-04-02-15",
+    "book-04-02-16",
+    "book-05-01-01",
+    "book-05-01-02"
   ],
   "images": [
     {
@@ -6911,6 +6914,373 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-4fe89a330661566cad38",
+      "caption": "薩英戦争を描いた版画（1863年刊）",
+      "note": "公開元の1863年12月５日刊『Le Monde Illustré』のE. Roevensの版画とフランス国立図書館の掲載号に照合した。薩英戦争と薩摩藩の対英関係の回答後に図を示す。生麦での殺傷事件の実況にはせず、新聞掲載の月日と1863年の戦闘の月日を混同しない。艦名・船の数・火災の範囲・地形・版画家は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-def0fd27e1a96221db7f",
+      "caption": "四国連合艦隊による下関砲撃を描いた絵（19世紀）",
+      "note": "公開元のオランダ王立図書館所蔵KONB11-P1651・四国連合艦隊の1864年の下関砲撃という作品記録に照合した。馬関戦争と外国船砲撃の報復、長州藩の方針の変化の回答後に図を示す。下関条約の調印や1863年の別の海戦には代用しない。制作年は公開元で1864～1869年とされるため19世紀とし、旗や船の数から四か国の政治方針を解読させない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U01",
+          "questions": [
+            "B03",
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d2fdb8f2d1572f7e847e",
+      "caption": "蛤御門の変を描いた後世の版画（1893年）",
+      "note": "公開元に転記された米国議会図書館の2004666394・1893年の蛤御門の変の版画という目録に照合した。蛤御門の変と京都の政変から長州征伐への回答後に図を示す。1864年の戦闘当日に描かれた実況図とはせず、1893年の後世の作品と明記する。写り込んだ色見本・個々の人物名・装備・門の位置・焼失区域を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-732575955351c72b5352",
+      "caption": "徳川家茂の肖像（19世紀）",
+      "note": "前回点検した家茂の肖像を共有する。九州国立博物館の2008年刊の図録に載る人物という公開元の記録に照合済みである。第二次長州征伐中に急死した将軍の回答後に家茂を示す。慶喜や家定の肖像に代用せず、戦死の場面や1866年の写真とは説明しない。顔つき・装束・図録の刊行年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U02",
+          "questions": [
+            "B06",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-1aa47aaa547d4c",
+      "caption": "坂本龍馬自筆の薩長同盟裏書（現代の写真）",
+      "note": "既存画像を共有する。公開元の宮内庁書陵部図書寮文庫所蔵の坂本龍馬自筆の薩長同盟裏書と人事院の公開記録に照合した。同盟名の回答後に関係する史料を示す。薩長の代表全員が署名した同盟条約の原本とは説明せず、赤い文字は裏書である。全文の解読・筆跡・書式・写真の撮影年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-3d71dcedfde5bc",
+      "caption": "坂本龍馬の肖像写真（幕末）",
+      "note": "既存画像を共有する。公開元の国立国会図書館由来の写真と人物名に照合した。二人の仲介者への回答後にその一人の龍馬を示す。中岡との集合写真とはせず、この肖像だけで仲介の実態を証明するとはしない。容姿・写真家・撮影場所や撮影年を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U03",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2a112542b5ff604e13cd",
+      "caption": "中岡慎太郎の肖像写真（1866年）",
+      "note": "公開元の1912年刊『維新土佐勤王史』掲載・大坂屋与兵衛撮影・1866年の中岡慎太郎の写真という記録に照合した。龍馬とともに仲介した同盟の説明への回答後に中岡を示す。同盟の調印や龍馬との集合写真とはせず、1912年を本人の撮影年に流用しない。写真家・衣服・写真中の刀・制作月を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f01eb73e4880aa",
+      "caption": "徳川慶喜の肖像写真（1867年）",
+      "note": "既存画像を共有する。公開元の松戸市戸定歴史館の図録とFrederick Suttonの1867年の大阪での写真という記録に照合した。政権を返上した将軍の回答後に慶喜を示す。家茂の肖像や大政奉還の会議中の実況写真とは説明しない。撮影者・容姿・大阪での場所・衣服を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b638fff7b341a9",
+      "caption": "大政奉還を描いた後世の絵（邨田丹陵筆）",
+      "note": "既存画像を共有する。聖徳記念絵画館の壁画という公開元の記録と、たましん美術館の昭和９年の下図の展覧会記録、東京文化財研究所の壁画完成の記録に照合した。政権返上と土佐藩の助言の回答後に図を示す。幕末当時の実況画とはせず、後世の歴史画と明記する。人物全員の名前・御殿の間取り・襖の図柄・画家や制作年は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U03",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-545b1f0dae0805864f42",
+      "caption": "ええじゃないかを描いた『慶応四豊年踊之図』",
+      "note": "国立国会図書館の『絵暦貼込帳』65コマの『慶応四豊年踊之図』と公開元の河鍋暁斎筆という記録、画中の踊る人々と札に照合した。ええじゃないかと民衆の動きへの回答後に図を示す。公開元の1867年と画中の慶応四年の年号を無条件に同一視せず、制作年は表示で断定しない。札が実際に天から降った証明や借金帳消しの制度を示す図にはせず、札の文字・衣服・個々の人物名・絵暦の読み方は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-04-02-16-U04",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d18df549f403f09b1235",
+      "caption": "大憲章（1215年・大英図書館所蔵）",
+      "note": "公開元の大英図書館所蔵Cotton MS Augustus II.106・1215年の現存する大憲章の記録と文書に照合した。文書名と国王の制限、法と権利の説明への回答後に史料を示す。ジョン王が近代的な議会で署名している場面には代用せず、公開元の投稿者を文書の筆者として表示しない。ラテン語や略字の解読、本文の条番号、現存文書の数や文書の寸法は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-46356ee643183f",
+      "caption": "クロムウェルの肖像（クーパーの1656年の作品に基づく）",
+      "note": "既存の世界史の画像を共有する。公開元のAfter Samuel Cooper・1656年の原作に基づく肖像の記録に照合した。指導者と共和制への移行の説明への回答後に人物を示す。1649年の処刑や内戦当日の実況にはしない。1656年は元となった作品の年であり、この画像の肖像の制作年とは断定しない。鎧・表情・画家を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e9505a06da514b",
+      "caption": "チャールズ１世の肖像（1636年）",
+      "note": "既存の世界史の画像を共有する。公開元の王室コレクションRCIN 404398・ヴァン・ダイクの1636年の人物画と照合した。処刑された国王と国王・議会の対立の回答後にチャールズ１世を示す。チャールズ２世と混同せず、肖像は内戦以前の作品で、処刑場面や王の課税の実況にはしない。王冠・装束・画家・肖像の制作年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U02",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-266386cfde86add78036",
+      "caption": "ジェームズ２世の肖像（17世紀・ピーター・レリーの工房）",
+      "note": "公開元のピーター・レリーの工房によるジェームズ２世の17世紀の肖像という作品記録に照合した。追放された王と名誉革命の説明への回答後に人物を示す。レリー本人の確実な作品と断定せず工房とし、革命の追放当日の場面やチャールズ１世・２世の肖像にはしない。服装・顔つき・画家・肖像の細かな制作年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U03",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5ed837cc58a1c5c4515d",
+      "caption": "イギリスの権利章典（1689年・文書の一部）",
+      "note": "公開元の英国国立公文書館由来の1689年のイギリスの文書という記録と英国議会の権利章典の解説に照合した。文書名と議会の承認による王権の制限への回答後に史料を示す。共通画像に登録された米国の権利章典の候補は採用しない。この図は文書の一部であり全条文を写したものとは説明せず、古い英語の解読・紙の寸法・所蔵館名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U03",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-ec352bfd49544f",
+      "caption": "ジョージ・ワシントンの肖像（1797年・スチュアート筆）",
+      "note": "既存の世界史の画像を共有する。公開元の1797年のホワイトハウス所蔵のLansdowne portraitに基づく作品という記録と人物像に照合した。植民地軍の司令長官と戦争の結果への回答後に人物を示す。1775年の開戦当日に描かれた姿や1920年代のワシントン会議の写真には代用しない。机上の本や衣服の解読、肖像の版の違い・制作年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U04",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-49e2b58e095a02",
+      "caption": "アメリカ独立宣言の複製（1823年・ストーン制作）",
+      "note": "既存の世界史の画像を共有する。公開元のWilliam Stoneによる1823年の複製という記録と米国国立公文書館の宣言の保存・複製の解説に照合した。文書名と平等・権利、政府と国民の関係の説明への回答後に史料の姿を示す。1776年の宣言と1823年の複製を区別し、1776年に撮影された画像や写されたものが原本とは説明しない。英語や署名の解読、書体・署名者全員の名前は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U05",
+          "questions": [
+            "B01",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-7ec1d3bad55ffa",
+      "caption": "アメリカ合衆国憲法の第１頁（1787年）",
+      "note": "既存の世界史の画像を共有する。公開元の1787年９月17日の文書の第１頁と米国の原憲法という目録に照合した。三権分立、連邦制、主権と統治の説明への回答後に文書の姿を示す。全制度の条文が第１頁だけに載っているとはせず、独立宣言や米国の権利章典と区別する。英語本文や字体の解読、署名者の数や所蔵館を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-01-U06",
+          "questions": [
+            "B01",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-8c6ea46329e110",
+      "caption": "ジョン・ロックの肖像（1697年・ネラー筆）",
+      "note": "既存の世界史の画像を共有する。公開元のエルミタージュ美術館所蔵・Godfrey Kneller筆・1697年の肖像の記録に照合した。社会契約説と抵抗権を説いた人物とその考えの回答後に人物を示す。ルソーの肖像と混同せず、社会契約の制度を顔つきから読み取らせない。原文の18世紀の啓蒙思想の説明に対し肖像は17世紀末の作品と明記し、画家・衣服・制作年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-81d111e7217c03",
+      "caption": "モンテスキューの肖像（18世紀・ダシエの作品に基づく）",
+      "note": "既存の世界史の画像を共有する。公開元のヴェルサイユ所蔵・After Jacques-Antoine Dassier・1753～1794年頃という作品記録に照合した。法の精神と三権分立の説明への回答後に人物を示す。画中の1728年はアカデミーへの選出の年であり肖像の制作年に流用しない。三権の組織図には代用せず、衣服・顔の向き・画中文字・画家を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U01",
+          "questions": [
+            "B05",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4fc664893fd2ce",
+      "caption": "ジャン＝ジャック・ルソーの肖像（1753年・ラ・トゥール筆）",
+      "note": "既存の世界史の画像を共有する。公開元のMaurice Quentin de La Tour筆・1753年のルソーの肖像という作品記録に照合した。人民主権と社会契約論、啓蒙思想への回答後に人物を示す。ロック・モンテスキューを含む三人全員の集合肖像にはせず、主権の制度を顔つきから読み取らせない。服装・画家・肖像の制作年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U01",
+          "questions": [
+            "B07",
+            "R04",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7245ece41f3dee6560a8",
+      "caption": "バスティーユ襲撃を描いた水彩画（1789年）",
+      "note": "公開元のフランス国立図書館Gallica btv1b103025148・ジャン＝ピエール・ウエルの1789年の水彩画という記録と襲撃の図像に照合した。革命名と牢獄の襲撃、革命の経過への回答後に図を示す。外観だけを描いた別の図や1830年の革命の絵とは区別し、作者が全場面を現場で目撃した実況図とは断定しない。個々の人物の名前・旗・兵器・建物の細部は追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U02",
+          "questions": [
+            "B01",
+            "B06",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9653c5ed92c8abedc004",
+      "caption": "人権宣言を記した絵（1789年頃・ル・バルビエの原案）",
+      "note": "パリのカルナヴァレ美術館のP809・1789年頃の板絵と同じ二つの銘板・人物・本文の構図に照合した。所蔵館が原案の作者と記録するル・バルビエを原案として表示する。人権宣言の名前と自由・平等、主権・行動・意見の説明への回答後に図を示す。議会が署名した原文書や実在の女神の肖像とはせず、宣言の文を絵として示した作品と明記する。フランス語や寓意・画中の象徴の解読、画家は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U03",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-12aabd981bc4a7",
+      "caption": "ナポレオンの肖像（1812年・ダヴィッド筆）",
+      "note": "既存の世界史の画像を共有する。公開元のJacques-Louis David筆・1812年のテュイルリー宮殿の書斎の肖像の記録に照合した。フランス軍を率いて政権を握った人物と皇帝への変化の回答後に人物を示す。1804年の国民投票や戴冠の実況場面、ナポレオン３世の肖像に代用しない。机の文書・時計・軍服・画家は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U04",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e5195c12c49f3d",
+      "caption": "ナポレオン法典の展示（現代の写真）",
+      "note": "既存の世界史の画像を共有する。公開元のプファルツ歴史博物館のCode civil des Françaisの展示写真と書名に照合した。民法典と法整備の説明への回答後に書物を示す。撮影年を法典成立の年にせず、撮影された本を初版本と断定しない。法典の条文・フランス語の解読・展示施設・出版者の名前を追加の暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-02-U04",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -9901,6 +10271,126 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sakuradamon_incident_1860_silk.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-40d940a230fa2c3cd5ee.jpg",
       "sha256": "40d940a230fa2c3cd5eeda1e8c5cb6f93c4765eff82fd1e84574e0e6627b02f4"
+    },
+    {
+      "id": "JHKS-4fe89a330661566cad38",
+      "path": "term-images/japanese-history-k/JHKS-4fe89a330661566cad38.jpg",
+      "alt": "薩英戦争を描いた版画（1863年刊）",
+      "caption": "薩英戦争を描いた版画（1863年刊）",
+      "creator": "E. Roevens（現地の図に基づく）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bombardment_of_Kagoshima_1863_by_E._Roevens.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4fe89a330661566cad38.jpg",
+      "sha256": "4fe89a330661566cad3805edd8faf70b9170871b0227f79425719fb51dfe757b"
+    },
+    {
+      "id": "JHKS-def0fd27e1a96221db7f",
+      "path": "term-images/japanese-history-k/JHKS-def0fd27e1a96221db7f.jpg",
+      "alt": "四国連合艦隊による下関砲撃を描いた絵（19世紀）",
+      "caption": "四国連合艦隊による下関砲撃を描いた絵（19世紀）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bombardment_of_Shimonoseki_-_KONB11-P1651.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-def0fd27e1a96221db7f.jpg",
+      "sha256": "def0fd27e1a96221db7fb3e88a1ec58f3bbba2b743e32cda5099e7c563fc44eb"
+    },
+    {
+      "id": "JHKS-d2fdb8f2d1572f7e847e",
+      "path": "term-images/japanese-history-k/JHKS-d2fdb8f2d1572f7e847e.jpg",
+      "alt": "蛤御門の変を描いた後世の版画（1893年）",
+      "caption": "蛤御門の変を描いた後世の版画（1893年）",
+      "creator": "森雄山・前川五嶺",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Battle_scene_from_the_Hamaguri_Gate_Incident_of_1864,_Kyoto,_Japan_LCCN2004666394.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d2fdb8f2d1572f7e847e.jpg",
+      "sha256": "d2fdb8f2d1572f7e847e615e092c260c813edf68898bf1c819443785bb18f7c2"
+    },
+    {
+      "id": "JHKS-545b1f0dae0805864f42",
+      "path": "term-images/japanese-history-k/JHKS-545b1f0dae0805864f42.jpg",
+      "alt": "ええじゃないかを描いた『慶応四豊年踊之図』",
+      "caption": "ええじゃないかを描いた『慶応四豊年踊之図』",
+      "creator": "河鍋暁斎",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:EeJaNaiKaScene.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-545b1f0dae0805864f42.jpg",
+      "sha256": "545b1f0dae0805864f422f4715ebee5c34f9fe1df2951ff7066c605ceff23577"
+    },
+    {
+      "id": "JHKS-2a112542b5ff604e13cd",
+      "path": "term-images/japanese-history-k/JHKS-2a112542b5ff604e13cd.jpg",
+      "alt": "中岡慎太郎の肖像写真（1866年）",
+      "caption": "中岡慎太郎の肖像写真（1866年）",
+      "creator": "大坂屋与兵衛",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nakaoka_Shintaro_1866.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2a112542b5ff604e13cd.jpg",
+      "sha256": "2a112542b5ff604e13cd4c319879bf811e4d2dfbc81184df2d668fa8cf6cba78"
+    },
+    {
+      "id": "JHKS-5ed837cc58a1c5c4515d",
+      "path": "term-images/japanese-history-k/JHKS-5ed837cc58a1c5c4515d.jpg",
+      "alt": "イギリスの権利章典（1689年・文書の一部）",
+      "caption": "イギリスの権利章典（1689年・文書の一部）",
+      "creator": "イングランド議会（文書）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:English_Bill_of_Rights_of_1689.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5ed837cc58a1c5c4515d.jpg",
+      "sha256": "5ed837cc58a1c5c4515d88c4e32712897dcbf61c4a68f6042c7aeada366a1773"
+    },
+    {
+      "id": "JHKS-9653c5ed92c8abedc004",
+      "path": "term-images/japanese-history-k/JHKS-9653c5ed92c8abedc004.jpg",
+      "alt": "人権宣言を記した絵（1789年頃・ル・バルビエの原案）",
+      "caption": "人権宣言を記した絵（1789年頃・ル・バルビエの原案）",
+      "creator": "ジャン＝ジャック＝フランソワ・ル・バルビエ（原案）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Declaration_of_the_Rights_of_Man_and_of_the_Citizen_in_1789.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9653c5ed92c8abedc004.jpg",
+      "sha256": "9653c5ed92c8abedc0047e5d11da27edb1bae56844d5a1ed69d70bdc8130c543"
+    },
+    {
+      "id": "JHKS-7245ece41f3dee6560a8",
+      "path": "term-images/japanese-history-k/JHKS-7245ece41f3dee6560a8.jpg",
+      "alt": "バスティーユ襲撃を描いた水彩画（1789年）",
+      "caption": "バスティーユ襲撃を描いた水彩画（1789年）",
+      "creator": "ジャン＝ピエール・ウエル",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Prise_de_la_Bastille.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7245ece41f3dee6560a8.jpg",
+      "sha256": "7245ece41f3dee6560a8ee4b8292ae4376d112c39fdeee78c6990a7d9ecbe677"
+    },
+    {
+      "id": "JHKS-266386cfde86add78036",
+      "path": "term-images/japanese-history-k/JHKS-266386cfde86add78036.jpg",
+      "alt": "ジェームズ２世の肖像（17世紀・ピーター・レリーの工房）",
+      "caption": "ジェームズ２世の肖像（17世紀・ピーター・レリーの工房）",
+      "creator": "ピーター・レリーの工房",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:James_II_by_Peter_Lely.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-266386cfde86add78036.jpg",
+      "sha256": "266386cfde86add78036a0e0debe5f82c11f07d7a0b26298842198053d5a143e"
+    },
+    {
+      "id": "JHKS-d18df549f403f09b1235",
+      "path": "term-images/japanese-history-k/JHKS-d18df549f403f09b1235.jpg",
+      "alt": "大憲章（1215年・大英図書館所蔵）",
+      "caption": "大憲章（1215年・大英図書館所蔵）",
+      "creator": "筆者不詳（大英図書館所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Magna_Carta_(British_Library_Cotton_MS_Augustus_II.106).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d18df549f403f09b1235.jpg",
+      "sha256": "d18df549f403f09b12352f6192f2178b070c832762260c50a91534fdb0988569"
     }
   ]
 }

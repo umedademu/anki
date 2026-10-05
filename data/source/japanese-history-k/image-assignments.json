@@ -121,7 +121,10 @@
     "book-05-02-14",
     "book-05-02-15",
     "book-05-02-16",
-    "book-05-03-01"
+    "book-05-03-01",
+    "book-05-03-02",
+    "book-05-03-03",
+    "book-05-03-04"
   ],
   "images": [
     {
@@ -9327,6 +9330,318 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-c486d9e5fdc035",
+      "caption": "袁世凱の肖像（1915年刊行物の掲載写真）",
+      "note": "点検済みの日本史K・世界史の画像を共有する。公開元のThe World’s Work第30巻・1915年の掲載記録と袁世凱の肖像に照合した。要求を受けた人物と交渉・反発の説明の回答後に姿を示す。掲載年を撮影年や対華要求の交渉当日の確定日付にせず、衣服・勲章・原文にない経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-02-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-65dd9ef0c2d2a7",
+      "caption": "五四運動の学生たち（1919年）",
+      "note": "世界史の画像を共有する。公開元の1919年の五四運動の学生の写真という記録と行進する学生の姿に照合した。北京大学の運動史も参照し、運動の名称・学生の行動・日本への反発の説明の回答後に姿を示す。公開元の転載元を撮影者とはせず、人物全員の所属や個人名、写真だけから運動の全国への広がりを判定させない。旗や看板の解読・撮影地点の細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-02-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-7c646401847def",
+      "caption": "二月革命期の写真（1921年刊の書籍掲載）",
+      "note": "世界史の画像を共有する。Edward Alsworth Ross『The Russian Bolshevik Revolution』（1921年）の掲載記録と、三月革命初期のツァーリ警察への攻撃という原キャプションに照合した。ロシア革命の名称・王朝打倒・1917年と二月から十月への経緯の回答後に場面を補助する。ロシア旧暦の二月と西暦の三月を区別し、1921年の掲載を撮影年にせず、十月革命や1905年の事件に代用しない。銃・人物の位置を革命全体の推移の証拠にせず、個人名・武器の型・外国語を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "B06",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-f273c82293296f",
+      "caption": "レーニンの肖像写真",
+      "note": "世界史の画像を共有する。公開元のPavel Zhukovによるレーニンの肖像に照合した。革命指導者への回答後に人物を示す。公開元の1920年７月という記録を1917年の革命の現場や1922年のソ連成立の写真とはしない。表情・衣服・撮影月日や原文にない政策を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c3ea4ed7fc6ce92421a0",
+      "caption": "ソ連成立に関する宣言・条約の表紙（1922年の文書）",
+      "note": "公開元のロシア連邦公文書の登録機関を出典とする1922年のソ連成立に関する宣言・条約の表紙に照合した。国名と複数の共和国による連邦成立の説明の回答後に文書の姿を示す。公開元の2003年４月25日という画像の日付を成立年や文書作成年にせず、表紙の装丁の製作年・撮影年は断定しない。署名欄や条文、評議会の会議の写真ではなく、紋章の図柄から成立時の加盟国・制度を読み取らせない。外国語・装丁・共和国の個別名を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-51b6f46b530b09",
+      "caption": "スターリンの肖像（1929年以前）",
+      "note": "世界史の画像を共有する。公開元のオランダ国立公文書館6a0857f4-1ad9-102f-a76c-003048944028を出典とする1929年以前のスターリンの肖像に照合した。指導者と政治弾圧の説明の回答後に人物を補助する。撮影年を確定せず、弾圧・裁判・工場の写真ではなく、顔貌から政策や経済の成果を判定させない。服装・生没年・原文にない政治事件を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U02",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-eaf81d9f6cdaa325b9c1",
+      "caption": "五カ年計画を呼びかける宣伝ポスター（1930年）",
+      "note": "公開元のロシア国立博物館の資料登録4516916を出典とするGriffel Vladislavの1930年の宣伝ポスターに照合した。五カ年計画の名称と国家の計画による経済建設の説明の回答後に当時の宣伝の姿を示す。描かれた労働者や敵対者を実際の工場・経済の成果・政治弾圧を撮影した記録とはしない。ロシア語の解読、描かれた人々の個人名・国名や画家名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-84ec07140ae389",
+      "caption": "シベリア出兵を描いた宣伝画（1919年刊行）",
+      "note": "世界史の画像を共有する。公開元の米国議会図書館を出典とするTokyo Shobido & Coの1919年刊『Siberian War』第16図に照合した。出兵の名称・1918年の開始・反革命勢力支援と撤兵への経緯の回答後に当時の宣伝を補助する。彩色の戦争宣伝画であり、戦闘や占領の実写・1918年の出発時の写真ではない。絵の軍隊・飛行機の配置を史実や兵力の証明にせず、地名・制服・航空機の型・制作会社を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U03",
+          "questions": [
+            "B01",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a3433998af20a9a55a49",
+      "caption": "コミンテルン第1回大会の代表者（1919年）",
+      "note": "公開元の1919年３月のコミンテルン第１回大会の代表者の集合写真に照合した。レーニンを切り出した別公開画像と同じ人物・部屋を確認し、その画像の出典は1970年刊『Lenin. Collection Of Photographs And Stills』第１巻である。国際組織の名称と日本共産党の結成経緯の回答後に国際組織の姿を補助する。関連する切り出し画像の撮影者を集合写真の確定撮影者とはせず、1919年の大会を1922年の日本共産党の秘密結成の現場にしない。参加者の顔・外国語の看板・加盟国を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U04",
+          "questions": [
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e5000e933ebeceaf18c0",
+      "caption": "全国水平社の関係者の写真（1922年）",
+      "note": "公開元の『写真記録 全国水平社』（部落解放同盟中央本部編、解放出版社、2002年）を出典とする1922年の関係者の写真に照合した。差別撤廃を目指す組織の名称の回答後に人々の姿を示す。2002年の刊行を撮影年にせず、写った全員の名前や位置は断定しない。創立大会の式典・宣言文そのものや全国の会員全員の写真とはせず、服装・個人名・写真の人数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U04",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5d372a048e796ad37f34",
+      "caption": "平塚らいてうの肖像（1955年刊の掲載写真）",
+      "note": "公開元の国立国会図書館を出典とする1955年刊の平塚らいてうの肖像と、同館の人物解説に照合した。原文にある女性の地位向上の運動を含む社会運動の説明の回答後に人物を補助する。1955年の掲載を撮影年にせず、大正期の活動の現場や全国水平社の創立者の写真にはしない。写真にない労働争議・小作争議を写しているとは説明せず、年齢・服装・原文にない団体や雑誌の名称を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-03-U04",
+          "questions": [
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-0130919a936339",
+      "caption": "ウィルソンの肖像写真（1914年）",
+      "note": "世界史の画像を共有する。公開元のHarris & Ewingによる1914年の肖像と米国議会図書館2016857913の記録に照合した。十四カ条・提唱者と国際協調の説明の回答後に人物を示す。1918年の演説や1919年の講和会議の写真とはせず、肖像から民族自決の適用地域を判断させない。撮影年・衣服・勲章・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-c9bedea8756b77",
+      "caption": "パリ講和会議の主要国代表（1919年）",
+      "note": "世界史の画像を共有する。公開元の米陸軍通信隊Edward N. Jacksonによる1919年５月27日の４人の主要国代表の写真に照合した。講和会議の名称・開催年とベルサイユ条約成立の説明の回答後に代表者の姿を示す。全参加国・日本の代表団・西園寺公望の写真ではなく、条約調印の瞬間とも説明しない。原文にない代表者名・立ち位置・外国語・撮影日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U02",
+          "questions": [
+            "B01",
+            "B06",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-9df63bd2965cdf",
+      "caption": "ベルサイユ条約の英文刊行物の表紙（1919年の条約）",
+      "note": "世界史の画像を共有する。公開元のオークランド戦争記念博物館を出典とする英文刊行物と表紙の講和条約・1919年６月28日の表記に照合した。五四運動と中国の調印拒否、条約名・講和体制とドイツへの条件の説明の回答後に文書の姿を示す。英文の表紙には別の英仏条約も記されるが、その内容を新しい学習条件に加えない。表紙を原本の署名頁や賠償額・軍備制限の条文そのものとはせず、公開元の政治家の著者欄を撮影者とはしない。原文にない条約・国名・外国語の解読を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-02-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-05-03-04-U02",
+          "questions": [
+            "B02",
+            "B07",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-baeb791f82d93d42bcf8",
+      "caption": "西園寺公望の肖像（1906年刊の書籍掲載）",
+      "note": "点検済みの日本史Kの画像を共有する。公開元の冨山房『帝國画報』第２巻・1906年の掲載記録と西園寺公望の肖像に照合した。日本の全権への回答後に人物を示す。1906年の掲載を1919年の会議や調印時の撮影日とせず、出版社と撮影者を区別する。服装・勲章・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U02",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9d7a943ab23100acbe2c",
+      "caption": "ジュネーブの国際連盟本部とウィルソン記念碑（1928年）",
+      "note": "公開元のドイツ連邦公文書館Bild 102-00678の1928年のジュネーブの国際連盟本部と記念碑の記録に照合した。国際連盟の名称・所在地・1920年の発足と協調の説明の回答後に本部の姿を示す。国連ジュネーブの沿革で1920～1936年の旧ホテル・ナショナル（パレ・ウィルソン）の本部と後のパレ・デ・ナシオンを区別する。1928年の写真を1920年の発足式や後代の本部の写真とはしない。記念碑から米国の連盟参加を推定させず、碑文・設計者・建築年を暗記条件にしない。配布元で既に切り出された版をそのまま使用し、資料番号・CC BY-SA 3.0 deの作者表示と利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U03",
+          "questions": [
+            "B01",
+            "B02",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fc80ca4de45a6c423ef8",
+      "caption": "新渡戸稲造の肖像（1933～1934年刊の書籍掲載）",
+      "note": "公開元の東洋文化協會『幕末・明治・大正 回顧八十年史』（1933～1934年）の掲載記録と新渡戸稲造の肖像に照合した。事務次長の人物名と日本の連盟での地位の説明の回答後に人物を補助する。刊行年を撮影年・就任年にせず、1920年の就任式や委任統治領・連盟会議そのものの写真とはしない。出版者と撮影者を区別し、顔貌・服装・紙幣・原文にない経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U04",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-852fe39b328f87",
+      "caption": "ワシントン会議の会場（1921～1922年）",
+      "note": "世界史の画像を共有する。公開元の会議場の写真と米国議会図書館2016886511の別写真に写る同じ会場の形を比較し、米国務省の会議と条約の記録にも照合した。会議名とアジア太平洋の協調、軍縮条約・1922年と軍備制限の説明の回答後に会場を示す。別写真と同一の瞬間とはせず、公開元の1922年２月の調印という説明は撮影日の確定として採用しない。四カ国・九カ国・海軍軍縮の個別調印式や比率が写っているとは説明しない。比率の単独問題には付けず、人物・国旗・席順・会場名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U05",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-05-03-04-U06",
+          "questions": [
+            "B01",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-748fd4b765f95e817224",
+      "caption": "加藤友三郎の肖像写真",
+      "note": "公開元の米国議会図書館cph.3b03425を出典とするUnderwood & Underwoodの加藤友三郎の肖像に照合した。全権の人物名と七割要求から調印への経緯の回答後に人物を示す。撮影年を断定せず、1922年の調印の瞬間・会場での比率交渉を撮影した写真にはしない。加藤高明の肖像に代用せず、衣服・勲章・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U06",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-1fe5b84ada04eb",
+      "caption": "パリ不戦条約の署名文書（1928年の条約）",
+      "note": "世界史の画像を共有する。公開元のオランダ国立公文書館6c3ed980-1ad9-102f-a76c-003048944028を出典とする文書と実際の署名頁の姿に照合した。条約名・1928年と戦争放棄・自衛戦争の限界の説明の回答後に文書を示す。公開元の1928年８月27日は条約の調印日であり、写真の撮影日や会場の調印式の写真とは断定しない。撮影者の推定を確定とせず、公開元の署名者名の表記を新しい学習条件にしない。写真の条文の解読・個別署名や封印から条約の実効性を判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-04-U07",
+          "questions": [
+            "B01",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -13217,6 +13532,102 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Munition_workers_painting_shells_at_the_National_Shell_Filling_Factory_No.6,_Chilwell,_Nottinghamshire_in_1917._This_was_one_of_the_largest_shell_factories_in_the_country._Q30016.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-237651849a7b7447eb9d.jpg",
       "sha256": "237651849a7b7447eb9db5fe9b42819659e22a22242ccb97c1f13211c39993a8"
+    },
+    {
+      "id": "JHKS-eaf81d9f6cdaa325b9c1",
+      "path": "term-images/japanese-history-k/JHKS-eaf81d9f6cdaa325b9c1.jpg",
+      "alt": "五カ年計画を呼びかける宣伝ポスター（1930年）",
+      "caption": "五カ年計画を呼びかける宣伝ポスター（1930年）",
+      "creator": "Griffel Vladislav",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Five-year_plan_USSR_by_Griffel_Vladislav_1930.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-eaf81d9f6cdaa325b9c1.jpg",
+      "sha256": "eaf81d9f6cdaa325b9c13dcfdba5053ef172d9c702576675d3b45dab6299eb5c"
+    },
+    {
+      "id": "JHKS-c3ea4ed7fc6ce92421a0",
+      "path": "term-images/japanese-history-k/JHKS-c3ea4ed7fc6ce92421a0.jpg",
+      "alt": "ソ連成立に関する宣言・条約の表紙（1922年の文書）",
+      "caption": "ソ連成立に関する宣言・条約の表紙（1922年の文書）",
+      "creator": "筆者不詳／ロシア連邦公文書の登録機関（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cover_of_the_1922_Declaration_and_Treaty_on_the_Formation_of_the_USSR.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c3ea4ed7fc6ce92421a0.jpg",
+      "sha256": "c3ea4ed7fc6ce92421a07ac871e8aabb0f45947eb0d5c61b0df2d817044dd90c"
+    },
+    {
+      "id": "JHKS-fc80ca4de45a6c423ef8",
+      "path": "term-images/japanese-history-k/JHKS-fc80ca4de45a6c423ef8.jpg",
+      "alt": "新渡戸稲造の肖像（1933～1934年刊の書籍掲載）",
+      "caption": "新渡戸稲造の肖像（1933～1934年刊の書籍掲載）",
+      "creator": "撮影者不詳／東洋文化協会（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Inazo_Nitobe_(crop).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fc80ca4de45a6c423ef8.jpg",
+      "sha256": "fc80ca4de45a6c423ef8397c716a4daefc59d96c89385ca9b22731713cde9d05"
+    },
+    {
+      "id": "JHKS-748fd4b765f95e817224",
+      "path": "term-images/japanese-history-k/JHKS-748fd4b765f95e817224.jpg",
+      "alt": "加藤友三郎の肖像写真",
+      "caption": "加藤友三郎の肖像写真",
+      "creator": "Underwood & Underwood",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kato_Tomosaburo_cph.3b03425.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-748fd4b765f95e817224.jpg",
+      "sha256": "748fd4b765f95e8172247ad742b9f798f49326ae7d2e6a8df62e1e718e178907"
+    },
+    {
+      "id": "JHKS-9d7a943ab23100acbe2c",
+      "path": "term-images/japanese-history-k/JHKS-9d7a943ab23100acbe2c.jpg",
+      "alt": "ジュネーブの国際連盟本部とウィルソン記念碑（1928年）",
+      "caption": "ジュネーブの国際連盟本部とウィルソン記念碑（1928年）",
+      "creator": "Bundesarchiv, Bild 102-00678（撮影者不詳）",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-00678,_Genf.-_Haus_des_V%C3%B6lkerbundrates.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9d7a943ab23100acbe2c.jpg",
+      "sha256": "9d7a943ab23100acbe2c7146376177173b8e7eb3cf18b5f859b5e822c01bf53e"
+    },
+    {
+      "id": "JHKS-5d372a048e796ad37f34",
+      "path": "term-images/japanese-history-k/JHKS-5d372a048e796ad37f34.jpg",
+      "alt": "平塚らいてうの肖像（1955年刊の掲載写真）",
+      "caption": "平塚らいてうの肖像（1955年刊の掲載写真）",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:HIRATSUKA_Raicho.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5d372a048e796ad37f34.jpg",
+      "sha256": "5d372a048e796ad37f345b18ff9e271c769ccb837ce72455e5bf008f57c87bdd"
+    },
+    {
+      "id": "JHKS-e5000e933ebeceaf18c0",
+      "path": "term-images/japanese-history-k/JHKS-e5000e933ebeceaf18c0.jpg",
+      "alt": "全国水平社の関係者の写真（1922年）",
+      "caption": "全国水平社の関係者の写真（1922年）",
+      "creator": "撮影者不詳／部落解放同盟中央本部（掲載著作の編集）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Suiheisha_members_in_1922_(1).JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e5000e933ebeceaf18c0.jpg",
+      "sha256": "e5000e933ebeceaf18c0b541d5e5c523fec042a846d44154a557b15f26017872"
+    },
+    {
+      "id": "JHKS-a3433998af20a9a55a49",
+      "path": "term-images/japanese-history-k/JHKS-a3433998af20a9a55a49.jpg",
+      "alt": "コミンテルン第1回大会の代表者（1919年）",
+      "caption": "コミンテルン第1回大会の代表者（1919年）",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Delegates_at_the_First_Congress_of_the_Communist_International,_1919.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a3433998af20a9a55a49.jpg",
+      "sha256": "a3433998af20a9a55a4997392bb47c1cd8805577efe8fe01bc3e15fe9b51fece"
     }
   ]
 }

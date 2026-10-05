@@ -118,7 +118,10 @@
     "book-05-02-11",
     "book-05-02-12",
     "book-05-02-13",
-    "book-05-02-14"
+    "book-05-02-14",
+    "book-05-02-15",
+    "book-05-02-16",
+    "book-05-03-01"
   ],
   "images": [
     {
@@ -9067,6 +9070,263 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMP-6f6eff8c2cd21a",
+      "caption": "日本銀行本店の入口（現代の写真）",
+      "note": "既存の政治・経済の画像を共有する。公開元のSycedによる2026年の本店写真と、入口の日本銀行の表示に照合した。中央銀行の名称と資金の基盤の回答後に機関の建物を示す。日本銀行の沿革で創立と現在地への移転を区別し、1882年の開業時の建物・銀行の資金供給を撮影した場面とはしない。国立銀行や三井銀行、造幣局に代用せず、建築年・設計者・撮影年・貨幣の制度を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b478bd245242c131b143",
+      "caption": "建設中の官営八幡製鉄所（1900年）",
+      "note": "公開元の毎日新聞社『昭和史』第14巻の掲載記録・1900年の八幡製鉄所の写真と、建設中の足場の姿に照合した。官営製鉄所の名称・開業年と重工業化の説明への回答後に設備の姿を示す。北九州市の建設・操業開始の解説にも照合し、1900年の建設写真を1901年の開業式や稼働中の写真とはしない。現在保存される後代の高炉の写真でもなく、鉄鉱石・炭鉱の産地、足場や炉の構造・原料の輸入先は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U01",
+          "questions": [
+            "B02",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e3e1276c034fc607f5b3",
+      "caption": "豊田佐吉の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする豊田佐吉の肖像に照合した。力織機の発明者への回答後に人物を示す。撮影年を断定せず、豊田喜一郎の肖像や発明中の現場写真・自動車工場の写真とはしない。勲章・衣服・生没年・自動車産業の事績を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e7fca295708614e448c7",
+      "caption": "豊田式汽力織機の複製展示（2022年の写真）",
+      "note": "公開元のKKPCW（Kyu3）によるトヨタ産業技術記念館の2022年の豊田式汽力織機の複製展示写真に照合した。動力織機は文化庁・トヨタの発明の解説にも照合し、力織機の名称と手織りから機械制生産への変化の回答後に織機の姿を示す。明治時代の工場で稼働している写真や1899年製の収蔵実機そのものとはしない。紡績機・糸繰返機・生糸の繰糸機・1924年のG型自動織機に代用せず、型名・部品・複製の製作年・展示館・効率は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-0bae4b55158e93",
+      "caption": "綿の実（現代の写真）",
+      "note": "既存の地理・日本史Kの画像を共有する。公開元のകാക്കരによる2013年の綿の実の写真に照合した。綿糸・綿花の輸出入の変化の説明への回答後に、主な輸入原料になった綿花の姿を補助する。写真だけから1890年の国内生産・輸入の比較、輸出先や輸入量を判定させない。日本の輸入品の現物や明治期の国内農場、生糸や繭、綿織物の写真とはしない。種名・原産地・撮影場所・撮影年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U02",
+          "questions": [
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d6563647a93f9ae951cd",
+      "caption": "蚕の繭（現代の写真）",
+      "note": "公開元のFumikas Sagisavasによる2024年の蚕の繭の写真と、画像の繭の形に照合した。綿糸と生糸の原料の違い、製糸と生糸輸出の説明への回答後に、生糸の原料である繭の姿を補助する。現代の写真から明治期の国産比率や輸出量・生産地を判定させず、この繭が当時の日本産・輸出用であるとは説明しない。繭を綿花・綿糸・完成した生糸や機械の写真に代用せず、蚕の品種・包装・撮影年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-15-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4beec6a10bd8f538d437",
+      "caption": "津田梅子の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする津田梅子の肖像と、同館・国立公文書館の女子教育の解説に照合した。人物名・女子英学塾と女子教育の説明への回答後に人物を示す。撮影年を断定せず、1871年の留学時や1900年の創立式の写真、校舎写真・日本女子大学校の創立者の肖像とはしない。髪型・服装・紙幣・原文にない留学先や学校の改称は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-16-U01",
+          "questions": [
+            "B03",
+            "B04",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ca815759c6d3f19fe3a3",
+      "caption": "東京の市街電車（1905年頃）",
+      "note": "公開元の米国議会図書館cph.3c25517を出典とする1905年頃の東京の電車写真と、線路・電線・車両の姿に照合した。市街電車の名称と都市生活の説明への回答後に街の交通の姿を示す。公開元の作者欄にある米国著作権局の番号を撮影者の名前とはしない。1905年頃という推定を撮影月日の確定にせず、地方の鉄道・長距離輸送や電灯の普及率の証拠にはしない。路線名・車両の型・撮影地点の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-16-U01",
+          "questions": [
+            "B07",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fcb211e288946ef7930b",
+      "caption": "田中正造の肖像（1926年刊の自叙伝掲載）",
+      "note": "公開元の国立国会図書館1908659を出典とする栗原彦三郎編集『田中正造自叙伝』（1926年）の肖像に照合した。元国会議員の人物名と直訴の行動の回答後に姿を示す。公開元の1901年の人物という説明、1926年の掲載、2020年の画像公開を区別し、撮影年は断定しない。栗原彦三郎を撮影者とせず、直訴の現場や取り押さえられた場面、天皇との会談写真とはしない。髭・服装・椅子・掲載年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-16-U04",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ae9a7257fa2ae501832c",
+      "caption": "足尾銅山の写真（1895年頃）",
+      "note": "公開元の三省堂の歴史資料第５巻を出典とする1895年頃の足尾銅山の写真と、施設の姿に照合した。公害事件の名称と被害・対策の説明への回答後に銅山の姿を示す。撮影年の推定を1891年の発覚時の確定写真にせず、煙や山の見た目だけから鉱毒の濃度・田畑の被害・予防令の効果を判定させない。渡良瀬川流域全体の地図や被害農民・直訴の現場の写真とはしない。建物名・施設の構造・掲載巻・鉱毒の化学成分は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-16-U04",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ff74943a4943b84c070c",
+      "caption": "桂太郎の肖像図（1904年の新聞掲載）",
+      "note": "公開元の米国議会図書館所蔵The Tacoma Times・1904年１月18日号を出典とする桂太郎の肖像図と、掲載された人物名に照合した。第三次桂内閣の首相と内閣への反発・政変の説明への回答後に人物を示す。1904年の掲載を1912年の内閣成立や1913年の総辞職の現場の写真とはせず、掲載図と写真を区別する。英文の称号・爵位・勲章・服装・新聞名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U01",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-baeb791f82d93d42bcf8",
+      "caption": "西園寺公望の肖像（1906年刊の書籍掲載）",
+      "note": "前回までに点検した日本史Kの画像を共有する。公開元の冨山房『帝國画報』第２巻・1906年の掲載記録と西園寺公望の肖像に照合した。軍事費をめぐる対立と第三次桂内閣の成立経緯への回答後に、前の内閣を率いた人物を補助する。1906年の掲載を1912年の総辞職時の写真にせず、軍事費の金額・対立の現場や軍の代表者を示すものとはしない。撮影者と出版社を区別し、服装・顔貌・原文にない政治経歴は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-0d1bd814d3d425",
+      "caption": "サラエボ事件を描いた報道の挿絵（1914年）",
+      "note": "既存の世界史の画像を共有する。公開元のAchille Beltrameによる1914年７月のDomenica del Corriereの表紙と、皇位継承者夫妻の暗殺を描いた場面に照合した。サラエボ事件と大戦のきっかけの説明への回答後に報道の図を示す。事件の現場写真・目撃記録・警察の証拠写真ではなく、描かれた構図や車・武器・人の位置を事実の証明にしない。掲載日と事件の日を区別し、夫妻・犯人の個人名や衣服・外国語の解読は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U02",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-237651849a7b7447eb9d",
+      "caption": "イギリスの軍需工場で砲弾を塗装する作業員（1917年）",
+      "note": "公開元の帝国戦争博物館Q30016を出典とするHorace Nichollsによる1917年７月の英国Chilwell軍需工場の写真と、多数の砲弾を塗装する作業員の姿に照合した。総力戦の名称への回答後に、戦場の部隊に限らず産業と労働力が戦争に使われたことを補助する。日本の工女・製糸工場や第二次世界大戦の工場写真とはしない。写真だけから動員制度・労働条件や全生産量を判定させず、地域・工場名・砲弾の型・作業員の個人名・性別は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0eeb7fddf85adaac42ce",
+      "caption": "第一次世界大戦のイギリス軍戦車（1916年）",
+      "note": "公開元の帝国戦争博物館Q2486を出典とするErnest Brooksによる1916年９月25日の英国Mark I戦車の写真と、博物館の説明に照合した。新兵器と総力戦の説明への回答後に戦車の姿を示す。博物館は塹壕で故障した車両と説明するため、公開元の「予備」という推定を事実として採用せず、攻撃中の成功場面や戦車の初使用そのものとはしない。日本軍の戦車・第二次世界大戦の戦車と取り違えず、車名・型・搭乗員・戦場の地名・戦術や原文にない日付は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U03",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-bc485e51c54443",
+      "caption": "ドイツ潜水艦による英国商船の沈没を描いた絵（1915年）",
+      "note": "既存の世界史の画像を共有する。公開元のWilly Stöwerによる1915年の英国商船Linda Blancheの沈没の絵と、画面の潜水艦・商船に照合した。商船へのドイツの攻撃と米国参戦の問いへの回答後に、商船を攻撃する潜水艦の姿を補助する。これは英国商船の例であり、米国の商船の写真や米国参戦の直接原因になった特定事件、ルシタニア号の写真とはしない。1915年の絵を1917年の参戦時の現場写真にせず、船員の避難の描写から実際の全攻撃の手順・安全性を判定させない。船名・乗員・艦番号・沈没日・画家名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U03",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-253586b0fa644891ec98",
+      "caption": "青島のイギリス・インド・日本の兵士（1914年）",
+      "note": "公開元の英国国立陸軍博物館NAM.1969-06-31--65の1914年の英国・インド・日本の兵士の写真と、青島攻略の解説に照合した。山東半島とアジアでの日本の軍事行動への回答後に青島に関係する兵士の姿を示す。写真帖の編集者N. W. Barnardistonを撮影者とせず、日英同盟の締結式や宣戦布告、戦闘そのもの・占領地全体の写真とはしない。1937年の青島占領や地中海の艦隊の写真に代用せず、部隊名・個人名・制服からの国籍判定・撮影場所の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U04",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-5234c00d540c06",
+      "caption": "地中海の位置（現代の衛星画像）",
+      "note": "既存の世界史の画像を共有する。公開元のNASA World Wind画像をEric Gabaが2007年に編集した地中海の画像と、欧州南部・アフリカ北部に囲まれた海の位置に照合した。日本が艦隊を派遣した海域と活動の説明への回答後に位置を示す。1917年の国境・航路・船団の写真や戦闘配置図とはせず、この画像だけから艦隊の活動地点・護衛の成否・ドイツ潜水艦の位置を判定させない。地中海の周囲の地名・海底の形・衛星技術や原文にない派遣年月は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-01-U04",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -12813,6 +13073,150 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hibiya_Incendiary_Incident2.JPG",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-46d72b52954f5100c153.jpg",
       "sha256": "46d72b52954f5100c153d024236a4f0139d59a2e28c0d437a114106668bd9276"
+    },
+    {
+      "id": "JHKS-b478bd245242c131b143",
+      "path": "term-images/japanese-history-k/JHKS-b478bd245242c131b143.jpg",
+      "alt": "建設中の官営八幡製鉄所（1900年）",
+      "caption": "建設中の官営八幡製鉄所（1900年）",
+      "creator": "撮影者不詳／毎日新聞社（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Governmental_Yawata_Iron_%26_Steel_Works.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b478bd245242c131b143.jpg",
+      "sha256": "b478bd245242c131b143514a4d7e9af72b975f9c7f90d276f0434c46ed77e7e6"
+    },
+    {
+      "id": "JHKS-e3e1276c034fc607f5b3",
+      "path": "term-images/japanese-history-k/JHKS-e3e1276c034fc607f5b3.jpg",
+      "alt": "豊田佐吉の肖像写真",
+      "caption": "豊田佐吉の肖像写真",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sakichi_Toyoda.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e3e1276c034fc607f5b3.jpg",
+      "sha256": "e3e1276c034fc607f5b38a8221b44c774a1ab07480ddc5a1712902784a5ac9ad"
+    },
+    {
+      "id": "JHKS-e7fca295708614e448c7",
+      "path": "term-images/japanese-history-k/JHKS-e7fca295708614e448c7.jpg",
+      "alt": "豊田式汽力織機の複製展示（2022年の写真）",
+      "caption": "豊田式汽力織機の複製展示（2022年の写真）",
+      "creator": "KKPCW（Kyu3）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Toyoda_Power_Loom_(Replica)_-_2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e7fca295708614e448c7.jpg",
+      "sha256": "e7fca295708614e448c71516c1a1608f30fa2ca4b989cdf45decf83c606a2c1d"
+    },
+    {
+      "id": "JHKS-d6563647a93f9ae951cd",
+      "path": "term-images/japanese-history-k/JHKS-d6563647a93f9ae951cd.jpg",
+      "alt": "蚕の繭（現代の写真）",
+      "caption": "蚕の繭（現代の写真）",
+      "creator": "Fumikas Sagisavas",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Silkworm_cocoons.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d6563647a93f9ae951cd.jpg",
+      "sha256": "d6563647a93f9ae951cd1e777ac38a21b3812e8b134914fa682bb1b86c44e1e0"
+    },
+    {
+      "id": "JHKS-4beec6a10bd8f538d437",
+      "path": "term-images/japanese-history-k/JHKS-4beec6a10bd8f538d437.jpg",
+      "alt": "津田梅子の肖像写真",
+      "caption": "津田梅子の肖像写真",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tsuda_Umeko.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4beec6a10bd8f538d437.jpg",
+      "sha256": "4beec6a10bd8f538d4371f80fd9daf984083d7aec07e74c3c61b9a552fb32ce0"
+    },
+    {
+      "id": "JHKS-ca815759c6d3f19fe3a3",
+      "path": "term-images/japanese-history-k/JHKS-ca815759c6d3f19fe3a3.jpg",
+      "alt": "東京の市街電車（1905年頃）",
+      "caption": "東京の市街電車（1905年頃）",
+      "creator": "撮影者不詳／米国議会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokyo_Tram_1905.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ca815759c6d3f19fe3a3.jpg",
+      "sha256": "ca815759c6d3f19fe3a3dfef27dca379f29c54ebe75689bd547d968c8165be9c"
+    },
+    {
+      "id": "JHKS-fcb211e288946ef7930b",
+      "path": "term-images/japanese-history-k/JHKS-fcb211e288946ef7930b.jpg",
+      "alt": "田中正造の肖像（1926年刊の自叙伝掲載）",
+      "caption": "田中正造の肖像（1926年刊の自叙伝掲載）",
+      "creator": "撮影者不詳／栗原彦三郎（掲載著作の編集）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tanaka_Sh%C5%8Dz%C5%8D_in_1901.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-fcb211e288946ef7930b.jpg",
+      "sha256": "fcb211e288946ef7930b5534342e4df1950787f68c793fb9ffa0211ccf8fb935"
+    },
+    {
+      "id": "JHKS-ae9a7257fa2ae501832c",
+      "path": "term-images/japanese-history-k/JHKS-ae9a7257fa2ae501832c.jpg",
+      "alt": "足尾銅山の写真（1895年頃）",
+      "caption": "足尾銅山の写真（1895年頃）",
+      "creator": "撮影者不詳／三省堂（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ashio_Copper_Mine_circa_1895.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ae9a7257fa2ae501832c.jpg",
+      "sha256": "ae9a7257fa2ae501832ce27d39f882262c8f838dbfc1c48a909c28bf23d13d2f"
+    },
+    {
+      "id": "JHKS-ff74943a4943b84c070c",
+      "path": "term-images/japanese-history-k/JHKS-ff74943a4943b84c070c.jpg",
+      "alt": "桂太郎の肖像図（1904年の新聞掲載）",
+      "caption": "桂太郎の肖像図（1904年の新聞掲載）",
+      "creator": "原作者不詳／The Tacoma Times（掲載紙）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Viscount_Katsura_Taro_(1904).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ff74943a4943b84c070c.jpg",
+      "sha256": "ff74943a4943b84c070c786f9f1e2eb88ad516a8a5eb1008aee153b9607eb381"
+    },
+    {
+      "id": "JHKS-0eeb7fddf85adaac42ce",
+      "path": "term-images/japanese-history-k/JHKS-0eeb7fddf85adaac42ce.jpg",
+      "alt": "第一次世界大戦のイギリス軍戦車（1916年）",
+      "caption": "第一次世界大戦のイギリス軍戦車（1916年）",
+      "creator": "Ernest Brooks",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:British_Mark_I_male_tank_Somme_25_September_1916.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0eeb7fddf85adaac42ce.jpg",
+      "sha256": "0eeb7fddf85adaac42ce97ffe0ffb2be252c0633629bdd1fd59ed788052ee75b"
+    },
+    {
+      "id": "JHKS-253586b0fa644891ec98",
+      "path": "term-images/japanese-history-k/JHKS-253586b0fa644891ec98.jpg",
+      "alt": "青島のイギリス・インド・日本の兵士（1914年）",
+      "caption": "青島のイギリス・インド・日本の兵士（1914年）",
+      "creator": "撮影者不詳／英国国立陸軍博物館（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:British,_Indian_and_Japanese_soldiers_in_Tsingtao_(Qingdao),_China,_1914.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-253586b0fa644891ec98.jpg",
+      "sha256": "253586b0fa644891ec988996acec35a63bf0f64bba5dbc99df2d4bae85250426"
+    },
+    {
+      "id": "JHKS-237651849a7b7447eb9d",
+      "path": "term-images/japanese-history-k/JHKS-237651849a7b7447eb9d.jpg",
+      "alt": "イギリスの軍需工場で砲弾を塗装する作業員（1917年）",
+      "caption": "イギリスの軍需工場で砲弾を塗装する作業員（1917年）",
+      "creator": "Horace Nicholls",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Munition_workers_painting_shells_at_the_National_Shell_Filling_Factory_No.6,_Chilwell,_Nottinghamshire_in_1917._This_was_one_of_the_largest_shell_factories_in_the_country._Q30016.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-237651849a7b7447eb9d.jpg",
+      "sha256": "237651849a7b7447eb9db5fe9b42819659e22a22242ccb97c1f13211c39993a8"
     }
   ]
 }

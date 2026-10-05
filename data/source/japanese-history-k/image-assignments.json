@@ -112,7 +112,10 @@
     "book-05-02-05",
     "book-05-02-06",
     "book-05-02-07",
-    "book-05-02-08"
+    "book-05-02-08",
+    "book-05-02-09",
+    "book-05-02-10",
+    "book-05-02-11"
   ],
   "images": [
     {
@@ -8513,6 +8516,260 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-70de8bbba708a12cf87a",
+      "caption": "壬午事変を題材にした版画（1882年・楊洲周延筆）",
+      "note": "公開元の楊洲周延筆・1882年の壬午事変の版画の記録と、日本公使館員の避難を題材にした描写に照合した。壬午事変と朝鮮をめぐる日清の対立への回答後に関連版画を示す。写真や清軍が暴動を鎮圧している現場の記録、1884年の甲申政変の図とはしない。日本側の視点を含む版画を客観的な実況とはせず、描かれた人物・旗・行動の細部を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-09-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-48d38892f3d70532a5bf",
+      "caption": "金玉均の肖像（1911年刊の書籍掲載）",
+      "note": "公開元のソウル歴史博物館の歴史資料を出典とする金玉均の肖像と、J. H. ロングフォード『THE STORY OF KOREA』・1911年刊という掲載記録に照合した。金玉均らによる甲申政変の回答後に人物を示す。掲載著者を撮影者とせず、1911年を本人の撮影年にしない。1884年のクーデターの現場写真とは説明せず、原文にない経歴・服装・撮影時期を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-09-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e002a3e41f2435",
+      "caption": "東学農民軍の指導者・全琫準の写真",
+      "note": "既存の世界史の画像を共有する。公開元の村上天眞撮影の全琫準という記録と、画像の人物・名札に照合した。東学党の乱と農民の動きへの回答後に関連人物を示す。1894年の蜂起や日清両軍の交戦の現場、農民全体の集合写真とはしない。公開元の撮影時期は1910年以前とのみ示すため年月日を断定しない。原文にない全琫準の名前・逮捕の経緯・人物の位置は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-09-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6e09ce76c40b88",
+      "caption": "日清戦争の軍隊を写した写真（1894年）",
+      "note": "既存の世界史・日本史の画像を共有する。公開元の1894年の写真と小沢健志『幕末明治の写真』340頁掲載という記録、銃を構える軍隊の姿に照合した。日清戦争の名称・開始年と展開への回答後に関連写真を示す。1894年７月の軍艦交戦や黄海の海戦の写真、1893年の製艦費をめぐる議会交渉の写真とはしない。撮影場所や実戦か演習かを断定せず、軍服・兵器・隊列から戦争経過を判定させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-09-U03",
+          "questions": [
+            "B02",
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-02b31f2efcc8a9084cd7",
+      "caption": "下関条約の漢文文書（1895年）",
+      "note": "公開元の国立故宮博物院の前清条約資料と、同館の1895年の中日講和条約の漢文署名本の記録、画像の講和条約・両国と全権代表の記載に照合した。下関条約の名称・締結年と講和の回答後に文書の姿を示す。講和会場の建物、三国干渉後の遼東半島還付条約、後の日露講和条約とはしない。画像は条文に入る前の頁であり、朝鮮の独立・賠償金・割譲の条文をこの頁から読み取らせない。原文にない李経方・漢文の解読・印章・史料番号は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-317acc56c859c7",
+      "caption": "陸奥宗光の肖像写真",
+      "note": "前回に点検した既存画像を共有する。公開元の国立国会図書館を出典とする陸奥宗光の人物と肖像写真に照合した。下関条約で伊藤博文とともに日本側の全権代表を担った人物への回答後に陸奥の姿を示す。代表全員の集合写真や1895年の会議・調印場面とはしない。撮影年・服装・後の役職は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U01",
+          "questions": [
+            "B06"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-2aa5175f36de49",
+      "caption": "李鴻章の肖像写真（1896年）",
+      "note": "既存の世界史の画像を共有する。公開元のRussell & Sons撮影・1896年の李鴻章の肖像と1903年刊の伝記掲載という記録に照合した。下関条約の清側全権代表への回答後に人物を示す。1895年の下関の講和会議の現場写真とはせず、撮影年と条約締結年・書籍の掲載年を区別する。服装・勲章・撮影者・訪問地は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U01",
+          "questions": [
+            "B07"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0d2963e5fef939",
+      "caption": "遼東半島還付条約の文書展示（1895年の文書・現代の写真）",
+      "note": "既存の世界史・日本史の画像を共有する。公開元のWorld Imagingの2009年の外交史料館写真と、文書の明治28年11月８日・遼東還付を外務省の説明に照合した。三国干渉と日本の返還への回答後に、その後に結んだ日清間の返還条約の姿を示す。1895年４月の三国の返還要求書や三国が署名した条約、日清戦争の下関条約とはしない。要求・受諾・返還協定・現代の撮影を区別し、署名者・調印月日・印章は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U02",
+          "questions": [
+            "B01",
+            "B04",
+            "B07",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ad281722e2db5cac912d",
+      "caption": "列強の中国進出を風刺した絵（1898年・アンリ＝メイエ筆）",
+      "note": "公開元のコーネル大学図書館の収集資料を出典とするアンリ＝メイエの図と、マサチューセッツ工科大学の1898年１月16日刊『Le Petit Journal』の作品記録に照合した。列強の清への進出と権益の獲得への回答後に、中国を菓子にたとえて競争を描いた風刺画を示す。1895年の三国干渉の実況や実際の国境・租借範囲の地図ではなく、絵だけで三国の組合せや各契約の権利・成立日を判定させない。描かれた人物・雑誌名・制作月日・菓子の比喩は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U02",
+          "questions": [
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b22d767b5093be",
+      "caption": "大隈重信の肖像写真（晩年）",
+      "note": "前回に点検した既存画像を共有する。公開元の大隈重信の肖像と1933～1934年刊の書籍掲載に照合した。初の政党内閣・第一次大隈内閣と憲政党の成立への回答後に人物を示す。掲載年を撮影年にせず、1898年の組閣時の写真や内閣全員・板垣退助との集合写真とはしない。服装・勲章・後の役職は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U03",
+          "questions": [
+            "B01",
+            "B03",
+            "B05",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b1166a2016154e",
+      "caption": "伊藤博文の肖像写真（1900年）",
+      "note": "前回に点検した既存画像を共有する。公開元の国立国会図書館の1900年の伊藤博文の肖像に照合した。立憲政友会の結成と総裁・政治勢力、日英同盟以前の対ロシア方針の回答後に人物を示す。1900年の人物写真を結党式や1902年の外交交渉の現場とはせず、党の構成や対ロシア方針を写真だけから読み取らせない。撮影時期・髭・服装は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U03",
+          "questions": [
+            "B02",
+            "B04",
+            "B06",
+            "R02",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-05-02-11-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-baeb791f82d93d42bcf8",
+      "caption": "西園寺公望の肖像（1906年刊の書籍掲載）",
+      "note": "公開元の冨山房『帝國画報』第２巻・1906年刊という記録と西園寺公望の肖像に照合した。西園寺公望と桂太郎が交互に政権を担った説明への回答後に西園寺の姿を示す。掲載年を撮影年にはせず、桂太郎本人や２人の集合写真、1900年の立憲政友会結成の写真とはしない。出版社を撮影者とせず、服装・爵位・撮影時期は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-10-U03",
+          "questions": [
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e5981e27f048e1",
+      "caption": "義和団事件期の天津の写真（1901年刊行）",
+      "note": "既存の世界史の画像を共有する。公開元と米国議会図書館LC-USZC4-3917の『Company of Boxers, Tien-Tsin, China』・Whiting View Companyの1901年刊行という記録、街を歩く集団に照合した。義和団事件と群衆の動きへの回答後に事件期の関連写真を示す。1900年の北京公使館包囲や戦闘現場の写真とは説明せず、刊行年を事件の発生年にしない。原掲載のステレオ写真の片側という公開画像をそのまま共有し、人物の位置・武器・撮影月日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-11-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-2af08efecb9640",
+      "caption": "西太后の肖像写真（20世紀初め）",
+      "note": "既存の世界史の画像を共有する。公開元のJohn Yu Shuinlingの西太后の肖像という記録と人物の姿に照合した。義和団を支持して宣戦布告した人物への回答後に姿を示す。撮影年を細かく断定せず、1900年の宣戦布告の場面や明治天皇・光緒帝の肖像とはしない。衣装・装飾・写真家・撮影年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-11-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-a1176ecb39e249",
+      "caption": "北京議定書の署名頁（1901年の文書）",
+      "note": "既存の世界史の画像を共有する。公開元のAlfons Mumm『Ein Tagebuch in Bildern』を出典とする署名頁の説明と、画像の1901年９月７日・署名・印章に照合した。義和団事件後の北京議定書と各国の対応の回答後に文書の姿を示す。公開元の1902年という画像記録を文書の調印年にせず、日英同盟や1885年の日清天津条約とはしない。署名頁から賠償の額・駐屯範囲・ロシア軍の動きを直接読み取らせない。署名者・フランス語・調印月日は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-11-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6b6fae15d1967d",
+      "caption": "日英同盟協約の文書展示（1902年の文書・現代の写真）",
+      "note": "既存の世界史・日本史の画像を共有する。公開元のWorld Imagingの2009年の外交史料館の展示写真と、文書の1902年１月30日・日英両国の協約に照合した。日英同盟の名称・成立年と交渉への回答後に文書を示す。1894年の日英通商航海条約や後の改訂同盟の文書、1902年の調印現場の写真とはしない。小村寿太郎本人の署名とは説明せず、協約の締結と現代の撮影を区別する。署名者・英語の解読・印章・調印月日は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-11-U02",
+          "questions": [
+            "B01",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9dcbea700514e2",
+      "caption": "小村寿太郎の肖像（1904年刊行物の掲載図）",
+      "note": "既存の世界史・日本史の画像を共有する。公開元のTaylorによる小村寿太郎の肖像と『The World’s Work』第７巻・1904年刊・4632頁掲載という記録に照合した。日英同盟の交渉を進めた外相への回答後に人物を示す。掲載年を1902年の交渉時の撮影年とせず、陸奥宗光や伊藤博文の肖像、協約の調印場面とはしない。服装・髭・写真家・掲載誌は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-11-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -12091,6 +12348,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Battle_at_Kagoshima_LACMA_M.84.31.322a-c.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-98aff196c1eed88ecb69.jpg",
       "sha256": "98aff196c1eed88ecb6957b268f7d518db004a6f5bf714b568e13dc5fa22a4ba"
+    },
+    {
+      "id": "JHKS-70de8bbba708a12cf87a",
+      "path": "term-images/japanese-history-k/JHKS-70de8bbba708a12cf87a.jpg",
+      "alt": "壬午事変を題材にした版画（1882年・楊洲周延筆）",
+      "caption": "壬午事変を題材にした版画（1882年・楊洲周延筆）",
+      "creator": "楊洲周延",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:ImoIncident_ToyoharaChikanobu_(2).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-70de8bbba708a12cf87a.jpg",
+      "sha256": "70de8bbba708a12cf87a1a4ee28f7da0cc413acec20016bff760f63e0079ca21"
+    },
+    {
+      "id": "JHKS-48d38892f3d70532a5bf",
+      "path": "term-images/japanese-history-k/JHKS-48d38892f3d70532a5bf.jpg",
+      "alt": "金玉均の肖像（1911年刊の書籍掲載）",
+      "caption": "金玉均の肖像（1911年刊の書籍掲載）",
+      "creator": "撮影者不詳／J. H. ロングフォード（掲載著作）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:KimOkkyun.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-48d38892f3d70532a5bf.jpg",
+      "sha256": "48d38892f3d70532a5bf73acbd40560bca606560a7fba64cc543f4a3ad060c8e"
+    },
+    {
+      "id": "JHKS-02b31f2efcc8a9084cd7",
+      "path": "term-images/japanese-history-k/JHKS-02b31f2efcc8a9084cd7.jpg",
+      "alt": "下関条約の漢文文書（1895年）",
+      "caption": "下関条約の漢文文書（1895年）",
+      "creator": "清国政府（文書）／国立故宮博物院・外交部寄存資料（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Treaty_of_Shimonoseki_Qing.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-02b31f2efcc8a9084cd7.jpg",
+      "sha256": "02b31f2efcc8a9084cd7db363798ae10c4ecfe0cffa94917245dfa80fd2dd5bd"
+    },
+    {
+      "id": "JHKS-baeb791f82d93d42bcf8",
+      "path": "term-images/japanese-history-k/JHKS-baeb791f82d93d42bcf8.jpg",
+      "alt": "西園寺公望の肖像（1906年刊の書籍掲載）",
+      "caption": "西園寺公望の肖像（1906年刊の書籍掲載）",
+      "creator": "撮影者不詳／冨山房（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kinmochi_Saionji.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-baeb791f82d93d42bcf8.jpg",
+      "sha256": "baeb791f82d93d42bcf891f4f5be35ffef7fe0f3f051fef13a57b92cf87f9748"
+    },
+    {
+      "id": "JHKS-ad281722e2db5cac912d",
+      "path": "term-images/japanese-history-k/JHKS-ad281722e2db5cac912d.jpg",
+      "alt": "列強の中国進出を風刺した絵（1898年・アンリ＝メイエ筆）",
+      "caption": "列強の中国進出を風刺した絵（1898年・アンリ＝メイエ筆）",
+      "creator": "アンリ＝メイエ",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:China,_the_cake_of_kings_and_emperors,_Le_Petit_Journal_1898.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ad281722e2db5cac912d.jpg",
+      "sha256": "ad281722e2db5cac912d4a83002f1dfb2778c1c13db6c5070d1a232b4bf53f88"
     }
   ]
 }

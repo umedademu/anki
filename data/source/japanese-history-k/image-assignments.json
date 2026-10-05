@@ -103,7 +103,10 @@
     "book-05-01-02",
     "book-05-01-03",
     "book-05-01-04",
-    "book-05-01-05"
+    "book-05-01-05",
+    "book-05-01-06",
+    "book-05-02-01",
+    "book-05-02-02"
   ],
   "images": [
     {
@@ -7591,6 +7594,268 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-bafa90e314733a",
+      "caption": "ペリーの肖像写真（19世紀）",
+      "note": "以前に点検した画像を共有する。公開元のメトロポリタン美術館283184・マシュー・ブレイディの1856～1858年頃の肖像と人物に照合した。1853年の来航者と開国への展開の回答後に人物を示す。撮影年を1853年の来航年とは同一視せず、浦賀で撮影された写真や艦隊の写真と説明しない。肩章・撮影者・撮影時期の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U01",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-49b017356c3a98",
+      "caption": "日米和親条約の批准書の複製展示（現代の写真）",
+      "note": "以前に点検した画像を共有する。公開元のWorld Imagingの外務省外交史料館の2009年の複製展示写真、1855年２月21日の批准書の記録と条文の姿に照合した。1854年に締結された条約の名称への回答後に関連文書を示す。条約締結・翌年の批准・現代の撮影を区別し、1854年に撮影された原本文書とはしない。古文の解読・条文番号・批准日・施設名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f1e3f04b2d693a28412c",
+      "caption": "ハリスの肖像写真（19世紀）",
+      "note": "以前に点検した画像を共有する。公開元の米国議会図書館cwpbh.01612・Brady-Handyの1855～1865年のタウンゼント・ハリスの写真と人物像に照合した。総領事と通商要求への回答後に人物を示す。ペリーや1858年の条約調印現場の写真と混同せず、撮影年を一点に断定しない。髪・服装・撮影者は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b7982fb667bb0d",
+      "caption": "日米修好通商条約の複製展示（現代の写真）",
+      "note": "以前に点検した画像を共有する。公開元のWorld Imagingの2009年の外務省外交史料館の複製展示と1858年７月29日の条約の記録に照合した。ハリスの要求した条約と開国・通商の流れの回答後に文書の姿を示す。和親条約の批准書と混同せず、1858年の調印現場で撮影された原本とはしない。署名の解読・印章・調印日・施設名は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U01",
+          "questions": [
+            "B05",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4fe89a330661566cad38",
+      "caption": "薩英戦争を描いた版画（1863年刊）",
+      "note": "前回までに点検・登録した画像を共有する。公開元のフランス国立図書館Gallica bpt6k6221111pと1863年12月５日刊のE. Roevensの版画、鹿児島への艦砲射撃の描写に照合した。戦争名と生麦事件からの展開の回答後に戦争の姿を示す。生麦事件の襲撃現場や長州への四国連合艦隊の砲撃と混同しない。船名・番号・フランス語・版画家は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U02",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-def0fd27e1a96221db7f",
+      "caption": "四国連合艦隊による下関砲撃を描いた絵（19世紀）",
+      "note": "前回までに点検・登録した画像を共有する。公開元のオランダ国立図書館KONB11-P1651・1864～1869年の作品の記録と海峡への砲撃の描写に照合した。馬関戦争の原因・年代・展開の回答後に戦争の図を示す。1864年の砲撃と作品制作時期を区別し、薩英戦争や1853年のペリーの来航の図とはしない。画中の旗や艦数から四カ国の構成を判定させず、作者・船名・外国語は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-01-06-U02",
+          "questions": [
+            "B03",
+            "B05",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9c2cb16c9acafa",
+      "caption": "王政復古後の会議を描いた後世の絵（1931年・島田墨仙筆）",
+      "note": "既存の世界史の画像を共有する。公開元の1931年の島田墨仙筆『王政復古』と明治神宮の解説が示す小御所会議の場面に照合した。1867年の大号令・新政府の発足と維新の展開への回答後に会議を示す。1867年に作られた実況図や大政奉還の場面と説明せず、同年の出来事と後世の制作時期を区別する。出席者の席順・衣服・会議名・画家は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U01",
+          "questions": [
+            "B01",
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f01eb73e4880aa",
+      "caption": "徳川慶喜の肖像写真（1867年）",
+      "note": "以前に点検した画像を共有する。公開元のフレデリック・サットンの1867年・大阪での徳川慶喜の写真と人物に照合した。新政府から除かれた人物への回答後に姿を示す。写真そのものを除外を決定した場面や王政復古後の会議の写真とはしない。衣服・撮影地・撮影者は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U01",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-76210a2c410ecd",
+      "caption": "江戸城の無血開城に向けた話し合いを描いた後世の絵（1935年・結城素明筆）",
+      "note": "既存の世界史の画像を共有する。公開元の結城素明筆『江戸開城』の1935年の記録、勝海舟と西郷隆盛の話し合いの人物と場面に照合した。無血開城を実現した二人と戦闘回避の回答後に交渉を示す。1868年の写真や鳥羽・伏見の戦闘場面とはせず、出来事と後世の制作時期を区別する。左右の人物の判別・調度品・会談場所・画家は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U02",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6e02097eb102676e834c",
+      "caption": "榎本武揚の肖像写真（晩年）",
+      "note": "公開元と国立国会図書館「近代日本人の肖像」の榎本武揚の人物・晩年の写真に照合した。艦隊を率いて箱館に移った人物への回答後に姿を示す。箱館戦争中の姿や艦隊の写真とはせず、晩年と明記し撮影年を断定しない。勲章・服装・後の役職・出身地は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U02",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1992c5491f8e621f7352",
+      "caption": "五稜郭跡（現代の写真）",
+      "note": "公開元の663highlandの2012年７月27日の五稜郭の写真と堀・城跡の輪郭に照合した。戦いの場所と戊辰戦争終結の展開への回答後に城跡を示す。1869年の戦闘現場の写真や当時の全建物を保つ姿とは説明せず、現在の都市・復元施設を区別する。現代の施設名・城の形の由来・周囲の道路・撮影者は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U02",
+          "questions": [
+            "B06",
+            "R03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5500957ec616be0a2994",
+      "caption": "五箇条の御誓文（1868年の書・1933年刊行物の掲載図）",
+      "note": "公開元の有栖川宮幟仁親王が1868年に揮毫した五箇条の御誓文を1933年刊『高松宮蔵版 幟仁親王行實』に載せた図、宮内庁の幟仁親王御筆の説明と本文の五条に照合した。誓文の名称・会議・人材登用・世界の知識という基本方針への回答後に書の姿を示す。投稿者を文書の作者とはせず、揮毫者と原本の撮影者不詳を分ける。1868年の書と後年の刊行物掲載を区別し、五榜の掲示文に代用しない。古文の解読・筆跡・親王名・掲載書名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U03",
+          "questions": [
+            "B01",
+            "B03",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-17415826eab68e4883e1",
+      "caption": "明治天皇の肖像画（1888年・キヨッソーネ筆）",
+      "note": "公開元のキヨッソーネの1888年の肖像画を丸木利陽が撮影したという記録と京都大学総合博物館の御真影の説明に照合した。御誓文を神に誓う形で発表した天皇への回答後に人物を示す。天皇本人を直接撮影した肖像写真とはせず、肖像画と明記する。1868年の儀式当時の姿とはしない。画家・画材・勲章・椅子は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-01-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-52d4d532f242df",
+      "caption": "廃藩置県を描いた後世の絵（小堀鞆音筆）",
+      "note": "既存の世界史の画像を共有する。公開元の小堀鞆音筆の廃藩置県の絵、国立歴史民俗博物館の絵画題記H-1444-3-20の1871年７月14日・皇城大広間という場面に照合した。廃藩置県の名称・実施年・中央集権化の回答後に詔の場面を示す。1871年の写真や版籍奉還そのものを描く図とは説明せず、後世の絵と明記する。公開元の2016年の画像登録を制作年に流用せず、人物の位置・施設名・画家は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-02-U01",
+          "questions": [
+            "B03",
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-e8934ad0773305",
+      "caption": "廃藩置県後の府県を示す歴史地図（1872年の区分・1935年刊）",
+      "note": "既存の世界史の画像を共有する。公開元の吉田東伍ら『大日本読史地図』の1935年刊行の記録と、図中の「明治五年」の府県の区分に照合した。中央から県令・府知事を派遣して統治したことへの回答後に府県の配置を示す。1871年の廃藩置県当日の区分や現在の47都道府県の地図とは説明せず、描画年代と刊行年代を分ける。地租・秩禄処分の文書の代わりには使わず、全県名・境界・外国語の解読は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-02-U01",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e6975ae1993780dfe835",
+      "caption": "旧開智学校の校舎（1876年建築・現代の写真）",
+      "note": "公開元の663highlandの2005年の旧開智学校の写真、松本市の開校1873年・現存校舎建築1876年・移築復原の記録に照合した。学制による学校教育の展開への回答後に明治初期の学校の一例を示す。1872年の公布時の写真や全国の校舎の共通規格とはせず、1876年建築・現代の写真と明記する。建物だけで就学年齢や費用負担を判定させず、学校名・建築様式・所在地・国宝指定は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-02-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-311843c7e7f0d22d5b9d",
+      "caption": "1873年の徴兵人数を記した『法令全書』の掲載図",
+      "note": "公開元が示す国立国会図書館787953の『法令全書』明治６年の掲載図と、図中の明治６年１月の徴兵人数・常備兵補充の記載に照合した。徴兵制の名称・実施年・国家による兵役の制度化への回答後に行政記録の姿を示す。人数・外国語の読み替え・古文の解読を求めず、これを徴兵令の全文や満20歳の規定の直接掲載図とはしない。公開元の刊行年・西暦の記載に不整合があるため刊行年は断定せず、対象の1873年と区別する。免除廃止や兵役が当初全員に均等に課された証拠にも代用しない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-02-U04",
+          "questions": [
+            "B01",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9043f767156ebd",
+      "caption": "地券の一例（1879年・地租軽減後の秋田県発行）",
+      "note": "既存の世界史の画像を共有する。公開元の秋田県発行・Mbdnoobの画像提供という記録と、明治12年３月６日・地価・地租・土地の所有者を示す地券の記載に照合した。地租改正・地価課税・税率軽減への回答後に史料を示す。1873年の開始時の税率３％の地券ではなく1877年の軽減後の例と明記し、1879年を改正開始年・税率軽減年と誤解させない。公債証書や現金で納めた領収証に代用せず、古文・所有者名・細かな金額の解読は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-02-U05",
+          "questions": [
+            "B01",
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -10785,6 +11050,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Indochina_1902.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-79260898f062dd004f81.jpg",
       "sha256": "79260898f062dd004f81ce94748447135f53648cd6ec805a99302c94a1e880b2"
+    },
+    {
+      "id": "JHKS-6e02097eb102676e834c",
+      "path": "term-images/japanese-history-k/JHKS-6e02097eb102676e834c.jpg",
+      "alt": "榎本武揚の肖像写真（晩年）",
+      "caption": "榎本武揚の肖像写真（晩年）",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Enomoto_Takeaki.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6e02097eb102676e834c.jpg",
+      "sha256": "6e02097eb102676e834c4456073a490c5463391a43dde49534faac2c415f1c27"
+    },
+    {
+      "id": "JHKS-17415826eab68e4883e1",
+      "path": "term-images/japanese-history-k/JHKS-17415826eab68e4883e1.jpg",
+      "alt": "明治天皇の肖像画（1888年・キヨッソーネ筆）",
+      "caption": "明治天皇の肖像画（1888年・キヨッソーネ筆）",
+      "creator": "エドアルド・キヨッソーネ（原画）／丸木利陽（原画の撮影）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Meiji_tenno1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-17415826eab68e4883e1.jpg",
+      "sha256": "17415826eab68e4883e10441c7b5f05ea777bee1e33a60fd5df6141eee773edc"
+    },
+    {
+      "id": "JHKS-5500957ec616be0a2994",
+      "path": "term-images/japanese-history-k/JHKS-5500957ec616be0a2994.jpg",
+      "alt": "五箇条の御誓文（1868年の書・1933年刊行物の掲載図）",
+      "caption": "五箇条の御誓文（1868年の書・1933年刊行物の掲載図）",
+      "creator": "有栖川宮幟仁親王（揮毫）／原本の撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Goseimon_by_takahito.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5500957ec616be0a2994.jpg",
+      "sha256": "5500957ec616be0a299421eb91f47bf17d89e9aa3639bb8eaf45fe60f130f852"
+    },
+    {
+      "id": "JHKS-e6975ae1993780dfe835",
+      "path": "term-images/japanese-history-k/JHKS-e6975ae1993780dfe835.jpg",
+      "alt": "旧開智学校の校舎（1876年建築・現代の写真）",
+      "caption": "旧開智学校の校舎（1876年建築・現代の写真）",
+      "creator": "663highland",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Former_Kaichi_School01_1024.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e6975ae1993780dfe835.jpg",
+      "sha256": "e6975ae1993780dfe8354e89af34bb329fdcaae1900ab969f3c7c08da74e8fe5"
+    },
+    {
+      "id": "JHKS-311843c7e7f0d22d5b9d",
+      "path": "term-images/japanese-history-k/JHKS-311843c7e7f0d22d5b9d.jpg",
+      "alt": "1873年の徴兵人数を記した『法令全書』の掲載図",
+      "caption": "1873年の徴兵人数を記した『法令全書』の掲載図",
+      "creator": "官報局（『法令全書』編纂）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Number_of_Army_Conscription_in_1873.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-311843c7e7f0d22d5b9d.jpg",
+      "sha256": "311843c7e7f0d22d5b9d79eb02fd322f90d8fa735389db9e03953d76482406ba"
+    },
+    {
+      "id": "JHKS-1992c5491f8e621f7352",
+      "path": "term-images/japanese-history-k/JHKS-1992c5491f8e621f7352.jpg",
+      "alt": "五稜郭跡（現代の写真）",
+      "caption": "五稜郭跡（現代の写真）",
+      "creator": "663highland",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Goryokaku_Hakodate_Hokkaido_Japan02bss.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-1992c5491f8e621f7352.jpg",
+      "sha256": "1992c5491f8e621f7352a90178f400a3c07e8b90e970d3ebe05a8c0e54b754f3"
     }
   ]
 }

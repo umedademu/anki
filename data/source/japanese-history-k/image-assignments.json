@@ -124,7 +124,10 @@
     "book-05-03-01",
     "book-05-03-02",
     "book-05-03-03",
-    "book-05-03-04"
+    "book-05-03-04",
+    "book-05-03-05",
+    "book-05-03-06",
+    "book-05-03-07"
   ],
   "images": [
     {
@@ -9642,6 +9645,295 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-010e32a1a783c898e77a",
+      "caption": "米騒動による神戸の焼け跡（1918年）",
+      "note": "公開元の国書刊行会『目でみる大正時代 下』を出典とする1918年の神戸の鈴木商店の焼け跡の写真に照合した。鈴木商店記念館の米騒動の被害の記録にも照合し、暴動の名称と経過の説明の回答後に被害の姿を補助する。米価の変化・米の買い占めの証拠写真にせず、被害を受けた鈴木商店を米価上昇の原因となった商人と説明しない。神戸の被害を富山での発端や全国すべての現場に代用せず、撮影日を焼失日の確定値としない。店名・地名の細部・建物・被害額を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U01",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-7c6f3aad07186b",
+      "caption": "原敬の肖像写真",
+      "note": "既存の日本史の画像を共有する。公開元の国立国会図書館を出典とする原敬の肖像に照合した。首相名と寺内内閣の退陣から政党内閣成立への説明の回答後に人物を示す。撮影年を断定せず、1918年の組閣式や閣僚の集合写真とはしない。身分や閣僚の党籍は原文で学び、衣服・花・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-075d0c536fda5d242f2c",
+      "caption": "寺内正毅の写真（1917年）",
+      "note": "公開元の米国議会図書館を出典とするBainの1917年の寺内正毅の写真と、人物の表示に照合した。退陣した内閣の首相への回答後に人物を示す。1917年の写真を1918年の米騒動や退陣の場面とはせず、背景の人物の身元は断定しない。軍装・羽飾り・勲章や写真の管理番号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b81ca3fbaebad1",
+      "caption": "加藤高明内閣の閣僚（1925年）",
+      "note": "既存の日本史の画像を共有する。公開元の東京朝日新聞を出典とする加藤高明内閣の集合写真に照合した。第二次護憲運動から護憲三派の内閣への経緯、普通選挙法の名称の回答後に閣僚の姿を補助する。公開元の1925年３月29日という記録と法律の公布日を区別し、普通選挙法の公布後に撮影されたと断定しない。既存画像の第一次護憲運動という名称を今回の説明に引き継がず、1924年の内閣発足当日や原敬内閣の写真にはしない。全員の個人名・立ち位置・党籍・法律条文を写真から読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        },
+        {
+          "termId": "JHK-05-03-06-U02",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a79906a2f0f541b8d492",
+      "caption": "加藤高明の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする加藤高明の肖像に照合した。1924年に組閣した人物への回答後に姿を示す。撮影年を断定せず、内閣発足の瞬間・運動の街頭写真にはしない。加藤友三郎に代用せず、背景の人々や服装・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-593e39a824072a597070",
+      "caption": "清浦奎吾の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする清浦奎吾の肖像に照合した。護憲運動が反対した内閣と貴族院の問いの回答後に、その首相の姿を補助する。原文の清浦圭吾という表記と公開元の清浦奎吾という表記は同じ人物だが、問題本文の表記を画像追加で変更しない。撮影年を断定せず、貴族院の議場や運動の現場の写真にはしない。顔貌から内閣の支持基盤を判断させず、別表記・服装・原文にない政治経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-05-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c887bf6e237add",
+      "caption": "吉野作造の肖像（1935年刊の書籍掲載）",
+      "note": "既存の日本史の画像を共有する。公開元の国立国会図書館と『閑談の閑談』（1935年）の掲載記録に照合した。提唱者と民本主義・天皇機関説の説明の回答後に吉野の姿を補助する。公開元の2006年の画像公開や1935年の刊行を撮影年にせず、撮影者の欄にある出典のURLを人名と扱わない。肖像は美濃部達吉ではなく、民本主義の演説・論文発表の現場でもない。髪型・服装・生没年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ce9bb82e3b02edca4dea",
+      "caption": "美濃部達吉の肖像（1964年刊の書籍掲載）",
+      "note": "公開元の家永三郎『美濃部達吉の思想史的研究』（岩波書店、1964年）の肖像と署名に照合した。提唱者と天皇を国家の機関とする説明の回答後に人物を示す。1964年の刊行を撮影年にせず、家永を撮影者や天皇機関説の提唱者と扱わない。署名の形・服装・撮影年月日を暗記条件にせず、肖像から主権や憲法の条文を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a6424edeb89e569d59ba",
+      "caption": "大阪府の普通選挙の告知ポスター（1928年）",
+      "note": "公開元の学研『昭和史の証言 第１巻』を出典とする大阪府の1928年の投票告知ポスターと、投票所へ向かう告知の姿に照合した。選挙権の範囲と拡大の説明の回答後に、その法律に基づく選挙の案内を補助する。国立公文書館の記録で1925年の法律成立と1928年の最初の実施を区別し、このポスターを1925年の法律原本や加藤内閣が1928年に選挙を行った証拠にはしない。投票日や紙面だけから25歳・男子の資格を読み取らせず、地方名・日時・書式を暗記条件にしない。女性参政権が既に認められていたとは説明しない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U02",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5d372a048e796ad37f34",
+      "caption": "平塚らいてうの肖像（1955年刊の掲載写真）",
+      "note": "前回に点検した日本史Kの画像を共有する。公開元の国立国会図書館を出典とする1955年刊の平塚らいてうの肖像に照合した。青鞜社の設立者と新婦人協会の活動の説明の回答後に人物を示す。刊行年を撮影年とせず、1911年や1920年の団体創立の現場、文芸誌の表紙を描いた人の写真にはしない。髪型・服装・原文にない著作や活動を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U03",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e687e17f15f141830a43",
+      "caption": "市川房枝の肖像（1961年刊の書籍掲載）",
+      "note": "公開元の日本経済新聞社『私の履歴書 第13集』（1961年）の市川房枝の肖像に照合した。新婦人協会をともに創設した人物への回答後に姿を示す。刊行年を撮影年や1920年の創立当日とせず、出版社と撮影者を区別する。欧米の女性参政権活動家や戦後の国会議場の写真に代用せず、帽子・服装・原文にない戦後の経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a9afbbf2476b67915c86",
+      "caption": "文芸誌『青鞜』創刊号の表紙（1911年）",
+      "note": "公開元の高村智恵子による1911年の『青鞜』創刊号の表紙と国立国会図書館の表紙制作の解説に照合した。団体の名称と文芸誌発行・女性運動の説明の回答後に刊行物の姿を示す。表紙の作者を青鞜社の設立者とせず、雑誌の刊行と1920年の新婦人協会の創立を区別する。表紙の人物像を実在の活動家の肖像と断定せず、模様・画家名・裏面の小さな文字を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-15caa33ffbbca6",
+      "caption": "関東大震災後の横浜（1923年）",
+      "note": "既存の日本史の画像を共有する。公開元の横浜市中央図書館を出典とする1923年の寿小学校からの写真と市街地の被害に照合した。震災の名称・発生年・主な被災都市と大きな被害の説明の回答後に横浜の姿を示す。横浜の一部を東京の写真や関東全体の被害図、地震発生の瞬間に代用せず、撮影日を９月１日と断定しない。写真だけから死傷者数・人口密度・全被害量や防災の日の制定年を求めさせない。学校名・道路・建物の個別名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-06-U04",
+          "questions": [
+            "B01",
+            "B02",
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-aac7f22702817b8d1c77",
+      "caption": "完成時の東京駅丸の内駅舎（1914年）",
+      "note": "公開元の『図説 駅の歴史 東京のターミナル』92頁を出典とする1914年完成時の東京駅丸の内駅舎の写真と、原文の同時期の駅舎図の説明に照合した。西欧建築を含む生活様式の変化の説明の回答後に公共建築の例を補助する。洋室の応接間を備えた文化住宅、女性の就業や移住者の増加の現場写真に代用せず、この駅が文化住宅であるとは説明しない。現代の復原駅舎の写真とも区別し、設計者・皇室口・建物の細部・撮影時刻を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U01",
+          "questions": [
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-70f50818844da306b3ba",
+      "caption": "東京・大阪のラジオ番組表（1925年）",
+      "note": "公開元の朝日新聞社『朝日年鑑』を出典とする1925年のラジオ番組表と、東京・大阪の番組欄に照合した。放送の名称と教育・メディアの広がりの説明の回答後に番組表の姿を示す。公開元の2008年は画像の公開日であり、資料の対象年とは区別する。年鑑の巻名・書誌年と1925年の発行日表記も区別し、画像で確認できる２都市を名古屋も写る３都市の表と説明しない。表だけから放送開始日・聴取者数や全国普及率を判断させず、番組名・呼出符号・周波数・時刻を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U02",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-75de8f655e80b6f7371b",
+      "caption": "鉱石ラジオ受信機の展示（1925年型・2011年撮影）",
+      "note": "公開元のYsuke Kawasakiによる2011年１月29日の展示写真と、左の「さぐり式鉱石ラジオ・1925／大正14年」の展示札に照合した。ラジオを含むメディアの広がりの説明の回答後に受信機の姿を補助する。1925年型の展示品と2011年の撮影を区別し、1925年の放送開始時の局舎や聴取の現場の写真にはしない。展示だけから当時の所有率・機器の普及や放送内容を判断させず、方式・配線・部品・呼出符号を暗記条件にしない。作者表示とCC BY 2.0の利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9f2092463067cf1a288f",
+      "caption": "蓄音機の再生部とレコード（現代の写真）",
+      "note": "公開元のgaelxによる2008年１月６日の写真と、蓄音機の針・再生部・レコードの姿に照合した。歌謡曲の広がりを支えた機器と媒体への回答後に仕組みの姿を補助する。現代の接写を大正期の日本の家庭や特定の日本の歌謡曲のレコードの写真とはしない。写真から歌手・曲名・国産比率・普及率を判定させず、外国語の盤面の解読・レーベル・型名・回転数を暗記条件にしない。作者表示とCC BY-SA 2.0の利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U02",
+          "questions": [
+            "B06"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0c192d0358384cafa5c3",
+      "caption": "志賀直哉の肖像（1926年刊の書籍掲載）",
+      "note": "公開元の国立国会図書館を出典とする1926年刊の志賀直哉の肖像に照合した。白樺派の名称と志賀・芥川の作風の説明の回答後に志賀の姿を示す。刊行年を撮影年にせず、雑誌創刊の現場・作品執筆中の写真とはしない。顔貌から簡潔な文体や文学の流派を読み取らせず、作品名・服装・刊行物の題名を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-07b940be38b36d7f71b4",
+      "caption": "芥川龍之介の肖像写真",
+      "note": "公開元の山梨県立文学館を出典とする芥川龍之介の肖像に照合した。『羅生門』『鼻』などの作者と文学・思想の動きの説明の回答後に人物を示す。撮影年を確定せず、作品の初版本や執筆・出版の現場にはしない。顔貌から作風を判断させず、衣服・撮影月日・原文にない作品や賞の名称を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U03",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5f406172f5f46b2d0f53",
+      "caption": "小林多喜二の肖像（1931年刊の書籍掲載）",
+      "note": "公開元の国立国会図書館6232と改造社『現代日本文学全集 第62篇』（1931年）の小林多喜二の肖像に照合した。プロレタリア文学の名称と社会を描く文学・哲学の説明の回答後に小林の姿を示す。1931年の刊行を撮影年とせず、資本主義社会の矛盾の現場や西田幾多郎の肖像・著作の写真にはしない。顔貌から作品の内容を判断させず、原文にない作品名・党歴・弾圧の詳細を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-03-07-U03",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -13628,6 +13920,186 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Delegates_at_the_First_Congress_of_the_Communist_International,_1919.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-a3433998af20a9a55a49.jpg",
       "sha256": "a3433998af20a9a55a4997392bb47c1cd8805577efe8fe01bc3e15fe9b51fece"
+    },
+    {
+      "id": "JHKS-010e32a1a783c898e77a",
+      "path": "term-images/japanese-history-k/JHKS-010e32a1a783c898e77a.jpg",
+      "alt": "米騒動による神戸の焼け跡（1918年）",
+      "caption": "米騒動による神戸の焼け跡（1918年）",
+      "creator": "撮影者不詳／国書刊行会（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Suzuki_Shoten_burnt_out.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-010e32a1a783c898e77a.jpg",
+      "sha256": "010e32a1a783c898e77a8f4ba40beaa0ec93f39e0b90535f3c152e29201cd32b"
+    },
+    {
+      "id": "JHKS-075d0c536fda5d242f2c",
+      "path": "term-images/japanese-history-k/JHKS-075d0c536fda5d242f2c.jpg",
+      "alt": "寺内正毅の写真（1917年）",
+      "caption": "寺内正毅の写真（1917年）",
+      "creator": "Bain／米国議会図書館（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Terauchi_Masatake_in_1917.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-075d0c536fda5d242f2c.jpg",
+      "sha256": "075d0c536fda5d242f2c8bc287d81afea36db5806e1dde3d82c0c73548716154"
+    },
+    {
+      "id": "JHKS-a79906a2f0f541b8d492",
+      "path": "term-images/japanese-history-k/JHKS-a79906a2f0f541b8d492.jpg",
+      "alt": "加藤高明の肖像写真",
+      "caption": "加藤高明の肖像写真",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Takaaki_Kato_Rekidai_Shusho_tou_Shashin_2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a79906a2f0f541b8d492.jpg",
+      "sha256": "a79906a2f0f541b8d492a06364c4dbae9ff3f5bfff4ea995b26a9b139c10f1ab"
+    },
+    {
+      "id": "JHKS-593e39a824072a597070",
+      "path": "term-images/japanese-history-k/JHKS-593e39a824072a597070.jpg",
+      "alt": "清浦奎吾の肖像写真",
+      "caption": "清浦奎吾の肖像写真",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:KIYOURA_Keigo.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-593e39a824072a597070.jpg",
+      "sha256": "593e39a824072a597070d137107d4030a181666e30acf121d2fedfb9ff37dcce"
+    },
+    {
+      "id": "JHKS-ce9bb82e3b02edca4dea",
+      "path": "term-images/japanese-history-k/JHKS-ce9bb82e3b02edca4dea.jpg",
+      "alt": "美濃部達吉の肖像（1964年刊の書籍掲載）",
+      "caption": "美濃部達吉の肖像（1964年刊の書籍掲載）",
+      "creator": "撮影者不詳／家永三郎（掲載著作の著者）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tatsukichi_Minobe.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ce9bb82e3b02edca4dea.jpg",
+      "sha256": "ce9bb82e3b02edca4deac1b6958e5472507bcc30019b0ab03949108a2eeb6806"
+    },
+    {
+      "id": "JHKS-a6424edeb89e569d59ba",
+      "path": "term-images/japanese-history-k/JHKS-a6424edeb89e569d59ba.jpg",
+      "alt": "大阪府の普通選挙の告知ポスター（1928年）",
+      "caption": "大阪府の普通選挙の告知ポスター（1928年）",
+      "creator": "大阪府",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:1928_Japanese_General_Election_Poster.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a6424edeb89e569d59ba.jpg",
+      "sha256": "a6424edeb89e569d59baf5c63a4af69545c5aa0974851bcd431e8291fe8239e9"
+    },
+    {
+      "id": "JHKS-e687e17f15f141830a43",
+      "path": "term-images/japanese-history-k/JHKS-e687e17f15f141830a43.jpg",
+      "alt": "市川房枝の肖像（1961年刊の書籍掲載）",
+      "caption": "市川房枝の肖像（1961年刊の書籍掲載）",
+      "creator": "撮影者不詳／日本経済新聞社（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fusae-Ichikawa-1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e687e17f15f141830a43.jpg",
+      "sha256": "e687e17f15f141830a43e7c41a6e9f979392d2cc507729c20694000e68d06900"
+    },
+    {
+      "id": "JHKS-a9afbbf2476b67915c86",
+      "path": "term-images/japanese-history-k/JHKS-a9afbbf2476b67915c86.jpg",
+      "alt": "文芸誌『青鞜』創刊号の表紙（1911年）",
+      "caption": "文芸誌『青鞜』創刊号の表紙（1911年）",
+      "creator": "高村智恵子（表紙画）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:1st_Issue_of_Seito.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a9afbbf2476b67915c86.jpg",
+      "sha256": "a9afbbf2476b67915c86bf629e6c63f3cce3b1464354b9adde228dee40be3125"
+    },
+    {
+      "id": "JHKS-aac7f22702817b8d1c77",
+      "path": "term-images/japanese-history-k/JHKS-aac7f22702817b8d1c77.jpg",
+      "alt": "完成時の東京駅丸の内駅舎（1914年）",
+      "caption": "完成時の東京駅丸の内駅舎（1914年）",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokyo_station_building_front_view_1914.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-aac7f22702817b8d1c77.jpg",
+      "sha256": "aac7f22702817b8d1c771fdb559528c63552fa1653c3ebff36ddd12e14700a85"
+    },
+    {
+      "id": "JHKS-70f50818844da306b3ba",
+      "path": "term-images/japanese-history-k/JHKS-70f50818844da306b3ba.jpg",
+      "alt": "東京・大阪のラジオ番組表（1925年）",
+      "caption": "東京・大阪のラジオ番組表（1925年）",
+      "creator": "朝日新聞社（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E3%83%A9%E3%82%B8%E3%82%AA%E7%95%AA%E7%B5%84%E8%A1%A8_(1925%E5%B9%B4).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-70f50818844da306b3ba.jpg",
+      "sha256": "70f50818844da306b3bac7cd9f13dc6154a66a0e7ef5eb6bbbbf930a2422b9c7"
+    },
+    {
+      "id": "JHKS-75de8f655e80b6f7371b",
+      "path": "term-images/japanese-history-k/JHKS-75de8f655e80b6f7371b.jpg",
+      "alt": "鉱石ラジオ受信機の展示（1925年型・2011年撮影）",
+      "caption": "鉱石ラジオ受信機の展示（1925年型・2011年撮影）",
+      "creator": "Ysuke Kawasaki",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Crystal-Detector_Radio_Receiver_of_Exploratory_Type_1925.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-75de8f655e80b6f7371b.jpg",
+      "sha256": "75de8f655e80b6f7371b75ba6d80490e8f2be1d64f79767e2c6fad3d4d8ab953"
+    },
+    {
+      "id": "JHKS-9f2092463067cf1a288f",
+      "path": "term-images/japanese-history-k/JHKS-9f2092463067cf1a288f.jpg",
+      "alt": "蓄音機の再生部とレコード（現代の写真）",
+      "caption": "蓄音機の再生部とレコード（現代の写真）",
+      "creator": "gaelx",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:His_Master%C2%B4s_Voice_(2186461778).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9f2092463067cf1a288f.jpg",
+      "sha256": "9f2092463067cf1a288f06b6891efb5c317823095fb6340e1bc5eefdee724611"
+    },
+    {
+      "id": "JHKS-0c192d0358384cafa5c3",
+      "path": "term-images/japanese-history-k/JHKS-0c192d0358384cafa5c3.jpg",
+      "alt": "志賀直哉の肖像（1926年刊の書籍掲載）",
+      "caption": "志賀直哉の肖像（1926年刊の書籍掲載）",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Naoya_Shiga.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0c192d0358384cafa5c3.jpg",
+      "sha256": "0c192d0358384cafa5c3a689c2e9107ba760df19bd4bf88c9103845b68e7e90f"
+    },
+    {
+      "id": "JHKS-07b940be38b36d7f71b4",
+      "path": "term-images/japanese-history-k/JHKS-07b940be38b36d7f71b4.jpg",
+      "alt": "芥川龍之介の肖像写真",
+      "caption": "芥川龍之介の肖像写真",
+      "creator": "撮影者不詳／山梨県立文学館（公開元の出典）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Akutagawa_Ryunosuke.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-07b940be38b36d7f71b4.jpg",
+      "sha256": "07b940be38b36d7f71b4de4941b61df5672002f898ef26f08d3781ee20420a66"
+    },
+    {
+      "id": "JHKS-5f406172f5f46b2d0f53",
+      "path": "term-images/japanese-history-k/JHKS-5f406172f5f46b2d0f53.jpg",
+      "alt": "小林多喜二の肖像（1931年刊の書籍掲載）",
+      "caption": "小林多喜二の肖像（1931年刊の書籍掲載）",
+      "creator": "撮影者不詳／改造社（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kobayashi_Takiji.01.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5f406172f5f46b2d0f53.jpg",
+      "sha256": "5f406172f5f46b2d0f53886d6a54eec552bba4e23b38d634886d4431846b8b86"
     }
   ]
 }

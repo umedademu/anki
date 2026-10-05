@@ -109,7 +109,10 @@
     "book-05-02-02",
     "book-05-02-03",
     "book-05-02-04",
-    "book-05-02-05"
+    "book-05-02-05",
+    "book-05-02-06",
+    "book-05-02-07",
+    "book-05-02-08"
   ],
   "images": [
     {
@@ -8264,6 +8267,252 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-3a84897bd41802",
+      "caption": "民撰議院設立の建白書（1874年の文書の末尾）",
+      "note": "既存の世界史の画像を共有する。文書末尾の明治７年１月17日と板垣退助らの署名を、国立公文書館の建白書の説明に照合した。自由民権運動の出発と建白書・提出年の回答後に文書の姿を示す。全文や表紙ではなく末尾と明記し、画像の投稿年を提出年にしない。細かな文字・署名の並び・他の署名者を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U01",
+          "questions": [
+            "B01",
+            "B03",
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-d3cd0fed52dc60",
+      "caption": "板垣退助の肖像写真（晩年）",
+      "note": "既存の世界史の画像を共有する。公開元と国立国会図書館を出典とする板垣退助の肖像に照合した。民権運動・立志社・自由党と人物を結び付ける回答後の補助にする。晩年の姿であり、1874年の建白書提出時や1881年の自由党結成時の写真とはしない。服装・髭・撮影時期は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U01",
+          "questions": [
+            "B02",
+            "B05",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-05-02-06-U03",
+          "questions": [
+            "B06",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2e1ded4f183586",
+      "caption": "西郷隆盛の肖像画（石川静正筆）",
+      "note": "既存の世界史の画像を共有する。公開元の石川静正筆という記録と西郷隆盛の油彩の肖像に照合した。西南戦争の中心人物への回答後に姿を示す。写真ではなく肖像画と明記し、制作年を1877年と断定しない。画家・画材・服装・容貌の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U02",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-98aff196c1eed88ecb69",
+      "caption": "西南戦争を題材にした版画（1877年・月岡芳年筆）",
+      "note": "公開元とロサンゼルス郡立美術館M.84.31.322a-cの月岡芳年筆・1877年の『鹿児島の戦い』の記録、画像の戦闘描写に照合した。西南戦争の年と展開への回答後に関連版画を示す。薩英戦争の艦砲射撃や戦争当時の写真とはせず、描写を客観的な実況とは扱わない。兵装・旗・人物の位置から戦闘経過や士族の特権の廃止を判定させない。作品名・絵師・描かれた戦闘の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-194888d8c16ed0",
+      "caption": "国会開設の勅諭（1881年の文書）",
+      "note": "既存の世界史の画像を共有する。文書の明治14年10月12日と内容を、国立公文書館の1881年の勅諭・1890年の国会開設の公約の説明に照合した。明治十四年の政変から国会開設の公約への回答後に文書を示す。1881年の約束と1890年の開設、画像が投稿された2008年を区別し、教育勅語・憲法原本とはしない。細かな文字・発布月日・書式は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U03",
+          "questions": [
+            "B01",
+            "B02",
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b22d767b5093be",
+      "caption": "大隈重信の肖像写真（晩年）",
+      "note": "既存の世界史の画像を共有する。公開元の大隈重信の肖像と東洋文化協會の1933～1934年刊『幕末明治大正回顧八十年史』掲載という記録に照合した。明治十四年の政変と立憲改進党の人物への回答後に姿を示す。掲載年を撮影年にはせず、1881年の政変や1882年の結党時の写真とはしない。出版社を撮影者とせず、勲章・服装・後の役職は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-06-U03",
+          "questions": [
+            "B05",
+            "B07",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b1166a2016154e",
+      "caption": "伊藤博文の肖像写真（1900年）",
+      "note": "既存の世界史の画像を共有する。公開元の国立国会図書館を出典とする1900年の伊藤博文の肖像に照合した。1885年の内閣制度と初代首相の回答後に人物を示す。撮影年と制度の開始を区別し、初代内閣の集合写真とは説明しない。憲法原本に記された1889年の黒田清隆首相と伊藤の枢密院議長の立場を1885年の内閣に流用しない。服装・髭・撮影年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-07-U01",
+          "questions": [
+            "B04",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6a2947b2f92d00",
+      "caption": "大日本帝国憲法の御署名原本・御名御璽と大臣の副署（1889年）",
+      "note": "既存の世界史・日本史Kの画像を共有する。国立公文書館の御署名原本の説明と、画像の御名御璽・黒田清隆首相と伊藤博文枢密院議長らの副署に照合した。大日本帝国憲法と欽定憲法の回答後に原本の姿を示す。全文・自由権の条文を写した頁や1947年の日本国憲法とはせず、この頁から三権分立や臣民の権利の具体的制限を読み取らせない。署名者全員や印章の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-07-U02",
+          "questions": [
+            "B01",
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c24b534b3e06b93ac6da",
+      "caption": "大日本帝国憲法の発布式を描いた版画（1889年・楊洲周延筆）",
+      "note": "公開元とメトロポリタン美術館55253・JP3240の楊洲周延筆『憲法発布式之図』・1889年の記録に照合した。憲法発布年と伊藤の憲法制定過程の回答後に発布式を題材にした版画を示す。写真や枢密院の審議の場面、帝国議会の会議とは説明しない。天皇による発布という理解の補助とし、出席者・座席・服装を事実確認や新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-07-U02",
+          "questions": [
+            "B07",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5ce24bcf703596",
+      "caption": "帝国議会を題材にした版画（1890年・楊洲周延筆）",
+      "note": "既存の世界史の画像を共有する。公開元の楊洲周延筆・1890年９月の『國會會議之圖』という記録と議会を題材にした描写に照合した。帝国議会の名称・開設と説明への回答後に議場の関連版画を示す。11月の第１回帝国議会の開会より前の制作であり、会議の実況や皇后の実際の出席を証明する図とは扱わない。１つの議場の図から二院の構成・選挙資格・予算先議を読み取らせない。画家・制作月・座席・建築の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-07-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5fa063a36ca6cd",
+      "caption": "学校に配られた教育勅語の写し（1930年刊行物の掲載図）",
+      "note": "既存の世界史の画像を共有する。公開元の茗渓会『教育勅語と学校教育』・1930年刊の掲載記録と、画像の明治23年10月30日・御名御璽を含む教育勅語の写しに照合した。1890年の教育勅語と道徳の規範・内容への回答後に学校向けの写しの姿を示す。1890年の発布と1930年の掲載を区別し、天皇直筆の原本や1948年の排除・失効の文書とはしない。文言の逐字暗唱・掲載書名・発布月日は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-07-U04",
+          "questions": [
+            "B01",
+            "B02",
+            "B03",
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f35760d8493308cfc2b9",
+      "caption": "井上馨の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする井上馨の肖像写真と人物に照合した。条約改正交渉を進めた外務卿・外務大臣への回答後に人物を示す。陸奥宗光の肖像や鹿鳴館の舞踏会・外国人裁判官任用の交渉現場の写真とはしない。撮影年は断定せず、服装・勲章・後の役職は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-08-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-37adbf2e19ffafcc44cd",
+      "caption": "鹿鳴館の古写真",
+      "note": "公開元の鹿鳴館の外観の古写真と建物に照合した。条約改正交渉と欧化政策に用いた施設名への回答後に建物の姿を示す。撮影年を1883年の開館当日と断定せず、建築模型や現代の復元建物の写真とはしない。外観から条約案の外国人裁判官任用や国内の反発を判断させない。建築家・建築様式の名称・場所の細部は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-08-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-129a59173a5838b4d913",
+      "caption": "西洋式の舞踏会を描いた版画（1888年・楊洲周延筆）",
+      "note": "公開元の楊洲周延筆『貴顕舞踏の略図』・1888年２月８日の版画の記録と、西洋の服装・舞踏の描写に照合した。欧化政策と舞踏会を用いた交渉の説明への回答後に西洋式の舞踏会を題材にした版画を示す。1883年の鹿鳴館開館時の写真や井上馨本人の交渉場面とはしない。画中の人物の同定や場面の実況性、条約改正交渉の成否を図から判断させない。作品名・人物名・制作年・服装の細かな名称は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-08-U01",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-317acc56c859c7",
+      "caption": "陸奥宗光の肖像写真",
+      "note": "既存の世界史の画像を共有する。公開元の国立国会図書館を出典とする陸奥宗光の肖像写真と人物に照合した。日英通商航海条約の改正交渉の責任者への回答後に人物を示す。井上馨・青木周蔵の肖像や1894年の条約調印の場面の写真とはしない。撮影時期・服装・後の役職は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-08-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-1f32c1011e41c2",
+      "caption": "日英通商航海条約の文書展示（現代の写真）",
+      "note": "既存の世界史の画像を共有する。公開元のWorld Imagingの2009年の外交史料館の写真と、1894年７月16日の日英通商航海条約の文書・署名を外務省の条約改正の説明に照合した。条約名・領事裁判権の撤廃と交渉の説明への回答後に文書展示の姿を示す。1894年の締結と現代の撮影を区別し、日英同盟や関税自主権の回復の条約とはしない。署名は青木周蔵とキンバリーであり、陸奥宗光本人の署名・調印現場の写真とは説明しない。英語の解読・署名者・印章・実施年は新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-08-U02",
+          "questions": [
+            "B01",
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -11782,6 +12031,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:UnyoBattle.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-13ebab58fc2e023463f9.jpg",
       "sha256": "13ebab58fc2e023463f938efde64fcc14060991e0344f3f7c4de74d0f9bf1e2a"
+    },
+    {
+      "id": "JHKS-f35760d8493308cfc2b9",
+      "path": "term-images/japanese-history-k/JHKS-f35760d8493308cfc2b9.jpg",
+      "alt": "井上馨の肖像写真",
+      "caption": "井上馨の肖像写真",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Inoue_Kaoru.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f35760d8493308cfc2b9.jpg",
+      "sha256": "f35760d8493308cfc2b978a94b50e06206e00e4daddaebfc613c83e5f9a377f6"
+    },
+    {
+      "id": "JHKS-37adbf2e19ffafcc44cd",
+      "path": "term-images/japanese-history-k/JHKS-37adbf2e19ffafcc44cd.jpg",
+      "alt": "鹿鳴館の古写真",
+      "caption": "鹿鳴館の古写真",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rokumeikan.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-37adbf2e19ffafcc44cd.jpg",
+      "sha256": "37adbf2e19ffafcc44cdb80eae71a8357de1c92f02e46c0b7e978635d2c423a7"
+    },
+    {
+      "id": "JHKS-129a59173a5838b4d913",
+      "path": "term-images/japanese-history-k/JHKS-129a59173a5838b4d913.jpg",
+      "alt": "西洋式の舞踏会を描いた版画（1888年・楊洲周延筆）",
+      "caption": "西洋式の舞踏会を描いた版画（1888年・楊洲周延筆）",
+      "creator": "楊洲周延",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chikamatsu_Kiken_buto_no_ryakuke.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-129a59173a5838b4d913.jpg",
+      "sha256": "129a59173a5838b4d913559271182160c0fbf3d33da7469c95c6bc84bfe593e0"
+    },
+    {
+      "id": "JHKS-c24b534b3e06b93ac6da",
+      "path": "term-images/japanese-history-k/JHKS-c24b534b3e06b93ac6da.jpg",
+      "alt": "大日本帝国憲法の発布式を描いた版画（1889年・楊洲周延筆）",
+      "caption": "大日本帝国憲法の発布式を描いた版画（1889年・楊洲周延筆）",
+      "creator": "楊洲周延（作品）／メトロポリタン美術館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Illustration_of_the_Ceremony_Issuing_the_Constitution_(Chikanobu).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c24b534b3e06b93ac6da.jpg",
+      "sha256": "c24b534b3e06b93ac6da0fe4865f7eda278296d1770ee195e9de4249bb0ee12c"
+    },
+    {
+      "id": "JHKS-98aff196c1eed88ecb69",
+      "path": "term-images/japanese-history-k/JHKS-98aff196c1eed88ecb69.jpg",
+      "alt": "西南戦争を題材にした版画（1877年・月岡芳年筆）",
+      "caption": "西南戦争を題材にした版画（1877年・月岡芳年筆）",
+      "creator": "月岡芳年（作品）／ロサンゼルス郡立美術館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Battle_at_Kagoshima_LACMA_M.84.31.322a-c.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-98aff196c1eed88ecb69.jpg",
+      "sha256": "98aff196c1eed88ecb6957b268f7d518db004a6f5bf714b568e13dc5fa22a4ba"
     }
   ]
 }

@@ -1,3 +1,9 @@
+// 既存画像は公開前に全体を照合し、保存窓口では一覧に未登録の本体だけを扱う。
+export function getUnregisteredImageSources(sourceBytes, assets) {
+  const registeredPaths = new Set(assets.map(asset => asset.path));
+  return new Map([...sourceBytes].filter(([path]) => !registeredPaths.has(path)));
+}
+
 // 画像が増えても、作業用の設定をCloudflareの一設定あたりの上限内で渡す。
 export function imageWriterVars(settings) {
   const vars = {}, encoder = new TextEncoder();

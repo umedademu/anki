@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.347" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.348" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.347") ||
-  !app.includes("app-navigation.js?v=0.347") ||
-  !changelog.includes("v0.347") ||
-  !settingsHtml.includes("v0.347") ||
-  !historyHtml.includes("v0.347") ||
-  !analysisHtml.includes("v0.347")
+  !html.includes("v0.348") ||
+  !app.includes("app-navigation.js?v=0.348") ||
+  !changelog.includes("v0.348") ||
+  !settingsHtml.includes("v0.348") ||
+  !historyHtml.includes("v0.348") ||
+  !analysisHtml.includes("v0.348")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -873,7 +873,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.347"') ||
+  !html.includes('href="/styles.css?v=0.348"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

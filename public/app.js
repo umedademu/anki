@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.347";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.348";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.347";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.347";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.347";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.347";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.347";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.347";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.347";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.347";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.347";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.348";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.348";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.348";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.348";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.348";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.348";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.348";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.348";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.348";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.347";
+} from "./original-session.js?v=0.348";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.347";
+} from "./speech.js?v=0.348";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.347";
+} from "./deck-selection.js?v=0.348";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,

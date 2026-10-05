@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { buildJapaneseKImages } from "./japanese-history-k-images.mjs";
 import storageWorker from "./japanese-history-k-images-storage-worker.js";
 import { createHash } from "node:crypto";
-import { imageWriterVars } from "./japanese-history-k-images-config.mjs";
+import { getUnregisteredImageSources, imageWriterVars } from "./japanese-history-k-images-config.mjs";
 
 const asset = { id: "old-picture", path: "term-images/old.webp", caption: "既存の説明", alt: "既存の説明", creator: "作者", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/", sourcePageUrl: "https://commons.wikimedia.org/wiki/File:Old.jpg" };
 const entry = { id: "book-06-01-01", version: "履歴は保持" };
@@ -65,10 +65,18 @@ assert.equal(prepared.addedAssets.length, 2); assert.equal(prepared.addedAssignm
 assert.equal(buildJapaneseKImages({ ...snapshot, images: prepared.manifest }, withSource).addedAssets.length, 0);
 assert.throws(() => buildJapaneseKImages(snapshot, { ...withSource, sources: [{ ...source, sha256: "bad" }] }));
 assert.throws(() => buildJapaneseKImages(snapshot, { ...withSource, sources: [{ ...source, sourceFile: "../outside.jpg" }] }));
+// 登録済みの本体が増えても、新規分だけを保存窓口に渡す。
+const registeredAssets = [asset, ...Array.from({ length: 40 }, (_, index) => ({ id: `existing-${index}`, path: `term-images/japanese-history-k/JHKS-${index.toString(16).padStart(20, "0")}.jpg` }))];
+const cumulativeBytes = new Map([...registeredAssets.map(value => [value.path, bytes]), [source.path, bytes]]);
+const pendingBytes = getUnregisteredImageSources(cumulativeBytes, [...registeredAssets, { ...asset, id: "different-caption" }]);
+assert.deepEqual([...pendingBytes.keys()], [source.path]); assert.equal(pendingBytes.get(source.path), bytes);
+assert.equal(cumulativeBytes.size, 42, "登録対象を絞っても全体照合に使う元の本体は保持します。");
+assert.equal(getUnregisteredImageSources(cumulativeBytes, [...registeredAssets, { ...source, id: "different-id" }]).size, 0, "同じ保存先が登録済みなら、説明や識別番号が異なっても再送しません。");
+assert.deepEqual([...getUnregisteredImageSources(cumulativeBytes, []).keys()], [...cumulativeBytes.keys()], "一覧にない本体は照合・登録対象から外しません。");
 const binaries = new Map(), binaryWrites = [];
 stored = oldText; imageEtag = "images-before";
 const preparedText = JSON.stringify(prepared.manifest);
-const binaryEnv = { ...env, NEXT_IMAGES_HASH: hash(preparedText), NEW_IMAGES: JSON.stringify({ [source.path]: sha256 }), BUCKET: {
+const binaryEnv = { ...env, NEXT_IMAGES_HASH: hash(preparedText), NEW_IMAGES: JSON.stringify(Object.fromEntries([...pendingBytes].map(([key, value]) => [key, hash(value)]))), BUCKET: {
   ...env.BUCKET,
   async get(key) { if (binaries.has(key)) return { arrayBuffer: async () => binaries.get(key) }; return env.BUCKET.get(key); },
   async put(key, value, options) {
@@ -125,4 +133,5 @@ const checkedKey = Object.keys(manyImages).at(-1); binaries.delete(checkedKey);
 assert.equal((await sendChunk(imageCommit)).status, 409); assert.equal(stored, oldText); binaries.set(checkedKey, validBytes);
 assert.equal((await sendChunk(imageCommit)).status, 200); assert.equal(stored, preparedText);
 console.log("容量上限を越える画像40枚の設定・日本語と絵文字を含む読込範囲・問題番号の分割、末尾の対象の保持、欠落と未照合画像の公開拒否を確認しました。");
+console.log("新規本体のみの登録、共有画像・説明違いの既存本体の再送抑制、全体照合用の本体保持、未登録・未照合の画像の公開拒否を確認しました。");
 console.log("日本史Kの画像追加：元の問題・画像・他科目の保持、画像本体の共有、再実行、編集済み指定の拒否、認証・範囲・同時編集の拒否と旧一覧の保持を確認しました。");

@@ -4,7 +4,7 @@ import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { buildJapaneseKImages, imageContentHash, japaneseKImagesKey } from "./japanese-history-k-images.mjs";
-import { imageWriterVars } from "./japanese-history-k-images-config.mjs";
+import { getUnregisteredImageSources, imageWriterVars } from "./japanese-history-k-images-config.mjs";
 
 const apply = process.argv.includes("--apply");
 const work = new URL("../.wrangler/japanese-history-k-images/", import.meta.url);
@@ -57,6 +57,7 @@ try {
     assert.ok(bytes.byteLength > 1000 && bytes.byteLength < 500000 && bytes[0] === 255 && bytes[1] === 216);
     sourceBytes.set(source.path, bytes);
   }
+  const pendingSourceBytes = getUnregisteredImageSources(sourceBytes, images.assets);
   // 画像本体も点検時の内容を記録し、同じ保存先の差し替えを検知する。
   const assetHashes = {};
   for (const path of new Set(result.audit.map(value => value.path))) {
@@ -83,20 +84,19 @@ try {
   if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
   else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
   else {
-    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, ...imageWriterVars({ READ_KEYS: [...reads.keys()], QUESTION_IDS: result.addedAssignments.map(item => item.questionId), NEW_IMAGES: Object.fromEntries([...sourceBytes].map(([key, bytes]) => [key, textHash(bytes)])) }), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
+    await writeFile(configPath, JSON.stringify({ name: "anki-japanese-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("japanese-history-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, ...imageWriterVars({ READ_KEYS: [...reads.keys()], QUESTION_IDS: result.addedAssignments.map(item => item.questionId), NEW_IMAGES: Object.fromEntries([...pendingSourceBytes].map(([key, bytes]) => [key, textHash(bytes)])) }), PREVIOUS_IMAGES_HASH: textHash(reads.get(japaneseKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
     deployAttempted = true;
     endpoint = (await wrangler("deploy")).match(/https:\/\/[a-z0-9.-]+\.workers\.dev/)?.[0]; assert.ok(endpoint);
     const checked = new Map();
     for (const [key, previous] of reads) {
       const current = await read(key); assert.equal(current.text, previous.text, `同時編集を検知しました: ${key}`); checked.set(key, current);
     }
-    for (const [key, bytes] of sourceBytes) {
+    for (const [key, bytes] of pendingSourceBytes) {
       await request({ action: "image", key, base64: bytes.toString("base64") });
       assert.equal((await request({ action: "image-check", key })).sha256, textHash(bytes));
     }
-    if (sourceBytes.size) {
-      const newImages = [...sourceBytes.keys()].filter(path => !images.assets.some(asset => asset.path === path)).length;
-      console.log(`画像本体${sourceBytes.size}枚をCloudflareで照合しました。新規登録は${newImages}枚で、既存の画像は保持しています。`);
+    if (pendingSourceBytes.size) {
+      console.log(`新規画像本体${pendingSourceBytes.size}枚をCloudflareで照合しました。既存の画像${Object.keys(assetHashes).length - pendingSourceBytes.size}枚は公開前に照合し、再送せず保持しています。`);
     }
     await request({ action: "commit", key: japaneseKImagesKey, text: manifestText, expectedEtag: checked.get(japaneseKImagesKey).etag, catalogEtag: checked.get("index.json").etag });
     assert.equal((await read(japaneseKImagesKey)).text, manifestText);

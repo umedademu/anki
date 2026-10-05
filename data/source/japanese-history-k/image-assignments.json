@@ -115,7 +115,10 @@
     "book-05-02-08",
     "book-05-02-09",
     "book-05-02-10",
-    "book-05-02-11"
+    "book-05-02-11",
+    "book-05-02-12",
+    "book-05-02-13",
+    "book-05-02-14"
   ],
   "images": [
     {
@@ -8770,6 +8773,300 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-ce7e05e54be4999fa566",
+      "caption": "金子堅太郎の肖像写真",
+      "note": "米国議会図書館ggbain.24356を出典とする公開元の金子堅太郎の人物写真に照合した。日露戦争の対米外交を担った人物と活動の回答後に肖像を示す。公開元の撮影者・1905年頃という記録は推定なので細かく断定せず、Bain News Serviceの掲載を本人の撮影ともしない。1904年の渡米や大統領との面談そのものの写真とはせず、勲章・爵位・撮影者・撮影年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U01",
+          "questions": [
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-342c9cc4a63c97",
+      "caption": "対馬と朝鮮半島の位置（現代の地図）",
+      "note": "既存の日本史Kの画像を共有する。公開元のLERKによる対馬の位置図と、地図の対馬・対馬海峡・朝鮮半島・九州の位置に照合した。対馬沖の日本海海戦と陸戦・海戦の説明への回答後に位置を補助する。現代の地名・国名を含む位置図であり、1905年の国境・艦隊の航路・交戦区域を示す図とはしない。海戦の勝敗・参加艦隊を図だけで判定させず、原文にない地名・赤丸・地形は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U02",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-412905a10b6db8e46711",
+      "caption": "東郷平八郎の肖像写真（1907年）",
+      "note": "公開元の1907年の東郷平八郎の写真と、C. Hendersonによる1951年刊の伝記掲載という記録に照合した。日本海海戦の連合艦隊司令官への回答後に肖像を示す。1905年の海戦中の写真や三笠の艦橋で指揮する場面とはせず、撮影と掲載・海戦の年を区別する。階級・勲章・服装・写真家・伝記名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0d57ba9b038c9eacb121",
+      "caption": "乃木希典の肖像写真",
+      "note": "公開元の国立国会図書館『近世名士写真』を出典とする乃木希典の肖像と、Adam Cuerdenによる修復という記録に照合した。旅順攻略の指揮官と陸戦の説明への回答後に人物の姿を示す。撮影者と修復者を区別し、写真の撮影年を断定しない。旅順要塞の現地写真、奉天会戦の写真、部隊全員の集合写真とはしない。勲章・制服・撮影場所・修復の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U02",
+          "questions": [
+            "B05",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-016686662c2948b67750",
+      "caption": "『平民新聞』の紙面（1904年11月13日号）",
+      "note": "公開元の講談社の歴史資料を出典とする1904年11月13日号と、画像内の『平民新聞』・日付・紙面に照合した。非戦論を訴えた新聞と活動の回答後に紙面の姿を示す。1903年の創刊号、開戦前の非戦論を掲載した頁、1946年の同名新聞や『万朝報』とはしない。この紙面の「宣言」を非戦論そのものの文章とは説明せず、記事の解読・号数・掲載日・翻訳内容を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-337a38aaf214fba59d71",
+      "caption": "内村鑑三の肖像写真（1925年）",
+      "note": "公開元の1925年５月の内村鑑三の肖像と、1935年刊『内村鑑三伝』の掲載記録に照合した。国立国会図書館の人物資料とも照合し、非戦論を唱えたキリスト教徒への回答後に肖像を示す。掲載著者の益本重雄・藤沢音吉を撮影者とはしない。1904年の非戦論執筆や新聞社の写真とはせず、撮影と掲載・日露戦争の年を区別する。服装・著者名・生没年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U03",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c4c8cf9574c2793c5ebb",
+      "caption": "与謝野晶子の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする与謝野晶子の肖像と、同館の人物・日露戦争時の詩についての資料に照合した。『君死にたまふことなかれ』の作者と内容への回答後に人物を示す。撮影年を断定せず、1904年の執筆中の写真や従軍する弟との集合写真、詩の原稿とはしない。着物・髪型・撮影時期・原文にない作品名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U03",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f945f169c68f165c73f4",
+      "caption": "高橋是清の肖像（1921年刊行物の掲載写真）",
+      "note": "公開元の『Trans-Pacific』第４巻第２号・1921年２月・47頁掲載の高橋是清の肖像に照合した。日本銀行副総裁として外債の交渉にあたった人物と経緯への回答後に姿を示す。1921年の掲載を1904年の交渉時の写真にせず、掲載時の大蔵大臣という役職を日露戦争時の役職と取り違えない。公債・株券の現物やヤコブ・シフの肖像ではなく、服装・掲載誌・後の役職は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-12-U04",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-dcae05456d6d6d",
+      "caption": "ポーツマス条約の署名頁の展示（1905年の文書・現代の写真）",
+      "note": "既存の世界史・日本史の画像を共有する。公開元のWorld Imagingの2009年の外交史料館写真と、文書の1905年９月５日・ポーツマス・全権の署名を外務省の展示解説にも照合した。日露講和条約の名称・締結年と交渉への回答後に文書の姿を示す。下関条約や同年の韓国保護条約、調印中の現場写真とはしない。この頁は署名部分であり、朝鮮の優越権・港の租借権・樺太の境界・賠償の条文を写しているとはしない。フランス語・署名者全員・印章・調印月日は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-13-U01",
+          "questions": [
+            "B01",
+            "B07",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-30abc2aec27eb8",
+      "caption": "セオドア・ルーズベルトの肖像写真（1904年）",
+      "note": "既存の世界史の画像を共有する。公開元の米国議会図書館ppmsca.35645を出典とするPach Brothersの1904年のセオドア・ルーズベルトの肖像と、Adam Cuerdenの修復という記録に照合した。日露講和を仲介した大統領への回答後に人物を示す。1930年代のフランクリン・ルーズベルトやエレノア・ルーズベルトとは区別し、1905年の講和会議に出席している場面とはしない。撮影者と修復者を区別し、髭・眼鏡・撮影年を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-13-U01",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9dcbea700514e2",
+      "caption": "小村寿太郎の肖像（1904年刊行物の掲載図）",
+      "note": "前回に点検した既存画像を共有する。公開元のTaylorの小村寿太郎の肖像と『The World’s Work』第７巻・1904年刊・4632頁掲載の記録に照合した。ポーツマス講和会議の日本側代表と、米国との条約改正交渉・関税自主権回復への回答後に人物を示す。1904年の掲載を1905年の講和や1911年の交渉現場の撮影とはせず、日英同盟の文書や日米の条約署名頁として代用しない。写真家・掲載誌・服装・髭は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-13-U01",
+          "questions": [
+            "B03"
+          ]
+        },
+        {
+          "termId": "JHK-05-02-14-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-46d72b52954f5100c153",
+      "caption": "日比谷焼打事件の被害を写した写真（1905年）",
+      "note": "公開元の毎日新聞社『昭和史』第３巻の掲載資料と1905年の日比谷焼打事件という記録、焼け跡の写真に照合した。暴動の名称と広がりへの回答後に被害を示す。出来事はアジア歴史資料センターの解説にも照合した。焼けた建物の種類や撮影地点・時刻を断定せず、戒厳令の原本や条約の賠償金の条件を示す写真とはしない。人物・警察の服装・被害の規模を写真だけで判定させず、原文にない撮影地点・月日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-13-U02",
+          "questions": [
+            "B01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-0680780ec5ba25",
+      "caption": "南満洲鉄道株式会社の株券（1933年発行）",
+      "note": "既存の政治・経済の画像を共有する。公開元の山口県文書館を出典とする1933年発行の株券と、画像の会社名・発行日・株券という記載に照合した。日露戦争後に設立した満鉄とその経営の説明への回答後に会社の資料を示す。1906年の設立時の株券、鉄道路線図、日露戦争の戦費調達の公債ではない。券面の蒸気機関車を特定の路線の走行写真ともせず、額面・発行年・署名者・会社名の字体は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-13-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-39138ec53777ecc19413",
+      "caption": "韓国併合条約の御署名原本（1910年）",
+      "note": "公開元の国立公文書館・アジア歴史資料センターA03020879400の1910年・条約第４号の御署名原本と、画像の公布文・御名御璽・条約番号を国立公文書館の資料説明にも照合した。日韓併合条約と保護国化から併合への説明の回答後に文書の姿を示す。1905年の保護条約やポーツマス条約、日韓両国全権の署名頁・調印の現場ではない。この頁に外交権取得・土地調査・抗議運動の条文があるとはせず、古文の解読・御璽・条約番号は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b1166a2016154e",
+      "caption": "伊藤博文の肖像写真（1900年）",
+      "note": "前回に点検した既存画像を共有する。公開元の国立国会図書館の1900年の伊藤博文の肖像に照合した。韓国の保護国化後の初代統監への回答後に人物を示す。1900年の人物写真を1905年の統監就任や1910年の併合・調印場面の写真とはせず、初代朝鮮総督の写真にも代用しない。髭・服装・撮影年・原文にない役職は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U01",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c9471f7d968631",
+      "caption": "朝鮮総督府の庁舎（1929年刊の写真帖掲載）",
+      "note": "既存の日本史の画像を共有する。公開元の門田房太郎による『朝鮮博覧会記念写真帖』・1929年の掲載記録と庁舎の姿に照合した。朝鮮総督府の名称と併合後の事業の回答後に機関の建物を示す。掲載と建築・併合の年を区別し、1910年の併合時の庁舎や1905年の統監府の写真とは説明しない。建物写真から土地の権利・社会基盤の整備・住民の賛否・抵抗を判定させず、建築様式・撮影場所・掲載年は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U01",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e76ba860d161fb",
+      "caption": "孫文と中国同盟会シンガポール支部の写真（1907年）",
+      "note": "既存の世界史の画像を共有する。公開元の上海の孫中山故居記念館の編集資料を出典とする1907年３月の孫文と中国同盟会シンガポール支部の写真に照合した。中国同盟会の名称と革命運動の活動への回答後に関連団体の姿を示す。1905年の東京での結成時の写真や1912年の南京の建国式、団体の全員の集合写真とはしない。支部名・人物の位置・衣服・孫文以外の人物名は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-85a4d64d712eb1",
+      "caption": "孫文の肖像写真（1922年）",
+      "note": "既存の世界史の画像を共有する。公開元の上海波爾写真館の1922年の孫文の肖像と記念館を出典とする記録に照合した。三民主義の三つの内容への回答後に、その主張を唱えた人物の姿を示す。1905年の結党や1912年の臨時大総統就任の場面とはせず、三つの主義を写真から読み取らせない。撮影日・衣服・髪型・原文にない政治上の経歴は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U03",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-9f6db760d01304",
+      "caption": "辛亥革命期の上海・南京路の写真",
+      "note": "既存の世界史の画像を共有する。公開元の『東方雑誌』第８巻第11号を出典とする上海・南京路の写真と民国改元を祝う掲載資料の説明に照合した。辛亥革命の名称・中華民国の成立と経緯への回答後に街の姿を示す。撮影月日を断定せず、南京路という道路名を共和国成立時の首都南京と取り違えない。武昌蜂起の戦闘写真や南京の建国式、北京遷都の写真ではなく、旗・路面電車・建物の細部は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U03",
+          "questions": [
+            "B02",
+            "B03",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-c486d9e5fdc035",
+      "caption": "袁世凱の肖像（1915年刊行物の掲載写真）",
+      "note": "既存の世界史の画像を共有する。公開元のRio V. De Sieux撮影と『The World’s Work』第30巻・1915年・378頁掲載の袁世凱の写真に照合した。袁世凱の人物名・革命派への弾圧と政治上の行動への回答後に肖像を示す。掲載と撮影・臨時大総統就任の年を区別し、1912年の政権継承や遷都、皇帝即位式・革命派弾圧の現場の写真とはしない。帽子・勲章・衣服・掲載誌は暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-02-14-U03",
+          "questions": [
+            "B06",
+            "B07",
+            "R03"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -12408,6 +12705,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:China,_the_cake_of_kings_and_emperors,_Le_Petit_Journal_1898.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-ad281722e2db5cac912d.jpg",
       "sha256": "ad281722e2db5cac912d4a83002f1dfb2778c1c13db6c5070d1a232b4bf53f88"
+    },
+    {
+      "id": "JHKS-ce7e05e54be4999fa566",
+      "path": "term-images/japanese-history-k/JHKS-ce7e05e54be4999fa566.jpg",
+      "alt": "金子堅太郎の肖像写真",
+      "caption": "金子堅太郎の肖像写真",
+      "creator": "撮影者不詳／Bain News Service（掲載元）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kaneko_Kentar%C5%8D.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ce7e05e54be4999fa566.jpg",
+      "sha256": "ce7e05e54be4999fa566c1f8dcc357bc64975faf333ff1ddede184f0985a955b"
+    },
+    {
+      "id": "JHKS-412905a10b6db8e46711",
+      "path": "term-images/japanese-history-k/JHKS-412905a10b6db8e46711.jpg",
+      "alt": "東郷平八郎の肖像写真（1907年）",
+      "caption": "東郷平八郎の肖像写真（1907年）",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Togo_Heihachiro,1907.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-412905a10b6db8e46711.jpg",
+      "sha256": "412905a10b6db8e4671158842bb5eec703be67c9d2e75b16c5a686e95032e540"
+    },
+    {
+      "id": "JHKS-0d57ba9b038c9eacb121",
+      "path": "term-images/japanese-history-k/JHKS-0d57ba9b038c9eacb121.jpg",
+      "alt": "乃木希典の肖像写真",
+      "caption": "乃木希典の肖像写真",
+      "creator": "撮影者不詳／Adam Cuerden（修復）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Maresuke_Nogi,_%E8%BF%91%E4%B8%96%E5%90%8D%E5%A3%AB%E5%86%99%E7%9C%9F_%E5%85%B61_-_Photo_only.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0d57ba9b038c9eacb121.jpg",
+      "sha256": "0d57ba9b038c9eacb121932da06b8cd426da536d068e067ba29948107ad38b27"
+    },
+    {
+      "id": "JHKS-337a38aaf214fba59d71",
+      "path": "term-images/japanese-history-k/JHKS-337a38aaf214fba59d71.jpg",
+      "alt": "内村鑑三の肖像写真（1925年）",
+      "caption": "内村鑑三の肖像写真（1925年）",
+      "creator": "撮影者不詳／益本重雄・藤沢音吉（掲載著作）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Uchimura_Kanzo.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-337a38aaf214fba59d71.jpg",
+      "sha256": "337a38aaf214fba59d71301f021560facf6fe179122bbdf001b941f7febda9e3"
+    },
+    {
+      "id": "JHKS-c4c8cf9574c2793c5ebb",
+      "path": "term-images/japanese-history-k/JHKS-c4c8cf9574c2793c5ebb.jpg",
+      "alt": "与謝野晶子の肖像写真",
+      "caption": "与謝野晶子の肖像写真",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:YOSANO_Akiko_(cropped).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c4c8cf9574c2793c5ebb.jpg",
+      "sha256": "c4c8cf9574c2793c5ebb67596e5b1c984bad2eedcf2189f3977cbbbf119ae883"
+    },
+    {
+      "id": "JHKS-f945f169c68f165c73f4",
+      "path": "term-images/japanese-history-k/JHKS-f945f169c68f165c73f4.jpg",
+      "alt": "高橋是清の肖像（1921年刊行物の掲載写真）",
+      "caption": "高橋是清の肖像（1921年刊行物の掲載写真）",
+      "creator": "撮影者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Takahashi_Korekiyo,_Trans-Pacific_Vol_4_Issue_2_-_Feb_1921.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f945f169c68f165c73f4.jpg",
+      "sha256": "f945f169c68f165c73f4ab66f2a5eae40df145459dd3c0f861c98f44658898f4"
+    },
+    {
+      "id": "JHKS-39138ec53777ecc19413",
+      "path": "term-images/japanese-history-k/JHKS-39138ec53777ecc19413.jpg",
+      "alt": "韓国併合条約の御署名原本（1910年）",
+      "caption": "韓国併合条約の御署名原本（1910年）",
+      "creator": "日本政府（文書）／国立公文書館・アジア歴史資料センター（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan%E2%80%93Korea_Annexation_Treaty_1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-39138ec53777ecc19413.jpg",
+      "sha256": "39138ec53777ecc19413ba2f12fc1c4749b29497e2e3cf0d7a9a20a5c7437e45"
+    },
+    {
+      "id": "JHKS-016686662c2948b67750",
+      "path": "term-images/japanese-history-k/JHKS-016686662c2948b67750.jpg",
+      "alt": "『平民新聞』の紙面（1904年11月13日号）",
+      "caption": "『平民新聞』の紙面（1904年11月13日号）",
+      "creator": "平民社",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Common_Peoples_Newspaper.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-016686662c2948b67750.jpg",
+      "sha256": "016686662c2948b6775006e4cfbfbdff95d8d7d97b7b6d73c54e005c8a66e520"
+    },
+    {
+      "id": "JHKS-46d72b52954f5100c153",
+      "path": "term-images/japanese-history-k/JHKS-46d72b52954f5100c153.jpg",
+      "alt": "日比谷焼打事件の被害を写した写真（1905年）",
+      "caption": "日比谷焼打事件の被害を写した写真（1905年）",
+      "creator": "撮影者不詳／毎日新聞社（掲載著作の出版）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hibiya_Incendiary_Incident2.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-46d72b52954f5100c153.jpg",
+      "sha256": "46d72b52954f5100c153d024236a4f0139d59a2e28c0d437a114106668bd9276"
     }
   ]
 }

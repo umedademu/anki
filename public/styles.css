@@ -2598,7 +2598,7 @@ body.is-listening.is-listening-answer-visible .page {
 
 .routine-editor-item {
   display: grid;
-  grid-template-columns: 34px 30px minmax(150px, 1fr) minmax(100px, 0.4fr) auto;
+  grid-template-columns: 34px 30px minmax(150px, 1fr) minmax(150px, 0.5fr) auto;
   min-width: 0;
   padding: 9px;
   align-items: center;
@@ -2642,7 +2642,8 @@ body.is-listening.is-listening-answer-visible .page {
 }
 
 .routine-subject-select,
-.routine-amount input {
+.routine-amount input,
+.routine-unit-select {
   width: 100%;
   min-height: 38px;
   padding: 6px 9px;
@@ -2660,6 +2661,14 @@ body.is-listening.is-listening-answer-visible .page {
   gap: 5px;
   color: var(--theme-muted, #52655a);
   font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.routine-unit-select {
+  width: auto;
+  min-width: 6.2em;
+  padding-right: 4px;
+  font-size: 0.8rem;
   font-weight: 800;
 }
 
@@ -3239,8 +3248,13 @@ body.is-listening.is-listening-answer-visible .page {
     grid-template-columns: 1fr;
   }
 
+  /* 狭い画面では、科目名・学習量・操作ボタンを段に分けて科目名を読めるようにする。 */
   .routine-editor-item {
-    grid-template-columns: 32px 26px minmax(0, 1fr) minmax(86px, 0.42fr);
+    grid-template-columns: 32px 26px minmax(0, 1fr);
+  }
+
+  .routine-editor-item > .routine-amount {
+    grid-column: 3;
   }
 
   .routine-editor-item.is-video {

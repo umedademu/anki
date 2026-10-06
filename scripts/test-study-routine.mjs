@@ -493,4 +493,132 @@ if (
   throw new Error("午前4時後に前回の続きへ引き継げませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止を確認");
+const deckPlan = normalizeStudyRoutinePlan([
+  { id: "parts", subjectId: "japanese-history-k", questionTarget: 80, targetUnit: "decks", deckTarget: 2 },
+  { id: "invalid-unit", subjectId: "geography", questionTarget: 30, targetUnit: "unknown", deckTarget: 4 },
+  { id: "deck-limit", subjectId: "world-history-so", targetUnit: "decks", deckTarget: 0 },
+  { id: "deck-video", kind: "video" },
+]);
+if (
+  deckPlan[0].targetUnit !== "decks" ||
+  deckPlan[0].deckTarget !== 2 ||
+  deckPlan[0].questionTarget !== 80 ||
+  Object.hasOwn(deckPlan[1], "targetUnit") ||
+  Object.hasOwn(deckPlan[1], "deckTarget") ||
+  deckPlan[2].deckTarget !== 1 ||
+  scaleStudyRoutinePlan(deckPlan, 2)[0].deckTarget !== 2
+) {
+  throw new Error("問題数とデッキ数の目標を安全に整形できませんでした。");
+}
+
+let deckRun = createStudyRoutineRun(deckPlan, "2026-10-07", "deck-run", 0.5);
+if (
+  deckRun.items[0].deckTarget !== 2 ||
+  deckRun.items[0].completedDeckIds.length !== 0 ||
+  Object.hasOwn(deckRun.items[1], "completedDeckIds") ||
+  studyRoutineTotals(deckRun).deckTarget !== 3 ||
+  studyRoutineTotals(deckRun).target !== 15
+) {
+  throw new Error("デッキ数の項目を倍率の対象外として開始できませんでした。");
+}
+for (let index = 1; index <= 120; index += 1) {
+  const deckChange = recordStudyRoutineQuestion(
+    deckRun,
+    "japanese-history-k",
+    "japanese-history-k-book-01-01-01-v1",
+    `deck-question-${index}`,
+    1,
+    index === 1 ? "again" : "good",
+  );
+  if (deckChange.completedItem) {
+    throw new Error("一周を終える前にデッキ数の項目を完了しました。");
+  }
+  deckRun = deckChange.run;
+}
+if (
+  deckRun.items[0].completedCount !== 119 ||
+  deckRun.items[0].studySeconds !== 120 ||
+  deckRun.currentIndex !== 0
+) {
+  throw new Error("デッキ数の項目で問題数の上限に止められず回答を記録できませんでした。");
+}
+let deckChange = recordStudyRoutineQuestion(
+  deckRun,
+  "japanese-history-k",
+  "japanese-history-k-book-01-01-01-v1",
+  "deck-question-last",
+  1,
+  "good",
+  { completedDeckIds: ["book-01-01-01"] },
+);
+deckRun = deckChange.run;
+const repeatedDeck = recordStudyRoutineQuestion(
+  deckRun,
+  "japanese-history-k",
+  "japanese-history-k-book-01-01-01-v1",
+  "deck-question-again",
+  1,
+  "good",
+  { completedDeckIds: ["book-01-01-01"] },
+);
+if (
+  deckChange.completedItem ||
+  deckRun.items[0].completedDeckIds.join(",") !== "book-01-01-01" ||
+  repeatedDeck.completedItem ||
+  repeatedDeck.run.items[0].completedDeckIds.length !== 1 ||
+  studyRoutineTotals(deckRun).completedDecks !== 1
+) {
+  throw new Error("一周したパートを1つとして数え、同じパートを二重に数えない処理になっていません。");
+}
+deckChange = recordStudyRoutineQuestion(
+  deckRun,
+  "japanese-history-k",
+  "japanese-history-k-book-01-01-02-v1",
+  "deck-question-second",
+  1,
+  "hard",
+  { completedDeckIds: ["book-01-01-02"], deferCompletion: true },
+);
+if (
+  deckChange.completedItem ||
+  !deckChange.run.items[0].overtimePending ||
+  deckChange.run.currentIndex !== 0 ||
+  !normalizeStudyRoutineRun(JSON.stringify(deckChange.run)).items[0].overtimePending
+) {
+  throw new Error("目標のパート数へ達した後の追加復習を維持できませんでした。");
+}
+deckChange = recordStudyRoutineQuestion(
+  deckChange.run,
+  "japanese-history-k",
+  "japanese-history-k-book-01-01-02-v1",
+  "deck-question-second",
+  1,
+  "good",
+);
+if (
+  !deckChange.completedItem ||
+  deckChange.completedItem.completedDeckIds.length !== 2 ||
+  deckChange.run.currentIndex !== 1 ||
+  studyRoutineTotals(deckChange.run).completedDecks !== 2
+) {
+  throw new Error("目標のパート数を一周した後に次の項目へ進めませんでした。");
+}
+const multiDeckRun = createStudyRoutineRun(deckPlan, "2026-10-07", "multi-deck-run");
+const multiDeck = recordStudyRoutineQuestion(
+  multiDeckRun,
+  "japanese-history-k",
+  "japanese-history-k-book-01-01-01-v1",
+  "multi-deck-question",
+  1,
+  "good",
+  { completedDeckIds: ["book-01-01-01", "book-01-01-02", "book-01-01-03"] },
+);
+if (
+  !multiDeck.completedItem ||
+  multiDeck.completedItem.completedDeckIds.length !== 3 ||
+  studyRoutineTotals(multiDeck.run).completedDecks !== 2
+) {
+  throw new Error("複数のパートを選んで一周した時に選んだ数だけ進められませんでした。");
+}
+
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標を確認");

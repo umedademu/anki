@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.353";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.354";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.353";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.353";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.353";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.353";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.353";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.353";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.353";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.353";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.353";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.354";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.354";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.354";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.354";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.354";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.354";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.354";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.354";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.354";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.353";
+} from "./original-session.js?v=0.354";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.353";
+} from "./speech.js?v=0.354";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.353";
+} from "./deck-selection.js?v=0.354";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -107,7 +107,9 @@ import {
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   scaleStudyRoutinePlan,
+  studyRoutineDeckTargetReachedWith,
   studyRoutineTotals,
+  studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
 import { createRatingSoundPlayer } from "./rating-sound.js";
 import {
@@ -660,10 +662,59 @@ function routineItemTitle(item) {
     : routineSubjectTitle(item?.subjectId);
 }
 
+// 日本史K・世界史SOのように章の中を分けた科目では、デッキを「パート」と呼ぶ。
+function routineDeckUnitLabel(subjectId) {
+  return usesChapterDecks(
+    state.subjectEntries.find((subject) => subject.id === subjectId) ??
+      { id: subjectId },
+  )
+    ? "パート"
+    : "デッキ";
+}
+
+function routineUnitLabel(item) {
+  return studyRoutineUsesDeckTarget(item)
+    ? routineDeckUnitLabel(item.subjectId)
+    : "問";
+}
+
+function routineItemTarget(item) {
+  return studyRoutineUsesDeckTarget(item) ? item.deckTarget : item.questionTarget;
+}
+
+function routineItemCompleted(item) {
+  return studyRoutineUsesDeckTarget(item)
+    ? item.completedDeckIds?.length ?? 0
+    : item.completedCount ?? 0;
+}
+
+function routineTargetText(item) {
+  return `${routineItemTarget(item)}${routineUnitLabel(item)}`;
+}
+
+// 問題数・パート数・デッキ数を単位ごとに合計して「300問・2パート」の形で示す。
+function routineAmountText(items, { withProgress = false } = {}) {
+  const amounts = new Map();
+  for (const item of items) {
+    if (item.kind !== "study") continue;
+    const unit = routineUnitLabel(item);
+    const amount = amounts.get(unit) ?? { completed: 0, target: 0 };
+    amount.target += routineItemTarget(item);
+    amount.completed += Math.min(routineItemCompleted(item), routineItemTarget(item));
+    amounts.set(unit, amount);
+  }
+  if (amounts.size === 0) return withProgress ? "0 / 0問" : "0問";
+  return [...amounts.entries()]
+    .map(([unit, amount]) => withProgress
+      ? `${amount.completed} / ${amount.target}${unit}`
+      : `${amount.target}${unit}`)
+    .join("・");
+}
+
 function routineItemSummary(item, skipVideos = false) {
   return item?.kind === "video"
     ? skipVideos ? "動画をスキップ" : "動画を1本見る"
-    : `${item.questionTarget}問`;
+    : routineTargetText(item);
 }
 
 function formatRoutineMultiplier(value) {
@@ -701,7 +752,11 @@ function activeRoutineItem() {
 }
 
 function routineRemainingCount(item = activeRoutineItem()) {
-  return item ? Math.max(0, item.questionTarget - item.completedCount) : 0;
+  return item ? Math.max(0, routineItemTarget(item) - routineItemCompleted(item)) : 0;
+}
+
+function routineRemainingText(item = activeRoutineItem()) {
+  return `${routineRemainingCount(item)}${routineUnitLabel(item)}`;
 }
 
 function routineOvertimeCutoffAt() {
@@ -748,15 +803,19 @@ function clearRoutineOvertime() {
   state.routineOvertimeEndsAt = null;
 }
 
-function startRoutineOvertimeIfNeeded(rating) {
+function startRoutineOvertimeIfNeeded(rating, { completedDeckIds = [] } = {}) {
   const item = activeRoutineItem();
   const overtimeSeconds = normalizeStudyRoutineOvertimeSeconds(
     state.studyRoutineOvertimeSeconds,
   );
+  // パート数の項目では、今回の一周で目標のパート数へ届く時だけ追加の復習を始める。
+  const reachesTarget = studyRoutineUsesDeckTarget(item)
+    ? studyRoutineDeckTargetReachedWith(item, completedDeckIds)
+    : routineRemainingCount(item) === 1;
   if (
     !item ||
     item.overtimePending ||
-    routineRemainingCount(item) !== 1 ||
+    !reachesTarget ||
     overtimeSeconds === 0 ||
     !countsTowardStudyRoutine(rating)
   ) {
@@ -831,23 +890,23 @@ function renderRoutineDashboard() {
   } else if (completed) {
     elements.routineDashboardTitle.textContent = "メニューをすべて完了しました";
     elements.routineDashboardSummary.textContent = routineSkipVideos
-      ? `${run.items.length}項目・${totals.target}問を完了し、動画${totals.totalVideos}本をスキップしました。`
-      : `${run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
+      ? `${run.items.length}項目・${routineAmountText(run.items)}を完了し、動画${totals.totalVideos}本をスキップしました。`
+      : `${run.items.length}項目・${routineAmountText(run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
   } else if (activeItem) {
     elements.routineDashboardTitle.textContent = "";
     elements.routineDashboardSummary.textContent = "";
   } else {
     elements.routineDashboardTitle.textContent = "今日の順番で学習する";
     elements.routineDashboardSummary.textContent = routineSkipVideos
-      ? `${plan.length}項目・合計${totals.target}問のメニューです。動画${totals.totalVideos}本はスキップします。`
-      : `${plan.length}項目・合計${totals.target}問・動画${totals.totalVideos}本のメニューです。`;
+      ? `${plan.length}項目・合計${routineAmountText(plan)}のメニューです。動画${totals.totalVideos}本はスキップします。`
+      : `${plan.length}項目・合計${routineAmountText(plan)}・動画${totals.totalVideos}本のメニューです。`;
   }
 
   const completedUnits = run
     ? run.items.reduce(
         (sum, item) => sum + (item.kind === "video"
           ? item.completed || routineSkipVideos ? 1 : 0
-          : Math.min(1, item.completedCount / item.questionTarget)),
+          : Math.min(1, routineItemCompleted(item) / routineItemTarget(item))),
         0,
       )
     : 0;
@@ -874,10 +933,13 @@ function renderRoutineSetupContext() {
   const run = normalizeStudyRoutineRun(state.routineRun);
   elements.routineSetupTitle.textContent =
     `毎日のメニュー ${run.currentIndex + 1}／${run.items.length}｜${routineSubjectTitle(item.subjectId)}`;
-  elements.routineSetupProgress.textContent =
-    `${item.completedCount}／${item.questionTarget}問完了・残り${routineRemainingCount(item)}問。今回のデッキと学習方法を選んでください。`;
-  elements.routineProgress.textContent =
-    `メニュー ${item.completedCount} / ${item.questionTarget}問`;
+  const unit = routineUnitLabel(item);
+  elements.routineSetupProgress.textContent = studyRoutineUsesDeckTarget(item)
+    ? `${routineItemCompleted(item)}／${item.deckTarget}${unit}完了・残り${routineRemainingText(item)}。学習する${unit}を選んで一周し終えると、選んだ${unit}の数だけ進みます。`
+    : `${item.completedCount}／${item.questionTarget}問完了・残り${routineRemainingCount(item)}問。今回のデッキと学習方法を選んでください。`;
+  elements.routineProgress.textContent = studyRoutineUsesDeckTarget(item)
+    ? `メニュー ${routineItemCompleted(item)} / ${item.deckTarget}${unit}`
+    : `メニュー ${item.completedCount} / ${item.questionTarget}問`;
 }
 
 async function persistRoutineRun(run) {
@@ -1015,25 +1077,27 @@ function showRoutineStepCompletion(change) {
   renderRatingResult(change.completedItem.ratingCounts);
   elements.routineResultPrimaryLabel.textContent = "進めた問題";
   elements.completionEyebrow.textContent = "メニューの1項目を完了";
-  elements.completionTitle.textContent =
-    `${routineSubjectTitle(change.completedItem.subjectId)}を${change.completedItem.questionTarget}問進めました`;
+  const completedByDecks = studyRoutineUsesDeckTarget(change.completedItem);
+  elements.completionTitle.textContent = completedByDecks
+    ? `${routineSubjectTitle(change.completedItem.subjectId)}を${routineItemCompleted(change.completedItem)}${routineUnitLabel(change.completedItem)}進めました`
+    : `${routineSubjectTitle(change.completedItem.subjectId)}を${change.completedItem.questionTarget}問進めました`;
   const totals = studyRoutineTotals(change.run);
   elements.routineResultQuestions.textContent =
     `${change.completedItem.completedCount}問`;
   elements.routineResultTime.textContent =
     formatStudyDuration(change.completedItem.studySeconds);
   elements.routineResultTotal.textContent =
-    `${totals.completed} / ${totals.target}問`;
+    routineAmountText(change.run.items, { withProgress: true });
   if (change.nextItem) {
     elements.completionMessage.textContent = change.nextItem.kind === "video"
       ? "次は登録動画から重複なく選ばれた1本を見ます。"
-      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。開始前にデッキや学習方法を選べます。`;
+      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${routineTargetText(change.nextItem)}進めます。開始前にデッキや学習方法を選べます。`;
     elements.completionReturn.textContent = "次の学習内容を選ぶ";
     elements.completionHome.classList.remove("is-hidden");
   } else {
     elements.completionEyebrow.textContent = "毎日のメニュー完了";
     elements.completionMessage.textContent =
-      `${change.run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
+      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
     elements.completionReturn.textContent = "科目選択へ戻る";
     elements.completionHome.classList.add("is-hidden");
   }
@@ -1132,12 +1196,12 @@ function showRoutineVideoCompletion(change) {
   if (change.nextItem) {
     elements.completionMessage.textContent = change.nextItem.kind === "video"
       ? "次も登録動画から重複なく選ばれた1本を見ます。"
-      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${change.nextItem.questionTarget}問進めます。`;
+      : `次は${routineSubjectTitle(change.nextItem.subjectId)}を${routineTargetText(change.nextItem)}進めます。`;
     elements.completionReturn.textContent = "次の学習内容へ進む";
     elements.completionHome.classList.remove("is-hidden");
   } else {
     elements.completionMessage.textContent =
-      `${change.run.items.length}項目・${totals.target}問・動画${totals.totalVideos}本をすべて進めました。`;
+      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
     elements.completionReturn.textContent = "科目選択へ戻る";
     elements.completionHome.classList.add("is-hidden");
   }
@@ -3791,13 +3855,15 @@ async function advanceListening(runId) {
   state.unseenQuestionIds.delete(completedTask.questionId);
   state.answeredThisSession += 1;
   state.currentTask = state.queue.shift() ?? null;
-  const routineChange = recordActiveRoutineQuestion(
-    completedTask.questionId,
-    state.screenStudySeconds,
-  );
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
     listeningPassComplete && state.retryQuestionIds.size === 0;
+  const routineChange = recordActiveRoutineQuestion(
+    completedTask.questionId,
+    state.screenStudySeconds,
+    "",
+    { completedDeckIds: state.inRoutine && sessionComplete ? [...state.activeDeckIds] : [] },
+  );
   undoSnapshot.completedRoundId = sessionComplete
     ? undoSnapshot.studySession?.roundId
     : null;
@@ -4646,6 +4712,12 @@ function updateSetupPreview() {
       elements.startStudy.disabled = true;
       elements.startStudy.textContent = "追加復習中は続きから再開";
       elements.resumeStudy.textContent = "追加の復習を再開";
+    } else if (studyRoutineUsesDeckTarget(routineItem)) {
+      const remainingText = routineRemainingText(routineItem);
+      elements.startStudy.textContent = hasSavedSession
+        ? `はじめから進める（残り${remainingText}）`
+        : `開始する（残り${remainingText}）`;
+      elements.resumeStudy.textContent = `前回の続きから（残り${remainingText}）`;
     } else {
       elements.startStudy.textContent = hasSavedSession
         ? `残り${remaining}問をはじめから進める`
@@ -4677,7 +4749,7 @@ function updateSetupPreview() {
         : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
   if (routineItem?.overtimePending) {
     elements.selectionSummary.textContent =
-      "目標問題数は達成済みです。続きから追加の復習を再開してください。";
+      `目標の${studyRoutineUsesDeckTarget(routineItem) ? `${routineUnitLabel(routineItem)}数` : "問題数"}は達成済みです。続きから追加の復習を再開してください。`;
   }
   elements.cloudStatus.classList.toggle("is-connected", state.cloudReady);
   elements.cloudStatus.innerHTML = state.cloudReady
@@ -5061,12 +5133,20 @@ function renderCompletion() {
     elements.actionDock.classList.add("is-hidden");
     elements.listeningDock.classList.add("is-hidden");
     elements.completionEyebrow.textContent = "学習内容を選び直す";
-    elements.completionTitle.textContent =
-      `${routineSubjectTitle(routineItem.subjectId)}の現在出題できる問題をすべて終えました`;
-    elements.completionMessage.textContent =
-      `この項目は${routineItem.completedCount}／${routineItem.questionTarget}問まで完了しています。残り${routineRemainingCount(routineItem)}問を進めるデッキや学習方法を選んでください。`;
+    if (studyRoutineUsesDeckTarget(routineItem)) {
+      const unit = routineUnitLabel(routineItem);
+      elements.completionTitle.textContent =
+        `${routineSubjectTitle(routineItem.subjectId)}の選んだ${unit}で出題できる問題を終えました`;
+      elements.completionMessage.textContent =
+        `この項目は${routineItemCompleted(routineItem)}／${routineItem.deckTarget}${unit}まで完了しています。残り${routineRemainingText(routineItem)}を選んでください。`;
+    } else {
+      elements.completionTitle.textContent =
+        `${routineSubjectTitle(routineItem.subjectId)}の現在出題できる問題をすべて終えました`;
+      elements.completionMessage.textContent =
+        `この項目は${routineItem.completedCount}／${routineItem.questionTarget}問まで完了しています。残り${routineRemainingCount(routineItem)}問を進めるデッキや学習方法を選んでください。`;
+    }
     elements.completionReturn.textContent =
-      `残り${routineRemainingCount(routineItem)}問の学習内容を選ぶ`;
+      `残り${routineRemainingText(routineItem)}の学習内容を選ぶ`;
     updateOverallProgress();
     return;
   }
@@ -5208,14 +5288,15 @@ async function rateListeningQuestion(rating) {
   state.currentTask = state.queue.shift() ?? null;
   state.answerVisible = false;
   state.answerRevealedAt = 0;
+  const listeningPassComplete = !state.currentTask;
+  const sessionComplete =
+    listeningPassComplete && state.retryQuestionIds.size === 0;
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
     rating,
+    { completedDeckIds: state.inRoutine && sessionComplete ? [...state.activeDeckIds] : [] },
   );
-  const listeningPassComplete = !state.currentTask;
-  const sessionComplete =
-    listeningPassComplete && state.retryQuestionIds.size === 0;
   snapshot.completedRoundId = sessionComplete
     ? snapshot.studySession?.roundId
     : null;
@@ -5367,12 +5448,17 @@ async function rateCurrentQuestion(rating) {
   if (sessionComplete) {
     state.activeSession = false;
   }
-  startRoutineOvertimeIfNeeded(rating);
+  // 一周を終えた時は、選んでいたデッキ（パート）をメニューの消化数へ加える。
+  const completedDeckIds = state.inRoutine && sessionComplete ? [...state.activeDeckIds] : [];
+  startRoutineOvertimeIfNeeded(rating, { completedDeckIds });
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
     rating,
-    { deferCompletion: hasPendingRoutineOvertimeReview() },
+    {
+      deferCompletion: hasPendingRoutineOvertimeReview(),
+      completedDeckIds,
+    },
   );
   if (routineChange?.completedItem) clearRoutineOvertime();
   startNewStudyScreen();

@@ -17,7 +17,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.353";
+import { createSpeechController } from "./speech.js?v=0.354";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,6 +39,7 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
+import { usesChapterDecks } from "./so-chapters.js?v=0.354";
 import { createRatingSoundPlayer } from "./rating-sound.js";
 import {
   defaultRatingSoundVolume,
@@ -466,6 +467,58 @@ function routineSubjectTitle(subjectId) {
     subjectId;
 }
 
+// マインドセットはデッキを一周する学び方ではないため、問題数（件数）だけで数える。
+function routineSubjectSupportsDecks(subjectId) {
+  const subject = routineSubjects.find((candidate) => candidate.id === subjectId);
+  return subjectId !== "mindset" && subject?.learningType !== "mindset";
+}
+
+function routineDeckUnitLabel(subjectId) {
+  return routineSubjects.find((subject) => subject.id === subjectId)?.deckUnitLabel ??
+    (subjectId === "world-history-so" ? "パート" : "デッキ");
+}
+
+function routineItemUsesDecks(item) {
+  return item.targetUnit === "decks" && routineSubjectSupportsDecks(item.subjectId);
+}
+
+function createRoutineAmount(item) {
+  const amount = document.createElement("div");
+  amount.className = "routine-amount";
+  const usesDecks = routineItemUsesDecks(item);
+  const deckLabel = routineDeckUnitLabel(item.subjectId);
+  const input = document.createElement("input");
+  input.type = "number";
+  input.min = "1";
+  input.max = usesDecks ? "500" : "10000";
+  input.step = "1";
+  input.inputMode = "numeric";
+  input.value = String(usesDecks ? item.deckTarget ?? 1 : item.questionTarget);
+  input.dataset.routineField = usesDecks ? "deckTarget" : "questionTarget";
+  input.setAttribute(
+    "aria-label",
+    `${routineSubjectTitle(item.subjectId)}の${usesDecks ? `${deckLabel}数` : "問題数"}`,
+  );
+  amount.append(input);
+  if (!routineSubjectSupportsDecks(item.subjectId)) {
+    amount.append(document.createTextNode("問"));
+    return amount;
+  }
+  const unit = document.createElement("select");
+  unit.className = "routine-unit-select";
+  unit.dataset.routineField = "targetUnit";
+  unit.setAttribute("aria-label", `${routineSubjectTitle(item.subjectId)}の数え方`);
+  for (const [value, text] of [["questions", "問"], ["decks", deckLabel]]) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = text;
+    unit.append(option);
+  }
+  unit.value = usesDecks ? "decks" : "questions";
+  amount.append(unit);
+  return amount;
+}
+
 function createRoutineSubjectSelect(item) {
   const select = document.createElement("select");
   select.className = "routine-subject-select";
@@ -536,20 +589,7 @@ function renderRoutineEditor() {
       } else {
         const subject = createRoutineSubjectSelect(item);
         subject.dataset.routineField = "subjectId";
-
-        const amount = document.createElement("label");
-        amount.className = "routine-amount";
-        const input = document.createElement("input");
-        input.type = "number";
-        input.min = "1";
-        input.max = "10000";
-        input.step = "1";
-        input.inputMode = "numeric";
-        input.value = String(item.questionTarget);
-        input.dataset.routineField = "questionTarget";
-        input.setAttribute("aria-label", `${routineSubjectTitle(item.subjectId)}の問題数`);
-        amount.append(input, document.createTextNode("問"));
-        row.append(handle, order, subject, amount, actions);
+        row.append(handle, order, subject, createRoutineAmount(item), actions);
       }
       return row;
     }),
@@ -635,7 +675,12 @@ async function loadRoutineSubjects() {
   if (!Array.isArray(catalog.subjects) || catalog.subjects.length === 0) {
     throw new Error("科目一覧の形式が正しくありません。");
   }
-  routineSubjects = catalog.subjects.map(({ id, title }) => ({ id, title }));
+  routineSubjects = catalog.subjects.map((subject) => ({
+    id: subject.id,
+    title: subject.title,
+    learningType: subject.learningType,
+    deckUnitLabel: usesChapterDecks(subject) ? "パート" : "デッキ",
+  }));
   renderRoutineEditor();
 }
 
@@ -708,11 +753,27 @@ function handleRoutineFieldChange(event) {
   const row = event.target.closest("[data-routine-item-id]");
   const field = event.target.dataset.routineField;
   if (!row || !field) return;
-  updateRoutineItem(row.dataset.routineItemId, {
-    [field]: field === "questionTarget"
-      ? Number.parseInt(event.target.value, 10) || 1
-      : event.target.value,
-  });
+  const itemId = row.dataset.routineItemId;
+  const value = event.target.value;
+  if (field === "questionTarget" || field === "deckTarget") {
+    updateRoutineItem(itemId, { [field]: Number.parseInt(value, 10) || 1 });
+  } else if (field === "targetUnit") {
+    updateRoutineItem(itemId, value === "decks"
+      ? { targetUnit: "decks" }
+      : { targetUnit: "questions" });
+  } else {
+    updateRoutineItem(itemId, {
+      subjectId: value,
+      ...(routineSubjectSupportsDecks(value) ? {} : { targetUnit: "questions" }),
+    });
+  }
+  // 単位や科目を変えた時は、入力欄と「パート」「デッキ」の表示を作り直す。
+  if (event.type === "change" && (field === "targetUnit" || field === "subjectId")) {
+    renderRoutineEditor();
+    elements.routineEditor
+      .querySelector(`[data-routine-item-id="${CSS.escape(itemId)}"] [data-routine-field="${field}"]`)
+      ?.focus();
+  }
   setRoutineStatus("変更があります。「メニューを保存」を押してください。");
 }
 
@@ -803,9 +864,14 @@ elements.addRoutineVideoItem.addEventListener("click", () => {
 });
 
 elements.saveRoutine.addEventListener("click", async () => {
-  const normalized = normalizeStudyRoutinePlan(routinePlan, {
-    fallbackToDefault: false,
-  });
+  const normalized = normalizeStudyRoutinePlan(
+    routinePlan.map((item) =>
+      item.kind === "study" && !routineSubjectSupportsDecks(item.subjectId)
+        ? { ...item, targetUnit: "questions" }
+        : item,
+    ),
+    { fallbackToDefault: false },
+  );
   if (normalized.length === 0) {
     setRoutineStatus("科目を1つ以上追加してください。", true);
     return;
@@ -814,6 +880,15 @@ elements.saveRoutine.addEventListener("click", async () => {
   try {
     const saved = await saveCloudStudyRoutine({ routinePlan: normalized });
     fillRoutinePlan(saved.setupPreferences.routinePlan);
+    const deckItemCount = (plan) =>
+      plan.filter((item) => item.targetUnit === "decks").length;
+    if (deckItemCount(saved.setupPreferences.routinePlan) !== deckItemCount(normalized)) {
+      setRoutineStatus(
+        "Cloudflare側がパート数・デッキ数の指定にまだ対応していないため、問題数として保存されました。",
+        true,
+      );
+      return;
+    }
     setRoutineStatus(
       "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
     );

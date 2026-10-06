@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.353"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.353" />
-    <link rel="stylesheet" href="/theme.css?v=0.353" />
+    <script src="/theme.js?v=0.354"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.354" />
+    <link rel="stylesheet" href="/theme.css?v=0.354" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.353</span>
+        <span class="app-version">v0.354</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/history.html">学習記録</a>
@@ -31,6 +31,11 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.354</h2><time datetime="2026-10-07">2026年10月7日</time></div>
+        <ul><li>毎日の学習メニューで、科目ごとの学習量を「問題数」のほか、日本史K・世界史SOでは「パート数」、その他の科目では「デッキ数」でも指定できるようにしました。設定ページのメニュー編集で単位を「パート」に切り替えると、学習画面で選んだパートを一周し終えるたびにその数だけ進み、指定した数に達すると次の科目や動画へ進みます。同じパートは二度数えず、目標に届く前は残りのパートを選び直す画面を表示します。目標のパート数に達した時も、復習猶予の時間内に復習予定の問題があれば出し終えてから次へ進みます。パート数・デッキ数には今日の学習量の倍率を掛けません。進み方はこれまでどおりCloudflareへ保存します。</li></ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.353</h2><time datetime="2026-10-05">2026年10月5日</time></div>

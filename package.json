@@ -40,6 +40,7 @@
     "test:editor:browser": "node scripts/test-question-editor-browser.mjs",
     "test:navigation:browser": "node scripts/test-app-navigation-browser.mjs",
     "test:mindset:browser": "node scripts/test-mindset-routine-browser.mjs",
+    "test:routine-decks:browser": "node scripts/test-routine-deck-target-browser.mjs",
     "preview:types:world-history-so": "node scripts/classify-world-history-so-cloudflare.mjs",
     "publish:types:world-history-so": "node scripts/classify-world-history-so-cloudflare.mjs --apply",
     "test:world-history-so:browser": "node scripts/test-world-history-so-picker-browser.mjs",

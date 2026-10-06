@@ -10,6 +10,7 @@ const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const routineItemLimit = 100;
 const routineVideoLimit = 200;
 const routineQuestionTargetLimit = 10_000;
+const routineDeckTargetLimit = 500;
 const routineStudySecondsLimit = 365 * 24 * 60 * 60;
 
 export const defaultStudyRoutineOvertimeSeconds = 10 * 60;
@@ -125,6 +126,31 @@ function normalizeQuestionTarget(value) {
     : 100;
 }
 
+function normalizeDeckTarget(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(routineDeckTargetLimit, Math.max(1, parsed))
+    : 1;
+}
+
+function normalizeCompletedDeckIds(value) {
+  return Array.isArray(value)
+    ? [...new Set(value.map(normalizeRoutineId).filter(Boolean))]
+        .slice(0, routineDeckTargetLimit)
+    : [];
+}
+
+// 問題数ではなく、選んだデッキ（日本史K・世界史SOではパート）の一周で数える項目か。
+export function studyRoutineUsesDeckTarget(item) {
+  return item?.kind === "study" && item.targetUnit === "decks";
+}
+
+export function studyRoutineDeckTargetReachedWith(item, deckIds = []) {
+  return studyRoutineUsesDeckTarget(item) &&
+    normalizeCompletedDeckIds([...(item.completedDeckIds ?? []), ...deckIds])
+      .length >= item.deckTarget;
+}
+
 export function normalizeStudyRoutineMultiplier(value) {
   if (value == null || value === "") return defaultStudyRoutineMultiplier;
   const parsed = Number(value);
@@ -167,6 +193,9 @@ function normalizeRoutineItem(value, index, usedIds) {
         kind,
         subjectId,
         questionTarget: normalizeQuestionTarget(value.questionTarget),
+        ...(value.targetUnit === "decks"
+          ? { targetUnit: "decks", deckTarget: normalizeDeckTarget(value.deckTarget) }
+          : {}),
       };
 }
 
@@ -293,10 +322,16 @@ export function normalizeStudyRoutineOvertimeSeconds(value) {
     : defaultStudyRoutineOvertimeSeconds;
 }
 
+function routineTargetReached(item) {
+  return studyRoutineUsesDeckTarget(item)
+    ? item.completedDeckIds.length >= item.deckTarget
+    : item.completedCount >= item.questionTarget;
+}
+
 function routineItemComplete(item, skipVideos = false) {
   return item.kind === "video"
     ? item.completed === true || skipVideos
-    : item.completedCount >= item.questionTarget && !item.overtimePending;
+    : routineTargetReached(item) && !item.overtimePending;
 }
 
 export function normalizeStudyRoutineRun(value) {
@@ -343,6 +378,9 @@ export function normalizeStudyRoutineRun(value) {
             ),
           )
         : normalizeQuestionTarget(sourceItem.questionTarget);
+    const completedDeckIds = studyRoutineUsesDeckTarget(item)
+      ? normalizeCompletedDeckIds(sourceItem.completedDeckIds)
+      : null;
     return {
       ...item,
       baseQuestionTarget,
@@ -353,9 +391,12 @@ export function normalizeStudyRoutineRun(value) {
         routineQuestionTargetLimit,
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
+      ...(completedDeckIds ? { completedDeckIds } : {}),
       overtimePending:
         sourceItem.overtimePending === true &&
-        Number.parseInt(sourceItem.completedCount, 10) >= item.questionTarget,
+        (completedDeckIds
+          ? completedDeckIds.length >= item.deckTarget
+          : Number.parseInt(sourceItem.completedCount, 10) >= item.questionTarget),
       studySeconds: normalizeRoutineStudySeconds(sourceItem.studySeconds),
       ratingCounts: normalizeRatingCounts(sourceItem.ratingCounts),
     };
@@ -475,6 +516,7 @@ export function createStudyRoutineRun(
             routineMultiplier,
           ),
           completedCount: 0,
+          ...(studyRoutineUsesDeckTarget(item) ? { completedDeckIds: [] } : {}),
           studySeconds: 0,
           ratingCounts: createEmptyRatingCounts(),
         },
@@ -533,6 +575,8 @@ export function studyRoutineTotals(run) {
     return {
       completed: 0,
       target: 0,
+      completedDecks: 0,
+      deckTarget: 0,
       studySeconds: 0,
       completedItems: 0,
       totalItems: 0,
@@ -541,13 +585,23 @@ export function studyRoutineTotals(run) {
       totalVideos: 0,
     };
   }
+  // 問題数の項目とデッキ数の項目は単位が違うため、別々に合計する。
   return normalized.items.reduce(
     (totals, item) => ({
       completed: totals.completed +
-        (item.kind === "study"
+        (item.kind === "study" && !studyRoutineUsesDeckTarget(item)
           ? Math.min(item.completedCount, item.questionTarget)
           : 0),
-      target: totals.target + (item.kind === "study" ? item.questionTarget : 0),
+      target: totals.target +
+        (item.kind === "study" && !studyRoutineUsesDeckTarget(item)
+          ? item.questionTarget
+          : 0),
+      completedDecks: totals.completedDecks +
+        (studyRoutineUsesDeckTarget(item)
+          ? Math.min(item.completedDeckIds.length, item.deckTarget)
+          : 0),
+      deckTarget: totals.deckTarget +
+        (studyRoutineUsesDeckTarget(item) ? item.deckTarget : 0),
       studySeconds: totals.studySeconds + item.studySeconds,
       completedItems: totals.completedItems +
         (routineItemComplete(item, normalized.skipVideos) ? 1 : 0),
@@ -561,6 +615,8 @@ export function studyRoutineTotals(run) {
     {
       completed: 0,
       target: 0,
+      completedDecks: 0,
+      deckTarget: 0,
       studySeconds: 0,
       completedItems: 0,
       totalItems: 0,
@@ -727,7 +783,7 @@ export function recordStudyRoutineQuestion(
   questionId,
   studySeconds = 0,
   rating = "",
-  { deferCompletion = false } = {},
+  { deferCompletion = false, completedDeckIds = [] } = {},
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -748,23 +804,31 @@ export function recordStudyRoutineQuestion(
       nextItem: item,
     };
   }
-  const counted =
-    item.completedCount < item.questionTarget &&
-    countsTowardStudyRoutine(rating);
+  const deckTarget = studyRoutineUsesDeckTarget(item);
+  // デッキ数の項目では、一周し終えるまで回答数を記録として数え続ける。
+  const counted = countsTowardStudyRoutine(rating) && (
+    deckTarget
+      ? item.completedCount < routineQuestionTargetLimit
+      : item.completedCount < item.questionTarget
+  );
+  const nextCompletedDeckIds = deckTarget
+    ? normalizeCompletedDeckIds([...item.completedDeckIds, ...completedDeckIds])
+    : null;
+  const addedDecks = deckTarget &&
+    nextCompletedDeckIds.length > item.completedDeckIds.length;
   const addedStudySeconds = normalizeRoutineStudySeconds(studySeconds);
   const hasRating = ratingValues.includes(rating);
   const items = normalized.items.map((candidate, index) =>
     index === normalized.currentIndex
       ? (() => {
           const completedCount = Math.min(
-            candidate.questionTarget,
+            deckTarget ? routineQuestionTargetLimit : candidate.questionTarget,
             candidate.completedCount + (counted ? 1 : 0),
           );
-          return {
+          const next = {
             ...candidate,
             completedCount,
-            overtimePending:
-              completedCount >= candidate.questionTarget && deferCompletion,
+            ...(deckTarget ? { completedDeckIds: nextCompletedDeckIds } : {}),
             studySeconds: Math.min(
               routineStudySecondsLimit,
               candidate.studySeconds + addedStudySeconds,
@@ -773,11 +837,14 @@ export function recordStudyRoutineQuestion(
               ? addRatingCount(candidate.ratingCounts, rating)
               : normalizeRatingCounts(candidate.ratingCounts),
           };
+          return {
+            ...next,
+            overtimePending: routineTargetReached(next) && deferCompletion,
+          };
         })()
       : { ...candidate },
   );
-  const completedItem = items[normalized.currentIndex].completedCount >=
-      items[normalized.currentIndex].questionTarget &&
+  const completedItem = routineTargetReached(items[normalized.currentIndex]) &&
       !items[normalized.currentIndex].overtimePending
     ? items[normalized.currentIndex]
     : null;
@@ -793,6 +860,7 @@ export function recordStudyRoutineQuestion(
     run: next,
     changed:
       counted ||
+      addedDecks ||
       addedStudySeconds > 0 ||
       hasRating ||
       (normalized.items[normalized.currentIndex].overtimePending &&

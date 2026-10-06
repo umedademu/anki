@@ -941,6 +941,47 @@ body.is-study-menu-open {
   font-size: 0.75rem;
 }
 
+/* 今日だけ科目を飛ばす操作は、主な操作より控えめに表示する。 */
+.routine-skip-button {
+  justify-self: start;
+  min-height: 34px;
+  padding: 6px 12px;
+  color: var(--theme-muted, #5d6d63);
+  background: transparent;
+  border: 1px dashed var(--theme-border, rgb(34 80 53 / 30%));
+  border-radius: 9px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.routine-skip-button:hover:not(:disabled) {
+  color: var(--theme-accent, #2b6543);
+  border-style: solid;
+}
+
+.routine-skip-button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.routine-dashboard-actions .routine-skip-button {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+.routine-setup-banner .routine-skip-button {
+  margin-top: 6px;
+}
+
+.mindset-heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .study-mode-picker {
   min-width: 0;
   margin: 26px 0 0;

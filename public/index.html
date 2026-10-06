@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.354"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.354" />
-    <link rel="stylesheet" href="/theme.css?v=0.354" />
+    <script src="/theme.js?v=0.355"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.355" />
+    <link rel="stylesheet" href="/theme.css?v=0.355" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.354" type="module"></script>
+    <script src="/app.js?v=0.355" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.354</span>
+        <span class="app-version">v0.355</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/history.html">学習記録</a>
@@ -33,7 +33,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.354｜科目別学習</p>
+        <p class="eyebrow">v0.355｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -83,6 +83,9 @@
             <button class="secondary-button" id="start-routine" type="button">
               1番から始める
             </button>
+            <button class="routine-skip-button is-hidden" id="skip-routine-item" type="button">
+              今の科目を今日はスキップ
+            </button>
             <a href="/settings.html#study-routine-settings">順番・科目・学習量を編集</a>
           </div>
         </section>
@@ -119,6 +122,9 @@
         <div class="routine-setup-banner is-hidden" id="routine-setup-banner">
           <strong id="routine-setup-title"></strong>
           <span id="routine-setup-progress"></span>
+          <button class="routine-skip-button" id="routine-setup-skip" type="button">
+            この科目を今日はスキップして次へ
+          </button>
         </div>
 
         <fieldset class="study-mode-picker">
@@ -338,9 +344,14 @@
             <p class="eyebrow">マインドセット｜音声聞き流し</p>
             <h1>マインドセット集</h1>
           </div>
-          <button class="secondary-button" id="mindset-home" type="button">
-            科目選択に戻る
-          </button>
+          <div class="mindset-heading-actions">
+            <button class="secondary-button is-hidden" id="mindset-skip" type="button">
+              今日はスキップ
+            </button>
+            <button class="secondary-button" id="mindset-home" type="button">
+              科目選択に戻る
+            </button>
+          </div>
         </div>
 
         <article class="mindset-card" aria-live="polite" aria-atomic="true">

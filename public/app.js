@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.354";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.355";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.354";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.354";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.354";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.354";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.354";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.354";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.354";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.354";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.354";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.355";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.355";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.355";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.355";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.355";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.355";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.355";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.355";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.355";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.354";
+} from "./original-session.js?v=0.355";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.354";
+} from "./speech.js?v=0.355";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.354";
+} from "./deck-selection.js?v=0.355";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -107,6 +107,7 @@ import {
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
   scaleStudyRoutinePlan,
+  skipStudyRoutineItem,
   studyRoutineDeckTargetReachedWith,
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
@@ -151,11 +152,13 @@ const elements = {
   routineSkipVideos: document.querySelector("#routine-skip-videos"),
   startRoutine: document.querySelector("#start-routine"),
   continueRoutine: document.querySelector("#continue-routine"),
+  skipRoutineItem: document.querySelector("#skip-routine-item"),
   setupPanel: document.querySelector("#setup-panel"),
   setupTitle: document.querySelector("#setup-title"),
   routineSetupBanner: document.querySelector("#routine-setup-banner"),
   routineSetupTitle: document.querySelector("#routine-setup-title"),
   routineSetupProgress: document.querySelector("#routine-setup-progress"),
+  routineSetupSkip: document.querySelector("#routine-setup-skip"),
   studyShell: document.querySelector("#study-shell"),
   studyMenuTrigger: document.querySelector("#study-menu-trigger"),
   studyMenuLayer: document.querySelector("#study-menu-layer"),
@@ -254,6 +257,7 @@ const elements = {
   mindsetToggle: document.querySelector("#mindset-toggle"),
   mindsetNext: document.querySelector("#mindset-next"),
   mindsetHome: document.querySelector("#mindset-home"),
+  mindsetSkip: document.querySelector("#mindset-skip"),
   mindsetCompletionPanel: document.querySelector("#mindset-completion-panel"),
   mindsetCompletionMessage: document.querySelector("#mindset-completion-message"),
   mindsetCompletionTime: document.querySelector("#mindset-completion-time"),
@@ -462,6 +466,7 @@ let routineVideoPlayer = null;
 let routineVideoPlayerLoadId = 0;
 let youtubePlayerApiPromise = null;
 let routinePreferenceSaving = false;
+let routineSkipSaving = false;
 const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
@@ -696,7 +701,7 @@ function routineTargetText(item) {
 function routineAmountText(items, { withProgress = false } = {}) {
   const amounts = new Map();
   for (const item of items) {
-    if (item.kind !== "study") continue;
+    if (item.kind !== "study" || item.skipped) continue;
     const unit = routineUnitLabel(item);
     const amount = amounts.get(unit) ?? { completed: 0, target: 0 };
     amount.target += routineItemTarget(item);
@@ -714,7 +719,13 @@ function routineAmountText(items, { withProgress = false } = {}) {
 function routineItemSummary(item, skipVideos = false) {
   return item?.kind === "video"
     ? skipVideos ? "動画をスキップ" : "動画を1本見る"
-    : routineTargetText(item);
+    : item.skipped
+      ? `${routineTargetText(item)}（今日はスキップ）`
+      : routineTargetText(item);
+}
+
+function routineSkippedNote(totals) {
+  return totals.skippedItems > 0 ? `（${totals.skippedItems}項目は今日はスキップ）` : "";
 }
 
 function formatRoutineMultiplier(value) {
@@ -879,6 +890,14 @@ function renderRoutineDashboard() {
   elements.continueRoutine.textContent = previousDay
     ? "前回の続きを今日進める"
     : "続きから始める";
+  const skippable = activeItem?.kind === "study";
+  elements.skipRoutineItem.classList.toggle("is-hidden", !skippable);
+  elements.skipRoutineItem.disabled =
+    !connected || routineSkipSaving || routinePreferenceSaving;
+  if (skippable) {
+    elements.skipRoutineItem.textContent =
+      `${routineSubjectTitle(activeItem.subjectId)}を今日はスキップ`;
+  }
 
   elements.routineDashboardTitle.classList.toggle("is-hidden", Boolean(activeItem));
   elements.routineDashboardSummary.classList.toggle("is-hidden", Boolean(activeItem));
@@ -890,8 +909,8 @@ function renderRoutineDashboard() {
   } else if (completed) {
     elements.routineDashboardTitle.textContent = "メニューをすべて完了しました";
     elements.routineDashboardSummary.textContent = routineSkipVideos
-      ? `${run.items.length}項目・${routineAmountText(run.items)}を完了し、動画${totals.totalVideos}本をスキップしました。`
-      : `${run.items.length}項目・${routineAmountText(run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
+      ? `${run.items.length}項目・${routineAmountText(run.items)}を完了し、動画${totals.totalVideos}本をスキップしました。${routineSkippedNote(totals)}`
+      : `${run.items.length}項目・${routineAmountText(run.items)}・動画${totals.totalVideos}本をすべて進めました。${routineSkippedNote(totals)}`;
   } else if (activeItem) {
     elements.routineDashboardTitle.textContent = "";
     elements.routineDashboardSummary.textContent = "";
@@ -906,7 +925,7 @@ function renderRoutineDashboard() {
     ? run.items.reduce(
         (sum, item) => sum + (item.kind === "video"
           ? item.completed || routineSkipVideos ? 1 : 0
-          : Math.min(1, routineItemCompleted(item) / routineItemTarget(item))),
+          : item.skipped ? 1 : Math.min(1, routineItemCompleted(item) / routineItemTarget(item))),
         0,
       )
     : 0;
@@ -940,6 +959,7 @@ function renderRoutineSetupContext() {
   elements.routineProgress.textContent = studyRoutineUsesDeckTarget(item)
     ? `メニュー ${routineItemCompleted(item)} / ${item.deckTarget}${unit}`
     : `メニュー ${item.completedCount} / ${item.questionTarget}問`;
+  elements.routineSetupSkip.disabled = routineSkipSaving || !state.cloudConnected;
 }
 
 async function persistRoutineRun(run) {
@@ -1097,7 +1117,7 @@ function showRoutineStepCompletion(change) {
   } else {
     elements.completionEyebrow.textContent = "毎日のメニュー完了";
     elements.completionMessage.textContent =
-      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
+      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。${routineSkippedNote(totals)}`;
     elements.completionReturn.textContent = "科目選択へ戻る";
     elements.completionHome.classList.add("is-hidden");
   }
@@ -1201,7 +1221,7 @@ function showRoutineVideoCompletion(change) {
     elements.completionHome.classList.remove("is-hidden");
   } else {
     elements.completionMessage.textContent =
-      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。`;
+      `${change.run.items.length}項目・${routineAmountText(change.run.items)}・動画${totals.totalVideos}本をすべて進めました。${routineSkippedNote(totals)}`;
     elements.completionReturn.textContent = "科目選択へ戻る";
     elements.completionHome.classList.add("is-hidden");
   }
@@ -1398,6 +1418,62 @@ async function continueRoutine() {
   } catch (error) {
     elements.errorMessage.textContent = error.message;
     showOnly(elements.errorPanel);
+  }
+}
+
+function setRoutineSkipButtonsDisabled(disabled) {
+  elements.skipRoutineItem.disabled = disabled;
+  elements.routineSetupSkip.disabled = disabled;
+  elements.mindsetSkip.disabled = disabled;
+}
+
+// 教科書で済ませた日などに、今の科目を達成扱いにせず飛ばして次の項目へ進める。
+// トップでは表示を更新するだけにし、科目の開始画面からは次の項目をそのまま開く。
+async function skipCurrentRoutineItem({ launchNext = false, showError } = {}) {
+  const item = currentStudyRoutineItem(state.routineRun);
+  if (
+    routineSkipSaving ||
+    state.saving ||
+    state.mindsetSaving ||
+    !state.cloudConnected ||
+    item?.kind !== "study"
+  ) {
+    return;
+  }
+  const completed = routineItemCompleted(item);
+  const keptRecord = completed > 0
+    ? `\n${completed}／${routineTargetText(item)}まで進めた記録はそのまま残ります。`
+    : "";
+  if (
+    !window.confirm(
+      `${routineSubjectTitle(item.subjectId)}（${routineTargetText(item)}）を今日はスキップして、次の項目へ進みますか？${keptRecord}`,
+    )
+  ) {
+    return;
+  }
+  routineSkipSaving = true;
+  setRoutineSkipButtonsDisabled(true);
+  if (isMindsetMode()) stopMindsetPlayback();
+  try {
+    // 開始設定の保存が古い進み方で上書きしないよう、送信中の保存を待ってから記録する。
+    await Promise.all([
+      setupPreferenceSave.catch(() => {}),
+      studySessionSave.catch(() => {}),
+    ]);
+    const change = skipStudyRoutineItem(state.routineRun);
+    if (!change.changed) return;
+    await persistRoutineRun(change.run);
+  } catch (error) {
+    showError?.(`スキップを保存できませんでした。${error.message}`);
+    return;
+  } finally {
+    routineSkipSaving = false;
+    setRoutineSkipButtonsDisabled(false);
+  }
+  if (launchNext) {
+    await launchRoutineCurrentStep();
+  } else {
+    renderRoutineDashboard();
   }
 }
 
@@ -2549,6 +2625,8 @@ function renderMindsetPlayer() {
   elements.mindsetToggle.disabled = disabled;
   elements.mindsetPrevious.disabled = !item || state.mindsetSaving;
   elements.mindsetNext.disabled = !item || state.mindsetSaving;
+  elements.mindsetSkip.classList.toggle("is-hidden", !routineItem);
+  elements.mindsetSkip.disabled = state.mindsetSaving || routineSkipSaving;
   elements.mindsetPlayerPanel.classList.toggle(
     "is-speaking",
     !state.mindsetPaused && !state.mindsetSpeechComplete,
@@ -6362,6 +6440,31 @@ elements.startRoutine.addEventListener("click", () => {
 });
 elements.continueRoutine.addEventListener("click", () => {
   void continueRoutine();
+});
+elements.skipRoutineItem.addEventListener("click", () => {
+  void skipCurrentRoutineItem({
+    showError(message) {
+      elements.routineMultiplierStatus.textContent = message;
+      elements.routineMultiplierStatus.classList.add("is-error");
+    },
+  });
+});
+elements.routineSetupSkip.addEventListener("click", () => {
+  void skipCurrentRoutineItem({
+    launchNext: true,
+    showError(message) {
+      elements.cloudStatus.textContent = message;
+    },
+  });
+});
+elements.mindsetSkip.addEventListener("click", () => {
+  void skipCurrentRoutineItem({
+    launchNext: true,
+    showError(message) {
+      state.mindsetMessage = message;
+      renderMindsetPlayer();
+    },
+  });
 });
 elements.routineMultiplier.addEventListener("input", () => {
   renderRoutineMultiplierControl(elements.routineMultiplier.value);

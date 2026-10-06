@@ -21,6 +21,7 @@ import {
   recordStudyRoutineQuestion,
   scaleStudyRoutinePlan,
   scaledStudyRoutineQuestionTarget,
+  skipStudyRoutineItem,
   studyRoutineTotals,
 } from "../public/study-routine.js";
 
@@ -621,4 +622,75 @@ if (
   throw new Error("複数のパートを選んで一周した時に選んだ数だけ進められませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標を確認");
+const skipPlan = [
+  { id: "skip-first", kind: "study", subjectId: "world-history", questionTarget: 10 },
+  { id: "skip-target", kind: "study", subjectId: "japanese-history-k", questionTarget: 50, targetUnit: "decks", deckTarget: 1 },
+  { id: "skip-video", kind: "video" },
+  { id: "skip-last", kind: "study", subjectId: "geography", questionTarget: 20 },
+];
+let skipRun = createStudyRoutineRun(skipPlan, "2026-10-07", "skip-run");
+skipRun = recordStudyRoutineQuestion(
+  skipRun, "world-history", "world-deck-1", "skip-question", 5, "good",
+).run;
+let skipChange = skipStudyRoutineItem(skipRun);
+if (
+  !skipChange.changed ||
+  !skipChange.skippedItem.skipped ||
+  skipChange.skippedItem.completedCount !== 1 ||
+  skipChange.skippedItem.studySeconds !== 5 ||
+  skipChange.nextItem.id !== "skip-target" ||
+  skipChange.run.currentIndex !== 1
+) {
+  throw new Error("途中まで進めた科目を記録を残したままスキップできませんでした。");
+}
+skipChange = skipStudyRoutineItem(skipChange.run);
+const restoredSkipRun = normalizeStudyRoutineRun(JSON.stringify(skipChange.run));
+const skipTotals = studyRoutineTotals(skipChange.run);
+const videoSkipAttempt = skipStudyRoutineItem(skipChange.run);
+if (
+  skipChange.nextItem.kind !== "video" ||
+  restoredSkipRun.currentIndex !== 2 ||
+  !restoredSkipRun.items[0].skipped ||
+  !restoredSkipRun.items[1].skipped ||
+  Object.hasOwn(restoredSkipRun.items[3], "skipped") ||
+  skipTotals.skippedItems !== 2 ||
+  skipTotals.completedItems !== 2 ||
+  skipTotals.target !== 20 ||
+  skipTotals.completed !== 0 ||
+  skipTotals.deckTarget !== 0 ||
+  videoSkipAttempt.changed ||
+  applyStudyRoutineMultiplier(skipChange.run, 2).currentIndex !== 2 ||
+  continueStudyRoutineOnDate(skipChange.run, "2026-10-08").items[1].skipped !== true
+) {
+  throw new Error("スキップした科目を次の日や学習量変更後も飛ばしたまま保てませんでした。");
+}
+const skippedThroughEnd = skipStudyRoutineItem(
+  completeStudyRoutineVideo(
+    assignStudyRoutineVideo(skipChange.run, defaultStudyRoutineVideos, defaultStudyRoutineVideoShuffle, () => 0).run,
+    1,
+  ).run,
+);
+if (
+  !skippedThroughEnd.changed ||
+  skippedThroughEnd.nextItem !== null ||
+  skippedThroughEnd.run.currentIndex !== skippedThroughEnd.run.items.length ||
+  currentStudyRoutineItem(skippedThroughEnd.run) !== null
+) {
+  throw new Error("最後の科目をスキップしてメニューを終えられませんでした。");
+}
+const overtimeSkipRun = normalizeStudyRoutineRun({
+  ...createStudyRoutineRun(skipPlan, "2026-10-07", "overtime-skip-run"),
+  items: createStudyRoutineRun(skipPlan, "2026-10-07", "overtime-skip-run").items.map((item, index) =>
+    index === 0 ? { ...item, completedCount: 10, overtimePending: true } : item,
+  ),
+});
+const overtimeSkip = skipStudyRoutineItem(overtimeSkipRun);
+if (
+  overtimeSkipRun.currentIndex !== 0 ||
+  overtimeSkip.run.items[0].overtimePending ||
+  overtimeSkip.run.currentIndex !== 1
+) {
+  throw new Error("追加復習中の科目をスキップして次へ進められませんでした。");
+}
+
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップを確認");

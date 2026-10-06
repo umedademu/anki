@@ -331,7 +331,7 @@ function routineTargetReached(item) {
 function routineItemComplete(item, skipVideos = false) {
   return item.kind === "video"
     ? item.completed === true || skipVideos
-    : routineTargetReached(item) && !item.overtimePending;
+    : item.skipped === true || (routineTargetReached(item) && !item.overtimePending);
 }
 
 export function normalizeStudyRoutineRun(value) {
@@ -392,7 +392,9 @@ export function normalizeStudyRoutineRun(value) {
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
       ...(completedDeckIds ? { completedDeckIds } : {}),
+      ...(sourceItem.skipped === true ? { skipped: true } : {}),
       overtimePending:
+        sourceItem.skipped !== true &&
         sourceItem.overtimePending === true &&
         (completedDeckIds
           ? completedDeckIds.length >= item.deckTarget
@@ -569,62 +571,80 @@ export function currentStudyRoutineItem(run) {
   return normalized?.items[normalized.currentIndex] ?? null;
 }
 
+function emptyStudyRoutineTotals() {
+  return {
+    completed: 0,
+    target: 0,
+    completedDecks: 0,
+    deckTarget: 0,
+    studySeconds: 0,
+    completedItems: 0,
+    totalItems: 0,
+    skippedItems: 0,
+    completedVideos: 0,
+    skippedVideos: 0,
+    totalVideos: 0,
+  };
+}
+
 export function studyRoutineTotals(run) {
   const normalized = normalizeStudyRoutineRun(run);
-  if (!normalized) {
-    return {
-      completed: 0,
-      target: 0,
-      completedDecks: 0,
-      deckTarget: 0,
-      studySeconds: 0,
-      completedItems: 0,
-      totalItems: 0,
-      completedVideos: 0,
-      skippedVideos: 0,
-      totalVideos: 0,
-    };
-  }
+  if (!normalized) return emptyStudyRoutineTotals();
   // 問題数の項目とデッキ数の項目は単位が違うため、別々に合計する。
+  // 今日はスキップした科目は、目標と達成数の合計から外して件数だけ数える。
   return normalized.items.reduce(
-    (totals, item) => ({
-      completed: totals.completed +
-        (item.kind === "study" && !studyRoutineUsesDeckTarget(item)
-          ? Math.min(item.completedCount, item.questionTarget)
-          : 0),
-      target: totals.target +
-        (item.kind === "study" && !studyRoutineUsesDeckTarget(item)
-          ? item.questionTarget
-          : 0),
-      completedDecks: totals.completedDecks +
-        (studyRoutineUsesDeckTarget(item)
-          ? Math.min(item.completedDeckIds.length, item.deckTarget)
-          : 0),
-      deckTarget: totals.deckTarget +
-        (studyRoutineUsesDeckTarget(item) ? item.deckTarget : 0),
-      studySeconds: totals.studySeconds + item.studySeconds,
-      completedItems: totals.completedItems +
-        (routineItemComplete(item, normalized.skipVideos) ? 1 : 0),
-      totalItems: totals.totalItems + 1,
-      completedVideos: totals.completedVideos +
-        (item.kind === "video" && item.completed ? 1 : 0),
-      skippedVideos: totals.skippedVideos +
-        (item.kind === "video" && normalized.skipVideos && !item.completed ? 1 : 0),
-      totalVideos: totals.totalVideos + (item.kind === "video" ? 1 : 0),
-    }),
-    {
-      completed: 0,
-      target: 0,
-      completedDecks: 0,
-      deckTarget: 0,
-      studySeconds: 0,
-      completedItems: 0,
-      totalItems: 0,
-      completedVideos: 0,
-      skippedVideos: 0,
-      totalVideos: 0,
+    (totals, item) => {
+      const counted = item.kind === "study" && item.skipped !== true;
+      return {
+        completed: totals.completed +
+          (counted && !studyRoutineUsesDeckTarget(item)
+            ? Math.min(item.completedCount, item.questionTarget)
+            : 0),
+        target: totals.target +
+          (counted && !studyRoutineUsesDeckTarget(item)
+            ? item.questionTarget
+            : 0),
+        completedDecks: totals.completedDecks +
+          (counted && studyRoutineUsesDeckTarget(item)
+            ? Math.min(item.completedDeckIds.length, item.deckTarget)
+            : 0),
+        deckTarget: totals.deckTarget +
+          (counted && studyRoutineUsesDeckTarget(item) ? item.deckTarget : 0),
+        studySeconds: totals.studySeconds + item.studySeconds,
+        completedItems: totals.completedItems +
+          (routineItemComplete(item, normalized.skipVideos) ? 1 : 0),
+        totalItems: totals.totalItems + 1,
+        skippedItems: totals.skippedItems + (item.skipped === true ? 1 : 0),
+        completedVideos: totals.completedVideos +
+          (item.kind === "video" && item.completed ? 1 : 0),
+        skippedVideos: totals.skippedVideos +
+          (item.kind === "video" && normalized.skipVideos && !item.completed ? 1 : 0),
+        totalVideos: totals.totalVideos + (item.kind === "video" ? 1 : 0),
+      };
     },
+    emptyStudyRoutineTotals(),
   );
+}
+
+// 気分や別の学習で済ませた日のために、現在の科目を達成扱いにせず飛ばして次へ進める。
+export function skipStudyRoutineItem(run) {
+  const normalized = normalizeStudyRoutineRun(run);
+  const item = currentStudyRoutineItem(normalized);
+  if (!normalized || item?.kind !== "study") {
+    return { run: normalized, changed: false, skippedItem: null, nextItem: item };
+  }
+  const items = normalized.items.map((candidate, index) =>
+    index === normalized.currentIndex
+      ? { ...candidate, skipped: true, overtimePending: false }
+      : { ...candidate },
+  );
+  const next = normalizeStudyRoutineRun({ ...normalized, items });
+  return {
+    run: next,
+    changed: true,
+    skippedItem: next.items[normalized.currentIndex],
+    nextItem: next.items[next.currentIndex] ?? null,
+  };
 }
 
 export function continueStudyRoutineOnDate(run, studyDate) {

@@ -152,8 +152,11 @@ try {
     await shown("subject-panel");
     await page.waitForFunction(() => !document.querySelector("#continue-routine").disabled);
   };
-  const begin = async ({ target = 2, completed = 0, lastCompletedItemId = "", interval = 0, next = "study", skipVideos = false, multiplier = 1 } = {}) => {
-    const plan = [{ id: "mindset-step", kind: "study", subjectId: "mindset", questionTarget: target }];
+  const begin = async ({ target = 2, cycles = 0, completed = 0, lastCompletedItemId = "", interval = 0, next = "study", skipVideos = false, multiplier = 1 } = {}) => {
+    const plan = [{
+      id: "mindset-step", kind: "study", subjectId: "mindset", questionTarget: target,
+      ...(cycles ? { targetUnit: "decks", deckTarget: cycles } : {}),
+    }];
     if (next === "video") plan.push({ id: "video-step", kind: "video" });
     if (next === "study" || skipVideos) plan.push({ id: "next-step", kind: "study", subjectId: "test", questionTarget: 3 });
     const run = createStudyRoutineRun(plan, studyDate, "mindset-test-run", multiplier, skipVideos);
@@ -248,6 +251,24 @@ try {
   await shown("completion-card");
   assert.equal(count(), 119, "末尾と設定数が一致しても次の科目へ進める");
 
+  // 「1周」は途中の位置から始めても、全部の言葉を1回ずつ聞き終えた時に終える。
+  await begin({ cycles: 1, lastCompletedItemId: terms[116].id });
+  assert.match(await page.locator("#mindset-position").textContent(), /^118 \/ 119.*メニュー 0 \/ 119件$/);
+  await page.locator("#mindset-toggle").click();
+  for (let index = 0; index < 119; index++) {
+    await waitForPlayback(index + 1);
+    if (index === 118) {
+      assert.equal(await page.locator("#completion-card").isVisible(), false, "全部の言葉を聞き終えるまで次へ進まない");
+      assert.equal(settings.setupPreferences.routineRun.items[0].completedDeckIds.length, 0);
+    }
+    await complete();
+  }
+  await shown("completion-card");
+  assert.equal(count(), 119);
+  assert.deepEqual(settings.setupPreferences.routineRun.items[0].completedDeckIds, ["cycle-1"]);
+  assert.equal(await page.locator("#completion-title").textContent(), "マインドセットを1周進めました");
+  assert.equal(settings.setupPreferences.routineRun.currentIndex, 1);
+
   await begin({ target: 2, multiplier: 0.5, next: "video", skipVideos: true });
   completionSaveDelay = 300;
   await page.locator("#mindset-next").click();
@@ -283,7 +304,7 @@ try {
   actualAudioCalls += await page.evaluate(() => window.__actualAudioCalls);
   assert.equal(actualAudioCalls, 0, "実際の音声は一切再生しない");
   assert.deepEqual(errors, []);
-  console.log("マインドセットの毎日メニュー検証完了: 指定数・次の科目と動画・倍率・途中再開・末尾・手動操作・二重加算防止・保存失敗と再試行・通常の一周停止を無音で確認");
+  console.log("マインドセットの毎日メニュー検証完了: 指定数・次の科目と動画・倍率・途中再開・末尾・手動操作・二重加算防止・保存失敗と再試行・通常の一周停止・全部の言葉を聞く1周の指定を無音で確認");
 } finally {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));

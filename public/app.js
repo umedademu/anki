@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.355";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.356";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.355";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.355";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.355";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.355";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.355";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.355";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.355";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.355";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.355";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.356";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.356";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.356";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.356";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.356";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.356";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.356";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.356";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.356";
 import {
   createEmptyProgress,
   createQuestionQueue,
@@ -64,7 +64,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.355";
+} from "./original-session.js?v=0.356";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +74,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.355";
+} from "./speech.js?v=0.356";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +90,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.355";
+} from "./deck-selection.js?v=0.356";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -668,13 +668,14 @@ function routineItemTitle(item) {
 }
 
 // 日本史K・世界史SOのように章の中を分けた科目では、デッキを「パート」と呼ぶ。
+// マインドセットはデッキを選ばないため、全部の言葉を1回ずつ進めることを「1周」と呼ぶ。
 function routineDeckUnitLabel(subjectId) {
-  return usesChapterDecks(
-    state.subjectEntries.find((subject) => subject.id === subjectId) ??
-      { id: subjectId },
-  )
-    ? "パート"
-    : "デッキ";
+  const subject = state.subjectEntries.find((entry) => entry.id === subjectId) ??
+    { id: subjectId };
+  if (subject.id === "mindset" || subject.learningType === mindsetLearningType) {
+    return "周";
+  }
+  return usesChapterDecks(subject) ? "パート" : "デッキ";
 }
 
 function routineUnitLabel(item) {
@@ -2545,9 +2546,20 @@ function queueMindsetResumeSave(completedItemId, { routineRun } = {}) {
   return setupPreferenceSave;
 }
 
+// 「◯周」で指定したマインドセットは、全部の言葉の数だけ進めるごとに1周として数える。
+function mindsetCompletedCycleIds(routineItem, completedWords) {
+  const cycleLength = state.mindsetOrder.length;
+  if (!studyRoutineUsesDeckTarget(routineItem) || cycleLength === 0) return [];
+  return Array.from(
+    { length: Math.floor(completedWords / cycleLength) },
+    (_, index) => `cycle-${index + 1}`,
+  );
+}
+
 async function completeRoutineMindset(runId) {
   const item = currentMindset();
-  if (!activeRoutineItem() || state.mindsetItemCompleted) return true;
+  const routineItem = activeRoutineItem();
+  if (!routineItem || state.mindsetItemCompleted) return true;
   if (!item || state.mindsetSaving) return false;
   stopMindsetStudyClock();
   const change = recordStudyRoutineQuestion(
@@ -2556,6 +2568,13 @@ async function completeRoutineMindset(runId) {
     datasetVersionForQuestion(item.id),
     item.id,
     state.mindsetScreenStudySeconds,
+    "",
+    {
+      completedDeckIds: mindsetCompletedCycleIds(
+        routineItem,
+        routineItem.completedCount + 1,
+      ),
+    },
   );
   if (!change.changed) return false;
   state.mindsetSaving = true;
@@ -2576,7 +2595,7 @@ async function completeRoutineMindset(runId) {
       });
       elements.subjectName.textContent = "マインドセット｜メニュー完了";
       elements.completionTitle.textContent =
-        `マインドセットを${change.completedItem.questionTarget}件進めました`;
+        `マインドセットを${routineTargetText(change.completedItem).replace(/問$/, "件")}進めました`;
       elements.routineResultPrimaryLabel.textContent = "進めた言葉";
       elements.routineResultQuestions.textContent =
         `${change.completedItem.completedCount}件`;
@@ -2608,8 +2627,12 @@ function renderMindsetPlayer() {
     : "0 / 0";
   const routineItem = activeRoutineItem();
   if (routineItem) {
+    // 「◯周」の項目は、周の数に全部の言葉の数を掛けた件数を目標として示す。
+    const targetWords = studyRoutineUsesDeckTarget(routineItem)
+      ? routineItem.deckTarget * total
+      : routineItem.questionTarget;
     elements.mindsetPosition.textContent +=
-      `｜メニュー ${routineItem.completedCount} / ${routineItem.questionTarget}件`;
+      `｜メニュー ${routineItem.completedCount} / ${targetWords}件`;
   }
   elements.mindsetText.textContent = mindsetContent(item);
   elements.mindsetPlaybackStatus.textContent = state.mindsetMessage ||

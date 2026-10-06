@@ -17,7 +17,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.355";
+import { createSpeechController } from "./speech.js?v=0.356";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,7 +39,7 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.355";
+import { usesChapterDecks } from "./so-chapters.js?v=0.356";
 import { createRatingSoundPlayer } from "./rating-sound.js";
 import {
   defaultRatingSoundVolume,
@@ -467,19 +467,19 @@ function routineSubjectTitle(subjectId) {
     subjectId;
 }
 
-// マインドセットはデッキを一周する学び方ではないため、問題数（件数）だけで数える。
-function routineSubjectSupportsDecks(subjectId) {
-  const subject = routineSubjects.find((candidate) => candidate.id === subjectId);
-  return subjectId !== "mindset" && subject?.learningType !== "mindset";
-}
-
+// 日本史K・世界史SOは「パート」、マインドセットは全部の言葉を1回ずつ進める「周」、
+// その他の科目は「デッキ」の数でも学習量を指定できる。
 function routineDeckUnitLabel(subjectId) {
   return routineSubjects.find((subject) => subject.id === subjectId)?.deckUnitLabel ??
-    (subjectId === "world-history-so" ? "パート" : "デッキ");
+    (subjectId === "world-history-so"
+      ? "パート"
+      : subjectId === "mindset"
+        ? "周"
+        : "デッキ");
 }
 
 function routineItemUsesDecks(item) {
-  return item.targetUnit === "decks" && routineSubjectSupportsDecks(item.subjectId);
+  return item.targetUnit === "decks";
 }
 
 function createRoutineAmount(item) {
@@ -500,10 +500,6 @@ function createRoutineAmount(item) {
     `${routineSubjectTitle(item.subjectId)}の${usesDecks ? `${deckLabel}数` : "問題数"}`,
   );
   amount.append(input);
-  if (!routineSubjectSupportsDecks(item.subjectId)) {
-    amount.append(document.createTextNode("問"));
-    return amount;
-  }
   const unit = document.createElement("select");
   unit.className = "routine-unit-select";
   unit.dataset.routineField = "targetUnit";
@@ -679,7 +675,9 @@ async function loadRoutineSubjects() {
     id: subject.id,
     title: subject.title,
     learningType: subject.learningType,
-    deckUnitLabel: usesChapterDecks(subject) ? "パート" : "デッキ",
+    deckUnitLabel: subject.learningType === "mindset"
+      ? "周"
+      : usesChapterDecks(subject) ? "パート" : "デッキ",
   }));
   renderRoutineEditor();
 }
@@ -762,12 +760,9 @@ function handleRoutineFieldChange(event) {
       ? { targetUnit: "decks" }
       : { targetUnit: "questions" });
   } else {
-    updateRoutineItem(itemId, {
-      subjectId: value,
-      ...(routineSubjectSupportsDecks(value) ? {} : { targetUnit: "questions" }),
-    });
+    updateRoutineItem(itemId, { subjectId: value });
   }
-  // 単位や科目を変えた時は、入力欄と「パート」「デッキ」の表示を作り直す。
+  // 単位や科目を変えた時は、入力欄と「パート」「デッキ」「周」の表示を作り直す。
   if (event.type === "change" && (field === "targetUnit" || field === "subjectId")) {
     renderRoutineEditor();
     elements.routineEditor
@@ -864,14 +859,9 @@ elements.addRoutineVideoItem.addEventListener("click", () => {
 });
 
 elements.saveRoutine.addEventListener("click", async () => {
-  const normalized = normalizeStudyRoutinePlan(
-    routinePlan.map((item) =>
-      item.kind === "study" && !routineSubjectSupportsDecks(item.subjectId)
-        ? { ...item, targetUnit: "questions" }
-        : item,
-    ),
-    { fallbackToDefault: false },
-  );
+  const normalized = normalizeStudyRoutinePlan(routinePlan, {
+    fallbackToDefault: false,
+  });
   if (normalized.length === 0) {
     setRoutineStatus("科目を1つ以上追加してください。", true);
     return;

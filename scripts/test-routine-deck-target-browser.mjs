@@ -255,7 +255,7 @@ try {
   assert.equal(await text("completion-title"), "試験科目を1パート進めました");
   assert.equal(settings.setupPreferences.routineRun.currentIndex, 1);
 
-  // 3. 設定画面では科目に応じて「パート」「デッキ」を選べ、マインドセットは問題数だけにする。
+  // 3. 設定画面では科目に応じて「パート」「デッキ」「周」（マインドセット）を選べる。
   reset([
     { id: "edit-parts", kind: "study", subjectId: "test", questionTarget: 100 },
     { id: "edit-decks", kind: "study", subjectId: "other", questionTarget: 50 },
@@ -267,15 +267,15 @@ try {
   await page.waitForFunction(() => document.querySelector(".routine-subject-select option")?.textContent === "試験科目");
   assert.deepEqual(await rows.nth(0).locator(".routine-unit-select option").allTextContents(), ["問", "パート"]);
   assert.deepEqual(await rows.nth(1).locator(".routine-unit-select option").allTextContents(), ["問", "デッキ"]);
-  assert.equal(await rows.nth(2).locator(".routine-unit-select").count(), 0);
+  assert.deepEqual(await rows.nth(2).locator(".routine-unit-select option").allTextContents(), ["問", "周"]);
   await rows.nth(0).locator(".routine-unit-select").selectOption("decks");
   const deckInput = rows.nth(0).locator('input[data-routine-field="deckTarget"]');
   assert.equal(await deckInput.inputValue(), "1");
   await deckInput.fill("2");
-  await rows.nth(2).locator(".routine-subject-select").selectOption("test");
   await rows.nth(2).locator(".routine-unit-select").selectOption("decks");
-  await rows.nth(2).locator(".routine-subject-select").selectOption("mindset");
-  assert.equal(await rows.nth(2).locator(".routine-unit-select").count(), 0, "マインドセットへ戻すと問題数へ戻す");
+  assert.equal(await rows.nth(2).locator('input[data-routine-field="deckTarget"]').inputValue(), "1", "マインドセットは1周から選べる");
+  await rows.nth(1).locator(".routine-subject-select").selectOption("mindset");
+  assert.deepEqual(await rows.nth(1).locator(".routine-unit-select option").allTextContents(), ["問", "周"], "科目を変えると単位の名前も変える");
   await page.locator("#save-routine").click();
   await page.waitForFunction(() => /保存しました/.test(document.querySelector("#routine-status").textContent));
   const savedPlan = routinePatches.at(-1).routinePlan;
@@ -283,13 +283,15 @@ try {
   assert.equal(savedPlan[0].deckTarget, 2);
   assert.equal(savedPlan[0].questionTarget, 100, "問題数の値も残す");
   assert.equal(Object.hasOwn(savedPlan[1], "targetUnit"), false);
-  assert.equal(Object.hasOwn(savedPlan[2], "targetUnit"), false);
+  assert.equal(savedPlan[1].subjectId, "mindset");
+  assert.equal(savedPlan[2].targetUnit, "decks");
+  assert.equal(savedPlan[2].deckTarget, 1);
   assert.equal(await rows.nth(0).locator(".routine-unit-select").inputValue(), "decks");
 
   const audioCalls = await page.evaluate(() => window.__actualAudioCalls ?? 0);
   assert.equal(audioCalls, 0, "実際の音声は一切再生しない");
   assert.deepEqual(errors, []);
-  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替を無音で確認");
+  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替（マインドセットの周を含む）を無音で確認");
 } finally {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));

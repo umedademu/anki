@@ -127,7 +127,10 @@
     "book-05-03-04",
     "book-05-03-05",
     "book-05-03-06",
-    "book-05-03-07"
+    "book-05-03-07",
+    "book-05-04-01",
+    "book-05-04-02",
+    "book-05-04-03"
   ],
   "images": [
     {
@@ -9934,6 +9937,369 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-5ab26ab48d71ccc41a9d",
+      "caption": "蒋介石の肖像（1926〜1927年頃とされる写真）",
+      "note": "公開元のスウェーデン民族学博物館がスウェーデン・ミッション盟約教会の資料として提供した蒋介石の写真に照合した。国民党の指導者の名前への回答後に人物を示す。公開元の撮影年は「1926年か1927年」の推定にとどまるため年を断定せず、1928年の北伐や済南事件の現場の写真とはしない。軍服・帽子・背景の建物や原文にない経歴を暗記条件にしない。作者不詳とCC0の利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U01",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d5eb18fd1b8616e79537",
+      "caption": "済南の市街で土嚢の陰に構える日本軍（1928年の新聞掲載写真）",
+      "note": "公開元のThe New York Times（1928年５月23日）に掲載されたTimes Wide Worldの電送写真と、済南の街路で土嚢の陰に構える日本軍という説明に照合した。済南事件の名称、在留日本人の保護を目的とした出兵と国民革命軍との衝突の説明の回答後に、出兵した日本軍の姿を補助する。掲載日を撮影日とせず、日本人の店舗の略奪や衝突の始まりの瞬間、国民革命軍の写真とはしない。写真から兵力・死傷者数・部隊名を判断させず、電送写真の不鮮明な細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U01",
+          "questions": [
+            "B02",
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-b17049ddd120ae",
+      "caption": "北伐の進路を示した地図（1926〜1928年・現代の作図）",
+      "note": "既存の世界史の地図を共有する。公開元の作図者による北伐の経路図（CC BY-SA 4.0）と、南京・済南・北京・奉天の位置に照合した。北伐の目的と北京政府との対立、出兵を含む全体の説明の回答後に経路を示す。現代の作図であり当時の地図ではない。矢印や勢力の色分けから兵力や各戦闘の日付を判断させず、英語の地名・軍閥の名称・省の境界を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U01",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3c0d4550974bc464db68",
+      "caption": "張作霖爆殺事件の現場検証（1928年）",
+      "note": "公開元の「張作霖が列車ごと暗殺された現場検証の風景」という説明と、宝島社『昭和・平成日本テロ事件史』からの転載という出典に照合した。事件の名称と事件全体の説明の回答後に、爆破で壊れた鉄道の現場を示す。爆破の瞬間や列車が燃える場面ではなく、写る人物の所属・氏名を断定しない。写真から爆破の実行者や関東軍の関与を証明させず、橋の構造・路線名・撮影日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U02",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-031f73d0be8405e57ac9",
+      "caption": "張作霖の肖像（1928年６月の画報掲載）",
+      "note": "公開元の上海の画報『良友』1928年６月30日号９頁に掲載された張作霖の肖像に照合した。北京政府を統率した将軍が列車の爆破で暗殺された事件の説明の回答後に人物を示す。掲載は事件の後だが撮影年は確定せず、事件当日や奉天へ引き揚げる途中の写真とはしない。軍服・勲章・帽子の羽根飾りを暗記条件にせず、肖像から暗殺の実行者を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-120871e725a4c9",
+      "caption": "張学良の肖像（1928年）",
+      "note": "既存の世界史の画像を共有する。公開元のCentral Archive Press刊『The history of ROC in mainland』を出典とする1928年の張学良の肖像に照合した。張作霖の子の名前と国民政府への合流、関東軍が東北軍の破壊工作と発表した柳条湖事件の問いの回答後に人物を示す。蒋介石との和解や満州事変の現場の写真ではなく、肖像を爆破の実行者の証拠にしない。勲章・軍服・撮影月を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-01-U02",
+          "questions": [
+            "B03",
+            "R03"
+          ]
+        },
+        {
+          "termId": "JHK-05-04-02-U01",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-70059ae4d6e3f05923a2",
+      "caption": "柳条湖事件の爆破地点を調べる日本側の関係者",
+      "note": "公開元の日本の画報『歴史写真』を出典とする、南満州鉄道の「爆破」現場を調べる日本側の関係者の写真に照合した。事件名・発生日と自作自演の経過の説明の回答後に現場の姿を示す。爆破の瞬間や関東軍が爆破を実行する場面ではなく、写る人物の氏名・所属を断定しない。公開元の日付を撮影日時と断定せず、線路上の物の正体や被害の大きさを写真から判断させない。説明に年を入れず、発生日の問いより前に年を先に示さない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U01",
+          "questions": [
+            "B01",
+            "B07",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-2399d5e49b663c",
+      "caption": "満州事変でチチハルに入る日本軍",
+      "note": "既存の日本史の画像を共有する。公開元の大阪毎日新聞の写真班を作者とする、1931年11月19日に第２師団がチチハルへ入る写真に照合した。満州事変の名称と、政府の方針を無視して満州全体を制圧した経過の説明の回答後に、北満へ進んだ日本軍の姿を示す。柳条湖事件の現場や事変の始まりの場面とはせず、ハルビン占領や満州全体の制圧の完了を写したものともしない。発生日の問いより前に年を示さないよう説明に年を入れない。部隊名・城門・装備を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U01",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-7dfd5bc0345825",
+      "caption": "満州国の国旗",
+      "note": "既存の日本史の画像を共有する。公開元の作図者による満州国の国旗の図に照合した。国名と建国の経緯の説明の回答後に国家の識別を補助する。現代の作図であり、建国式典の写真や各国による承認の証拠ではない。旗の色の意味や制定日を新しい暗記条件にせず、旗から元首・首都を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U02",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ea76facc11cb91",
+      "caption": "満州国皇帝時代の溥儀（1934〜1935年頃）",
+      "note": "既存の日本史の画像を共有する。公開元の説明にある満州国皇帝の正装の肖像（1934〜1935年頃）に照合した。元首とされた清朝最後の皇帝の名前と建国の説明の回答後に人物を示す。1932年の建国時は執政であり、この写真を建国当日や清国皇帝時代の写真とはしない。勲章・軍服・帽子の細部を暗記条件にせず、写真から首都名を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U02",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0c4d839c2d6891",
+      "caption": "犬養毅の肖像写真",
+      "note": "既存の日本史の画像を共有する。公開元の国立国会図書館を出典とする犬養毅の肖像に照合した。五・一五事件で暗殺された首相への回答後と、その内閣の満州国を承認しない方針の問いに人物を示す。撮影年を断定せず、暗殺の現場や首相官邸の写真とはしない。顔つきから方針を判断させず、服装・原文にない経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U02",
+          "questions": [
+            "B04",
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-55a36dd1dd5f7380e360",
+      "caption": "斎藤実の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする斎藤実の肖像に照合した。犬養毅の後継として満州国を承認した内閣の首相への回答後に人物を示す。撮影年を断定せず、組閣や満州国承認の場面の写真とはしない。原文の注にある海軍出身などの経歴を写真から判断させず、服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U02",
+          "questions": [
+            "B06",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-d7da0e190ed9ea",
+      "caption": "五・一五事件を伝える東京朝日新聞の号外（1932年）",
+      "note": "既存の日本史の画像を共有する。公開元の東京朝日新聞の号外と、首相官邸の襲撃を伝える紙面・写真特集に照合した。紙面の見出しに首相の名前があるため、首相の名前を問う問題より後の、政党内閣の終わりと事件の説明の回答後だけに付ける。公開元が紙面の日付表記に誤りがあるとしているため、紙面から発生日を読み取らせない。見出し・写真説明・容体・他の襲撃先の細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U02",
+          "questions": [
+            "B07",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-dd59470672c15d",
+      "caption": "犬養首相を訪ねたリットン調査団（1932年２月）",
+      "note": "既存の世界史の画像を共有する。公開元のDensho Digital Repositoryにある新聞連合の写真と、1932年２月29日に東京に入った調査団が犬養首相を訪ねたという裏面の説明に照合した。調査団の名称と報告書・国際連盟の対応の説明の回答後に調査団の姿を示す。満州での現地調査や柳条湖の爆破地点を調べる場面ではなく、写る人物の配置から各委員の氏名を判断させない。報告書の内容や総会の採決を写真から読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U03",
+          "questions": [
+            "B01",
+            "B06",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-161e03500dffe6b66d60",
+      "caption": "塘沽停戦協定の調印（1933年）",
+      "note": "公開元の1933年５月31日の塘沽停戦協定の調印の写真に照合した。協定の名称と軍事衝突を止めた役割の説明の回答後に調印の場面を示す。公開元の出典の記載は河出書房新社『満州帝国』だが、現在の高解像度版には「Narodowe Archiwum Cyfrowe, sygn. 1-B-2174」（ポーランド国立デジタル公文書館）の表示があり、両方を記録する。写る人物の氏名・席順を断定せず、非武装地帯や撤退線を示す地図とはしない。協定の条文・調印場所の細部を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-02-U03",
+          "questions": [
+            "B02",
+            "R03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c02dd0e76c6fc05f8594",
+      "caption": "閉鎖されたアメリカン・ユニオン銀行の前に集まる預金者（ニューヨーク）",
+      "note": "公開元の米国国立公文書館の記録（306-NT-677-B-177.476C）と、閉鎖された銀行の前に集まる預金者という説明に照合した。原文の取り付け騒ぎの写真と同じ銀行の場面である。銀行の連鎖的な倒産の問いの回答後に、預金を引き出そうと集まった人々の姿を示す。公開元は撮影日を1932年４月26日とするが、同じ写真を1931年とする説明もあるため年を断定しない。看板の利率・通りの番号を暗記条件にせず、一つの銀行の閉鎖から倒産した銀行の数を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U01",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a91d9b80514f3ca1f8d1",
+      "caption": "株価大暴落の直後、ニューヨーク証券取引所の外に集まった群衆（1929年）",
+      "note": "公開元の米国社会保障庁の展示資料と、1929年10月29日に証券取引所の外に集まった群衆という説明に照合した。説明に年を含むため、発端の年を問う問題の回答後と、世界恐慌へ広がる経過の説明だけに付ける。株価の数値や暴落の規模を写真から判断させず、銀行に預金者が殺到した場面とはしない。日付・通りの名前・看板の文字を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U01",
+          "questions": [
+            "B05",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e0bd18873bbc56",
+      "caption": "ニューディール政策を紹介する組み合わせ画像（法律の署名・大統領の肖像・壁画）",
+      "note": "既存の世界史の画像を共有する。公開元の説明にある、1933年のテネシー川流域開発公社（TVA）法の署名、ルーズベルトの肖像、ニューディールで雇われた画家の壁画を組み合わせた画像に照合した。政策の名称と、政府が積極的に経済へ介入した説明の回答後に政策の姿を補助する。後の問いの答えを先に示さないよう、説明に大統領の名前や「公共事業」を入れない。後年に作られた組み合わせであり当時の宣伝物ではない。壁画の作者・署名に立ち会った人々・原文にない機関名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U02",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-8c8787e462c984098df0",
+      "caption": "フランクリン・ルーズベルトの肖像写真（1933年）",
+      "note": "公開元の米国議会図書館の所蔵記録とElias Goldenskyによる1933年の肖像に照合した。ニューディール政策を実行した大統領への回答後に人物を示す。セオドア・ルーズベルトと区別し、大統領就任式や法律の署名の場面とはしない。服装・胸の飾り・撮影日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4714abbd0228200322ea",
+      "caption": "建設中のノリス・ダム（1936年）",
+      "note": "公開元のテネシー川流域開発公社（TVA）が公開した、1936年のノリス・ダムの建設作業の写真に照合した。大規模な公共事業と雇用の回復を問う回答後に、公共事業の現場の例を示す。ダム１か所の写真で全米の公共事業や失業者の数を示すものではなく、ダムの名前・所在地・発電の仕組みを暗記条件にしない。作者表示とCC BY 2.0の利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U02",
+          "questions": [
+            "B03",
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-afaf0dc03d8acb76da5a",
+      "caption": "井上準之助の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする井上準之助の肖像に照合した。金本位制への復帰を進めた大蔵大臣への回答後と、金輸出の解禁・井上財政の説明に人物を示す。撮影年を断定せず、金輸出解禁の決定の場面とはしない。公開元の原画像は500KBを超えるため、公開元が提供する幅500pxの表示用画像を加工せず使う。眼鏡・服装や原文にない経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U03",
+          "questions": [
+            "B02",
+            "B04",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f945f169c68f165c73f4",
+      "caption": "高橋是清の肖像（1921年刊行物の掲載写真）",
+      "note": "前回までに点検した日本史Kの画像を共有する。公開元の『Trans-Pacific』1921年２月号を出典とする高橋是清の肖像に照合した。井上に代わって恐慌からの脱出を指揮した大蔵大臣への回答後と、金輸出の再禁止・高橋財政の説明に人物を示す。1921年の写真を1931年の就任時や昭和恐慌期の写真とはしない。服装・原文にない経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U03",
+          "questions": [
+            "B03",
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d6563647a93f9ae951cd",
+      "caption": "蚕の繭（現代の写真）",
+      "note": "前回までに点検した日本史Kの画像を共有する。公開元のFumikas Sagisavasが2024年に撮影した蚕の繭の写真（CC0）に照合した。生糸の輸出が激減して価格が暴落したものへの回答後と、農家の家計の困窮の説明に繭の姿を示す。現代の写真であり、昭和恐慌期の農村や価格の暴落を写したものではない。繭の色・形・品種を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U04",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-bfde2be708a078",
+      "caption": "立憲政友会の本部",
+      "note": "既存の日本史の画像を共有する。公開元が改造社刊の地理書シリーズ第２巻を出典とする1930年頃の立憲政友会本部の写真に照合した。統帥権干犯を攻撃した野党の名前への回答後に党本部の姿を示す。調印年の問いより前に年を示さないよう説明に年を入れない。議会での追及の場面や党員の写真ではなく、建物から党の主張を判断させない。所在地・建物の様式・看板の文字を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U05",
+          "questions": [
+            "B05"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6b80318047a9bdecb001",
+      "caption": "ロンドン海軍軍縮条約の調印式に臨む日本の首席全権・若槻礼次郎",
+      "note": "公開元に記載された毎日新聞社の1930年４月22日の写真と、３か月にわたる会議の最終日に調印式の席についた首席全権の若槻という説明に照合した。条約の名称・調印年と補助艦の制限の説明の回答後に調印の場面を示す。調印年の問いより前にも付けるため、説明に年を入れない。若槻礼次郎や周囲の人物の名前を新しい暗記条件にせず、海軍軍令部の反発や統帥権干犯問題の場面とはしない。写真から艦船の種類や保有量の比率を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-03-U05",
+          "questions": [
+            "B01",
+            "B07",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -14100,6 +14466,162 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kobayashi_Takiji.01.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-5f406172f5f46b2d0f53.jpg",
       "sha256": "5f406172f5f46b2d0f53886d6a54eec552bba4e23b38d634886d4431846b8b86"
+    },
+    {
+      "id": "JHKS-5ab26ab48d71ccc41a9d",
+      "path": "term-images/japanese-history-k/JHKS-5ab26ab48d71ccc41a9d.jpg",
+      "alt": "蒋介石の肖像（1926〜1927年頃とされる写真）",
+      "caption": "蒋介石の肖像（1926〜1927年頃とされる写真）",
+      "creator": "撮影者不詳／スウェーデン民族学博物館（画像提供）",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chiang_Kai-shek,_Svenska_Mission_0964.a.2007.tiff",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5ab26ab48d71ccc41a9d.jpg",
+      "sha256": "5ab26ab48d71ccc41a9da5d34eb0f46889e9f530c2fbed074345facf4302b5dc"
+    },
+    {
+      "id": "JHKS-d5eb18fd1b8616e79537",
+      "path": "term-images/japanese-history-k/JHKS-d5eb18fd1b8616e79537.jpg",
+      "alt": "済南の市街で土嚢の陰に構える日本軍（1928年の新聞掲載写真）",
+      "caption": "済南の市街で土嚢の陰に構える日本軍（1928年の新聞掲載写真）",
+      "creator": "Times Wide World（電送写真）／The New York Times（掲載紙）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_troops_behind_barricades_during_Jinan_Incident,_1928_photo_by_Times_Wide_World.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d5eb18fd1b8616e79537.jpg",
+      "sha256": "d5eb18fd1b8616e79537733be8238e939e1c439a2b04a28807d09de3e4a1bc57"
+    },
+    {
+      "id": "JHKS-031f73d0be8405e57ac9",
+      "path": "term-images/japanese-history-k/JHKS-031f73d0be8405e57ac9.jpg",
+      "alt": "張作霖の肖像（1928年６月の画報掲載）",
+      "caption": "張作霖の肖像（1928年６月の画報掲載）",
+      "creator": "撮影者不詳／『良友』画報（掲載誌）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Zhang_Zuolin_(%E5%BC%B5%E4%BD%9C%E9%9C%96),_Liangyou_1928-06-30.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-031f73d0be8405e57ac9.jpg",
+      "sha256": "031f73d0be8405e57ac9adfe4cc69302b83ea3e6d96724d3532427a50754636f"
+    },
+    {
+      "id": "JHKS-3c0d4550974bc464db68",
+      "path": "term-images/japanese-history-k/JHKS-3c0d4550974bc464db68.jpg",
+      "alt": "張作霖爆殺事件の現場検証（1928年）",
+      "caption": "張作霖爆殺事件の現場検証（1928年）",
+      "creator": "撮影者不詳（宝島社『昭和・平成日本テロ事件史』からの転載）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Huanggutun_Incident_in_railway.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3c0d4550974bc464db68.jpg",
+      "sha256": "3c0d4550974bc464db6853c5dae09bdc3c109ec10620fbaab82305c25d870bf5"
+    },
+    {
+      "id": "JHKS-70059ae4d6e3f05923a2",
+      "path": "term-images/japanese-history-k/JHKS-70059ae4d6e3f05923a2.jpg",
+      "alt": "柳条湖事件の爆破地点を調べる日本側の関係者",
+      "caption": "柳条湖事件の爆破地点を調べる日本側の関係者",
+      "creator": "撮影者不詳／『歴史写真』（掲載誌）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:193109_mukden_incident_railway_sabotage.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-70059ae4d6e3f05923a2.jpg",
+      "sha256": "70059ae4d6e3f05923a23a9396809096c346c636c086b693c4a5824d0199ee07"
+    },
+    {
+      "id": "JHKS-161e03500dffe6b66d60",
+      "path": "term-images/japanese-history-k/JHKS-161e03500dffe6b66d60.jpg",
+      "alt": "塘沽停戦協定の調印（1933年）",
+      "caption": "塘沽停戦協定の調印（1933年）",
+      "creator": "撮影者不詳／ポーランド国立デジタル公文書館（画像の表示）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tanggu_Truce.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-161e03500dffe6b66d60.jpg",
+      "sha256": "161e03500dffe6b66d6056bc0573959dbaa555e5e4b93ccaffa73d6478449dc4"
+    },
+    {
+      "id": "JHKS-55a36dd1dd5f7380e360",
+      "path": "term-images/japanese-history-k/JHKS-55a36dd1dd5f7380e360.jpg",
+      "alt": "斎藤実の肖像写真",
+      "caption": "斎藤実の肖像写真",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Makoto_Saito_2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-55a36dd1dd5f7380e360.jpg",
+      "sha256": "55a36dd1dd5f7380e3600ceb9b0fa2fde5a487bf92e8023b49aaf2665e48e786"
+    },
+    {
+      "id": "JHKS-a91d9b80514f3ca1f8d1",
+      "path": "term-images/japanese-history-k/JHKS-a91d9b80514f3ca1f8d1.jpg",
+      "alt": "株価大暴落の直後、ニューヨーク証券取引所の外に集まった群衆（1929年）",
+      "caption": "株価大暴落の直後、ニューヨーク証券取引所の外に集まった群衆（1929年）",
+      "creator": "撮影者不詳／米国社会保障庁（公開元）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Crowd_outside_nyse.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a91d9b80514f3ca1f8d1.jpg",
+      "sha256": "a91d9b80514f3ca1f8d1ebf06164709c42bae1ebb54eb5d0c4fa863466b2d321"
+    },
+    {
+      "id": "JHKS-c02dd0e76c6fc05f8594",
+      "path": "term-images/japanese-history-k/JHKS-c02dd0e76c6fc05f8594.jpg",
+      "alt": "閉鎖されたアメリカン・ユニオン銀行の前に集まる預金者（ニューヨーク）",
+      "caption": "閉鎖されたアメリカン・ユニオン銀行の前に集まる預金者（ニューヨーク）",
+      "creator": "撮影者不詳／米国国立公文書館（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bank_Run_on_American_Union_Bank.jpeg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c02dd0e76c6fc05f8594.jpg",
+      "sha256": "c02dd0e76c6fc05f85949b8ddfb3e9f8cdc308881d60f259e9dce51d99384a96"
+    },
+    {
+      "id": "JHKS-8c8787e462c984098df0",
+      "path": "term-images/japanese-history-k/JHKS-8c8787e462c984098df0.jpg",
+      "alt": "フランクリン・ルーズベルトの肖像写真（1933年）",
+      "caption": "フランクリン・ルーズベルトの肖像写真（1933年）",
+      "creator": "Elias Goldensky／米国議会図書館（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Franklin_Delano_Roosevelt,_Portrait_1933.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8c8787e462c984098df0.jpg",
+      "sha256": "8c8787e462c984098df02e5bbfd88029172c258258680c87d1518ab834e32203"
+    },
+    {
+      "id": "JHKS-4714abbd0228200322ea",
+      "path": "term-images/japanese-history-k/JHKS-4714abbd0228200322ea.jpg",
+      "alt": "建設中のノリス・ダム（1936年）",
+      "caption": "建設中のノリス・ダム（1936年）",
+      "creator": "テネシー川流域開発公社（TVA Web Team）",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Norris_Dam_(1936)_-_Construction_worker_facing_dam_(9134563415).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4714abbd0228200322ea.jpg",
+      "sha256": "4714abbd0228200322ea3eeda5cb7ca4ad11a470c4aeb0d651d522a3b57245e9"
+    },
+    {
+      "id": "JHKS-afaf0dc03d8acb76da5a",
+      "path": "term-images/japanese-history-k/JHKS-afaf0dc03d8acb76da5a.jpg",
+      "alt": "井上準之助の肖像写真",
+      "caption": "井上準之助の肖像写真",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Junnosuke_Inoue.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-afaf0dc03d8acb76da5a.jpg",
+      "sha256": "afaf0dc03d8acb76da5a97bdd7408e3b4053c4e4788d538ee93052ed83baeaf1"
+    },
+    {
+      "id": "JHKS-6b80318047a9bdecb001",
+      "path": "term-images/japanese-history-k/JHKS-6b80318047a9bdecb001.jpg",
+      "alt": "ロンドン海軍軍縮条約の調印式に臨む日本の首席全権・若槻礼次郎",
+      "caption": "ロンドン海軍軍縮条約の調印式に臨む日本の首席全権・若槻礼次郎",
+      "creator": "毎日新聞社",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Reijiro_Wakatsuki_at_the_signing_of_the_London_Naval_Treaty.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6b80318047a9bdecb001.jpg",
+      "sha256": "6b80318047a9bdecb00145460f4f84aae194d63e3fca476ae293d890fb09c537"
     }
   ]
 }

@@ -136,7 +136,10 @@
     "book-05-04-06",
     "book-05-04-07",
     "book-05-04-08",
-    "book-05-04-09"
+    "book-05-04-09",
+    "book-05-04-10",
+    "book-05-04-11",
+    "book-05-04-12"
   ],
   "images": [
     {
@@ -10845,6 +10848,195 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-8c0b42926cecaa455948",
+      "caption": "降伏のため日本軍のもとへ向かうイギリス軍の一行（シンガポール・1942年２月）",
+      "note": "公開元の帝国戦争博物館（HU 2781）の1942年２月15日の写真と、パーシバル中将らがイギリス国旗を掲げて降伏に向かう一行という説明に照合した。日本軍が占領した都市の名前と、マレー半島からの作戦の説明の回答後に降伏の場面を示す。説明に都市名を含むため、統治国を問う最初の問題には付けない。降伏文書の署名の場面ではなく、写る人物の名前・旗を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-10-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4038e6f06fbfd48b3604",
+      "caption": "大東亜会議に集まった各国・地域の代表（1943年11月）",
+      "note": "公開元が毎日新聞社『昭和史 第11巻』を出典とする、1943年11月の大東亜会議で国会議事堂の前に並んだ各国・地域の代表の写真に照合した。日本が影響下の地域に用いた呼称と、アジア諸国との関係の説明の回答後に会議の姿を示す。後の問いの答えにあたるタイ・フィリピン・ビルマの代表が写るため、国名を問う問題には付けず、説明に国名や人名を入れない。写真の並びから各国の独立の時期や同盟の内容を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-10-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-6cb3a13d605adcd6fe1e",
+      "caption": "ミッドウェー海戦で爆撃をかわす空母飛龍（1942年６月）",
+      "note": "公開元の米軍の写真（USAF-3725）と、1942年６月４日のミッドウェー海戦で爆撃をかわす空母飛龍という説明に照合した。原文に同じ場面の写真がある。海戦の名前と、海戦と補給の悪化の全体の説明の回答後に海戦の姿を示す。飛龍が沈む場面ではなく、写真から失った空母の数や搭載機の数を判断させない。艦名・爆弾の数を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-11-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-b33b26862433d9b2bab0",
+      "caption": "ガダルカナル島に上陸する米海兵隊（1942年８月）",
+      "note": "公開元の米国国立公文書館の写真（80-CF-112-5-3）と、1942年８月７日にガダルカナル島へ上陸する米第１海兵師団という説明に照合した。島の名前と、海戦と島での戦闘の経過の説明の回答後に上陸の姿を示す。1943年２月の日本軍の撤退の場面ではなく、部隊名・舟艇の番号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-11-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-439c60cabe6cbc4cfbf3",
+      "caption": "サイパン島に上陸した米海兵隊の兵士たち",
+      "note": "公開元の米軍の写真（Signal Corps Archive）と、1944年６月15日にサイパン島へ上陸した第８海兵連隊の兵士という説明に照合した。島が属する諸島の名前と、陥落の経過の説明の回答後に上陸の姿を示す。陥落の年を問う問題があるため説明に年を入れない。陥落の場面や住民の様子を写した写真ではなく、部隊名・装備を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-11-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a625ad2dbab16c5f49d5",
+      "caption": "米軍のB29爆撃機",
+      "note": "公開元の米陸軍航空軍の写真と、第29爆撃群のB29「シティ・オブ・アレンタウン」（1945年）という説明に照合した。日本の都市を空襲した長距離爆撃機の名前と、サイパン島の陥落の意味の説明の回答後に機体の姿を示す。陥落の年を問う問題があるため説明に年を入れない。空襲の場面ではなく、機体の愛称・部隊名・機体番号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-11-U02",
+          "questions": [
+            "B02",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-07ba24ed15eb2df401a3",
+      "caption": "出陣学徒壮行会で行進する学生たち（1943年10月）",
+      "note": "公開元が『青山学院100年』（1975年）を出典とする、1943年10月21日の出陣学徒壮行会で行進する青山学院の学生の写真に照合した。大学生も徴兵の対象となった動員の名前と、その説明の回答後に壮行会の姿を示す。勤労挺身隊や中学生の勤労動員の写真ではなく、学校名・会場名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-11-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-121ac1c123e422f9231b",
+      "caption": "東京大空襲の後の焼け跡（1945年３月）",
+      "note": "公開元の警視庁の写真家・石川光陽による1945年３月10日頃の写真で、雄鶏社『東京大空襲秘録写真集』（1953年）に掲載されたものに照合した。都市空襲の名前と、本土空襲の全体の説明の回答後に焼け跡の姿を示す。犠牲者が写る写真は避け、焼け跡と人々の写真を選んだ。写真の地区名を断定せず、焼夷弾そのものや爆撃の瞬間の写真ではない。被害の規模や死者数を写真から判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1fb508cea94cf248d511",
+      "caption": "東條英機の肖像写真",
+      "note": "前回点検した日本史Kの画像を同じ説明で共有する。公開元の国立国会図書館を出典とする東條英機の肖像に照合した。1944年７月に総辞職した内閣への回答後と、戦局の変化と退陣の説明に、その首相の姿を示す。総辞職の場面ではなく、撮影年を断定しない。軍服・記章を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U01",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5925c2e901b161e4e8ad",
+      "caption": "横浜に焼夷弾を投下するB29爆撃機（1945年５月）",
+      "note": "公開元の米国空軍博物館の写真と、1945年５月29日に第500爆撃群のB29が横浜に焼夷弾を投下する場面という説明に照合した。米軍が投下した爆弾の種類と、爆撃が日本全土に及んだ説明の回答後に、東京以外の都市への爆撃の例を示す。東京大空襲（３月10日）そのものの写真ではない。説明に爆弾の種類を含むため、その名前を問う問題より前には付けない。機体の記号・部隊名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U01",
+          "questions": [
+            "B04",
+            "B05",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4e9f9d49fdef6951e4bf",
+      "caption": "沖縄戦で学徒隊に動員される前の女学校の生徒たち",
+      "note": "公開元がひめゆり平和祈念資料館を出典とする、動員前の沖縄の女学校の生徒たちの写真（1944年）に照合した。沖縄戦で生徒が編入された隊の名前と、動員の説明の回答後に生徒たちの姿を示す。学童疎開が始まった年を問う問題があるため説明に年を入れない。戦場の場面ではなく、写る人物の名前・学校名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U02",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ebee62f3effe2619e8e1",
+      "caption": "硫黄島に上陸する米海兵隊（1945年２月）",
+      "note": "公開元の米海兵隊のBob Campbellによる写真と、1945年２月に硫黄島へ上陸する第27海兵連隊第２大隊という説明に照合した。陥落した島の名前と、陥落の意味の説明の回答後に上陸の姿を示す。３月の陥落の場面や飛行場の写真ではなく、写真から陥落の時期や犠牲者数を判断させない。部隊名・撮影者名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U03",
+          "questions": [
+            "B01",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-6c890ef7791517",
+      "caption": "沖縄本島の海岸で物資を降ろす米軍の上陸用舟艇（1945年４月）",
+      "note": "既存の日本史の画像を共有する。公開元の米国国立公文書館の写真と、1945年４月13日に沖縄本島の比謝川河口近くの海岸で米軍の舟艇が物資を降ろす場面という説明に照合した。米軍が上陸した島の名前と、沖縄本島での戦闘の説明の回答後に上陸後の海岸の姿を示す。４月１日の上陸開始の瞬間や住民の様子を写した写真ではなく、組織的戦闘の終結日を写真から判断させない。艦の番号・海岸名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-12-U03",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -15419,6 +15611,138 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hull-Cordell-LOC.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-90bf00f128f8ecd5a5e1.jpg",
       "sha256": "90bf00f128f8ecd5a5e13b0d78e5085548649f37fdd45b24d072ae70a191b49e"
+    },
+    {
+      "id": "JHKS-8c0b42926cecaa455948",
+      "path": "term-images/japanese-history-k/JHKS-8c0b42926cecaa455948.jpg",
+      "alt": "降伏のため日本軍のもとへ向かうイギリス軍の一行（シンガポール・1942年２月）",
+      "caption": "降伏のため日本軍のもとへ向かうイギリス軍の一行（シンガポール・1942年２月）",
+      "creator": "撮影者不詳／帝国戦争博物館（HU 2781）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Surrender_Singapore.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-8c0b42926cecaa455948.jpg",
+      "sha256": "8c0b42926cecaa45594871a55781554559c650454e84c821a7bbeb7052a730a4"
+    },
+    {
+      "id": "JHKS-4038e6f06fbfd48b3604",
+      "path": "term-images/japanese-history-k/JHKS-4038e6f06fbfd48b3604.jpg",
+      "alt": "大東亜会議に集まった各国・地域の代表（1943年11月）",
+      "caption": "大東亜会議に集まった各国・地域の代表（1943年11月）",
+      "creator": "撮影者不詳／毎日新聞社『昭和史 第11巻』（掲載書）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Greater_East_Asia_Conference.JPG",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4038e6f06fbfd48b3604.jpg",
+      "sha256": "4038e6f06fbfd48b360443d4a76bdca3efe6265c5c5a8840af9d7d20fb548263"
+    },
+    {
+      "id": "JHKS-6cb3a13d605adcd6fe1e",
+      "path": "term-images/japanese-history-k/JHKS-6cb3a13d605adcd6fe1e.jpg",
+      "alt": "ミッドウェー海戦で爆撃をかわす空母飛龍（1942年６月）",
+      "caption": "ミッドウェー海戦で爆撃をかわす空母飛龍（1942年６月）",
+      "creator": "米軍の撮影（USAF-3725）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_aircraft_carrier_Hiryu_dodging_bombs_on_4_June_1942_(USAF-3725).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-6cb3a13d605adcd6fe1e.jpg",
+      "sha256": "6cb3a13d605adcd6fe1ee4ab78b50e371488115f59bcb84941e28075817246c4"
+    },
+    {
+      "id": "JHKS-b33b26862433d9b2bab0",
+      "path": "term-images/japanese-history-k/JHKS-b33b26862433d9b2bab0.jpg",
+      "alt": "ガダルカナル島に上陸する米海兵隊（1942年８月）",
+      "caption": "ガダルカナル島に上陸する米海兵隊（1942年８月）",
+      "creator": "米海兵隊／米国国立公文書館（80-CF-112-5-3）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:U.S._Marines_storm_ashore_on_Guadalcanal,_7_August_1942_(80-CF-112-5-3).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-b33b26862433d9b2bab0.jpg",
+      "sha256": "b33b26862433d9b2bab04b1de0560aec124c66bbac68f0e081c46c788547bbba"
+    },
+    {
+      "id": "JHKS-439c60cabe6cbc4cfbf3",
+      "path": "term-images/japanese-history-k/JHKS-439c60cabe6cbc4cfbf3.jpg",
+      "alt": "サイパン島に上陸した米海兵隊の兵士たち",
+      "caption": "サイパン島に上陸した米海兵隊の兵士たち",
+      "creator": "米軍の撮影（Signal Corps Archive）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Members_of_the_8th_Marines_who_came_in_on_the_5th_wave,_just_after_landing_on_the_beach._Saipan._15_June,_1944._(52307414716).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-439c60cabe6cbc4cfbf3.jpg",
+      "sha256": "439c60cabe6cbc4cfbf37415652ea0918310195b5b46b3e87d4a6080ea939734"
+    },
+    {
+      "id": "JHKS-a625ad2dbab16c5f49d5",
+      "path": "term-images/japanese-history-k/JHKS-a625ad2dbab16c5f49d5.jpg",
+      "alt": "米軍のB29爆撃機",
+      "caption": "米軍のB29爆撃機",
+      "creator": "米陸軍航空軍",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:29th_Bombardment_Group_B-29_City_of_Allentown_1945.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a625ad2dbab16c5f49d5.jpg",
+      "sha256": "a625ad2dbab16c5f49d5672fd4b11498f2d4f2d9991e96a5cf137a85f0ae1424"
+    },
+    {
+      "id": "JHKS-07ba24ed15eb2df401a3",
+      "path": "term-images/japanese-history-k/JHKS-07ba24ed15eb2df401a3.jpg",
+      "alt": "出陣学徒壮行会で行進する学生たち（1943年10月）",
+      "caption": "出陣学徒壮行会で行進する学生たち（1943年10月）",
+      "creator": "撮影者不詳／『青山学院100年』（掲載書）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Gakuto_Shutsujin_of_Aoyama_Gakuin.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-07ba24ed15eb2df401a3.jpg",
+      "sha256": "07ba24ed15eb2df401a3fdac0804e551ed44bcd183decb167b5c964be6e7aae2"
+    },
+    {
+      "id": "JHKS-121ac1c123e422f9231b",
+      "path": "term-images/japanese-history-k/JHKS-121ac1c123e422f9231b.jpg",
+      "alt": "東京大空襲の後の焼け跡（1945年３月）",
+      "caption": "東京大空襲の後の焼け跡（1945年３月）",
+      "creator": "石川光陽／『東京大空襲秘録写真集』（雄鶏社、1953年刊に掲載）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tokyo_kushu_1945-4.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-121ac1c123e422f9231b.jpg",
+      "sha256": "121ac1c123e422f9231bf52e478e47ccef46e17c58adb67f9adbbbd7104c3944"
+    },
+    {
+      "id": "JHKS-5925c2e901b161e4e8ad",
+      "path": "term-images/japanese-history-k/JHKS-5925c2e901b161e4e8ad.jpg",
+      "alt": "横浜に焼夷弾を投下するB29爆撃機（1945年５月）",
+      "caption": "横浜に焼夷弾を投下するB29爆撃機（1945年５月）",
+      "creator": "米陸軍航空軍／米国空軍博物館（公開元）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Incendaries-b29.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-5925c2e901b161e4e8ad.jpg",
+      "sha256": "5925c2e901b161e4e8ad872ce78f28d87c1d84060c1a934db29f05d8cadb54fc"
+    },
+    {
+      "id": "JHKS-4e9f9d49fdef6951e4bf",
+      "path": "term-images/japanese-history-k/JHKS-4e9f9d49fdef6951e4bf.jpg",
+      "alt": "沖縄戦で学徒隊に動員される前の女学校の生徒たち",
+      "caption": "沖縄戦で学徒隊に動員される前の女学校の生徒たち",
+      "creator": "撮影者不詳／ひめゆり平和祈念資料館（公開元の出典）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Himeyuri_Students.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4e9f9d49fdef6951e4bf.jpg",
+      "sha256": "4e9f9d49fdef6951e4bfa1caa189ef16eed799cb817a2b2ffcc7583093540f42"
+    },
+    {
+      "id": "JHKS-ebee62f3effe2619e8e1",
+      "path": "term-images/japanese-history-k/JHKS-ebee62f3effe2619e8e1.jpg",
+      "alt": "硫黄島に上陸する米海兵隊（1945年２月）",
+      "caption": "硫黄島に上陸する米海兵隊（1945年２月）",
+      "creator": "Bob Campbell（米海兵隊）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:2nd_Battalion,_27th_Marines_landing_on_Iwo_Jima._(49675588113).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ebee62f3effe2619e8e1.jpg",
+      "sha256": "ebee62f3effe2619e8e10dfc5290735a3b5e6d4a83dcdce4d4283dfc472e440a"
     }
   ]
 }

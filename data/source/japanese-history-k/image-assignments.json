@@ -130,7 +130,10 @@
     "book-05-03-07",
     "book-05-04-01",
     "book-05-04-02",
-    "book-05-04-03"
+    "book-05-04-03",
+    "book-05-04-04",
+    "book-05-04-05",
+    "book-05-04-06"
   ],
   "images": [
     {
@@ -10300,6 +10303,312 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-7e17a144cc6bcc",
+      "caption": "ローマへ進軍するファシスト党の隊列（1922年・イタリアの画報掲載）",
+      "note": "既存の世界史の画像を共有する。公開元の『Illustrazione Italiana』1922年第45号に掲載された、ローマ進軍でサラリオ橋を渡る隊列の写真に照合した。政党の名称と、ローマ進軍から組閣・一党独裁へ進んだ経過の説明の回答後に示威行為の姿を示す。国王が組閣を命じる場面や党首の肖像ではなく、隊列の人数や旗の図柄から党の勢力を判断させない。橋の名前・旗の模様・掲載号を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a8f34f484a156213c425",
+      "caption": "エチオピアの首都アディスアベバを行進するイタリア軍（1936年５月）",
+      "note": "公開元のポーランド国立デジタル公文書館の写真と、1936年５月にアディスアベバでイタリア軍が行進したという説明に照合した。世界恐慌に直面したイタリアが侵略し併合した国への回答後と、対外行動の説明に侵略後の首都の姿を示す。1935年の侵攻開始や戦闘の場面ではなく、写る部隊の所属や背景の兵士の出身を暗記条件にしない。写真の左下にある公開元の印を加工せず残す。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-b354bd5974695f",
+      "caption": "ヒトラーの肖像写真（1937年）",
+      "note": "既存の世界史の画像を共有する。公開元のドイツ連邦公文書館が提供した1937年４月20日のヒトラーの肖像（CC BY-SA 3.0 de）に照合した。ナチスを率いて内閣を組織した人物への回答後と、台頭と独裁政治の全体の説明に人物を示す。1933年の政権成立の場面や演説・選挙の写真ではなく、顔つきから政策を判断させない。服装・記章・撮影日を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-9df63bd2965cdf",
+      "caption": "ベルサイユ条約の英文刊行物の表紙（1919年の条約）",
+      "note": "前回までに点検した日本史Kの画像と同じ説明で共有する。公開元のオークランド戦争記念博物館が所蔵する、ベルサイユ条約の英文刊行物の表紙に照合した。ナチスが破棄を掲げた条約の名前への回答後に条約の姿を示す。ナチスの破棄の宣言や再軍備の場面ではなく、表紙の文言・刊行年・署名者を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U02",
+          "questions": [
+            "B03"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ade5b62dee8f6a1a1881",
+      "caption": "ユダヤ人の商店に不買を呼びかける貼り紙をするナチスの党員（1933年４月）",
+      "note": "公開元のドイツ連邦公文書館の1933年４月１日の写真と、ユダヤ人の商店の窓に「ドイツ人よ、身を守れ、ユダヤ人から買うな」という貼り紙をするナチスの党員という説明に照合した。人種差別の宣伝で標的にされた人々への回答後と、宣伝と政治の特徴の説明に示す。公開元が写真の元の説明に偏りがありうると注記していることを踏まえ、貼り紙の主張を事実として扱わない。のちの迫害の全体や政党の禁止・国際連盟脱退を写した写真ではなく、店名・人物・貼り紙の文言を暗記条件にしない。作者表示とCC BY-SA 3.0 deの利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U02",
+          "questions": [
+            "B06",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0a1e5d77b4d584937894",
+      "caption": "ナチスの選挙ポスターを見る人々（1932年４月・プロイセン州議会選挙）",
+      "note": "公開元のドイツ連邦公文書館の写真と、1932年４月24日のプロイセン州議会選挙のナチスの選挙ポスターという説明に照合した。ポスターに党首の名前があるため、党首の名前を問う問題より後の、第一党となって政権が成立した経過の説明だけに付ける。原文の第一党となった1932年７月の国会選挙そのもののポスターではない。ポスターの得票数・候補名簿の番号・文言を暗記条件にせず、選挙結果を写真から判断させない。作者表示とCC BY-SA 3.0 deの利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-04bfeeced06018",
+      "caption": "日独防共協定の調印（1936年）",
+      "note": "既存の世界史の画像を共有する。公開元の説明にある、1936年11月25日にドイツのリッベントロップが防共協定に署名し、日本の武者小路公共大使らが立ち会う写真に照合した。協定の名前と、共産主義に対抗する目的・参加国の変化の説明の回答後に調印の場面を示す。1937年にイタリアが加わった時の調印ではなく、写る人物の名前を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U03",
+          "questions": [
+            "B01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-51b6f46b530b09",
+      "caption": "スターリンの肖像（1929年以前）",
+      "note": "前回までに点検した日本史Kの画像と同じ説明で共有する。公開元の1929年以前のスターリンの肖像に照合した。五カ年計画を実行したソ連を率いた人物への回答後と、計画経済と防共協定の全体の説明に人物を示す。五カ年計画の開始の場面ではなく、撮影年を断定しない。服装・髪型を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U03",
+          "questions": [
+            "B03",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-eaf81d9f6cdaa325b9c1",
+      "caption": "五カ年計画を呼びかける宣伝ポスター（1930年）",
+      "note": "前回までに点検した日本史Kの画像と同じ説明で共有する。公開元のロシア連邦の博物館所蔵品の国家目録に登録された1930年のGriffel Vladislavの宣伝ポスターに照合した。国家権力が経済を統制する五カ年計画の説明の回答後に、計画を呼びかける宣伝の姿を示す。計画の成果や生産量の証拠ではなく、ポスターの標語・図柄を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-04-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-8c4cee8fe1032c",
+      "caption": "二・二六事件で決起した部隊の兵士たち（1936年）",
+      "note": "既存の日本史の画像を共有する。公開元の説明にある、1936年２月26日の事件で決起した部隊の兵士たちと、その前で話す将校の写真に照合した。原文に同じ場面の写真があり、左手前の人物を丹生誠忠中尉とする。事件の名称と、目標・鎮圧の経過の説明の回答後に決起部隊の姿を示す。閣僚の襲撃や鎮圧の瞬間ではなく、人物の名前・派閥・雪の様子を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3032eb44f9e0b4e18fa8",
+      "caption": "広田弘毅の肖像写真（1936年）",
+      "note": "公開元の国立国会図書館を出典とする広田弘毅の1936年の肖像に照合した。軍部大臣現役武官制を復活させた内閣の首相への回答後と、制度の全体の説明に人物を示す。制度の復活の決定や組閣の場面ではなく、顔つきから軍との関係を判断させない。服装・記章や原文にない戦後の経歴を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U02",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-77ea6e58a128a6e7032e",
+      "caption": "盧溝橋（1877年の写真）",
+      "note": "公開元のブリストル大学所蔵のThomas Childによる1877年の写真と、北京の南の古い橋「盧溝橋」という台紙の説明に照合した。事件名への回答後に、事件の舞台となった橋の姿を示す。事件のおよそ60年前の写真であり、1937年の戦闘や日本軍の演習の場面ではない。アーチの数・欄干の獅子・英語表記を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U03",
+          "questions": [
+            "B01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7ea3a4410222bf53d365",
+      "caption": "盧溝橋事件の直前の支那駐屯軍の配置図（1937年７月上旬・現代の作図）",
+      "note": "公開元の作図者が『戦史叢書 支那事変陸軍作戦１』142頁に基づいて描いた、1937年７月上旬の支那駐屯軍の配置図（CC BY-SA 3.0）に照合した。盧溝橋の位置と、事件の経過・不拡大派と拡大派の対立の説明の回答後に、北京周辺の配置を示す。現代の作図であり当時の地図ではない。部隊名・兵員数・各国の駐屯人数を暗記条件にせず、図から事件の発端の責任を判断させない。作者表示と利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U03",
+          "questions": [
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9068ffa7deb531",
+      "caption": "近衛文麿の肖像写真",
+      "note": "既存の日本史の画像を共有する。公開元の国立国会図書館を出典とする近衛文麿の肖像に照合した。華北への出兵を決めた首相、国家総動員法を成立させた内閣、新体制運動を進めた第二次内閣への回答後に人物を示す。撮影年を断定せず、出兵の決定・法律の成立・大政翼賛会の発足の場面とはしない。原文の人物説明にある戦後の経歴を写真から判断させず、服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U03",
+          "questions": [
+            "B02"
+          ]
+        },
+        {
+          "termId": "JHK-05-04-06-U01",
+          "questions": [
+            "B02"
+          ]
+        },
+        {
+          "termId": "JHK-05-04-06-U03",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9ef5e51f00cffbf728fe",
+      "caption": "上海の市街で前進に備える日本海軍の陸戦隊（1937年８月）",
+      "note": "公開元に海軍省の撮影と記され、Brent Jones『Rising Sun in the East 1937』を出典とする、1937年８月の上海で防毒面を着けて前進に備える日本海軍の陸戦隊の写真に照合した。全面戦争の契機となった都市への回答後と、停戦後に戦闘が拡大した説明に上海の戦闘の姿を示す。盧溝橋事件の現場や陸軍の部隊ではなく、写真から毒ガスの使用や戦況を判断させない。装備・部隊名を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U03",
+          "questions": [
+            "B03",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-c696a575c4d36ebb8565",
+      "caption": "延安での毛沢東（1937年頃）",
+      "note": "公開元のサザビーズの出品記録にある、エバンズ・カールソン旧蔵の延安での毛沢東の署名入り写真（1937年頃）に照合した。抗日民族統一戦線の結成時に共産党を率いた人物への回答後と、国共合作の全体の説明に人物を示す。国共合作の調印や会談の場面ではなく、撮影年を断定しない。服装・署名・旧蔵者の名前を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U04",
+          "questions": [
+            "B02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5ab26ab48d71ccc41a9d",
+      "caption": "蒋介石の肖像（1926〜1927年頃とされる写真）",
+      "note": "前回点検した日本史Kの画像を同じ説明で共有する。公開元のスウェーデン民族学博物館が提供した蒋介石の写真に照合した。国民党と共産党の協力の始まりと期間を説明する問いの回答後に、国民党を率いた人物を示す。国共合作より前の写真であり、合作の成立や抗戦の場面ではない。軍服・背景を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-05-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-20cce2ed3a25e1",
+      "caption": "国家総動員法の成立を伝える新聞",
+      "note": "既存の日本史の画像を共有する。公開元が東京法令出版『図説 日本史』を出典とする、貴族院の可決で法案が成立したことを伝える新聞の写真に照合した。法律の名前と、政府の権限の変化・統制経済の説明の回答後に当時の報道を示す。成立年と内閣を問う問題より前にも付けるため、説明に年や首相の名前を入れない。見出しの「憲法精神に反」などの文言や記事中の人物を暗記条件にせず、紙面から法律の条文を読み取らせない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-06-U01",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-229934690608af36a8cf",
+      "caption": "隣組の防火訓練のバケツリレー（1941年）",
+      "note": "公開元の立命館大学国際平和ミュージアムが所蔵する梅本忠男の1941年の写真（ネガ番号416C）と、隣組のバケツリレーという説明に照合した。国民統制の末端組織の名前への回答後と、防空防火などの役割の説明に隣組の活動の姿を示す。回覧板・配給・資源回収の場面ではなく、写真の地域・人物を断定しない。服装・道具・撮影場所を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-06-U02",
+          "questions": [
+            "B02",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-578f2133bb9636",
+      "caption": "大政翼賛会の看板を掲げる場面",
+      "note": "既存の日本史の画像を共有する。公開元が毎日新聞社『一億人の昭和史』を出典とする、大政翼賛会の看板を掲げる写真に照合した。組織の名前と、新体制運動から発足に至る説明の回答後に組織の姿を示す。公開元の日付（1941年１月28日）は1940年の発足とは異なるため、発足当日の写真とはしない。看板の書体・人物・建物を暗記条件にせず、写真から議会の活動の状態を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-06-U03",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-d8eccd93e56624a92597",
+      "caption": "1940年東京大会のポスター（和田三造作）",
+      "note": "公開元の第12回オリンピック東京大会組織委員会の報告書（1940年）114頁に掲載された和田三造のポスターに照合した。開催を辞退した大会への回答後と、辞退の背景の説明に大会の姿を示す。大会は開かれておらず、ポスターは開催の証拠ではない。1964年の東京大会や2021年の大会の資料とは区別する。ポスターの図柄・文字・五輪の標章を暗記条件にせず、辞退の年を図から判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-06-U04",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -14622,6 +14931,126 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Reijiro_Wakatsuki_at_the_signing_of_the_London_Naval_Treaty.jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-6b80318047a9bdecb001.jpg",
       "sha256": "6b80318047a9bdecb00145460f4f84aae194d63e3fca476ae293d890fb09c537"
+    },
+    {
+      "id": "JHKS-a8f34f484a156213c425",
+      "path": "term-images/japanese-history-k/JHKS-a8f34f484a156213c425.jpg",
+      "alt": "エチオピアの首都アディスアベバを行進するイタリア軍（1936年５月）",
+      "caption": "エチオピアの首都アディスアベバを行進するイタリア軍（1936年５月）",
+      "creator": "撮影者不詳／ポーランド国立デジタル公文書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Military_Parade_of_Italian_Troops_in_Addis_Ababa_(1936).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-a8f34f484a156213c425.jpg",
+      "sha256": "a8f34f484a156213c4256e10dcf7ce71499f03352721d4a5a66d9077d55662e3"
+    },
+    {
+      "id": "JHKS-ade5b62dee8f6a1a1881",
+      "path": "term-images/japanese-history-k/JHKS-ade5b62dee8f6a1a1881.jpg",
+      "alt": "ユダヤ人の商店に不買を呼びかける貼り紙をするナチスの党員（1933年４月）",
+      "caption": "ユダヤ人の商店に不買を呼びかける貼り紙をするナチスの党員（1933年４月）",
+      "creator": "Georg Pahl／ドイツ連邦公文書館（Bild 102-14468）",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-14468,_Berlin,_NS-Boykott_gegen_j%C3%BCdische_Gesch%C3%A4fte.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-ade5b62dee8f6a1a1881.jpg",
+      "sha256": "ade5b62dee8f6a1a18815d2ffa0ed8755bad1cddd6ec63afb2d8e87fbe654f0f"
+    },
+    {
+      "id": "JHKS-0a1e5d77b4d584937894",
+      "path": "term-images/japanese-history-k/JHKS-0a1e5d77b4d584937894.jpg",
+      "alt": "ナチスの選挙ポスターを見る人々（1932年４月・プロイセン州議会選挙）",
+      "caption": "ナチスの選挙ポスターを見る人々（1932年４月・プロイセン州議会選挙）",
+      "creator": "Georg Pahl／ドイツ連邦公文書館（Bild 102-04651A）",
+      "license": "CC BY-SA 3.0 de",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_102-04651A,_Preu%C3%9Fen,_Wahlplakat_Nationalsozialisten.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0a1e5d77b4d584937894.jpg",
+      "sha256": "0a1e5d77b4d58493789488b92b225251cc2cb7816ac51a7bafc7733379264b1c"
+    },
+    {
+      "id": "JHKS-3032eb44f9e0b4e18fa8",
+      "path": "term-images/japanese-history-k/JHKS-3032eb44f9e0b4e18fa8.jpg",
+      "alt": "広田弘毅の肖像写真（1936年）",
+      "caption": "広田弘毅の肖像写真（1936年）",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kohki_Hirota_suit.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-3032eb44f9e0b4e18fa8.jpg",
+      "sha256": "3032eb44f9e0b4e18fa8883fca0b61a1049bb4da3764abf5c7f8ff67c862d3f2"
+    },
+    {
+      "id": "JHKS-9ef5e51f00cffbf728fe",
+      "path": "term-images/japanese-history-k/JHKS-9ef5e51f00cffbf728fe.jpg",
+      "alt": "上海の市街で前進に備える日本海軍の陸戦隊（1937年８月）",
+      "caption": "上海の市街で前進に備える日本海軍の陸戦隊（1937年８月）",
+      "creator": "撮影者不詳（海軍省）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_Special_Naval_Landing_Forces_in_Battle_of_Shanghai_1937.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-9ef5e51f00cffbf728fe.jpg",
+      "sha256": "9ef5e51f00cffbf728fe184b87de4cea1fed93f447f6a0effe9d1d193e239be6"
+    },
+    {
+      "id": "JHKS-c696a575c4d36ebb8565",
+      "path": "term-images/japanese-history-k/JHKS-c696a575c4d36ebb8565.jpg",
+      "alt": "延安での毛沢東（1937年頃）",
+      "caption": "延安での毛沢東（1937年頃）",
+      "creator": "撮影者不詳（エバンズ・カールソン旧蔵の署名入り写真）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%AF%9B%E6%B3%BD%E4%B8%9C%E7%AD%BE%E5%90%8D%E7%85%A7.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-c696a575c4d36ebb8565.jpg",
+      "sha256": "c696a575c4d36ebb8565c0af7ece22451fb35d2291f3707edb95c3b779246347"
+    },
+    {
+      "id": "JHKS-77ea6e58a128a6e7032e",
+      "path": "term-images/japanese-history-k/JHKS-77ea6e58a128a6e7032e.jpg",
+      "alt": "盧溝橋（1877年の写真）",
+      "caption": "盧溝橋（1877年の写真）",
+      "creator": "Thomas Child／ブリストル大学（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Child_-_Marco_Polo_Bridge_(Lugou_Qiao),_Peking,_1877_NA01-75.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-77ea6e58a128a6e7032e.jpg",
+      "sha256": "77ea6e58a128a6e7032e726189bc7412fbee8c09d858a51e409d52f94e84cc2d"
+    },
+    {
+      "id": "JHKS-7ea3a4410222bf53d365",
+      "path": "term-images/japanese-history-k/JHKS-7ea3a4410222bf53d365.jpg",
+      "alt": "盧溝橋事件の直前の支那駐屯軍の配置図（1937年７月上旬・現代の作図）",
+      "caption": "盧溝橋事件の直前の支那駐屯軍の配置図（1937年７月上旬・現代の作図）",
+      "creator": "みや東亜（作図）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Marco_Polo_Bridge_Incident_1.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-7ea3a4410222bf53d365.jpg",
+      "sha256": "7ea3a4410222bf53d365b46690b50f090bcea07bd81b92818c25ae8f181fa894"
+    },
+    {
+      "id": "JHKS-229934690608af36a8cf",
+      "path": "term-images/japanese-history-k/JHKS-229934690608af36a8cf.jpg",
+      "alt": "隣組の防火訓練のバケツリレー（1941年）",
+      "caption": "隣組の防火訓練のバケツリレー（1941年）",
+      "creator": "梅本忠男／立命館大学国際平和ミュージアム（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bucket_brigade_in_fire_drill_of_Tonarigumi,_The_neighborhood_mutual-aid_association,_1941_Japan.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-229934690608af36a8cf.jpg",
+      "sha256": "229934690608af36a8cf45e41289152813cb1abbd2b8aaf0f118281a06e9fcde"
+    },
+    {
+      "id": "JHKS-d8eccd93e56624a92597",
+      "path": "term-images/japanese-history-k/JHKS-d8eccd93e56624a92597.jpg",
+      "alt": "1940年東京大会のポスター（和田三造作）",
+      "caption": "1940年東京大会のポスター（和田三造作）",
+      "creator": "和田三造（原画）／第12回オリンピック東京大会組織委員会（報告書掲載）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Poster_Olympische_Sommerspiele_Tokio_1940.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-d8eccd93e56624a92597.jpg",
+      "sha256": "d8eccd93e56624a925977a72c0e66eb8f196074ac4d4901c1c8218fb9c5cd721"
     }
   ]
 }

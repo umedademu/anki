@@ -139,7 +139,10 @@
     "book-05-04-09",
     "book-05-04-10",
     "book-05-04-11",
-    "book-05-04-12"
+    "book-05-04-12",
+    "book-05-04-13",
+    "book-05-04-14",
+    "book-05-04-15"
   ],
   "images": [
     {
@@ -11037,6 +11040,181 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-2c059f446d9b1e",
+      "caption": "ヤルタ会談のチャーチル・ルーズベルト・スターリン（1945年２月）",
+      "note": "既存の世界史の画像を共有する。公開元の米国海軍歴史遺産司令部（USA C-543）の1945年２月９日の写真と、ヤルタ会談の米英ソの首脳という説明に照合した。説明に首脳の名前を含むため、参加国を問う問題より後と、会談の取り決めの説明だけに付ける。密約の署名の場面ではなく、写真から南樺太・千島列島の引き渡しや対日参戦の時期を判断させない。人物の配置・服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U01",
+          "questions": [
+            "B02",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e8fe833cae8b05345a83",
+      "caption": "ハリー・トルーマンの肖像写真",
+      "note": "公開元の米国国立公文書館（530677）のトルーマンの肖像（1945〜1953年）に照合した。ルーズベルトの死去後に大統領となった人物への回答後と、終戦外交の暗号電報の報告を受けた大統領の説明に人物を示す。撮影年を断定せず、就任式やポツダム会談の場面ではない。眼鏡・服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U01",
+          "questions": [
+            "B05",
+            "R02"
+          ]
+        },
+        {
+          "termId": "JHK-05-04-13-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-96f1396c9dce563f9f9d",
+      "caption": "ベルリンでドイツの降伏文書に署名するカイテル元帥（1945年５月）",
+      "note": "公開元の米国国立公文書館（111-SC-206292）の1945年５月８日の写真と、ベルリンでカイテル元帥がドイツの降伏文書に署名する場面という説明に照合した。ドイツが降伏した年月への回答後に降伏の場面を示す。前日のランスでの署名とは別の場面であり、署名した人物の名前や場所を新しい暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U01",
+          "questions": [
+            "B06"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-39dfb7295d36f9088bb9",
+      "caption": "鈴木貫太郎の肖像写真",
+      "note": "公開元の国立国会図書館を出典とする鈴木貫太郎の肖像に照合した。1945年４月に成立した内閣への回答後と、終戦外交の説明に、その首相の姿を示す。撮影年を断定せず、組閣やソ連への仲介依頼の場面ではない。原文にない海軍軍人としての経歴や服装を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U02",
+          "questions": [
+            "B01",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-4051fb602835982a8361",
+      "caption": "アメリカの最初の核実験の火球（1945年７月16日）",
+      "note": "公開元のロスアラモス国立研究所（PA-98-0520）の1945年７月16日の写真と、爆発の0.016秒後の火球という説明に照合した。会談の直前に成功した原爆開発の段階への回答後と、成功の報せの説明に実験の姿を示す。広島・長崎への投下の写真ではなく、写真から威力や実験場の位置を判断させない。撮影者・時間の数値を暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U03",
+          "questions": [
+            "B02",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-293db148ce9d5b",
+      "caption": "ポツダム会談のチャーチル・トルーマン・スターリン（1945年７月）",
+      "note": "既存の世界史の画像を共有する。公開元の米国国立公文書館（198958）の1945年７月25日の写真と、チャーチル・トルーマン・スターリンが並ぶ場面という説明に照合した。説明に首脳の名前を含むため、ソ連の指導者の名前を問う問題より後と、会談の説明だけに付ける。会談の途中で英国の首相がアトリーに代わったことは原文にないため出題に加えず、写真をポツダム宣言の署名や発表の場面とはしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-13-U03",
+          "questions": [
+            "B04",
+            "R02",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-f60c879ed8c0625bf9b3",
+      "caption": "広島の上空に上がった原子爆弾のきのこ雲（1945年８月６日）",
+      "note": "公開元の米国国立公文書館（542192）のGeorge R. Caronによる1945年８月６日の写真と、広島の上空に上がった原子爆弾のきのこ雲という説明に照合した。８月６日に原子爆弾が投下された都市への回答後に投下直後の姿を示す。説明に長崎を含めず、長崎の写真とは区別する。雲の高さなどの数値を暗記条件にせず、写真から犠牲者の数を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-14-U02",
+          "questions": [
+            "B02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-ec0b7bcfef79f8",
+      "caption": "広島（左）と長崎（右）の原子爆弾のきのこ雲（1945年８月）",
+      "note": "既存の日本史の画像を共有する。公開元の説明にある、広島（George R. Caron撮影）と長崎（Charles Levy撮影）のきのこ雲を並べた画像に照合した。説明に２都市の名前を含むため、長崎を問う問題より後と、投下と被害の説明だけに付ける。後年に２枚を並べた画像であり、当時の１枚の写真ではない。雲の形や高さを暗記条件にしない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-14-U02",
+          "questions": [
+            "B03",
+            "R01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-2c7d8269a9ddf0b96662",
+      "caption": "原子爆弾で破壊された広島の市街（1945年）",
+      "note": "公開元のオーストラリア戦争記念館（P01604.004）の1945年８月の写真と、原子爆弾の投下後の広島の市街の廃墟という説明に照合した。熱線と衝撃波による破壊を問う問題の回答後に市街の被害の姿を示す。犠牲者が写る写真は避けて選んだ。建物の名前・撮影地点を暗記条件にせず、写真から放射線による被害を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-14-U02",
+          "questions": [
+            "B04"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-0f109cfad59b2e36ac63",
+      "caption": "天皇の放送を聞く人々",
+      "note": "公開元が『Japan’s Longest Day』（1968年英語版）262頁を出典とする、1945年８月15日に天皇の放送を聞く人々の写真に照合した。国民に戦争の終わりを告げた放送の名前と、終戦の全体の説明の回答後に放送を聞く人々の姿を示す。放送の日付を問う問題があるため説明に日付を入れない。写る人物の名前・場所を断定せず、表情から人々の受け止め方の全体を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-15-U01",
+          "questions": [
+            "B01",
+            "I01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-11d43d0fdab964980cc0",
+      "caption": "満州のハルビンに入るソ連軍（1945年８月21日）",
+      "note": "公開元のロシア連邦国防省の資料（CC BY 4.0）にある、1945年８月21日にハルビンへ入るソ連軍の写真に照合した。ソ連軍が攻撃を始めた地域への回答後と、対ソ外交とソ連参戦の説明に満州へ進んだソ連軍の姿を示す。日本時間８月９日の攻撃開始の場面ではなく、玉音放送の後の写真であることを区別する。公開元の「解放」という表現や写る人々の様子を、住民の受け止め方の証拠とはしない。部隊名を暗記条件にしない。作者表示とCC BY 4.0の利用条件を維持する。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-15-U01",
+          "questions": [
+            "B03",
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-368770bb5b6c4e4ea04f",
+      "caption": "戦争終結の詔書の原本（1945年８月14日付）",
+      "note": "公開元の国立公文書館デジタルアーカイブにある、1945年８月14日付の戦争終結の詔書の原本に照合した。ポツダム宣言への日本政府の最終的な対応への回答後と、受諾と国民への告知の説明に詔書の姿を示す。放送の日付を問う問題より後だけに付ける。詔書の本文の読解や文言を暗記条件にせず、写真から放送の内容全体を判断させない。",
+      "targets": [
+        {
+          "termId": "JHK-05-04-15-U01",
+          "questions": [
+            "B04",
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -15743,6 +15921,114 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:2nd_Battalion,_27th_Marines_landing_on_Iwo_Jima._(49675588113).jpg",
       "sourceFile": "data/source/japanese-history-k/images/JHKS-ebee62f3effe2619e8e1.jpg",
       "sha256": "ebee62f3effe2619e8e10dfc5290735a3b5e6d4a83dcdce4d4283dfc472e440a"
+    },
+    {
+      "id": "JHKS-39dfb7295d36f9088bb9",
+      "path": "term-images/japanese-history-k/JHKS-39dfb7295d36f9088bb9.jpg",
+      "alt": "鈴木貫太郎の肖像写真",
+      "caption": "鈴木貫太郎の肖像写真",
+      "creator": "撮影者不詳／国立国会図書館（画像提供）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kantaro_Suzuki_suit.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-39dfb7295d36f9088bb9.jpg",
+      "sha256": "39dfb7295d36f9088bb9458080c64e3c9bd4076a8ad5421d136385cee437e23b"
+    },
+    {
+      "id": "JHKS-4051fb602835982a8361",
+      "path": "term-images/japanese-history-k/JHKS-4051fb602835982a8361.jpg",
+      "alt": "アメリカの最初の核実験の火球（1945年７月16日）",
+      "caption": "アメリカの最初の核実験の火球（1945年７月16日）",
+      "creator": "Berlyn Brixner／ロスアラモス国立研究所",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Trinity_Test_Fireball_16ms.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-4051fb602835982a8361.jpg",
+      "sha256": "4051fb602835982a83618266dedb87a773a9033e598870dfc0c7f2fb08d4d3e6"
+    },
+    {
+      "id": "JHKS-96f1396c9dce563f9f9d",
+      "path": "term-images/japanese-history-k/JHKS-96f1396c9dce563f9f9d.jpg",
+      "alt": "ベルリンでドイツの降伏文書に署名するカイテル元帥（1945年５月）",
+      "caption": "ベルリンでドイツの降伏文書に署名するカイテル元帥（1945年５月）",
+      "creator": "Lt. Moore（米陸軍）／米国国立公文書館（111-SC-206292）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Field_Marshall_Keitel_signs_German_surrender_terms_in_Berlin_8_May_1945.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-96f1396c9dce563f9f9d.jpg",
+      "sha256": "96f1396c9dce563f9f9dbd7343904a217a7c73f318776d108bf6cbe0936eea3d"
+    },
+    {
+      "id": "JHKS-e8fe833cae8b05345a83",
+      "path": "term-images/japanese-history-k/JHKS-e8fe833cae8b05345a83.jpg",
+      "alt": "ハリー・トルーマンの肖像写真",
+      "caption": "ハリー・トルーマンの肖像写真",
+      "creator": "撮影者不詳／米国国立公文書館（530677）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Harry_S._Truman_-_NARA_-_530677_(cropped2).jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-e8fe833cae8b05345a83.jpg",
+      "sha256": "e8fe833cae8b05345a83e9d37815fe2d3fc4bd38633498bb6b76fe7bc85fb9eb"
+    },
+    {
+      "id": "JHKS-f60c879ed8c0625bf9b3",
+      "path": "term-images/japanese-history-k/JHKS-f60c879ed8c0625bf9b3.jpg",
+      "alt": "広島の上空に上がった原子爆弾のきのこ雲（1945年８月６日）",
+      "caption": "広島の上空に上がった原子爆弾のきのこ雲（1945年８月６日）",
+      "creator": "George R. Caron／米国国立公文書館（542192）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Atomic_cloud_over_Hiroshima_-_NARA_542192_-_Edit.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-f60c879ed8c0625bf9b3.jpg",
+      "sha256": "f60c879ed8c0625bf9b3c246fcc33f59f0a8909d81f808403cb924293f63eca1"
+    },
+    {
+      "id": "JHKS-2c7d8269a9ddf0b96662",
+      "path": "term-images/japanese-history-k/JHKS-2c7d8269a9ddf0b96662.jpg",
+      "alt": "原子爆弾で破壊された広島の市街（1945年）",
+      "caption": "原子爆弾で破壊された広島の市街（1945年）",
+      "creator": "撮影者不詳／オーストラリア戦争記念館（P01604.004）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:P01604.004_HIROSHIMA,_JAPAN._1945-08.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-2c7d8269a9ddf0b96662.jpg",
+      "sha256": "2c7d8269a9ddf0b9666255b80ddd7dd4a04631b6070d4c332e9ebaf6c478fec7"
+    },
+    {
+      "id": "JHKS-11d43d0fdab964980cc0",
+      "path": "term-images/japanese-history-k/JHKS-11d43d0fdab964980cc0.jpg",
+      "alt": "満州のハルビンに入るソ連軍（1945年８月21日）",
+      "caption": "満州のハルビンに入るソ連軍（1945年８月21日）",
+      "creator": "撮影者不詳／ロシア連邦国防省（公開元）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Soviet_troops_enter_the_liberated_Harbin._August_21,_1945.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-11d43d0fdab964980cc0.jpg",
+      "sha256": "11d43d0fdab964980cc0c68aa0e550c65526b54c48a63596b8715aae1fc4aa76"
+    },
+    {
+      "id": "JHKS-0f109cfad59b2e36ac63",
+      "path": "term-images/japanese-history-k/JHKS-0f109cfad59b2e36ac63.jpg",
+      "alt": "天皇の放送を聞く人々",
+      "caption": "天皇の放送を聞く人々",
+      "creator": "撮影者不詳／『Japan’s Longest Day』（1968年、掲載書）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japanese_civilians_listening_to_the_surrender_broadcast.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-0f109cfad59b2e36ac63.jpg",
+      "sha256": "0f109cfad59b2e36ac63c0730f43f9e0d339c98fb4ec2f2c26f5f4c36204562d"
+    },
+    {
+      "id": "JHKS-368770bb5b6c4e4ea04f",
+      "path": "term-images/japanese-history-k/JHKS-368770bb5b6c4e4ea04f.jpg",
+      "alt": "戦争終結の詔書の原本（1945年８月14日付）",
+      "caption": "戦争終結の詔書の原本（1945年８月14日付）",
+      "creator": "大日本帝国政府／国立公文書館（デジタルアーカイブ）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Imperial_Rescript_on_the_Termination_of_the_War2.jpg",
+      "sourceFile": "data/source/japanese-history-k/images/JHKS-368770bb5b6c4e4ea04f.jpg",
+      "sha256": "368770bb5b6c4e4ea04fb0d524bfbfdeb3fa80519a16bad7b1a120362f65d4d5"
     }
   ]
 }

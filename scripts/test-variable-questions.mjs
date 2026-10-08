@@ -283,6 +283,21 @@ if (directReverse.length !== 3 || directReverse.some((task) => task.stage !== "r
   throw new Error("問題スタイル指定時に前段階を飛ばして直接出題できませんでした。");
 }
 
+const directReverseIntegrated = createQuestionQueue(terms, progress, masteryTarget, "reverse-integrated", startAt);
+const expectedReverseIntegrated = terms.reduce(
+  (total, term) => total + (term.stages.reverse?.length ?? 0) + (term.stages.integrated?.length ?? 0),
+  0,
+);
+if (
+  directReverseIntegrated.length !== expectedReverseIntegrated ||
+  !directReverseIntegrated.some((task) => task.stage === "integrated") ||
+  directReverseIntegrated.some((task) => task.stage === "beginner") ||
+  directReverseIntegrated.findIndex((task) => task.stage === "integrated") <
+    directReverseIntegrated.findLastIndex((task) => task.stage === "reverse")
+) {
+  throw new Error("逆向きの説明＋統合説明で基礎を飛ばして両方を直接出題できませんでした。");
+}
+
 if (
   !shouldHideTerm(terms[0].stages.beginner[0], false) ||
   shouldHideTerm(terms[0].stages.beginner[0], true) ||

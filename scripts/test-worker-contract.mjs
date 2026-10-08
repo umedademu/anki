@@ -140,6 +140,24 @@ for (const normalize of [normalizeWorkerStudySession, normalizeBrowserStudySessi
   if (normalize({...studySessionInput,deckIds:manyDeckIds}).deckIds.join()!==manyDeckIds.join()) throw new Error("109パートの一周の保存範囲が欠落しました。");
 }
 
+// 逆向きの説明＋統合説明は開始設定と一周の選択として保存し、個々の問題の段階には使わない。
+const combinedStyleSettings = { subjects: { "japanese-history-k": { decks: { "deck-1": { questionStyle: "reverse-integrated" } } } } };
+for (const normalize of [normalizeWorkerSetupPreferences, normalizeBrowserSetupPreferences]) {
+  if (normalize(combinedStyleSettings).subjects["japanese-history-k"].decks["deck-1"].questionStyle !== "reverse-integrated") {
+    throw new Error("逆向きの説明＋統合説明の開始設定を保存できませんでした。");
+  }
+}
+for (const normalize of [normalizeWorkerStudySession, normalizeBrowserStudySession]) {
+  const session = normalize({
+    ...studySessionInput,
+    selectedStage: "reverse-integrated",
+    tasks: [...studySessionInput.tasks, { termId: "WH-000003", questionId: "WH-Q-000003", stage: "reverse-integrated" }],
+  });
+  if (session.selectedStage !== "reverse-integrated" || session.tasks.some((task) => task.stage === "reverse-integrated")) {
+    throw new Error("逆向きの説明＋統合説明の一周を正しく保存できませんでした。");
+  }
+}
+
 const listeningSessionInput = {
   ...studySessionInput,
   studyMode: "listen-answer",

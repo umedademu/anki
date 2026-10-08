@@ -368,6 +368,43 @@ try {
     }
     await page.screenshot({ path: path.join(images, `${addition.index.deckId}-integrated-mobile.png`), fullPage: true });
   }
+  // 逆向きの説明＋統合説明では、基礎を出さずに二つの段階だけを直接出題する。
+  const combinedTarget = additions[0];
+  const combinedCount = countStage(combinedTarget.terms, "reverse") + countStage(combinedTarget.terms, "integrated");
+  await page.locator("#study-stop").click(); await shown("setup-panel"); await ready();
+  await page.goto(`${base}/?subject=${plan.subject.id}&deck=${combinedTarget.index.deckId}&view=setup`); await shown("setup-panel"); await ready();
+  assert.deepEqual(
+    await page.locator("#question-style-filter option").evaluateAll(options => options.map(option => [option.value, option.textContent])),
+    [["", "習熟度に応じて自動"], ["beginner", "基礎の一問一答"], ["reverse", "逆向きの説明"], ["integrated", "統合説明"], ["reverse-integrated", "逆向きの説明＋統合説明"]],
+  );
+  await page.locator("#question-style-filter").selectOption("reverse-integrated");
+  await page.locator("#setup-shuffle").uncheck();
+  assert.ok((await page.locator("#selection-summary").textContent()).includes(`${combinedTarget.terms.length}項目・${combinedCount}問（逆向きの説明＋統合説明）`));
+  await page.screenshot({ path: path.join(images, "reverse-integrated-setup-mobile.png"), fullPage: true });
+  let restartConfirmed = false;
+  page.once("dialog", async dialog => { assert.match(dialog.message(), /前回の一周を終了/); restartConfirmed = true; await dialog.accept(); });
+  await page.locator("#start-study").click(); await shown("study-shell");
+  assert.ok(restartConfirmed);
+  const firstCombined = combinedTarget.terms[0].stages.reverse[0];
+  assert.equal(await page.locator("#question-text").textContent(), getQuestionPromptForDisplay(firstCombined, false));
+  await assertStudyDisplay(firstCombined, false);
+  const combinedSession = sessions.get(combinedTarget.index.version);
+  assert.equal(combinedSession.selectedStage, "reverse-integrated");
+  assert.equal(combinedSession.tasks.length, combinedCount);
+  assert.ok(combinedSession.tasks.every(task => task.stage === "reverse" || task.stage === "integrated"), "基礎の問題を含めません。");
+  assert.ok(combinedSession.tasks.some(task => task.stage === "integrated"), "統合説明を前段階の習得前から出題します。");
+  assert.equal(await page.locator("#overall-progress").textContent(), `習得 0 / ${combinedCount}問`);
+  await page.locator("#next-action").click(); await assertStudyDisplay(firstCombined, true);
+  await page.locator("#good-action").click();
+  await page.waitForFunction(prompt => document.querySelector("#question-text").textContent !== prompt, firstCombined.prompt);
+  await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
+  assert.notEqual(sessions.get(combinedTarget.index.version).currentTask.stage, "beginner");
+  const combinedNextPrompt = await page.locator("#question-text").textContent();
+  await page.reload(); await shown("study-shell");
+  assert.equal(await page.locator("#question-text").textContent(), combinedNextPrompt);
+  await page.locator("#study-stop").click(); await shown("setup-panel"); await ready();
+  await page.goto(`${base}/?subject=${plan.subject.id}&deck=${combinedTarget.index.deckId}&view=setup`); await shown("setup-panel"); await ready();
+  assert.equal(await page.locator("#question-style-filter").inputValue(), "reverse-integrated", "選んだ問題スタイルを次回の開始画面へ復元します。");
   assert.deepEqual(progress.get(plan.index.version), ghqRecords, "新規小項目の回答でGHQの学習記録を変更しません。");
   // 共有化した章表示が、既存の世界史SOにも同じ章名で適用される。
   const so = catalog.subjects.find(subject => subject.id === "world-history-so");

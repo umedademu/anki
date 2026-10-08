@@ -1,15 +1,16 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.361";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.362";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.361";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.361";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.361";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.361";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.361";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.361";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.361";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.361";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.361";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.362";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.362";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.362";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.362";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.362";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.362";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.362";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.362";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.362";
 import {
+  combinedQuestionStyles,
   createEmptyProgress,
   createQuestionQueue,
   createRatingUndoSnapshot,
@@ -38,6 +39,7 @@ import {
   rateQuestion,
   rescheduleReviewProgress,
   restoreRatingUndoSnapshot,
+  selectedStageList,
   shuffleTasks,
   shouldHideTerm,
   usesStagedClassicalChineseMeaning,
@@ -64,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.361";
+} from "./original-session.js?v=0.362";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -74,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.361";
+} from "./speech.js?v=0.362";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -90,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.361";
+} from "./deck-selection.js?v=0.362";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -619,6 +621,19 @@ function availableQuestionStages() {
       )
     : [];
   return configured.length > 0 ? configured : learningStages;
+}
+
+// 日本史Kでは、基礎を除いた逆向きの説明と統合説明だけをまとめて選べる。
+const combinedQuestionStyleSubjectIds = new Set(["japanese-history-k"]);
+
+function availableQuestionStyles() {
+  const stages = availableQuestionStages();
+  const combinedStyles = combinedQuestionStyleSubjectIds.has(state.activeSubjectId)
+    ? Object.entries(combinedQuestionStyles)
+        .filter(([, styleStages]) => styleStages.every((stage) => stages.includes(stage)))
+        .map(([style]) => style)
+    : [];
+  return [...stages, ...combinedStyles];
 }
 
 function selectedQuestionAmountMode() {
@@ -4604,17 +4619,20 @@ const defaultQuestionStyleLabels = {
 };
 
 function questionStyleLabel(stage) {
+  if (combinedQuestionStyles[stage]) {
+    return combinedQuestionStyles[stage].map(questionStyleLabel).join("＋");
+  }
   const labels = state.subject?.stageLabels ?? defaultQuestionStyleLabels;
   return labels[stage || "all"] ?? defaultQuestionStyleLabels[stage] ?? stage;
 }
 
 function setQuestionStyleOptions() {
   const selected = elements.questionStyleFilter.value;
-  const availableStages = availableQuestionStages();
+  const availableStyles = availableQuestionStyles();
   elements.questionStyleFilter.replaceChildren(
     ...[
       ["", questionStyleLabel("")],
-      ...availableStages.map((stage) => [stage, questionStyleLabel(stage)]),
+      ...availableStyles.map((style) => [style, questionStyleLabel(style)]),
     ].map(([value, label]) => {
       const option = document.createElement("option");
       option.value = value;
@@ -4622,7 +4640,7 @@ function setQuestionStyleOptions() {
       return option;
     }),
   );
-  elements.questionStyleFilter.value = ["", ...availableStages].includes(selected)
+  elements.questionStyleFilter.value = ["", ...availableStyles].includes(selected)
     ? selected
     : "";
 }
@@ -4661,10 +4679,9 @@ function applySetupPreferences() {
 }
 
 function activeStages() {
-  const availableStages = availableQuestionStages();
-  return availableStages.includes(state.selectedStage)
-    ? [state.selectedStage]
-    : availableStages;
+  return availableQuestionStyles().includes(state.selectedStage)
+    ? selectedStageList(state.selectedStage)
+    : availableQuestionStages();
 }
 
 function countQuestions(terms, stages = learningStages) {
@@ -4771,8 +4788,9 @@ function updateSetupPreview() {
   const studyMode = selectedStudyMode();
   const listening = listeningModes.has(studyMode);
   const questionAmountMode = selectedQuestionAmountMode();
-  const stages = learningStages.includes(selectedStage)
-    ? [selectedStage]
+  const selectedStages = selectedStageList(selectedStage);
+  const stages = selectedStages.length > 0
+    ? selectedStages
     : availableQuestionStages();
   const questions = countQuestions(terms, stages);
   const dueQuestions = (

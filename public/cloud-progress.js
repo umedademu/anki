@@ -1,7 +1,9 @@
 import { normalizeSubjectOrder } from "./subject-order.js";
 import {
+  combinedQuestionStyles,
   createEmptyProgress,
   defaultReviewSettings,
+  learningStages,
   normalizeProgress,
   normalizeReviewSettings,
   normalizeSubjectReviewSettings,
@@ -73,7 +75,8 @@ export const defaultSetupPreferences = Object.freeze({
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const studyModes = new Set(["memorize", "listen-answer"]);
-const questionStyles = new Set(["", "beginner", "reverse", "integrated"]);
+const questionStages = new Set(learningStages);
+const questionStyles = new Set(["", ...learningStages, ...Object.keys(combinedQuestionStyles)]);
 const questionAmountModes = new Set(["all", "one-per-term"]);
 const studySessionIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const studySessionTaskLimit = 10_000;
@@ -146,7 +149,7 @@ function normalizeStudySessionTask(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const termId = normalizeStudySessionId(value.termId);
   const questionId = normalizeStudySessionId(value.questionId);
-  const stage = questionStyles.has(value.stage) && value.stage ? value.stage : "";
+  const stage = questionStages.has(value.stage) ? value.stage : "";
   return termId && questionId && stage ? { termId, questionId, stage } : null;
 }
 

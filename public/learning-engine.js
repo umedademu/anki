@@ -1,5 +1,16 @@
 export const learningStages = ["beginner", "reverse", "integrated"];
 
+// 複数の段階をまとめて直接出題する問題スタイル。
+export const combinedQuestionStyles = {
+  "reverse-integrated": ["reverse", "integrated"],
+};
+
+// 問題スタイルの選択値を出題する段階の一覧へ変換する。空の一覧は習熟度に応じた自動出題を表す。
+export function selectedStageList(selectedStage) {
+  if (learningStages.includes(selectedStage)) return [selectedStage];
+  return combinedQuestionStyles[selectedStage] ?? [];
+}
+
 export const stageLabels = {
   beginner: "基礎 一問一答",
   reverse: "逆一問一答",
@@ -513,9 +524,8 @@ export function createQuestionQueue(
   selectedStage = "",
   now = new Date(),
 ) {
-  const stages = learningStages.includes(selectedStage)
-    ? [selectedStage]
-    : learningStages;
+  const selectedStages = selectedStageList(selectedStage);
+  const stages = selectedStages.length > 0 ? selectedStages : learningStages;
   const tasks = [];
   for (const stage of stages) {
     const largestStageSize = Math.max(
@@ -525,7 +535,7 @@ export function createQuestionQueue(
     for (let questionIndex = 0; questionIndex < largestStageSize; questionIndex += 1) {
       for (const term of terms) {
         if (
-          !selectedStage &&
+          selectedStages.length === 0 &&
           !isStageUnlocked(term, stage, progress, masteryTarget)
         ) {
           continue;
@@ -665,12 +675,13 @@ export function getNextDueAt(
   masteryTarget,
   selectedStage = "",
 ) {
+  const selectedStages = selectedStageList(selectedStage);
   const dates = [];
   for (const term of terms) {
     for (const stage of learningStages) {
       if (
-        selectedStage
-          ? stage !== selectedStage
+        selectedStages.length > 0
+          ? !selectedStages.includes(stage)
           : !isStageUnlocked(term, stage, progress, masteryTarget)
       ) {
         continue;

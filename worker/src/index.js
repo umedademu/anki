@@ -83,7 +83,9 @@ const defaultSetupPreferences = Object.freeze({
 
 const setupPreferenceIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const setupStudyModes = new Set(["memorize", "listen-answer"]);
-const setupQuestionStyles = new Set(["", "beginner", "reverse", "integrated"]);
+const setupQuestionStages = new Set(["beginner", "reverse", "integrated"]);
+// 「reverse-integrated」は逆向きの説明と統合説明をまとめて出題する問題スタイル。
+const setupQuestionStyles = new Set(["", ...setupQuestionStages, "reverse-integrated"]);
 const setupQuestionAmountModes = new Set(["all", "one-per-term"]);
 const studySessionTaskLimit = 10_000;
 const defaultStudyTimeLimitSeconds = 30;
@@ -479,7 +481,7 @@ function normalizeStudySessionTask(value) {
   }
   const termId = normalizeSetupPreferenceId(value.termId);
   const questionId = normalizeSetupPreferenceId(value.questionId);
-  const stage = setupQuestionStyles.has(value.stage) && value.stage
+  const stage = setupQuestionStages.has(value.stage)
     ? value.stage
     : "";
   return termId && questionId && stage ? { termId, questionId, stage } : null;

@@ -8,7 +8,13 @@
     "pek-01-04",
     "pek-02-01",
     "pek-02-02",
-    "pek-02-03"
+    "pek-02-03",
+    "pek-03-01",
+    "pek-03-02",
+    "pek-03-03",
+    "pek-03-04",
+    "pek-03-05",
+    "pek-03-06"
   ],
   "images": [
     {
@@ -458,6 +464,174 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-c24b534b3e06b93ac6da",
+      "caption": "大日本帝国憲法の発布式を描いた版画（1889年）",
+      "note": "天皇が憲法を授ける欽定憲法の発布式。条文の内容は描かれていない。",
+      "targets": [
+        {
+          "termId": "PEK-03-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c887bf6e237add",
+      "caption": "吉野作造の肖像",
+      "note": "民本主義を唱えた人物として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-03-01-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b98b79405ef696",
+      "caption": "ダグラス・マッカーサーの肖像写真（1945年）",
+      "note": "三原則を示したGHQ最高司令官の肖像。草案作成の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-03-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-69526d0d0260c5aa442e",
+      "caption": "植木枝盛の肖像",
+      "note": "私擬憲法で有名な人物として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-03-02-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-1e37f069d2fbe8",
+      "caption": "日本国憲法の原本（御名御璽の頁、1946年11月3日）",
+      "note": "公布された日本国憲法の原本。帝国議会の審議の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-03-02-U08",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-fd30973ad14864977ece",
+      "caption": "官報号外（1946年）に掲載された日本国憲法の前文と第1条",
+      "note": "第1条（象徴天皇制）を含む頁。国事行為を定めた第6・7条の頁ではない。",
+      "targets": [
+        {
+          "termId": "PEK-03-03-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0aed73fc55a0a97ad404",
+      "caption": "鳩山一郎の肖像写真（1954〜56年ごろ）",
+      "note": "内閣に憲法調査会を設置した首相の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-03-04-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-6813cd9eeabb50",
+      "caption": "イギリスの国会議事堂（ウェストミンスター宮殿）",
+      "note": "上院・下院が置かれる建物。",
+      "targets": [
+        {
+          "termId": "PEK-03-05-U01",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-03-05-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-66304e821dc66ec0f800",
+      "caption": "イギリス最高裁判所の建物（ロンドン）",
+      "note": "2009年に上院から独立して設立された最高裁判所の建物。",
+      "targets": [
+        {
+          "termId": "PEK-03-05-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-71acf6b83bfbd4484eca",
+      "caption": "州ごとの大統領選挙人の数（2012〜2020年の大統領選挙。色は2010年国勢調査による増減）",
+      "note": "人口比例で州ごとに割り当てられた選挙人の数を示す。特定の選挙の勝敗の地図ではない。",
+      "targets": [
+        {
+          "termId": "PEK-03-05-U05",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-03-05-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d293ab0ba9b04cd5994c",
+      "caption": "アメリカ連邦議会議事堂（ワシントン）",
+      "note": "上院・下院から成るアメリカ議会の議事堂。",
+      "targets": [
+        {
+          "termId": "PEK-03-05-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0d1500c13ca7359682b6",
+      "caption": "全国人民代表大会が開かれる人民大会堂（北京）",
+      "note": "全人代の会場となる建物。共産党の指導の実態を写真から判断させない。",
+      "targets": [
+        {
+          "termId": "PEK-03-06-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -664,6 +838,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cour_europ%C3%A9enne_des_droits_de_l%27homme_(Strasbourg)_(2).jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-05ba27ea68cd47d08ca7.jpg",
       "sha256": "05ba27ea68cd47d08ca7280b39e3f04c01e02e0de5b413eff596ac12bef8d9a9"
+    },
+    {
+      "id": "PEKS-69526d0d0260c5aa442e",
+      "path": "term-images/politics-economics-k/PEKS-69526d0d0260c5aa442e.jpg",
+      "alt": "植木枝盛の肖像",
+      "caption": "植木枝盛の肖像",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Emori_Ueki.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-69526d0d0260c5aa442e.jpg",
+      "sha256": "69526d0d0260c5aa442eb82741d755a6fbc1b915e2d2f31de3382e2e369b62f1"
+    },
+    {
+      "id": "PEKS-0aed73fc55a0a97ad404",
+      "path": "term-images/politics-economics-k/PEKS-0aed73fc55a0a97ad404.jpg",
+      "alt": "鳩山一郎の肖像写真（1954〜56年ごろ）",
+      "caption": "鳩山一郎の肖像写真（1954〜56年ごろ）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Hatoyama_Ichir%C5%8D_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0aed73fc55a0a97ad404.jpg",
+      "sha256": "0aed73fc55a0a97ad404153a34d3af854b23873a4a5085353107a18908542670"
+    },
+    {
+      "id": "PEKS-d293ab0ba9b04cd5994c",
+      "path": "term-images/politics-economics-k/PEKS-d293ab0ba9b04cd5994c.jpg",
+      "alt": "アメリカ連邦議会議事堂（ワシントン）",
+      "caption": "アメリカ連邦議会議事堂（ワシントン）",
+      "creator": "Martin Falbisoner",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:US_Capitol_west_side.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-d293ab0ba9b04cd5994c.jpg",
+      "sha256": "d293ab0ba9b04cd5994c1925bcac5fc5e72b97983a2b4263928f36f210b64698"
+    },
+    {
+      "id": "PEKS-66304e821dc66ec0f800",
+      "path": "term-images/politics-economics-k/PEKS-66304e821dc66ec0f800.jpg",
+      "alt": "イギリス最高裁判所の建物（ロンドン）",
+      "caption": "イギリス最高裁判所の建物（ロンドン）",
+      "creator": "Dietmar Rabich（縮小）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:London,_The_Supreme_Court_--_2016_--_4814.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-66304e821dc66ec0f800.jpg",
+      "sha256": "66304e821dc66ec0f800f289ee02a19b08c9cd3b61c498e312b8933f22ff6ddd"
+    },
+    {
+      "id": "PEKS-71acf6b83bfbd4484eca",
+      "path": "term-images/politics-economics-k/PEKS-71acf6b83bfbd4484eca.jpg",
+      "alt": "州ごとの大統領選挙人の数（2012〜2020年の大統領選挙。色は2010年国勢調査による増減）",
+      "caption": "州ごとの大統領選挙人の数（2012〜2020年の大統領選挙。色は2010年国勢調査による増減）",
+      "creator": "Adam Lenhardt（2010年国勢調査にもとづく）（JPEGに変換・縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Electoral_College_2012.svg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-71acf6b83bfbd4484eca.jpg",
+      "sha256": "71acf6b83bfbd4484ecabaed2e23baa7eca930a6cd1d6135d0f80fc28e0bef53"
+    },
+    {
+      "id": "PEKS-0d1500c13ca7359682b6",
+      "path": "term-images/politics-economics-k/PEKS-0d1500c13ca7359682b6.jpg",
+      "alt": "全国人民代表大会が開かれる人民大会堂（北京）",
+      "caption": "全国人民代表大会が開かれる人民大会堂（北京）",
+      "creator": "Philip Nalangan",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Great_Hall_of_the_People_Beijing_China.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0d1500c13ca7359682b6.jpg",
+      "sha256": "0d1500c13ca7359682b67b63214365e2f0f0c28f6a1242263b4da8a8cb0dd654"
     }
   ]
 }

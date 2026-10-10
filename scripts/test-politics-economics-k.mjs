@@ -19,6 +19,12 @@ const expected = [
   ["pek-02-01", "政治経済K｜2-1 人権獲得の歴史", 24, 29, 1],
   ["pek-02-02", "政治経済K｜2-2 人権の国際化", 8, 9, 1],
   ["pek-02-03", "政治経済K｜2-3 代表的な人権条約", 12, 13, 1],
+  ["pek-03-01", "政治経済K｜3-1 大日本帝国憲法", 9, 11, 1],
+  ["pek-03-02", "政治経済K｜3-2 日本国憲法の成立", 8, 8, 1],
+  ["pek-03-03", "政治経済K｜3-3 日本国憲法", 5, 8, 1],
+  ["pek-03-04", "政治経済K｜3-4 憲法改正の議論", 7, 7, 1],
+  ["pek-03-05", "政治経済K｜3-5 各国の政治制度", 11, 11, 1],
+  ["pek-03-06", "政治経済K｜3-6 その他の主要国", 4, 6, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

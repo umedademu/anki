@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 1, "title": "第1講 政治分野" },
+  "item": { "number": 3, "title": "日本国憲法／各国の政治制度" },
+  "heading": { "number": 1, "title": "大日本帝国憲法" },
+  "source": {
+    "file": "sources/seikei/03_日本国憲法・各国の政治制度.md",
+    "ranges": [
+      { "start": "### 1　大日本帝国憲法", "end": "### 2　日本国憲法の成立" }
+    ],
+    "pages": [41, 42, 43],
+    "note": "41頁の「1 大日本帝国憲法」から43頁末までを読んだ。制定年は原文にないため答えに含めない。欽定憲法・硬性憲法・改正手続き、統治権の総攬と協賛・輔弼、天皇大権、枢密院、臣民の権利と法律の留保、規定のなかった制度、超然内閣、民本主義を扱う。「本当に戦後に生まれてよかった」などの講義の感想は答えに使わない。"
+  },
+  "facts": [
+    { "id": "kintei", "page": 41, "quote": "形式:欽定憲法（天皇が制定）" },
+    { "id": "rigid", "page": 41, "quote": "性質:硬性憲法（改正に特別な手続きが必要）" },
+    { "id": "art73", "page": 41, "quote": "第73条:天皇の勅命➡帝国議会［・総議員の3分の2以上の出席/・出席議員の3分の2以上の賛成］で改正" },
+    { "id": "sacred", "page": 41, "quote": "神聖不可侵➡現人神であり、不敬は刑法違反。" },
+    { "id": "sovereign-power", "page": 41, "quote": "統治権を総攬（＝三権すべてを掌握）" },
+    { "id": "diet-consent", "page": 41, "quote": "帝国議会:天皇の立法権行使を「協賛」（協力し賛同）。" },
+    { "id": "minister-advice", "page": 41, "quote": "国務大臣:天皇の行政権行使を「輔弼」（補い助ける）。" },
+    { "id": "court-name", "page": 41, "quote": "裁判所:裁判所は「天皇の名において」司法権行使。" },
+    { "id": "prerogative", "page": 41, "quote": "＋強大な天皇大権もあり。" },
+    { "id": "emergency-decree", "page": 42, "quote": "緊急勅令:議会閉会中に天皇が出す命令。" },
+    { "id": "independent-order", "page": 42, "quote": "独立命令:法律のない領域で天皇が出す命令。" },
+    { "id": "supreme-command", "page": 42, "quote": "その他:軍の統帥/宣戦・講和/条約締結等。" },
+    { "id": "no-diet", "page": 42, "quote": "➡帝国議会は関与できず。" },
+    { "id": "military", "page": 42, "quote": "▶軍の輔弼➡独走へ" },
+    { "id": "privy-council", "page": 42, "quote": "旧憲法下で設置されていた、天皇の最高諮問機関。" },
+    { "id": "privy-role", "page": 42, "quote": "「重要な国務の審議＋新旧両憲法の草案審議」等を行った。" },
+    { "id": "subject", "page": 42, "quote": "国民の権利:「臣民」（＝天皇の家臣としての国民）の権利。" },
+    { "id": "grace", "page": 42, "quote": "主権者である天皇から恩恵で与えられた人権にすぎない。" },
+    { "id": "reservation", "page": 42, "quote": "「法律の留保」あり。➡人権保障は「法律の範囲内」のみ。" },
+    { "id": "liberty-only", "page": 42, "quote": "権利規定は不十分な「自由権」のみ。➡参政権・社会権の規定なし。" },
+    { "id": "not-provided", "page": 42, "quote": "規定なし:思想・良心の自由/学問の自由/職業選択の自由" },
+    { "id": "insufficient", "page": 42, "quote": "規定不十分:言論・集会・結社の自由/人身の自由" },
+    { "id": "no-local", "page": 42, "quote": "その他:地方自治・違憲立法審査権…規定なし。" },
+    { "id": "supreme-law", "page": 42, "quote": "大日本帝国憲法（＝明治憲法・旧憲法）は皇室典範と並ぶ、戦前の最高法規" },
+    { "id": "imperial-house-law", "page": 42, "quote": "戦前は天皇が唯一の主権者だったから、皇室典範も最高法規扱いだった（※今日は法律と同格）。" },
+    { "id": "concentration", "page": 43, "quote": "三権は、すべて天皇に集中する（＝統治権の総攬）。" },
+    { "id": "cabinet-system", "page": 43, "quote": "内閣の仕事が「天皇の輔弼」だと、議院内閣制も機能しない" },
+    { "id": "transcendental", "page": 43, "quote": "議会を無視した政策決定を行う内閣（＝超然内閣）が現れた" },
+    { "id": "law-limit", "page": 43, "quote": "後からできた法律でいくらでも制限できる（＝法律の留保）弱いもの" },
+    { "id": "minpon", "page": 43, "quote": "大正デモクラシー期の吉野作造が唱えた「民本主義」（天皇主権下で可能な限り「人民本位」にしていく）" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "大日本帝国憲法", "reading": "だいにっぽんていこくけんぽう", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "形式と性質",
+          "prompt": "大日本帝国憲法はどんな憲法？",
+          "answer": "天皇が制定した**欽定憲法**で、改正に特別な手続きが必要な**硬性憲法**。**明治憲法**ともいい、**皇室典範**と並ぶ戦前の最高法規だった。天皇は**神聖不可侵**とされた。",
+          "evidence": ["kintei", "rigid", "supreme-law", "sacred"], "keywords": ["欽定憲法", "硬性憲法", "明治憲法", "皇室典範", "神聖不可侵"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "改正手続き",
+          "prompt": "大日本帝国憲法の改正手続きはどう定められていた？",
+          "answer": "第73条により、**天皇の勅命**で改正案を帝国議会にかけ、**総議員の3分の2以上の出席**で、**出席議員の3分の2以上の賛成**を得て改正するとされた。",
+          "evidence": ["art73"], "keywords": ["天皇の勅命", "総議員の3分の2以上の出席", "出席議員の3分の2以上の賛成"], "note": ""
+        },
+        {
+          "id": "R03", "stage": "reverse", "type": "reverse", "form": "規定がなかった制度",
+          "prompt": "大日本帝国憲法に規定がなかった制度や権利には、どんなものがある？",
+          "answer": "**地方自治**と**違憲立法審査権**の規定はなく、権利も**参政権・社会権**の規定はなかった。**思想・良心の自由**、**学問の自由**、**職業選択の自由**も規定されていない。",
+          "evidence": ["no-local", "liberty-only", "not-provided"], "keywords": ["地方自治", "違憲立法審査権", "参政権・社会権", "思想・良心の自由", "学問の自由", "職業選択の自由"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "統治権の総攬", "reading": "とうちけんのそうらん", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と三権のあり方",
+          "prompt": "大日本帝国憲法の天皇による統治権の総攬とは、どういうこと？",
+          "answer": "天皇が**立法・行政・司法の三権すべて**を握ること。**帝国議会**は天皇の立法権を**協賛**し、**国務大臣**は行政権を**輔弼**し、**裁判所**は「**天皇の名において**」司法権を行使した。",
+          "evidence": ["sovereign-power", "concentration", "diet-consent", "minister-advice", "court-name"],
+          "keywords": ["立法・行政・司法の三権すべて", "帝国議会", "協賛", "国務大臣", "輔弼", "裁判所", "天皇の名において"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "輔弼", "reading": "ほひつ", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と影響",
+          "prompt": "大日本帝国憲法の輔弼とはどういうこと？",
+          "answer": "**国務大臣**が天皇の**行政権**の行使を**補い助ける**こと。内閣の仕事が天皇の輔弼とされたため**議院内閣制が機能せず**、議会を無視する**超然内閣**も現れた。",
+          "evidence": ["minister-advice", "cabinet-system", "transcendental"], "keywords": ["国務大臣", "行政権", "補い助ける", "議院内閣制が機能せず", "超然内閣"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04", "term": "超然内閣", "reading": "ちょうぜんないかく", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "超然内閣とはどんな内閣？",
+          "answer": "**議会を無視**して政策決定を行う内閣。大日本帝国憲法で内閣の仕事が**天皇の輔弼**とされたことから現れた。",
+          "evidence": ["transcendental", "cabinet-system"], "keywords": ["議会を無視", "天皇の輔弼"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05", "term": "天皇大権", "reading": "てんのうたいけん", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
+          "prompt": "天皇大権とはどんな権限？",
+          "answer": "**帝国議会が関与できない**天皇の強大な権限。議会閉会中に出す**緊急勅令**、法律のない領域で出す**独立命令**、**軍の統帥**、宣戦・講和、条約の締結などがあり、軍の独走につながった。",
+          "evidence": ["prerogative", "emergency-decree", "independent-order", "supreme-command", "no-diet", "military"],
+          "keywords": ["帝国議会が関与できない", "緊急勅令", "独立命令", "軍の統帥"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06", "term": "枢密院", "reading": "すうみついん", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "役割",
+          "prompt": "枢密院とはどんな機関？",
+          "answer": "大日本帝国憲法のもとで置かれた、天皇の**最高諮問機関**。**重要な国務**や、**新旧両憲法の草案**を審議した。",
+          "evidence": ["privy-council", "privy-role"], "keywords": ["最高諮問機関", "重要な国務", "新旧両憲法の草案"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "07", "term": "臣民の権利", "reading": "しんみんのけんり", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "性格と限界",
+          "prompt": "大日本帝国憲法の臣民の権利には、どんな特徴がある？",
+          "answer": "国民は天皇の家臣である「**臣民**」とされ、その権利は天皇から**恩恵**として与えられたものにすぎなかった。**法律の留保**があり、権利は**法律の範囲内**でしか保障されず、規定も**不十分な自由権**だけだった。",
+          "evidence": ["subject", "grace", "reservation", "law-limit", "liberty-only", "insufficient"],
+          "keywords": ["臣民", "恩恵", "法律の留保", "法律の範囲内", "不十分な自由権"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "08", "term": "皇室典範", "reading": "こうしつてんぱん", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "位置づけの変化",
+          "prompt": "皇室典範の位置づけは、戦前と今日でどう違う？",
+          "answer": "戦前は**大日本帝国憲法と並ぶ最高法規**だったが、今日は**法律と同格**である。",
+          "evidence": ["supreme-law", "imperial-house-law"], "keywords": ["大日本帝国憲法と並ぶ最高法規", "法律と同格"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "09", "term": "民本主義", "reading": "みんぽんしゅぎ", "category": "大日本帝国憲法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "提唱者と内容",
+          "prompt": "民本主義とはどんな考え方？",
+          "answer": "**大正デモクラシー**期に**吉野作造**が唱えた考え方。**天皇主権**のもとで、できる限り「**人民本位**」の政治をめざした。",
+          "evidence": ["minpon"], "keywords": ["大正デモクラシー", "吉野作造", "天皇主権", "人民本位"], "note": ""
+        }
+      ]
+    }
+  ]
+}

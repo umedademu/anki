@@ -52,7 +52,11 @@
     "pek-13-05",
     "pek-14-01",
     "pek-14-02",
-    "pek-14-03"
+    "pek-14-03",
+    "pek-15-01",
+    "pek-15-02",
+    "pek-15-03",
+    "pek-15-04"
   ],
   "images": [
     {
@@ -1827,6 +1831,32 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-e451fbd0576edbf3b97c",
+      "caption": "ドイツの1兆マルク紙幣（1923年）",
+      "note": "第一次世界大戦後のドイツで、紙幣の増刷により起こった極端なインフレの例。",
+      "targets": [
+        {
+          "termId": "PEK-15-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-6f6eff8c2cd21a",
+      "caption": "日本銀行本店（東京都中央区）",
+      "note": "日本の中央銀行である日本銀行の建物。",
+      "targets": [
+        {
+          "termId": "PEK-15-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2573,6 +2603,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Real_GDP_growth_rate_in_Japan_(1956-2008).png",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-56c11c9b2061870db5b7.jpg",
       "sha256": "56c11c9b2061870db5b7c0c9f78ecc89497d9b93fe676a642aeaa6fae585f8bd"
+    },
+    {
+      "id": "PEKS-e451fbd0576edbf3b97c",
+      "path": "term-images/politics-economics-k/PEKS-e451fbd0576edbf3b97c.jpg",
+      "alt": "ドイツの1兆マルク紙幣（1923年）",
+      "caption": "ドイツの1兆マルク紙幣（1923年）",
+      "creator": "ドイツ帝国銀行",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:GER-134-Reichsbanknote-1_Trillion_Mark_(1923).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e451fbd0576edbf3b97c.jpg",
+      "sha256": "e451fbd0576edbf3b97c2a9afe161b34407279aef5d76956843ba41851483d4c"
     }
   ]
 }

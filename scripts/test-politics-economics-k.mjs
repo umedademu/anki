@@ -21,7 +21,9 @@ assert.deepEqual(plan.definition.chapterGroups, [{ id: "item-01", number: 1, tit
 // 講義の口調を答えに持ち込まない。
 for (const question of plan.terms.flatMap(term => term.stages.reverse)) {
   assert.doesNotMatch(question.answer, /だよ|なんだ|のさ|大変なことになる|100％|しょせん|ってわけ|じゃなくて/, `講義口調の答えです: ${question.id}`);
-  assert.match(question.prompt, /^「[^」]+」：.+？$/, `問題文は「用語」：…？ の形にします: ${question.id}`);
+  // 問題文は「排他的経済水域とはどんな水域？」のような普通の疑問文にし、「用語」：…？ の形や「〜か。」の形にしない。
+  assert.match(question.prompt, /^[^「].*？$/, `問題文は普通の疑問文にします: ${question.id}`);
+  assert.doesNotMatch(question.prompt, /^「[^」]+」：/, `「用語」：…？ の形は使いません: ${question.id}`);
 }
 for (const term of plan.terms) {
   assert.deepEqual(term.stages.beginner, []); assert.deepEqual(term.stages.integrated, []);

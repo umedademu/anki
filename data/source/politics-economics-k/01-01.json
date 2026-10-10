@@ -65,7 +65,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
-          "prompt": "「政治」：どんな作用？",
+          "prompt": "政治とはどんな作用？",
           "answer": "多くの人が集まる社会で、**権力**や**政策**を用いて社会の**秩序**を形成していく作用。",
           "evidence": ["politics-definition"], "keywords": ["権力", "政策", "秩序"], "note": ""
         }
@@ -76,7 +76,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
-          "prompt": "「民主政治」：どんな政治？",
+          "prompt": "民主政治とはどんな政治？",
           "answer": "**人民の意思**に従って行われる政治。人民自身が政治に参加して社会を支配する、**国民主権**にもとづく政治のあり方。",
           "evidence": ["democracy-definition", "self-participation", "national-sovereignty"], "keywords": ["人民の意思", "国民主権"], "note": ""
         }
@@ -87,7 +87,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
-          "prompt": "「国家」：どんな社会集団？",
+          "prompt": "国家とはどんな社会集団？",
           "answer": "一定の領域の中で、**秩序を保つための強制力**をもつ社会集団。**人民・領域・主権**を三要素とする。",
           "evidence": ["state-definition", "three-elements"], "keywords": ["秩序を保つための強制力", "人民・領域・主権"], "note": ""
         }
@@ -98,7 +98,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容と提唱者",
-          "prompt": "「国家の三要素」：何を指す？定義したのは誰？",
+          "prompt": "国家の三要素とは何？また、それを定義したのは誰？",
           "answer": "**人民・領域・主権**の３つ。**イェリネック**が定義した。",
           "evidence": ["three-elements"], "keywords": ["人民・領域・主権", "イェリネック"], "note": ""
         }
@@ -109,7 +109,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "構成",
-          "prompt": "「領域」：何から成る？",
+          "prompt": "国家の領域は何から成る？",
           "answer": "**領土・領海・領空**から成る、国家の主権が及ぶ範囲。**排他的経済水域**は領域に含まれない。",
           "evidence": ["domain-parts", "eez"], "keywords": ["領土・領海・領空", "排他的経済水域"], "note": ""
         }
@@ -120,7 +120,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "範囲と権限",
-          "prompt": "「領海」：どんな海域？",
+          "prompt": "領海とはどんな海域？",
           "answer": "**基線**（干潮時の海岸線）から**12海里**までの海域。領土と同じく、沿岸国の**主権**がすべて及ぶ。",
           "evidence": ["territorial-sea", "check-sea-width"], "keywords": ["基線", "12海里", "主権"], "note": ""
         }
@@ -131,7 +131,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "範囲",
-          "prompt": "「領空」：どんな範囲？",
+          "prompt": "領空とはどんな範囲？",
           "answer": "**領土と領海の上空**で、国家の主権が及ぶ。**宇宙空間**は含まれない。",
           "evidence": ["airspace", "check-airspace"], "keywords": ["領土と領海の上空", "宇宙空間"], "note": ""
         }
@@ -142,14 +142,14 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "範囲と権利",
-          "prompt": "「排他的経済水域」：どんな水域？",
+          "prompt": "排他的経済水域とはどんな水域？",
           "answer": "基線から**200海里**までの、領海の外側の水域。領域には含まれないが、沿岸国が**資源を排他的に利用する権利**をもつ。主権のすべてが及ぶ領海とは区別される。",
           "evidence": ["domain-parts", "eez", "check-eez-width"], "keywords": ["200海里", "資源を排他的に利用する権利"],
           "note": "1海里（カイリ）は1852m。"
         },
         {
           "id": "R02", "stage": "reverse", "type": "reverse", "form": "境界の決め方",
-          "prompt": "「排他的経済水域」：隣国と200海里が重なる場合はどう決める？",
+          "prompt": "排他的経済水域が隣国と重なる場合、境界はどう決める？",
           "answer": "関係国の**話し合い**で境界を決め、**中間線**で区切るのが慣例。日中間は中間線で対処し、日韓間は**共同規制水域**として双方が利用するなど、対応は国によって異なる。",
           "evidence": ["eez-overlap", "median-line", "check-overlap"], "keywords": ["話し合い", "中間線", "共同規制水域"], "note": ""
         }
@@ -160,7 +160,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "範囲と原則",
-          "prompt": "「公海」：どんな海域？",
+          "prompt": "公海とはどんな海域？",
           "answer": "領海や排他的経済水域の外側（基線から**200海里より外**）の海。どの国の主権も及ばず、**公海自由の原則**によりすべての国が自由に利用できる。",
           "evidence": ["high-seas", "check-high-seas"], "keywords": ["200海里より外", "公海自由の原則"], "note": ""
         }
@@ -171,7 +171,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "沿岸国の権利",
-          "prompt": "「大陸棚」：沿岸国にはどんな権利がある？",
+          "prompt": "大陸棚について、沿岸国にはどんな権利がある？",
           "answer": "領土の自然な延長とみなされ、**海底とその下の資源**の開発について沿岸国に**排他的な権利**が認められる。他国が自由に地下資源を採掘することはできない。",
           "evidence": ["continental-shelf", "check-shelf-right", "check-shelf-wrong"], "keywords": ["海底とその下の資源", "排他的な権利"],
           "note": "センター試験では「領海の外側の大陸棚では、すべての国が自由に地下資源を採掘できる」が誤りの選択肢として出題された。"
@@ -183,7 +183,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "位置づけ",
-          "prompt": "「深海底」：どう扱われる？",
+          "prompt": "深海底とその資源はどう扱われる？",
           "answer": "大陸棚より外側の深海底とその資源は、どの国の主権にも属さず「**人類共同の財産**」とされる。",
           "evidence": ["deep-seabed"], "keywords": ["人類共同の財産"], "note": ""
         }
@@ -194,7 +194,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
-          "prompt": "「宇宙条約」：何を定めた？",
+          "prompt": "宇宙条約は何を定めた？",
           "answer": "**宇宙空間**はどの国も**領有できない**と定め、**平和利用**に限ってすべての国が自由に利用できるとした条約。",
           "evidence": ["space-antarctica", "space-antarctica-treaties", "check-space"], "keywords": ["宇宙空間", "領有できない", "平和利用"], "note": ""
         }
@@ -205,7 +205,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
-          "prompt": "「南極条約」：何を定めた？",
+          "prompt": "南極条約は何を定めた？",
           "answer": "**南極大陸**にはどの国の**領有権も認めない**と定めた条約。",
           "evidence": ["space-antarctica", "space-antarctica-treaties"], "keywords": ["南極大陸", "領有権も認めない"], "note": ""
         }
@@ -216,13 +216,13 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と提唱者",
-          "prompt": "「主権」：どんな権力？",
+          "prompt": "主権とはどんな権力？",
           "answer": "国家がもつ**最高・絶対の支配権**で、国家に固有の要素。フランスの**ボーダン**が「**主権論の祖**」とされる。",
           "evidence": ["sovereignty-definition", "bodin"], "keywords": ["最高・絶対の支配権", "ボーダン", "主権論の祖"], "note": ""
         },
         {
           "id": "R02", "stage": "reverse", "type": "reverse", "form": "３つの意味",
-          "prompt": "「主権」：３つの意味は？",
+          "prompt": "主権の３つの意味とは？",
           "answer": "①国の政治のあり方を最終的に決める**最高意思決定権**、②領域と人民を統治する国家権力としての**領域支配権（統治権）**、③他国から独立し対等であるという**対外独立性**。いずれも本質は「**支配権**」。",
           "evidence": ["supreme-decision", "territorial-control", "external-independence", "sovereignty-essence"],
           "keywords": ["最高意思決定権", "領域支配権（統治権）", "対外独立性", "支配権"], "note": ""
@@ -234,7 +234,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と用例",
-          "prompt": "「最高意思決定権」：どんな意味の主権？用例は？",
+          "prompt": "最高意思決定権とはどんな意味の主権？その用例は？",
           "answer": "国の政治のあり方を**最終的に決定する権力**という意味の主権。「この地位は、**主権の存する日本国民の総意**に基く」とする**日本国憲法第1条**の「主権」がこの意味。",
           "evidence": ["supreme-decision", "supreme-decision-source"], "keywords": ["最終的に決定する権力", "主権の存する日本国民の総意", "日本国憲法第1条"], "note": ""
         }
@@ -245,7 +245,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と用例",
-          "prompt": "「領域支配権」：どんな意味の主権？用例は？",
+          "prompt": "領域支配権とはどんな意味の主権？その用例は？",
           "answer": "国家が領域と人民を統治する権力（国家権力そのもの）という意味の主権で、「**統治権**」ともいう。「**日本国の主権は、本州・北海道・九州…に局限せらるべし**」とする**ポツダム宣言**の「主権」がこの意味。",
           "evidence": ["territorial-control", "territorial-control-source"], "keywords": ["統治権", "日本国の主権は、本州・北海道・九州…に局限せらるべし", "ポツダム宣言"], "note": ""
         }
@@ -256,7 +256,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と用例",
-          "prompt": "「対外独立性」：どんな意味の主権？用例は？",
+          "prompt": "対外独立性とはどんな意味の主権？その用例は？",
           "answer": "国家が他国に支配されず**独立・対等**であるという意味の主権。「**自国の主権を維持し、他国と対等関係に立とうとする**」とする**日本国憲法前文**の「主権」がこの意味。",
           "evidence": ["external-independence", "external-independence-source"], "keywords": ["独立・対等", "自国の主権を維持し、他国と対等関係に立とうとする", "日本国憲法前文"], "note": ""
         }
@@ -267,7 +267,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
-          "prompt": "「国民主権」：どんな原理？",
+          "prompt": "国民主権とはどんな原理？",
           "answer": "国家の**主権**（支配権）を**国民自身**がもち、国民全体で国家を支配しているという原理。民主政治の基礎となる。",
           "evidence": ["national-sovereignty", "sovereignty-restated"], "keywords": ["主権", "国民自身"], "note": ""
         }
@@ -278,7 +278,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "有名な言葉",
-          "prompt": "「リンカーン」：民主政治を表す有名な言葉は？",
+          "prompt": "リンカーンが民主政治について述べた有名な言葉は？",
           "answer": "**ゲティスバーグ演説**で述べた「**人民の、人民による、人民のための政治**」。国民主権にもとづく民主政治の理念を表す。",
           "evidence": ["lincoln"], "keywords": ["ゲティスバーグ演説", "人民の、人民による、人民のための政治"], "note": ""
         }
@@ -289,7 +289,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "何が問題か",
-          "prompt": "「沖ノ鳥島」：何が問題になっている？",
+          "prompt": "沖ノ鳥島では何が問題になっている？",
           "answer": "**日本最南端**の島で、周囲に広い**排他的経済水域**をもたらす。中国は「島ではなく**岩**」だと主張してこれを認めていない。日本は水没を防ぐ**護岸工事**を行い、周辺で漁業などの経済活動を進めて、島としての地位を守ろうとしている。地球温暖化による**海面上昇**で水没するおそれも指摘される。",
           "evidence": ["okinotori-southernmost", "okinotori-china", "okinotori-revetment", "okinotori-fishery", "okinotori-warming"],
           "keywords": ["日本最南端", "排他的経済水域", "岩", "護岸工事", "海面上昇"], "note": ""
@@ -301,7 +301,7 @@
       "questions": [
         {
           "id": "R01", "stage": "reverse", "type": "reverse", "form": "島の定義",
-          "prompt": "「国連海洋法条約」：「島」の定義は？",
+          "prompt": "国連海洋法条約における「島」の定義は？",
           "answer": "**自然に形成された陸地**で、**満潮時にも海面上に出ている**もの。ただし**人間の居住**や**独自の経済活動**ができない岩には、**排他的経済水域**は認められない。",
           "evidence": ["island-definition"], "keywords": ["自然に形成された陸地", "満潮時にも海面上に出ている", "人間の居住", "独自の経済活動", "排他的経済水域"], "note": ""
         }

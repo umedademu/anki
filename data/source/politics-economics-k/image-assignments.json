@@ -27,7 +27,11 @@
     "pek-06-02",
     "pek-06-03",
     "pek-07-01",
-    "pek-07-02"
+    "pek-07-02",
+    "pek-08-01",
+    "pek-08-02",
+    "pek-08-03",
+    "pek-08-04"
   ],
   "images": [
     {
@@ -996,6 +1000,162 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-29c81f955f98c4dd210b",
+      "caption": "中央省庁の庁舎が並ぶ霞が関（東京都千代田区）",
+      "note": "中央省庁が集まる官庁街の通り。特定の省庁の建物を問うものではない。",
+      "targets": [
+        {
+          "termId": "PEK-08-01-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-42138d6d3a7c32b25ef9",
+      "caption": "マックス・ウェーバーの肖像写真（1918年）",
+      "note": "官僚制の特徴を分析したドイツの社会学者として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-dbdb2659cf3ec4570aea",
+      "caption": "中曽根康弘の肖像写真（1982年）",
+      "note": "三公社の民営化を進めた首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-01-U13",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-f3631f880ba487a085c6",
+      "caption": "橋本龍太郎の肖像写真（1996年）",
+      "note": "行政改革会議を設けて中央省庁の再編を進めた首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-01-U15",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-e49c39097fd61cfcc8ff",
+      "caption": "小泉純一郎の肖像写真（2001年）",
+      "note": "郵政民営化を進めた首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-01-U24",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a6424edeb89e569d59ba",
+      "caption": "普通選挙による初の総選挙を告知する大阪府のポスター（1928年）",
+      "note": "1925年の普通選挙法による最初の総選挙のポスター。女性にはまだ選挙権がない。",
+      "targets": [
+        {
+          "termId": "PEK-08-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-dbcfe16241567f8da65b",
+      "caption": "区議会議員選挙のポスター掲示場（東京都港区、2019年）",
+      "note": "自治体が設ける選挙ポスターの掲示場。選挙公営の例。",
+      "targets": [
+        {
+          "termId": "PEK-08-02-U13",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-2e9e34e580d35ec66ace",
+      "caption": "日本経団連の本部がある経団連会館（東京都千代田区）",
+      "note": "代表的な財界の圧力団体である日本経団連の本部が入る建物。",
+      "targets": [
+        {
+          "termId": "PEK-08-03-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5de53639034596",
+      "caption": "田中角栄の肖像写真（1972年）",
+      "note": "ロッキード事件で逮捕された元首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-04-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-fdd362c79fe95290c9d2",
+      "caption": "細川護熙の肖像写真（1993年）",
+      "note": "55年体制を終わらせた非自民連立政権の首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-04-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0412c4e05e6a88db36ef",
+      "caption": "村山富市の肖像写真（1994年）",
+      "note": "自民党・社会党などの連立内閣を率いた首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-08-04-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d434fbd3419236e55d84",
+      "caption": "安倍晋三の肖像写真（2020年）",
+      "note": "歴代最長の在任期間となった首相の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-08-04-U08",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1490,6 +1650,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yoshinogawa_Daijuzeki.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-77d6c9d87896e781b76c.jpg",
       "sha256": "77d6c9d87896e781b76cfffbd690c9255ce33177da1ad19c2640dbecb5eb03c4"
+    },
+    {
+      "id": "PEKS-29c81f955f98c4dd210b",
+      "path": "term-images/politics-economics-k/PEKS-29c81f955f98c4dd210b.jpg",
+      "alt": "中央省庁の庁舎が並ぶ霞が関（東京都千代田区）",
+      "caption": "中央省庁の庁舎が並ぶ霞が関（東京都千代田区）",
+      "creator": "Miyuki Meinaka",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kasumigaseki_1_and_2_chome,_Chiyoda.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-29c81f955f98c4dd210b.jpg",
+      "sha256": "29c81f955f98c4dd210b8506d279da7a9b7d73e1bd39e669285faecb6dd64772"
+    },
+    {
+      "id": "PEKS-42138d6d3a7c32b25ef9",
+      "path": "term-images/politics-economics-k/PEKS-42138d6d3a7c32b25ef9.jpg",
+      "alt": "マックス・ウェーバーの肖像写真（1918年）",
+      "caption": "マックス・ウェーバーの肖像写真（1918年）",
+      "creator": "Ernst Gottmann",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Max_Weber,_1918.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-42138d6d3a7c32b25ef9.jpg",
+      "sha256": "42138d6d3a7c32b25ef9f9642b6f24df6d7ebb50b47bf4282b0979312564f0c7"
+    },
+    {
+      "id": "PEKS-dbdb2659cf3ec4570aea",
+      "path": "term-images/politics-economics-k/PEKS-dbdb2659cf3ec4570aea.jpg",
+      "alt": "中曽根康弘の肖像写真（1982年）",
+      "caption": "中曽根康弘の肖像写真（1982年）",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yasuhiro_Nakasone_19821127.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-dbdb2659cf3ec4570aea.jpg",
+      "sha256": "dbdb2659cf3ec4570aea6b586028892e2b668d9cf8097b9c2615d18fdf2ca51c"
+    },
+    {
+      "id": "PEKS-f3631f880ba487a085c6",
+      "path": "term-images/politics-economics-k/PEKS-f3631f880ba487a085c6.jpg",
+      "alt": "橋本龍太郎の肖像写真（1996年）",
+      "caption": "橋本龍太郎の肖像写真（1996年）",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ryutaro_Hashimoto_19960111.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f3631f880ba487a085c6.jpg",
+      "sha256": "f3631f880ba487a085c68d6335c1b2a98f90ecc0979458926a7f8f0dd6acc360"
+    },
+    {
+      "id": "PEKS-dbcfe16241567f8da65b",
+      "path": "term-images/politics-economics-k/PEKS-dbcfe16241567f8da65b.jpg",
+      "alt": "区議会議員選挙のポスター掲示場（東京都港区、2019年）",
+      "caption": "区議会議員選挙のポスター掲示場（東京都港区、2019年）",
+      "creator": "Syced",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%B8%AF%E5%8C%BA%E8%AD%B0%E4%BC%9A%E8%AD%B0%E5%93%A1%E9%81%B8%E6%8C%99_%E3%83%9D%E3%82%B9%E3%82%BF%E3%83%BC%E6%8E%B2%E7%A4%BA%E5%A0%B4_2019%E5%B9%B44%E6%9C%8821%E6%97%A5_.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-dbcfe16241567f8da65b.jpg",
+      "sha256": "dbcfe16241567f8da65bf68eebda9203776c4d4d48e857762540240111514d04"
+    },
+    {
+      "id": "PEKS-2e9e34e580d35ec66ace",
+      "path": "term-images/politics-economics-k/PEKS-2e9e34e580d35ec66ace.jpg",
+      "alt": "日本経団連の本部がある経団連会館（東京都千代田区）",
+      "caption": "日本経団連の本部がある経団連会館（東京都千代田区）",
+      "creator": "RESPITE（縮小）",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Keidanren_Kaikan.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-2e9e34e580d35ec66ace.jpg",
+      "sha256": "2e9e34e580d35ec66ace1cf6e66590783908e9c06dab25a8adf47ff15e4af4a1"
+    },
+    {
+      "id": "PEKS-0412c4e05e6a88db36ef",
+      "path": "term-images/politics-economics-k/PEKS-0412c4e05e6a88db36ef.jpg",
+      "alt": "村山富市の肖像写真（1994年）",
+      "caption": "村山富市の肖像写真（1994年）",
+      "creator": "内閣官房内閣広報室",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tomiichi_Murayama_19940630.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0412c4e05e6a88db36ef.jpg",
+      "sha256": "0412c4e05e6a88db36ef8853b25d4abcf296dc549600057676d7cda3251b400b"
     }
   ]
 }

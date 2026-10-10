@@ -49,7 +49,10 @@
     "pek-13-02",
     "pek-13-03",
     "pek-13-04",
-    "pek-13-05"
+    "pek-13-05",
+    "pek-14-01",
+    "pek-14-02",
+    "pek-14-03"
   ],
   "images": [
     {
@@ -1811,6 +1814,19 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-56c11c9b2061870db5b7",
+      "caption": "日本の実質経済成長率の推移（1956〜2008年、内閣府の資料による）",
+      "note": "1950年代後半〜1973年は10％前後の高度成長、その後は安定成長、マイナス成長の年もある。",
+      "targets": [
+        {
+          "termId": "PEK-14-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2545,6 +2561,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:The_Tokyo_Stock_Exchange_-_main_room_2.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-2965076926df4d57f49f.jpg",
       "sha256": "2965076926df4d57f49f0b4e15524f2e30a6fe0c3faf28a75ab538b01e28c4da"
+    },
+    {
+      "id": "PEKS-56c11c9b2061870db5b7",
+      "path": "term-images/politics-economics-k/PEKS-56c11c9b2061870db5b7.jpg",
+      "alt": "日本の実質経済成長率の推移（1956〜2008年、内閣府の資料による）",
+      "caption": "日本の実質経済成長率の推移（1956〜2008年、内閣府の資料による）",
+      "creator": "Wushi-En（JPEGに変換・縮小）",
+      "license": "CC BY 2.5",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.5/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Real_GDP_growth_rate_in_Japan_(1956-2008).png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-56c11c9b2061870db5b7.jpg",
+      "sha256": "56c11c9b2061870db5b7c0c9f78ecc89497d9b93fe676a642aeaa6fae585f8bd"
     }
   ]
 }

@@ -60,6 +60,9 @@ const expected = [
   ["pek-13-03", "政治経済K｜13-3 価格弾力性", 1, 3, 1],
   ["pek-13-04", "政治経済K｜13-4 市場の失敗", 8, 9, 1],
   ["pek-13-05", "政治経済K｜13-5 独占禁止法", 5, 6, 1],
+  ["pek-14-01", "政治経済K｜14-1 国民所得と国富", 2, 2, 1],
+  ["pek-14-02", "政治経済K｜14-2 国民所得の計算", 8, 8, 1],
+  ["pek-14-03", "政治経済K｜14-3 経済成長率", 3, 3, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

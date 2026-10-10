@@ -25,7 +25,9 @@
     "pek-05-05",
     "pek-06-01",
     "pek-06-02",
-    "pek-06-03"
+    "pek-06-03",
+    "pek-07-01",
+    "pek-07-02"
   ],
   "images": [
     {
@@ -942,6 +944,58 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-13df0fe6888abf50f208",
+      "caption": "ジェームズ・ブライスの肖像写真（1912年）",
+      "note": "「地方自治は民主主義の学校」と述べたイギリスの政治家として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-07-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-41d9a439265fcc467b98",
+      "caption": "東京都庁舎（東京都新宿区）",
+      "note": "地方交付税の交付を受けていない唯一の都道府県である東京都の庁舎。",
+      "targets": [
+        {
+          "termId": "PEK-07-01-U18",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-fe78a433600f72680117",
+      "caption": "政令指定都市の分布（20都市）",
+      "note": "2024年4月末現在の20都市を示した地図。",
+      "targets": [
+        {
+          "termId": "PEK-07-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-77d6c9d87896e781b76c",
+      "caption": "吉野川の第十堰（徳島県）",
+      "note": "可動堰への改築の是非が、2000年に徳島市の住民投票条例にもとづく住民投票で問われた堰。",
+      "targets": [
+        {
+          "termId": "PEK-07-02-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1388,6 +1442,54 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Iken_Kojima.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-d3df3ef162c8a2068fb9.jpg",
       "sha256": "d3df3ef162c8a2068fb9ae9cb1cc8c886a1ccd6cdd8dc5578d254fff74c25a77"
+    },
+    {
+      "id": "PEKS-13df0fe6888abf50f208",
+      "path": "term-images/politics-economics-k/PEKS-13df0fe6888abf50f208.jpg",
+      "alt": "ジェームズ・ブライスの肖像写真（1912年）",
+      "caption": "ジェームズ・ブライスの肖像写真（1912年）",
+      "creator": "Harris & Ewing（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:James_Bryce,_1st_Viscount_Bryce_cph.3b16400.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-13df0fe6888abf50f208.jpg",
+      "sha256": "13df0fe6888abf50f208bd89950bf2b01029888d6aba3afa1ef4cdd29c2d5084"
+    },
+    {
+      "id": "PEKS-41d9a439265fcc467b98",
+      "path": "term-images/politics-economics-k/PEKS-41d9a439265fcc467b98.jpg",
+      "alt": "東京都庁舎（東京都新宿区）",
+      "caption": "東京都庁舎（東京都新宿区）",
+      "creator": "くろふね",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E6%9D%B1%E4%BA%AC%E9%83%BD%E5%BA%81_-_panoramio.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-41d9a439265fcc467b98.jpg",
+      "sha256": "41d9a439265fcc467b98a4d95ff72e5fe6e72527c6323a762def6d1e3b1bdd54"
+    },
+    {
+      "id": "PEKS-fe78a433600f72680117",
+      "path": "term-images/politics-economics-k/PEKS-fe78a433600f72680117.jpg",
+      "alt": "政令指定都市の分布（20都市）",
+      "caption": "政令指定都市の分布（20都市）",
+      "creator": "Bigmorr（JPEGに変換・縮小）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ordinance_designed_Cities_(ja).svg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-fe78a433600f72680117.jpg",
+      "sha256": "fe78a433600f7268011756e12dc661ca7c08d2b7928049d887fdb6f75d006c82"
+    },
+    {
+      "id": "PEKS-77d6c9d87896e781b76c",
+      "path": "term-images/politics-economics-k/PEKS-77d6c9d87896e781b76c.jpg",
+      "alt": "吉野川の第十堰（徳島県）",
+      "caption": "吉野川の第十堰（徳島県）",
+      "creator": "Tamago915",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yoshinogawa_Daijuzeki.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-77d6c9d87896e781b76c.jpg",
+      "sha256": "77d6c9d87896e781b76cfffbd690c9255ce33177da1ad19c2640dbecb5eb03c4"
     }
   ]
 }

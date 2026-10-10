@@ -718,5 +718,25 @@
     "license": "Public domain",
     "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Luddite.jpg"
+  },
+  {
+    "id": "WM-0d853f665fb02a",
+    "path": "term-images/optimized/WM-0d853f665fb02a.webp",
+    "alt": "ビスマルク",
+    "caption": "ビスマルク",
+    "creator": "Jacques Pilartz",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_146-2005-0057,_Otto_von_Bismarck.jpg"
+  },
+  {
+    "id": "WMP-e862b5d963dafe",
+    "path": "term-images/optimized/WMP-e862b5d963dafe.webp",
+    "alt": "日本の少子高齢化を示す人口ピラミッド",
+    "caption": "日本の少子高齢化を示す人口ピラミッド",
+    "creator": "CIA Factbook",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan_population_pyramid_(2018).jpg"
   }
 ]

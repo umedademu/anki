@@ -70,7 +70,9 @@
     "pek-18-04",
     "pek-19-01",
     "pek-19-02",
-    "pek-19-03"
+    "pek-19-03",
+    "pek-20-01",
+    "pek-20-02"
   ],
   "images": [
     {
@@ -2053,6 +2055,58 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-0d853f665fb02a",
+      "caption": "ビスマルクの肖像写真",
+      "note": "「アメとムチ」の政策で初の社会保険を設けたドイツの宰相の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-20-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-742b3a9245079260d2a3",
+      "caption": "ベバリッジの肖像写真（1940年代）",
+      "note": "「ゆりかごから墓場まで」の社会保障を示した報告書をまとめた人物の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-20-01-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-e862b5d963dafe",
+      "caption": "日本の人口ピラミッド（2018年）",
+      "note": "高齢者が多く、子どもが少ない少子高齢化の形を示している。",
+      "targets": [
+        {
+          "termId": "PEK-20-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1902f2edfcff145f43e6",
+      "caption": "日本の出生数と合計特殊出生率の推移",
+      "note": "出生数（棒）と合計特殊出生率（折れ線）が長期的に下がっていることを示すグラフ。",
+      "targets": [
+        {
+          "termId": "PEK-20-02-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2871,6 +2925,30 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sen_Katayama_in_1901.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-3c7fa28968213b997bbf.jpg",
       "sha256": "3c7fa28968213b997bbf8e7ee2841d937b7cffa70c1ec362fc44a34df8eb7b23"
+    },
+    {
+      "id": "PEKS-742b3a9245079260d2a3",
+      "path": "term-images/politics-economics-k/PEKS-742b3a9245079260d2a3.jpg",
+      "alt": "ベバリッジの肖像写真（1940年代）",
+      "caption": "ベバリッジの肖像写真（1940年代）",
+      "creator": "Howard Coster",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:William-Henry-Beveridge-1st-Baron-Beveridge_(3x4_crop).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-742b3a9245079260d2a3.jpg",
+      "sha256": "742b3a9245079260d2a3237f083f61cfb089d47d12476958a9edd6bf416a28b5"
+    },
+    {
+      "id": "PEKS-1902f2edfcff145f43e6",
+      "path": "term-images/politics-economics-k/PEKS-1902f2edfcff145f43e6.jpg",
+      "alt": "日本の出生数と合計特殊出生率の推移",
+      "caption": "日本の出生数と合計特殊出生率の推移",
+      "creator": "Yuasan（JPEGに変換・縮小）",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Births_and_Total_fertility_rate_of_Japan.svg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-1902f2edfcff145f43e6.jpg",
+      "sha256": "1902f2edfcff145f43e6a042650c5654bb047955691e4ea3c3116c1aa68a477d"
     }
   ]
 }

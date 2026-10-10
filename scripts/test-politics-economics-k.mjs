@@ -81,6 +81,8 @@ const expected = [
   ["pek-19-01", "政治経済K｜19-1 労働運動の歴史", 4, 4, 1],
   ["pek-19-02", "政治経済K｜19-2 労働三法", 9, 11, 1],
   ["pek-19-03", "政治経済K｜19-3 日本の労働問題", 11, 13, 1],
+  ["pek-20-01", "政治経済K｜20-1 社会保障の四本柱", 10, 13, 1],
+  ["pek-20-02", "政治経済K｜20-2 高齢化社会", 4, 7, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

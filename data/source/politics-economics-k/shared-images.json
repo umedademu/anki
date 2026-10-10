@@ -608,5 +608,35 @@
     "license": "Public domain",
     "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
     "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Stock_Certificate_of_The_South_Manchuria_Railway.jpg"
+  },
+  {
+    "id": "WMP-0153dc278391de",
+    "path": "term-images/optimized/WMP-0153dc278391de.webp",
+    "alt": "需要曲線・供給曲線と均衡点",
+    "caption": "需要曲線・供給曲線と均衡点",
+    "creator": "Dallas.Epperson",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Simple_supply_and_demand.svg"
+  },
+  {
+    "id": "WMP-74cefab582a95e",
+    "path": "term-images/optimized/WMP-74cefab582a95e.webp",
+    "alt": "需要の価格弾力性を表す曲線",
+    "caption": "需要の価格弾力性を表す曲線",
+    "creator": "Supply-and-demand.svg : Paweł Zdziarski ( User:faxe ), User:Astarot derivative work: Jarry1250 ( talk )",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Price_elasticity_of_demand.svg"
+  },
+  {
+    "id": "WMJ-620b29e90bdad3",
+    "path": "term-images/optimized/WMJ-620b29e90bdad3.webp",
+    "alt": "財閥解体",
+    "caption": "財閥解体",
+    "creator": "Unknown author Unknown author",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Seizure_of_the_Zaibatsu_families_assets.JPG"
   }
 ]

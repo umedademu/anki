@@ -55,6 +55,11 @@ const expected = [
   ["pek-11-03", "政治経済K｜11-3 経済学説", 7, 7, 1],
   ["pek-12-01", "政治経済K｜12-1 経済主体と企業の分類", 8, 9, 1],
   ["pek-12-02", "政治経済K｜12-2 株式会社", 17, 18, 1],
+  ["pek-13-01", "政治経済K｜13-1 需要曲線と供給曲線", 6, 6, 1],
+  ["pek-13-02", "政治経済K｜13-2 需給曲線のシフト", 2, 3, 1],
+  ["pek-13-03", "政治経済K｜13-3 価格弾力性", 1, 3, 1],
+  ["pek-13-04", "政治経済K｜13-4 市場の失敗", 8, 9, 1],
+  ["pek-13-05", "政治経済K｜13-5 独占禁止法", 5, 6, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

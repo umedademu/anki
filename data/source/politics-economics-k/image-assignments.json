@@ -44,7 +44,12 @@
     "pek-11-02",
     "pek-11-03",
     "pek-12-01",
-    "pek-12-02"
+    "pek-12-02",
+    "pek-13-01",
+    "pek-13-02",
+    "pek-13-03",
+    "pek-13-04",
+    "pek-13-05"
   ],
   "images": [
     {
@@ -1762,6 +1767,45 @@
       "targets": [
         {
           "termId": "PEK-12-02-U11",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-0153dc278391de",
+      "caption": "需要曲線・供給曲線と均衡点（Price＝価格、Quantity＝数量）",
+      "note": "右下がりの需要曲線と右上がりの供給曲線が交わる点が均衡点。",
+      "targets": [
+        {
+          "termId": "PEK-13-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-74cefab582a95e",
+      "caption": "需要曲線の上で、価格の変化（ΔP）と需要量の変化（ΔQ）を示した図",
+      "note": "価格の変化に対する需要量の変化の大きさが、需要の価格弾力性。",
+      "targets": [
+        {
+          "termId": "PEK-13-03-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-620b29e90bdad3",
+      "caption": "財閥解体で財閥一族の資産が接収される場面（1946年）",
+      "note": "独占禁止法の制定につながった財閥解体の場面。",
+      "targets": [
+        {
+          "termId": "PEK-13-05-U01",
           "questions": [
             "R01"
           ]

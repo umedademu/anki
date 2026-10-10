@@ -31,7 +31,11 @@
     "pek-08-01",
     "pek-08-02",
     "pek-08-03",
-    "pek-08-04"
+    "pek-08-04",
+    "pek-09-01",
+    "pek-09-02",
+    "pek-09-03",
+    "pek-09-04"
   ],
   "images": [
     {
@@ -1156,6 +1160,227 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-66f5d39f025da8",
+      "caption": "ミュンスターの講和の批准（テル・ボルフ画、1648年）",
+      "note": "ウェストファリア条約を構成する講和の一つを結ぶ場面。",
+      "targets": [
+        {
+          "termId": "PEK-09-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-cc9110140b29da29c4a3",
+      "caption": "グロティウスの肖像（1631年）",
+      "note": "「国際法の父」とよばれる法学者として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-09-01-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-0130919a936339",
+      "caption": "ウッドロウ・ウィルソンの肖像写真",
+      "note": "平和原則14カ条を唱えたアメリカ大統領として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-09-01-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-9d7a943ab23100acbe2c",
+      "caption": "ジュネーブの国際連盟本部とウィルソン記念碑（1928年）",
+      "note": "国際連盟の本部が置かれたジュネーブの建物。",
+      "targets": [
+        {
+          "termId": "PEK-09-01-U06",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-cc1d0044bad3f8",
+      "caption": "国際連合の旗",
+      "note": "国連の旗。成立の場面を写したものではない。",
+      "targets": [
+        {
+          "termId": "PEK-09-02-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-277b5df6b2104f",
+      "caption": "ニューヨークの国連本部にある安全保障理事会の議場",
+      "note": "安保理の会議が開かれる議場。",
+      "targets": [
+        {
+          "termId": "PEK-09-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-96f87b8b20059d",
+      "caption": "ニューヨークの国連本部にある総会の議場",
+      "note": "全加盟国が参加する総会の議場。",
+      "targets": [
+        {
+          "termId": "PEK-09-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-ecb852c2827860",
+      "caption": "国連平和維持活動の要員がかぶる青いヘルメット",
+      "note": "PKOの要員を示す国連の青いヘルメット。",
+      "targets": [
+        {
+          "termId": "PEK-09-03-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ab1d50b226f40de9ec8b",
+      "caption": "湾岸戦争に参加した米軍の戦車",
+      "note": "PKO協力法制定のきっかけとなった戦争の写真。自衛隊の写真ではない。",
+      "targets": [
+        {
+          "termId": "PEK-09-03-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-f8bee487e8979340c33f",
+      "caption": "南スーダンのPKOで道路を整備する陸上自衛隊（2013年）",
+      "note": "PKO協力法にもとづいて派遣された陸上自衛隊の活動。",
+      "targets": [
+        {
+          "termId": "PEK-09-03-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-2c059f446d9b1e",
+      "caption": "ヤルタ会談のチャーチル・ローズベルト・スターリン（1945年）",
+      "note": "冷戦のきっかけとなった米英ソ首脳会談。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-4ed63e7f6b378c",
+      "caption": "マーシャル＝プランの援助物資に付けられた標章",
+      "note": "アメリカによる西欧への経済援助を示す標章。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-3d05b4389622e7",
+      "caption": "フルシチョフの肖像写真",
+      "note": "平和共存路線を唱えたソ連の指導者として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-23d28643ef8344",
+      "caption": "モスクワの軍事パレードに登場したソ連の中距離弾道ミサイルR-12（キューバへの配備が問題となった型）",
+      "note": "キューバ危機で配備が問題となったミサイルと同じ型。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-064d892f5f41ec",
+      "caption": "アジア・アフリカ会議の会場となった独立会館（インドネシア・バンドン）",
+      "note": "1955年のアジア・アフリカ会議（バンドン会議）の会場。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-09d0b61722cb85",
+      "caption": "ゴルバチョフの肖像写真",
+      "note": "ペレストロイカを進めたソ連の指導者として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U10",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ebc6906abdee0b07006f",
+      "caption": "マルタ会談のブッシュ大統領とゴルバチョフ（1989年）",
+      "note": "冷戦の終結を宣言した首脳会談。",
+      "targets": [
+        {
+          "termId": "PEK-09-04-U11",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1734,6 +1959,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tomiichi_Murayama_19940630.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-0412c4e05e6a88db36ef.jpg",
       "sha256": "0412c4e05e6a88db36ef8853b25d4abcf296dc549600057676d7cda3251b400b"
+    },
+    {
+      "id": "PEKS-f8bee487e8979340c33f",
+      "path": "term-images/politics-economics-k/PEKS-f8bee487e8979340c33f.jpg",
+      "alt": "南スーダンのPKOで道路を整備する陸上自衛隊（2013年）",
+      "caption": "南スーダンのPKOで道路を整備する陸上自衛隊（2013年）",
+      "creator": "陸上自衛隊",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:UNMISS_road_maintenance.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f8bee487e8979340c33f.jpg",
+      "sha256": "f8bee487e8979340c33f64366abe158946924ece64e4ca864e418cdef2f63273"
     }
   ]
 }

@@ -67,7 +67,10 @@
     "pek-18-01",
     "pek-18-02",
     "pek-18-03",
-    "pek-18-04"
+    "pek-18-04",
+    "pek-19-01",
+    "pek-19-02",
+    "pek-19-03"
   ],
   "images": [
     {
@@ -2024,6 +2027,32 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-a6fad2cf8156b1",
+      "caption": "「ラッダイトの指導者」を描いた版画（1812年）",
+      "note": "機械打ち壊し運動を描いたイギリスの版画。",
+      "targets": [
+        {
+          "termId": "PEK-19-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-3c7fa28968213b997bbf",
+      "caption": "片山潜の肖像写真（1901年）",
+      "note": "労働組合期成会をつくった人物の一人として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-19-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2830,6 +2859,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Food_Self-sufficiency_ratio_en.png",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-f41e0089b1995d8008fc.jpg",
       "sha256": "f41e0089b1995d8008fce71263d40e7aee0ab11af3653fddc1a5f40c94094d0a"
+    },
+    {
+      "id": "PEKS-3c7fa28968213b997bbf",
+      "path": "term-images/politics-economics-k/PEKS-3c7fa28968213b997bbf.jpg",
+      "alt": "片山潜の肖像写真（1901年）",
+      "caption": "片山潜の肖像写真（1901年）",
+      "creator": "雨宮栄一",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sen_Katayama_in_1901.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-3c7fa28968213b997bbf.jpg",
+      "sha256": "3c7fa28968213b997bbf8e7ee2841d937b7cffa70c1ec362fc44a34df8eb7b23"
     }
   ]
 }

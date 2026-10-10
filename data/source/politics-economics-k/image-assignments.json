@@ -39,7 +39,10 @@
     "pek-10-01",
     "pek-10-02",
     "pek-10-03",
-    "pek-10-04"
+    "pek-10-04",
+    "pek-11-01",
+    "pek-11-02",
+    "pek-11-03"
   ],
   "images": [
     {
@@ -1567,6 +1570,162 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WM-552fc3b9f67489",
+      "caption": "囲い込み以前の開放耕地の跡が残るイギリスの畑",
+      "note": "囲い込みの前の耕地のようすを伝える跡。羊を飼う囲い地の写真ではない。",
+      "targets": [
+        {
+          "termId": "PEK-11-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-3703f856b7b11a2d32c9",
+      "caption": "ワットの蒸気機関を描いた図（1877〜1878年刊）",
+      "note": "産業革命で工場の機械化を進めた動力の例。",
+      "targets": [
+        {
+          "termId": "PEK-11-01-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-63cba66163ab00",
+      "caption": "世界恐慌期のアメリカで、季節労働に出た農民の母子（1936年）",
+      "note": "資本主義の矛盾が表面化した世界恐慌期の貧困を伝える写真。",
+      "targets": [
+        {
+          "termId": "PEK-11-01-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-30c208b54e44a0aca5d8",
+      "caption": "フランクリン＝ローズベルトの肖像写真（1933年）",
+      "note": "ニューディール政策を進めたアメリカ大統領として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-11-01-U08",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-a656a41d6f6354",
+      "caption": "マルクスの肖像写真（1875年）",
+      "note": "社会主義の経済学を生み出した思想家として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-11-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-c22fed4682b6ac",
+      "caption": "訪米した鄧小平とカーター大統領（1979年）",
+      "note": "改革・開放政策を始めた中国の指導者。",
+      "targets": [
+        {
+          "termId": "PEK-11-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-0de3af0a3cf77c",
+      "caption": "深圳の街並み（経済特区として発展した都市）",
+      "note": "改革・開放で経済特区となり発展した都市。",
+      "targets": [
+        {
+          "termId": "PEK-11-02-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-7ce958b62eb14b",
+      "caption": "アダム＝スミスの肖像",
+      "note": "『国富論』を著した経済学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-11-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-da792b045dc09ea085c7",
+      "caption": "リカードの肖像（トマス・フィリップス画、1821年）",
+      "note": "比較生産費説を唱えた経済学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-11-03-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-a412c9cf9defae91ca66",
+      "caption": "フリードリヒ・リストの肖像（1845年）",
+      "note": "保護貿易理論を唱えたドイツの経済学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-11-03-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-886f2df8a146fe1ade6e",
+      "caption": "ケインズの肖像写真（1933年）",
+      "note": "有効需要の原理を唱えた経済学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-11-03-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-db79822d1693bc3b3279",
+      "caption": "ミルトン・フリードマンの肖像写真",
+      "note": "マネタリズムを唱えた経済学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-11-03-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2217,6 +2376,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Uotsuri-shima_geo_1900.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-5796917eeb9743e5520c.jpg",
       "sha256": "5796917eeb9743e5520cd036124a562cd6090fd2da8acc9706aa8f7c77d3520f"
+    },
+    {
+      "id": "PEKS-30c208b54e44a0aca5d8",
+      "path": "term-images/politics-economics-k/PEKS-30c208b54e44a0aca5d8.jpg",
+      "alt": "フランクリン＝ローズベルトの肖像写真（1933年）",
+      "caption": "フランクリン＝ローズベルトの肖像写真（1933年）",
+      "creator": "Elias Goldensky（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Franklin_Delano_Roosevelt,_Portrait_1933_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-30c208b54e44a0aca5d8.jpg",
+      "sha256": "30c208b54e44a0aca5d8fd4335aee02afcb04f4f5a5ad25365fb11a27fd1aca4"
+    },
+    {
+      "id": "PEKS-da792b045dc09ea085c7",
+      "path": "term-images/politics-economics-k/PEKS-da792b045dc09ea085c7.jpg",
+      "alt": "リカードの肖像（トマス・フィリップス画、1821年）",
+      "caption": "リカードの肖像（トマス・フィリップス画、1821年）",
+      "creator": "Thomas Phillips",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_David_Ricardo_by_Thomas_Phillips.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-da792b045dc09ea085c7.jpg",
+      "sha256": "da792b045dc09ea085c76f41b455727f4b68ce74dc304eb0a3976cb72ddd4bfb"
+    },
+    {
+      "id": "PEKS-a412c9cf9defae91ca66",
+      "path": "term-images/politics-economics-k/PEKS-a412c9cf9defae91ca66.jpg",
+      "alt": "フリードリヒ・リストの肖像（1845年）",
+      "caption": "フリードリヒ・リストの肖像（1845年）",
+      "creator": "Josef Kriehuber（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Friedrich_List_1845.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-a412c9cf9defae91ca66.jpg",
+      "sha256": "a412c9cf9defae91ca669a5436be099ca91784be2da09717c0b0d71de6f54526"
+    },
+    {
+      "id": "PEKS-886f2df8a146fe1ade6e",
+      "path": "term-images/politics-economics-k/PEKS-886f2df8a146fe1ade6e.jpg",
+      "alt": "ケインズの肖像写真（1933年）",
+      "caption": "ケインズの肖像写真（1933年）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Keynes_1933.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-886f2df8a146fe1ade6e.jpg",
+      "sha256": "886f2df8a146fe1ade6ed760cc610eec56e57cb14458c7e1c8dc9c3995918606"
+    },
+    {
+      "id": "PEKS-db79822d1693bc3b3279",
+      "path": "term-images/politics-economics-k/PEKS-db79822d1693bc3b3279.jpg",
+      "alt": "ミルトン・フリードマンの肖像写真",
+      "caption": "ミルトン・フリードマンの肖像写真",
+      "creator": "The Friedman Foundation for Educational Choice（縮小）",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Milton_Friedman_(3x4_cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-db79822d1693bc3b3279.jpg",
+      "sha256": "db79822d1693bc3b327928b753e32c423147b92253c10d673438d1e12ba14b5f"
     }
   ]
 }

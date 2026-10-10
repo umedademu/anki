@@ -2,7 +2,10 @@
   "schemaVersion": 1,
   "subjectId": "politics-economics-k",
   "deckIds": [
-    "pek-01-01"
+    "pek-01-01",
+    "pek-01-02",
+    "pek-01-03",
+    "pek-01-04"
   ],
   "images": [
     {
@@ -125,6 +128,175 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-cc9110140b29da29c4a3",
+      "caption": "グロティウスの肖像（1631年）",
+      "note": "近代自然法の父とよばれる人物の肖像。国際法の父としての著作（項目9で扱う）の画像ではない。",
+      "targets": [
+        {
+          "termId": "PEK-01-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-286cd482223bd0",
+      "caption": "ホッブズの肖像",
+      "note": "自然状態のとらえ方を問う問題の回答後に人物を示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d4b55f713f68545c8e44",
+      "caption": "ホッブズ『リヴァイアサン』初版の口絵（1651年）",
+      "note": "多数の人民から成る巨大な主権者（王冠・剣・笏）を描いた口絵。人民が主権者に自然権を譲渡し、主権者が絶対的な権力をもつ契約の説明に付ける。万人の万人に対する闘争（自然状態）の絵ではない。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-8c6ea46329e110",
+      "caption": "ロックの肖像",
+      "note": "自然状態のとらえ方を問う問題の回答後に人物を示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-e1e7ec994c70e6a37f98",
+      "caption": "ロック『統治二論（市民政府二論）』初版の扉（1690年）",
+      "note": "主著の書名を答えに含む問題だけに付ける。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U04",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-4fc664893fd2ce",
+      "caption": "ルソーの肖像",
+      "note": "ルソーの自然状態のとらえ方・社会契約・一般意志の回答後に人物を示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U08",
+          "questions": [
+            "R01",
+            "R02"
+          ]
+        },
+        {
+          "termId": "PEK-01-03-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-4ca54edd6fbe568c754f",
+      "caption": "アメリカ・バーモント州ハンティントンのタウン・ミーティング（2006年）",
+      "note": "ニューイングランドの町で今も続く住民総会の様子。原文が例に挙げるアメリカ植民地時代の会合そのものの写真ではない。",
+      "targets": [
+        {
+          "termId": "PEK-01-03-U11",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1e31b3917ad3baee3a55",
+      "caption": "裁判官エドワード・コークの肖像（1600年ごろ）",
+      "note": "「国王といえども神と法の下にある」を用いて国王をいさめた裁判官として、答えを示した後に肖像を表示する。言葉の主ブラクトンの肖像ではない。",
+      "targets": [
+        {
+          "termId": "PEK-01-04-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-6a2947b2f92d00",
+      "caption": "大日本帝国憲法の原本（御名御璽の頁）",
+      "note": "法律の留保を定めた権利の条文の頁ではなく、憲法そのものを示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-04-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-e07a1dcd076a6fea124f",
+      "caption": "アクトンの肖像",
+      "note": "権力の集中の危険を述べた言葉の主として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-01-04-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-81d111e7217c03",
+      "caption": "モンテスキューの肖像",
+      "note": "三権分立を説いた人物の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-01-04-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-dd1b5d95b9ca13",
+      "caption": "日本の三権分立と相互の抑制を示した図",
+      "note": "立法（国会）・行政（内閣）・司法（裁判所）の担当と、相互の抑制の矢印を示す。図中の個々の抑制の手段（内閣不信任決議など）は項目6で扱うため、答えに含めない。",
+      "targets": [
+        {
+          "termId": "PEK-01-04-U08",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-04-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -211,6 +383,78 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Abraham_Lincoln_O-77_matte_collodion_print.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-6f0d47f184f2a4ffb2e6.jpg",
       "sha256": "6f0d47f184f2a4ffb2e654d83c74205b320038c26f27b31cb28e18613421ea59"
+    },
+    {
+      "id": "PEKS-cc9110140b29da29c4a3",
+      "path": "term-images/politics-economics-k/PEKS-cc9110140b29da29c4a3.jpg",
+      "alt": "グロティウスの肖像（1631年）",
+      "caption": "グロティウスの肖像（1631年）",
+      "creator": "Michiel Jansz. van Mierevelt",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Michiel_Jansz_van_Mierevelt_-_Hugo_Grotius.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-cc9110140b29da29c4a3.jpg",
+      "sha256": "cc9110140b29da29c4a328423920b3136cdc1857d4f75d0a2dc028e2c58e3205"
+    },
+    {
+      "id": "PEKS-d4b55f713f68545c8e44",
+      "path": "term-images/politics-economics-k/PEKS-d4b55f713f68545c8e44.jpg",
+      "alt": "ホッブズ『リヴァイアサン』初版の口絵（1651年）",
+      "caption": "ホッブズ『リヴァイアサン』初版の口絵（1651年）",
+      "creator": "Abraham Bosse（縮小）",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Leviathan_by_Thomas_Hobbes.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-d4b55f713f68545c8e44.jpg",
+      "sha256": "d4b55f713f68545c8e4456b7af8cfbd9d18086cf69f1bc1aa427315a28dd8ee9"
+    },
+    {
+      "id": "PEKS-e1e7ec994c70e6a37f98",
+      "path": "term-images/politics-economics-k/PEKS-e1e7ec994c70e6a37f98.jpg",
+      "alt": "ロック『統治二論（市民政府二論）』初版の扉（1690年）",
+      "caption": "ロック『統治二論（市民政府二論）』初版の扉（1690年）",
+      "creator": "アメリカ議会図書館（所蔵）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Title_page_of_John_Locke,_Two_Treatises_of_Government_(London,_1690)_LCCN2002710224.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e1e7ec994c70e6a37f98.jpg",
+      "sha256": "e1e7ec994c70e6a37f98bfb601dcb7f2dff9fcb0860a584e9bab4611522462bc"
+    },
+    {
+      "id": "PEKS-4ca54edd6fbe568c754f",
+      "path": "term-images/politics-economics-k/PEKS-4ca54edd6fbe568c754f.jpg",
+      "alt": "アメリカ・バーモント州ハンティントンのタウン・ミーティング（2006年）",
+      "caption": "アメリカ・バーモント州ハンティントンのタウン・ミーティング（2006年）",
+      "creator": "TimothyDexter（英語版ウィキペディア）",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Huntington_town_meeting.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-4ca54edd6fbe568c754f.jpg",
+      "sha256": "4ca54edd6fbe568c754f4e29a7232730a06adfc8131ab0e84cb464dae18d313f"
+    },
+    {
+      "id": "PEKS-1e31b3917ad3baee3a55",
+      "path": "term-images/politics-economics-k/PEKS-1e31b3917ad3baee3a55.jpg",
+      "alt": "裁判官エドワード・コークの肖像（1600年ごろ）",
+      "caption": "裁判官エドワード・コークの肖像（1600年ごろ）",
+      "creator": "Marcus Gheeraerts the Younger",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Marcus_the_Younger_Gheeraerts_-_Edward_Coke_Lord_Chief_Justice.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-1e31b3917ad3baee3a55.jpg",
+      "sha256": "1e31b3917ad3baee3a5537d9a25fc394643685510b2e5dfebe82f5500a9f0ade"
+    },
+    {
+      "id": "PEKS-e07a1dcd076a6fea124f",
+      "path": "term-images/politics-economics-k/PEKS-e07a1dcd076a6fea124f.jpg",
+      "alt": "アクトンの肖像",
+      "caption": "アクトンの肖像",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_John_Dalberg-Acton,_1st_Baron_Acton.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e07a1dcd076a6fea124f.jpg",
+      "sha256": "e07a1dcd076a6fea124f806d386c7a54ac8c7d174ea405cc933e40f274380c3d"
     }
   ]
 }

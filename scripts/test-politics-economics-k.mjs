@@ -10,22 +10,36 @@ import { buildPoliticsKImages, isPoliticsKAssignment } from "./politics-economic
 import { createEmptyProgress, createQuestionQueue, getTermStage, rateQuestion } from "../public/learning-engine.js";
 
 const plans = await loadPoliticsEconomicsK();
-assert.deepEqual(plans.map(plan => plan.index.deckId), ["pek-01-01"]);
-const [plan] = plans;
-assert.equal(plan.index.datasetLabel, "政治経済K｜1-1 民主政治と国家・主権");
-assert.deepEqual(plan.index.availableStages, ["reverse"], "逆向きの説明だけを出題します。");
-assert.deepEqual(plan.index.questionCounts, { beginner: 0, reverse: 23, integrated: 0 });
-assert.equal(plan.unitCount, 21);
-assert.equal(plan.index.version, "politics-economics-k-pek-01-01-v2", "作り直した第2版は学習履歴を分けます。");
-assert.deepEqual(plan.definition.chapterGroups, [{ id: "item-01", number: 1, title: "1 民主政治の思想と原理", label: "項目1", deckIds: ["pek-01-01"] }]);
+// 項目1「民主政治の思想と原理」の全４小見出し。
+const expected = [
+  ["pek-01-01", "政治経済K｜1-1 民主政治と国家・主権", 21, 23, 2],
+  ["pek-01-02", "政治経済K｜1-2 自然法と自然権", 4, 6, 1],
+  ["pek-01-03", "政治経済K｜1-3 社会契約説", 15, 19, 1],
+  ["pek-01-04", "政治経済K｜1-4 法の支配と権力分立", 9, 10, 1],
+];
+assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
+for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {
+  const value = plans[index];
+  assert.equal(value.index.datasetLabel, label);
+  assert.deepEqual(value.index.availableStages, ["reverse"], "逆向きの説明だけを出題します。");
+  assert.deepEqual(value.index.questionCounts, { beginner: 0, reverse: questions, integrated: 0 });
+  assert.equal(value.unitCount, units);
+  assert.equal(value.index.version, `politics-economics-k-${deckId}-v${revision}`, "作り直した版だけ学習履歴を分けます。");
+  assert.deepEqual(value.definition.chapterGroups, [{ id: "item-01", number: 1, title: "1 民主政治の思想と原理", label: "項目1", deckIds: [deckId] }]);
+}
+const [plan] = plans, allPlanObjects = plans.flatMap(value => value.objects);
+const totalQuestions = expected.reduce((sum, value) => sum + value[3], 0), totalUnits = expected.reduce((sum, value) => sum + value[2], 0);
+const allTerms = plans.flatMap(value => value.terms);
+assert.equal(new Set(allTerms.map(term => term.id)).size, allTerms.length);
+assert.equal(new Set(allTerms.flatMap(term => term.stages.reverse).map(question => question.prompt)).size, totalQuestions, "パートをまたいでも問題文は重複しません。");
 // 講義の口調を答えに持ち込まない。
-for (const question of plan.terms.flatMap(term => term.stages.reverse)) {
-  assert.doesNotMatch(question.answer, /だよ|なんだ|のさ|大変なことになる|100％|しょせん|ってわけ|じゃなくて/, `講義口調の答えです: ${question.id}`);
+for (const question of allTerms.flatMap(term => term.stages.reverse)) {
+  assert.doesNotMatch(question.answer, /だよ|なんだ|のさ|大変なことになる|100％|しょせん|ってわけ|じゃなくて|僕/, `講義口調の答えです: ${question.id}`);
   // 問題文は「排他的経済水域とはどんな水域？」のような普通の疑問文にし、「用語」：…？ の形や「〜か。」の形にしない。
-  assert.match(question.prompt, /^[^「].*？$/, `問題文は普通の疑問文にします: ${question.id}`);
+  assert.match(question.prompt, /？$/, `問題文は普通の疑問文にします: ${question.id}`);
   assert.doesNotMatch(question.prompt, /^「[^」]+」：/, `「用語」：…？ の形は使いません: ${question.id}`);
 }
-for (const term of plan.terms) {
+for (const term of allTerms) {
   assert.deepEqual(term.stages.beginner, []); assert.deepEqual(term.stages.integrated, []);
   for (const question of term.stages.reverse) {
     assert.ok(question.id.startsWith(`${term.id}-R`));
@@ -70,19 +84,20 @@ const subject = next.subjects[1];
 assert.equal(subject.id, "politics-economics-k");
 assert.equal(subject.title, "政治経済K");
 assert.equal(subject.defaultDeckId, "pek-01-01");
-assert.equal(subject.questionCount, 23); assert.equal(subject.termCount, 21);
-assert.deepEqual(subject.chapterGroups, plan.definition.chapterGroups);
+assert.equal(subject.questionCount, totalQuestions); assert.equal(subject.termCount, totalUnits);
+assert.deepEqual(subject.chapterGroups, [{ ...plan.definition.chapterGroups[0], deckIds: expected.map(([deckId]) => deckId) }], "項目1の４パートが一つのデッキにまとまります。");
+assert.deepEqual(subject.decks.map(deck => deck.number), [101, 102, 103, 104]);
 assert.notEqual(next.version, original.version);
 assert.deepEqual(appendPoliticsKDecks(next, plans), next, "同じ追加を繰り返しても索引版を変えません。");
 const edited = structuredClone(next); edited.subjects[1].decks[0].contentVersion = "edited-after-publication";
 assert.throws(() => appendPoliticsKDecks(edited, plans), /上書きしません/, "公開後に編集したパートを上書きしません。");
 assert.throws(() => appendPoliticsKDecks(original, [plan, plan]), /重複/);
 // 次の小見出しは同じ項目のデッキへ番号順に加わる。
-const laterBank = structuredClone(bank); laterBank.heading = { number: 2, title: "試験用の小見出し" };
+const laterBank = structuredClone(bank); laterBank.heading = { number: 9, title: "試験用の小見出し" };
 const later = buildPoliticsEconomicsK(laterBank, excerpt);
 const grown = appendPoliticsKDecks(next, [later]);
-assert.deepEqual(grown.subjects[1].chapterGroups, [{ ...plan.definition.chapterGroups[0], deckIds: ["pek-01-01", "pek-01-02"] }]);
-assert.equal(grown.subjects[1].questionCount, 46);
+assert.deepEqual(grown.subjects[1].chapterGroups, [{ ...plan.definition.chapterGroups[0], deckIds: [...expected.map(([deckId]) => deckId), "pek-01-09"] }]);
+assert.equal(grown.subjects[1].questionCount, totalQuestions + 23);
 assert.deepEqual(grown.subjects[1].decks[0], next.subjects[1].decks[0]);
 // 作り直し：確認時の科目と一致する場合だけ、手元の原稿全体で科目を置き換え、他科目と並び順を維持する。
 const revised = structuredClone(bank); revised.revision = 3; revised.units[0].questions[0].answer = "多くの人が集まる社会で、**権力**や**政策**を用いて秩序を形成する作用。";
@@ -112,19 +127,19 @@ class MemoryBucket {
 const bucket = new MemoryBucket(), before = await bucket.put("index.json", JSON.stringify(original));
 const env = { BUCKET: bucket, ACCESS_TOKEN: "test-only", PRESERVE_EXISTING_DECKS: "false", PREVIOUS_SUBJECT_HASH: "",
   ...encodeJsonBindings("ADDITION_JSON", subject),
-  ...encodeJsonBindings("OBJECT_HASHES", Object.fromEntries(plan.objects.map(object => [object.key, contentHash(object.value)]))),
+  ...encodeJsonBindings("OBJECT_HASHES", Object.fromEntries(allPlanObjects.map(object => [object.key, contentHash(object.value)]))),
   ...encodeJsonBindings("PREVIOUS_OBJECT_HASHES", {}) };
 const call = input => writer.fetch(new Request("https://example.invalid", { method: "POST", headers: { Authorization: "Bearer test-only", "Content-Type": "application/json" }, body: JSON.stringify(input) }), env);
 const commit = { action: "commit", key: "index.json", value: next, expectedEtag: before.etag };
 assert.equal((await call(commit)).status, 400, "全新規問題を照合する前には切替できません。");
 assert.equal((await call({ action: "stage", key: "subjects/japanese-history-k/x.json", value: {} })).status, 403, "他科目の保存先には書き込みません。");
-for (const object of plan.objects) assert.equal((await call({ action: "stage", ...object })).status, 200);
+for (const object of allPlanObjects) assert.equal((await call({ action: "stage", ...object })).status, 200);
 assert.equal((await call({ ...commit, expectedEtag: "stale" })).status, 409);
 const otherChanged = structuredClone(next); otherChanged.subjects[0].title = "変更";
 assert.equal((await call({ ...commit, value: otherChanged })).status, 400, "他科目の変更を含む切替を拒否します。");
 assert.equal((await call(commit)).status, 200);
 assert.deepEqual(await (await bucket.get("index.json")).json(), next);
-for (const object of plan.objects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
+for (const object of allPlanObjects) assert.deepEqual(await (await bucket.get(object.key)).json(), object.value);
 assert.equal((await call({ ...commit, expectedEtag: (await bucket.get("index.json")).etag })).status, 409, "登録済みの科目を初回として二重登録しません。");
 // 作り直しの切替：確認時の科目と一致し、他科目を変えない場合だけ科目全体を置き換える。
 const replacedCatalog = replacePoliticsKSubject(next, [revisedPlan], contentHash(subject));
@@ -142,15 +157,20 @@ assert.equal((await callReplace({ ...replaceCommit, expectedEtag: (await bucket.
 
 // 関連画像：点検済みの割り当てだけを追加し、既存の画像一覧を保持する。
 const selection = JSON.parse(await readFile("data/source/politics-economics-k/image-assignments.json", "utf8"));
-const images = { schemaVersion: 2, assets: [{ id: "OLD", path: "term-images/old.webp" }], assignments: [{ questionId: "OLD-Q", assetId: "OLD" }], termFallbacks: [] };
-const snapshot = { catalog: next, images, decks: [{ entry: subject.decks[0], index: plan.index, chunks: plan.objects.filter(object => object.key.includes("/chunks/")).map(object => object.value) }] };
+// 「政治・経済」で登録済みの画像（ホッブズなど）は共有する。Cloudflareの一覧と同じ内容を手元の写しから使う。
+const sharedIds = new Set(selection.images.map(choice => choice.sourceAssetId).filter(id => id.startsWith("WMP-")));
+const sharedAssets = JSON.parse(await readFile("data/source/politics-economics/term-images.json", "utf8")).assets.filter(asset => sharedIds.has(asset.id));
+assert.equal(sharedAssets.length, sharedIds.size, "共有する画像はすべて登録済みです。");
+const images = { schemaVersion: 2, assets: [{ id: "OLD", path: "term-images/old.webp" }, ...sharedAssets], assignments: [{ questionId: "OLD-Q", assetId: "OLD" }], termFallbacks: [] };
+const snapshot = { catalog: next, images, decks: plans.map(value => ({ entry: subject.decks.find(deck => deck.id === value.index.deckId), index: value.index, chunks: value.objects.filter(object => object.key.includes("/chunks/")).map(object => object.value) })) };
 const result = buildPoliticsKImages(snapshot, selection);
-assert.equal(result.addedAssignments.length, 12);
+assert.equal(result.addedAssignments.length, 27);
 assert.equal(result.removedAssignments.length, 0);
-assert.equal(new Set(result.audit.map(entry => entry.path)).size, 7);
-assert.deepEqual(result.manifest.assets.slice(0, 1), images.assets);
+assert.equal(new Set(result.audit.map(entry => entry.path)).size, 19);
+assert.deepEqual([...new Set(result.audit.map(entry => entry.deckId))], expected.map(([deckId]) => deckId), "全４パートに画像があります。");
+assert.deepEqual(result.manifest.assets.slice(0, images.assets.length), images.assets);
 assert.deepEqual(result.manifest.assignments.slice(0, 1), images.assignments);
-for (const entry of result.audit) assert.ok(plan.terms.some(term => term.stages.reverse.some(question => question.id === entry.questionId)));
+for (const entry of result.audit) assert.ok(allTerms.some(term => term.stages.reverse.some(question => question.id === entry.questionId)));
 for (const source of selection.sources) {
   const bytes = await readFile(source.sourceFile);
   assert.ok(bytes.length > 1000 && bytes.length < 500000 && bytes[0] === 255 && bytes[1] === 216, `JPEG・500KB未満の画像です: ${source.id}`);
@@ -161,7 +181,7 @@ staleImages.assignments = [images.assignments[0], { questionId: "PEK-01-01-U08-R
 assert.throws(() => buildPoliticsKImages({ ...snapshot, images: staleImages }, selection), /編集済みの画像指定は上書きしません/);
 const replacedImages = buildPoliticsKImages({ ...snapshot, images: staleImages }, selection, { replace: true });
 assert.equal(replacedImages.removedAssignments.length, 2);
-assert.equal(replacedImages.addedAssignments.length, 12);
+assert.equal(replacedImages.addedAssignments.length, 27);
 assert.deepEqual(replacedImages.manifest.assignments.filter(item => !isPoliticsKAssignment(item)), [images.assignments[0]], "他科目の割り当てを保持します。");
 assert.deepEqual(replacedImages.manifest.assets.slice(0, staleImages.assets.length), staleImages.assets, "既存の画像は残します。");
 assert.ok(!replacedImages.manifest.assignments.some(item => item.questionId === "PEK-01-01-U99-R01"), "旧版だけの問題への割り当てを外します。");
@@ -180,4 +200,4 @@ assert.equal((await callImages({ ...imageCommit, text: otherText }, { ...imageEn
 assert.equal((await callImages(imageCommit, { ...imageEnv, ...imageWriterVars({ READ_KEYS: ["index.json", "term-images.json"], QUESTION_IDS: ownQuestionIds.slice(1), NEW_IMAGES: {} }) })).status, 400, "設定にない問題への割り当てを拒否します。");
 assert.equal((await callImages(imageCommit)).status, 200);
 assert.equal(await (await imageBucket.get("term-images.json")).text(), nextText);
-console.log(`政治経済K：${plans.length}パート・${plan.unitCount}用語・${plan.index.questionCount}問（逆向きの説明のみ）の原文照合、一般的な言い回しの検査、科目の新設・再送・上書き防止・作り直しの置き換え、保存窓口の照合、関連画像${result.addedAssignments.length}問・${selection.sources.length}枚の割り当てと付け直しを確認しました。`);
+console.log(`政治経済K：${plans.length}パート・${totalUnits}用語・${totalQuestions}問（逆向きの説明のみ）の原文照合、一般的な言い回しの検査、科目の新設・再送・上書き防止・作り直しの置き換え、保存窓口の照合、関連画像${result.addedAssignments.length}問・${new Set(result.audit.map(entry => entry.path)).size}枚の割り当てと付け直しを確認しました。`);

@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 1, "title": "第1講 政治分野" },
+  "item": { "number": 1, "title": "民主政治の思想と原理" },
+  "heading": { "number": 2, "title": "自然法と自然権" },
+  "source": {
+    "file": "sources/seikei/01_民主政治の思想と原理.md",
+    "ranges": [
+      { "start": "### 2　自然法と自然権", "end": "### 3　社会契約説" }
+    ],
+    "pages": [10, 11, 12],
+    "note": "10頁の「2 自然法と自然権」から12頁の「3 社会契約説」の見出し直前までを読んだ。末尾の社会契約説の定義は次の小見出しの範囲にも含め、そちらで出題する。講義のたとえ（「人を殺すな」をみんながわきまえていれば自分の生命を守る権利が与えられたのと同じ、など）は答えに使わず、自然法・自然権・自然状態の一般的な説明と、自然状態に強制力がないことから国家が必要になる流れを扱う。グロティウスの「国際法の父」としての側面は項目9で扱うため、ここでは自然法の考え方だけを答えにする。"
+  },
+  "facts": [
+    { "id": "natural-law-root", "page": 10, "quote": "自然法は人間である以上当然守るべき、根源的なルールである。" },
+    { "id": "natural-law-universal", "page": 10, "quote": "自然法は時・場所に制約されない普遍的ルールである。" },
+    { "id": "not-statute", "page": 11, "quote": "自然法は法律ではなく、一種の「社会常識」" },
+    { "id": "statute-scope", "page": 11, "quote": "法律は「今現在」の「1つの国の中」だけに通用するルールだけど、自然法はもっと根源的なルールだ。" },
+    { "id": "before-statute", "page": 11, "quote": "人間である以上は法律よりもまず先に守らなければならない普遍的なルール" },
+    { "id": "examples", "page": 11, "quote": "「人を殺すな」「人のものを盗むな」「人の自由を奪うな」などの社会常識は、みんな自然法ということになるね。" },
+    { "id": "right-reason", "page": 11, "quote": "それが人間の「正しい理性の命令」に従っているかどうかで判断すればいいんだ。これが近代自然法の父といわれたグロティウスの考え方だ。" },
+    { "id": "natural-right", "page": 11, "quote": "自然権とは、自然法で認められた権利のことだ。人間が生まれながらに持つ当然の権利といい換えてもいい。" },
+    { "id": "natural-right-content", "page": 11, "quote": "「自分の生命・財産・自由などを守る権利」と考えればいい。" },
+    { "id": "state-of-nature", "page": 12, "quote": "世の中が自然法しかない状態（＝自然状態）だったら、僕らの自然権は十分に守ることはできない" },
+    { "id": "no-force", "page": 12, "quote": "自然法は「正しい理性の命令」にすぎず、そこには一切の強制力がない。" },
+    { "id": "no-arrest", "page": 12, "quote": "もし世の中に自然権の侵害者が現れても、逮捕も裁判もできず、刑罰も加えられない。" },
+    { "id": "need-state", "page": 12, "quote": "逮捕や刑罰といった強制力のある社会集団をつくる必要がある。そして万人を従えられる強制力は主権に基づくものだから、それは国家以外にあり得ない。" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "自然法", "reading": "しぜんほう", "category": "自然法と自然権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "自然法とはどんなルール？",
+          "answer": "人間である以上、**法律よりも先に**当然守るべき**根源的なルール**。**時代や場所に制約されない普遍的なルール**で、「人を殺すな」「人のものを盗むな」といった社会常識がこれにあたる。",
+          "evidence": ["natural-law-root", "natural-law-universal", "before-statute", "examples"],
+          "keywords": ["法律よりも先に", "根源的なルール", "時代や場所に制約されない普遍的なルール"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "法律との違い",
+          "prompt": "自然法と法律は、どう違う？",
+          "answer": "法律は**特定の時代の、特定の国の中**だけで通用するルールである。これに対して自然法は法律ではなく、**時代や国を問わず通用する**普遍的なルールである。",
+          "evidence": ["not-statute", "statute-scope", "natural-law-universal"],
+          "keywords": ["特定の時代の、特定の国の中", "時代や国を問わず通用する"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "グロティウス", "reading": "ぐろてぃうす", "category": "人物",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "自然法のとらえ方",
+          "prompt": "グロティウスはどんな人物？自然法をどのようにとらえた？",
+          "answer": "「**近代自然法の父**」とよばれる人物。自然法を、人間の**正しい理性の命令**ととらえた。",
+          "evidence": ["right-reason"], "keywords": ["近代自然法の父", "正しい理性の命令"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "自然権", "reading": "しぜんけん", "category": "自然法と自然権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "自然権とはどんな権利？",
+          "answer": "自然法によって認められた、人間が**生まれながらにもつ当然の権利**。自分の**生命・自由・財産**などを守る権利をさす。",
+          "evidence": ["natural-right", "natural-right-content"], "keywords": ["生まれながらにもつ当然の権利", "生命・自由・財産"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04", "term": "自然状態", "reading": "しぜんじょうたい", "category": "自然法と自然権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "自然状態とはどんな状態？",
+          "answer": "国家がつくられる前の、世の中に**自然法しかない状態**。",
+          "evidence": ["state-of-nature"], "keywords": ["自然法しかない状態"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "国家が必要になる理由",
+          "prompt": "自然状態では、なぜ自然権を十分に守れない？",
+          "answer": "自然法には**強制力がない**ため、自然権を侵害する者が現れても**逮捕・裁判・刑罰**ができないから。そのため、主権にもとづく強制力をもつ**国家**が必要とされた。",
+          "evidence": ["no-force", "no-arrest", "need-state", "state-of-nature"],
+          "keywords": ["強制力がない", "逮捕・裁判・刑罰", "国家"], "note": ""
+        }
+      ]
+    }
+  ]
+}

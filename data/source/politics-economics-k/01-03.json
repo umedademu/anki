@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 1, "title": "第1講 政治分野" },
+  "item": { "number": 1, "title": "民主政治の思想と原理" },
+  "heading": { "number": 3, "title": "社会契約説" },
+  "source": {
+    "file": "sources/seikei/01_民主政治の思想と原理.md",
+    "ranges": [
+      { "start": "このように、<mark>**自然権を確実に守るために", "end": "### 4　法の支配と権力分立" }
+    ],
+    "pages": [12, 13, 14, 15, 16, 17, 18, 19],
+    "note": "社会契約説の定義は12頁の前の小見出しの末尾にあるため、その段落から19頁の「4 法の支配と権力分立」の見出し直前までを範囲とした（定義の段落だけ前のパートと重なる）。ホッブズ・ロック・ルソーの自然状態のとらえ方、契約の内容、主著、導かれる政治体制を比較できるようにし、間接民主制・直接民主制の長所と短所、直接民主制的な要素（イニシアチブ・レファレンダム・リコール）まで扱う。国生み神話との違い、「命がいくつあっても足りない」「人任せではダメ」などの講義のたとえは答えに使わない。ルソーの言葉は原文の「英国人が自由なのは選挙のときだけ」の表記に従う。地方自治の直接請求の詳細は項目7で扱う。"
+  },
+  "facts": [
+    { "id": "sc-definition", "page": 12, "quote": "自然権を確実に守るために、人民相互の同意に基づいて国家が形成されたとする説を「社会契約説」という" },
+    { "id": "sc-origin", "page": 12, "quote": "社会契約説は、国家形成の起源に関する説の1つなんだ。" },
+    { "id": "sc-thinkers", "page": 13, "quote": "この説を唱えた代表的な人物は3人、ホッブズとロックとルソーなんだけど、面白いことに彼らはそれぞれ、重視する自然権が違う。" },
+    { "id": "hobbes-book", "page": 13, "quote": "ホッブズの社会契約説…『リヴァイアサン』より" },
+    { "id": "hobbes-nature", "page": 13, "quote": "自然状態：自由・平等だが欲望に支配される。" },
+    { "id": "hobbes-war", "page": 13, "quote": "「万人の万人に対する闘争」発生" },
+    { "id": "hobbes-wolf", "page": 13, "quote": "「人は人に対して狼」発生" },
+    { "id": "hobbes-transfer", "page": 13, "quote": "社会契約：人民が主権者（1人or合議体）に、自然権を全面譲渡。" },
+    { "id": "hobbes-absolute", "page": 13, "quote": "主権者は人民の生命を守るため、絶対的な強権を持つ。" },
+    { "id": "hobbes-result", "page": 13, "quote": "結果的に絶対王政の正当化へ" },
+    { "id": "hobbes-no-change", "page": 13, "quote": "自然権を譲渡した以上、人民側からの主権者変更は不可。" },
+    { "id": "hobbes-self-preservation", "page": 14, "quote": "この状態は、いわば戦争状態だ。戦争状態でいちばん大事な自然権は自己保存、いい換えれば「生命や、安全」だ。" },
+    { "id": "locke-book", "page": 14, "quote": "ロックの社会契約説…『市民政府二論（統治二論）』より" },
+    { "id": "locke-nature", "page": 14, "quote": "自然状態：自由・平等だが不安定。➡自然法しかないから。" },
+    { "id": "locke-secure", "page": 14, "quote": "誰かに所有権を侵害されるかも。➡自然権を確実に守りたい。" },
+    { "id": "locke-property", "page": 14, "quote": "ロックの所有権は「生命・自由・財産など」の自然権を所有する権利。" },
+    { "id": "locke-indirect", "page": 14, "quote": "国民の代表者が集まる機関が国家統治（＝間接民主制）。" },
+    { "id": "locke-trust", "page": 14, "quote": "議会➡ここに国民は権力を信託" },
+    { "id": "locke-resistance", "page": 14, "quote": "代表者が裏切れば抵抗権（＝革命権）を行使。" },
+    { "id": "locke-peace", "page": 14, "quote": "ロックはホッブズとは違い、自然状態の人間は自由で平等で平和だと考えた。" },
+    { "id": "trust-meaning", "page": 15, "quote": "国民が統治機関に対し、そこを信頼して犯罪等を取り締まるための強制力を与えるかわりに、その強制力で自分たちを守ってもらうことだよ。" },
+    { "id": "locke-parliament", "page": 15, "quote": "議会を中心とした間接民主制国家をイメージした。" },
+    { "id": "resistance-meaning", "page": 15, "quote": "政府解任権とか革命権とも呼ばれるけど、これを国民に与えておくんだ。そうすると、議会が国民を裏切ったときには、僕らはすぐに革命でひっくり返せる。" },
+    { "id": "rousseau-book", "page": 16, "quote": "ルソーの社会契約説…『社会契約論』より" },
+    { "id": "rousseau-nature", "page": 16, "quote": "自然状態：自由・平等・独立＋「自己愛と憐憫」に基づく平和。" },
+    { "id": "rousseau-property", "page": 16, "quote": "私有財産の発生により不自然・不平等に。" },
+    { "id": "particular-will", "page": 16, "quote": "利己的利益を求める特殊意志や、その意志の総和（＝全体意志）などに基づく国家では、自由・平等は回復しない。" },
+    { "id": "rousseau-direct", "page": 16, "quote": "選挙での代表選出ではなく直接民主制を" },
+    { "id": "general-will", "page": 16, "quote": "一般意志とは「公共の利益をめざす全人民的意志」のこと。" },
+    { "id": "rousseau-inequality", "page": 16, "quote": "より詳しくはルソーの『人間不平等起源論』に書いてあるが" },
+    { "id": "rousseau-chains", "page": 17, "quote": "人間は自由なものとして生まれた。しかし至る所で鉄鎖につながれている" },
+    { "id": "rousseau-recover", "page": 17, "quote": "公共の利益をめざす全人民的意志に基づいて共同体を形成し、そこで自由と平等の回復をめざす" },
+    { "id": "general-will-distinct", "page": 17, "quote": "これは、個人の利益を求める特殊意志や、その意志の集まりである全体意志とは別のものだ。" },
+    { "id": "english-free", "page": 17, "quote": "「英国人が自由なのは選挙のときだけ」という有名な言葉で選挙制度を批判し、全人民が直接政治に参加する直接民主制を主張した" },
+    { "id": "indirect-content", "page": 18, "quote": "選挙で選ばれた人民が、代表者として政治参加。" },
+    { "id": "indirect-name", "page": 18, "quote": "間接民主制（＝代議制）" },
+    { "id": "indirect-merit", "page": 18, "quote": "実現が容易。" },
+    { "id": "indirect-demerit", "page": 18, "quote": "民意の反映が不十分。" },
+    { "id": "direct-content", "page": 18, "quote": "全人民が政治に参加。" },
+    { "id": "direct-merit", "page": 18, "quote": "民意の完全反映。" },
+    { "id": "direct-demerit", "page": 18, "quote": "実現が困難。" },
+    { "id": "town-meeting", "page": 18, "quote": "アメリカ植民地時代のタウン＝ミーティングぐらいの規模なら可能でも、国家レベルではかなり困難と考えた方がいい。" },
+    { "id": "mixed", "page": 18, "quote": "間接民主制を直接民主制の要素で部分的に補った形" },
+    { "id": "mixed-examples", "page": 18, "quote": "署名活動や住民投票など、全員参加の直接民主制的要素を織り交ぜていく" },
+    { "id": "mixed-purpose", "page": 18, "quote": "これらを使って議会の暴走を抑えるのも、民主政治では必要なことなんだ。" },
+    { "id": "initiative-name", "page": 19, "quote": "国民発案（イニシアチブ）" },
+    { "id": "initiative-content", "page": 19, "quote": "国民からの立法提案。" },
+    { "id": "referendum-name", "page": 19, "quote": "国民表決（レファレンダム）" },
+    { "id": "referendum-content", "page": 19, "quote": "投票による意思決定。" },
+    { "id": "recall-name", "page": 19, "quote": "国民解職（リコール）" },
+    { "id": "recall-content", "page": 19, "quote": "国民による公務員の解職。" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "社会契約説", "reading": "しゃかいけいやくせつ", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と代表的な思想家",
+          "prompt": "社会契約説とはどんな説？",
+          "answer": "**自然権**を確実に守るために、人民どうしの**同意（契約）**にもとづいて**国家**がつくられたとする、国家の成り立ちについての説。代表的な思想家は**ホッブズ・ロック・ルソー**。",
+          "evidence": ["sc-definition", "sc-origin", "sc-thinkers"],
+          "keywords": ["自然権", "同意（契約）", "国家", "ホッブズ・ロック・ルソー"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "三人の比較",
+          "prompt": "ホッブズ・ロック・ルソーの社会契約説は、それぞれどんな政治体制につながった？",
+          "answer": "ホッブズは結果的に**絶対王政**を擁護することになった。ロックは議会を中心とする**間接民主制**を、ルソーは全人民が政治に参加する**直接民主制**を主張した。",
+          "evidence": ["hobbes-result", "locke-indirect", "locke-parliament", "rousseau-direct", "english-free"],
+          "keywords": ["絶対王政", "間接民主制", "直接民主制"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "ホッブズ", "reading": "ほっぶず", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "自然状態のとらえ方",
+          "prompt": "ホッブズは自然状態をどのようにとらえた？",
+          "answer": "人間は自由・平等だが**欲望**に支配されているため、自然状態では「**万人の万人に対する闘争**」という戦争状態が生じるととらえた。そのため、最も大切な自然権は**自己保存**（生命の安全）だと考えた。",
+          "evidence": ["hobbes-nature", "hobbes-war", "hobbes-self-preservation"],
+          "keywords": ["欲望", "万人の万人に対する闘争", "自己保存"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "社会契約の内容と結果",
+          "prompt": "ホッブズの社会契約説では、人民はどのような契約を結ぶ？",
+          "answer": "人民は生命を守るため、**主権者に自然権を全面的に譲渡**し、主権者は**絶対的な権力**をもつ。人民の側から主権者を変えることはできず、結果的に**絶対王政を擁護**することになった。主著は『**リヴァイアサン**』。",
+          "evidence": ["hobbes-transfer", "hobbes-absolute", "hobbes-no-change", "hobbes-result", "hobbes-book"],
+          "keywords": ["主権者に自然権を全面的に譲渡", "絶対的な権力", "絶対王政を擁護", "リヴァイアサン"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "万人の万人に対する闘争", "reading": "ばんにんのばんにんにたいするとうそう", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "誰が何を表した言葉か",
+          "prompt": "「万人の万人に対する闘争」とは、誰が何を表した言葉？",
+          "answer": "**ホッブズ**が、**自然状態**のありさまを表した言葉。自由・平等な人間が欲望のままに争う**戦争状態**のことで、「**人は人に対して狼**」とも表現される。",
+          "evidence": ["hobbes-war", "hobbes-wolf", "hobbes-nature", "hobbes-self-preservation"],
+          "keywords": ["ホッブズ", "自然状態", "戦争状態", "人は人に対して狼"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04", "term": "ロック", "reading": "ろっく", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "自然状態のとらえ方",
+          "prompt": "ロックは自然状態をどのようにとらえた？",
+          "answer": "人間は自由・平等で**平和**な状態にあるが、**自然法しかなく強制力がない**ため**不安定**であり、生命・自由・財産などの**所有権**が侵害されるおそれがあるととらえた。",
+          "evidence": ["locke-peace", "locke-nature", "locke-secure", "locke-property"],
+          "keywords": ["平和", "自然法しかなく強制力がない", "不安定", "所有権"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "社会契約の内容",
+          "prompt": "ロックの社会契約説では、人民はどのような国家をつくる？",
+          "answer": "人民は自然権を守るため、代表者が集まる議会に**権力を信託**し、**議会を中心とする間接民主制**の国家をつくる。政府が人民を裏切った場合、人民は**抵抗権（革命権）**を行使できる。主著は『**市民政府二論（統治二論）**』。",
+          "evidence": ["locke-indirect", "locke-trust", "locke-parliament", "locke-resistance", "locke-book"],
+          "keywords": ["権力を信託", "議会を中心とする間接民主制", "抵抗権（革命権）", "市民政府二論（統治二論）"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05", "term": "所有権", "reading": "しょゆうけん", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "ロックのいう所有権",
+          "prompt": "ロックのいう所有権とは、どんな権利？",
+          "answer": "**生命・自由・財産**などの**自然権を所有する権利**。ロックは、これを確実に守るために国家がつくられると考えた。",
+          "evidence": ["locke-property", "locke-secure"],
+          "keywords": ["生命・自由・財産", "自然権を所有する権利"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06", "term": "信託", "reading": "しんたく", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "権力の信託の意味",
+          "prompt": "ロックのいう権力の信託とは、どういうこと？",
+          "answer": "国民が政府などの統治機関を**信頼**して、犯罪などを取り締まる**強制力を与える**代わりに、その力で自分たちの**自然権を守ってもらう**こと。",
+          "evidence": ["trust-meaning", "locke-trust"],
+          "keywords": ["信頼", "強制力を与える", "自然権を守ってもらう"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "07", "term": "抵抗権", "reading": "ていこうけん", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と提唱者",
+          "prompt": "抵抗権とはどんな権利？",
+          "answer": "政府や議会が国民の信託を裏切った場合に、国民が**政府を倒してつくり変える**ことができる権利。**革命権**ともいい、**ロック**が説いた。",
+          "evidence": ["locke-resistance", "resistance-meaning"],
+          "keywords": ["政府を倒してつくり変える", "革命権", "ロック"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "08", "term": "ルソー", "reading": "るそー", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "自然状態とその変化",
+          "prompt": "ルソーは自然状態とその変化をどのようにとらえた？",
+          "answer": "自然状態の人間は自由・平等で、**自己愛**と**憐憫(れんびん)**にもとづく平和な状態にあったが、**私有財産**の発生によって不自由・不平等になったととらえた（『**人間不平等起源論**』）。「**人間は自由なものとして生まれた。しかし至る所で鉄鎖につながれている**」と述べた。",
+          "evidence": ["rousseau-nature", "rousseau-property", "rousseau-inequality", "rousseau-chains"],
+          "keywords": ["自己愛", "憐憫", "私有財産", "人間不平等起源論", "人間は自由なものとして生まれた。しかし至る所で鉄鎖につながれている"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "社会契約の内容",
+          "prompt": "ルソーの社会契約説では、どのような国家をつくる？",
+          "answer": "人民が**一般意志**にもとづいて共同体をつくり、失われた自由と平等の回復をめざす。全人民が直接政治に参加する**直接民主制**を主張し、「**英国人が自由なのは選挙のときだけ**」と代議制を批判した。主著は『**社会契約論**』。",
+          "evidence": ["rousseau-recover", "general-will", "rousseau-direct", "english-free", "rousseau-book"],
+          "keywords": ["一般意志", "直接民主制", "英国人が自由なのは選挙のときだけ", "社会契約論"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "09", "term": "一般意志", "reading": "いっぱんいし", "category": "社会契約説",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と区別",
+          "prompt": "一般意志とはどんな意志？",
+          "answer": "ルソーが説いた、**公共の利益をめざす全人民の意志**。個人の利益を求める**特殊意志**や、その総和である**全体意志**とは区別される。",
+          "evidence": ["general-will", "particular-will", "general-will-distinct"],
+          "keywords": ["公共の利益をめざす全人民の意志", "特殊意志", "全体意志"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "10", "term": "間接民主制", "reading": "かんせつみんしゅせい", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容と長所・短所",
+          "prompt": "間接民主制とはどんな政治のしくみ？長所と短所は？",
+          "answer": "選挙で選ばれた**代表者**が政治を行うしくみで、**代議制**ともいう。**実現が容易**だが、**民意の反映が不十分**になりやすい。ロックが主張した。",
+          "evidence": ["indirect-content", "indirect-name", "indirect-merit", "indirect-demerit", "locke-indirect"],
+          "keywords": ["代表者", "代議制", "実現が容易", "民意の反映が不十分"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "11", "term": "直接民主制", "reading": "ちょくせつみんしゅせい", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容と長所・短所",
+          "prompt": "直接民主制とはどんな政治のしくみ？長所と短所は？",
+          "answer": "**全人民が直接政治に参加**するしくみ。**民意を完全に反映**できるが、国家の規模では**実現が困難**である。ルソーが主張し、アメリカ植民地時代の**タウン・ミーティング**がその例とされる。",
+          "evidence": ["direct-content", "direct-merit", "direct-demerit", "town-meeting", "rousseau-direct"],
+          "keywords": ["全人民が直接政治に参加", "民意を完全に反映", "実現が困難", "タウン・ミーティング"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "12", "term": "直接民主制的要素", "reading": "ちょくせつみんしゅせいてきようそ", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "間接民主制の補い方",
+          "prompt": "間接民主制を補う直接民主制的要素には、どんなものがある？",
+          "answer": "間接民主制を基本としつつ、**署名活動**や**住民投票**などの直接民主制的要素で補い、議会の暴走を抑える。主なものに国民発案（**イニシアチブ**）・国民表決（**レファレンダム**）・国民解職（**リコール**）がある。",
+          "evidence": ["mixed", "mixed-examples", "mixed-purpose", "initiative-name", "referendum-name", "recall-name"],
+          "keywords": ["署名活動", "住民投票", "イニシアチブ", "レファレンダム", "リコール"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "13", "term": "イニシアチブ", "reading": "いにしあちぶ", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
+          "prompt": "イニシアチブ（国民発案）とはどんな制度？",
+          "answer": "国民が**署名**を集めて、**立法を提案**する制度。",
+          "evidence": ["initiative-name", "initiative-content"], "keywords": ["署名", "立法を提案"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "14", "term": "レファレンダム", "reading": "れふぁれんだむ", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
+          "prompt": "レファレンダム（国民表決）とはどんな制度？",
+          "answer": "重要な事項を、**国民の投票**によって決める制度。",
+          "evidence": ["referendum-name", "referendum-content"], "keywords": ["国民の投票"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "15", "term": "リコール", "reading": "りこーる", "category": "民主政治の形態",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
+          "prompt": "リコール（国民解職）とはどんな制度？",
+          "answer": "国民が**署名**を集めて、**公務員の解職**を求める制度。",
+          "evidence": ["recall-name", "recall-content"], "keywords": ["署名", "公務員の解職"], "note": ""
+        }
+      ]
+    }
+  ]
+}

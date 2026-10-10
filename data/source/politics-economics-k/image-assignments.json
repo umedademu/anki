@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "deckIds": [
+    "pek-01-01"
+  ],
+  "images": [
+    {
+      "sourceAssetId": "PEKS-e10d4e4c966f0bde41e1",
+      "caption": "国際法上の海の区分を示した図",
+      "note": "基線から領海12海里・排他的経済水域200海里と、大陸棚・公海の位置関係を示す。図にある接続水域・内水は原文の出題範囲外なので答えに含めない。領空・宇宙空間・深海底の問題には付けない。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U05",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U07",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U08",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U09",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U10",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-8c4f71df58d8a7275465",
+      "caption": "日本の領海と排他的経済水域の範囲を示した図（2016年）",
+      "note": "沖ノ鳥島を中心に円形に広がる日本の排他的経済水域が示され、島の扱いが水域の広さに直結することがわかる。図は日本政府の主張する範囲であり、北方領土周辺の水域の問題には付けない。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U19",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-626115caef047b8573cf",
+      "caption": "周囲を護岸で囲まれた沖ノ鳥島の空撮（2007年）",
+      "note": "島の周囲をコンクリートで囲んだ護岸工事の様子が見える。水没を避ける対策を問う問題だけに付ける。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U19",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-fd30973ad14864977ece",
+      "caption": "官報号外（1946年）に掲載された日本国憲法の前文と第1条",
+      "note": "右頁に前文の冒頭、左頁に前文の末尾（「自国の主権を維持し、他国と対等関係に立たうとする」）と第1条（「主権の存する日本国民の総意」）が載る。ポツダム宣言の用例を問う問題には付けない。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U14",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U16",
+          "questions": [
+            "R01"
+          ]
+        },
+        {
+          "termId": "PEK-01-01-U17",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-970ec940edb2e086e30c",
+      "caption": "ボーダンの肖像（17世紀初めの版画）",
+      "note": "主権論の祖として名前を答えた後に肖像を示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U13",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-8546e8b154ebbc8aae50",
+      "caption": "イェリネックの肖像写真",
+      "note": "国家の三要素を定義した人物として名前を答えた後に肖像を示す。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-6f0d47f184f2a4ffb2e6",
+      "caption": "リンカーンの肖像写真（1863年11月）",
+      "note": "ゲティスバーグ演説と同じ1863年11月に撮影された肖像。演説の場面の写真ではない。",
+      "targets": [
+        {
+          "termId": "PEK-01-01-U18",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "id": "PEKS-e10d4e4c966f0bde41e1",
+      "path": "term-images/politics-economics-k/PEKS-e10d4e4c966f0bde41e1.jpg",
+      "alt": "国際法上の海の区分を示した図",
+      "caption": "国際法上の海の区分を示した図",
+      "creator": "Pqks758（PNGをJPEGに変換）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Zonmar-ja.png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e10d4e4c966f0bde41e1.jpg",
+      "sha256": "e10d4e4c966f0bde41e1c85e8542b33f4d1a52958f77ef374e0550f7ba7a29db"
+    },
+    {
+      "id": "PEKS-8c4f71df58d8a7275465",
+      "path": "term-images/politics-economics-k/PEKS-8c4f71df58d8a7275465.jpg",
+      "alt": "日本の領海と排他的経済水域の範囲を示した図（2016年）",
+      "caption": "日本の領海と排他的経済水域の範囲を示した図（2016年）",
+      "creator": "海上保安体制強化に関する関係閣僚会議／首相官邸（PNGをJPEGに変換・縮小）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Japan_Exclusive_Economic_Zone_Map_2016.png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-8c4f71df58d8a7275465.jpg",
+      "sha256": "8c4f71df58d8a7275465a63ca4ec920c56659d332ed95ec26cee0806d0590b84"
+    },
+    {
+      "id": "PEKS-fd30973ad14864977ece",
+      "path": "term-images/politics-economics-k/PEKS-fd30973ad14864977ece.jpg",
+      "alt": "官報号外（1946年）に掲載された日本国憲法の前文と第1条",
+      "caption": "官報号外（1946年）に掲載された日本国憲法の前文と第1条",
+      "creator": "国立国会図書館（PNGをJPEGに変換・縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nihon-Koku_Kenpo_3.png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-fd30973ad14864977ece.jpg",
+      "sha256": "fd30973ad14864977ece872ed8f78c5ea96f1759b5c4af4e7ba066a7d5aaa07b"
+    },
+    {
+      "id": "PEKS-626115caef047b8573cf",
+      "path": "term-images/politics-economics-k/PEKS-626115caef047b8573cf.jpg",
+      "alt": "周囲を護岸で囲まれた沖ノ鳥島の空撮（2007年）",
+      "caption": "周囲を護岸で囲まれた沖ノ鳥島の空撮（2007年）",
+      "creator": "国土交通省関東地方整備局京浜河川事務所",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Okinotorishima20070602.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-626115caef047b8573cf.jpg",
+      "sha256": "626115caef047b8573cfffb9a81096d712497285ae1b51bbaa10cf37d729e719"
+    },
+    {
+      "id": "PEKS-970ec940edb2e086e30c",
+      "path": "term-images/politics-economics-k/PEKS-970ec940edb2e086e30c.jpg",
+      "alt": "ボーダンの肖像（17世紀初めの版画）",
+      "caption": "ボーダンの肖像（17世紀初めの版画）",
+      "creator": "François Stuerhelt",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Jean_Bodin.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-970ec940edb2e086e30c.jpg",
+      "sha256": "970ec940edb2e086e30cf154633ab428b917a79d8a096c0abcfcf9e03676a977"
+    },
+    {
+      "id": "PEKS-8546e8b154ebbc8aae50",
+      "path": "term-images/politics-economics-k/PEKS-8546e8b154ebbc8aae50.jpg",
+      "alt": "イェリネックの肖像写真",
+      "caption": "イェリネックの肖像写真",
+      "creator": "Ed. Schultze（ハイデルベルク）／ハイデルベルク大学図書館（縮小）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Georg_Jellinek_(HeidICON_28827)_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-8546e8b154ebbc8aae50.jpg",
+      "sha256": "8546e8b154ebbc8aae5072a8f66bbc6d0c4c8824d12660ccdde479e1bf1e9a8f"
+    },
+    {
+      "id": "PEKS-6f0d47f184f2a4ffb2e6",
+      "path": "term-images/politics-economics-k/PEKS-6f0d47f184f2a4ffb2e6.jpg",
+      "alt": "リンカーンの肖像写真（1863年11月）",
+      "caption": "リンカーンの肖像写真（1863年11月）",
+      "creator": "Alexander Gardner",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Abraham_Lincoln_O-77_matte_collodion_print.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-6f0d47f184f2a4ffb2e6.jpg",
+      "sha256": "6f0d47f184f2a4ffb2e654d83c74205b320038c26f27b31cb28e18613421ea59"
+    }
+  ]
+}

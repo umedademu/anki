@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.362";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.363";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.362";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.362";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.362";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.362";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.362";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.362";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.362";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.362";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.362";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.363";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.363";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.363";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.363";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.363";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.363";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.363";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.363";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.363";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.362";
+} from "./original-session.js?v=0.363";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.362";
+} from "./speech.js?v=0.363";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.362";
+} from "./deck-selection.js?v=0.363";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -622,6 +622,9 @@ function availableQuestionStages() {
     : [];
   return configured.length > 0 ? configured : learningStages;
 }
+
+// 日本史K・政治経済Kは問題文に対象の用語を含めるため、上部の用語欄を表示しない。
+const hiddenTermCardSubjectIds = new Set(["japanese-history-k", "politics-economics-k"]);
 
 // 日本史Kでは、基礎を除いた逆向きの説明と統合説明だけをまとめて選べる。
 const combinedQuestionStyleSubjectIds = new Set(["japanese-history-k"]);
@@ -4549,6 +4552,8 @@ function setDeckOptions(decks, selectedIds) {
       details.dataset.chapterId = group.id;
       details.dataset.chapterTitle = group.title;
       details.dataset.chapterNumber = group.number;
+      // 政治経済Kのように章ではなく項目でまとめる科目は、まとまりの呼び名を指定できる。
+      details.dataset.chapterLabel = group.label ?? `第${group.number}章`;
       const summary = document.createElement("summary");
       summary.id = groups.length === 1 ? "chapter-selection-summary" : `chapter-selection-summary-${group.id}`;
       const menu = document.createElement("div");
@@ -4592,10 +4597,10 @@ function updateChapterSelectionSummary() {
   for (const picker of pickers) {
     const inputs = [...picker.querySelectorAll('input[name="deck-filter"]')];
     const count = inputs.filter(input => input.checked).length;
-    const prefix = pickers.length === 1 ? "パートを選択" : `第${picker.dataset.chapterNumber}章のパート`;
+    const prefix = pickers.length === 1 ? "パートを選択" : `${picker.dataset.chapterLabel}のパート`;
     picker.querySelector("summary").textContent = count === inputs.length
       ? `${prefix}：すべて（${count}パート）` : `${prefix}：${count} / ${inputs.length}パート`;
-    if (pickers.length > 1 && count === inputs.length) picker.querySelector("summary").textContent = `第${picker.dataset.chapterNumber}章：全${count}パート`;
+    if (pickers.length > 1 && count === inputs.length) picker.querySelector("summary").textContent = `${picker.dataset.chapterLabel}：全${count}パート`;
     const deck = [...elements.deckFilter.querySelectorAll('input[name="chapter-deck-filter"]')].find(input => input.value === picker.dataset.chapterId);
     deck.checked = count > 0; deck.indeterminate = count > 0 && count < inputs.length;
     if (count > 0) delete picker.dataset.keepEmpty;
@@ -4865,6 +4870,8 @@ function updateSetupPreview() {
         ? `${questions}問（一問一答）`
       : selectedStage
         ? `${terms.length}${termUnitLabel()}・${questions}問（${questionStyleLabel(selectedStage)}）`
+        : !availableQuestionStages().includes("beginner")
+          ? `${terms.length}${termUnitLabel()}・${questions}問（${questionStyleLabel(availableQuestionStages()[0])}）`
         : `${terms.length}${termUnitLabel()}・${questions}問（開始時は${questionStyleLabel("beginner")} ${beginnerQuestions}問）`;
   if (routineItem?.overtimePending) {
     elements.selectionSummary.textContent =
@@ -4925,8 +4932,10 @@ function configureSetup() {
     if (text) label.textContent = text;
   }
   setQuestionStyleOptions();
+  // 逆向きの説明だけの政治経済Kのように、基礎がなく選べる問題スタイルが一つなら選択欄を出さない。
   elements.questionStyleFilter.closest(".setup-field").classList.toggle(
-    "is-hidden", Boolean(state.subject?.simpleQuestions),
+    "is-hidden", Boolean(state.subject?.simpleQuestions) ||
+      (availableQuestionStyles().length <= 1 && !availableQuestionStages().includes("beginner")),
   );
   elements.questionAmountField.classList.toggle(
     "is-hidden",
@@ -5085,7 +5094,7 @@ function renderQuestion() {
     "is-hidden",
     (vocabularyMode && hidesTerm) || stagedClassicalChineseMeaning ||
       Boolean(state.subject?.simpleQuestions) ||
-      state.activeSubjectId === "japanese-history-k",
+      hiddenTermCardSubjectIds.has(state.activeSubjectId),
   );
   elements.stageName.classList.toggle(
     "is-hidden",

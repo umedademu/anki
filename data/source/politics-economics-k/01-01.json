@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 1, "title": "第1講 政治分野" },
+  "item": { "number": 1, "title": "民主政治の思想と原理" },
+  "heading": { "number": 1, "title": "民主政治と国家・主権" },
+  "source": {
+    "file": "sources/seikei/01_民主政治の思想と原理.md",
+    "ranges": [
+      { "start": "# 1　民主政治の思想と原理", "end": "### 2　自然法と自然権" },
+      { "start": "### コラム　**<ruby>沖ノ鳥島", "end": null }
+    ],
+    "pages": [8, 9, 10, 22, 23],
+    "note": "8頁の項目冒頭のイラスト文字から10頁の「2 自然法と自然権」の見出し直前までを本文として全文読んだ。同じ項目のコラム「沖ノ鳥島を守る！？」（22頁）とチェック問題１（23頁）は、この小見出しの領域・排他的経済水域を扱うため同じパートに含めた。1カイリ＝1852mは解説だけに記し、正答の暗記条件にしない。主権の３つの意味は、原文が示す名称と用例（憲法第1条・ポツダム宣言・憲法前文）の対応だけを答えさせ、原文にない定義や学説を足さない。北方領土の排他的経済水域と安全操業枠組み協定は23頁の解説の範囲に限り、領土問題の経緯は後の「日本の領土について」に譲る。沖ノ鳥島は原文のコラムの範囲で、中国の主張・国連海洋法条約の島の定義・日本の対策・地球温暖化の脅威だけを扱う。"
+  },
+  "facts": [
+    { "id": "lincoln-illustration", "page": 8, "quote": "Government of the people, by the people, for the people" },
+    { "id": "democracy-definition", "page": 8, "quote": "民主政治とは、人民の意思に従った政治のことだよ。" },
+    { "id": "politics-definition", "page": 8, "quote": "政治とは、複数の人が集まり、権力や政策を駆使して社会の秩序をともに形成していく作用" },
+    { "id": "power-relation", "page": 8, "quote": "人が2人以上集まれば、そこには必ず力関係が生まれるからだよ。つまり、支配する者とされる者とに分かれる。" },
+    { "id": "selfish-rulers", "page": 8, "quote": "もしも支配する側が私利私欲に走ったら、他の者の自由と安全はたちまち危うくなる。" },
+    { "id": "people-rule", "page": 8, "quote": "人民自身が支配すればいい。" },
+    { "id": "not-leave-politics", "page": 8, "quote": "政治を人任せにしちゃダメ" },
+    { "id": "self-participation", "page": 8, "quote": "自分たち自身で政治に参加し、自分たち自身で社会を支配すれば" },
+    { "id": "state-definition", "page": 9, "quote": "秩序を保つための強制力を伴った社会集団、つまり国家が必要だな。" },
+    { "id": "national-sovereignty", "page": 9, "quote": "人民自身が支配権（＝主権）を握っている状態、つまり国民主権も必要だ。" },
+    { "id": "three-elements", "page": 9, "quote": "国家の三要素…人民・領域・主権➡イェリネックが定義" },
+    { "id": "domain-parts", "page": 9, "quote": "領域…領土・領空・領海（＋「排他的経済水域」200カイリ）" },
+    { "id": "airspace", "page": 9, "quote": "領空：▶領土・領海の上空（宇宙空間含まず）" },
+    { "id": "territorial-sea", "page": 9, "quote": "領海：▶基線（干潮時の海岸線）から12カイリ" },
+    { "id": "eez", "page": 9, "quote": "排他的経済水域：▶領域外だが、一切の資源を手にできる幅（1カイリ＝1852m）" },
+    { "id": "high-seas", "page": 9, "quote": "200カイリより外側（＝公海）は、自由に使用可（＝公海自由の原則）。" },
+    { "id": "eez-overlap", "page": 9, "quote": "地理的に200カイリが重なる場合は、国同士の話し合いで決定。" },
+    { "id": "median-line", "page": 9, "quote": "「中間線」で区切るのが慣例" },
+    { "id": "continental-shelf", "page": 9, "quote": "大陸棚は沿岸国の主権下。" },
+    { "id": "deep-seabed", "page": 9, "quote": "深海底とその資源は「人類共同の財産」。" },
+    { "id": "space-antarctica", "page": 9, "quote": "「宇宙空間＋南極大陸」は領有権なし。" },
+    { "id": "space-antarctica-treaties", "page": 9, "quote": "宇宙条約＋南極条約" },
+    { "id": "sovereignty-definition", "page": 9, "quote": "主権…国家の有する最高・絶対の支配権。➡◎国家固有の要素。" },
+    { "id": "bodin", "page": 9, "quote": "ボーダン（仏）＝主権論の祖" },
+    { "id": "supreme-decision", "page": 9, "quote": "最高意思決定権：「天皇は日本国の象徴…この地位は主権の存する日本国民の総意に基く」の主権。" },
+    { "id": "supreme-decision-source", "page": 9, "quote": "憲法第1条など" },
+    { "id": "territorial-control", "page": 9, "quote": "領域支配権：「統治権」ともいう。「日本国の主権は、本州・北海道・九州…に局限せらるべし」の主権。" },
+    { "id": "territorial-control-source", "page": 9, "quote": "ポツダム宣言など" },
+    { "id": "external-independence", "page": 9, "quote": "対外独立性：「自国の主権を維持し他国と対等の関係に立とうとする…」の主権。" },
+    { "id": "external-independence-source", "page": 9, "quote": "憲法前文など" },
+    { "id": "sovereignty-essence", "page": 10, "quote": "すべてに共通するその本質は「支配権」だ。" },
+    { "id": "sovereignty-restated", "page": 10, "quote": "国民主権は、「国民全体で国家を支配している状態」といい換えることもできるんだ。" },
+    { "id": "danger-of-others", "page": 10, "quote": "この支配権を一部の権力者や外国に握られてしまう方が大変だ。" },
+    { "id": "no-guarantee", "page": 10, "quote": "他人はいかにいい人であっても、僕らの自由と安全を100％守ってくれる保証なんてない。" },
+    { "id": "people-as-rulers", "page": 10, "quote": "国民全体が国家の支配者になれば、自分たちの自由と安全を100％願う。" },
+    { "id": "lincoln", "page": 10, "quote": "リンカーンがゲティスバーグ演説で述べたあの有名な言葉、「人民の、人民による、人民のための政治」だって、まさにそのような国民主権に基づく民主政治の大切さについて語っているんだ。" },
+    { "id": "legitimacy", "page": 10, "quote": "主権の本質が「支配権」である以上、使い方を間違えると大変なことになる。だからそこには、誰もが納得できる正当性が必要になってくるんだ。" },
+    { "id": "natural-law-link", "page": 10, "quote": "その正当性の根拠となるルールを自然法という。" },
+    { "id": "okinotori-southernmost", "page": 22, "quote": "沖ノ鳥島は、日本の最南端の島だ。" },
+    { "id": "okinotori-china", "page": 22, "quote": "中国は「島じゃなくて岩だ！」と主張している。" },
+    { "id": "island-definition", "page": 22, "quote": "国連海洋法条約の定義によると、島とは「自然に形成された陸地」で、「満潮時に海面上に露出している部分」があればよいが、「人間の居住か独自の経済活動がなければ排他的経済水域はない」ことになっている。" },
+    { "id": "okinotori-revetment", "page": 22, "quote": "日本政府は、まず水没を避けるために、島の周囲をコンクリートで護岸工事した。" },
+    { "id": "okinotori-fishery", "page": 22, "quote": "石原東京都知事（当時）は「独自の経済活動」のため、自ら視察におもむいたり、小笠原の漁民に島周辺での漁業を奨励したりした。" },
+    { "id": "okinotori-warming", "page": 22, "quote": "地球温暖化だ。海面上昇すれば、海抜0mの島は水没の危機だ。" },
+    { "id": "check-shelf-wrong", "page": 23, "quote": "領海の外側の大陸棚においては、原則として、すべての国が自由に地下資源を採掘することができる。" },
+    { "id": "check-high-seas", "page": 23, "quote": "すべての国が自由に利用できるのは、領海・大陸棚・排他的経済水域を越えたエリアである「公海」（公海自由の原則）。" },
+    { "id": "check-shelf-right", "page": 23, "quote": "大陸棚は、領土の自然な延長上として、海底とその下の資源に関して、沿岸国に排他的権利が認められている。" },
+    { "id": "check-sea-width", "page": 23, "quote": "領海は沿岸12カイリの幅で、主権のすべてが及ぶ。" },
+    { "id": "check-eez-width", "page": 23, "quote": "排他的経済水域は沿岸200カイリの幅で、資源を排他的に確保する権利のみ及ぶ。" },
+    { "id": "check-overlap", "page": 23, "quote": "200カイリが重複するエリアは、「日中＝中間線で対処」「日韓＝共同規制水域として双方が利用」などさまざまで、トラブルも起こりやすい。" },
+    { "id": "check-northern", "page": 23, "quote": "北方領土は、日本の固有領土だがロシアの実効支配が続いており、排他的経済水域もロシアの管理が続いている（だから仕方なく、領土問題とは別の漁業用として、日ロ間で安全操業枠組み協定が結ばれている）。" },
+    { "id": "check-airspace", "page": 23, "quote": "領空には領域国の主権が及ぶが" },
+    { "id": "check-space", "page": 23, "quote": "宇宙空間には領有権なし。宇宙条約で「平和利用に限り、利用は自由」と規定されている。" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "民主政治", "reading": "みんしゅせいじ", "category": "民主政治の基本",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "民主政治の意味",
+          "prompt": "「民主政治」とは、どのような政治か。",
+          "answer": "**人民の意思に従った政治**のこと。",
+          "evidence": ["democracy-definition"], "keywords": ["人民の意思に従った政治"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "民主政治が必要な理由",
+          "prompt": "「民主政治」が必要とされるのはなぜか。人が集まると生まれる関係から説明せよ。",
+          "answer": "人が2人以上集まると必ず**力関係**が生まれ、**支配する者とされる者**に分かれる。支配する側が**私利私欲**に走れば、他の者の**自由と安全**が危うくなる。そこで**政治を人任せにせず**、**人民自身が政治に参加して社会を支配**する必要がある。",
+          "evidence": ["power-relation", "selfish-rulers", "people-rule", "not-leave-politics", "self-participation"],
+          "keywords": ["力関係", "支配する者とされる者", "私利私欲", "自由と安全", "政治を人任せにせず", "人民自身が政治に参加して社会を支配"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "政治", "reading": "せいじ", "category": "民主政治の基本",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "政治の意味",
+          "prompt": "「政治」とは、どのような作用か。",
+          "answer": "**複数の人が集まり**、**権力や政策を駆使**して、**社会の秩序をともに形成**していく作用。",
+          "evidence": ["politics-definition"], "keywords": ["複数の人が集まり", "権力や政策を駆使", "社会の秩序をともに形成"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "国家", "reading": "こっか", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "国家の意味",
+          "prompt": "「国家」とは、どのような社会集団か。",
+          "answer": "**秩序を保つための強制力**を伴った**社会集団**。",
+          "evidence": ["state-definition"], "keywords": ["秩序を保つための強制力", "社会集団"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04", "term": "国家の三要素", "reading": "こっかのさんようそ", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "三要素と定義した人物",
+          "prompt": "「国家の三要素」とは何か。それを定義した人物も答えよ。",
+          "answer": "**人民**・**領域**・**主権**の3つ。**イェリネック**が定義した。",
+          "evidence": ["three-elements"], "keywords": ["人民", "領域", "主権", "イェリネック"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05", "term": "領域", "reading": "りょういき", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "領域の構成",
+          "prompt": "国家の「領域」は何から構成されるか。排他的経済水域が領域に含まれるかどうかも説明せよ。",
+          "answer": "**領土**・**領空**・**領海**から構成される。**排他的経済水域**は**領域外**である。",
+          "evidence": ["domain-parts", "eez"], "keywords": ["領土", "領空", "領海", "排他的経済水域", "領域外"],
+          "note": "排他的経済水域は資源を手にできる水域だが、領域（領土・領空・領海）には含まれない。"
+        }
+      ]
+    },
+    {
+      "id": "06", "term": "領空", "reading": "りょうくう", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "領空の範囲",
+          "prompt": "「領空」とは、どの範囲か。宇宙空間との関係も含めて説明せよ。",
+          "answer": "**領土・領海の上空**で、**領域国の主権が及ぶ**。ただし**宇宙空間は含まない**。",
+          "evidence": ["airspace", "check-airspace"], "keywords": ["領土・領海の上空", "領域国の主権が及ぶ", "宇宙空間は含まない"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "07", "term": "領海", "reading": "りょうかい", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "領海の範囲と及ぶ権限",
+          "prompt": "「領海」とは、どの範囲の海域か。沿岸国のどのような権限が及ぶかも説明せよ。",
+          "answer": "**基線**（**干潮時の海岸線**）から**12カイリ**までの海域で、沿岸国の**主権のすべて**が及ぶ。",
+          "evidence": ["territorial-sea", "check-sea-width"], "keywords": ["基線", "干潮時の海岸線", "12カイリ", "主権のすべて"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "08", "term": "排他的経済水域", "reading": "はいたてきけいざいすいいき", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "範囲と沿岸国の権利",
+          "prompt": "「排他的経済水域」とは、どのような水域か。領海との違いがわかるように説明せよ。",
+          "answer": "沿岸**200カイリ**の幅の水域で、**領域外**だが、沿岸国が**一切の資源**を手にできる。及ぶのは**資源を排他的に確保する権利のみ**で、**主権のすべてが及ぶ領海**とは異なる。",
+          "evidence": ["domain-parts", "eez", "check-eez-width", "check-sea-width"],
+          "keywords": ["200カイリ", "領域外", "一切の資源", "資源を排他的に確保する権利のみ", "主権のすべてが及ぶ領海"],
+          "note": "1カイリは1852m。"
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "200カイリが重なる場合",
+          "prompt": "隣り合う国の「排他的経済水域」の200カイリが重なる場合、どのように決めるか。日本と周辺国の例も説明せよ。",
+          "answer": "**国同士の話し合い**で決定し、**中間線**で区切るのが慣例である。日本と中国の間は**中間線で対処**し、日本と韓国の間は**共同規制水域**として双方が利用するなどさまざまで、**トラブルも起こりやすい**。",
+          "evidence": ["eez-overlap", "median-line", "check-overlap"],
+          "keywords": ["国同士の話し合い", "中間線", "中間線で対処", "共同規制水域", "トラブルも起こりやすい"], "note": ""
+        },
+        {
+          "id": "R03", "stage": "reverse", "type": "reverse", "form": "北方領土周辺の水域と漁業の協定",
+          "prompt": "北方領土周辺の「排他的経済水域」は、どのような状況にあるか。漁業のために日本とロシアが結んだ協定も説明せよ。",
+          "answer": "北方領土は**日本の固有領土**だが**ロシアの実効支配**が続いており、排他的経済水域も**ロシアの管理**が続いている。そのため**領土問題とは別の漁業用**として、日ロ間で**安全操業枠組み協定**が結ばれている。",
+          "evidence": ["check-northern"],
+          "keywords": ["日本の固有領土", "ロシアの実効支配", "ロシアの管理", "領土問題とは別の漁業用", "安全操業枠組み協定"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "09", "term": "公海", "reading": "こうかい", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "公海と公海自由の原則",
+          "prompt": "「公海」とはどの水域か。また「公海自由の原則」とは何か。",
+          "answer": "領海・大陸棚・排他的経済水域を越えた、**200カイリより外側**の水域。**すべての国が自由に利用できる**という原則を**公海自由の原則**という。",
+          "evidence": ["high-seas", "check-high-seas"], "keywords": ["200カイリより外側", "すべての国が自由に利用できる", "公海自由の原則"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "10", "term": "大陸棚", "reading": "たいりくだな", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "沿岸国の権利",
+          "prompt": "「大陸棚」には、沿岸国のどのような権利が認められているか。",
+          "answer": "**沿岸国の主権下**にあり、**領土の自然な延長**として、**海底とその下の資源**について沿岸国に**排他的権利**が認められている。そのため、**すべての国が自由に地下資源を採掘できるわけではない**。",
+          "evidence": ["continental-shelf", "check-shelf-right", "check-shelf-wrong"],
+          "keywords": ["沿岸国の主権下", "領土の自然な延長", "海底とその下の資源", "排他的権利", "すべての国が自由に地下資源を採掘できるわけではない"],
+          "note": "センター試験（追試験）では「領海の外側の大陸棚では、すべての国が自由に地下資源を採掘できる」が誤りの選択肢として出題された。"
+        }
+      ]
+    },
+    {
+      "id": "11", "term": "深海底", "reading": "しんかいてい", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "深海底と資源の位置づけ",
+          "prompt": "「深海底」とその資源は、どのように位置づけられているか。大陸棚と比べて説明せよ。",
+          "answer": "大陸棚は**沿岸国の主権下**にあるが、深海底とその資源は「**人類共同の財産**」とされている。",
+          "evidence": ["continental-shelf", "deep-seabed"], "keywords": ["沿岸国の主権下", "人類共同の財産"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "12", "term": "宇宙空間と南極大陸", "reading": "うちゅうくうかんとなんきょくたいりく", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "領有権と根拠の条約",
+          "prompt": "「宇宙空間と南極大陸」の領有権は、どのように扱われているか。根拠となる条約と、宇宙空間の利用の原則も説明せよ。",
+          "answer": "いずれも**領有権なし**とされ、それぞれ**宇宙条約**と**南極条約**が根拠となる。宇宙条約では、宇宙空間は**平和利用に限り、利用は自由**と規定されている。",
+          "evidence": ["space-antarctica", "space-antarctica-treaties", "check-space"],
+          "keywords": ["領有権なし", "宇宙条約", "南極条約", "平和利用に限り、利用は自由"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "13", "term": "主権", "reading": "しゅけん", "category": "主権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "主権の意味と主権論の祖",
+          "prompt": "「主権」とは何か。主権論の祖とされる人物も答えよ。",
+          "answer": "**国家の有する最高・絶対の支配権**で、**国家固有の要素**である。主権論の祖は**フランス**の**ボーダン**。",
+          "evidence": ["sovereignty-definition", "bodin"], "keywords": ["国家の有する最高・絶対の支配権", "国家固有の要素", "フランス", "ボーダン"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "主権の３つの意味",
+          "prompt": "「主権」という言葉には、どのような3つの意味があるか。",
+          "answer": "**最高意思決定権**・**領域支配権**（**統治権**）・**対外独立性**の3つ。",
+          "evidence": ["supreme-decision", "territorial-control", "external-independence"],
+          "keywords": ["最高意思決定権", "領域支配権", "統治権", "対外独立性"], "note": ""
+        },
+        {
+          "id": "R03", "stage": "reverse", "type": "reverse", "form": "主権の本質と正当性",
+          "prompt": "「主権」のさまざまな意味に共通する本質は何か。また、その本質から、主権には何が必要とされるか。",
+          "answer": "本質は「**支配権**」である。使い方を間違えると大変なことになるため、**誰もが納得できる正当性**が必要となる。その**正当性の根拠となるルール**を**自然法**という。",
+          "evidence": ["sovereignty-essence", "legitimacy", "natural-law-link"],
+          "keywords": ["支配権", "誰もが納得できる正当性", "正当性の根拠となるルール", "自然法"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "14", "term": "最高意思決定権", "reading": "さいこういしけっていけん", "category": "主権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "用例となる条文",
+          "prompt": "主権の意味のうち「最高意思決定権」としての主権は、日本国憲法のどの条文に用いられているか。その文言も説明せよ。",
+          "answer": "**憲法第1条**の「天皇は日本国の象徴…この地位は**主権の存する日本国民の総意**に基く」の主権が、この意味にあたる。",
+          "evidence": ["supreme-decision", "supreme-decision-source"], "keywords": ["憲法第1条", "主権の存する日本国民の総意"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "15", "term": "領域支配権", "reading": "りょういきしはいけん", "category": "主権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "別名と用例",
+          "prompt": "主権の意味のうち「領域支配権」は、別名を何というか。また、どの文書の主権がこの意味にあたるか、その文言も説明せよ。",
+          "answer": "「**統治権**」ともいう。**ポツダム宣言**の「**日本国の主権は、本州・北海道・九州…に局限せらるべし**」の主権が、この意味にあたる。",
+          "evidence": ["territorial-control", "territorial-control-source"], "keywords": ["統治権", "ポツダム宣言", "日本国の主権は、本州・北海道・九州…に局限せらるべし"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "16", "term": "対外独立性", "reading": "たいがいどくりつせい", "category": "主権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "用例となる文言",
+          "prompt": "主権の意味のうち「対外独立性」としての主権は、日本国憲法のどこに用いられているか。その文言も説明せよ。",
+          "answer": "**憲法前文**の「**自国の主権を維持し他国と対等の関係に立とうとする**…」の主権が、この意味にあたる。",
+          "evidence": ["external-independence", "external-independence-source"], "keywords": ["憲法前文", "自国の主権を維持し他国と対等の関係に立とうとする"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "17", "term": "国民主権", "reading": "こくみんしゅけん", "category": "主権",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "国民主権の意味",
+          "prompt": "「国民主権」とは、どのような状態か。",
+          "answer": "国家において**人民自身が支配権（＝主権）を握っている**状態。言い換えれば、**国民全体で国家を支配している状態**である。",
+          "evidence": ["national-sovereignty", "sovereignty-restated"], "keywords": ["人民自身が支配権（＝主権）を握っている", "国民全体で国家を支配している状態"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "国民主権が必要な理由",
+          "prompt": "「国民主権」が必要とされるのはなぜか。支配権を他者に握られた場合と比べて説明せよ。",
+          "answer": "支配権を**一部の権力者や外国**に握られると、他人である彼らには、自分たちの**自由と安全を100％守ってくれる保証がない**。**国民全体が国家の支配者**になれば、**自分たちの自由と安全を100％願う**からである。",
+          "evidence": ["danger-of-others", "no-guarantee", "people-as-rulers"],
+          "keywords": ["一部の権力者や外国", "自由と安全を100％守ってくれる保証がない", "国民全体が国家の支配者", "自分たちの自由と安全を100％願う"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "18", "term": "ゲティスバーグ演説", "reading": "げてぃすばーぐえんぜつ", "category": "民主政治の基本",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "有名な言葉とその意味",
+          "prompt": "リンカーンが「ゲティスバーグ演説」で述べた有名な言葉は何か。また、それは何の大切さを語っているか。",
+          "answer": "「**人民の、人民による、人民のための政治**」（Government of the people, by the people, for the people）。**国民主権に基づく民主政治**の大切さを語っている。",
+          "evidence": ["lincoln", "lincoln-illustration"], "keywords": ["人民の、人民による、人民のための政治", "国民主権に基づく民主政治"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "19", "term": "沖ノ鳥島", "reading": "おきのとりしま", "category": "国家と領域",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "島か岩かの対立と島の定義",
+          "prompt": "「沖ノ鳥島」について、中国はどのように主張しているか。国連海洋法条約の島の定義と、排他的経済水域との関係も含めて説明せよ。",
+          "answer": "沖ノ鳥島は**日本の最南端の島**だが、中国は「**島ではなく岩だ**」と主張している。**国連海洋法条約**では、島は**自然に形成された陸地**で**満潮時に海面上に露出**している部分があればよいが、**人間の居住か独自の経済活動**がなければ**排他的経済水域はない**とされる。",
+          "evidence": ["okinotori-southernmost", "okinotori-china", "island-definition"],
+          "keywords": ["日本の最南端の島", "島ではなく岩だ", "国連海洋法条約", "自然に形成された陸地", "満潮時に海面上に露出", "人間の居住か独自の経済活動", "排他的経済水域はない"], "note": ""
+        },
+        {
+          "id": "R02", "stage": "reverse", "type": "reverse", "form": "日本の対策と最大の問題",
+          "prompt": "日本は「沖ノ鳥島」を維持するために、どのような対策をとってきたか。また、維持するうえでのより大きな問題は何か。",
+          "answer": "**水没を避けるため**、島の周囲を**コンクリートで護岸工事**した。また「**独自の経済活動**」のため、**小笠原の漁民に島周辺での漁業を奨励**した。より大きな問題は**地球温暖化**で、**海面上昇**すれば海抜0mの島は**水没の危機**にある。",
+          "evidence": ["okinotori-revetment", "okinotori-fishery", "okinotori-warming"],
+          "keywords": ["水没を避けるため", "コンクリートで護岸工事", "独自の経済活動", "小笠原の漁民に島周辺での漁業を奨励", "地球温暖化", "海面上昇", "水没の危機"], "note": ""
+        }
+      ]
+    }
+  ]
+}

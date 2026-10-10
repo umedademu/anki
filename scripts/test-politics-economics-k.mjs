@@ -28,6 +28,11 @@ const expected = [
   ["pek-04-01", "政治経済K｜4-1 裁判と判例", 36, 38, 1],
   ["pek-04-02", "政治経済K｜4-2 新しい人権", 11, 11, 1],
   ["pek-04-03", "政治経済K｜4-3 外国人や少数民族の扱い・その他", 17, 18, 1],
+  ["pek-05-01", "政治経済K｜5-1 自衛隊と憲法第9条", 11, 12, 1],
+  ["pek-05-02", "政治経済K｜5-2 日米安全保障条約", 8, 9, 1],
+  ["pek-05-03", "政治経済K｜5-3 安倍内閣より少し前の安全保障政策", 6, 6, 1],
+  ["pek-05-04", "政治経済K｜5-4 安倍内閣から始まった安全保障政策", 8, 8, 1],
+  ["pek-05-05", "政治経済K｜5-5 防衛政策の諸原則", 7, 11, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

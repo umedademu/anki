@@ -17,7 +17,12 @@
     "pek-03-06",
     "pek-04-01",
     "pek-04-02",
-    "pek-04-03"
+    "pek-04-03",
+    "pek-05-01",
+    "pek-05-02",
+    "pek-05-03",
+    "pek-05-04",
+    "pek-05-05"
   ],
   "images": [
     {
@@ -739,6 +744,110 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-fe8939387d096dc95947",
+      "caption": "行進する警察予備隊の隊員（1951〜52年）",
+      "note": "1950年に設置された自衛隊の前身の隊員。朝鮮戦争の写真ではない。",
+      "targets": [
+        {
+          "termId": "PEK-05-01-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-a66b80fb0da690",
+      "caption": "サンフランシスコ平和条約に署名する吉田茂（1951年）",
+      "note": "同じ日に結ばれた平和条約の署名場面。日米安全保障条約の署名場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-05-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-b7763d77abaa01",
+      "caption": "1960年に改定された日米安全保障条約の署名原本",
+      "note": "新安保条約の原本。1951年の旧安保条約ではない。",
+      "targets": [
+        {
+          "termId": "PEK-05-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-9e8ddf244c91d4",
+      "caption": "国会を取り囲む安保闘争のデモ隊（1960年）",
+      "note": "新安保条約に反対した大規模な抗議運動の写真。",
+      "targets": [
+        {
+          "termId": "PEK-05-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-74170163c3513f1db3c0",
+      "caption": "宜野湾市の市街地にある普天間飛行場（2016年）",
+      "note": "移設が計画されている飛行場の現状。移設先の辺野古ではない。",
+      "targets": [
+        {
+          "termId": "PEK-05-02-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-775e0b729d91768bc40f",
+      "caption": "米海軍の駆逐艦に洋上補給を行う海上自衛隊の補給艦「ときわ」（2006年）",
+      "note": "テロ対策特別措置法の期間中に、外国艦船へ燃料を補給する海上自衛隊の補給艦。補給した海域を写真から判断させない。",
+      "targets": [
+        {
+          "termId": "PEK-05-03-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d434fbd3419236e55d84",
+      "caption": "安倍晋三の肖像写真（2020年）",
+      "note": "国家安全保障会議を設置した首相の肖像。会議の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-05-04-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-7b86bd3ce2052b25ec25",
+      "caption": "佐藤栄作の肖像写真（1964年）",
+      "note": "非核三原則を閣議決定した内閣の首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-05-05-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1101,6 +1210,42 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sadako_Ogata_(cropped).jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-c68ed543937ef18ee744.jpg",
       "sha256": "c68ed543937ef18ee7442e970b47c83173d773f017660d88906c6c78835cf968"
+    },
+    {
+      "id": "PEKS-fe8939387d096dc95947",
+      "path": "term-images/politics-economics-k/PEKS-fe8939387d096dc95947.jpg",
+      "alt": "行進する警察予備隊の隊員（1951〜52年）",
+      "caption": "行進する警察予備隊の隊員（1951〜52年）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Marching_NPR_personnel.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-fe8939387d096dc95947.jpg",
+      "sha256": "fe8939387d096dc9594798586652bfe6a66c8b924b95825b2e273b8ef9a11d2b"
+    },
+    {
+      "id": "PEKS-74170163c3513f1db3c0",
+      "path": "term-images/politics-economics-k/PEKS-74170163c3513f1db3c0.jpg",
+      "alt": "宜野湾市の市街地にある普天間飛行場（2016年）",
+      "caption": "宜野湾市の市街地にある普天間飛行場（2016年）",
+      "creator": "Suikotei",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Marine_Corps_Air_Station_Futenma_20160720.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-74170163c3513f1db3c0.jpg",
+      "sha256": "74170163c3513f1db3c0ac158d9fd8f841ee2bf3612b401e72e8647910ff5faa"
+    },
+    {
+      "id": "PEKS-d434fbd3419236e55d84",
+      "path": "term-images/politics-economics-k/PEKS-d434fbd3419236e55d84.jpg",
+      "alt": "安倍晋三の肖像写真（2020年）",
+      "caption": "安倍晋三の肖像写真（2020年）",
+      "creator": "首相官邸",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shinz%C5%8D_Abe_20200101.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-d434fbd3419236e55d84.jpg",
+      "sha256": "d434fbd3419236e55d84a72bebefd1dcc4ac42d706f4e39f9615478f577ba1ec"
     }
   ]
 }

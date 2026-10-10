@@ -4,7 +4,11 @@ import { createHash } from "node:crypto";
 export const politicsKImagesKey = "term-images.json";
 export const imageContentHash = value => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
-export function buildPoliticsKImages(snapshot, selection) {
+// 政治経済Kの問題への割り当てだけを、この科目の管理対象とする。
+export const isPoliticsKAssignment = assignment => String(assignment?.questionId ?? "").startsWith("PEK-");
+
+// replace は試作の作り直し用。この科目の既存の割り当てを外してから付け直す。他科目の割り当てと既存の画像は保持する。
+export function buildPoliticsKImages(snapshot, selection, { replace = false } = {}) {
   assert.equal(selection.schemaVersion, 1);
   assert.equal(selection.subjectId, "politics-economics-k");
   assert.equal(new Set(selection.deckIds).size, selection.deckIds.length);
@@ -15,6 +19,8 @@ export function buildPoliticsKImages(snapshot, selection) {
   for (const field of ["assets", "assignments", "termFallbacks"]) assert.ok(Array.isArray(images[field]));
   const original = JSON.stringify(snapshot);
   const next = structuredClone(images);
+  const removedAssignments = replace ? images.assignments.filter(isPoliticsKAssignment) : [];
+  if (replace) next.assignments = images.assignments.filter(value => !isPoliticsKAssignment(value));
   const assets = new Map(images.assets.map(asset => [asset.id, asset]));
   assert.equal(assets.size, images.assets.length);
   const addedAssets = [], addedAssignments = [], audit = [], seen = new Set();
@@ -29,8 +35,8 @@ export function buildPoliticsKImages(snapshot, selection) {
     if (assets.has(asset.id)) assert.deepEqual(assets.get(asset.id), asset, "登録済みの画像は上書きしません。");
     else { next.assets.push(asset); assets.set(asset.id, asset); addedAssets.push(asset); }
   }
-  const registered = new Map(images.assignments.map(value => [value.questionId, value]));
-  assert.equal(registered.size, images.assignments.length);
+  const registered = new Map(next.assignments.map(value => [value.questionId, value]));
+  assert.equal(registered.size, next.assignments.length);
   const questions = new Map();
   for (const deckId of selection.deckIds) {
     const deck = decks.find(value => value.entry.id === deckId);
@@ -73,6 +79,7 @@ export function buildPoliticsKImages(snapshot, selection) {
   assert.equal(JSON.stringify(snapshot), original, "問題・画像の現行データを変更せず追加します。");
   assert.deepEqual(next.termFallbacks, images.termFallbacks);
   assert.deepEqual(next.assets.slice(0, images.assets.length), images.assets);
-  assert.deepEqual(next.assignments.slice(0, images.assignments.length), images.assignments);
-  return { manifest: next, addedAssets, addedAssignments, audit };
+  assert.deepEqual(next.assignments.filter(value => !isPoliticsKAssignment(value)), images.assignments.filter(value => !isPoliticsKAssignment(value)), "他科目の割り当てを変更しません。");
+  if (!replace) assert.deepEqual(next.assignments.slice(0, images.assignments.length), images.assignments);
+  return { manifest: next, addedAssets, addedAssignments, removedAssignments, audit };
 }

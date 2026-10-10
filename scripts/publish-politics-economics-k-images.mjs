@@ -3,10 +3,11 @@ import { createHash, randomBytes } from "node:crypto";
 import { spawn } from "node:child_process";
 import { mkdir, readFile, writeFile, unlink } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
-import { buildPoliticsKImages, imageContentHash, politicsKImagesKey } from "./politics-economics-k-images.mjs";
+import { buildPoliticsKImages, imageContentHash, isPoliticsKAssignment, politicsKImagesKey } from "./politics-economics-k-images.mjs";
 import { getUnregisteredImageSources, imageWriterVars } from "./japanese-history-k-images-config.mjs";
 
-const apply = process.argv.includes("--apply");
+// --replace は試作の作り直し用。この科目の既存の割り当てを外してから、点検済みの割り当てを付け直す。
+const apply = process.argv.includes("--apply"), replace = process.argv.includes("--replace");
 const work = new URL("../.wrangler/politics-economics-k-images/", import.meta.url);
 await mkdir(work, { recursive: true });
 const cloudBase = "https://pub-76ffbe2829114a5cbaa433db45872267.r2.dev";
@@ -48,7 +49,7 @@ try {
     const chunks = await Promise.all(index.chunks.map(chunk => json(chunk.path)));
     return { entry, index, chunks };
   }));
-  const snapshot = { catalog, images, decks }, result = buildPoliticsKImages(snapshot, selection);
+  const snapshot = { catalog, images, decks }, result = buildPoliticsKImages(snapshot, selection, { replace });
   const manifestText = JSON.stringify(result.manifest) + "\n";
   const sourceBytes = new Map();
   for (const source of selection.sources ?? []) {
@@ -73,18 +74,22 @@ try {
     assetHashes[path] = textHash(bytes);
   }
   const review = { selection: imageContentHash(selection), reads: Object.fromEntries([...reads].map(([key, value]) => [key, textHash(value.text)])), assets: assetHashes, next: textHash(manifestText) };
-  if (apply && result.addedAssignments.length) assert.deepEqual(review, JSON.parse(await readFile(new URL("review.json", work), "utf8")), "確認後に問題・画像・指定が変わりました。公開せず再点検してください。");
+  const changed = result.addedAssignments.length || result.removedAssignments.length;
+  if (apply && changed) assert.deepEqual(review, JSON.parse(await readFile(new URL("review.json", work), "utf8")), "確認後に問題・画像・指定が変わりました。公開せず再点検してください。");
   if (!apply) {
     await writeFile(new URL("snapshot.json", work), JSON.stringify(snapshot));
     await writeFile(new URL("manifest.json", work), manifestText);
     await writeFile(new URL("audit.json", work), JSON.stringify(result.audit, null, 2));
     await writeFile(new URL("review.json", work), JSON.stringify(review));
   }
+  if (replace) console.log(`この科目の既存の割り当て${result.removedAssignments.length}問を外して付け直します。`);
   console.log(`今回の追加は${result.addedAssignments.length}問。累計${selection.deckIds.length}パート・${result.audit.length}問へ${Object.keys(assetHashes).length}枚の確認済み画像を割り当てます。`);
   if (!apply) console.log("確認用の一覧を作成しました。Cloudflareへの書き込みはありません。");
-  else if (!result.addedAssignments.length && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
+  else if (!changed && !result.addedAssets.length) console.log("公開済みの画像指定が一致しています。再登録は不要です。");
   else {
-    await writeFile(configPath, JSON.stringify({ name: "anki-politics-economics-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("politics-economics-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, ...imageWriterVars({ READ_KEYS: [...reads.keys()], QUESTION_IDS: result.addedAssignments.map(item => item.questionId), NEW_IMAGES: Object.fromEntries([...pendingSourceBytes].map(([key, bytes]) => [key, textHash(bytes)])) }), PREVIOUS_IMAGES_HASH: textHash(reads.get(politicsKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
+    // 保存窓口には、置き換え後に残るこの科目の割り当て全部を許可する問題として渡す。
+    const ownQuestionIds = result.manifest.assignments.filter(isPoliticsKAssignment).map(item => item.questionId);
+    await writeFile(configPath, JSON.stringify({ name: "anki-politics-economics-k-images", compatibility_date: "2026-08-20", main: fileURLToPath(new URL("politics-economics-k-images-storage-worker.js", import.meta.url)), workers_dev: true, preview_urls: false, vars: { ACCESS_TOKEN: token, ...imageWriterVars({ READ_KEYS: [...reads.keys()], QUESTION_IDS: ownQuestionIds, NEW_IMAGES: Object.fromEntries([...pendingSourceBytes].map(([key, bytes]) => [key, textHash(bytes)])) }), PREVIOUS_IMAGES_HASH: textHash(reads.get(politicsKImagesKey).text), NEXT_IMAGES_HASH: textHash(manifestText) }, r2_buckets: [{ binding: "BUCKET", bucket_name: "anki-world-history" }] }));
     deployAttempted = true;
     endpoint = (await wrangler("deploy")).match(/https:\/\/[a-z0-9.-]+\.workers\.dev/)?.[0]; assert.ok(endpoint);
     const checked = new Map();

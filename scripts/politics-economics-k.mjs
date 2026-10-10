@@ -92,7 +92,10 @@ export function validatePoliticsKBank(bank, excerpt) {
 export function buildPoliticsEconomicsK(bank, excerpt) {
   const facts = validatePoliticsKBank(bank, excerpt);
   const code = partCode(bank), deckId = `pek-${code}`;
-  const historyVersion = `${politicsKSubjectId}-${deckId}-v1`;
+  // 作り直した版は学習履歴を分ける。原稿の revision（省略時1）で履歴版を決める。
+  const revision = bank.revision ?? 1;
+  assert.ok(Number.isInteger(revision) && revision >= 1, "revisionは1以上の整数にしてください。");
+  const historyVersion = `${politicsKSubjectId}-${deckId}-v${revision}`;
   const contentVersion = contentHash(bank).slice(0, 20);
   const itemTitle = `${bank.item.number} ${bank.item.title}`;
   const datasetLabel = `${bank.subjectTitle}｜${bank.item.number}-${bank.heading.number} ${bank.heading.title}`;
@@ -204,5 +207,18 @@ export function appendPoliticsKDecks(catalog, additions) {
   subject.termCount = subject.decks.reduce((sum, deck) => sum + deck.termCount, 0);
   subject.questionCount = subject.decks.reduce((sum, deck) => sum + deck.questionCount, 0);
   if (before !== contentHash(subject)) next.version = contentHash(next.subjects).slice(0, 20);
+  return next;
+}
+
+// 試作の作り直し用。確認時の科目から変わっていない場合だけ、手元の原稿全体で科目を置き換える。他科目は変更しない。
+export function replacePoliticsKSubject(catalog, additions, expectedPreviousHash) {
+  assert.equal(catalog.schemaVersion, 3);
+  const existing = catalog.subjects.filter(entry => entry.id === politicsKSubjectId);
+  assert.equal(existing.length, 1, "置換対象は政治経済Kの1科目だけです。");
+  assert.equal(contentHash(existing[0]), expectedPreviousHash, "政治経済Kは確認後に編集されています。既存の編集を上書きしません。");
+  const rebuilt = appendPoliticsKDecks({ schemaVersion: 3, subjects: [] }, additions).subjects[0];
+  const next = structuredClone(catalog);
+  next.subjects = next.subjects.map(entry => entry.id === politicsKSubjectId ? rebuilt : entry);
+  next.version = contentHash(next.subjects).slice(0, 20);
   return next;
 }

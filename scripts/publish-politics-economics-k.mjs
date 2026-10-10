@@ -4,10 +4,11 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile, unlink } from "node:fs/promises";
 import { setTimeout as delay } from "node:timers/promises";
 import { fileURLToPath } from "node:url";
-import { loadPoliticsEconomicsK, appendPoliticsKDecks, contentHash, politicsKSubjectId } from "./politics-economics-k.mjs";
+import { loadPoliticsEconomicsK, appendPoliticsKDecks, replacePoliticsKSubject, contentHash, politicsKSubjectId } from "./politics-economics-k.mjs";
 import { encodeJsonBindings } from "./japanese-history-k-bindings.js";
 
-const apply = process.argv.includes("--apply"), additions = await loadPoliticsEconomicsK();
+// --replace は試作の作り直し用。登録済みのパートを保持せず、手元の原稿全体で科目を置き換える。
+const apply = process.argv.includes("--apply"), replace = process.argv.includes("--replace"), additions = await loadPoliticsEconomicsK();
 assert.ok(additions.length, "追加する問題原稿がありません。");
 const work = new URL("../.wrangler/politics-economics-k/", import.meta.url);
 await mkdir(work, { recursive: true });
@@ -42,14 +43,16 @@ async function read(key) {
 }
 try {
   const prepared = await read("index.json");
-  const next = appendPoliticsKDecks(prepared.value, additions);
   const preparedExisting = prepared.value.subjects.find(subject => subject.id === politicsKSubjectId);
+  assert.ok(!replace || preparedExisting, "置き換える政治経済Kが未登録です。--replaceなしで追加してください。");
+  const next = replace ? replacePoliticsKSubject(prepared.value, additions, contentHash(preparedExisting)) : appendPoliticsKDecks(prepared.value, additions);
   const nextSubject = next.subjects.find(subject => subject.id === politicsKSubjectId);
   const matchesNew = Boolean(preparedExisting) && contentHash(preparedExisting) === contentHash(nextSubject);
-  const newAdditions = additions.filter(plan => !preparedExisting?.decks.some(deck => deck.id === plan.index.deckId));
+  const newAdditions = replace ? additions : additions.filter(plan => !preparedExisting?.decks.some(deck => deck.id === plan.index.deckId));
   const newObjects = newAdditions.flatMap(plan => plan.objects);
+  // 置き換え時は旧パートを引き継がないので、既存の保存内容の照合は行わない（旧データはCloudflareに残る）。
   const previousHashes = {};
-  for (const deck of preparedExisting?.decks ?? []) {
+  for (const deck of replace ? [] : preparedExisting?.decks ?? []) {
     const previousIndex = (await read(deck.indexPath)).value;
     previousHashes[deck.indexPath] = contentHash(previousIndex);
     for (const chunk of previousIndex.chunks) previousHashes[chunk.path] = contentHash((await read(chunk.path)).value);
@@ -64,8 +67,8 @@ try {
       ...encodeJsonBindings("ADDITION_JSON", nextSubject),
       ...encodeJsonBindings("OBJECT_HASHES", Object.fromEntries(newObjects.map(object => [object.key, contentHash(object.value)]))),
       ...encodeJsonBindings("PREVIOUS_OBJECT_HASHES", previousHashes),
-      // 初回は科目が未登録であることを、以後は確認時の科目と既存パートの維持を保存窓口でも照合する。
-      PREVIOUS_SUBJECT_HASH: preparedExisting ? contentHash(preparedExisting) : "", PRESERVE_EXISTING_DECKS: preparedExisting ? "true" : "false",
+      // 初回は科目が未登録であることを、以後は確認時の科目と既存パートの維持を保存窓口でも照合する。置き換え時はパートを保持しない。
+      PREVIOUS_SUBJECT_HASH: preparedExisting ? contentHash(preparedExisting) : "", PRESERVE_EXISTING_DECKS: preparedExisting && !replace ? "true" : "false",
     };
     assert.ok(Object.keys(vars).length <= 64, "登録設定がCloudflareの変数数の上限を超えています。");
     await writeFile(configPath, JSON.stringify({
@@ -85,7 +88,8 @@ try {
     console.log("政治経済Kの小見出しは登録済みで一致しています。変更しません。");
   } else {
     if (!preparedExisting) console.log("政治経済Kを新しい科目として追加します。");
-    for (const plan of newAdditions) console.log(`政治経済K：${plan.index.datasetLabel}を${plan.unitCount}用語・${plan.index.questionCount}問（逆向きの説明）で追加します。`);
+    if (replace) console.log(`政治経済Kの登録済み${preparedExisting.decks.length}パート・${preparedExisting.questionCount}問を、手元の原稿全体で置き換えます（履歴版：${newAdditions.map(plan => plan.index.version).join("、")}）。`);
+    for (const plan of newAdditions) console.log(`政治経済K：${plan.index.datasetLabel}を${plan.unitCount}用語・${plan.index.questionCount}問（逆向きの説明）で${replace ? "登録" : "追加"}します。`);
     console.log(`全体は${nextSubject.chapterGroups.length}項目・${nextSubject.decks.length}パート・${nextSubject.termCount}用語・${nextSubject.questionCount}問です。他科目と既存の問題・履歴版を維持します。`);
     if (apply) {
       await writeFile(new URL(`before-${original.etag.replace(/[^a-zA-Z0-9-]/g, "")}.json`, work), JSON.stringify(original));
@@ -97,7 +101,7 @@ try {
       assert.deepEqual((await read("index.json")).value, next);
       for (const [key, hash] of Object.entries(previousHashes)) assert.equal(contentHash((await read(key)).value), hash, "既存問題が変わっています。");
       console.log("Cloudflareへの登録、新規問題の全文照合と既存問題・科目一覧の保持確認が完了しました。");
-    } else console.log("確認のみです。--applyでCloudflareへ反映します。");
+    } else console.log(`確認のみです。--apply${replace ? " --replace" : ""}でCloudflareへ反映します。`);
   }
 } catch (error) {
   publishError = error;

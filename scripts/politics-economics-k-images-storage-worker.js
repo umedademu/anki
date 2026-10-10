@@ -38,11 +38,13 @@ export default {
     const previousText = await previous.text();
     if (await digest(previousText) !== env.PREVIOUS_IMAGES_HASH) return new Response("Conflict", { status: 409 });
     const old = JSON.parse(previousText), value = JSON.parse(text);
+    // 他科目の割り当てと既存の画像は順序ごと保持し、政治経済Kの割り当てだけを設定した問題の範囲で付け直せる。
+    const isOwn = item => String(item?.questionId ?? "").startsWith("PEK-");
     if (value.schemaVersion !== 2 || !Array.isArray(value.assets) || !Array.isArray(value.assignments) ||
       JSON.stringify(value.termFallbacks) !== JSON.stringify(old.termFallbacks) ||
       JSON.stringify(value.assets.slice(0, old.assets.length)) !== JSON.stringify(old.assets) ||
-      JSON.stringify(value.assignments.slice(0, old.assignments.length)) !== JSON.stringify(old.assignments) ||
-      !value.assignments.slice(old.assignments.length).every(item => questionIds.includes(item.questionId))) return new Response("Invalid scope", { status: 400 });
+      JSON.stringify(value.assignments.filter(item => !isOwn(item))) !== JSON.stringify(old.assignments.filter(item => !isOwn(item))) ||
+      !value.assignments.filter(isOwn).every(item => questionIds.includes(item.questionId))) return new Response("Invalid scope", { status: 400 });
     for (const [imageKey, expectedHash] of Object.entries(newImages)) {
       const object = await env.BUCKET.get(imageKey);
       if (!object || await binaryDigest(await object.arrayBuffer()) !== expectedHash) return new Response("Unverified image", { status: 409 });

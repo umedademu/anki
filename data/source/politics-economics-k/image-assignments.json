@@ -5,7 +5,10 @@
     "pek-01-01",
     "pek-01-02",
     "pek-01-03",
-    "pek-01-04"
+    "pek-01-04",
+    "pek-02-01",
+    "pek-02-02",
+    "pek-02-03"
   ],
   "images": [
     {
@@ -297,6 +300,164 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-d18df549f403f09b1235",
+      "caption": "マグナ・カルタ（大憲章、1215年）の写本",
+      "note": "成立と内容を答えた後に文書の姿を示す。条文の読解は求めない。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U04",
+          "questions": [
+            "R01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1e31b3917ad3baee3a55",
+      "caption": "裁判官エドワード・コークの肖像（1600年ごろ）",
+      "note": "権利請願を起草した人物として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5ed837cc58a1c5c4515d",
+      "caption": "イギリスの権利章典（1689年）の文書の一部",
+      "note": "名誉革命後の権利章典そのもの。アメリカの権利章典ではない。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-49e2b58e095a02",
+      "caption": "アメリカ独立宣言（1776年）の文書",
+      "note": "独立宣言の文書。バージニア権利章典ではない。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U12",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-0feef1b34c4569",
+      "caption": "フランス人権宣言（1789年）の文書",
+      "note": "人権宣言の内容（平等・国民主権・権力分立）を答えた後に文書を示す。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U13",
+          "questions": [
+            "R01",
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-1d803e5954a0ba955656",
+      "caption": "参政権を求めるチャーチスト運動の集会（ロンドン、1848年）",
+      "note": "労働者の参政権要求の集会の写真。ラッダイト運動（機械打ち壊し）の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U17",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-f285c4955b0c106a51ef",
+      "caption": "ワイマール憲法（ドイツ国憲法）の表紙",
+      "note": "社会権を初めて規定した憲法の表紙。条文の頁ではない。",
+      "targets": [
+        {
+          "termId": "PEK-02-01-U22",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-42fe535bdd469deb98d5",
+      "caption": "4つの自由を描いたポスター（1943年、アメリカ戦時情報局）",
+      "note": "ローズベルトが示した4つの自由（言論・信教・欠乏から・恐怖から）を描いた戦時中のポスター。答えを示した後に表示する。",
+      "targets": [
+        {
+          "termId": "PEK-02-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-c6f3df7ae8f874",
+      "caption": "世界人権宣言を手にするエレノア・ローズベルト",
+      "note": "1948年の世界人権宣言の採択に関わった人物と宣言文書。法的拘束力の有無を写真から判断させない。",
+      "targets": [
+        {
+          "termId": "PEK-02-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-9757b71be8b78a044d3c",
+      "caption": "白人専用と定めたダーバンの海岸の看板（南アフリカ、1989年）",
+      "note": "人種隔離政策の下で白人専用とされた海岸の看板。答えを示した後に表示する。",
+      "targets": [
+        {
+          "termId": "PEK-02-02-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-385833c5b0c341",
+      "caption": "アイヌの人々（1904年の写真）",
+      "note": "アイヌ民族の人々の写真。法律の内容や先住権を写真から判断させない。",
+      "targets": [
+        {
+          "termId": "PEK-02-03-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-05ba27ea68cd47d08ca7",
+      "caption": "欧州人権裁判所（フランス・ストラスブール）",
+      "note": "欧州人権条約が設置した欧州人権裁判所の建物。",
+      "targets": [
+        {
+          "termId": "PEK-02-03-U12",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -455,6 +616,54 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_John_Dalberg-Acton,_1st_Baron_Acton.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-e07a1dcd076a6fea124f.jpg",
       "sha256": "e07a1dcd076a6fea124f806d386c7a54ac8c7d174ea405cc933e40f274380c3d"
+    },
+    {
+      "id": "PEKS-f285c4955b0c106a51ef",
+      "path": "term-images/politics-economics-k/PEKS-f285c4955b0c106a51ef.jpg",
+      "alt": "ワイマール憲法（ドイツ国憲法）の表紙",
+      "caption": "ワイマール憲法（ドイツ国憲法）の表紙",
+      "creator": "JonRoma（英語版ウィキペディア）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Weimar_Constitution.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f285c4955b0c106a51ef.jpg",
+      "sha256": "f285c4955b0c106a51ef8fb8975bd5f9ce9f6ae6290a94351669e3cd114b0ab9"
+    },
+    {
+      "id": "PEKS-42fe535bdd469deb98d5",
+      "path": "term-images/politics-economics-k/PEKS-42fe535bdd469deb98d5.jpg",
+      "alt": "4つの自由を描いたポスター（1943年、アメリカ戦時情報局）",
+      "caption": "4つの自由を描いたポスター（1943年、アメリカ戦時情報局）",
+      "creator": "Office of War Information（Norman Rockwellの絵）（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Four-Freedoms-OWI-composite-poster-1943.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-42fe535bdd469deb98d5.jpg",
+      "sha256": "42fe535bdd469deb98d5ba4b1f136c9189f169ea3b2d67477fb1dcb416434ca9"
+    },
+    {
+      "id": "PEKS-9757b71be8b78a044d3c",
+      "path": "term-images/politics-economics-k/PEKS-9757b71be8b78a044d3c.jpg",
+      "alt": "白人専用と定めたダーバンの海岸の看板（南アフリカ、1989年）",
+      "caption": "白人専用と定めたダーバンの海岸の看板（南アフリカ、1989年）",
+      "creator": "Guinnog",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:DurbanSign1989.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-9757b71be8b78a044d3c.jpg",
+      "sha256": "9757b71be8b78a044d3c8a80783ff9d632653febc07e8a9e2837f913046e3d4e"
+    },
+    {
+      "id": "PEKS-05ba27ea68cd47d08ca7",
+      "path": "term-images/politics-economics-k/PEKS-05ba27ea68cd47d08ca7.jpg",
+      "alt": "欧州人権裁判所（フランス・ストラスブール）",
+      "caption": "欧州人権裁判所（フランス・ストラスブール）",
+      "creator": "Gzen92",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Cour_europ%C3%A9enne_des_droits_de_l%27homme_(Strasbourg)_(2).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-05ba27ea68cd47d08ca7.jpg",
+      "sha256": "05ba27ea68cd47d08ca7280b39e3f04c01e02e0de5b413eff596ac12bef8d9a9"
     }
   ]
 }

@@ -120,7 +120,8 @@ export function buildPoliticsEconomicsK(bank, excerpt) {
         return {
           id: `${id}-${question.id}`, stage, focus: question.form, type: question.type, label: "逆向きの説明",
           prompt: question.prompt, answer: question.answer,
-          explanation: [question.note, `原文の根拠：${evidence.map(fact => `${fact.page}頁「${fact.quote}」`).join("\n")}`].filter(Boolean).join("\n\n"),
+          // 表の行を引用した根拠は、列の区切りを「／」にして表示する。
+          explanation: [question.note, `原文の根拠：${evidence.map(fact => `${fact.page}頁「${fact.quote.replaceAll("|", "／")}」`).join("\n")}`].filter(Boolean).join("\n\n"),
           keywords: [...question.keywords], acceptedAnswers: [], answerNote: "", yearMnemonic: "", hideTermUntilAnswer: false,
           source: { name: `${itemTitle}／${bank.heading.title}（${pages.join("・")}頁）`, url: "", file: bank.source.file, pages, evidence: evidence.map(fact => fact.id) },
         };

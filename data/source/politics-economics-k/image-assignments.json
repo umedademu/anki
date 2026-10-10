@@ -35,7 +35,11 @@
     "pek-09-01",
     "pek-09-02",
     "pek-09-03",
-    "pek-09-04"
+    "pek-09-04",
+    "pek-10-01",
+    "pek-10-02",
+    "pek-10-03",
+    "pek-10-04"
   ],
   "images": [
     {
@@ -1381,6 +1385,188 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-3cab1c1b545f9a24ffb9",
+      "caption": "展示館に保存されている第五福竜丸（東京都江東区）",
+      "note": "1954年にビキニ環礁の水爆実験で被ばくした漁船。部分的核実験禁止条約のきっかけの一つ。",
+      "targets": [
+        {
+          "termId": "PEK-10-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-80a284bcda112b344158",
+      "caption": "新STARTに署名するオバマ大統領とメドベージェフ大統領（2010年、プラハ）",
+      "note": "2010年の新STARTの署名式。",
+      "targets": [
+        {
+          "termId": "PEK-10-01-U11",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0aed73fc55a0a97ad404",
+      "caption": "鳩山一郎の肖像写真（1954〜56年ごろ）",
+      "note": "日ソ共同宣言に調印した首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-10-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-02a053b827366c0c4508",
+      "caption": "日韓基本条約の写し（展示用）",
+      "note": "1965年の日韓基本条約の文書。",
+      "targets": [
+        {
+          "termId": "PEK-10-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-0685afa060e64e",
+      "caption": "日中共同声明の文書（1972年）",
+      "note": "日中の国交正常化を宣言した文書。",
+      "targets": [
+        {
+          "termId": "PEK-10-02-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-5f2cea314d21955a990a",
+      "caption": "紛争中のサラエボで給水を待つ人々",
+      "note": "ボスニア＝ヘルツェゴビナ紛争中の首都の様子。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-db21d6767cf6c3",
+      "caption": "PLOの議長アラファト（1996年）",
+      "note": "パレスチナ解放機構を率いた指導者。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-a8b87a83c497b6",
+      "caption": "パレスチナ自治区のヨルダン川西岸とガザ地区（2007年）",
+      "note": "オスロ合意で自治が認められた地域の地図。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U06",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-5f0fadb8463091",
+      "caption": "カシミール地方の地図（2019年）",
+      "note": "インド・パキスタン・中国が接する係争地域の地図。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-74dd393efaae4e",
+      "caption": "香港の街並み",
+      "note": "一国二制度が適用された香港。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-fafdba73a3965a80ce45",
+      "caption": "アウン＝サン＝スーチー（2011年）",
+      "note": "ミャンマーの民主化運動の指導者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U14",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1730819791769239ef22",
+      "caption": "ダライ＝ラマ14世（2013年）",
+      "note": "インドに亡命したチベットの指導者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-10-03-U16",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-123ec7f72188e5",
+      "caption": "樺太・千島交換条約の文書（1875年）",
+      "note": "樺太をロシア領、千島列島を日本領とした条約の文書。",
+      "targets": [
+        {
+          "termId": "PEK-10-04-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-5796917eeb9743e5520c",
+      "caption": "黒岩恒による魚釣島の地質図（1900年）",
+      "note": "尖閣諸島の魚釣島を調査した地図。沖縄県への編入（1895年）の後の調査。",
+      "targets": [
+        {
+          "termId": "PEK-10-04-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1971,6 +2157,66 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:UNMISS_road_maintenance.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-f8bee487e8979340c33f.jpg",
       "sha256": "f8bee487e8979340c33f64366abe158946924ece64e4ca864e418cdef2f63273"
+    },
+    {
+      "id": "PEKS-3cab1c1b545f9a24ffb9",
+      "path": "term-images/politics-economics-k/PEKS-3cab1c1b545f9a24ffb9.jpg",
+      "alt": "展示館に保存されている第五福竜丸（東京都江東区）",
+      "caption": "展示館に保存されている第五福竜丸（東京都江東区）",
+      "creator": "carpkazu（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Daigo_Fukury%C5%AB_Maru_01.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-3cab1c1b545f9a24ffb9.jpg",
+      "sha256": "3cab1c1b545f9a24ffb932f2f125b4b50b6c8654e8e704d26e217578225ee9c8"
+    },
+    {
+      "id": "PEKS-80a284bcda112b344158",
+      "path": "term-images/politics-economics-k/PEKS-80a284bcda112b344158.jpg",
+      "alt": "新STARTに署名するオバマ大統領とメドベージェフ大統領（2010年、プラハ）",
+      "caption": "新STARTに署名するオバマ大統領とメドベージェフ大統領（2010年、プラハ）",
+      "creator": "Chuck Kennedy",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Obama_and_Medvedev_sign_New_START.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-80a284bcda112b344158.jpg",
+      "sha256": "80a284bcda112b344158b1054258f5a578097fc3a66cd7b1a3e77477d137f287"
+    },
+    {
+      "id": "PEKS-1730819791769239ef22",
+      "path": "term-images/politics-economics-k/PEKS-1730819791769239ef22.jpg",
+      "alt": "ダライ＝ラマ14世（2013年）",
+      "caption": "ダライ＝ラマ14世（2013年）",
+      "creator": "Niccolò Caranti",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Tenzin_Gyatso_-_Trento_2013_01.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-1730819791769239ef22.jpg",
+      "sha256": "1730819791769239ef223adfe5d5846582d1c3e43d8a5946858c53bd3471298a"
+    },
+    {
+      "id": "PEKS-fafdba73a3965a80ce45",
+      "path": "term-images/politics-economics-k/PEKS-fafdba73a3965a80ce45.jpg",
+      "alt": "アウン＝サン＝スーチー（2011年）",
+      "caption": "アウン＝サン＝スーチー（2011年）",
+      "creator": "アメリカ国務省",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Aung_San_Suu_Kyi_(December_2011).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-fafdba73a3965a80ce45.jpg",
+      "sha256": "fafdba73a3965a80ce451915ac2584fae69d4a6df97ff599be18a24c6f42d498"
+    },
+    {
+      "id": "PEKS-5796917eeb9743e5520c",
+      "path": "term-images/politics-economics-k/PEKS-5796917eeb9743e5520c.jpg",
+      "alt": "黒岩恒による魚釣島の地質図（1900年）",
+      "caption": "黒岩恒による魚釣島の地質図（1900年）",
+      "creator": "黒岩恒",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Uotsuri-shima_geo_1900.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-5796917eeb9743e5520c.jpg",
+      "sha256": "5796917eeb9743e5520cd036124a562cd6090fd2da8acc9706aa8f7c77d3520f"
     }
   ]
 }

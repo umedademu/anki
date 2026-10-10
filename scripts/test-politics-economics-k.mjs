@@ -46,6 +46,10 @@ const expected = [
   ["pek-09-02", "政治経済K｜9-2 国際連合", 11, 14, 1],
   ["pek-09-03", "政治経済K｜9-3 国連平和維持活動（PKO）", 4, 6, 1],
   ["pek-09-04", "政治経済K｜9-4 冷戦", 13, 14, 1],
+  ["pek-10-01", "政治経済K｜10-1 軍縮", 11, 14, 1],
+  ["pek-10-02", "政治経済K｜10-2 戦後日本の外交", 5, 5, 1],
+  ["pek-10-03", "政治経済K｜10-3 主な民族紛争", 18, 19, 1],
+  ["pek-10-04", "政治経済K｜10-4 日本の領土について", 4, 7, 1],
 ];
 assert.deepEqual(plans.map(plan => plan.index.deckId), expected.map(([deckId]) => deckId));
 for (const [index, [deckId, label, units, questions, revision]] of expected.entries()) {

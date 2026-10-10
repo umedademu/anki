@@ -14,7 +14,10 @@
     "pek-03-03",
     "pek-03-04",
     "pek-03-05",
-    "pek-03-06"
+    "pek-03-06",
+    "pek-04-01",
+    "pek-04-02",
+    "pek-04-03"
   ],
   "images": [
     {
@@ -632,6 +635,110 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMP-6ce35d5a15d591",
+      "caption": "最高裁判所の庁舎（東京都千代田区）",
+      "note": "違憲判決を下した最高裁判所の建物。判決の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-04-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-c2f3cd81870ece9a41ef",
+      "caption": "靖国神社の拝殿（2018年）",
+      "note": "公式参拝が問題となる靖国神社の拝殿。参拝の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-04-01-U12",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-2ab84ad4ef4c5dbf4173",
+      "caption": "チャタレー事件の第一審の判決後の翻訳者・伊藤整（1952年）",
+      "note": "チャタレー事件の被告となった翻訳者。判決の結論（有罪）は答えで学ぶ。",
+      "targets": [
+        {
+          "termId": "PEK-04-01-U14",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0deabbbccb93fadab936",
+      "caption": "家永三郎の肖像写真（1965年）",
+      "note": "教科書検定の違憲性を争った原告の歴史学者の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-04-01-U16",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-8b35945c51eaaa554d54",
+      "caption": "三島由紀夫の肖像写真（1955年）",
+      "note": "『宴のあと』の作者として答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-04-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-6f9b9dbee5bf2665a5a6",
+      "caption": "大阪国際空港（伊丹空港）の空撮",
+      "note": "騒音公害訴訟の舞台となった空港。夜間飛行の様子ではない。",
+      "targets": [
+        {
+          "termId": "PEK-04-02-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-c68ed543937ef18ee744",
+      "caption": "緒方貞子の肖像写真（1993年）",
+      "note": "UNHCRの代表を務めた人物として答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-04-03-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d0ea8cdac6ad7a87339d",
+      "caption": "マイナンバーカードの見本（表面）",
+      "note": "12けたの個人番号が記載されるマイナンバーカードの見本。住基カードではない。",
+      "targets": [
+        {
+          "termId": "PEK-04-03-U14",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -910,6 +1017,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Great_Hall_of_the_People_Beijing_China.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-0d1500c13ca7359682b6.jpg",
       "sha256": "0d1500c13ca7359682b67b63214365e2f0f0c28f6a1242263b4da8a8cb0dd654"
+    },
+    {
+      "id": "PEKS-c2f3cd81870ece9a41ef",
+      "path": "term-images/politics-economics-k/PEKS-c2f3cd81870ece9a41ef.jpg",
+      "alt": "靖国神社の拝殿（2018年）",
+      "caption": "靖国神社の拝殿（2018年）",
+      "creator": "Kakidai",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:2018_Haiden_(Yasukuni_Shrine).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-c2f3cd81870ece9a41ef.jpg",
+      "sha256": "c2f3cd81870ece9a41efe5e5d9e37b2ede327e422c6aee3de208eed629816bbb"
+    },
+    {
+      "id": "PEKS-0deabbbccb93fadab936",
+      "path": "term-images/politics-economics-k/PEKS-0deabbbccb93fadab936.jpg",
+      "alt": "家永三郎の肖像写真（1965年）",
+      "caption": "家永三郎の肖像写真（1965年）",
+      "creator": "憲法擁護国民連合",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sabur%C5%8D_Ienaga_close-up_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0deabbbccb93fadab936.jpg",
+      "sha256": "0deabbbccb93fadab9360cb4ecd4759b5d9ed7046dbab3af692e08d82033ed27"
+    },
+    {
+      "id": "PEKS-2ab84ad4ef4c5dbf4173",
+      "path": "term-images/politics-economics-k/PEKS-2ab84ad4ef4c5dbf4173.jpg",
+      "alt": "チャタレー事件の第一審の判決後の翻訳者・伊藤整（1952年）",
+      "caption": "チャタレー事件の第一審の判決後の翻訳者・伊藤整（1952年）",
+      "creator": "朝日新聞社",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ito_Sei_after_the_1st_Chatterley_trial.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-2ab84ad4ef4c5dbf4173.jpg",
+      "sha256": "2ab84ad4ef4c5dbf41736e23cd74daa8a3d5605edf8a3d14c8dfbf8c0d42aaea"
+    },
+    {
+      "id": "PEKS-8b35945c51eaaa554d54",
+      "path": "term-images/politics-economics-k/PEKS-8b35945c51eaaa554d54.jpg",
+      "alt": "三島由紀夫の肖像写真（1955年）",
+      "caption": "三島由紀夫の肖像写真（1955年）",
+      "creator": "土門拳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Yukio_Mishima,_1955_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-8b35945c51eaaa554d54.jpg",
+      "sha256": "8b35945c51eaaa554d54624baeb54324514fdaf041785e4d8333563cbcfbaa72"
+    },
+    {
+      "id": "PEKS-6f9b9dbee5bf2665a5a6",
+      "path": "term-images/politics-economics-k/PEKS-6f9b9dbee5bf2665a5a6.jpg",
+      "alt": "大阪国際空港（伊丹空港）の空撮",
+      "caption": "大阪国際空港（伊丹空港）の空撮",
+      "creator": "国土交通省（縮小）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Itami_airport_aerial_photograph_2012.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-6f9b9dbee5bf2665a5a6.jpg",
+      "sha256": "6f9b9dbee5bf2665a5a6fcdf4e0ce5f6e33419a9516684a81d6a794ba1405f77"
+    },
+    {
+      "id": "PEKS-d0ea8cdac6ad7a87339d",
+      "path": "term-images/politics-economics-k/PEKS-d0ea8cdac6ad7a87339d.jpg",
+      "alt": "マイナンバーカードの見本（表面）",
+      "caption": "マイナンバーカードの見本（表面）",
+      "creator": "デジタル庁",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E3%83%9E%E3%82%A4%E3%83%8A%E3%83%B3%E3%83%90%E3%83%BC%E3%82%AB%E3%83%BC%E3%83%89%E3%81%BF%E3%81%BB%E3%82%93%E8%A1%A8.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-d0ea8cdac6ad7a87339d.jpg",
+      "sha256": "d0ea8cdac6ad7a87339d8294f1060e0d8849a402710f6f296d1377c1acb26ff9"
+    },
+    {
+      "id": "PEKS-c68ed543937ef18ee744",
+      "path": "term-images/politics-economics-k/PEKS-c68ed543937ef18ee744.jpg",
+      "alt": "緒方貞子の肖像写真（1993年）",
+      "caption": "緒方貞子の肖像写真（1993年）",
+      "creator": "World Economic Forum",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Sadako_Ogata_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-c68ed543937ef18ee744.jpg",
+      "sha256": "c68ed543937ef18ee7442e970b47c83173d773f017660d88906c6c78835cf968"
     }
   ]
 }

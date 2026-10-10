@@ -22,7 +22,10 @@
     "pek-05-02",
     "pek-05-03",
     "pek-05-04",
-    "pek-05-05"
+    "pek-05-05",
+    "pek-06-01",
+    "pek-06-02",
+    "pek-06-03"
   ],
   "images": [
     {
@@ -848,6 +851,97 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMP-da06f096e8123a",
+      "caption": "国会議事堂（東京都千代田区永田町）",
+      "note": "国会が開かれる建物。建物の写真で、国会の地位そのものを示すものではない。",
+      "targets": [
+        {
+          "termId": "PEK-06-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-5ae1020062442f851959",
+      "caption": "参議院の本会議場",
+      "note": "参議院の本会議場。衆議院の本会議場と取り違えない。",
+      "targets": [
+        {
+          "termId": "PEK-06-01-U16",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-c2f3107adae376",
+      "caption": "衆議院の本会議場",
+      "note": "衆議院の本会議場。議決の場面を写したものではない。",
+      "targets": [
+        {
+          "termId": "PEK-06-01-U19",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-9a217616c80b167a57d4",
+      "caption": "内閣総理大臣の官邸（首相官邸）",
+      "note": "内閣総理大臣が執務する官邸の建物。閣議の場面ではない。",
+      "targets": [
+        {
+          "termId": "PEK-06-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-dd578f1752ec857f8913",
+      "caption": "ロバート・ウォルポールの肖像",
+      "note": "議院内閣制が始まったとされる内閣の首相として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-06-02-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-6ce35d5a15d591",
+      "caption": "最高裁判所の庁舎（東京都千代田区）",
+      "note": "終審裁判所である最高裁判所の建物。",
+      "targets": [
+        {
+          "termId": "PEK-06-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d3df3ef162c8a2068fb9",
+      "caption": "児島惟謙の肖像写真",
+      "note": "大津事件のときの大審院長として、答えを示した後に肖像を表示する。",
+      "targets": [
+        {
+          "termId": "PEK-06-03-U08",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -1246,6 +1340,54 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Shinz%C5%8D_Abe_20200101.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-d434fbd3419236e55d84.jpg",
       "sha256": "d434fbd3419236e55d84a72bebefd1dcc4ac42d706f4e39f9615478f577ba1ec"
+    },
+    {
+      "id": "PEKS-5ae1020062442f851959",
+      "path": "term-images/politics-economics-k/PEKS-5ae1020062442f851959.jpg",
+      "alt": "参議院の本会議場",
+      "caption": "参議院の本会議場",
+      "creator": "Kestrel",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Chamber_of_the_House_of_Councillors_P5200854.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-5ae1020062442f851959.jpg",
+      "sha256": "5ae1020062442f851959aa56d67583d29ab50397e69e75dfac1e6147d0a56d10"
+    },
+    {
+      "id": "PEKS-9a217616c80b167a57d4",
+      "path": "term-images/politics-economics-k/PEKS-9a217616c80b167a57d4.jpg",
+      "alt": "内閣総理大臣の官邸（首相官邸）",
+      "caption": "内閣総理大臣の官邸（首相官邸）",
+      "creator": "AMANO Jun-ichi（縮小）",
+      "license": "CC BY 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:%E7%B7%8F%E7%90%86%E5%AE%98%E9%82%B8_S%C5%8Dri_Kantei,_the_Prime_Minister%27s_office_-_panoramio.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-9a217616c80b167a57d4.jpg",
+      "sha256": "9a217616c80b167a57d4870f52c695c92f79afb5a5995d14483a303a33008bde"
+    },
+    {
+      "id": "PEKS-dd578f1752ec857f8913",
+      "path": "term-images/politics-economics-k/PEKS-dd578f1752ec857f8913.jpg",
+      "alt": "ロバート・ウォルポールの肖像",
+      "caption": "ロバート・ウォルポールの肖像",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Robert-Walpole-1st-Earl-of-Orford.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-dd578f1752ec857f8913.jpg",
+      "sha256": "dd578f1752ec857f8913a32590246bd17507ef7ffd6056e13b99dbca99eaa4a0"
+    },
+    {
+      "id": "PEKS-d3df3ef162c8a2068fb9",
+      "path": "term-images/politics-economics-k/PEKS-d3df3ef162c8a2068fb9.jpg",
+      "alt": "児島惟謙の肖像写真",
+      "caption": "児島惟謙の肖像写真",
+      "creator": "作者不詳（縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Iken_Kojima.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-d3df3ef162c8a2068fb9.jpg",
+      "sha256": "d3df3ef162c8a2068fb9ae9cb1cc8c886a1ccd6cdd8dc5578d254fff74c25a77"
     }
   ]
 }

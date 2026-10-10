@@ -56,7 +56,10 @@
     "pek-15-01",
     "pek-15-02",
     "pek-15-03",
-    "pek-15-04"
+    "pek-15-04",
+    "pek-16-01",
+    "pek-16-02",
+    "pek-16-03"
   ],
   "images": [
     {
@@ -1857,6 +1860,19 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-a7ce963707ecc7fc5dc4",
+      "caption": "財務省の庁舎（東京都千代田区霞が関、2024年）",
+      "note": "国の予算案の作成や国債の発行を担う財務省の建物。",
+      "targets": [
+        {
+          "termId": "PEK-16-02-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2615,6 +2631,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:GER-134-Reichsbanknote-1_Trillion_Mark_(1923).jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-e451fbd0576edbf3b97c.jpg",
       "sha256": "e451fbd0576edbf3b97c2a9afe161b34407279aef5d76956843ba41851483d4c"
+    },
+    {
+      "id": "PEKS-a7ce963707ecc7fc5dc4",
+      "path": "term-images/politics-economics-k/PEKS-a7ce963707ecc7fc5dc4.jpg",
+      "alt": "財務省の庁舎（東京都千代田区霞が関、2024年）",
+      "caption": "財務省の庁舎（東京都千代田区霞が関、2024年）",
+      "creator": "Kakidai",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ministry_of_Finance_Building_(Japan).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-a7ce963707ecc7fc5dc4.jpg",
+      "sha256": "a7ce963707ecc7fc5dc446a05fc3c76488db485ba9ef8e8f3bf25491e5898cc9"
     }
   ]
 }

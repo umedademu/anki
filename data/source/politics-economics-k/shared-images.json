@@ -648,5 +648,55 @@
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Bank_of_Japan_building_(51698).jpg"
+  },
+  {
+    "id": "WM-72f7e0b15a8a15",
+    "path": "term-images/optimized/WM-72f7e0b15a8a15.webp",
+    "alt": "朝鮮戦争",
+    "caption": "朝鮮戦争",
+    "creator": "All photographs are works of the United States federal government.",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Korean_War_Montage_2.png"
+  },
+  {
+    "id": "WMJ-f44ffc0afd1838",
+    "path": "term-images/optimized/WMJ-f44ffc0afd1838.webp",
+    "alt": "池田勇人",
+    "caption": "池田勇人",
+    "creator": "Robert LeRoy Knudsen",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:JFKWHP-KN-C18157_in_Hayato_Ikeda_(cropped).jpg"
+  },
+  {
+    "id": "WM-e12b6da57f6657",
+    "path": "term-images/optimized/WM-e12b6da57f6657.webp",
+    "alt": "石油危機",
+    "caption": "石油危機",
+    "creator": "Jashuah",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Crude_oil_prices_since_1861.png"
+  },
+  {
+    "id": "WMP-a2df57d9eafdd6",
+    "path": "term-images/optimized/WMP-a2df57d9eafdd6.webp",
+    "alt": "プラザ合意前後のドル・円相場",
+    "caption": "プラザ合意前後のドル・円相場",
+    "creator": "Monaneko ( talk )",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:USD-JPY_(Plaza_Accord).svg"
+  },
+  {
+    "id": "WMJ-37ad2d6f49977c",
+    "path": "term-images/optimized/WMJ-37ad2d6f49977c.webp",
+    "alt": "バブル経済",
+    "caption": "バブル経済",
+    "creator": "Monaneko",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Nikkei_225(1970-).svg"
   }
 ]

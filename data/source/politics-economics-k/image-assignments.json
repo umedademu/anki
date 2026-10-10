@@ -59,7 +59,11 @@
     "pek-15-04",
     "pek-16-01",
     "pek-16-02",
-    "pek-16-03"
+    "pek-16-03",
+    "pek-17-01",
+    "pek-17-02",
+    "pek-17-03",
+    "pek-17-04"
   ],
   "images": [
     {
@@ -1873,6 +1877,110 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMJ-620b29e90bdad3",
+      "caption": "財閥解体で財閥一族の資産が接収される場面（1946年）",
+      "note": "GHQによる経済民主化の一つである財閥解体の場面。",
+      "targets": [
+        {
+          "termId": "PEK-17-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-e619b287d3eb126f9e4e",
+      "caption": "ドッジ夫妻と池田勇人（1949年）",
+      "note": "ドッジ・ラインを実施したアメリカの経済顧問ドッジと、当時の大蔵大臣。",
+      "targets": [
+        {
+          "termId": "PEK-17-01-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-72f7e0b15a8a15",
+      "caption": "朝鮮戦争の場面を集めた写真",
+      "note": "日本に特需景気をもたらした朝鮮戦争の写真。",
+      "targets": [
+        {
+          "termId": "PEK-17-01-U04",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-f44ffc0afd1838",
+      "caption": "池田勇人の肖像写真",
+      "note": "国民所得倍増計画を発表した首相の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-17-02-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-e823bc953f6259b05da2",
+      "caption": "東海道新幹線の0系（1967年、東京）",
+      "note": "東京オリンピックに合わせて1964年に開業した東海道新幹線の車両。",
+      "targets": [
+        {
+          "termId": "PEK-17-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e12b6da57f6657",
+      "caption": "原油価格の推移（1861年以降）",
+      "note": "1970年代の2度の石油危機で原油価格が急上昇している。",
+      "targets": [
+        {
+          "termId": "PEK-17-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-a2df57d9eafdd6",
+      "caption": "プラザ合意前後のドル・円相場",
+      "note": "1985年のプラザ合意の後、急速に円高・ドル安が進んだ。",
+      "targets": [
+        {
+          "termId": "PEK-17-03-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-37ad2d6f49977c",
+      "caption": "日経平均株価の推移（1970年以降）",
+      "note": "1989年末に最高値をつけた後、バブル崩壊で急落している。",
+      "targets": [
+        {
+          "termId": "PEK-17-03-U06",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2643,6 +2751,30 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Ministry_of_Finance_Building_(Japan).jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-a7ce963707ecc7fc5dc4.jpg",
       "sha256": "a7ce963707ecc7fc5dc446a05fc3c76488db485ba9ef8e8f3bf25491e5898cc9"
+    },
+    {
+      "id": "PEKS-e619b287d3eb126f9e4e",
+      "path": "term-images/politics-economics-k/PEKS-e619b287d3eb126f9e4e.jpg",
+      "alt": "ドッジ夫妻と池田勇人（1949年）",
+      "caption": "ドッジ夫妻と池田勇人（1949年）",
+      "creator": "作者不詳",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Dodge_and_Ikeda_1949.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e619b287d3eb126f9e4e.jpg",
+      "sha256": "e619b287d3eb126f9e4e80875cc0c32226a19920f59b2c897b88aef1fb98df3c"
+    },
+    {
+      "id": "PEKS-e823bc953f6259b05da2",
+      "path": "term-images/politics-economics-k/PEKS-e823bc953f6259b05da2.jpg",
+      "alt": "東海道新幹線の0系（1967年、東京）",
+      "caption": "東海道新幹線の0系（1967年、東京）",
+      "creator": "Roger Wollstadt",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:0_series_Yurakucho_19670505.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e823bc953f6259b05da2.jpg",
+      "sha256": "e823bc953f6259b05da26aeaee0751e9e64105918c7235c003cf614384b4a593"
     }
   ]
 }

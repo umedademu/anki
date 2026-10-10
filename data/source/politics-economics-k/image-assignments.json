@@ -63,7 +63,11 @@
     "pek-17-01",
     "pek-17-02",
     "pek-17-03",
-    "pek-17-04"
+    "pek-17-04",
+    "pek-18-01",
+    "pek-18-02",
+    "pek-18-03",
+    "pek-18-04"
   ],
   "images": [
     {
@@ -1981,6 +1985,45 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "PEKS-f41e0089b1995d8008fc",
+      "caption": "主要国の食料自給率（カロリーベース）の推移",
+      "note": "日本（Japan）の自給率が、フランスやアメリカなどの主要国より低いことがわかる。",
+      "targets": [
+        {
+          "termId": "PEK-18-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-e26619c846a635",
+      "caption": "ケネディの肖像写真",
+      "note": "消費者の4つの権利を示したアメリカ大統領の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-18-03-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-5de53639034596",
+      "caption": "田中角栄の肖像写真（1972年）",
+      "note": "日本列島改造論を唱えた首相の肖像。",
+      "targets": [
+        {
+          "termId": "PEK-18-04-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -2775,6 +2818,18 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:0_series_Yurakucho_19670505.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-e823bc953f6259b05da2.jpg",
       "sha256": "e823bc953f6259b05da26aeaee0751e9e64105918c7235c003cf614384b4a593"
+    },
+    {
+      "id": "PEKS-f41e0089b1995d8008fc",
+      "path": "term-images/politics-economics-k/PEKS-f41e0089b1995d8008fc.jpg",
+      "alt": "主要国の食料自給率（カロリーベース）の推移",
+      "caption": "主要国の食料自給率（カロリーベース）の推移",
+      "creator": "Masaqui（JPEGに変換・縮小）",
+      "license": "CC BY-SA 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Food_Self-sufficiency_ratio_en.png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f41e0089b1995d8008fc.jpg",
+      "sha256": "f41e0089b1995d8008fce71263d40e7aee0ab11af3653fddc1a5f40c94094d0a"
     }
   ]
 }

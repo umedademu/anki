@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.393";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.394";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.393";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.393";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.393";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.393";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.393";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.393";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.393";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.393";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.393";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.394";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.394";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.394";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.394";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.394";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.394";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.394";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.394";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.394";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.393";
+} from "./original-session.js?v=0.394";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.393";
+} from "./speech.js?v=0.394";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.393";
+} from "./deck-selection.js?v=0.394";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -285,6 +285,7 @@ const elements = {
   progressBar: document.querySelector("#progress-bar"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
+  questionHeading: document.querySelector(".question-heading"),
   questionSpokenBlock: document.querySelector(".question-spoken-block"),
   questionText: document.querySelector("#question-text"),
   questionMap: document.querySelector("#question-map"),
@@ -5097,6 +5098,28 @@ function configureSetup() {
   renderRoutineSetupContext();
 }
 
+// 上部の問題番号と学習状況を1行に収める。入らない時だけ文字の大きさを縮める。
+function fitQuestionHeading() {
+  const heading = elements.questionHeading;
+  heading.style.removeProperty("--heading-fit");
+  // 右寄せの学習状況は左へはみ出して重なるため、縮めずに並べた幅で測る。
+  heading.classList.add("is-measuring");
+  const available = heading.clientWidth;
+  const needed = heading.scrollWidth;
+  heading.classList.remove("is-measuring");
+  if (available === 0 || needed <= available) return;
+  const scale = Math.max(0.6, (available - 1) / needed);
+  heading.style.setProperty("--heading-fit", scale.toFixed(3));
+}
+
+// スマートフォン縦向きでは「一巡の」「この回の」を隠して「残り ◯問」だけにする。
+function setQueueProgressText(remaining) {
+  const scope = document.createElement("span");
+  scope.className = "queue-progress-scope";
+  scope.textContent = isListeningMode() ? "一巡の" : "この回の";
+  elements.queueProgress.replaceChildren(scope, `残り ${remaining}問`);
+}
+
 function updateOverallProgress() {
   const mastery = getOverallMastery(
     state.terms,
@@ -5109,9 +5132,9 @@ function updateOverallProgress() {
       ? 0
       : (mastery.masteredQuestions / mastery.totalQuestions) * 100;
   elements.overallProgress.textContent = `習得 ${mastery.masteredQuestions} / ${mastery.totalQuestions}問`;
-  elements.termProgress.textContent = state.selectedStage
-    ? `このスタイル習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`
-    : `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`;
+  // 問題スタイルを選んだ時の習得数は「習得」と重なるので表示しない。
+  elements.termProgress.classList.toggle("is-hidden", Boolean(state.selectedStage));
+  elements.termProgress.textContent = `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`;
   elements.progressBar.style.width = `${percent}%`;
 }
 
@@ -5315,9 +5338,7 @@ function renderQuestion() {
   renderTermTags(term, question, showsSupplement);
 
   renderActionControls();
-  elements.queueProgress.textContent = isListeningMode()
-    ? `一巡の残り ${state.queue.length + 1}問`
-    : `この回の残り ${state.queue.length + 1}問`;
+  setQueueProgressText(state.queue.length + 1);
   if (state.questionLimit !== null && !state.inRoutine) {
     elements.queueProgress.textContent = `今回の学習 ${state.answeredThisSession - state.questionLimitStart}／${state.questionLimit}問`;
   }
@@ -5327,6 +5348,7 @@ function renderQuestion() {
   state.unlockMessage = "";
 
   updateOverallProgress();
+  fitQuestionHeading();
   setContentDensity(
     elements.questionCard,
     stagedClassicalChineseMeaning ? term.term : displayedQuestionPrompt,
@@ -5396,7 +5418,7 @@ function renderCompletion() {
   state.routineCompletionAction = "";
   elements.completionReturn.textContent = "開始画面に戻る";
   if (listening) {
-    elements.queueProgress.textContent = "一巡の残り 0問";
+    setQueueProgressText(0);
     elements.completionEyebrow.textContent = "一巡完了";
     elements.completionTitle.textContent = `聞き流しを${state.sessionTasks.length}問完了しました`;
     elements.completionMessage.textContent = `今回選んだ${state.terms.length}${termUnitLabel()}・${state.sessionTasks.length}問を一通り聞き終えました。学習時間は${formatStudyDuration(state.studySeconds)}です。`;
@@ -7136,6 +7158,7 @@ window.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("resize", () => {
+  if (state.currentTask) fitQuestionHeading();
   if (state.currentTask && state.answerVisible) {
     const question = currentQuestion();
     const term = currentTerm();

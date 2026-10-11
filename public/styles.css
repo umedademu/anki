@@ -1533,11 +1533,20 @@ body.is-study-menu-open {
   box-shadow: 0 0 0 3px rgb(78 145 102 / 24%);
 }
 
+/* 中身の長さでカードを広げず、カードの幅に合わせる（収まらない時は文字を縮める）。 */
 .question-heading {
   display: flex;
+  box-sizing: border-box;
+  width: 0;
+  min-width: 100%;
   align-items: center;
-  flex-wrap: wrap;
   gap: 8px;
+  overflow: hidden;
+}
+
+.question-heading.is-measuring .progress-summary {
+  flex-shrink: 0;
+  margin-left: 0;
 }
 
 .question-number {
@@ -3426,17 +3435,20 @@ body.is-listening.is-listening-answer-visible .page {
     align-items: flex-start;
   }
 
+  /* 上部は1行に収める。カードの左右の余白も使い、それでも入らない時だけ文字を縮める。 */
   .question-heading {
+    min-width: calc(100% + 28px);
+    margin-inline: -14px;
     gap: 4px;
   }
 
   .question-number {
-    font-size: 0.56rem;
+    font-size: calc(0.56rem * var(--heading-fit, 1));
   }
 
   .question-heading .progress-summary {
     gap: 2px;
-    font-size: 0.42rem;
+    font-size: calc(0.42rem * var(--heading-fit, 1));
     letter-spacing: -0.02em;
   }
 
@@ -3448,6 +3460,13 @@ body.is-listening.is-listening-answer-visible .page {
 
   .question-heading .subject-progress-name {
     max-width: 15vw;
+  }
+
+  /* 上部を1行に収めるため、縦向きでは科目名・デッキ名と残り数の前置きを省く。 */
+  .question-heading .subject-progress-name,
+  .question-heading .deck-progress-name,
+  .question-heading .queue-progress-scope {
+    display: none;
   }
 
   .action-dock.is-answer-visible .action-buttons {

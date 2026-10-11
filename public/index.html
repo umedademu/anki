@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.392"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.392" />
-    <link rel="stylesheet" href="/theme.css?v=0.392" />
+    <script src="/theme.js?v=0.393"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.393" />
+    <link rel="stylesheet" href="/theme.css?v=0.393" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.392" type="module"></script>
+    <script src="/app.js?v=0.393" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.392</span>
+        <span class="app-version">v0.393</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/history.html">学習記録</a>
@@ -33,7 +33,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.392｜科目別学習</p>
+        <p class="eyebrow">v0.393｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -681,7 +681,8 @@
               <span id="term-progress">完全習得 0 / 0語</span>
               <span class="is-hidden" id="routine-progress">メニュー 0 / 0問</span>
               <span id="queue-progress">この回の残り 0問</span>
-              <span class="study-time" id="study-time">00:00:00</span>
+              <span>累計 <span class="study-time" id="study-time">00:00:00</span></span>
+              <span>今回 <span class="study-time" id="launch-study-time">00:00:00</span></span>
             </div>
           </div>
           <div class="spoken-block question-spoken-block">

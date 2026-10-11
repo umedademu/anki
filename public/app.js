@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.392";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.393";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.392";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.392";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.392";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.392";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.392";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.392";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.392";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.392";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.392";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.393";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.393";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.393";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.393";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.393";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.393";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.393";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.393";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.393";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.392";
+} from "./original-session.js?v=0.393";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.392";
+} from "./speech.js?v=0.393";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.392";
+} from "./deck-selection.js?v=0.393";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -281,6 +281,7 @@ const elements = {
   routineProgress: document.querySelector("#routine-progress"),
   queueProgress: document.querySelector("#queue-progress"),
   studyTime: document.querySelector("#study-time"),
+  launchStudyTime: document.querySelector("#launch-study-time"),
   progressBar: document.querySelector("#progress-bar"),
   questionCard: document.querySelector("#question-card"),
   questionNumber: document.querySelector("#question-number"),
@@ -466,6 +467,8 @@ let studyClockLastTick = 0;
 let mindsetStudyClockTimer = null;
 let mindsetStudyClockLastTick = 0;
 let studyTimeSave = Promise.resolve();
+// アプリを閉じると消える「今回」の基準。一周ごとに時間と問題数の累計を覚える。
+const launchRoundStarts = new Map();
 let listeningTouchStart = null;
 let suppressNextListeningClick = false;
 let studyMenuLastFocused = null;
@@ -1507,6 +1510,31 @@ async function skipCurrentRoutineItem({ launchNext = false, showError } = {}) {
 
 function updateStudyTimeDisplay() {
   elements.studyTime.textContent = formatStudyDuration(state.studySeconds);
+  elements.launchStudyTime.textContent = formatStudyDuration(launchStudySeconds());
+}
+
+// アプリを開いている間だけの「今回」の時間と問題数。一周ごとに、この起動で最初に
+// 表示した時点の累計を基準にし、そこから増えた分を示す。
+function launchRoundStart() {
+  if (!state.activeSession || !state.sessionRoundId) return null;
+  const key = `${state.sessionDatasetVersion}|${state.sessionRoundId}`;
+  if (!launchRoundStarts.has(key)) {
+    launchRoundStarts.set(key, {
+      studySeconds: state.studySeconds,
+      answeredCount: state.answeredThisSession,
+    });
+  }
+  return launchRoundStarts.get(key);
+}
+
+function launchStudySeconds() {
+  const start = launchRoundStart();
+  return start ? Math.max(0, state.studySeconds - start.studySeconds) : 0;
+}
+
+function launchAnsweredCount() {
+  const start = launchRoundStart();
+  return start ? Math.max(0, state.answeredThisSession - start.answeredCount) : 0;
 }
 
 function updateMindsetStudyTimeDisplay() {
@@ -5212,11 +5240,11 @@ function renderQuestion() {
   );
   elements.contextCard.classList.toggle("reveals-term", !hidesTerm);
 
-  elements.questionNumber.textContent = `${state.completedRoundCount}周消化｜${
+  elements.questionNumber.textContent = `${
     state.completedRoundCount + 1
   }周目｜${isListeningMode() ? "聞き流し" : "出題"} ${
     state.answeredThisSession + 1
-  }`;
+  }｜今回 ${launchAnsweredCount()}問`;
   updateStudyTimeDisplay();
   const displayedQuestionPrompt = getQuestionPromptForDisplay(
     question,

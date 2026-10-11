@@ -1536,13 +1536,16 @@ body.is-study-menu-open {
 .question-heading {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
 .question-number {
+  flex-shrink: 0;
   color: var(--theme-muted, #667269);
   font-size: 0.78rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .question-card h2 {

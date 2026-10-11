@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.392" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.393" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.392") ||
-  !app.includes("app-navigation.js?v=0.392") ||
-  !changelog.includes("v0.392") ||
-  !settingsHtml.includes("v0.392") ||
-  !historyHtml.includes("v0.392") ||
-  !analysisHtml.includes("v0.392")
+  !html.includes("v0.393") ||
+  !app.includes("app-navigation.js?v=0.393") ||
+  !changelog.includes("v0.393") ||
+  !settingsHtml.includes("v0.393") ||
+  !historyHtml.includes("v0.393") ||
+  !analysisHtml.includes("v0.393")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -879,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.392"') ||
+  !html.includes('href="/styles.css?v=0.393"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1839,6 +1839,55 @@ if (
   loopbackConfig.progressApiBaseUrl !== "http://localhost:8787"
 ) {
   throw new Error("手元確認用のCloudflare保存窓口が設定されていません。");
+}
+
+// 「今回」の時間と問題数は、アプリを開いている間だけ一周ごとに基準を覚えて増えた分を示す。
+{
+  const launchSource = app.slice(
+    app.indexOf("function launchRoundStart()"),
+    app.indexOf("function updateMindsetStudyTimeDisplay()"),
+  );
+  const launchState = {
+    activeSession: true, sessionDatasetVersion: "v1", sessionRoundId: "round-1",
+    studySeconds: 600, answeredThisSession: 40,
+  };
+  const launchContext = { state: launchState, launchRoundStarts: new Map() };
+  runInNewContext(launchSource, launchContext);
+  const firstSeconds = launchContext.launchStudySeconds();
+  launchState.studySeconds = 690;
+  launchState.answeredThisSession = 43;
+  const progressed = [launchContext.launchStudySeconds(), launchContext.launchAnsweredCount()];
+  launchState.answeredThisSession = 38;
+  const undoneBelowStart = launchContext.launchAnsweredCount();
+  launchState.sessionRoundId = "round-2";
+  launchState.studySeconds = 0;
+  launchState.answeredThisSession = 0;
+  const newRound = launchContext.launchStudySeconds();
+  launchState.studySeconds = 30;
+  launchState.answeredThisSession = 2;
+  const newRoundProgress = [launchContext.launchStudySeconds(), launchContext.launchAnsweredCount()];
+  launchState.sessionRoundId = "round-1";
+  launchState.studySeconds = 700;
+  launchState.answeredThisSession = 44;
+  const resumedFirstRound = [launchContext.launchStudySeconds(), launchContext.launchAnsweredCount()];
+  launchState.activeSession = false;
+  if (
+    firstSeconds !== 0 ||
+    progressed.join(",") !== "90,3" ||
+    undoneBelowStart !== 0 ||
+    newRound !== 0 ||
+    newRoundProgress.join(",") !== "30,2" ||
+    resumedFirstRound.join(",") !== "100,4" ||
+    launchContext.launchAnsweredCount() !== 0 ||
+    !app.includes("const launchRoundStarts = new Map();") ||
+    !app.includes("elements.launchStudyTime.textContent = formatStudyDuration(launchStudySeconds());") ||
+    !app.includes("｜今回 ${launchAnsweredCount()}問`") ||
+    app.includes("周消化｜") ||
+    !html.includes('<span>累計 <span class="study-time" id="study-time">00:00:00</span></span>') ||
+    !html.includes('<span>今回 <span class="study-time" id="launch-study-time">00:00:00</span></span>')
+  ) {
+    throw new Error("学習中の「今回」の時間・問題数、または周回表示が正しくありません。");
+  }
 }
 console.log(
   "画面構成検証完了: 4段階評価・開始前全項目・Cloudflare共通設定と教科別設定を確認",

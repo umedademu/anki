@@ -78,7 +78,10 @@
     "pek-21-03",
     "pek-21-04",
     "pek-21-05",
-    "pek-21-06"
+    "pek-21-06",
+    "pek-22-01",
+    "pek-22-02",
+    "pek-22-03"
   ],
   "images": [
     {
@@ -2217,6 +2220,175 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "WMG-8e8de6a96f9441",
+      "caption": "酸性雨で傷んだ石像",
+      "note": "硫黄酸化物や窒素酸化物が溶けこんだ雨は、森林や建造物に被害を与える。",
+      "targets": [
+        {
+          "termId": "PEK-22-01-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-a4956760838c767c4277",
+      "caption": "南極上空のオゾンホール（2006年9月）",
+      "note": "フロンなどによってオゾン層が薄くなった領域（青・紫の部分）。",
+      "targets": [
+        {
+          "termId": "PEK-22-01-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-dc73809239c430",
+      "caption": "世界の平均気温の変化",
+      "note": "温室効果ガスの増加などにより、世界各地で平均気温が上がっている。",
+      "targets": [
+        {
+          "termId": "PEK-22-01-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-fe2e88bc252dfdcf48ef",
+      "caption": "『沈黙の春』の著者レイチェル・カーソン",
+      "note": "1962年に『沈黙の春』を著し、農薬による環境汚染を警告した。",
+      "targets": [
+        {
+          "termId": "PEK-22-01-U09",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-e19d036f8b2ecf",
+      "caption": "四日市港の臨海工業地帯（三重県）",
+      "note": "石油化学コンビナートの排煙による大気汚染が、四日市ぜんそくの原因となった。",
+      "targets": [
+        {
+          "termId": "PEK-22-01-U12",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-3b0f73f20a2df8713537",
+      "caption": "マルサスの肖像",
+      "note": "『人口論』で、人口の増加に食糧の増産が追いつかないと説いた。",
+      "targets": [
+        {
+          "termId": "PEK-22-02-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-4d503075c7efaa",
+      "caption": "人口転換のモデル",
+      "note": "近代化とともに出生率と死亡率が下がり、多産多死から少産少死へ移る。",
+      "targets": [
+        {
+          "termId": "PEK-22-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1251e3b38efdb3e2adad",
+      "caption": "中国で出生率の抑制を呼びかける看板（2005年）",
+      "note": "中国は1979年から一人っ子政策で出生を抑えた（2015年に終了）。",
+      "targets": [
+        {
+          "termId": "PEK-22-02-U03",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-f6a25951d5cc7d61e0d3",
+      "caption": "スリーマイル島原子力発電所の2号機（アメリカ）",
+      "note": "1979年に炉心溶融事故を起こした原子炉。",
+      "targets": [
+        {
+          "termId": "PEK-22-03-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-68a422dba8f9e1c97f49",
+      "caption": "事故後の福島第一原子力発電所（2011年3月）",
+      "note": "東日本大震災の津波で電源を失い、大きな事故となった。",
+      "targets": [
+        {
+          "termId": "PEK-22-03-U05",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-1a66939cdef03a54cac6",
+      "caption": "高速増殖炉もんじゅ（福井県敦賀市）",
+      "note": "事故やトラブルが続き、2016年に廃炉が決まった。",
+      "targets": [
+        {
+          "termId": "PEK-22-03-U06",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-25c78e41c11bca",
+      "caption": "風力発電の風車",
+      "note": "風力は、太陽光・地熱などと並ぶ再生可能エネルギー。",
+      "targets": [
+        {
+          "termId": "PEK-22-03-U07",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-773a1229345fba381b84",
+      "caption": "燃えるメタンハイドレート",
+      "note": "氷のような固体の中にメタンガスが閉じこめられており、火をつけると燃える。",
+      "targets": [
+        {
+          "termId": "PEK-22-03-U08",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -3059,6 +3231,90 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Births_and_Total_fertility_rate_of_Japan.svg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-1902f2edfcff145f43e6.jpg",
       "sha256": "1902f2edfcff145f43e6a042650c5654bb047955691e4ea3c3116c1aa68a477d"
+    },
+    {
+      "id": "PEKS-a4956760838c767c4277",
+      "path": "term-images/politics-economics-k/PEKS-a4956760838c767c4277.jpg",
+      "alt": "南極上空のオゾンホール（2006年9月）",
+      "caption": "南極上空のオゾンホール（2006年9月）",
+      "creator": "NASA（JPEGに変換・縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:NASA_and_NOAA_Announce_Ozone_Hole_is_a_Double_Record_Breaker.png",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-a4956760838c767c4277.jpg",
+      "sha256": "a4956760838c767c4277ae3fc6037e6e50d87277a6f45eb1c03846a7b4e5dc0f"
+    },
+    {
+      "id": "PEKS-fe2e88bc252dfdcf48ef",
+      "path": "term-images/politics-economics-k/PEKS-fe2e88bc252dfdcf48ef.jpg",
+      "alt": "『沈黙の春』の著者レイチェル・カーソン",
+      "caption": "『沈黙の春』の著者レイチェル・カーソン",
+      "creator": "U.S. Fish and Wildlife Service",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Rachel-Carson.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-fe2e88bc252dfdcf48ef.jpg",
+      "sha256": "fe2e88bc252dfdcf48efaba4a17fa88c4dc9af5d5379bfdca3b71db5961746c2"
+    },
+    {
+      "id": "PEKS-3b0f73f20a2df8713537",
+      "path": "term-images/politics-economics-k/PEKS-3b0f73f20a2df8713537.jpg",
+      "alt": "マルサスの肖像",
+      "caption": "マルサスの肖像",
+      "creator": "John Linnell（Wellcome Collection）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Robert_Malthus_Wellcome_L0069037_-crop.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-3b0f73f20a2df8713537.jpg",
+      "sha256": "3b0f73f20a2df871353721586ec355673d258a7db5f2cda6500dac52d11dc882"
+    },
+    {
+      "id": "PEKS-1251e3b38efdb3e2adad",
+      "path": "term-images/politics-economics-k/PEKS-1251e3b38efdb3e2adad.jpg",
+      "alt": "中国で出生率の抑制を呼びかける看板（2005年）",
+      "caption": "中国で出生率の抑制を呼びかける看板（2005年）",
+      "creator": "kafka4prez",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:One-child_policy_in_China.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-1251e3b38efdb3e2adad.jpg",
+      "sha256": "1251e3b38efdb3e2adad2171d860382ac1957af2eaac20cc5e385daaff7cb703"
+    },
+    {
+      "id": "PEKS-f6a25951d5cc7d61e0d3",
+      "path": "term-images/politics-economics-k/PEKS-f6a25951d5cc7d61e0d3.jpg",
+      "alt": "スリーマイル島原子力発電所の2号機（アメリカ）",
+      "caption": "スリーマイル島原子力発電所の2号機（アメリカ）",
+      "creator": "Z22",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Three_Mile_Island_Nuclear_Generating_Station_Unit_2.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f6a25951d5cc7d61e0d3.jpg",
+      "sha256": "f6a25951d5cc7d61e0d3359dc01a94ccc085a4810ba519f4a5d0fa902a1d69be"
+    },
+    {
+      "id": "PEKS-1a66939cdef03a54cac6",
+      "path": "term-images/politics-economics-k/PEKS-1a66939cdef03a54cac6.jpg",
+      "alt": "高速増殖炉もんじゅ（福井県敦賀市）",
+      "caption": "高速増殖炉もんじゅ（福井県敦賀市）",
+      "creator": "Nife",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Monju.JPG",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-1a66939cdef03a54cac6.jpg",
+      "sha256": "1a66939cdef03a54cac65aff3958df05169d003e0011d3987e4e82d147e10897"
+    },
+    {
+      "id": "PEKS-773a1229345fba381b84",
+      "path": "term-images/politics-economics-k/PEKS-773a1229345fba381b84.jpg",
+      "alt": "燃えるメタンハイドレート",
+      "caption": "燃えるメタンハイドレート",
+      "creator": "USGS",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Burning_methane_hydrate.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-773a1229345fba381b84.jpg",
+      "sha256": "773a1229345fba381b84bf0c27ef149221e3a64f80d7997a27c4ca54c299ec51"
     }
   ]
 }

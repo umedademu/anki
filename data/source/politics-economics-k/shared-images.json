@@ -818,5 +818,65 @@
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
     "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Lehman_Brothers_Times_Square_by_David_Shankbone.jpg"
+  },
+  {
+    "id": "WMG-8e8de6a96f9441",
+    "path": "term-images/optimized/WMG-8e8de6a96f9441.webp",
+    "alt": "酸性雨",
+    "caption": "酸性雨",
+    "creator": "Nino Barbieri",
+    "license": "CC BY 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Pollution_-_Damaged_by_acid_rain.jpg"
+  },
+  {
+    "id": "WMG-dc73809239c430",
+    "path": "term-images/optimized/WMG-dc73809239c430.webp",
+    "alt": "地球温暖化",
+    "caption": "地球温暖化",
+    "creator": "NASA’s Scientific Visualization Studio, Key and Title by uploader (Eric Fisk)",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Change_in_Average_Temperature_With_Fahrenheit.svg"
+  },
+  {
+    "id": "WMG-e19d036f8b2ecf",
+    "path": "term-images/optimized/WMG-e19d036f8b2ecf.webp",
+    "alt": "臨海型工業",
+    "caption": "臨海型工業",
+    "creator": "Kaz Ish",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Port_of_Yokkaichi_,_Mie_-_panoramio_(18).jpg"
+  },
+  {
+    "id": "WMG-4d503075c7efaa",
+    "path": "term-images/optimized/WMG-4d503075c7efaa.webp",
+    "alt": "人口転換",
+    "caption": "人口転換",
+    "creator": "Max Roser",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Demographic-TransitionOWID.png"
+  },
+  {
+    "id": "JHKS-68a422dba8f9e1c97f49",
+    "path": "term-images/japanese-history-k/JHKS-68a422dba8f9e1c97f49.jpg",
+    "alt": "事故後の福島第一原子力発電所（2011年3月16日）",
+    "caption": "事故後の福島第一原子力発電所（2011年3月16日）",
+    "creator": "Digital Globe",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Fukushima_I_by_Digital_Globe_crop.jpg"
+  },
+  {
+    "id": "WMG-25c78e41c11bca",
+    "path": "term-images/optimized/WMG-25c78e41c11bca.webp",
+    "alt": "風力発電",
+    "caption": "風力発電",
+    "creator": "Stewie Griffin",
+    "license": "Public domain",
+    "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Alto_de_Penouta.JPG"
   }
 ]

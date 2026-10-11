@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.389";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.390";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.389";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.389";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.389";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.389";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.389";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.389";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.389";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.389";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.389";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.390";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.390";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.390";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.390";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.390";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.390";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.390";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.390";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.390";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.389";
+} from "./original-session.js?v=0.390";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.389";
+} from "./speech.js?v=0.390";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.389";
+} from "./deck-selection.js?v=0.390";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -454,7 +454,9 @@ let deckSelectionUpdating = false;
 let pendingDeckSelection = null;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
-let listeningAdvanceSave = Promise.resolve();
+// 聞き流しで終えた問題の保存は、次の問題を読み上げながら古い順に送る。
+// 失敗したら回数を進め、それより後に並んでいた保存は送らずに捨てる。
+const listeningSaves = { tail: Promise.resolve(), pending: [], failures: 0 };
 let studyClockTimer = null;
 let studyClockLastTick = 0;
 let mindsetStudyClockTimer = null;
@@ -513,6 +515,8 @@ const listeningModes = new Set(["listen-answer"]);
 const classicalChineseSubjectId = "classical-chinese";
 const mindsetLearningType = "mindset";
 const classicalChineseListeningStepDelayMilliseconds = 1000;
+// 通信が詰まった時に、失敗で巻き戻る問題数が増えすぎないよう未保存の数を抑える。
+const listeningSaveBacklogLimit = 3;
 const oneQuestionPerTermMode = "one-per-term";
 const studyMenuReviewFields = {
   againSeconds: [elements.studyMenuAgainValue, elements.studyMenuAgainUnit],
@@ -1932,7 +1936,12 @@ function queueActiveSessionSave() {
 
 function queueActiveStudyActivity(
   activity,
-  { completeSession = false, routineRun, session = captureActiveSession() } = {},
+  {
+    completeSession = false,
+    routineRun,
+    session = captureActiveSession(),
+    timeEntry = null,
+  } = {},
 ) {
   const studyMode = state.studyMode;
   const datasetVersion = datasetVersionForQuestion(activity.questionId);
@@ -1945,7 +1954,7 @@ function queueActiveStudyActivity(
         datasetVersion,
         activity,
         session,
-        { sessionDatasetVersion, completeSession, routineRun },
+        { sessionDatasetVersion, completeSession, routineRun, timeEntry },
       );
       if (
         saveVersion === studySessionSaveVersion &&
@@ -3804,6 +3813,17 @@ async function goBackListeningOneStep() {
   if (!isListeningMode() || state.saving) {
     return;
   }
+  if (listeningSaves.pending.length > 0) {
+    // 進めた問題の保存が終わってから戻す。保存に失敗して巻き戻った時は、その位置で止める。
+    const failuresBefore = listeningSaves.failures;
+    stopListeningSequence();
+    state.listeningPaused = true;
+    state.saving = true;
+    renderActionControls();
+    await listeningSaves.tail;
+    state.saving = false;
+    if (failuresBefore !== listeningSaves.failures) return;
+  }
   const snapshot = state.history.at(-1);
   if (
     !snapshot ||
@@ -3932,9 +3952,13 @@ async function goBackListeningOneStep() {
 
 async function advanceListening(runId) {
   if (hasReachedQuestionLimit()) return;
-  // 前の問題の保存中に次の回答まで読み終えた時は、その保存の結果を見てから進む。
-  await listeningAdvanceSave;
+  // 未保存の問題が溜まっている時だけ、古い保存が終わるのを待ってから進む。
+  const failuresBeforeWait = listeningSaves.failures;
+  while (listeningSaves.pending.length >= listeningSaveBacklogLimit) {
+    await listeningSaves.pending[0];
+  }
   if (
+    failuresBeforeWait !== listeningSaves.failures ||
     runId !== state.listeningRunId ||
     state.listeningPaused ||
     !isListeningMode() ||
@@ -3943,11 +3967,16 @@ async function advanceListening(runId) {
     return;
   }
   const completedTask = state.currentTask;
-  const activity = state.pendingListeningActivity ??
-    createStudyActivity(completedTask.questionId);
+  const activity =
+    state.pendingListeningActivity?.questionId === completedTask.questionId
+      ? state.pendingListeningActivity
+      : createStudyActivity(completedTask.questionId);
   stopStudyClock();
-  const pendingStudySessionSave = studySessionSave.catch(() => {});
-  const pendingStudyTimeSave = queueCurrentStudyTimeSave();
+  const studyTimeEntry = captureStudyTimeEntry();
+  const timeEntry =
+    studyTimeEntry && studyTimeEntry.studySeconds > state.studyTimeSavedSeconds
+      ? studyTimeEntry
+      : null;
   const undoSnapshot = {
     type: "listening-advance",
     studyActivityEventId: activity.eventId,
@@ -3986,27 +4015,39 @@ async function advanceListening(runId) {
     !listeningPassComplete &&
     !routineChange?.completedItem &&
     !hasReachedQuestionLimit();
-  let finishAdvanceSave;
-  listeningAdvanceSave = new Promise((resolve) => {
-    finishAdvanceSave = resolve;
-  });
-  state.saving = true;
   if (continuesToNextQuestion) {
     // 保存の完了を待たずに次の問題を読み上げ、保存に失敗した時だけ元の問題へ戻す。
     beginListeningQuestion();
   } else {
+    state.saving = true;
     renderActionControls();
   }
+  const failuresBefore = listeningSaves.failures;
+  // 学習時間も同じ通信で送り、1問あたりの通信を1回にする。
+  const save = listeningSaves.tail.then(async () => {
+    if (failuresBefore !== listeningSaves.failures) return false;
+    try {
+      await queueActiveStudyActivity(activity, {
+        session: advancedSession,
+        timeEntry,
+        completeSession: sessionComplete,
+        routineRun: routineChange?.changed ? state.routineRun : undefined,
+      });
+    } catch (error) {
+      // 次の保存が始まる前に数え、後ろに並んでいる保存を確実に止める。
+      listeningSaves.failures += 1;
+      throw error;
+    }
+    return true;
+  });
+  const settled = save.then(() => {}, () => {});
+  listeningSaves.tail = settled;
+  listeningSaves.pending.push(settled);
+  let saved = false;
   try {
-    await pendingStudySessionSave;
-    await pendingStudyTimeSave;
-    await queueActiveStudyActivity(activity, {
-      session: advancedSession,
-      completeSession: sessionComplete,
-      routineRun: routineChange?.changed ? state.routineRun : undefined,
-    });
-    state.pendingListeningActivity = null;
+    saved = await save;
   } catch (error) {
+    // 保存できなかった問題へ戻す。後ろに並んでいた保存は送られずに終わる。
     if (!restoreActiveSession(undoSnapshot.studySession, { updateControls: false })) {
       state.currentTask = completedTask;
       state.queue = previousQueue;
@@ -4026,13 +4067,15 @@ async function advanceListening(runId) {
     renderQuestion();
     return;
   } finally {
-    finishAdvanceSave();
+    listeningSaves.pending.splice(listeningSaves.pending.indexOf(settled), 1);
   }
+  // 前の保存が失敗して巻き戻した後は、この問題の進行も取り消し済み。
+  if (!saved) return;
+  if (state.pendingListeningActivity === activity) {
+    state.pendingListeningActivity = null;
+  }
+  if (continuesToNextQuestion) return;
   state.saving = false;
-  if (continuesToNextQuestion) {
-    renderActionControls();
-    return;
-  }
   if (sessionComplete) state.activeSession = false;
   if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
@@ -5393,6 +5436,15 @@ async function rateListeningQuestion(rating) {
   }
   const resumesFromPause = state.listeningPaused;
   stopListeningSequence();
+  if (listeningSaves.pending.length > 0) {
+    // 前の問題の保存が終わってから評価を保存する。保存に失敗して巻き戻った時は評価しない。
+    const failuresBefore = listeningSaves.failures;
+    state.saving = true;
+    renderActionControls();
+    await listeningSaves.tail;
+    state.saving = false;
+    if (failuresBefore !== listeningSaves.failures) return;
+  }
   ratingSoundPlayer.play(rating);
   stopStudyClock();
   state.saving = true;
@@ -6326,7 +6378,12 @@ function navigateToRoute(route, { replace = false, fromHistory = false } = {}) {
   routeQueue = routeQueue.catch(() => {}).then(async () => {
     await studyFieldEditor.closeForNavigation();
     // 回答の保存・開始処理の途中で別科目の状態に入れ替えない。
-    while (startingStudy || state.saving || deckSelectionUpdating) {
+    while (
+      startingStudy ||
+      state.saving ||
+      deckSelectionUpdating ||
+      listeningSaves.pending.length > 0
+    ) {
       await new Promise((resolve) => window.setTimeout(resolve, 25));
     }
     if (request !== routeRequest) return;

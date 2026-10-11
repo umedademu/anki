@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.389" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.390" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.389") ||
-  !app.includes("app-navigation.js?v=0.389") ||
-  !changelog.includes("v0.389") ||
-  !settingsHtml.includes("v0.389") ||
-  !historyHtml.includes("v0.389") ||
-  !analysisHtml.includes("v0.389")
+  !html.includes("v0.390") ||
+  !app.includes("app-navigation.js?v=0.390") ||
+  !changelog.includes("v0.390") ||
+  !settingsHtml.includes("v0.390") ||
+  !historyHtml.includes("v0.390") ||
+  !analysisHtml.includes("v0.390")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -873,7 +873,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.389"') ||
+  !html.includes('href="/styles.css?v=0.390"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1684,16 +1684,23 @@ if (
   throw new Error("聞き流しの任意評価またはCloudflareへの一括保存が揃っていません。");
 }
 if (
-  !app.includes("let listeningAdvanceSave = Promise.resolve();") ||
-  !advanceListeningBlock.includes("await listeningAdvanceSave;") ||
-  advanceListeningBlock.indexOf("await listeningAdvanceSave;") >=
-    advanceListeningBlock.indexOf("runId !== state.listeningRunId") ||
+  !app.includes("const listeningSaves = { tail: Promise.resolve(), pending: [], failures: 0 };") ||
+  !app.includes("const listeningSaveBacklogLimit = 3;") ||
+  !advanceListeningBlock.includes("while (listeningSaves.pending.length >= listeningSaveBacklogLimit)") ||
   advanceListeningBlock.indexOf("beginListeningQuestion();") >=
     advanceListeningBlock.indexOf("await queueActiveStudyActivity(activity,") ||
   advanceListeningBlock.indexOf("pushHistory(undoSnapshot);") >=
     advanceListeningBlock.indexOf("beginListeningQuestion();") ||
-  !advanceListeningBlock.includes("finishAdvanceSave();") ||
-  advanceListeningBlock.includes("await queueCurrentStudyTimeSave();") ||
+  !advanceListeningBlock.includes("const save = listeningSaves.tail.then(async () => {") ||
+  !advanceListeningBlock.includes("if (failuresBefore !== listeningSaves.failures) return false;") ||
+  !advanceListeningBlock.includes("listeningSaves.failures += 1;") ||
+  !advanceListeningBlock.includes("timeEntry,") ||
+  advanceListeningBlock.includes("queueCurrentStudyTimeSave(") ||
+  !listeningBackBlock?.includes("await listeningSaves.tail;") ||
+  !rateListeningQuestionBlock?.includes("await listeningSaves.tail;") ||
+  !app.includes("listeningSaves.pending.length > 0\n    ) {") ||
+  !cloudProgress.includes("...(timeEntry ? { timeEntry } : {})") ||
+  !worker.includes("statements.push(studyTimeStatement(env, timeEntry, occurredAt));") ||
   !listeningAnswerSpeechBlock?.includes(
     "state.queue.slice(0, 2).forEach(preloadListeningTask);",
   ) ||
@@ -1705,7 +1712,7 @@ if (
   !cloudProgress.includes("trimSilence: trimSilence === true") ||
   !worker.includes('const trimSilence = body.trimSilence === true;')
 ) {
-  throw new Error("聞き流しで保存を待たずに次の問題へ進む処理か、英単語の無音を削る音声の構成が不足しています。");
+  throw new Error("聞き流しで保存を待たずに次の問題へ進む処理、学習時間の一括保存、英単語の無音を削る音声のいずれかの構成が不足しています。");
 }
 if (
   !app.includes(

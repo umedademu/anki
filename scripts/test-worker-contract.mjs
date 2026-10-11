@@ -761,6 +761,98 @@ for (const invalid of [
   }
 }
 
+// 聞き流しは、終えた問題の学習時間を日別学習記録と同じ通信でまとめて保存する。
+const activityBatches = [];
+const activityEnv = {
+  SYNC_TOKEN: "test-key",
+  ALLOWED_ORIGIN: "https://anki-ume.vercel.app",
+  DB: {
+    prepare(sql) {
+      return {
+        sql,
+        values: [],
+        bind(...values) {
+          this.values = values;
+          return this;
+        },
+        async all() {
+          return { results: [] };
+        },
+        async first() {
+          return null;
+        },
+      };
+    },
+    async batch(statements) {
+      activityBatches.push(statements);
+      return [];
+    },
+  },
+};
+const listeningActivity = {
+  subjectId: "english-vocabulary",
+  subjectTitle: "英単語",
+  deckId: "deck-1",
+  deckTitle: "Deck 1",
+  studyMode: "listen-answer",
+  questionId: "EN-000001-B01",
+};
+const saveListeningActivity = (timeEntry) =>
+  worker.fetch(
+    new Request(
+      "https://anki-progress-api.example/v1/study-activity/activity-1?dataset=en-test",
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer test-key",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ activity: listeningActivity, session: null, timeEntry }),
+      },
+    ),
+    activityEnv,
+  );
+const combinedResponse = await saveListeningActivity({
+  ...listeningActivity,
+  eventId: "screen-1",
+  studySeconds: 3,
+});
+const combinedStatements = activityBatches.at(-1);
+const savedTimeStatement = combinedStatements?.find((statement) =>
+  statement.sql.includes("INSERT INTO study_time_events"),
+);
+const activityOnlyResponse = await saveListeningActivity(undefined);
+const activityBatchCount = activityBatches.length;
+const mismatchedTimeResponse = await saveListeningActivity({
+  ...listeningActivity,
+  questionId: "EN-000002-B01",
+  eventId: "screen-2",
+  studySeconds: 3,
+});
+const overLimitTimeResponse = await saveListeningActivity({
+  ...listeningActivity,
+  eventId: "screen-3",
+  studySeconds: 31,
+});
+if (
+  combinedResponse.status !== 200 ||
+  !combinedStatements?.some((statement) =>
+    statement.sql.includes("INSERT INTO study_activity_events"),
+  ) ||
+  savedTimeStatement?.values[0] !== "screen-1" ||
+  savedTimeStatement.values[9] !== "EN-000001-B01" ||
+  savedTimeStatement.values[10] !== 3 ||
+  activityOnlyResponse.status !== 200 ||
+  activityBatches.at(-1).some((statement) =>
+    statement.sql.includes("INSERT INTO study_time_events"),
+  ) ||
+  mismatchedTimeResponse.status !== 400 ||
+  overLimitTimeResponse.status !== 400 ||
+  activityBatches.length !== activityBatchCount
+) {
+  throw new Error("聞き流しの日別学習記録と学習時間の一括保存が不正です。");
+}
+
 console.log(
   "Cloudflare窓口検証完了: 学習記録・開始設定・Azure音声・評価音を確認",
 );

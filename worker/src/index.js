@@ -1703,8 +1703,32 @@ async function handleRequest(request, env) {
     if (completeSession && activity.studyMode !== "listen-answer") {
       return json(request, env, { error: "聞き流し以外の一周は完了できません。" }, 400);
     }
+    // 聞き流しは、終えた問題の学習時間を同じ通信でまとめて保存する。
+    const timeEntry = body.timeEntry == null
+      ? null
+      : normalizeStudyTimeEntry(body.timeEntry, datasetVersion, body.timeEntry.eventId);
+    if (timeEntry) {
+      if (
+        timeEntry.questionId !== activity.questionId ||
+        timeEntry.studyMode !== activity.studyMode
+      ) {
+        return json(request, env, { error: "学習時間と日別学習記録の問題が一致しません。" }, 400);
+      }
+      const settings = (await readState(env, "__settings_only__")).settings;
+      if (timeEntry.studySeconds > settings.studyTimeLimitSeconds) {
+        return json(
+          request,
+          env,
+          { error: "学習時間が設定した上限を超えています。" },
+          400,
+        );
+      }
+    }
     const occurredAt = new Date().toISOString();
     const statements = [studyActivityStatement(env, activity, occurredAt)];
+    if (timeEntry) {
+      statements.push(studyTimeStatement(env, timeEntry, occurredAt));
+    }
     if (routineRun) {
       statements.push(studyRoutineRunStatement(env, routineRun, occurredAt));
     }

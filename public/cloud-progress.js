@@ -805,6 +805,7 @@ export async function saveCloudStudyActivity(
     completeSession = false,
     completeRoundId = completeSession ? session?.roundId : null,
     routineRun,
+    timeEntry = null,
   } = {},
 ) {
   const payload = await cloudRequest(
@@ -818,6 +819,7 @@ export async function saveCloudStudyActivity(
         completeSession,
         completeRoundId,
         routineRun,
+        ...(timeEntry ? { timeEntry } : {}),
       }),
     },
   );

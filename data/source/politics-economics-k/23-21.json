@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 3, "title": "第3講 時事問題" },
+  "item": { "number": 23, "title": "時事問題" },
+  "heading": { "number": 21, "title": "IT革命" },
+  "source": {
+    "file": "sources/seikei/23_時事問題.md",
+    "ranges": [
+      { "start": "### ■IT革命", "end": "### ■SDGs" }
+    ],
+    "pages": [411],
+    "note": "411頁の「■IT革命」を読んだ。IT化をめぐる法整備（電子署名・認証法・不正アクセス禁止法）と、デジタル・デバイド、eコマース、ユビキタス、ノマドワーキング、SNS、SOHOを扱う。"
+  },
+  "facts": [
+    { "id": "sign", "page": 411, "quote": "電子署名・認証法…ネット上の文書に、紙の文書同様の法的効力を認める。" },
+    { "id": "access", "page": 411, "quote": "不正アクセス禁止法…他人のパスワードの不正利用／データの改ざんを禁止。" },
+    { "id": "divide", "page": 411, "quote": "デジタル＝デバイド…IT機器への習熟度から生じる経済格差など。" },
+    { "id": "divide-2", "page": 411, "quote": "情報格差" },
+    { "id": "ec", "page": 411, "quote": "eコマースの促進…（ネット活用の「電子商取引」）" },
+    { "id": "btob", "page": 411, "quote": "B to B（企業対企業）" },
+    { "id": "btoc", "page": 411, "quote": "B to C（企業対個人）" },
+    { "id": "ctoc", "page": 411, "quote": "C to C（個人対個人）" },
+    { "id": "ubiq", "page": 411, "quote": "ユビキタス…（「いつでもどこでも」ネットワークにアクセスできる技術や環境。" },
+    { "id": "nomad", "page": 411, "quote": "ノマドワーキング…（ノートPCやスマホを使って、場所を問わず仕事をする働き方。" },
+    { "id": "sns", "page": 411, "quote": "SNS（ソーシャル・ネットワーキング・サービス）…Facebookやツイッターなど、双方向性のあるwebサイト。" },
+    { "id": "oneway", "page": 411, "quote": "情報伝達が一方通行で、受け手の側から送信できない状態（➡従来型のマスメディアはこれ）。" },
+    { "id": "soho", "page": 411, "quote": "SOHO（Small Office ／ Home Office）…ネットを使った在宅小規模経営。" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "不正アクセス禁止法", "reading": "ふせいあくせすきんしほう", "category": "IT化と法",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "IT化の法整備",
+          "prompt": "IT化に対応して制定された不正アクセス禁止法と電子署名・認証法とは？",
+          "answer": "**不正アクセス禁止法**（2000年）は、**他人のパスワードの不正利用**や**データの改ざん**を禁止する法律。**電子署名・認証法**（2001年）は、ネット上の文書の電子署名に、**紙の文書と同じ法的効力**を認める法律である。",
+          "evidence": ["access", "sign"], "keywords": ["不正アクセス禁止法", "他人のパスワードの不正利用", "データの改ざん", "電子署名・認証法", "紙の文書と同じ法的効力"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "デジタル・デバイド", "reading": "でじたるでばいど", "category": "ITの用語",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "デジタル・デバイドとは？",
+          "answer": "IT機器を使いこなせるかどうかによって生じる**情報格差**や、それにともなう**経済格差**のこと。",
+          "evidence": ["divide", "divide-2"], "keywords": ["情報格差", "経済格差"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "eコマース", "reading": "いーこまーす", "category": "ITの用語",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味と形態",
+          "prompt": "eコマース（電子商取引）とは？どんな形態がある？",
+          "answer": "インターネットを利用した**電子商取引**のこと。**企業対企業（B to B）**、**企業対個人（B to C）**、**個人対個人（C to C）**の取引がある。",
+          "evidence": ["ec", "btob", "btoc", "ctoc"], "keywords": ["電子商取引", "企業対企業（B to B）", "企業対個人（B to C）", "個人対個人（C to C）"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "04", "term": "ユビキタス", "reading": "ゆびきたす", "category": "ITの用語",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "ユビキタスとは？",
+          "answer": "「**いつでもどこでも**」**ネットワークにアクセスできる**技術や環境のこと。",
+          "evidence": ["ubiq"], "keywords": ["いつでもどこでも", "ネットワークにアクセスできる"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "05", "term": "SNS", "reading": "えすえぬえす", "category": "ITの用語",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "特徴",
+          "prompt": "SNSとは？従来のマスメディアとどう違う？",
+          "answer": "Facebookなどのように、利用者どうしが**情報を発信し合える双方向性**をもつサービス。従来のマスメディアは、情報の伝達が**一方通行**で、**受け手の側から発信できない**。",
+          "evidence": ["sns", "oneway"], "keywords": ["情報を発信し合える双方向性", "一方通行", "受け手の側から発信できない"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "06", "term": "SOHO", "reading": "そーほー", "category": "ITの用語",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "SOHOとノマドワーキング",
+          "prompt": "SOHOとノマドワーキングとは？",
+          "answer": "**SOHO**は、ネットを使った**自宅や小さな事務所での小規模経営**。**ノマドワーキング**は、ノートパソコンやスマートフォンを使い、**場所を選ばずに仕事をする**働き方である。",
+          "evidence": ["soho", "nomad"], "keywords": ["SOHO", "自宅や小さな事務所での小規模経営", "ノマドワーキング", "場所を選ばずに仕事をする"], "note": ""
+        }
+      ]
+    }
+  ]
+}

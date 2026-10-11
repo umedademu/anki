@@ -81,7 +81,29 @@
     "pek-21-06",
     "pek-22-01",
     "pek-22-02",
-    "pek-22-03"
+    "pek-22-03",
+    "pek-23-01",
+    "pek-23-02",
+    "pek-23-03",
+    "pek-23-04",
+    "pek-23-05",
+    "pek-23-06",
+    "pek-23-07",
+    "pek-23-08",
+    "pek-23-09",
+    "pek-23-10",
+    "pek-23-11",
+    "pek-23-12",
+    "pek-23-13",
+    "pek-23-14",
+    "pek-23-15",
+    "pek-23-16",
+    "pek-23-17",
+    "pek-23-18",
+    "pek-23-19",
+    "pek-23-20",
+    "pek-23-21",
+    "pek-23-22"
   ],
   "images": [
     {
@@ -2389,6 +2411,214 @@
           ]
         }
       ]
+    },
+    {
+      "sourceAssetId": "JHKS-d00aae0a51858ccf9cd5",
+      "caption": "G20大阪サミットの参加者（2019年）",
+      "note": "G20には、G7に加えて中国・インドなどの新興国も参加する。",
+      "targets": [
+        {
+          "termId": "PEK-23-01-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-36f28f5696951dd341c7",
+      "caption": "G7広島サミットに参加した首脳ら（2023年5月）",
+      "note": "ウクライナのゼレンスキー大統領や、インドなどの招待国の首脳も参加した。",
+      "targets": [
+        {
+          "termId": "PEK-23-01-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-d434fbd3419236e55d84",
+      "caption": "安倍晋三（2020年）",
+      "note": "連続・通算ともに歴代最長の在任期間となった首相。",
+      "targets": [
+        {
+          "termId": "PEK-23-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-cee29a53d7909f74b7d4",
+      "caption": "新型コロナウイルス（SARS-CoV-2）の電子顕微鏡写真",
+      "note": "2020年から世界的に流行した新型コロナウイルス感染症の原因ウイルス。",
+      "targets": [
+        {
+          "termId": "PEK-23-06-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-ff8485c8285beab8d3de",
+      "caption": "新元号「令和」の発表（2019年4月）",
+      "note": "退位特例法にもとづき、2019年5月1日に元号が令和に改められた。",
+      "targets": [
+        {
+          "termId": "PEK-23-11-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0ad80e2f85ee9c776e5a",
+      "caption": "富士山",
+      "note": "2013年に、自然遺産ではなく文化遺産として登録された。",
+      "targets": [
+        {
+          "termId": "PEK-23-12-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-65ce307d9d73459d240b",
+      "caption": "原爆ドーム（広島市）",
+      "note": "核兵器の悲惨さを伝える遺産として、1996年に世界遺産に登録された。",
+      "targets": [
+        {
+          "termId": "PEK-23-12-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMJ-bd9a39f53dc8a7",
+      "caption": "富岡製糸場（群馬県）",
+      "note": "2014年に世界遺産に登録された、明治初期の官営模範工場。",
+      "targets": [
+        {
+          "termId": "PEK-23-12-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-f5c95e6773a263cd1bf3",
+      "caption": "EU離脱を呼びかけるポスター（2016年、北アイルランド）",
+      "note": "2016年の国民投票では、離脱派が僅差で勝利した。",
+      "targets": [
+        {
+          "termId": "PEK-23-13-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-e77a9eccfedbc12a442c",
+      "caption": "シンガポールでの米朝首脳会談（2018年6月）",
+      "note": "トランプ大統領と金正恩委員長による、初の米朝首脳会談。",
+      "targets": [
+        {
+          "termId": "PEK-23-15-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-74dd393efaae4e",
+      "caption": "香港の市街地",
+      "note": "1997年にイギリスから中国に返還され、特別行政区となった。",
+      "targets": [
+        {
+          "termId": "PEK-23-16-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-4a97d8687908ec9f1168",
+      "caption": "中国の新疆ウイグル自治区の位置",
+      "note": "中国西部にあり、中央アジアと接する地域。",
+      "targets": [
+        {
+          "termId": "PEK-23-17-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-0b9a1d1d2de9640bb0d7",
+      "caption": "習近平（2019年）",
+      "note": "2012年に中国共産党の総書記となり、2018年の憲法改正で国家主席の任期が撤廃された。",
+      "targets": [
+        {
+          "termId": "PEK-23-18-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-02a053b827366c0c4508",
+      "caption": "日韓基本条約の写し（展示用）",
+      "note": "1965年、日韓請求権協定とともに結ばれ、日韓の国交が正常化した。",
+      "targets": [
+        {
+          "termId": "PEK-23-19-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-c6d59b4ff02103516e34",
+      "caption": "核兵器禁止条約の署名国・締約国",
+      "note": "緑が締約国、黄色が署名国。核保有国や日本は参加していない。",
+      "targets": [
+        {
+          "termId": "PEK-23-20-U01",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "PEKS-b0f0624a90e6d79d585d",
+      "caption": "プラハで演説するオバマ大統領（2009年4月）",
+      "note": "「核なき世界」をめざすと訴え、同年ノーベル平和賞を受けた。",
+      "targets": [
+        {
+          "termId": "PEK-23-20-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
     }
   ],
   "sources": [
@@ -3315,6 +3545,126 @@
       "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Burning_methane_hydrate.jpg",
       "sourceFile": "data/source/politics-economics-k/images/PEKS-773a1229345fba381b84.jpg",
       "sha256": "773a1229345fba381b84bf0c27ef149221e3a64f80d7997a27c4ca54c299ec51"
+    },
+    {
+      "id": "PEKS-36f28f5696951dd341c7",
+      "path": "term-images/politics-economics-k/PEKS-36f28f5696951dd341c7.jpg",
+      "alt": "G7広島サミットに参加した首脳ら（2023年5月）",
+      "caption": "G7広島サミットに参加した首脳ら（2023年5月）",
+      "creator": "European Commission（Dati Bendo）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:49th_G7_summit_in_Hiroshima_-_2023_-_P061116-31481.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-36f28f5696951dd341c7.jpg",
+      "sha256": "36f28f5696951dd341c79b95558ea12d6f51668e4e0f298b62e1e943f89bcc61"
+    },
+    {
+      "id": "PEKS-cee29a53d7909f74b7d4",
+      "path": "term-images/politics-economics-k/PEKS-cee29a53d7909f74b7d4.jpg",
+      "alt": "新型コロナウイルス（SARS-CoV-2）の電子顕微鏡写真",
+      "caption": "新型コロナウイルス（SARS-CoV-2）の電子顕微鏡写真",
+      "creator": "NIAID",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Novel_Coronavirus_SARS-CoV-2.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-cee29a53d7909f74b7d4.jpg",
+      "sha256": "cee29a53d7909f74b7d46ecb765e20a3d6879bf866fdd0791694dce14991edcd"
+    },
+    {
+      "id": "PEKS-0ad80e2f85ee9c776e5a",
+      "path": "term-images/politics-economics-k/PEKS-0ad80e2f85ee9c776e5a.jpg",
+      "alt": "富士山",
+      "caption": "富士山",
+      "creator": "Romain Guy",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_at_sunset,_March_2025.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0ad80e2f85ee9c776e5a.jpg",
+      "sha256": "0ad80e2f85ee9c776e5a29407cdc10848c87fe829f030dee57323b8225ba7c0f"
+    },
+    {
+      "id": "PEKS-65ce307d9d73459d240b",
+      "path": "term-images/politics-economics-k/PEKS-65ce307d9d73459d240b.jpg",
+      "alt": "原爆ドーム（広島市）",
+      "caption": "原爆ドーム（広島市）",
+      "creator": "Balon Greyjoy",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:20181111_Atomic_Bomb_Dome-5.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-65ce307d9d73459d240b.jpg",
+      "sha256": "65ce307d9d73459d240b659feafa1ac6596e7ed0d012b084e0ea110d9b2787c6"
+    },
+    {
+      "id": "PEKS-e77a9eccfedbc12a442c",
+      "path": "term-images/politics-economics-k/PEKS-e77a9eccfedbc12a442c.jpg",
+      "alt": "シンガポールでの米朝首脳会談（2018年6月）",
+      "caption": "シンガポールでの米朝首脳会談（2018年6月）",
+      "creator": "Shealeah Craighead（ホワイトハウス）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Kim_and_Trump_shaking_hands_at_the_red_carpet_during_the_DPRK%E2%80%93USA_Singapore_Summit.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-e77a9eccfedbc12a442c.jpg",
+      "sha256": "e77a9eccfedbc12a442cb2d3cdc93d4f334fe6460a2daa020faca91ac8f9e38b"
+    },
+    {
+      "id": "PEKS-b0f0624a90e6d79d585d",
+      "path": "term-images/politics-economics-k/PEKS-b0f0624a90e6d79d585d.jpg",
+      "alt": "プラハで演説するオバマ大統領（2009年4月）",
+      "caption": "プラハで演説するオバマ大統領（2009年4月）",
+      "creator": "The White House",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:P040509PS-0304_(4503387093).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-b0f0624a90e6d79d585d.jpg",
+      "sha256": "b0f0624a90e6d79d585de95bb13adb18399014231db9ccdcb458f77d634d5cc7"
+    },
+    {
+      "id": "PEKS-c6d59b4ff02103516e34",
+      "path": "term-images/politics-economics-k/PEKS-c6d59b4ff02103516e34.jpg",
+      "alt": "核兵器禁止条約の署名国・締約国",
+      "caption": "核兵器禁止条約の署名国・締約国",
+      "creator": "JayCoop（JPEGに変換・縮小）",
+      "license": "Public domain",
+      "licenseUrl": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Treaty_on_the_Prohibition_of_Nuclear_Weapons_members.svg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-c6d59b4ff02103516e34.jpg",
+      "sha256": "c6d59b4ff02103516e34a30133f8ef2bc57880030ad913215de88fcf99e30aa1"
+    },
+    {
+      "id": "PEKS-0b9a1d1d2de9640bb0d7",
+      "path": "term-images/politics-economics-k/PEKS-0b9a1d1d2de9640bb0d7.jpg",
+      "alt": "習近平（2019年）",
+      "caption": "習近平（2019年）",
+      "creator": "Press Service of the President of the Russian Federation（縮小）",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Xi_Jinping_portrait_2019_(cropped).jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-0b9a1d1d2de9640bb0d7.jpg",
+      "sha256": "0b9a1d1d2de9640bb0d7d586df8d30a2a8a203b64b2d97f96e1b9e3edcdea89e"
+    },
+    {
+      "id": "PEKS-f5c95e6773a263cd1bf3",
+      "path": "term-images/politics-economics-k/PEKS-f5c95e6773a263cd1bf3.jpg",
+      "alt": "EU離脱を呼びかけるポスター（2016年、北アイルランド）",
+      "caption": "EU離脱を呼びかけるポスター（2016年、北アイルランド）",
+      "creator": "Kenneth Allen",
+      "license": "CC BY-SA 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Vote_Leave_poster,_Omagh.jpg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-f5c95e6773a263cd1bf3.jpg",
+      "sha256": "f5c95e6773a263cd1bf38b58e422e25e233ff55c6987e8062e3783b7c83a9da3"
+    },
+    {
+      "id": "PEKS-4a97d8687908ec9f1168",
+      "path": "term-images/politics-economics-k/PEKS-4a97d8687908ec9f1168.jpg",
+      "alt": "中国の新疆ウイグル自治区の位置",
+      "caption": "中国の新疆ウイグル自治区の位置",
+      "creator": "TUBS（JPEGに変換・縮小）",
+      "license": "CC BY-SA 3.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "sourcePageUrl": "https://commons.wikimedia.org/wiki/File:Xinjiang_in_China_(de-facto)_(%2Ball_claims_hatched).svg",
+      "sourceFile": "data/source/politics-economics-k/images/PEKS-4a97d8687908ec9f1168.jpg",
+      "sha256": "4a97d8687908ec9f11683a688b99ba4918edd27687f112e5073283bbd78b2327"
     }
   ]
 }

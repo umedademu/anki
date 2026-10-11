@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "subjectId": "politics-economics-k",
+  "subjectTitle": "政治経済K",
+  "lecture": { "number": 3, "title": "第3講 時事問題" },
+  "item": { "number": 23, "title": "時事問題" },
+  "heading": { "number": 22, "title": "SDGs（持続可能な開発目標）" },
+  "source": {
+    "file": "sources/seikei/23_時事問題.md",
+    "ranges": [
+      { "start": "### ■SDGs", "end": "## 413" }
+    ],
+    "pages": [412],
+    "note": "412頁の「■SDGs（持続可能な開発目標）」を読んだ。前身のMDGs（2000年・8つの目標）、SDGs（2016〜2030年・17の目標・5つのP・誰一人取り残さない）と日本の弱い分野、SDGsアクションプラン、ESG投資を扱う。"
+  },
+  "facts": [
+    { "id": "mdgs", "page": 412, "quote": "MDGs（ミレニアム開発目標）…国連ミレニアムサミット（2000年）で採択。" },
+    { "id": "eight", "page": 412, "quote": "2015年末までに達成すべき、国際社会の「8つの目標」。" },
+    { "id": "goals", "page": 412, "quote": "（1）：貧困・飢餓／（2）：初等教育／（3）：ジェンダー平等" },
+    { "id": "structure", "page": 412, "quote": "主に「途上国の抱える課題→先進国の援助で解決」という構図" },
+    { "id": "sdgs", "page": 412, "quote": "これを土台に2016〜2030年末までは「SDGs（持続可能な開発目標）」へ。" },
+    { "id": "s17", "page": 412, "quote": "「持続可能な世界」をめざす17目標を「5つのP」に分類。" },
+    { "id": "noone", "page": 412, "quote": "「地球上の誰一人として取り残さない」をめざす。" },
+    { "id": "dev", "page": 412, "quote": "「先進国にも課題」を設定" },
+    { "id": "corp", "page": 412, "quote": "企業の自主的な取り組みに期待。" },
+    { "id": "weak", "page": 412, "quote": "日本が弱い分野は5（男女格差）・13〜15（環境）・17（国際協力（特にODA））など。" },
+    { "id": "plan", "page": 412, "quote": "SDGsアクションプラン…今後の日本の行動計画。（2018より毎年発表）" },
+    { "id": "esg", "page": 412, "quote": "（ESG投資）…「環境（Environment）・社会（Social）・企業統治（Governance）」に配慮している企業か否かを選定基準とする投資。" }
+  ],
+  "units": [
+    {
+      "id": "01", "term": "MDGs", "reading": "えむでぃーじーず", "category": "SDGs",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容",
+          "prompt": "SDGsの前身であるMDGs（ミレニアム開発目標）とは？",
+          "answer": "**2000年**の**国連ミレニアムサミット**で採択され、**2015年まで**の達成をめざした**8つの目標**。貧困・飢餓の撲滅や初等教育の普及、ジェンダー平等など、主に**途上国の課題を先進国の援助で解決する**という構図だった。",
+          "evidence": ["mdgs", "eight", "goals", "structure"], "keywords": ["2000年", "国連ミレニアムサミット", "2015年まで", "8つの目標", "途上国の課題を先進国の援助で解決する"], "note": ""
+        }
+      ]
+    },
+    {
+      "id": "02", "term": "SDGs", "reading": "えすでぃーじーず", "category": "SDGs",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "内容とMDGsとの違い",
+          "prompt": "SDGs（持続可能な開発目標）とは？MDGsとどこが違う？",
+          "answer": "MDGsを引き継ぎ、**2016〜2030年**に達成をめざす**17の目標**で、「**地球上の誰一人として取り残さない**」ことを掲げる。途上国だけでなく**先進国にも課題**を設定し、**企業の自主的な取り組み**にも期待している点が特徴である。日本は**ジェンダー平等**や**環境**、**国際協力**の分野が弱いとされる。",
+          "evidence": ["sdgs", "s17", "noone", "dev", "corp", "weak", "plan"], "keywords": ["2016〜2030年", "17の目標", "地球上の誰一人として取り残さない", "先進国にも課題", "企業の自主的な取り組み", "ジェンダー平等", "環境", "国際協力"], "note": "17の目標は「5つのP」（人間・繁栄・地球・平和・パートナーシップ）に分類される。日本政府は2018年から毎年SDGsアクションプランを発表している。"
+        }
+      ]
+    },
+    {
+      "id": "03", "term": "ESG投資", "reading": "いーえすじーとうし", "category": "SDGs",
+      "questions": [
+        {
+          "id": "R01", "stage": "reverse", "type": "reverse", "form": "意味",
+          "prompt": "ESG投資とは？",
+          "answer": "**環境（Environment）・社会（Social）・企業統治（Governance）**に配慮しているかどうかを基準に、投資先の企業を選ぶ投資。",
+          "evidence": ["esg"], "keywords": ["環境（Environment）・社会（Social）・企業統治（Governance）"], "note": ""
+        }
+      ]
+    }
+  ]
+}

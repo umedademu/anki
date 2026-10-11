@@ -950,10 +950,9 @@ if (preloadPlayers.length !== 1) {
 }
 preloadPlayers[0].onended();
 
-// 英単語では前後の無音を削った音声を頼み、通常の音声とは別に覚えておく。
+// Azure音声は前後の無音を削った音声を頼み、削らない設定の音声とは別に覚えておく。
 const trimRequests = [];
-let trimCloudSilence = false;
-const trimController = createSpeechController({
+const createTrimController = (options = {}) => createSpeechController({
   synthesis,
   Utterance: FakeUtterance,
   AudioPlayer: PreloadAudio,
@@ -967,15 +966,15 @@ const trimController = createSpeechController({
     source: "cloud",
     englishAzureVoiceId: "en-US-GuyNeural",
   }),
-  shouldTrimCloudSilence: () => trimCloudSilence,
+  ...options,
 });
 const trimSegments = [{ target: "question", text: "although", language: "en-US" }];
+const trimController = createTrimController();
 await trimController.preload(trimSegments);
-trimCloudSilence = true;
 await trimController.preload(trimSegments);
-await trimController.preload(trimSegments);
-if (trimRequests.join("|") !== "although:false|although:true") {
-  throw new Error("英単語用の無音を削る音声を通常の音声と分けて取り寄せられませんでした。");
+await createTrimController({ trimCloudSilence: false }).preload(trimSegments);
+if (trimRequests.join("|") !== "although:true|although:false") {
+  throw new Error("前後の無音を削る音声を既定で取り寄せ、同じ音声を再取得しない処理が不正です。");
 }
 
 let iosGestureActive = false;

@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.390";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.391";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -285,7 +285,8 @@ export function createSpeechController({
   requestCloudAudio = null,
   getSettings = () => defaultSpeechSettings,
   getHistoryReadings = () => ({}),
-  shouldTrimCloudSilence = () => false,
+  // 聞き流しで問題・回答・次の問題がつながるよう、Azure音声の前後の無音を削る。
+  trimCloudSilence = true,
   onTargetChange = () => {},
   onFallback = () => {},
   deviceStartTimeoutMs = 1500,
@@ -474,7 +475,7 @@ export function createSpeechController({
 
   function loadCloudAudio(segment, settings) {
     const voice = cloudVoiceFor(segment, settings);
-    const trimSilence = Boolean(shouldTrimCloudSilence());
+    const trimSilence = Boolean(trimCloudSilence);
     const cacheKey = JSON.stringify([
       segment.text,
       voice,

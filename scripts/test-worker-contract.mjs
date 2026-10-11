@@ -433,7 +433,7 @@ if (
   throw new Error("Azure音声の生成・再利用・読取許可が不正です。");
 }
 
-// 英単語用の前後の無音を削る音声は、通常の音声と別の保存先へ置く。
+// 前後の無音を削る音声は、削らない音声と別の保存先へ置く。
 const trimmedSpeechResponse = await worker.fetch(
   speechRequest("en-US-GuyNeural", "although", "en-US", true),
   speechEnv,
@@ -462,7 +462,7 @@ if (
   ) ||
   !speechKeys[3].startsWith("speech-cache/azure-speech-v1-silence-50-0/")
 ) {
-  throw new Error("英単語用の無音を削るAzure音声の生成・保存先が不正です。");
+  throw new Error("前後の無音を削るAzure音声の生成・保存先が不正です。");
 }
 
 const settings = normalizeSettings({

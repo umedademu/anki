@@ -781,6 +781,9 @@ export async function saveCloudStudyAnswer(
         studyMode: historyChange.studyMode ?? session?.studyMode ?? null,
         activity: historyChange.activity ?? null,
         deleteActivityId: historyChange.deleteActivityId ?? null,
+        ...(historyChange.replaceActivityId
+          ? { replaceActivityId: historyChange.replaceActivityId }
+          : {}),
         completeRoundId: historyChange.completeRoundId ?? null,
         deleteRoundId: historyChange.deleteRoundId ?? null,
         sessionDatasetVersion:

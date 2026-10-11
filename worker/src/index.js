@@ -1782,6 +1782,10 @@ async function handleRequest(request, env) {
     const deleteActivityId = body.deleteActivityId == null
       ? null
       : String(body.deleteActivityId);
+    // 聞き流しで次の問題へ進んだ後に前の問題を評価した時は、評価なしの記録を評価付きに置き換える。
+    const replaceActivityId = body.replaceActivityId == null
+      ? null
+      : String(body.replaceActivityId);
     const completeRoundId = normalizeStudyRoundId(body.completeRoundId) ||
       (!session && activity ? activity.eventId : "");
     const deleteRoundId = normalizeStudyRoundId(
@@ -1812,6 +1816,17 @@ async function handleRequest(request, env) {
     if (activity && deleteActivityId) {
       return json(request, env, { error: "日別学習記録の追加と取消は同時に行えません。" }, 400);
     }
+    if (
+      replaceActivityId &&
+      (
+        !studyActivityIdPattern.test(replaceActivityId) ||
+        replaceActivityId === activity?.eventId ||
+        !activity?.rating ||
+        studyMode !== "listen-answer"
+      )
+    ) {
+      return json(request, env, { error: "置き換える日別学習記録が正しくありません。" }, 400);
+    }
     if (completeRoundId && deleteRoundId) {
       return json(request, env, { error: "周回完了の追加と取消は同時に行えません。" }, 400);
     }
@@ -1830,6 +1845,14 @@ async function handleRequest(request, env) {
     } else {
       statements.push(
         ...deleteStudySessionStatements(env, sessionDatasetVersion),
+      );
+    }
+    if (replaceActivityId) {
+      statements.push(
+        env.DB.prepare(
+          `DELETE FROM study_activity_events
+           WHERE event_id = ? AND study_mode = 'listen-answer' AND question_id = ?`,
+        ).bind(replaceActivityId, questionId),
       );
     }
     if (activity) {

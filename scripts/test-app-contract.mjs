@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.394" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.395" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.394") ||
-  !app.includes("app-navigation.js?v=0.394") ||
-  !changelog.includes("v0.394") ||
-  !settingsHtml.includes("v0.394") ||
-  !historyHtml.includes("v0.394") ||
-  !analysisHtml.includes("v0.394")
+  !html.includes("v0.395") ||
+  !app.includes("app-navigation.js?v=0.395") ||
+  !changelog.includes("v0.395") ||
+  !settingsHtml.includes("v0.395") ||
+  !historyHtml.includes("v0.395") ||
+  !analysisHtml.includes("v0.395")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -879,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.394"') ||
+  !html.includes('href="/styles.css?v=0.395"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1682,9 +1682,17 @@ if (
   !advanceListeningBlock.includes("queueActiveStudyActivity(activity,") ||
   advanceListeningBlock.includes("applyQuestionRating(") ||
   advanceListeningBlock.includes("saveCloudStudyAnswer(") ||
-  !app.includes("const showsListeningRatingActions = listening && hasQuestion && state.answerVisible") ||
+  !app.includes("const showsListeningRatingActions = listening && hasQuestion &&") ||
+  !app.includes("(state.answerVisible || ratesPreviousListeningQuestion)") ||
+  !app.includes("function lateListeningRatingTarget()") ||
+  !app.includes("async function ratePreviousListeningQuestion(rating, late)") ||
+  !app.includes("replaceActivityId: late.activity.eventId") ||
+  !app.includes("reviseStudyRoutineListeningRating(") ||
+  !worker.includes("const replaceActivityId = body.replaceActivityId == null") ||
+  !cloudProgress.includes("replaceActivityId: historyChange.replaceActivityId") ||
+  !styles.includes('content: "前の問題を評価";') ||
   !app.includes('elements.listeningRatingButtons.classList.toggle(\n    "is-hidden",\n    !showsListeningRatingActions') ||
-  !app.includes('state.currentTask &&\n      state.answerVisible &&\n      /^[1-4]$/.test(event.key)') ||
+  !app.includes('state.currentTask &&\n      (state.answerVisible || lateListeningRatingTarget()) &&\n      /^[1-4]$/.test(event.key)') ||
   !worker.includes("if (!setupStudyModes.has(studyMode))")
 ) {
   throw new Error("聞き流しの任意評価またはCloudflareへの一括保存が揃っていません。");

@@ -796,6 +796,40 @@ export function countsTowardStudyRoutine(rating = "") {
     (ratingValues.includes(rating) && rating !== "again");
 }
 
+// 聞き流しで次の問題へ進んだ後に、前の問題へ評価を付けた時の進み方を直す。
+// 進んだ時に数えた1問は、不正解なら取り消し、評価の内訳には加える。
+export function reviseStudyRoutineListeningRating(
+  run,
+  subjectId,
+  rating,
+  { counted = false } = {},
+) {
+  const normalized = normalizeStudyRoutineRun(run);
+  const item = currentStudyRoutineItem(normalized);
+  if (
+    !normalized ||
+    item?.kind !== "study" ||
+    item.subjectId !== normalizeRoutineId(subjectId) ||
+    !ratingValues.includes(rating)
+  ) {
+    return { run: normalized, changed: false };
+  }
+  const uncount = counted && !countsTowardStudyRoutine(rating);
+  const items = normalized.items.map((candidate, index) =>
+    index === normalized.currentIndex
+      ? {
+          ...candidate,
+          completedCount: Math.max(0, candidate.completedCount - (uncount ? 1 : 0)),
+          ratingCounts: addRatingCount(candidate.ratingCounts, rating),
+        }
+      : { ...candidate },
+  );
+  return {
+    run: normalizeStudyRoutineRun({ ...normalized, items }),
+    changed: true,
+  };
+}
+
 export function recordStudyRoutineQuestion(
   run,
   subjectId,

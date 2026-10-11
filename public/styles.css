@@ -1863,6 +1863,28 @@ body.is-listening.is-listening-answer-visible .page {
   gap: 8px;
 }
 
+/* 次の問題の回答が出るまでは、ボタンが直前の問題の評価であることを示す。 */
+.listening-rating-buttons.is-previous {
+  position: relative;
+}
+
+.listening-rating-buttons.is-previous::before {
+  position: absolute;
+  bottom: calc(100% + 3px);
+  left: 50%;
+  padding: 1px 10px;
+  background: var(--theme-surface-subtle, #eef3ef);
+  border: 1px solid var(--theme-border, rgb(41 101 67 / 16%));
+  border-radius: 999px;
+  color: var(--theme-muted, #5f6f65);
+  content: "前の問題を評価";
+  font-size: 0.66rem;
+  font-weight: 800;
+  pointer-events: none;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
 .action-buttons {
   width: min(100%, 680px);
   margin: 0 auto;

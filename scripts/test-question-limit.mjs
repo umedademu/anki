@@ -223,3 +223,52 @@ for (const [name, next] of [['rateCurrentQuestion', 'async function resetAllProg
 }
 console.log('暗記・任意評価付き聞き流しの指定数終了を確認');
 
+
+// 聞き流しで次の問題へ進んだ直後は、読み上げを止めずに前の問題を評価できる。
+{
+  const rateSource = app.slice(app.indexOf('async function rateListeningQuestion(rating)'), app.indexOf('async function rateCurrentQuestion(rating)'));
+  const calls = [];
+  Object.assign(context, {
+    termForTask: (task) => ({ id: `${task.questionId}-term` }),
+    questionForTask: (task) => ({ id: task.questionId }),
+    createRatingUndoSnapshot: ({ questionId }) => ({ type: 'rating', questionId }),
+    restoreRatingUndoSnapshot() { calls.push('取り消し'); },
+    createQuestionAnalysisSnapshot: () => ({}),
+    applyQuestionRating: (_term, question, rating) => calls.push(`評価:${question.id}:${rating}`),
+    ratingSoundPlayer: { play: (rating) => calls.push(`効果音:${rating}`) },
+    async saveCloudStudyAnswer(_version, questionId, _record, _session, change) {
+      calls.push(`保存:${questionId}:${change.activity.rating}:置換=${change.replaceActivityId}`);
+      return { session: {}, roundProgress: {} };
+    },
+    setRoundProgress() {}, restoreRoutineRun() {},
+    stopListeningSequence() { calls.push('停止'); state.listeningPaused = true; },
+    async queueActiveStudyActivity() {},
+    beginListeningQuestion() { state.answerVisible = false; },
+    isListeningMode: () => state.studyMode === 'listen-answer',
+  });
+  runInNewContext(rateSource, context);
+  elements.questionLimit.value = '';
+  context.initializeQuestionLimit();
+  Object.assign(state, {
+    studyMode: 'listen-answer', listeningRunId: 7, listeningPaused: false, saving: false,
+    activeSession: true, inRoutine: false, answerVisible: true, answeredThisSession: 0,
+    currentTask: { questionId: 'a' }, queue: [{ questionId: 'b' }, { questionId: 'c' }],
+    unseenQuestionIds: new Set(['a', 'b', 'c']), retryQuestionIds: new Set(), history: [],
+    ratingCounts: emptyRatings(), progress: { questions: {} }, lateListeningRating: null,
+  });
+  await context.advanceListening(7);
+  assert.equal(state.currentTask.questionId, 'b');
+  assert.ok(context.lateListeningRatingTarget(), '次の問題の回答が出るまでは前の問題を評価できる');
+  await context.rateListeningQuestion('good');
+  assert.deepEqual(calls, ['効果音:good', '評価:a:good', '保存:a:good:置換=a'], '前の問題を評価し、評価なしの記録を置き換える');
+  assert.equal(state.currentTask.questionId, 'b', '読み上げ中の問題はそのまま');
+  assert.equal(state.listeningPaused, false, '読み上げを止めない');
+  assert.equal(state.ratingCounts.good, 1);
+  assert.equal(state.history.at(-1).type, 'rating', '戻る操作では評価として取り消す');
+  assert.equal(context.lateListeningRatingTarget(), null, '同じ問題は一度だけ評価する');
+  await context.advanceListening(7);
+  assert.ok(context.lateListeningRatingTarget());
+  state.answerVisible = true;
+  assert.equal(context.lateListeningRatingTarget(), null, '次の問題の回答が出たら前の問題の評価は終える');
+}
+console.log('聞き流しの次の問題へ進んだ直後に前の問題を評価できることを確認');

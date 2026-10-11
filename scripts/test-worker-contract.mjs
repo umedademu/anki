@@ -853,6 +853,64 @@ if (
   throw new Error("聞き流しの日別学習記録と学習時間の一括保存が不正です。");
 }
 
+// 聞き流しで次の問題へ進んだ後の評価は、評価なしの記録を評価付きの記録に置き換える。
+const lateRatingAnalysis = {
+  term: "although",
+  question: "although",
+  dimensions: [{ key: "category", label: "品詞", values: ["接続詞"] }],
+};
+const saveLateRating = (overrides = {}) =>
+  worker.fetch(
+    new Request(
+      "https://anki-progress-api.example/v1/study-answer/EN-000001-B01?dataset=en-test",
+      {
+        method: "PUT",
+        headers: { Authorization: "Bearer test-key", "Content-Type": "application/json" },
+        body: JSON.stringify({
+          record: null,
+          session: null,
+          studyMode: "listen-answer",
+          activity: { ...listeningActivity, eventId: "rating-1", rating: "good", analysis: lateRatingAnalysis },
+          replaceActivityId: "activity-1",
+          ...overrides,
+        }),
+      },
+    ),
+    activityEnv,
+  );
+const lateBatchCount = activityBatches.length;
+const lateResponse = await saveLateRating();
+const lateStatements = activityBatches.at(-1);
+const lateDeleteIndex = lateStatements.findIndex((statement) =>
+  statement.sql.includes("DELETE FROM study_activity_events") &&
+  statement.sql.includes("study_mode = 'listen-answer'"),
+);
+const lateInsertIndex = lateStatements.findIndex((statement) =>
+  statement.sql.includes("INSERT INTO study_activity_events"),
+);
+const lateBody = await lateResponse.clone().json();
+const lateBatchesAfterSuccess = activityBatches.length;
+const unratedReplace = await saveLateRating({
+  activity: { ...listeningActivity, eventId: "rating-2" },
+});
+const memorizeReplace = await saveLateRating({
+  studyMode: "memorize",
+  activity: { ...listeningActivity, studyMode: "memorize", eventId: "rating-3", rating: "good", analysis: lateRatingAnalysis },
+});
+if (
+  lateResponse.status !== 200 ||
+  activityBatches.length !== lateBatchCount + 1 ||
+  lateDeleteIndex < 0 ||
+  lateInsertIndex < lateDeleteIndex ||
+  lateStatements[lateDeleteIndex].values.join(",") !== "activity-1,EN-000001-B01" ||
+  lateStatements[lateInsertIndex].values[0] !== "rating-1" ||
+  unratedReplace.status !== 400 ||
+  memorizeReplace.status !== 400 ||
+  activityBatches.length !== lateBatchesAfterSuccess
+) {
+  throw new Error(`聞き流しの後から付けた評価の置き換えが不正です。${JSON.stringify(lateBody)}`);
+}
+
 console.log(
   "Cloudflare窓口検証完了: 学習記録・開始設定・Azure音声・評価音を確認",
 );

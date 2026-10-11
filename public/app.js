@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.394";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.395";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.394";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.394";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.394";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.394";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.394";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.394";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.394";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.394";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.394";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.395";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.395";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.395";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.395";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.395";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.395";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.395";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.395";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.395";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.394";
+} from "./original-session.js?v=0.395";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.394";
+} from "./speech.js?v=0.395";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.394";
+} from "./deck-selection.js?v=0.395";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -108,6 +108,7 @@ import {
   normalizeStudyRoutineMultiplier,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
+  reviseStudyRoutineListeningRating,
   scaleStudyRoutinePlan,
   skipStudyRoutineItem,
   studyRoutineDeckTargetReachedWith,
@@ -430,6 +431,7 @@ const state = {
   mindsetSpeechComplete: false,
   mindsetItemCompleted: false,
   mindsetChoosingStart: false,
+  lateListeningRating: null,
   mindsetSaving: false,
   mindsetTimer: null,
   mindsetRunId: 0,
@@ -3306,7 +3308,9 @@ function renderActionControls() {
   const listening = isListeningMode();
   const canGoBack = state.history.length > 0;
   const showsRatingActions = !listening && hasQuestion && state.answerVisible;
-  const showsListeningRatingActions = listening && hasQuestion && state.answerVisible;
+  const ratesPreviousListeningQuestion = Boolean(lateListeningRatingTarget());
+  const showsListeningRatingActions = listening && hasQuestion &&
+    (state.answerVisible || ratesPreviousListeningQuestion);
   const showsListeningControls = listening && hasQuestion;
   elements.actionDock.classList.toggle("is-answer-visible", showsRatingActions);
   elements.actionDock.classList.toggle("is-back-only", !hasQuestion);
@@ -3321,6 +3325,10 @@ function renderActionControls() {
   elements.listeningRatingButtons.classList.toggle(
     "is-hidden",
     !showsListeningRatingActions,
+  );
+  elements.listeningRatingButtons.classList.toggle(
+    "is-previous",
+    ratesPreviousListeningQuestion,
   );
   document.body.classList.toggle(
     "is-listening-answer-visible",
@@ -3874,6 +3882,7 @@ async function goBackListeningOneStep() {
   if (!isListeningMode() || state.saving) {
     return;
   }
+  state.lateListeningRating = null;
   if (listeningSaves.pending.length > 0) {
     // 進めた問題の保存が終わってから戻す。保存に失敗して巻き戻った時は、その位置で止める。
     const failuresBefore = listeningSaves.failures;
@@ -4076,6 +4085,16 @@ async function advanceListening(runId) {
     !listeningPassComplete &&
     !routineChange?.completedItem &&
     !hasReachedQuestionLimit();
+  // 次の問題の回答が出るまでは、終えた問題に4段階評価を付けられるようにする。
+  state.lateListeningRating = continuesToNextQuestion
+    ? {
+        task: cloneTask(completedTask),
+        activity,
+        undoSnapshot,
+        routineCounted: Boolean(routineChange?.counted),
+        nextQuestionId: state.currentTask.questionId,
+      }
+    : null;
   if (continuesToNextQuestion) {
     // 保存の完了を待たずに次の問題を読み上げ、保存に失敗した時だけ元の問題へ戻す。
     beginListeningQuestion();
@@ -4179,6 +4198,8 @@ function speakListeningAnswer(runId) {
   }
   state.classicalChineseReadingVisible = true;
   state.answerVisible = true;
+  // 次の問題の回答を出したら、前の問題への評価は受け付けない。
+  state.lateListeningRating = null;
   renderQuestion();
   const segments = [
     ...(includesDeferredClassicalChineseReading
@@ -5511,6 +5532,12 @@ function applyQuestionRating(term, question, rating) {
 
 async function rateListeningQuestion(rating) {
   if (hasReachedQuestionLimit()) return;
+  const late = lateListeningRatingTarget();
+  if (late) {
+    await ratePreviousListeningQuestion(rating, late);
+    return;
+  }
+  state.lateListeningRating = null;
   const term = currentTerm();
   const question = currentQuestion();
   if (!term || !question || !state.answerVisible || state.saving) {
@@ -5652,6 +5679,122 @@ async function rateListeningQuestion(rating) {
       beginListeningQuestion();
     }
   }, state.listeningQuestionIntervalSeconds * 1000);
+}
+
+// 次の問題の回答が出るまでは、直前に終えた問題を評価できる。
+function lateListeningRatingTarget() {
+  const late = state.lateListeningRating;
+  return late &&
+    isListeningMode() &&
+    !state.answerVisible &&
+    late.nextQuestionId === state.currentTask?.questionId
+    ? late
+    : null;
+}
+
+// 直前の問題の評価は、読み上げ中の問題を止めずに裏で保存する。評価なしで保存済みの
+// 聞き流しの記録を評価付きの記録に置き換え、戻る操作では評価前のその問題へ戻す。
+async function ratePreviousListeningQuestion(rating, late) {
+  if (state.saving) return;
+  const term = termForTask(late.task);
+  const question = questionForTask(late.task);
+  if (!term || !question) return;
+  state.lateListeningRating = null;
+  ratingSoundPlayer.play(rating);
+  renderActionControls();
+  const failuresBefore = listeningSaves.failures;
+  let snapshot = null;
+  let ratingCountsBefore = null;
+  let routineRunBefore;
+  const save = listeningSaves.tail.then(async () => {
+    // 前の問題の保存に失敗して巻き戻した後は、その問題をもう一度聞いてから評価する。
+    if (failuresBefore !== listeningSaves.failures) return false;
+    snapshot = createRatingUndoSnapshot({
+      progress: state.progress,
+      questionId: question.id,
+      queue: [],
+      currentTask: late.task,
+      answerVisible: true,
+      answeredThisSession: state.answeredThisSession,
+      ratingCounts: state.ratingCounts,
+      unlockMessage: "",
+    });
+    snapshot.studySession = late.undoSnapshot.studySession;
+    if (Object.hasOwn(late.undoSnapshot, "routineRun")) {
+      snapshot.routineRun = late.undoSnapshot.routineRun;
+    }
+    snapshot.completedRoundId = null;
+    const activity = {
+      ...createStudyActivity(question.id),
+      rating,
+      analysis: createQuestionAnalysisSnapshot(state.subject, term, question),
+    };
+    snapshot.studyActivityEventId = activity.eventId;
+    snapshot.studyActivityDatasetVersion = datasetVersionForQuestion(question.id);
+    ratingCountsBefore = state.ratingCounts;
+    state.ratingCounts = addRatingCount(state.ratingCounts, rating);
+    applyQuestionRating(term, question, rating);
+    let routineRun;
+    if (state.inRoutine) {
+      routineRunBefore = state.routineRun;
+      const change = reviseStudyRoutineListeningRating(
+        state.routineRun,
+        state.activeSubjectId,
+        rating,
+        { counted: late.routineCounted },
+      );
+      if (change.changed) {
+        restoreRoutineRun(change.run);
+        routineRun = state.routineRun;
+      }
+    }
+    const session = captureActiveSession();
+    const sessionDatasetVersion = state.sessionDatasetVersion;
+    studySessionSave = studySessionSave
+      .catch(() => {})
+      .then(() => saveCloudStudyAnswer(
+        snapshot.studyActivityDatasetVersion,
+        question.id,
+        state.progress.questions[question.id],
+        session,
+        {
+          studyMode: "listen-answer",
+          activity,
+          replaceActivityId: late.activity.eventId,
+          sessionDatasetVersion,
+          routineRun,
+        },
+      ));
+    const saved = await studySessionSave;
+    if (state.sessionDatasetVersion === sessionDatasetVersion) {
+      setSavedSessionForMode("listen-answer", saved.session);
+      setRoundProgress(saved.roundProgress);
+    }
+    return true;
+  });
+  const settled = save.then(() => {}, () => {});
+  listeningSaves.tail = settled;
+  listeningSaves.pending.push(settled);
+  try {
+    if (!(await save)) return;
+    // 戻る操作で、評価なしの進行ではなく評価として取り消せるようにする。
+    const historyIndex = state.history.findIndex(
+      (entry) =>
+        entry.type === "listening-advance" &&
+        entry.studyActivityEventId === late.activity.eventId,
+    );
+    if (historyIndex >= 0) state.history[historyIndex] = snapshot;
+  } catch (error) {
+    if (snapshot) {
+      restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
+      state.ratingCounts = ratingCountsBefore;
+      if (routineRunBefore !== undefined) restoreRoutineRun(routineRunBefore);
+    }
+    state.unlockMessage = `前の問題の評価を保存できませんでした。${error.message}`;
+    if (isListeningMode() && state.currentTask) renderQuestion();
+  } finally {
+    listeningSaves.pending.splice(listeningSaves.pending.indexOf(settled), 1);
+  }
 }
 
 async function rateCurrentQuestion(rating) {
@@ -7125,7 +7268,7 @@ window.addEventListener("keydown", (event) => {
       advanceListeningManually();
     } else if (
       state.currentTask &&
-      state.answerVisible &&
+      (state.answerVisible || lateListeningRatingTarget()) &&
       /^[1-4]$/.test(event.key)
     ) {
       event.preventDefault();

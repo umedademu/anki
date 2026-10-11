@@ -19,6 +19,7 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineRun,
   recordStudyRoutineQuestion,
+  reviseStudyRoutineListeningRating,
   scaleStudyRoutinePlan,
   scaledStudyRoutineQuestionTarget,
   skipStudyRoutineItem,
@@ -693,4 +694,27 @@ if (
   throw new Error("追加復習中の科目をスキップして次へ進められませんでした。");
 }
 
-console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップを確認");
+// 聞き流しで次の問題へ進んだ後に前の問題を評価した時は、数えた1問を不正解なら取り消す。
+{
+  let lateRun = createStudyRoutineRun(defaultStudyRoutinePlan, "2026-08-24", "late-rating-test");
+  const listened = recordStudyRoutineQuestion(lateRun, "world-history", "world-deck-1", "late-1", 4, "");
+  lateRun = listened.run;
+  const again = reviseStudyRoutineListeningRating(lateRun, "world-history", "again", { counted: listened.counted });
+  const good = reviseStudyRoutineListeningRating(lateRun, "world-history", "good", { counted: listened.counted });
+  const otherSubject = reviseStudyRoutineListeningRating(lateRun, "english-vocabulary", "good", { counted: true });
+  if (
+    !listened.counted ||
+    lateRun.items[0].completedCount !== 1 ||
+    !again.changed ||
+    again.run.items[0].completedCount !== 0 ||
+    again.run.items[0].ratingCounts.again !== 1 ||
+    again.run.items[0].studySeconds !== 4 ||
+    good.run.items[0].completedCount !== 1 ||
+    good.run.items[0].ratingCounts.good !== 1 ||
+    otherSubject.changed
+  ) {
+    throw new Error("聞き流しの後から付けた評価をメニューへ正しく反映できませんでした。");
+  }
+}
+
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップ・聞き流しの後からの評価を確認");

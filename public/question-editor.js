@@ -1,4 +1,4 @@
-import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.388";
+import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.389";
 import { cloudRequest } from "./cloud-progress.js";
 import { getQuestionExplanation } from "./learning-engine.js";
 

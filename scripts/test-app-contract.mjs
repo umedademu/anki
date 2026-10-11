@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.388" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.389" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.388") ||
-  !app.includes("app-navigation.js?v=0.388") ||
-  !changelog.includes("v0.388") ||
-  !settingsHtml.includes("v0.388") ||
-  !historyHtml.includes("v0.388") ||
-  !analysisHtml.includes("v0.388")
+  !html.includes("v0.389") ||
+  !app.includes("app-navigation.js?v=0.389") ||
+  !changelog.includes("v0.389") ||
+  !settingsHtml.includes("v0.389") ||
+  !historyHtml.includes("v0.389") ||
+  !analysisHtml.includes("v0.389")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -873,7 +873,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.388"') ||
+  !html.includes('href="/styles.css?v=0.389"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1437,7 +1437,7 @@ if (
   styles.includes("body.is-listening .speech-button") ||
   !app.includes("normalizeSpeechParts") ||
   !listeningAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
-  !listeningAnswerSpeechBlock?.includes("preloadListeningTask(state.queue[0])") ||
+  !listeningAnswerSpeechBlock?.includes("state.queue.slice(0, 2).forEach(preloadListeningTask)") ||
   !listeningAnswerSpeechBlock?.includes("window.setTimeout") ||
   !listeningQuestionSpeechBlock?.includes(
     "speechController.preload(answerSpeechSequence())",
@@ -1445,7 +1445,7 @@ if (
   listeningQuestionSpeechBlock?.includes("if (pauseSeconds === 0)") ||
   !listeningQuestionSpeechBlock?.includes("window.setTimeout") ||
   !speech.includes("function preload(segments)") ||
-  !speech.includes("const cloudAudioCacheLimit = 12") ||
+  !speech.includes("const cloudAudioCacheLimit = 24") ||
   !speech.includes("resetPlayback();") ||
   speech.includes("resetPlayback(Boolean(currentTarget))") ||
   !speech.includes("deviceStartTimeoutMs = 1500") ||
@@ -1682,6 +1682,30 @@ if (
   !worker.includes("if (!setupStudyModes.has(studyMode))")
 ) {
   throw new Error("聞き流しの任意評価またはCloudflareへの一括保存が揃っていません。");
+}
+if (
+  !app.includes("let listeningAdvanceSave = Promise.resolve();") ||
+  !advanceListeningBlock.includes("await listeningAdvanceSave;") ||
+  advanceListeningBlock.indexOf("await listeningAdvanceSave;") >=
+    advanceListeningBlock.indexOf("runId !== state.listeningRunId") ||
+  advanceListeningBlock.indexOf("beginListeningQuestion();") >=
+    advanceListeningBlock.indexOf("await queueActiveStudyActivity(activity,") ||
+  advanceListeningBlock.indexOf("pushHistory(undoSnapshot);") >=
+    advanceListeningBlock.indexOf("beginListeningQuestion();") ||
+  !advanceListeningBlock.includes("finishAdvanceSave();") ||
+  advanceListeningBlock.includes("await queueCurrentStudyTimeSave();") ||
+  !listeningAnswerSpeechBlock?.includes(
+    "state.queue.slice(0, 2).forEach(preloadListeningTask);",
+  ) ||
+  !app.includes(
+    'shouldTrimCloudSilence: () => state.subject?.learningType === "vocabulary"',
+  ) ||
+  !speech.includes("const cloudAudioCacheLimit = 24;") ||
+  !speech.includes("shouldTrimCloudSilence = () => false") ||
+  !cloudProgress.includes("trimSilence: trimSilence === true") ||
+  !worker.includes('const trimSilence = body.trimSilence === true;')
+) {
+  throw new Error("聞き流しで保存を待たずに次の問題へ進む処理か、英単語の無音を削る音声の構成が不足しています。");
 }
 if (
   !app.includes(

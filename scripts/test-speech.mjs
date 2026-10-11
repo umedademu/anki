@@ -950,6 +950,34 @@ if (preloadPlayers.length !== 1) {
 }
 preloadPlayers[0].onended();
 
+// 英単語では前後の無音を削った音声を頼み、通常の音声とは別に覚えておく。
+const trimRequests = [];
+let trimCloudSilence = false;
+const trimController = createSpeechController({
+  synthesis,
+  Utterance: FakeUtterance,
+  AudioPlayer: PreloadAudio,
+  createObjectUrl: () => "blob:trim",
+  revokeObjectUrl: () => {},
+  requestCloudAudio: async (text, voice, language, options) => {
+    trimRequests.push(`${text}:${options?.trimSilence === true}`);
+    return { type: "audio/mpeg", size: 100 };
+  },
+  getSettings: () => ({
+    source: "cloud",
+    englishAzureVoiceId: "en-US-GuyNeural",
+  }),
+  shouldTrimCloudSilence: () => trimCloudSilence,
+});
+const trimSegments = [{ target: "question", text: "although", language: "en-US" }];
+await trimController.preload(trimSegments);
+trimCloudSilence = true;
+await trimController.preload(trimSegments);
+await trimController.preload(trimSegments);
+if (trimRequests.join("|") !== "although:false|although:true") {
+  throw new Error("英単語用の無音を削る音声を通常の音声と分けて取り寄せられませんでした。");
+}
+
 let iosGestureActive = false;
 let iosAudioPlayers = 0;
 let iosCloudRequests = 0;

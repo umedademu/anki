@@ -560,7 +560,12 @@ export async function cloudRequest(path, options = {}) {
   return payload;
 }
 
-export async function requestCloudSpeech(text, voice, language = "ja-JP") {
+export async function requestCloudSpeech(
+  text,
+  voice,
+  language = "ja-JP",
+  { trimSilence = false } = {},
+) {
   const accessKey = getStoredAccessKey();
   if (!accessKey) {
     throw new Error("Cloudflareのアクセスキーが登録されていません。");
@@ -576,6 +581,7 @@ export async function requestCloudSpeech(text, voice, language = "ja-JP") {
       text: String(text ?? ""),
       voice: String(voice ?? ""),
       language: String(language ?? ""),
+      trimSilence: trimSilence === true,
     }),
   });
   if (!response.ok) {

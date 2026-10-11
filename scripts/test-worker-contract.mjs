@@ -344,6 +344,7 @@ for (const invalidPrompt of ["", "あ".repeat(2001)]) {
 
 let azureRequestCount = 0;
 const requestedAzureVoices = [];
+const requestedAzureBodies = [];
 const speechObjects = new Map();
 const speechEnv = {
   ALLOWED_ORIGIN: "https://anki-ume.vercel.app",
@@ -360,6 +361,7 @@ const speechEnv = {
       (candidate) => options.body.includes(`voice name="${candidate}"`),
     );
     requestedAzureVoices.push(voice);
+    requestedAzureBodies.push(options.body);
     if (
       url !==
         "https://japaneast.tts.speech.microsoft.com/cognitiveservices/v1" ||
@@ -392,6 +394,7 @@ const speechRequest = (
   voice = "ja-JP-KeitaNeural",
   text = "王安石の政策",
   language = "ja-JP",
+  trimSilence = undefined,
 ) =>
   new Request("https://anki-progress-api.example/v1/speech", {
     method: "POST",
@@ -400,7 +403,7 @@ const speechRequest = (
       "Content-Type": "application/json",
       Origin: "https://anki-ume.vercel.app",
     },
-    body: JSON.stringify({ text, voice, language }),
+    body: JSON.stringify({ text, voice, language, trimSilence }),
   });
 const firstSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
 const secondSpeechResponse = await worker.fetch(speechRequest(), speechEnv);
@@ -428,6 +431,38 @@ if (
   new Uint8Array(await secondSpeechResponse.arrayBuffer()).join(",") !== "1,2,3"
 ) {
   throw new Error("Azure音声の生成・再利用・読取許可が不正です。");
+}
+
+// 英単語用の前後の無音を削る音声は、通常の音声と別の保存先へ置く。
+const trimmedSpeechResponse = await worker.fetch(
+  speechRequest("en-US-GuyNeural", "although", "en-US", true),
+  speechEnv,
+);
+const trimmedSpeechCacheResponse = await worker.fetch(
+  speechRequest("en-US-GuyNeural", "although", "en-US", true),
+  speechEnv,
+);
+const speechKeys = [...speechObjects.keys()];
+const trimmedSpeechBody = requestedAzureBodies.at(-1);
+if (
+  trimmedSpeechResponse.status !== 200 ||
+  trimmedSpeechResponse.headers.get("X-Speech-Cache") !== "MISS" ||
+  trimmedSpeechCacheResponse.headers.get("X-Speech-Cache") !== "HIT" ||
+  azureRequestCount !== 4 ||
+  speechObjects.size !== 4 ||
+  !trimmedSpeechBody.includes('xmlns:mstts="https://www.w3.org/2001/mstts"') ||
+  !trimmedSpeechBody.includes(
+    '<voice name="en-US-GuyNeural"><mstts:silence type="Leading-exact" value="50ms"/><mstts:silence type="Tailing-exact" value="0ms"/>although</voice>',
+  ) ||
+  requestedAzureBodies.slice(0, 3).some((body) => body.includes("mstts")) ||
+  requestedAzureBodies[0] !==
+    '<speak version="1.0" xml:lang="ja-JP"><voice name="ja-JP-KeitaNeural">王安石の政策</voice></speak>' ||
+  speechKeys.slice(0, 3).some(
+    (key) => !key.startsWith("speech-cache/azure-speech-v1/"),
+  ) ||
+  !speechKeys[3].startsWith("speech-cache/azure-speech-v1-silence-50-0/")
+) {
+  throw new Error("英単語用の無音を削るAzure音声の生成・保存先が不正です。");
 }
 
 const settings = normalizeSettings({

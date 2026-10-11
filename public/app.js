@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.388";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.389";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.388";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.388";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.388";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.388";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.388";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.388";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.388";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.388";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.388";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.389";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.389";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.389";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.389";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.389";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.389";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.389";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.389";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.389";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.388";
+} from "./original-session.js?v=0.389";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.388";
+} from "./speech.js?v=0.389";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.388";
+} from "./deck-selection.js?v=0.389";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -454,6 +454,7 @@ let deckSelectionUpdating = false;
 let pendingDeckSelection = null;
 let studySessionSave = Promise.resolve();
 let studySessionSaveVersion = 0;
+let listeningAdvanceSave = Promise.resolve();
 let studyClockTimer = null;
 let studyClockLastTick = 0;
 let mindsetStudyClockTimer = null;
@@ -473,6 +474,8 @@ const speechController = createSpeechController({
   requestCloudAudio: requestCloudSpeech,
   getSettings: loadSpeechSettings,
   getHistoryReadings: () => state.historySpeechReadings,
+  // 英単語は聞き流しを詰めるため、Azure音声の前後の無音を削る。
+  shouldTrimCloudSilence: () => state.subject?.learningType === "vocabulary",
   onTargetChange: updateSpeechButtons,
 });
 const ratingSoundPlayer = createRatingSoundPlayer();
@@ -1929,9 +1932,8 @@ function queueActiveSessionSave() {
 
 function queueActiveStudyActivity(
   activity,
-  { completeSession = false, routineRun } = {},
+  { completeSession = false, routineRun, session = captureActiveSession() } = {},
 ) {
-  const session = captureActiveSession();
   const studyMode = state.studyMode;
   const datasetVersion = datasetVersionForQuestion(activity.questionId);
   const sessionDatasetVersion = state.sessionDatasetVersion;
@@ -3930,6 +3932,8 @@ async function goBackListeningOneStep() {
 
 async function advanceListening(runId) {
   if (hasReachedQuestionLimit()) return;
+  // 前の問題の保存中に次の回答まで読み終えた時は、その保存の結果を見てから進む。
+  await listeningAdvanceSave;
   if (
     runId !== state.listeningRunId ||
     state.listeningPaused ||
@@ -3942,21 +3946,8 @@ async function advanceListening(runId) {
   const activity = state.pendingListeningActivity ??
     createStudyActivity(completedTask.questionId);
   stopStudyClock();
-  state.saving = true;
-  renderActionControls();
-  await studySessionSave.catch(() => {});
-  try {
-    await queueCurrentStudyTimeSave();
-  } catch (error) {
-    state.answerVisible = true;
-    state.listeningPaused = true;
-    stopListeningSequence();
-    state.saving = false;
-    state.unlockMessage = error.message;
-    startStudyClock();
-    renderQuestion();
-    return;
-  }
+  const pendingStudySessionSave = studySessionSave.catch(() => {});
+  const pendingStudyTimeSave = queueCurrentStudyTimeSave();
   const undoSnapshot = {
     type: "listening-advance",
     studyActivityEventId: activity.eventId,
@@ -3988,13 +3979,33 @@ async function advanceListening(runId) {
     : null;
   state.answerVisible = false;
   startNewStudyScreen();
+  const advancedSession = captureActiveSession();
+  // 保存後に積むと次の問題の回答表示より後ろになり、戻る順番が崩れるため先に積む。
+  pushHistory(undoSnapshot);
+  const continuesToNextQuestion =
+    !listeningPassComplete &&
+    !routineChange?.completedItem &&
+    !hasReachedQuestionLimit();
+  let finishAdvanceSave;
+  listeningAdvanceSave = new Promise((resolve) => {
+    finishAdvanceSave = resolve;
+  });
+  state.saving = true;
+  if (continuesToNextQuestion) {
+    // 保存の完了を待たずに次の問題を読み上げ、保存に失敗した時だけ元の問題へ戻す。
+    beginListeningQuestion();
+  } else {
+    renderActionControls();
+  }
   try {
+    await pendingStudySessionSave;
+    await pendingStudyTimeSave;
     await queueActiveStudyActivity(activity, {
+      session: advancedSession,
       completeSession: sessionComplete,
       routineRun: routineChange?.changed ? state.routineRun : undefined,
     });
     state.pendingListeningActivity = null;
-    pushHistory(undoSnapshot);
   } catch (error) {
     if (!restoreActiveSession(undoSnapshot.studySession, { updateControls: false })) {
       state.currentTask = completedTask;
@@ -4014,8 +4025,14 @@ async function advanceListening(runId) {
     startStudyClock();
     renderQuestion();
     return;
+  } finally {
+    finishAdvanceSave();
   }
   state.saving = false;
+  if (continuesToNextQuestion) {
+    renderActionControls();
+    return;
+  }
   if (sessionComplete) state.activeSession = false;
   if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
@@ -4037,12 +4054,6 @@ async function advanceListening(runId) {
     renderQuestion();
     return;
   }
-  startStudyClock();
-  if (runId !== state.listeningRunId || state.listeningPaused) {
-    renderQuestion();
-    return;
-  }
-  beginListeningQuestion();
 }
 
 function speakListeningAnswer(runId) {
@@ -4071,7 +4082,8 @@ function speakListeningAnswer(runId) {
       : []),
     ...answerSpeechSequence(),
   ];
-  preloadListeningTask(state.queue[0]);
+  // 初めて作る音声でも間に合うよう、2問先まで取り寄せておく。
+  state.queue.slice(0, 2).forEach(preloadListeningTask);
   const started = speechController.speak(segments, {
     onComplete: () => {
       if (runId !== state.listeningRunId) {

@@ -24,7 +24,8 @@ const context = {
   renderRatingResult(value) { results++; resultRatings = value; },
   updateRoundProgressDisplay() {}, updateOverallProgress() {},
   isListeningMode: () => true, renderActionControls() {},
-  studySessionSave: Promise.resolve(), queueCurrentStudyTimeSave: async () => {},
+  studySessionSave: Promise.resolve(), listeningAdvanceSave: Promise.resolve(),
+  queueCurrentStudyTimeSave: async () => {},
   captureActiveSession: () => structuredClone({ ...state, history: [] }),
   restoreActiveSession(snapshot) { Object.assign(state, snapshot); return true; },
   createStudyActivity: questionId => ({ questionId, eventId: questionId }),
@@ -108,6 +109,52 @@ context.showQuestionLimitCompletion();
 assert.equal(resultRatings.again, 1, '不正解も回答1回と数える');
 assert.equal(resultRatings.good, 0, '前回までの評価を今回の結果に含めない');
 console.log('問題数指定の検証完了: 未入力・100問・再開・保存失敗・残り問題・一周完了・今回の評価を確認');
+
+// 聞き流しは保存の完了を待たずに次の問題を読み上げ、保存に失敗した時だけ元の問題へ戻す。
+{
+  const settle = () => new Promise((resolve) => setTimeout(resolve, 0));
+  const events = [];
+  const pendingSaves = [];
+  const originalBegin = context.beginListeningQuestion;
+  const originalSave = context.queueActiveStudyActivity;
+  elements.questionLimit.value = '';
+  context.initializeQuestionLimit();
+  Object.assign(state, {
+    listeningRunId: 5, listeningPaused: false, saving: false, activeSession: true,
+    answeredThisSession: 0, currentTask: { questionId: 'a' },
+    queue: [{ questionId: 'b' }, { questionId: 'c' }],
+    unseenQuestionIds: new Set(['a', 'b', 'c']), retryQuestionIds: new Set(), history: [],
+  });
+  context.beginListeningQuestion = () => {
+    events.push(`読み上げ:${state.currentTask.questionId}:保存中=${state.saving}`);
+  };
+  context.queueActiveStudyActivity = (activity) => {
+    events.push(`保存:${activity.questionId}`);
+    return new Promise((resolve, reject) => pendingSaves.push({ resolve, reject }));
+  };
+  const first = context.advanceListening(5);
+  await settle();
+  assert.deepEqual(events, ['読み上げ:b:保存中=true', '保存:a'], '保存を待たずに次の問題を読み上げる');
+  assert.equal(state.history.length, 1, '戻るための記録は次の問題の回答表示より先に積む');
+  const second = context.advanceListening(5);
+  await settle();
+  assert.equal(events.length, 2, '前の保存が終わるまでは次へ進まない');
+  pendingSaves[0].resolve();
+  await first;
+  await settle();
+  assert.deepEqual(events.slice(2), ['読み上げ:c:保存中=true', '保存:b'], '前の保存が終わってから次へ進む');
+  pendingSaves[1].reject(new Error('保存失敗'));
+  await second;
+  assert.equal(state.currentTask.questionId, 'b', '保存に失敗した問題へ戻す');
+  assert.equal(state.answeredThisSession, 1);
+  assert.equal(state.history.length, 1, '失敗した進行の記録を取り除く');
+  assert.equal(state.listeningPaused, true);
+  assert.equal(state.saving, false);
+  assert.equal(state.unlockMessage, '保存失敗');
+  context.beginListeningQuestion = originalBegin;
+  context.queueActiveStudyActivity = originalSave;
+}
+console.log('聞き流しの保存待ちなしの進行・前の保存待ち・保存失敗時の巻き戻しを確認');
 
 
 // 暗記と任意評価付き聞き流しも実際の評価処理で確認する。

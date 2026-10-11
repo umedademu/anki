@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.388";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.389";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -285,6 +285,7 @@ export function createSpeechController({
   requestCloudAudio = null,
   getSettings = () => defaultSpeechSettings,
   getHistoryReadings = () => ({}),
+  shouldTrimCloudSilence = () => false,
   onTargetChange = () => {},
   onFallback = () => {},
   deviceStartTimeoutMs = 1500,
@@ -316,7 +317,7 @@ export function createSpeechController({
   let activePlaybackResume = null;
   let pausedContinuation = null;
   const cloudAudioCache = new Map();
-  const cloudAudioCacheLimit = 12;
+  const cloudAudioCacheLimit = 24;
   const scheduleContinuation =
     typeof globalThis.queueMicrotask === "function"
       ? (callback) => globalThis.queueMicrotask(callback)
@@ -473,7 +474,13 @@ export function createSpeechController({
 
   function loadCloudAudio(segment, settings) {
     const voice = cloudVoiceFor(segment, settings);
-    const cacheKey = JSON.stringify([segment.text, voice, segment.language]);
+    const trimSilence = Boolean(shouldTrimCloudSilence());
+    const cacheKey = JSON.stringify([
+      segment.text,
+      voice,
+      segment.language,
+      trimSilence,
+    ]);
     const cached = cloudAudioCache.get(cacheKey);
     if (cached) {
       cloudAudioCache.delete(cacheKey);
@@ -482,7 +489,11 @@ export function createSpeechController({
     }
 
     const request = Promise.resolve()
-      .then(() => requestCloudAudio(segment.text, voice, segment.language))
+      .then(() =>
+        requestCloudAudio(segment.text, voice, segment.language, {
+          trimSilence,
+        }),
+      )
       .catch((error) => {
         if (cloudAudioCache.get(cacheKey) === request) {
           cloudAudioCache.delete(cacheKey);

@@ -693,12 +693,19 @@ function normalizeEnglishAzureSpeechVoice(value) {
     : defaultEnglishAzureSpeechVoice;
 }
 
-async function speechCacheKey(prompt, voice) {
+// 前後の無音を削る音声。先頭は再生開始の瞬間に語頭が欠けないよう少しだけ残す。
+const trimmedSpeechLeadingSilenceMs = 50;
+const trimmedSpeechTrailingSilenceMs = 0;
+// 無音の長さを変えたら、古い音声を使い回さないよう保存先も自動で変わる。
+const trimmedSpeechCacheVersion = `azure-speech-v1-silence-${trimmedSpeechLeadingSilenceMs}-${trimmedSpeechTrailingSilenceMs}`;
+
+async function speechCacheKey(prompt, voice, trimSilence = false) {
+  const version = trimSilence ? trimmedSpeechCacheVersion : "azure-speech-v1";
   const input = new TextEncoder().encode(
-    `azure-speech-v1\0${voice}\0${prompt}`,
+    `${version}\0${voice}\0${prompt}`,
   );
   const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", input));
-  return `speech-cache/azure-speech-v1/${[...digest]
+  return `speech-cache/${version}/${[...digest]
     .map((value) => value.toString(16).padStart(2, "0"))
     .join("")}.mp3`;
 }
@@ -712,7 +719,14 @@ function escapeSsml(value) {
     .replaceAll("'", "&apos;");
 }
 
-async function generateSpeech(env, prompt, voice) {
+function speechSsml(prompt, voice, trimSilence = false) {
+  if (!trimSilence) {
+    return `<speak version="1.0" xml:lang="${voice.slice(0, 5)}"><voice name="${voice}">${escapeSsml(prompt)}</voice></speak>`;
+  }
+  return `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="${voice.slice(0, 5)}"><voice name="${voice}"><mstts:silence type="Leading-exact" value="${trimmedSpeechLeadingSilenceMs}ms"/><mstts:silence type="Tailing-exact" value="${trimmedSpeechTrailingSilenceMs}ms"/>${escapeSsml(prompt)}</voice></speak>`;
+}
+
+async function generateSpeech(env, prompt, voice, trimSilence = false) {
   const region = String(env.AZURE_SPEECH_REGION ?? "").trim().toLowerCase();
   if (!env.AZURE_SPEECH_KEY || !/^[a-z0-9-]+$/.test(region)) {
     throw new Error("Azure音声の接続設定がありません。");
@@ -728,7 +742,7 @@ async function generateSpeech(env, prompt, voice) {
         "X-Microsoft-OutputFormat": azureSpeechOutputFormat,
         "User-Agent": "anki-world-history",
       },
-      body: `<speak version="1.0" xml:lang="${voice.slice(0, 5)}"><voice name="${voice}">${escapeSsml(prompt)}</voice></speak>`,
+      body: speechSsml(prompt, voice, trimSilence),
     },
   );
   if (!response.ok) {
@@ -752,14 +766,15 @@ async function handleSpeech(request, env) {
   const voice = requestedLanguage.startsWith("en")
     ? normalizeEnglishAzureSpeechVoice(requestedVoice)
     : normalizeAzureSpeechVoice(requestedVoice);
-  const key = await speechCacheKey(prompt, voice);
+  const trimSilence = body.trimSilence === true;
+  const key = await speechCacheKey(prompt, voice, trimSilence);
   const cached = await env.SPEECH_CACHE.get(key);
   if (cached) {
     return new Response(cached.body, {
       headers: audioHeaders(request, env, "HIT"),
     });
   }
-  const audio = await generateSpeech(env, prompt, voice);
+  const audio = await generateSpeech(env, prompt, voice, trimSilence);
   await env.SPEECH_CACHE.put(key, audio, {
     httpMetadata: { contentType: "audio/mpeg" },
     customMetadata: {

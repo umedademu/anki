@@ -72,7 +72,13 @@
     "pek-19-02",
     "pek-19-03",
     "pek-20-01",
-    "pek-20-02"
+    "pek-20-02",
+    "pek-21-01",
+    "pek-21-02",
+    "pek-21-03",
+    "pek-21-04",
+    "pek-21-05",
+    "pek-21-06"
   ],
   "images": [
     {
@@ -2104,6 +2110,110 @@
           "termId": "PEK-20-02-U01",
           "questions": [
             "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-2486efeee78793",
+      "caption": "ブレトン・ウッズ会議の舞台となったホテル（アメリカ・ニューハンプシャー州）",
+      "note": "1944年に戦後の国際通貨体制を話し合った会議の会場。",
+      "targets": [
+        {
+          "termId": "PEK-21-02-U03",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-dea04c0d92d73a",
+      "caption": "ワシントンにあるIMF（国際通貨基金）の本部",
+      "note": "国際通貨基金の本部の建物。",
+      "targets": [
+        {
+          "termId": "PEK-21-02-U04",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-42bdc444fa8f60",
+      "caption": "ワシントンにある世界銀行（IBRD）の本部",
+      "note": "国際復興開発銀行（世界銀行）の本部の建物。",
+      "targets": [
+        {
+          "termId": "PEK-21-02-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMG-deeda7deee6b84",
+      "caption": "カカオの実",
+      "note": "途上国のモノカルチャー経済を支える一次産品の例。",
+      "targets": [
+        {
+          "termId": "PEK-21-03-U01",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-99b05030a919c8",
+      "caption": "ユーロの紙幣と硬貨",
+      "note": "1999年に導入され、2002年から一般に流通しているEUの単一通貨。",
+      "targets": [
+        {
+          "termId": "PEK-21-04-U02",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WMP-3e7c23bf0bc9db",
+      "caption": "欧州連合（EU）の加盟地域",
+      "note": "EUの加盟国を示した地図。",
+      "targets": [
+        {
+          "termId": "PEK-21-04-U02",
+          "questions": [
+            "R02"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "WM-b41c974d2a7a6d",
+      "caption": "ジャカルタにあるASEAN（東南アジア諸国連合）の本部",
+      "note": "AFTAを進めるASEANの本部の建物。",
+      "targets": [
+        {
+          "termId": "PEK-21-04-U05",
+          "questions": [
+            "R01"
+          ]
+        }
+      ]
+    },
+    {
+      "sourceAssetId": "JHKS-a4b50912464cd60ed6ca",
+      "caption": "破綻前のリーマン・ブラザーズ本社（2007年）",
+      "note": "2008年に経営破綻し、世界的な金融危機のきっかけとなった投資銀行。",
+      "targets": [
+        {
+          "termId": "PEK-21-06-U04",
+          "questions": [
+            "R01"
           ]
         }
       ]

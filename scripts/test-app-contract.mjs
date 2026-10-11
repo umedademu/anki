@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.391" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.392" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.391") ||
-  !app.includes("app-navigation.js?v=0.391") ||
-  !changelog.includes("v0.391") ||
-  !settingsHtml.includes("v0.391") ||
-  !historyHtml.includes("v0.391") ||
-  !analysisHtml.includes("v0.391")
+  !html.includes("v0.392") ||
+  !app.includes("app-navigation.js?v=0.392") ||
+  !changelog.includes("v0.392") ||
+  !settingsHtml.includes("v0.392") ||
+  !historyHtml.includes("v0.392") ||
+  !analysisHtml.includes("v0.392")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -538,7 +538,13 @@ if (
   !app.includes("showMindsetCompletion(state.mindsetOrder.length)") ||
   !app.includes("showMindsetPlayer({ fromBeginning: true })") ||
   !app.includes("void queueMindsetResumeSave(item.id)") ||
-  !app.includes("前回の続きです。再生ボタンを押すと、この言葉から読み上げます。") ||
+  !app.includes("前回の続きから聞くか、はじめから聞くかを選んでください。") ||
+  !app.includes("state.mindsetChoosingStart = resume.resumed;") ||
+  !app.includes("function chooseMindsetStart({ fromBeginning = false } = {})") ||
+  !app.includes("!state.mindsetChoosingStart &&\n    Boolean(currentMindset())") ||
+  !html.includes('id="mindset-resume"') ||
+  !html.includes('id="mindset-start-over"') ||
+  !styles.includes(".mindset-player-panel.is-choosing-start .mindset-controls") ||
   !cloudProgress.includes("export function mindsetResumeStartIndex(") ||
   !cloudProgress.includes("mindsetResume: normalizeMindsetResume(") ||
   !app.includes('.replace(/=/g, "イコール")') ||
@@ -873,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.391"') ||
+  !html.includes('href="/styles.css?v=0.392"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {

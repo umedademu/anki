@@ -640,6 +640,26 @@ body.is-study-menu-open {
   min-height: 52px;
 }
 
+.mindset-start-choice {
+  display: none;
+  width: min(100%, 620px);
+  margin: 0 auto;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 10px;
+}
+
+.mindset-start-choice button {
+  min-height: 52px;
+}
+
+.mindset-player-panel.is-choosing-start .mindset-start-choice {
+  display: grid;
+}
+
+.mindset-player-panel.is-choosing-start .mindset-controls {
+  display: none;
+}
+
 .setup-description,
 .changelog-heading > p:last-child {
   margin: 0;
@@ -3684,12 +3704,14 @@ body.is-listening.is-listening-answer-visible .page {
     border-radius: 6px;
   }
 
-  .mindset-controls {
+  .mindset-controls,
+  .mindset-start-choice {
     width: min(100%, 520px);
     gap: 5px;
   }
 
-  .mindset-controls button {
+  .mindset-controls button,
+  .mindset-start-choice button {
     min-height: 32px;
     padding: 4px 8px;
     border-radius: 8px;

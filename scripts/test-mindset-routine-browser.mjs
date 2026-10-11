@@ -229,9 +229,18 @@ try {
   await page.locator("#continue-routine").click();
   await shown("mindset-player-panel");
   assert.match(await page.locator("#mindset-position").textContent(), /^2 \/ 119.*1 \/ 3件$/, "残りの言葉と消化数を復元する");
+  assert.equal(await page.locator("#mindset-toggle").isVisible(), false, "続きがある時は再生より先に開始位置を選ぶ");
+  assert.equal(await page.locator("#mindset-resume").textContent(), "前回の続きから（2件目）");
+  const callsBeforeChoice = await page.evaluate(() => window.__testSpeech.calls.length);
+  await page.waitForTimeout(100);
+  assert.equal(await page.evaluate(() => window.__testSpeech.calls.length), callsBeforeChoice, "選ぶまでは読み上げない");
+  await page.locator("#mindset-start-over").click();
+  await waitForPlayback(callsBeforeChoice + 1);
+  assert.match(await page.locator("#mindset-position").textContent(), /^1 \/ 119.*1 \/ 3件$/, "はじめからを選ぶと先頭から読み上げ、消化数は残す");
+  assert.equal(await page.locator("#mindset-toggle").textContent(), "一時停止");
 
   await begin({ target: 3, lastCompletedItemId: terms[116].id });
-  await page.locator("#mindset-toggle").click();
+  await page.locator("#mindset-resume").click();
   await complete();
   await waitForPlayback(2);
   await complete();
@@ -254,7 +263,7 @@ try {
   // 「1周」は途中の位置から始めても、全部の言葉を1回ずつ聞き終えた時に終える。
   await begin({ cycles: 1, lastCompletedItemId: terms[116].id });
   assert.match(await page.locator("#mindset-position").textContent(), /^118 \/ 119.*メニュー 0 \/ 119件$/);
-  await page.locator("#mindset-toggle").click();
+  await page.locator("#mindset-resume").click();
   for (let index = 0; index < 119; index++) {
     await waitForPlayback(index + 1);
     if (index === 118) {
@@ -296,7 +305,8 @@ try {
   await shown("subject-panel");
   await page.locator('[data-subject-id="mindset"]').click();
   await shown("mindset-player-panel");
-  await page.locator("#mindset-toggle").click();
+  assert.match(await page.locator("#mindset-position").textContent(), /^119 \/ 119/, "通常の科目選択でも前回の続きの位置を示す");
+  await page.locator("#mindset-resume").click();
   await complete();
   await shown("mindset-completion-panel");
   assert.equal(count(), 0, "通常の科目選択ではメニューを変更しない");
@@ -304,7 +314,7 @@ try {
   actualAudioCalls += await page.evaluate(() => window.__actualAudioCalls);
   assert.equal(actualAudioCalls, 0, "実際の音声は一切再生しない");
   assert.deepEqual(errors, []);
-  console.log("マインドセットの毎日メニュー検証完了: 指定数・次の科目と動画・倍率・途中再開・末尾・手動操作・二重加算防止・保存失敗と再試行・通常の一周停止・全部の言葉を聞く1周の指定を無音で確認");
+  console.log("マインドセットの毎日メニュー検証完了: 前回の続きから・はじめからの選択・指定数・次の科目と動画・倍率・途中再開・末尾・手動操作・二重加算防止・保存失敗と再試行・通常の一周停止・全部の言葉を聞く1周の指定を無音で確認");
 } finally {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));

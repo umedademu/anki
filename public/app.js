@@ -1,14 +1,14 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.391";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.392";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.391";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.391";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.391";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.391";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.391";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.391";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.391";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.391";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.391";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.392";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.392";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.392";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.392";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.392";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.392";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.392";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.392";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.392";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +66,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.391";
+} from "./original-session.js?v=0.392";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +76,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.391";
+} from "./speech.js?v=0.392";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +92,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.391";
+} from "./deck-selection.js?v=0.392";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -257,6 +257,9 @@ const elements = {
   mindsetIntervalSeconds: document.querySelector("#mindset-interval-seconds"),
   mindsetPrevious: document.querySelector("#mindset-previous"),
   mindsetToggle: document.querySelector("#mindset-toggle"),
+  mindsetStartChoice: document.querySelector("#mindset-start-choice"),
+  mindsetResume: document.querySelector("#mindset-resume"),
+  mindsetStartOver: document.querySelector("#mindset-start-over"),
   mindsetNext: document.querySelector("#mindset-next"),
   mindsetHome: document.querySelector("#mindset-home"),
   mindsetSkip: document.querySelector("#mindset-skip"),
@@ -424,6 +427,7 @@ const state = {
   mindsetPaused: true,
   mindsetSpeechComplete: false,
   mindsetItemCompleted: false,
+  mindsetChoosingStart: false,
   mindsetSaving: false,
   mindsetTimer: null,
   mindsetRunId: 0,
@@ -1514,6 +1518,7 @@ function updateMindsetStudyTimeDisplay() {
 function canCountMindsetStudyTime({ includeHidden = false } = {}) {
   return (
     !elements.mindsetPlayerPanel.classList.contains("is-hidden") &&
+    !state.mindsetChoosingStart &&
     Boolean(currentMindset()) &&
     (includeHidden || !document.hidden) &&
     state.mindsetScreenStudySeconds < state.studyTimeLimitSeconds
@@ -2681,6 +2686,12 @@ function renderMindsetPlayer() {
     "is-speaking",
     !state.mindsetPaused && !state.mindsetSpeechComplete,
   );
+  elements.mindsetPlayerPanel.classList.toggle(
+    "is-choosing-start",
+    state.mindsetChoosingStart,
+  );
+  elements.mindsetResume.disabled = !item;
+  elements.mindsetStartOver.disabled = !item;
 }
 
 function scheduleNextMindset(runId) {
@@ -2765,7 +2776,7 @@ function speakCurrentMindset() {
 
 async function moveMindset(direction, { autoplay = false } = {}) {
   const total = state.mindsetOrder.length;
-  if (!total || state.mindsetSaving) return;
+  if (!total || state.mindsetSaving || state.mindsetChoosingStart) return;
   const runId = ++state.mindsetRunId;
   clearMindsetTimer();
   speechController.stop();
@@ -2794,7 +2805,14 @@ async function moveMindset(direction, { autoplay = false } = {}) {
 }
 
 function toggleMindsetPlayback() {
-  if (!currentMindset() || !speechController.supported || state.mindsetSaving) return;
+  if (
+    !currentMindset() ||
+    !speechController.supported ||
+    state.mindsetSaving ||
+    state.mindsetChoosingStart
+  ) {
+    return;
+  }
   speechController.unlock();
   if (!state.mindsetPaused) {
     state.mindsetPaused = true;
@@ -2870,14 +2888,18 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
     ? { index: 0, resumed: false }
     : mindsetResumePosition(state.mindsetOrder);
   state.mindsetIndex = resume.index;
+  // 前回の続きがある時は、他の科目と同じく続きからか、はじめからかを先に選んでもらう。
+  state.mindsetChoosingStart = resume.resumed;
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetItemCompleted = false;
   state.mindsetMessage = speechController.supported
     ? resume.resumed
-      ? "前回の続きです。再生ボタンを押すと、この言葉から読み上げます。"
+      ? "前回の続きから聞くか、はじめから聞くかを選んでください。"
       : "再生ボタンを押すと、音声で順番に読み上げます。"
     : "この端末では音声を再生できません。";
+  elements.mindsetResume.textContent =
+    `前回の続きから（${resume.index + 1}件目）`;
   const settings = loadSpeechSettings();
   elements.mindsetSpeechRate.value = String(settings.rate);
   elements.mindsetIntervalSeconds.value = String(
@@ -2888,6 +2910,18 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
   showOnly(elements.mindsetPlayerPanel);
   renderMindsetPlayer();
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// 選んだ位置からすぐ読み上げ、他の科目の「前回の続きから」「はじめから」と同じ流れにする。
+function chooseMindsetStart({ fromBeginning = false } = {}) {
+  if (!state.mindsetChoosingStart) return;
+  if (fromBeginning) {
+    showMindsetPlayer({ fromBeginning: true });
+  }
+  state.mindsetChoosingStart = false;
+  startNewMindsetStudyScreen();
+  speakCurrentMindset();
+  renderMindsetPlayer();
 }
 
 function showMindsetCompletion(total) {
@@ -6611,6 +6645,12 @@ elements.mindsetPrevious.addEventListener("click", () => {
   moveMindset(-1, { autoplay: true });
 });
 elements.mindsetToggle.addEventListener("click", toggleMindsetPlayback);
+elements.mindsetResume.addEventListener("click", () => {
+  chooseMindsetStart();
+});
+elements.mindsetStartOver.addEventListener("click", () => {
+  chooseMindsetStart({ fromBeginning: true });
+});
 elements.mindsetNext.addEventListener("click", () => {
   moveMindset(1, { autoplay: true });
 });

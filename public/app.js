@@ -1,14 +1,15 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.396";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.397";
+import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.396";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.396";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.396";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.396";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.396";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.396";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.396";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.396";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.396";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.397";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.397";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.397";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.397";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.397";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.397";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.397";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.397";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.397";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -66,7 +67,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.396";
+} from "./original-session.js?v=0.397";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -76,7 +77,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.396";
+} from "./speech.js?v=0.397";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -92,7 +93,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.396";
+} from "./deck-selection.js?v=0.397";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -111,6 +112,7 @@ import {
   reviseStudyRoutineListeningRating,
   scaleStudyRoutinePlan,
   skipStudyRoutineItem,
+  setStudyRoutineQuestionTarget,
   studyRoutineDeckTargetReachedWith,
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
@@ -235,6 +237,12 @@ const elements = {
   setupRoundProgress: document.querySelector("#setup-round-progress"),
   resumeStudy: document.querySelector("#resume-study"),
   questionLimit: document.querySelector("#question-limit"),
+  questionLimitLabel: document.querySelector("#question-limit-label"),
+  routineQuestionLimitNote: document.querySelector("#routine-question-limit-note"),
+  sequentialField: document.querySelector("#sequential-study-field"),
+  sequentialStudy: document.querySelector("#sequential-study"),
+  sequentialOrder: document.querySelector("#sequential-order"),
+  sequentialStatus: document.querySelector("#sequential-status"),
   questionLimitField: document.querySelector("#question-limit-field"),
   startStudy: document.querySelector("#start-study"),
   resetProgress: document.querySelector("#reset-progress"),
@@ -412,6 +420,8 @@ const state = {
   questionAmountMode: "all",
   answeredThisSession: 0,
   questionLimit: null,
+  sequentialEnabled: false,
+  sequentialDeckOrder: [],
   questionLimitStart: 0,
   questionLimitRatings: createEmptyRatingCounts(),
   questionLimitSeconds: 0,
@@ -849,6 +859,7 @@ function clearRoutineOvertime() {
 }
 
 function startRoutineOvertimeIfNeeded(rating, { completedDeckIds = [] } = {}) {
+  if (state.sequentialEnabled) return false;
   const item = activeRoutineItem();
   const overtimeSeconds = normalizeStudyRoutineOvertimeSeconds(
     state.studyRoutineOvertimeSeconds,
@@ -1729,6 +1740,12 @@ function captureActiveSession() {
     selectedStage: state.selectedStage,
     questionAmountMode: state.questionAmountMode,
     shuffleEnabled: state.shuffleEnabled,
+    sequentialEnabled: state.sequentialEnabled,
+    deckOrder: state.sequentialDeckOrder,
+    questionLimit: state.questionLimit,
+    questionLimitStart: state.questionLimitStart,
+    questionLimitRatings: state.questionLimitRatings,
+    questionLimitSeconds: state.questionLimitSeconds,
     autoSpeechEnabled: true,
     filters: selectedFilters(),
     termIds: state.terms.map((term) => term.id),
@@ -1840,6 +1857,7 @@ function queueCurrentStudyTimeSave({ keepalive = false } = {}) {
 }
 
 function setSetupControlsFromSession(session) {
+  elements.sequentialStudy.checked = session.sequentialEnabled;
   setAvailableSelectValue(elements.macroRegionFilter, session.filters.macroRegion);
   updateRegionDetailOptions();
   setAvailableSelectValue(elements.regionDetailFilter, session.filters.regionDetail);
@@ -1915,6 +1933,15 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.selectedStage = session.selectedStage;
   state.questionAmountMode = session.questionAmountMode;
   state.shuffleEnabled = session.shuffleEnabled;
+  state.sequentialEnabled = session.sequentialEnabled;
+  state.sequentialDeckOrder = state.sequentialEnabled
+    ? orderedDeckIds(state.activeDeckIds, session.deckOrder) : [];
+  if (state.sequentialEnabled) {
+    state.questionLimit = session.questionLimit;
+    state.questionLimitStart = session.questionLimitStart;
+    state.questionLimitRatings = session.questionLimitRatings;
+    state.questionLimitSeconds = session.questionLimitSeconds;
+  }
   state.answeredThisSession = session.answeredCount;
   state.ratingCounts = normalizeRatingCounts(session.ratingCounts);
   state.studySeconds = session.studySeconds;
@@ -2021,6 +2048,7 @@ function addTasksToActiveSession(tasks, { unseen = true } = {}) {
 }
 
 function ensureUnseenTasksQueued() {
+  if (state.sequentialEnabled) { refreshSequentialQueue(); return; }
   if (routineOvertimeCutoffAt() !== null) return;
   const queuedIds = new Set([
     state.currentTask?.questionId,
@@ -2034,6 +2062,7 @@ function ensureUnseenTasksQueued() {
 }
 
 function enqueueDueSessionTasks(now = new Date()) {
+  if (state.sequentialEnabled) { refreshSequentialQueue(now); return; }
   if (!state.activeSession || isListeningMode()) return;
   if (routineOvertimeCutoffAt() !== null) return;
   const queuedIds = new Set([
@@ -2058,6 +2087,7 @@ function enqueueDueSessionTasks(now = new Date()) {
 }
 
 function enqueuePendingRetryTasksImmediately() {
+  if (state.sequentialEnabled) return;
   if (
     !state.activeSession ||
     isListeningMode() ||
@@ -2074,6 +2104,7 @@ function enqueuePendingRetryTasksImmediately() {
 }
 
 function refreshPendingReviewTasks(now = new Date()) {
+  if (state.sequentialEnabled) { refreshSequentialQueue(now); return; }
   if (!state.activeSession) return;
   const cutoffAt = routineOvertimeCutoffAt();
   const reviewAt = cutoffAt === null ? now : new Date(cutoffAt);
@@ -3542,6 +3573,9 @@ function captureSetupPreferences() {
         ...currentSubject,
         lastDeckId: state.activeDeckIds[0],
         selectedDeckIds: state.activeDeckIds,
+        sequentialEnabled: elements.sequentialStudy.checked,
+        deckOrder: setupDeckOrder(),
+        questionLimit: state.inRoutine ? currentSubject.questionLimit : normalizeQuestionLimit(elements.questionLimit.value),
         studyMode,
         selectedQuestionTypes: supportsQuestionTypes() ? selectedQuestionTypes() : currentSubject.selectedQuestionTypes,
         decks: Object.fromEntries([
@@ -4793,9 +4827,101 @@ function setAvailableSelectValue(select, value) {
     : "";
 }
 
+function supportsSequentialStudy() {
+  return state.subject?.learningType !== "mindset" && !isOriginalSession() &&
+    !studyRoutineUsesDeckTarget(activeRoutineItem());
+}
+
+function selectedSequentialStudy() {
+  return supportsSequentialStudy() && elements.sequentialStudy.checked;
+}
+
+function setupDeckOrder() {
+  return orderedDeckIds(state.deckEntries.map(deck => deck.id),
+    state.setupPreferences.subjects[state.activeSubjectId]?.deckOrder);
+}
+
+function sequentialPlanForTerms(terms, stage, now = new Date()) {
+  const deckOrder = state.activeSession && state.sequentialEnabled
+    ? state.sequentialDeckOrder : setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
+  return sequentialStudyPlan({
+    tasks: createSequentialStudyTasks(terms, stage), progress: state.progress, deckOrder,
+    questionDeckIds: new Map([...state.questionDeckById].map(([id, deck]) => [id, deck.entry.id])),
+    retryQuestionIds: !isListeningMode() && state.activeSession ? state.retryQuestionIds : new Set(),
+    now, shuffle: state.activeSession ? state.shuffleEnabled : elements.setupShuffle.checked,
+  });
+}
+
+function renderSequentialSetup() {
+  const supported = supportsSequentialStudy();
+  const enabled = selectedSequentialStudy();
+  elements.sequentialField.classList.toggle("is-hidden", !supported);
+  const unit = activeSubjectUsesChapterDecks() ? "パート" : "デッキ";
+  elements.sequentialStudy.nextElementSibling.querySelector("strong").textContent = `選んだ${unit}を順番に覚える`;
+  elements.sequentialOrder.hidden = !enabled;
+  elements.sequentialStatus.hidden = !enabled;
+  elements.questionAmountFilter.disabled = enabled;
+  if (!enabled) return;
+  const order = setupDeckOrder().filter(id => selectedDeckIds().includes(id));
+  const plan = sequentialPlanForTerms(selectedStudyTerms(), elements.questionStyleFilter.value);
+  elements.sequentialOrder.replaceChildren(...order.map((id, index) => {
+    const row = document.createElement("div");
+    row.className = "sequential-order-row";
+    const name = document.createElement("span");
+    name.textContent = `${index + 1}. ${deckDisplayLabel(state.deckEntries.find(deck => deck.id === id)).replaceAll("｜", " ")}${plan.masteredDeckIds.includes(id) ? "（マスター）" : ""}`;
+    row.append(name);
+    for (const [direction, label] of [[-1, "上へ"], [1, "下へ"]]) {
+      const button = document.createElement("button");
+      button.type = "button"; button.className = "secondary-button"; button.textContent = label;
+      button.dataset.sequentialDeck = id; button.dataset.direction = direction;
+      button.setAttribute("aria-label", `${name.textContent}を${label}`);
+      button.disabled = index + direction < 0 || index + direction >= order.length || deckSelectionUpdating;
+      row.append(button);
+    }
+    return row;
+  }));
+  elements.sequentialStatus.textContent = plan.currentDeckId
+    ? `次に覚える${unit}：${deckDisplayLabel(state.deckEntries.find(deck => deck.id === plan.currentDeckId)).replaceAll("｜", " ")}`
+    : "選んだ範囲はすべてマスターしています。復習時期が来た問題を出題します。";
+}
+
+function refreshSequentialQueue(now = new Date()) {
+  if (!state.activeSession || !state.sequentialEnabled) return;
+  const plan = sequentialPlanForTerms(state.terms, state.selectedStage, now);
+  const candidates = new Set(plan.queue.map(task => task.questionId));
+  // 聞き流しでは、評価なしで聞いた問題を同じ回で繰り返さない。
+  state.queue = plan.queue.filter(task => task.questionId !== state.currentTask?.questionId &&
+    (!isListeningMode() || state.unseenQuestionIds.has(task.questionId)));
+  if (!isListeningMode()) {
+    state.unseenQuestionIds = new Set([...candidates, ...(state.currentTask ? [state.currentTask.questionId] : [])]);
+  }
+}
+
+async function saveRoutineQuestionLimit() {
+  const item = activeRoutineItem();
+  if (!item || studyRoutineUsesDeckTarget(item)) return true;
+  const target = Number(elements.questionLimit.value);
+  if (target === item.questionTarget) return true;
+  const run = setStudyRoutineQuestionTarget(state.routineRun, item.id, target);
+  const saved = await saveCloudStudyRoutine({ routineRun: run });
+  const savedItem = saved.setupPreferences.routineRun?.items.find(candidate => candidate.id === item.id);
+  if (savedItem?.questionTarget !== target) throw new Error("目標問題数を保存できませんでした。もう一度お試しください。");
+  syncRoutinePreferences(saved.setupPreferences, saved.studyDate);
+  if (savedItem.completedCount >= savedItem.questionTarget) {
+    showOnly(elements.studyShell);
+    showRoutineStepCompletion({ completedItem: savedItem, nextItem: currentStudyRoutineItem(state.routineRun) });
+    return false;
+  }
+  return true;
+}
+
 function applySetupPreferences() {
   const preferences = normalizeSetupPreferences(state.setupPreferences);
   const subject = preferences.subjects[state.activeSubjectId];
+  elements.sequentialStudy.checked = subject?.sequentialEnabled === true;
+  const routineItem = activeRoutineItem();
+  elements.questionLimit.value = routineItem && !studyRoutineUsesDeckTarget(routineItem)
+    ? String(routineItem.questionTarget) : String(subject?.questionLimit ?? "");
   const deck = subject?.decks?.[state.activeDeckIds[0]] ?? {};
   elements.excludeTimeQuestions.checked = deck.excludeTimeQuestions !== false;
   renderQuestionTypes(resolveQuestionTypes(subject?.selectedQuestionTypes, deck.excludeTimeQuestions !== false, activeSubjectUsesChapterDecks() ? ["short_answer"] : []));
@@ -4919,7 +5045,13 @@ function selectedStudyTerms() {
 }
 
 function updateSetupPreview() {
-  elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine);
+  const currentRoutine = activeRoutineItem();
+  elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine && studyRoutineUsesDeckTarget(currentRoutine));
+  elements.questionLimit.required = Boolean(currentRoutine && !studyRoutineUsesDeckTarget(currentRoutine));
+  elements.questionLimit.max = currentRoutine ? "10000" : "999999";
+  elements.questionLimitLabel.textContent = currentRoutine ? "今回のメニューの目標問題数" : "今回の問題数（任意）";
+  elements.routineQuestionLimitNote.hidden = !currentRoutine;
+  renderSequentialSetup();
   elements.questionTypeField.classList.toggle("is-hidden", !supportsQuestionTypes());
   const typeCount = selectedQuestionTypes().length;
   elements.questionTypeSummary.textContent = typeCount ? `出題する問題の種類（${typeCount}種類）` : "出題する問題の種類（１種類以上選んでください）";
@@ -4935,7 +5067,9 @@ function updateSetupPreview() {
     ? selectedStages
     : availableQuestionStages();
   const questions = countQuestions(terms, stages);
-  const dueQuestions = (
+  const dueQuestions = selectedSequentialStudy()
+    ? sequentialPlanForTerms(terms, selectedStage).queue.length
+    : (
     questionAmountMode === oneQuestionPerTermMode
       ? createTermQuestionQueue
       : createQuestionQueue
@@ -5142,6 +5276,16 @@ function setQueueProgressText(remaining) {
 }
 
 function updateOverallProgress() {
+  if (state.sequentialEnabled) {
+    const tasks = createSequentialStudyTasks(state.terms, state.selectedStage);
+    const passed = tasks.filter(task => hasPassingRating(state.progress.questions[task.questionId])).length;
+    const plan = sequentialPlanForTerms(state.terms, state.selectedStage);
+    elements.overallProgress.textContent = `習得 ${passed} / ${tasks.length}問`;
+    elements.termProgress.classList.remove("is-hidden");
+    elements.termProgress.textContent = `マスター ${plan.masteredDeckIds.length} / ${state.activeDeckIds.length}${activeSubjectUsesChapterDecks() ? "パート" : "デッキ"}`;
+    elements.progressBar.style.width = `${tasks.length ? passed / tasks.length * 100 : 0}%`;
+    return;
+  }
   const mastery = getOverallMastery(
     state.terms,
     state.progress,
@@ -5438,6 +5582,19 @@ function renderCompletion() {
   }
   state.routineCompletionAction = "";
   elements.completionReturn.textContent = "開始画面に戻る";
+  if (state.sequentialEnabled) {
+    const plan = sequentialPlanForTerms(state.terms, state.selectedStage);
+    elements.completionEyebrow.textContent = "今回の出題を完了";
+    elements.completionTitle.textContent = plan.currentDeckId
+      ? "現在のパートで出題できる問題を終えました"
+      : "選んだ範囲をすべてマスターしています";
+    elements.completionMessage.textContent = plan.currentDeckId && listening
+      ? "次のパートへ進むには、今のパートの全問題を「難しい・正解・簡単」のいずれかで評価してください。"
+      : "復習時期が来た問題は、次回も優先して出題します。";
+    renderActionControls();
+    updateOverallProgress();
+    return;
+  }
   if (listening) {
     setQueueProgressText(0);
     elements.completionEyebrow.textContent = "一巡完了";
@@ -5489,6 +5646,10 @@ function renderCompletion() {
 }
 
 function buildQueue() {
+  if (state.sequentialEnabled) {
+    state.queue = sequentialPlanForTerms(state.terms, state.selectedStage).queue;
+    return;
+  }
   const tasks = (usesOneQuestionPerTerm()
     ? createTermQuestionQueue
     : createQuestionQueue)(
@@ -5511,6 +5672,7 @@ function applyQuestionRating(term, question, rating) {
     state.subject.masteryTarget,
     state.reviewSettings,
   );
+  if (state.sequentialEnabled) return;
   if (state.selectedStage || usesOneQuestionPerTerm()) {
     return;
   }
@@ -5983,7 +6145,7 @@ async function resetAllProgress() {
 }
 
 function validateQuestionLimit() {
-  return state.inRoutine || elements.questionLimit.reportValidity();
+  return (state.inRoutine && studyRoutineUsesDeckTarget(activeRoutineItem())) || elements.questionLimit.reportValidity();
 }
 
 function initializeQuestionLimit() {
@@ -6055,11 +6217,12 @@ async function beginStudy() {
   startingStudy = true;
   elements.startStudy.disabled = true;
   try {
+    if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }
     await queueSetupPreferenceSave();
   } catch (error) {
-    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
     startingStudy = false;
     updateSetupPreview();
+    elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
     return;
   }
 
@@ -6067,12 +6230,17 @@ async function beginStudy() {
   state.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
   setStudyTerms(selectedTerms);
   state.selectedStage = elements.questionStyleFilter.value;
-  state.questionAmountMode = selectedQuestionAmountMode();
+  state.sequentialEnabled = selectedSequentialStudy();
+  state.sequentialDeckOrder = setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
+  state.questionAmountMode = state.sequentialEnabled ? "all" : selectedQuestionAmountMode();
   state.studyMode = studyMode;
   state.shuffleEnabled = elements.setupShuffle.checked;
   speechController.stop();
+  state.activeSession = false;
+  state.retryQuestionIds = new Set();
   buildQueue();
-  state.sessionTasks = state.queue.map(cloneTask);
+  state.sessionTasks = state.sequentialEnabled
+    ? createSequentialStudyTasks(state.terms, state.selectedStage) : state.queue.map(cloneTask);
   state.unseenQuestionIds = new Set(
     state.sessionTasks.map((task) => task.questionId),
   );
@@ -6164,6 +6332,7 @@ async function resumeStudy() {
   elements.startStudy.disabled = true;
   speechController.stop();
   try {
+    if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }
     await queueSetupPreferenceSave();
   } catch (error) {
     startingStudy = false;
@@ -6172,6 +6341,16 @@ async function resumeStudy() {
     return;
   }
   savedSession.excludeTimeQuestions = selectedTimeQuestionExclusion();
+  savedSession.sequentialEnabled = selectedSequentialStudy();
+  savedSession.deckOrder = setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
+  if (savedSession.sequentialEnabled) {
+    const terms = filterConfiguredQuestions(state.allTerms.filter(term => savedSession.termIds.includes(term.id)),
+      supportsQuestionTypes() ? selectedQuestionTypes() : null, savedSession.excludeTimeQuestions);
+    const previousIds = new Set(savedSession.tasks.map(task => task.questionId));
+    savedSession.tasks = createSequentialStudyTasks(terms, savedSession.selectedStage);
+    savedSession.unseenQuestionIds.push(...savedSession.tasks.filter(task => !previousIds.has(task.questionId)).map(task => task.questionId));
+    savedSession.questionAmountMode = "all";
+  }
   savedSession.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
   const eligibleIds = new Set(filterConfiguredQuestions(state.allTerms, savedSession.selectedQuestionTypes, savedSession.excludeTimeQuestions)
     .flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)));
@@ -6197,6 +6376,10 @@ async function resumeStudy() {
     return;
   }
   initializeQuestionLimit();
+  if (state.sequentialEnabled) {
+    state.currentTask = null;
+    state.answerVisible = false;
+  }
   refreshPendingReviewTasks();
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
@@ -6395,6 +6578,8 @@ async function activateDecks(deckIds, { keepDeckSelection = false } = {}) {
   elements.macroRegionFilter.value = "";
   elements.regionDetailFilter.value = "";
   elements.categoryFilter.value = "";
+  state.sequentialEnabled = false;
+  state.sequentialDeckOrder = [];
   if (!keepDeckSelection) {
     deckInputs.forEach((input) => {
       input.checked = state.activeDeckIds.includes(input.value);
@@ -6566,8 +6751,10 @@ function restoreStudyRoute(route) {
     state.activeSession = false;
     return false;
   }
-  elements.questionLimit.value = "";
-  initializeQuestionLimit();
+  if (!state.sequentialEnabled) {
+    elements.questionLimit.value = "";
+    initializeQuestionLimit();
+  }
   ensureCurrentStudyScreen();
   state.listeningPaused = true;
   clearListeningTimer();
@@ -6647,6 +6834,10 @@ function navigateToRoute(route, { replace = false, fromHistory = false } = {}) {
         await activateSubject(route.subject, route.decks);
         if (request !== routeRequest) return;
         state.inRoutine = route.routine && currentStudyRoutineItem(state.routineRun)?.subjectId === route.subject;
+        const routineItem = activeRoutineItem();
+        if (routineItem && !studyRoutineUsesDeckTarget(routineItem)) {
+          elements.questionLimit.value = String(routineItem.questionTarget);
+        }
         if (isMindsetMode()) {
           showMindsetPlayer();
           return;
@@ -6978,6 +7169,30 @@ for (const option of elements.studyModeOptions) {
 elements.setupShuffle.addEventListener("change", () => {
   updateSetupPreview();
   queueVisibleSetupPreferenceSave();
+});
+elements.sequentialStudy.addEventListener("change", () => {
+  updateSetupPreview();
+  queueVisibleSetupPreferenceSave();
+});
+elements.sequentialOrder.addEventListener("click", event => {
+  const button = event.target.closest("button[data-sequential-deck]");
+  if (!button || deckSelectionUpdating) return;
+  const order = setupDeckOrder();
+  const selected = order.filter(id => selectedDeckIds().includes(id));
+  const index = selected.indexOf(button.dataset.sequentialDeck);
+  const other = selected[index + Number(button.dataset.direction)];
+  if (!other) return;
+  const left = order.indexOf(selected[index]), right = order.indexOf(other);
+  [order[left], order[right]] = [order[right], order[left]];
+  const subject = state.setupPreferences.subjects[state.activeSubjectId] ?? {};
+  state.setupPreferences.subjects[state.activeSubjectId] = { ...subject, deckOrder: order };
+  updateSetupPreview();
+  queueVisibleSetupPreferenceSave();
+  elements.sequentialOrder.querySelector(`button[data-sequential-deck="${button.dataset.sequentialDeck}"][data-direction="${button.dataset.direction}"]`)?.focus();
+});
+elements.questionLimit.addEventListener("change", () => {
+  if (!elements.questionLimit.checkValidity()) return;
+  if (!state.inRoutine) queueVisibleSetupPreferenceSave();
 });
 elements.setupReviewShared.addEventListener("change", () => {
   if (!elements.setupReviewShared.checked) return;

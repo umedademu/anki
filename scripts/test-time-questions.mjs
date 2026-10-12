@@ -122,6 +122,7 @@ Object.assign(elements, { resumeStudy: {}, startStudy: {}, cloudStatus: {} });
 Object.assign(context, {
   validateQuestionLimit: () => true, selectedStudyMode: () => "memorize",
   savedSessionForMode: () => onlyTime, activeRoutineItem: () => null,
+  selectedSequentialStudy: () => false, setupDeckOrder: () => [],
   switchStudySessionMode, startingStudy: false, deckSelectionUpdating: false,
   speechController: { stop() {} },
   queueSetupPreferenceSave: async () => { if (saveFails) throw Error("保存失敗"); },

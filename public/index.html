@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.396"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.396" />
-    <link rel="stylesheet" href="/theme.css?v=0.396" />
+    <script src="/theme.js?v=0.397"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.397" />
+    <link rel="stylesheet" href="/theme.css?v=0.397" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.396" type="module"></script>
+    <script src="/app.js?v=0.397" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.396</span>
+        <span class="app-version">v0.397</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -34,7 +34,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.396｜科目別学習</p>
+        <p class="eyebrow">v0.397｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -216,6 +216,17 @@
 
         </div>
 
+        <section class="setup-review-settings" id="sequential-study-field" aria-labelledby="sequential-study-title">
+          <h2 id="sequential-study-title">学習する順番</h2>
+          <label class="shuffle-choice" for="sequential-study">
+            <input id="sequential-study" type="checkbox" />
+            <span><strong>選んだパートを順番に覚える</strong></span>
+          </label>
+          <p class="sequential-description">復習時期が来た問題を先に出し、その後で最初の未習得パートを進めます。選んだ出題範囲の全問題が「不正解」以外になれば、次のパートへ進みます。</p>
+          <div id="sequential-order" class="sequential-order" aria-label="選んだパートの学習順" hidden></div>
+          <p id="sequential-status" class="selection-summary" role="status" hidden></p>
+        </section>
+
         <section class="setup-review-settings" aria-labelledby="setup-review-title">
           <div class="setup-review-heading">
             <h2 id="setup-review-title">この教科の復習間隔</h2>
@@ -293,8 +304,9 @@
           0周消化・次は1周目
         </p>
         <label class="setup-field question-limit-field" id="question-limit-field" for="question-limit">
-          <span>今回の問題数（任意）</span>
+          <span id="question-limit-label">今回の問題数（任意）</span>
           <input id="question-limit" type="number" min="1" max="999999" step="1" inputmode="numeric" placeholder="指定なし" />
+          <small id="routine-question-limit-note" hidden>変更は今回のメニューだけに適用します。達成済みの問題数を含む目標です。</small>
         </label>
         <div class="setup-actions">
           <button class="primary-button setup-start is-hidden" id="resume-study" type="button">

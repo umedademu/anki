@@ -1,0 +1,50 @@
+import assert from "node:assert/strict";
+import { createSequentialStudyTasks, orderedDeckIds, sequentialStudyPlan } from "../public/sequential-study.js";
+import { normalizeSetupPreferences, normalizeStudySession } from "../public/cloud-progress.js";
+import { normalizeSetupPreferences as workerPreferences, normalizeStudySession as workerSession } from "../worker/src/index.js";
+import { applyStudyRoutineMultiplier, createStudyRoutineRun, recordStudyRoutineQuestion, setStudyRoutineQuestionTarget } from "../public/study-routine.js";
+
+const now = new Date("2026-10-13T00:00:00Z");
+const deckOrder = Array.from({ length: 6 }, (_, index) => `part-${index + 1}`);
+const terms = deckOrder.map((id, index) => ({ id: `t${index}`, stages: {
+  beginner: [{ id: `${id}-a` }], reverse: [{ id: `${id}-b` }], integrated: [],
+} }));
+const tasks = createSequentialStudyTasks(terms);
+const questionDeckIds = new Map(tasks.map(task => [task.questionId, task.questionId.slice(0, -2)]));
+const progress = { questions: {} };
+const passed = nextReviewAt => ({ lastRating: "hard", lastAnsweredAt: "2026-10-12T00:00:00Z", nextReviewAt, streak: 1 });
+const plan = extra => sequentialStudyPlan({ tasks, progress, deckOrder, questionDeckIds, now, ...extra });
+assert.deepEqual(plan().queue.map(task => task.questionId), ["part-1-a", "part-1-b"], "後ろのパートを混ぜない。段階は連続正解２回を待たず同じパート内で進める");
+for (const task of tasks.filter(task => /^part-[123]-/.test(task.questionId))) progress.questions[task.questionId] = passed("2026-10-20T00:00:00Z");
+for (const id of ["part-1-a", "part-3-b"]) progress.questions[id].nextReviewAt = "2026-10-12T23:59:00Z";
+assert.equal(plan().currentDeckId, "part-4");
+assert.deepEqual(plan().masteredDeckIds, ["part-1", "part-2", "part-3"], "難しい・正解も１回で習得と判定");
+assert.deepEqual(plan().queue.map(task => task.questionId), ["part-1-a", "part-3-b", "part-4-a", "part-4-b"], "過去の復習２問の後で現在のパートへ進む");
+for (const id of ["part-1-a", "part-3-b", "part-4-a", "part-4-b"]) progress.questions[id] = passed("2026-10-20T00:00:00Z");
+assert.equal(plan().currentDeckId, "part-5", "翌日を待たず次へ進む");
+progress.questions["part-1-a"] = { ...passed("2026-10-20T00:00:00Z"), lastRating: "again" };
+assert.equal(plan().currentDeckId, "part-1", "過去の習得済み印があっても現在の不正解を保持する");
+assert.deepEqual(plan({ retryQuestionIds: new Set(["part-1-a"]) }).queue.map(task => task.questionId), ["part-1-a"], "不正解を解消するまでは先の未回答を開かない");
+assert.deepEqual(orderedDeckIds(deckOrder, ["part-6", "part-6", "deleted", "part-2"]), ["part-6", "part-2", "part-1", "part-3", "part-4", "part-5"]);
+progress.questions["part-1-a"] = passed("2026-10-20T00:00:00Z");
+assert.equal(plan({ deckOrder: orderedDeckIds(deckOrder, ["part-6"]) }).currentDeckId, "part-6", "科目ごとの並びを使う");
+const prefs = { subjects: { test: { selectedDeckIds: deckOrder, deckOrder: ["part-6", "part-2"], sequentialEnabled: true, questionLimit: 100 } } };
+assert.deepEqual(normalizeSetupPreferences(prefs), workerPreferences(prefs), "画面と保存先の設定が一致する");
+assert.equal(workerPreferences(prefs).subjects.test.questionLimit, 100);
+const session = { tasks, termIds: terms.map(term => term.id), deckIds: deckOrder, sequentialEnabled: true, deckOrder,
+  questionLimit: 10, questionLimitStart: 5, questionLimitRatings: { good: 4 }, questionLimitSeconds: 50 };
+assert.deepEqual(normalizeStudySession(session), workerSession(session), "順番と指定数を途中記録へ保持する");
+const run = createStudyRoutineRun([{ id: "a", subjectId: "test", questionTarget: 100 }], "2026-10-13", "run-test");
+run.items[0].completedCount = 30;
+run.items[0].studySeconds = 45;
+const changed = setStudyRoutineQuestionTarget(run, "a", 60);
+assert.equal(changed.items[0].questionTarget, 60);
+assert.equal(changed.items[0].baseQuestionTarget, 100, "毎日の元の目標を保持する");
+assert.equal(changed.items[0].completedCount, 30);
+assert.equal(changed.items[0].studySeconds, 45);
+assert.equal(applyStudyRoutineMultiplier(changed, 2).items[0].questionTarget, 60, "手入力した目標を保存時に倍率で戻さない");
+let current = changed;
+for (let i = 0; i < 30; i++) current = recordStudyRoutineQuestion(current, "test", "dataset", `q${i}`, 0, "good").run;
+assert.equal(current.currentIndex, 1, "変更後の目標でメニューを完了する");
+assert.equal(setStudyRoutineQuestionTarget(run, "a", 20).items[0].completedCount, 30, "目標を下げても達成済み件数を削らない");
+console.log("順番学習：習得判定・復習優先・順序変更・同じ回の次パート・不正解・途中記録・保存側の一致・今回だけの目標変更を確認しました。");

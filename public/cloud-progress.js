@@ -1,4 +1,5 @@
 import { normalizeSubjectOrder } from "./subject-order.js";
+import { normalizeDeckOrder, normalizeQuestionLimit } from "./sequential-study.js";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -208,6 +209,12 @@ export function normalizeStudySession(value) {
       ? source.questionAmountMode
       : "all",
     shuffleEnabled: source.shuffleEnabled === true,
+    sequentialEnabled: source.sequentialEnabled === true,
+    deckOrder: normalizeDeckOrder(source.deckOrder),
+    questionLimit: normalizeQuestionLimit(source.questionLimit),
+    questionLimitStart: Math.min(1_000_000_000, Math.max(0, Number.parseInt(source.questionLimitStart, 10) || 0)),
+    questionLimitRatings: normalizeRatingCounts(source.questionLimitRatings),
+    questionLimitSeconds: normalizeStudySeconds(source.questionLimitSeconds),
     autoSpeechEnabled: true,
     filters: {
       macroRegion: normalizeSetupSelection(source.filters?.macroRegion),
@@ -366,6 +373,9 @@ export function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      sequentialEnabled: rawSubject.sequentialEnabled === true,
+      deckOrder: normalizeDeckOrder(rawSubject.deckOrder),
+      questionLimit: normalizeQuestionLimit(rawSubject.questionLimit),
       selectedQuestionTypes: Array.isArray(rawSubject.selectedQuestionTypes)
         ? [...new Set(rawSubject.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
         : null,

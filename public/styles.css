@@ -4355,6 +4355,36 @@ body.is-listening.is-listening-answer-visible .page {
 }
 
 /* 現在のページも同じ大きさのボタンとして残す。 */
+.sequential-description {
+  color: var(--theme-muted, #5b6d62);
+  font-size: 0.85rem;
+  line-height: 1.7;
+}
+
+.sequential-order {
+  display: grid;
+  gap: 8px;
+}
+
+.sequential-order[hidden] { display: none; }
+
+.sequential-order-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 6px;
+}
+
+.sequential-order-row span {
+  overflow-wrap: anywhere;
+  font-size: 0.85rem;
+}
+
+.sequential-order-row button {
+  padding: 6px 9px;
+  font-size: 0.75rem;
+}
+
 .header-link[aria-current="page"] {
   color: var(--theme-text, #183b2a);
   background: var(--theme-tint, rgb(74 122 91 / 12%));

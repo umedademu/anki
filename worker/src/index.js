@@ -1,4 +1,5 @@
 import { normalizeSubjectOrder } from "../../public/subject-order.js";
+import { normalizeDeckOrder, normalizeQuestionLimit } from "../../public/sequential-study.js";
 import {
   defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
@@ -340,6 +341,9 @@ function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      sequentialEnabled: rawSubject.sequentialEnabled === true,
+      deckOrder: normalizeDeckOrder(rawSubject.deckOrder),
+      questionLimit: normalizeQuestionLimit(rawSubject.questionLimit),
       selectedQuestionTypes: Array.isArray(rawSubject.selectedQuestionTypes)
         ? [...new Set(rawSubject.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
         : null,
@@ -547,6 +551,12 @@ function normalizeStudySession(value) {
       ? source.questionAmountMode
       : "all",
     shuffleEnabled: source.shuffleEnabled === true,
+    sequentialEnabled: source.sequentialEnabled === true,
+    deckOrder: normalizeDeckOrder(source.deckOrder),
+    questionLimit: normalizeQuestionLimit(source.questionLimit),
+    questionLimitStart: integer(source.questionLimitStart, 0),
+    questionLimitRatings: normalizeRatingCounts(source.questionLimitRatings),
+    questionLimitSeconds: integer(source.questionLimitSeconds, 0),
     autoSpeechEnabled: true,
     filters: {
       macroRegion: normalizeSetupSelection(source.filters?.macroRegion),

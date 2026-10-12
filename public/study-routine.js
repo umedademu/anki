@@ -384,7 +384,11 @@ export function normalizeStudyRoutineRun(value) {
     return {
       ...item,
       baseQuestionTarget,
-      questionTarget: hasStoredMultiplier
+      ...(sourceItem.questionTargetOverride != null
+        ? { questionTargetOverride: normalizeQuestionTarget(sourceItem.questionTargetOverride) } : {}),
+      questionTarget: sourceItem.questionTargetOverride != null
+        ? normalizeQuestionTarget(sourceItem.questionTargetOverride)
+        : hasStoredMultiplier
         ? scaledStudyRoutineQuestionTarget(baseQuestionTarget, routineMultiplier)
         : normalizeQuestionTarget(sourceItem.questionTarget),
       completedCount: Math.min(
@@ -554,6 +558,16 @@ export function applyStudyRoutineMultiplier(run, multiplier = 1) {
         : { ...item },
     ),
   });
+}
+
+// 開始画面の変更は今回の進行中メニューだけに適用し、基本の並びと目標を保持する。
+export function setStudyRoutineQuestionTarget(run, itemId, questionTarget) {
+  const normalized = normalizeStudyRoutineRun(run);
+  if (!normalized) return null;
+  return normalizeStudyRoutineRun({ ...normalized, items: normalized.items.map(item =>
+    item.kind === "study" && item.id === itemId && !studyRoutineUsesDeckTarget(item)
+      ? { ...item, questionTargetOverride: normalizeQuestionTarget(questionTarget), overtimePending: false }
+      : item) });
 }
 
 export function applyStudyRoutineVideoSkip(run, skipVideos = false) {

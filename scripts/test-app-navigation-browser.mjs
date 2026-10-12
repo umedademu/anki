@@ -206,9 +206,36 @@ try {
   await page.goto(base + "/changelog.html");
   await page.goBack(); await shown("study-shell"); checkRoute("study", "original");
   assert.match(await page.locator("#question-text").textContent(), /試験問題/);
+  // 上部から編集画面を直接開き、戻る・進むと再読み込みでも表示を保つ。
+  await page.goto(base + "/changelog.html");
+  const routineLink = '.header-meta a[href="/settings.html#study-routine-settings"]';
+  const settingsLink = '.header-meta a[href="/settings.html"]';
+  await page.locator(routineLink).click();
+  await page.locator("#study-routine-settings").waitFor({ state: "visible" });
+  assert.equal(await page.locator(routineLink).getAttribute("aria-current"), "page");
+  assert.equal(await page.locator(settingsLink).getAttribute("aria-current"), null);
+  assert.equal(await page.locator(".settings-heading").isVisible(), false);
+  await page.reload();
+  await page.locator("#study-routine-settings").waitFor({ state: "visible" });
+  await page.locator('.settings-subpage-navigation a').first().click();
+  await page.locator("#learning-menu-links").waitFor({ state: "visible" });
+  assert.equal(await page.locator(settingsLink).getAttribute("aria-current"), "page");
+  assert.equal(await page.locator(routineLink).getAttribute("aria-current"), null);
+  await page.goBack();
+  await page.locator("#study-routine-settings").waitFor({ state: "visible" });
+  assert.equal(await page.locator(routineLink).getAttribute("aria-current"), "page");
+  await page.goForward();
+  await page.locator("#learning-menu-links").waitFor({ state: "visible" });
+  await page.locator('a[href="#routine-video-settings"]').click();
+  await page.locator("#routine-video-settings").waitFor({ state: "visible" });
+  assert.equal(await page.locator(settingsLink).getAttribute("aria-current"), "page");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator(routineLink).click();
+  await page.locator("#study-routine-settings").waitFor({ state: "visible" });
+  assert.equal(await page.locator(routineLink).isVisible(), true);
   assert.deepEqual(errors, []);
   assert.equal(requests.some((url) => /\/v1\/.*(speech|rating-sound)/.test(url)), false, "音声を取得・再生しない: " + JSON.stringify(requests.filter((url) => /\/v1\/.*(speech|rating-sound)/.test(url))));
-  console.log("画面遷移検証完了: 段階表示・画像後読み・科目別URL・再読み込み・戻る進む・途中復元・聞き流し停止・デッキ維持・無効URL・通信失敗・オリジナル");
+  console.log("画面遷移検証完了: 段階表示・画像後読み・科目別URL・再読み込み・戻る進む・途中復元・聞き流し停止・デッキ維持・無効URL・通信失敗・オリジナル・学習メニューの直接編集と選択表示・スマートフォン幅");
 } finally {
   await browser?.close();
   server.closeAllConnections();

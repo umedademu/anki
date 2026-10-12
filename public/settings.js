@@ -17,7 +17,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.395";
+import { createSpeechController } from "./speech.js?v=0.396";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,7 +39,7 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.395";
+import { usesChapterDecks } from "./so-chapters.js?v=0.396";
 import { createRatingSoundPlayer } from "./rating-sound.js";
 import {
   defaultRatingSoundVolume,
@@ -1155,6 +1155,16 @@ function showSettingsPage() {
   const page = document.querySelector(".settings-page");
   const subpages = [...page.querySelectorAll("[data-settings-subpage]")];
   const activePage = subpages.find((section) => location.hash === "#" + section.id);
+  const activeNavigationUrl = activePage?.id === "study-routine-settings"
+    ? "/settings.html#study-routine-settings"
+    : "/settings.html";
+  for (const link of document.querySelectorAll('.header-meta a[href^="/settings.html"]')) {
+    if (link.getAttribute("href") === activeNavigationUrl) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  }
   for (const section of page.children) {
     if (section.id === "settings-status") continue;
     section.hidden = section.matches(".settings-subpage-navigation")

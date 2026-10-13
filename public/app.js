@@ -1,15 +1,15 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.397";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.398";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.397";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.397";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.397";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.397";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.397";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.397";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.397";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.397";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.397";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.398";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.398";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.398";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.398";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.398";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.398";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.398";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.398";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.398";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -67,7 +67,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.397";
+} from "./original-session.js?v=0.398";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -77,7 +77,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.397";
+} from "./speech.js?v=0.398";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -93,7 +93,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.397";
+} from "./deck-selection.js?v=0.398";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -824,7 +824,7 @@ function routineOvertimeCutoffAt() {
 
 function routineOvertimeReviewTasks(cutoffAt) {
   if (!Number.isFinite(cutoffAt)) return [];
-  return state.sessionTasks
+  const tasks = state.sessionTasks
     .filter((task) => {
       if (state.unseenQuestionIds.has(task.questionId)) return false;
       const record = state.progress.questions[task.questionId];
@@ -834,8 +834,8 @@ function routineOvertimeReviewTasks(cutoffAt) {
         Number.isFinite(nextReviewAt) &&
         nextReviewAt <= cutoffAt
       );
-    })
-    .sort((left, right) => {
+    });
+  const ordered = state.shuffleEnabled ? shuffleTasks(tasks) : tasks.sort((left, right) => {
       const leftAt = Date.parse(
         state.progress.questions[left.questionId]?.nextReviewAt ?? "",
       );
@@ -843,8 +843,8 @@ function routineOvertimeReviewTasks(cutoffAt) {
         state.progress.questions[right.questionId]?.nextReviewAt ?? "",
       );
       return leftAt - rightAt;
-    })
-    .map(cloneTask);
+    });
+  return ordered.map(cloneTask);
 }
 
 function hasPendingRoutineOvertimeReview() {
@@ -2042,7 +2042,7 @@ function addTasksToActiveSession(tasks, { unseen = true } = {}) {
   }
   state.queue = enqueueUniqueTasks(
     state.queue,
-    added,
+    state.shuffleEnabled ? shuffleTasks(added) : added,
     state.currentTask ? [state.currentTask.questionId] : [],
   );
 }
@@ -2058,7 +2058,7 @@ function ensureUnseenTasksQueued() {
     (task) =>
       state.unseenQuestionIds.has(task.questionId) && !queuedIds.has(task.questionId),
   );
-  state.queue.push(...missing.map(cloneTask));
+  state.queue.push(...(state.shuffleEnabled ? shuffleTasks(missing) : missing).map(cloneTask));
 }
 
 function enqueueDueSessionTasks(now = new Date()) {
@@ -2077,13 +2077,15 @@ function enqueueDueSessionTasks(now = new Date()) {
         !queuedIds.has(task.questionId) &&
         isQuestionDue(state.progress, task.questionId, now)
       );
-    })
-    .sort((left, right) => {
+    });
+  const orderedDueTasks = state.shuffleEnabled
+    ? shuffleTasks(dueTasks)
+    : dueTasks.sort((left, right) => {
       const leftAt = Date.parse(state.progress.questions[left.questionId]?.nextReviewAt ?? "");
       const rightAt = Date.parse(state.progress.questions[right.questionId]?.nextReviewAt ?? "");
       return leftAt - rightAt;
     });
-  state.queue = [...dueTasks.map(cloneTask), ...state.queue];
+  state.queue = [...orderedDueTasks.map(cloneTask), ...state.queue];
 }
 
 function enqueuePendingRetryTasksImmediately() {
@@ -2095,9 +2097,10 @@ function enqueuePendingRetryTasksImmediately() {
   ) {
     return;
   }
+  const retries = state.sessionTasks.filter(task => state.retryQuestionIds.has(task.questionId));
   state.queue = enqueueRetryTasksImmediately(
     state.queue,
-    state.sessionTasks,
+    state.shuffleEnabled ? shuffleTasks(retries) : retries,
     state.retryQuestionIds,
     state.currentTask ? [state.currentTask.questionId] : [],
   );
@@ -6340,6 +6343,9 @@ async function resumeStudy() {
     elements.cloudStatus.textContent = `開始設定を共有できませんでした。${error.message}`;
     return;
   }
+  // 開始画面の選択を優先し、古い途中記録の設定でチェックを戻さない。
+  const shuffleChanged = savedSession.shuffleEnabled !== elements.setupShuffle.checked;
+  savedSession.shuffleEnabled = elements.setupShuffle.checked;
   savedSession.excludeTimeQuestions = selectedTimeQuestionExclusion();
   savedSession.sequentialEnabled = selectedSequentialStudy();
   savedSession.deckOrder = setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
@@ -6384,6 +6390,17 @@ async function resumeStudy() {
   enqueueDueSessionTasks();
   ensureUnseenTasksQueued();
   enqueuePendingRetryTasksImmediately();
+  if (shuffleChanged && !state.sequentialEnabled) {
+    if (state.shuffleEnabled) {
+      state.queue = shuffleTasks(state.queue);
+    } else {
+      const sourceOrder = new Map(createQuestionQueue(
+        state.terms, state.progress, state.subject.masteryTarget, state.selectedStage,
+      ).map((task, index) => [task.questionId, index]));
+      state.queue.sort((left, right) =>
+        (sourceOrder.get(left.questionId) ?? Infinity) - (sourceOrder.get(right.questionId) ?? Infinity));
+    }
+  }
   if (!state.currentTask) {
     state.currentTask = state.queue.shift() ?? null;
   }

@@ -161,6 +161,8 @@ const expectedEnglishSpecs = new Map([
   ],
   ["deck-4", { number: 4, version: "english-vocabulary-deck-4-v1", contentVersion: "74e7eb0494be",
     datasetLabel: "英単語段階別デッキ｜Deck 4｜共通テスト標準500語", difficultyLabel: "Deck 4｜共通テスト標準", termCount: 500, questionCount: 1500 }],
+  ["deck-5", { number: 5, version: "english-vocabulary-deck-5-v1", contentVersion: "2e8eba3f11f8",
+    datasetLabel: "英単語段階別デッキ｜Deck 5｜共通テスト完成・国公立標準500語", difficultyLabel: "Deck 5｜共通テスト完成・国公立標準", termCount: 500, questionCount: 1500 }],
 ]);
 
 const expectedJapaneseSpec = {
@@ -839,18 +841,18 @@ const sourceEnglishDeckById = new Map(
   sourceEnglishDecks.map((deck) => [deck.id, deck]),
 );
 if (
-  sourceEnglishDecks.length !== 4 ||
+  sourceEnglishDecks.length !== 5 ||
   sourceEnglishDecks.some((deck) => !expectedEnglishSpecs.has(deck.id)) ||
   !englishSubjectEntry ||
   englishSubjectEntry.defaultDeckId !== "deck-1" ||
-  englishSubjectEntry.datasetLabel !== "英単語段階別デッキ｜Deck 1〜4" ||
-  englishSubjectEntry.termCount !== 2000 ||
-  englishSubjectEntry.questionCount !== 6000 ||
-  englishSubjectEntry.decks.length !== 4 ||
+  englishSubjectEntry.datasetLabel !== "英単語段階別デッキ｜Deck 1〜5" ||
+  englishSubjectEntry.termCount !== 2500 ||
+  englishSubjectEntry.questionCount !== 7500 ||
+  englishSubjectEntry.decks.length !== 5 ||
   englishSubjectEntry.decks.map((deck) => deck.id).join(",") !==
-    "deck-1,deck-2,deck-3,deck-4"
+    "deck-1,deck-2,deck-3,deck-4,deck-5"
 ) {
-  throw new Error("英単語Deck 1〜4の科目一覧が正しくありません。");
+  throw new Error("英単語Deck 1〜5の科目一覧が正しくありません。");
 }
 const generatedEnglishTerms = [];
 const generatedEnglishQuestions = [];
@@ -906,9 +908,9 @@ for (const englishDeckEntry of englishSubjectEntry.decks) {
 }
 if (
   JSON.stringify(generatedEnglishTerms) !== JSON.stringify(expectedEnglishTerms) ||
-  new Set(generatedEnglishTerms.map((term) => term.id)).size !== 2000 ||
-  new Set(generatedEnglishTerms.map((term) => term.term)).size !== 2000 ||
-  new Set(generatedEnglishQuestions.map((question) => question.id)).size !== 6000 ||
+  new Set(generatedEnglishTerms.map((term) => term.id)).size !== 2500 ||
+  new Set(generatedEnglishTerms.map((term) => term.term)).size !== 2500 ||
+  new Set(generatedEnglishQuestions.map((question) => question.id)).size !== 7500 ||
   generatedEnglishTerms.some(
     (term) =>
       term.stages.beginner[0].acceptedAnswers.includes(

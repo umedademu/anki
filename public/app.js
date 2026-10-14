@@ -1,15 +1,15 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.399";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.400";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.399";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.399";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.399";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.399";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.399";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.399";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.399";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.399";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.399";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.400";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.400";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.400";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.400";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.400";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.400";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.400";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.400";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.400";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -67,7 +67,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.399";
+} from "./original-session.js?v=0.400";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -77,7 +77,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.399";
+} from "./speech.js?v=0.400";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -93,7 +93,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.399";
+} from "./deck-selection.js?v=0.400";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -260,7 +260,7 @@ const elements = {
   mindsetPosition: document.querySelector("#mindset-position"),
   mindsetStudyTime: document.querySelector("#mindset-study-time"),
   mindsetText: document.querySelector("#mindset-text"),
-  mindsetPlaybackStatus: document.querySelector("#mindset-playback-status"),
+  mindsetErrorMessage: document.querySelector("#mindset-error-message"),
   mindsetSpeechRate: document.querySelector("#mindset-speech-rate"),
   mindsetSpeechRateOutput: document.querySelector("#mindset-speech-rate-output"),
   mindsetIntervalSeconds: document.querySelector("#mindset-interval-seconds"),
@@ -446,7 +446,7 @@ const state = {
   mindsetSaving: false,
   mindsetTimer: null,
   mindsetRunId: 0,
-  mindsetMessage: "",
+  mindsetErrorMessage: "",
   mindsetStudySeconds: 0,
   mindsetScreenStudySeconds: 0,
 };
@@ -2584,7 +2584,7 @@ function stopMindsetPlayback({ reset = false } = {}) {
   speechController.stop();
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
-  state.mindsetMessage = "";
+  state.mindsetErrorMessage = "";
   if (reset) {
     state.mindsetOrder = [];
     state.mindsetIndex = 0;
@@ -2676,7 +2676,7 @@ async function completeRoutineMindset(runId) {
   );
   if (!change.changed) return false;
   state.mindsetSaving = true;
-  state.mindsetMessage = "学習の進み方をCloudflareへ保存しています。";
+  state.mindsetErrorMessage = "";
   renderMindsetPlayer();
   try {
     // 再生位置とメニューの消化数を同じ通信で保存してから次へ進む。
@@ -2704,7 +2704,7 @@ async function completeRoutineMindset(runId) {
   } catch (error) {
     if (runId === state.mindsetRunId) {
       state.mindsetPaused = true;
-      state.mindsetMessage =
+      state.mindsetErrorMessage =
         `学習の進み方を保存できませんでした。${error.message} 「次へ」で保存をやり直してください。`;
     }
     return false;
@@ -2733,10 +2733,8 @@ function renderMindsetPlayer() {
       `｜メニュー ${routineItem.completedCount} / ${targetWords}件`;
   }
   elements.mindsetText.textContent = mindsetContent(item);
-  elements.mindsetPlaybackStatus.textContent = state.mindsetMessage ||
-    (state.mindsetPaused
-      ? "再生ボタンを押すと、音声で順番に読み上げます。"
-      : "読み上げています。");
+  elements.mindsetErrorMessage.textContent = state.mindsetErrorMessage;
+  elements.mindsetErrorMessage.hidden = !state.mindsetErrorMessage;
   elements.mindsetToggle.textContent = state.mindsetPaused
     ? state.mindsetSpeechComplete
       ? "次を再生"
@@ -2765,9 +2763,6 @@ function scheduleNextMindset(runId) {
   const seconds = normalizeListeningQuestionIntervalSeconds(
     state.listeningQuestionIntervalSeconds,
   );
-  state.mindsetMessage = seconds > 0
-    ? `${seconds}秒後に次の言葉へ進みます。`
-    : "次の言葉へ進みます。";
   renderMindsetPlayer();
   state.mindsetTimer = window.setTimeout(() => {
     state.mindsetTimer = null;
@@ -2787,7 +2782,7 @@ function speakCurrentMindset() {
   const content = mindsetContent(item);
   if (!item || !content || !speechController.supported) {
     state.mindsetPaused = true;
-    state.mindsetMessage = "この端末では音声を再生できません。";
+    state.mindsetErrorMessage = "この端末では音声を再生できません。";
     renderMindsetPlayer();
     return;
   }
@@ -2797,7 +2792,7 @@ function speakCurrentMindset() {
   const runId = ++state.mindsetRunId;
   state.mindsetPaused = false;
   state.mindsetSpeechComplete = false;
-  state.mindsetMessage = "読み上げています。";
+  state.mindsetErrorMessage = "";
   renderMindsetPlayer();
   const nextItem = state.mindsetOrder[state.mindsetIndex + 1];
   if (nextItem) {
@@ -2829,14 +2824,14 @@ function speakCurrentMindset() {
         if (runId !== state.mindsetRunId) return;
         state.mindsetPaused = true;
         state.mindsetSpeechComplete = false;
-        state.mindsetMessage = `${error.message} 再生ボタンを押してやり直してください。`;
+        state.mindsetErrorMessage = `${error.message} 再生ボタンを押してやり直してください。`;
         renderMindsetPlayer();
       },
     },
   );
   if (!started) {
     state.mindsetPaused = true;
-    state.mindsetMessage = "音声を開始できませんでした。再生ボタンを押してやり直してください。";
+    state.mindsetErrorMessage = "音声を開始できませんでした。再生ボタンを押してやり直してください。";
     renderMindsetPlayer();
   }
 }
@@ -2864,7 +2859,7 @@ async function moveMindset(direction, { autoplay = false } = {}) {
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetItemCompleted = false;
-  state.mindsetMessage = "";
+  state.mindsetErrorMessage = "";
   renderMindsetPlayer();
   if (autoplay) {
     speakCurrentMindset();
@@ -2888,7 +2883,7 @@ function toggleMindsetPlayback() {
       speechController.stop();
       state.mindsetSpeechComplete = false;
     }
-    state.mindsetMessage = "一時停止中です。";
+    state.mindsetErrorMessage = "";
     renderMindsetPlayer();
     return;
   }
@@ -2898,7 +2893,7 @@ function toggleMindsetPlayback() {
   }
   if (speechController.paused) {
     state.mindsetPaused = false;
-    state.mindsetMessage = "読み上げています。";
+    state.mindsetErrorMessage = "";
     if (speechController.resume()) {
       renderMindsetPlayer();
       return;
@@ -2938,7 +2933,7 @@ async function saveMindsetPlaybackSettings({ restartSpeech = false } = {}) {
     });
     saveSpeechSettings(saved);
   } catch (error) {
-    state.mindsetMessage = `設定をCloudflareへ保存できませんでした。${error.message}`;
+    state.mindsetErrorMessage = `設定をCloudflareへ保存できませんでした。${error.message}`;
     renderMindsetPlayer();
   }
 }
@@ -2960,10 +2955,8 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
   state.mindsetPaused = true;
   state.mindsetSpeechComplete = false;
   state.mindsetItemCompleted = false;
-  state.mindsetMessage = speechController.supported
-    ? resume.resumed
-      ? "前回の続きから聞くか、はじめから聞くかを選んでください。"
-      : "再生ボタンを押すと、音声で順番に読み上げます。"
+  state.mindsetErrorMessage = speechController.supported
+    ? ""
     : "この端末では音声を再生できません。";
   elements.mindsetResume.textContent =
     `前回の続きから（${resume.index + 1}件目）`;
@@ -7021,7 +7014,7 @@ elements.mindsetSkip.addEventListener("click", () => {
   void skipCurrentRoutineItem({
     launchNext: true,
     showError(message) {
-      state.mindsetMessage = message;
+      state.mindsetErrorMessage = message;
       renderMindsetPlayer();
     },
   });

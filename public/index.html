@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.399"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.399" />
-    <link rel="stylesheet" href="/theme.css?v=0.399" />
+    <script src="/theme.js?v=0.400"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.400" />
+    <link rel="stylesheet" href="/theme.css?v=0.400" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.399" type="module"></script>
+    <script src="/app.js?v=0.400" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.399</span>
+        <span class="app-version">v0.400</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -34,7 +34,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.399｜科目別学習</p>
+        <p class="eyebrow">v0.400｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -378,9 +378,6 @@
             </p>
           </div>
           <p class="mindset-text" id="mindset-text"></p>
-          <p class="mindset-playback-status" id="mindset-playback-status" role="status">
-            再生ボタンを押すと、音声で順番に読み上げます。
-          </p>
         </article>
 
         <div class="mindset-settings" aria-label="マインドセットの再生設定">
@@ -437,6 +434,7 @@
             次へ
           </button>
         </nav>
+        <p class="mindset-error-message" id="mindset-error-message" role="alert" hidden></p>
       </section>
 
       <section

@@ -180,6 +180,8 @@ try {
   const waitForPlayback = (calls) => page.waitForFunction((expected) => window.__testSpeech.calls.length === expected, calls);
 
   await begin();
+  assert.equal(await page.locator("#mindset-playback-status").count(), 0);
+  assert.equal(await page.locator("#mindset-error-message").isVisible(), false);
   await page.locator("#mindset-toggle").click();
   await complete();
   await waitForPlayback(2);
@@ -205,11 +207,12 @@ try {
   await complete();
   assert.equal(count(), 1, "保存失敗で件数を進めない");
   assert.equal(await page.locator("#completion-card").isVisible(), false);
-  assert.match(await page.locator("#mindset-playback-status").textContent(), /保存できませんでした/);
+  assert.match(await page.locator("#mindset-error-message").textContent(), /保存できませんでした/);
   failCompletionSave = false;
   await page.locator("#mindset-next").click();
   await shown("completion-card");
   assert.equal(count(), 2, "同じ言葉の保存を再試行しても一度だけ加算する");
+  assert.equal(await page.locator("#mindset-error-message").isVisible(), false);
   assert.equal(settings.setupPreferences.mindsetResume.lastCompletedItemId, terms[1].id);
 
   await begin({ target: 3, interval: 60 });

@@ -1,15 +1,15 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.398";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.399";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.398";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.398";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.398";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.398";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.398";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.398";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.398";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.398";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.398";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.399";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.399";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.399";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.399";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.399";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.399";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.399";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.399";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.399";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -67,7 +67,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.398";
+} from "./original-session.js?v=0.399";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -77,7 +77,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.398";
+} from "./speech.js?v=0.399";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -93,7 +93,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.398";
+} from "./deck-selection.js?v=0.399";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -270,6 +270,7 @@ const elements = {
   mindsetResume: document.querySelector("#mindset-resume"),
   mindsetStartOver: document.querySelector("#mindset-start-over"),
   mindsetNext: document.querySelector("#mindset-next"),
+  mindsetEdit: document.querySelector("#mindset-edit"),
   mindsetHome: document.querySelector("#mindset-home"),
   mindsetSkip: document.querySelector("#mindset-skip"),
   mindsetCompletionPanel: document.querySelector("#mindset-completion-panel"),
@@ -2745,6 +2746,7 @@ function renderMindsetPlayer() {
   elements.mindsetToggle.disabled = disabled;
   elements.mindsetPrevious.disabled = !item || state.mindsetSaving;
   elements.mindsetNext.disabled = !item || state.mindsetSaving;
+  elements.mindsetEdit.disabled = state.mindsetSaving || deckSelectionUpdating;
   elements.mindsetSkip.classList.toggle("is-hidden", !routineItem);
   elements.mindsetSkip.disabled = state.mindsetSaving || routineSkipSaving;
   elements.mindsetPlayerPanel.classList.toggle(
@@ -6948,16 +6950,22 @@ async function start() {
   }
 }
 
-document.getElementById("edit-questions").addEventListener("click", async (event) => {
+async function openQuestionEditor(event) {
   event.preventDefault();
-  if (deckSelectionUpdating || !state.activeSubjectId || isOriginalSession()) return;
+  if (deckSelectionUpdating || state.mindsetSaving || !state.activeSubjectId || isOriginalSession()) return;
   stopListeningSequence();
+  if (isMindsetMode()) {
+    stopMindsetPlayback();
+    stopMindsetStudyClock();
+  }
   const params = new URLSearchParams({ subject: state.activeSubjectId });
   for (const deckId of state.activeDeckIds) params.append("deck", deckId);
   if (state.inRoutine) params.set("routine", "1");
-  try { await queueSetupPreferenceSave(); } catch { /* 編集画面側で接続状況を案内する。 */ }
+  try { await (isMindsetMode() ? setupPreferenceSave : queueSetupPreferenceSave()); } catch { /* 編集画面側で接続状況を案内する。 */ }
   window.location.assign(`/question-editor.html?${params}`);
-});
+}
+document.getElementById("edit-questions").addEventListener("click", openQuestionEditor);
+elements.mindsetEdit.addEventListener("click", openQuestionEditor);
 
 elements.subjectOptions.addEventListener("click", (event) => {
   if (event.target.closest("button[data-original-study]")) {

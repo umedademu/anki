@@ -32,3 +32,33 @@ export function editorFixture() {
   return { objects, dbCalls, bucket, env: { SYNC_TOKEN: "editor-test-key", ALLOWED_ORIGIN: "http://127.0.0.1:4173", SPEECH_CACHE: bucket,
     DB: { prepare(sql) { return { bind(...args) { return { async run() { dbCalls.push({ sql, args }); return { success: true }; } }; } }; } } } };
 }
+
+// 本番の言葉を変更せず、音声専用の項目を共通の保存処理で確認する。
+export function mindsetEditorFixture(counts = [2, 1]) {
+  const fixture = editorFixture();
+  let offset = 0;
+  const decks = counts.map((count, index) => {
+    const number = index + 1, id = `deck-${number}`, indexPath = `subjects/mindset/${id}/index.json`, chunkPath = `subjects/mindset/${id}/chunk.json`;
+    const datasetLabel = `マインドセット集｜Deck ${number}`;
+    const terms = Array.from({ length: count }, () => {
+      const rank = ++offset, content = `確認用の言葉${rank}`;
+      return { id: `MS-${String(rank).padStart(6, "0")}`, datasetLabel, difficultyLabel: datasetLabel, importanceRank: rank,
+        term: content, content, category: "", subunit: "", reading: "", aliases: [], prerequisiteIds: [], era: "",
+        geography: { macroRegion: "", regionDetail: "", scale: "", splitMacroRegion: false },
+        chronology: { displayPeriod: "", sortYear: rank }, referenceYear: "", speechReadings: {}, integratedAsExplanation: false,
+        stages: { beginner: [], reverse: [], integrated: [] }, source: { name: "マインドセット集", url: "" } };
+    });
+    const entry = { id, number, indexPath, version: `mindset-deck-${number}-v1`, datasetLabel, difficultyLabel: datasetLabel, termCount: count, questionCount: 0 };
+    fixture.objects.set(indexPath, JSON.stringify({ ...entry, schemaVersion: 3, id: "mindset", deckId: id, title: "マインドセット", learningType: "mindset",
+      termUnitLabel: "件", masteryTarget: 2, availableStages: [], stageLabels: {}, filterLabels: {}, contentVersion: "initial",
+      questionCounts: { beginner: 0, reverse: 0, integrated: 0 }, chunks: count ? [{ number: 1, path: chunkPath, count }] : [] }));
+    fixture.objects.set(chunkPath, JSON.stringify({ schemaVersion: 3, subjectId: "mindset", deckId: id, chunkNumber: 1, terms }));
+    return entry;
+  });
+  const catalog = JSON.parse(fixture.objects.get("index.json"));
+  catalog.subjects.push({ id: "mindset", title: "マインドセット", learningType: "mindset", termUnitLabel: "件", defaultDeckId: "deck-1",
+    indexPath: decks[0].indexPath, decks, termCount: offset, questionCount: 0 });
+  fixture.objects.set("index.json", JSON.stringify(catalog));
+  fixture.objects.set("term-images.json", JSON.stringify({ schemaVersion: 2, assets: [], assignments: [] }));
+  return fixture;
+}

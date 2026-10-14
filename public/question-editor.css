@@ -30,6 +30,7 @@
 #question-table .answer-column { width: 270px; }
 #question-table .explanation-column { width: 330px; }
 #question-table .category-column { width: 155px; }
+#question-table .content-column { width: 510px; }
 #question-table .detail-column { width: 210px; }
 #question-table .action-column { width: 74px; }
 #question-table:not(.show-details) .detail-column { display: none; }

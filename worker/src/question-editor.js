@@ -27,7 +27,7 @@ async function readDeck(bucket, entry) {
 
 function findSubject(catalog, id) {
   const subject = catalog.subjects.find((item) => item.id === id);
-  if (!subject || subject.learningType === "mindset") throw new Error("編集できる科目を選択してください。");
+  if (!subject) throw new Error("編集できる科目を選択してください。");
   return subject;
 }
 
@@ -42,7 +42,12 @@ export async function loadEditableQuestion(env, subjectId, deckId, questionId) {
   const {value: catalog, etag: revision} = await readObject(env.SPEECH_CACHE, "index.json");
   const subject = findSubject(catalog, subjectId), entry = entries(subject).find(deck => deck.id === deckId);
   if (!entry) throw new Error("対象のデッキが見つかりません。");
-  const deck = await readDeck(env.SPEECH_CACHE, entry), found = locateQuestion(deck, questionId);
+  const deck = await readDeck(env.SPEECH_CACHE, entry);
+  if (subject.learningType === "mindset") {
+    const term = locateMindset(deck, questionId);
+    return { revision, content: term.content ?? term.term, category: term.category ?? "" };
+  }
+  const found = locateQuestion(deck, questionId);
   return {revision, prompt: usesStagedClassicalChineseMeaning(subjectId, found.question) ? found.term.term : found.question.prompt,
     answer: found.question.answer, explanation: getQuestionExplanation(found.term, found.question)};
 }
@@ -72,6 +77,51 @@ function normalizeFields(input, deck) {
 
 function questionCount(term) {
   return stages.reduce((total, stage) => total + (term.stages[stage]?.length ?? 0), 0);
+}
+
+function locateMindset(deck, id) {
+  const term = deck.terms.find((item) => item.id === id);
+  if (!term) throw new Error("対象の言葉が見つかりません。再読込してください。");
+  return term;
+}
+
+function editMindset(source, destination, input, changed) {
+  let term = input.action === "create" ? null : locateMindset(source, input.questionId);
+  if (input.action === "delete") {
+    source.terms = source.terms.filter((item) => item !== term);
+    return { questionId: term.id, editedTerm: null };
+  }
+  if (input.action === "field") {
+    if (!["content", "category"].includes(input.field) || source !== destination) throw new Error("編集する項目が正しくありません。");
+    term[input.field] = field(input.value, input.field === "content" ? "言葉の本文" : "分類", input.field === "content", input.field === "category" ? 500 : 20000);
+    if (input.field === "content") term.term = term.content;
+    term.editorModified = true;
+    return { questionId: term.id, editedTerm: term };
+  }
+  const content = field(input.fields?.content, "言葉の本文", true);
+  const category = field(input.fields?.category ?? "", "分類", false, 500);
+  if (!term) {
+    term = {
+      id: `MS-EDIT-${crypto.randomUUID()}`, importanceRank: destination.terms.length + 1,
+      datasetLabel: destination.index.datasetLabel, difficultyLabel: destination.index.difficultyLabel,
+      term: content, content, category, subunit: "", reading: "", aliases: [], prerequisiteIds: [], era: "",
+      geography: { macroRegion: "", regionDetail: "", scale: "", splitMacroRegion: false },
+      chronology: { displayPeriod: "", sortYear: destination.terms.length + 1 }, referenceYear: "", speechReadings: {},
+      integratedAsExplanation: false, stages: { beginner: [], reverse: [], integrated: [] },
+      source: { name: "マインドセット集", url: "" }, editorCreatedAt: Date.now(),
+    };
+    destination.terms.push(term);
+    changed.add(destination);
+  } else if (source !== destination) {
+    if (destination.terms.some((item) => item.id === term.id)) throw new Error("移動先に同じ言葉の番号が存在します。");
+    source.terms = source.terms.filter((item) => item !== term);
+    destination.terms.push(term);
+    term.datasetLabel = destination.index.datasetLabel;
+    term.difficultyLabel = destination.index.difficultyLabel;
+    changed.add(destination);
+  }
+  Object.assign(term, { content, term: content, category, editorModified: true });
+  return { questionId: term.id, editedTerm: term };
 }
 
 function locateQuestion(deck, id) {
@@ -137,7 +187,9 @@ export async function mutateEditableSubject(env, input) {
   if (input.revision !== etag) throw conflict();
   if (input.action === "reorder") {
     const decks = await Promise.all(entries(subject).map(entry => readDeck(bucket, entry)));
-    const rows = decks.flatMap(deck => deck.terms.flatMap(term => Object.values(term.stages).flat().map(question => ({ questionId: question.id, question }))));
+    const rows = decks.flatMap(deck => deck.terms.flatMap(term => subject.learningType === "mindset"
+      ? [{ questionId: term.id, question: term }]
+      : Object.values(term.stages).flat().map(question => ({ questionId: question.id, question }))));
     const ids = orderedEditorRows(rows, subject.editorQuestionOrder).map(row => row.questionId);
     if (new Set(ids).size !== ids.length) throw new Error("問題番号が重複しているため並べ替えできません。");
     const editorQuestionOrder = moveEditorQuestion(ids, input.questionId, input.targetQuestionId, input.placement);
@@ -169,7 +221,9 @@ export async function mutateEditableSubject(env, input) {
   if (source.index.learningType !== destination.index.learningType) throw new Error("学習方式の異なるデッキには移動できません。");
   const changed = new Set([source]);
   let questionId = input.questionId, editedTerm = null;
-  if (input.action === "field") {
+  if (subject.learningType === "mindset") {
+    ({ questionId, editedTerm } = editMindset(source, destination, input, changed));
+  } else if (input.action === "field") {
     if (!["prompt", "answer", "explanation"].includes(input.field) || source !== destination) throw new Error("編集する項目が正しくありません。");
     const value = field(input.value, "編集内容", input.field !== "explanation");
     const found = locateQuestion(source, questionId);

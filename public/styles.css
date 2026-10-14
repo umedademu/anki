@@ -582,6 +582,7 @@ body.is-study-menu-open {
   font-weight: 700;
   line-height: 1.7;
   letter-spacing: 0.02em;
+  white-space: pre-wrap;
 }
 
 .mindset-playback-status {

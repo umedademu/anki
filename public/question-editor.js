@@ -1,4 +1,4 @@
-import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.398";
+import { orderedEditorRows, createEditorRowDrag } from "./editor-row-order.js?v=0.399";
 import { cloudRequest } from "./cloud-progress.js";
 import { getQuestionExplanation } from "./learning-engine.js";
 
@@ -8,8 +8,8 @@ const subjectId = params.get("subject") ?? "";
 const initialDecks = params.getAll("deck");
 const pageSize = 30;
 const saveDelay = 700;
-const fields = ["prompt", "answer", "explanation", "category", "term", "stage", "macroRegion", "regionDetail", "acceptedAnswers", "answerNote", "yearMnemonic"];
-const labels = { targetDeckId: "デッキ", prompt: "問題文", answer: "回答", explanation: "解説", category: "分類", term: "用語・見出し", stage: "問題形式", macroRegion: "大分類", regionDetail: "小分類", acceptedAnswers: "別の正答", answerNote: "回答の補足", yearMnemonic: "語呂合わせ" };
+let fields = ["prompt", "answer", "explanation", "category", "term", "stage", "macroRegion", "regionDetail", "acceptedAnswers", "answerNote", "yearMnemonic"];
+const labels = { targetDeckId: "デッキ", content: "言葉の本文", prompt: "問題文", answer: "回答", explanation: "解説", category: "分類", term: "用語・見出し", stage: "問題形式", macroRegion: "大分類", regionDetail: "小分類", acceptedAnswers: "別の正答", answerNote: "回答の補足", yearMnemonic: "語呂合わせ" };
 const sharedFields = new Set(["term", "category", "macroRegion", "regionDetail"]);
 const state = { data: null, rows: [], page: 0, loading: true, running: null, operation: null, timer: null, error: null, paused: false, undoId: null, message: "", allowUnload: false };
 const returnParams = new URLSearchParams({ subject: subjectId });
@@ -22,20 +22,44 @@ const pending = (row) => row.isNew || row.edits.size > 0;
 const hasPending = () => state.rows.some(pending) || Boolean(state.running || state.operation);
 const getDeck = (id) => state.data?.decks.find((deck) => deck.entry.id === id);
 const canSave = (row) => pending(row) && !rowProblem(row) && !row.composing.size && !row.removing;
+const isMindsetEditor = () => state.data?.subject.learningType === "mindset";
+
+function configureEditor() {
+  if (!isMindsetEditor()) return;
+  fields = ["content", "category"];
+  document.body.classList.add("mindset-editor");
+  $("editor-title").textContent = "言葉を編集";
+  $("return-to-study").textContent = "再生画面へ戻る";
+  $("editor-search").placeholder = "言葉の本文で検索";
+  $("show-details").closest("label").hidden = true;
+  document.querySelector(".editor-toolbar").setAttribute("aria-label", "表示する言葉");
+  $("editor-table-scroll").setAttribute("aria-label", "言葉の編集表。横にスクロールできます。");
+  $("question-table").querySelector("caption").textContent = "言葉を１行ずつ表示します。各セルを編集すると自動保存します。";
+  $("editor-empty").textContent = "該当する言葉はありません。絞り込みを変更するか、行を追加してください。";
+  document.querySelector(".editor-help").textContent = "表は左右にスクロールできます。新しい行はデッキと言葉の本文がそろうと保存します。保存した本文は次に再生画面を開いたときから読み上げに反映されます。";
+  const header = $("question-table").querySelector("thead tr");
+  header.replaceChildren(...[["number", "行"], ["deck", "デッキ"], ["content", "言葉の本文"], ["category", "分類"], ["action", "操作"]].map(([key, text]) => {
+    const cell = document.createElement("th"); cell.scope = "col"; cell.className = `${key}-column`; cell.textContent = text;
+    if (key === "content") { const required = document.createElement("small"); required.textContent = " 必須"; cell.append(required); }
+    return cell;
+  }));
+}
 
 function rowProblem(row) {
   if (!valueOf(row, "targetDeckId")) return "デッキを選択";
-  if (!valueOf(row, "prompt").trim() || !valueOf(row, "answer").trim()) return "問題文・回答を入力";
+  if (isMindsetEditor()) {
+    if (!valueOf(row, "content").trim()) return "言葉の本文を入力";
+  } else if (!valueOf(row, "prompt").trim() || !valueOf(row, "answer").trim()) return "問題文・回答を入力";
   return "";
 }
 
 function updateStatus() {
   const count = state.rows.filter(pending).length;
   const incomplete = state.rows.some((row) => pending(row) && rowProblem(row));
-  $("editor-status").textContent = state.loading ? "問題を読み込んでいます。" : state.error
+  $("editor-status").textContent = state.loading ? "学習データを読み込んでいます。" : state.error
     ? `${state.error.message} 入力内容はこの画面に残っています。`
     : state.running ? `自動保存中…${count ? `（未保存 ${count}行）` : ""}`
-    : count ? `未保存 ${count}行。${incomplete ? "デッキ・問題文・回答がそろった行から自動保存します。" : "順に自動保存します。"}`
+    : count ? `未保存 ${count}行。${incomplete ? (isMindsetEditor() ? "デッキと言葉の本文がそろった行から自動保存します。" : "デッキ・問題文・回答がそろった行から自動保存します。") : "順に自動保存します。"}`
     : state.message || "すべて保存済みです。セルを直接編集できます。";
   $("editor-status").parentElement.classList.toggle("is-error", Boolean(state.error));
   $("retry-save").hidden = !state.error || !state.operation || state.error.status === 409;
@@ -53,12 +77,13 @@ function updateRowStatus(row) {
   row.element.querySelector(".row-delete").disabled = Boolean(state.loading || state.running || state.paused || state.error);
   for (const input of row.element.querySelectorAll("[data-field]")) {
     input.disabled = state.loading;
-    const required = ["prompt", "answer", "targetDeckId"].includes(input.dataset.field);
+    const required = (isMindsetEditor() ? ["content", "targetDeckId"] : ["prompt", "answer", "targetDeckId"]).includes(input.dataset.field);
     input.setAttribute("aria-invalid", String(required && pending(row) && !valueOf(row, input.dataset.field).trim()));
   }
 }
 
 function readFields(deck, term, question, stage) {
+  if (isMindsetEditor()) return { targetDeckId: deck.entry.id, content: term.content ?? term.term ?? "", category: term.category ?? "" };
   return { targetDeckId: deck.entry.id, prompt: question.prompt ?? "", answer: question.answer ?? "", explanation: question.explanation ?? "",
     category: term.category ?? "", term: term.term ?? "", stage, macroRegion: term.geography?.macroRegion ?? "", regionDetail: term.geography?.regionDetail ?? "",
     acceptedAnswers: (question.acceptedAnswers ?? []).join("\n"), answerNote: question.answerNote ?? "", yearMnemonic: question.yearMnemonic ?? "" };
@@ -66,10 +91,13 @@ function readFields(deck, term, question, stage) {
 
 // 保存結果は項目ごとに取り込み、送信後に入力された内容と入力位置を保つ。
 function mergeData(data, reorder = false) {
+  const first = !state.data;
   state.data = data;
+  if (first) configureEditor();
   const existing = new Map(state.rows.filter((row) => row.questionId).map((row) => [row.questionId, row]));
   const found = new Set();
-  for (const deck of data.decks) for (const term of deck.terms) for (const [stage, questions] of Object.entries(term.stages)) for (const question of questions) {
+  for (const deck of data.decks) for (const term of deck.terms) for (const [stage, question] of (isMindsetEditor()
+    ? [["", term]] : Object.entries(term.stages).flatMap(([stage, questions]) => questions.map(question => [stage, question])))) {
     let row = existing.get(question.id);
     if (!row) {
       row = { key: question.id, edits: new Map(), sequence: 0, composing: new Set(), readyAt: 0 };
@@ -80,8 +108,8 @@ function mergeData(data, reorder = false) {
   }
   state.rows = state.rows.filter((row) => row.isNew || found.has(row) || row.edits.size);
   if (reorder) state.rows = [...state.rows.filter(row => !found.has(row)), ...orderedEditorRows([...found], data.subject.editorQuestionOrder)];
-  $("editor-subject").textContent = `${data.subject.title}｜問題の管理`;
-  document.title = `Anki | ${data.subject.title}の問題を編集`;
+  $("editor-subject").textContent = `${data.subject.title}｜${isMindsetEditor() ? "言葉の管理" : "問題の管理"}`;
+  document.title = `Anki | ${data.subject.title}の${isMindsetEditor() ? "言葉" : "問題"}を編集`;
   for (const row of state.rows) syncCells(row);
 }
 
@@ -104,7 +132,7 @@ function renderTable() {
   const ids = new Set(activeDeckIds()), category = $("editor-category").value;
   const query = $("editor-search").value.trim().normalize("NFKC").toLocaleLowerCase();
   const matches = state.rows.filter((row) => row.isNew || (ids.has(valueOf(row, "targetDeckId")) && (!category || valueOf(row, "category") === category)
-    && (!query || ["prompt", "answer", "term", "explanation"].map((field) => valueOf(row, field)).join("\n").normalize("NFKC").toLocaleLowerCase().includes(query))));
+    && (!query || (isMindsetEditor() ? ["content"] : ["prompt", "answer", "term", "explanation"]).map((field) => valueOf(row, field)).join("\n").normalize("NFKC").toLocaleLowerCase().includes(query))));
   const pages = Math.max(1, Math.ceil(matches.length / pageSize));
   state.page = Math.min(Math.max(0, state.page), pages - 1);
   const visible = matches.slice(state.page * pageSize, (state.page + 1) * pageSize);
@@ -143,7 +171,7 @@ function createRow(row) {
   tr.append(number);
   for (const field of ["targetDeckId", ...fields]) {
     const cell = document.createElement("td");
-    cell.className = field === "targetDeckId" ? "deck-column" : ["prompt", "answer", "explanation", "category"].includes(field) ? `${field}-column` : "detail-column";
+    cell.className = field === "targetDeckId" ? "deck-column" : ["content", "prompt", "answer", "explanation", "category"].includes(field) ? `${field}-column` : "detail-column";
     const input = document.createElement(field === "stage" || field === "targetDeckId" ? "select" : "textarea");
     input.dataset.field = field; input.setAttribute("aria-label", labels[field]);
     if (field === "targetDeckId") input.replaceChildren(option("", "デッキを選択"), ...state.data.decks.map((deck) => option(deck.entry.id, deckName(deck))));
@@ -172,7 +200,7 @@ function syncCells(row) {
     if (field === "stage") stageOptions(row, input);
     if (input.value !== valueOf(row, field)) input.value = valueOf(row, field);
     if (field === "explanation") input.title = !valueOf(row, field) && row.term ? `空欄の場合の共通解説：${getQuestionExplanation(row.term, row.question) || "なし"}` : "";
-    if (sharedFields.has(field)) input.title = "同じ用語の問題にも反映されます。";
+    if (sharedFields.has(field) && !isMindsetEditor()) input.title = "同じ用語の問題にも反映されます。";
     if (field === "prompt" && subjectId === "classical-chinese" && row.question?.focus === "意味瞬発") input.title = "この問題の出題面には、詳細列の「用語・見出し」を表示します。";
   }
   updateRowStatus(row);
@@ -183,7 +211,7 @@ function editCell(row, field, value) {
   if (value === row.base[field] && state.operation?.row !== row) row.edits.delete(field);
   else row.edits.set(field, { value, sequence: ++row.sequence });
   row.readyAt = Date.now() + saveDelay; state.message = "";
-  if (field === "targetDeckId") {
+  if (field === "targetDeckId" && !isMindsetEditor()) {
     const deck = getDeck(value), stages = deck?.index.availableStages ?? ["beginner", "reverse", "integrated"];
     if (deck && !stages.includes(valueOf(row, "stage"))) row.edits.set("stage", { value: stages[0], sequence: ++row.sequence });
     syncCells(row);
@@ -261,7 +289,8 @@ async function confirmAction(title, message, label) {
 
 async function deleteRow(row) {
   if (state.running || state.error) return;
-  if (!await confirmAction("この行を削除しますか？", `${valueOf(row, "prompt") || "入力中の新しい行"}\n\n削除後は出題されなくなります。学習履歴は保持します。`, "削除する")) return;
+  const message = isMindsetEditor() ? "削除後は読み上げ対象から外れます。再開位置と学習メニューの記録は保持します。" : "削除後は出題されなくなります。学習履歴は保持します。";
+  if (!await confirmAction("この行を削除しますか？", `${valueOf(row, isMindsetEditor() ? "content" : "prompt") || "入力中の新しい行"}\n\n${message}`, "削除する")) return;
   if (row.isNew) { state.rows = state.rows.filter((item) => item !== row); renderTable(); scheduleSave(); return; }
   // 削除対象の未保存入力は送らず、ほかの行の保存を先に完了する。
   row.removing = true;
@@ -274,7 +303,7 @@ function addRow() {
   const row = { key: `draft-${crypto.randomUUID()}`, isNew: true, edits: new Map(), sequence: 0, composing: new Set(), readyAt: 0,
     base: Object.fromEntries(["targetDeckId", ...fields].map((field) => [field, field === "targetDeckId" ? targetDeckId : field === "stage" ? (getDeck(targetDeckId)?.index.availableStages?.[0] ?? "beginner") : ""])) };
   state.rows.unshift(row); state.page = 0; renderTable();
-  row.element.querySelector(`[data-field="${targetDeckId ? "prompt" : "targetDeckId"}"]`).focus();
+  row.element.querySelector(`[data-field="${targetDeckId ? (isMindsetEditor() ? "content" : "prompt") : "targetDeckId"}"]`).focus();
 }
 
 const fetchData = () => cloudRequest(`/v1/question-editor?subject=${encodeURIComponent(subjectId)}`);
@@ -289,8 +318,10 @@ async function reloadData() {
     $("editor-deck").value = first ? (valid.length === 1 ? valid[0].entry.id : valid.length > 1 ? "selected" : "all") : previous;
     if (!$("editor-deck").value) $("editor-deck").value = "all";
     const index = data.decks[0].index;
-    $("macro-region-label").textContent = index.filterLabels?.macroRegion ?? "大分類";
-    $("region-detail-label").textContent = index.filterLabels?.regionDetail ?? "小分類";
+    if (!isMindsetEditor()) {
+      $("macro-region-label").textContent = index.filterLabels?.macroRegion ?? "大分類";
+      $("region-detail-label").textContent = index.filterLabels?.regionDetail ?? "小分類";
+    }
     categoryOptions(); renderTable(); state.message = "すべて保存済みです。セルを直接編集できます。";
   } catch (error) { state.error = error; }
   finally { state.loading = false; updateStatus(); }

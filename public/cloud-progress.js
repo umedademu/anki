@@ -1,5 +1,6 @@
 import { normalizeSubjectOrder } from "./subject-order.js";
 import { normalizeDeckOrder, normalizeQuestionLimit } from "./sequential-study.js";
+import { normalizeQuestionBatch } from "./question-batch.js";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -212,6 +213,7 @@ export function normalizeStudySession(value) {
     sequentialEnabled: source.sequentialEnabled === true,
     deckOrder: normalizeDeckOrder(source.deckOrder),
     questionLimit: normalizeQuestionLimit(source.questionLimit),
+    questionBatch: normalizeQuestionBatch(source.questionBatch, validQuestionIds),
     questionLimitStart: Math.min(1_000_000_000, Math.max(0, Number.parseInt(source.questionLimitStart, 10) || 0)),
     questionLimitRatings: normalizeRatingCounts(source.questionLimitRatings),
     questionLimitSeconds: normalizeStudySeconds(source.questionLimitSeconds),

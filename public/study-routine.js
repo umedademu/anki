@@ -395,6 +395,9 @@ export function normalizeStudyRoutineRun(value) {
         routineQuestionTargetLimit,
         Math.max(0, Number.parseInt(sourceItem.completedCount, 10) || 0),
       ),
+      ...(Array.isArray(sourceItem.completedQuestionKeys)
+        ? { completedQuestionKeys: [...new Set(sourceItem.completedQuestionKeys
+            .filter(key => typeof key === "string" && key.length <= 500))].slice(0, routineQuestionTargetLimit) } : {}),
       ...(completedDeckIds ? { completedDeckIds } : {}),
       ...(sourceItem.skipped === true ? { skipped: true } : {}),
       overtimePending:
@@ -816,7 +819,7 @@ export function reviseStudyRoutineListeningRating(
   run,
   subjectId,
   rating,
-  { counted = false } = {},
+  { counted = false, datasetVersion = "", questionId = "" } = {},
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -834,6 +837,8 @@ export function reviseStudyRoutineListeningRating(
       ? {
           ...candidate,
           completedCount: Math.max(0, candidate.completedCount - (uncount ? 1 : 0)),
+          ...(candidate.completedQuestionKeys ? { completedQuestionKeys: candidate.completedQuestionKeys
+            .filter(key => !uncount || key !== JSON.stringify([datasetVersion, questionId])) } : {}),
           ratingCounts: addRatingCount(candidate.ratingCounts, rating),
         }
       : { ...candidate },
@@ -851,7 +856,7 @@ export function recordStudyRoutineQuestion(
   questionId,
   studySeconds = 0,
   rating = "",
-  { deferCompletion = false, completedDeckIds = [] } = {},
+  { deferCompletion = false, completedDeckIds = [], uniqueQuestions = false } = {},
 ) {
   const normalized = normalizeStudyRoutineRun(run);
   const item = currentStudyRoutineItem(normalized);
@@ -873,8 +878,10 @@ export function recordStudyRoutineQuestion(
     };
   }
   const deckTarget = studyRoutineUsesDeckTarget(item);
+  const questionKey = JSON.stringify([normalizedDatasetVersion, normalizedQuestionId]);
+  const alreadyCounted = uniqueQuestions && item.completedQuestionKeys?.includes(questionKey);
   // デッキ数の項目では、一周し終えるまで回答数を記録として数え続ける。
-  const counted = countsTowardStudyRoutine(rating) && (
+  const counted = !alreadyCounted && countsTowardStudyRoutine(rating) && (
     deckTarget
       ? item.completedCount < routineQuestionTargetLimit
       : item.completedCount < item.questionTarget
@@ -896,6 +903,8 @@ export function recordStudyRoutineQuestion(
           const next = {
             ...candidate,
             completedCount,
+            ...(uniqueQuestions ? { completedQuestionKeys: [...(candidate.completedQuestionKeys ?? []),
+              ...(counted ? [questionKey] : [])] } : {}),
             ...(deckTarget ? { completedDeckIds: nextCompletedDeckIds } : {}),
             studySeconds: Math.min(
               routineStudySecondsLimit,

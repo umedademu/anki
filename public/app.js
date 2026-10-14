@@ -1,15 +1,16 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.403";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.404";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.404";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.403";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.403";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.403";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.403";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.403";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.403";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.403";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.403";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.403";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.404";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.404";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.404";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.404";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.404";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.404";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.404";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.404";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.404";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -67,7 +68,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.403";
+} from "./original-session.js?v=0.404";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -77,7 +78,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.403";
+} from "./speech.js?v=0.404";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -93,7 +94,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.403";
+} from "./deck-selection.js?v=0.404";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -421,6 +422,7 @@ const state = {
   questionAmountMode: "all",
   answeredThisSession: 0,
   questionLimit: null,
+  questionBatch: null,
   sequentialEnabled: false,
   sequentialDeckOrder: [],
   questionLimitStart: 0,
@@ -860,6 +862,7 @@ function clearRoutineOvertime() {
 }
 
 function startRoutineOvertimeIfNeeded(rating, { completedDeckIds = [] } = {}) {
+  if (state.questionBatch) return false;
   if (state.sequentialEnabled) return false;
   const item = activeRoutineItem();
   const overtimeSeconds = normalizeStudyRoutineOvertimeSeconds(
@@ -1110,7 +1113,7 @@ function recordActiveRoutineQuestion(
     questionId,
     studySeconds,
     rating,
-    options,
+    { ...options, uniqueQuestions: Boolean(state.questionBatch) },
   );
   if (!change.changed) return change;
   restoreRoutineRun(change.run);
@@ -1744,6 +1747,7 @@ function captureActiveSession() {
     sequentialEnabled: state.sequentialEnabled,
     deckOrder: state.sequentialDeckOrder,
     questionLimit: state.questionLimit,
+    questionBatch: state.questionBatch,
     questionLimitStart: state.questionLimitStart,
     questionLimitRatings: state.questionLimitRatings,
     questionLimitSeconds: state.questionLimitSeconds,
@@ -1937,12 +1941,11 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   state.sequentialEnabled = session.sequentialEnabled;
   state.sequentialDeckOrder = state.sequentialEnabled
     ? orderedDeckIds(state.activeDeckIds, session.deckOrder) : [];
-  if (state.sequentialEnabled) {
-    state.questionLimit = session.questionLimit;
-    state.questionLimitStart = session.questionLimitStart;
-    state.questionLimitRatings = session.questionLimitRatings;
-    state.questionLimitSeconds = session.questionLimitSeconds;
-  }
+  state.questionBatch = normalizeQuestionBatch(session.questionBatch, new Set(taskByQuestionId.keys()));
+  state.questionLimit = session.questionLimit;
+  state.questionLimitStart = session.questionLimitStart;
+  state.questionLimitRatings = session.questionLimitRatings;
+  state.questionLimitSeconds = session.questionLimitSeconds;
   state.answeredThisSession = session.answeredCount;
   state.ratingCounts = normalizeRatingCounts(session.ratingCounts);
   state.studySeconds = session.studySeconds;
@@ -2049,6 +2052,7 @@ function addTasksToActiveSession(tasks, { unseen = true } = {}) {
 }
 
 function ensureUnseenTasksQueued() {
+  if (state.questionBatch) { refreshQuestionBatchQueue(); return; }
   if (state.sequentialEnabled) { refreshSequentialQueue(); return; }
   if (routineOvertimeCutoffAt() !== null) return;
   const queuedIds = new Set([
@@ -2063,6 +2067,7 @@ function ensureUnseenTasksQueued() {
 }
 
 function enqueueDueSessionTasks(now = new Date()) {
+  if (state.questionBatch) return;
   if (state.sequentialEnabled) { refreshSequentialQueue(now); return; }
   if (!state.activeSession || isListeningMode()) return;
   if (routineOvertimeCutoffAt() !== null) return;
@@ -2090,6 +2095,7 @@ function enqueueDueSessionTasks(now = new Date()) {
 }
 
 function enqueuePendingRetryTasksImmediately() {
+  if (state.questionBatch) { refreshQuestionBatchQueue(); return; }
   if (state.sequentialEnabled) return;
   if (
     !state.activeSession ||
@@ -2108,6 +2114,7 @@ function enqueuePendingRetryTasksImmediately() {
 }
 
 function refreshPendingReviewTasks(now = new Date()) {
+  if (state.questionBatch) { refreshQuestionBatchQueue(); return; }
   if (state.sequentialEnabled) { refreshSequentialQueue(now); return; }
   if (!state.activeSession) return;
   const cutoffAt = routineOvertimeCutoffAt();
@@ -4094,11 +4101,14 @@ async function advanceListening(runId) {
   const previousAnsweredCount = state.answeredThisSession;
   state.pendingListeningActivity = activity;
   state.unseenQuestionIds.delete(completedTask.questionId);
+  state.retryQuestionIds.delete(completedTask.questionId);
+  updateQuestionBatch(completedTask.questionId);
   state.answeredThisSession += 1;
+  if (state.questionBatch) refreshQuestionBatchQueue();
   state.currentTask = state.queue.shift() ?? null;
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
-    listeningPassComplete && state.retryQuestionIds.size === 0;
+    listeningPassComplete && state.retryQuestionIds.size === 0 && state.unseenQuestionIds.size === 0;
   const routineChange = recordActiveRoutineQuestion(
     completedTask.questionId,
     state.screenStudySeconds,
@@ -4884,6 +4894,7 @@ function renderSequentialSetup() {
 }
 
 function refreshSequentialQueue(now = new Date()) {
+  if (state.questionBatch) { refreshQuestionBatchQueue(); return; }
   if (!state.activeSession || !state.sequentialEnabled) return;
   const plan = sequentialPlanForTerms(state.terms, state.selectedStage, now);
   const candidates = new Set(plan.queue.map(task => task.questionId));
@@ -4899,7 +4910,7 @@ async function saveRoutineQuestionLimit() {
   const item = activeRoutineItem();
   if (!item || studyRoutineUsesDeckTarget(item)) return true;
   const target = Number(elements.questionLimit.value);
-  if (target === item.questionTarget) return true;
+  if (target === item.questionTarget && !item.overtimePending) return true;
   const run = setStudyRoutineQuestionTarget(state.routineRun, item.id, target);
   const saved = await saveCloudStudyRoutine({ routineRun: run });
   const savedItem = saved.setupPreferences.routineRun?.items.find(candidate => candidate.id === item.id);
@@ -5502,8 +5513,8 @@ function renderQuestion() {
 
   renderActionControls();
   setQueueProgressText(state.queue.length + 1);
-  if (state.questionLimit !== null && !state.inRoutine) {
-    elements.queueProgress.textContent = `今回の学習 ${state.answeredThisSession - state.questionLimitStart}／${state.questionLimit}問`;
+  if (state.questionBatch && !state.inRoutine) {
+    elements.queueProgress.textContent = `今回の学習 ${state.questionBatch.completedQuestionIds.length}／${state.questionBatch.questionIds.length}問`;
   }
   renderRoutineSetupContext();
   elements.unlockNotice.textContent = state.unlockMessage;
@@ -5670,7 +5681,7 @@ function applyQuestionRating(term, question, rating) {
     state.subject.masteryTarget,
     state.reviewSettings,
   );
-  if (state.sequentialEnabled) return;
+  if (state.sequentialEnabled || state.questionBatch) return;
   if (state.selectedStage || usesOneQuestionPerTerm()) {
     return;
   }
@@ -5742,7 +5753,9 @@ async function rateListeningQuestion(rating) {
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
   state.unseenQuestionIds.delete(question.id);
-  state.retryQuestionIds.delete(question.id);
+  if (state.questionBatch && rating === "again") state.retryQuestionIds.add(question.id);
+  else state.retryQuestionIds.delete(question.id);
+  updateQuestionBatch(question.id, rating);
   state.answeredThisSession += 1;
   state.currentTask = null;
   ensureUnseenTasksQueued();
@@ -5751,7 +5764,7 @@ async function rateListeningQuestion(rating) {
   state.answerRevealedAt = 0;
   const listeningPassComplete = !state.currentTask;
   const sessionComplete =
-    listeningPassComplete && state.retryQuestionIds.size === 0;
+    listeningPassComplete && state.retryQuestionIds.size === 0 && state.unseenQuestionIds.size === 0;
   const routineChange = recordActiveRoutineQuestion(
     question.id,
     state.screenStudySeconds,
@@ -5866,6 +5879,7 @@ async function ratePreviousListeningQuestion(rating, late) {
   let snapshot = null;
   let ratingCountsBefore = null;
   let routineRunBefore;
+  let batchBefore;
   const save = listeningSaves.tail.then(async () => {
     // 前の問題の保存に失敗して巻き戻した後は、その問題をもう一度聞いてから評価する。
     if (failuresBefore !== listeningSaves.failures) return false;
@@ -5894,6 +5908,12 @@ async function ratePreviousListeningQuestion(rating, late) {
     ratingCountsBefore = state.ratingCounts;
     state.ratingCounts = addRatingCount(state.ratingCounts, rating);
     applyQuestionRating(term, question, rating);
+    batchBefore = state.questionBatch;
+    updateQuestionBatch(question.id, rating);
+    if (state.questionBatch && rating === "again") {
+      state.retryQuestionIds.add(question.id);
+      refreshQuestionBatchQueue();
+    }
     let routineRun;
     if (state.inRoutine) {
       routineRunBefore = state.routineRun;
@@ -5901,7 +5921,7 @@ async function ratePreviousListeningQuestion(rating, late) {
         state.routineRun,
         state.activeSubjectId,
         rating,
-        { counted: late.routineCounted },
+        { counted: late.routineCounted, datasetVersion: datasetVersionForQuestion(question.id), questionId: question.id },
       );
       if (change.changed) {
         restoreRoutineRun(change.run);
@@ -5944,10 +5964,16 @@ async function ratePreviousListeningQuestion(rating, late) {
         entry.studyActivityEventId === late.activity.eventId,
     );
     if (historyIndex >= 0) state.history[historyIndex] = snapshot;
+    if (isListeningMode() && state.currentTask) renderQuestion();
   } catch (error) {
     if (snapshot) {
       restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
       state.ratingCounts = ratingCountsBefore;
+      if (batchBefore) {
+        updateQuestionBatch(question.id, batchBefore.completedQuestionIds.includes(question.id) ? "" : "again");
+        state.retryQuestionIds.delete(question.id);
+        refreshQuestionBatchQueue();
+      }
       if (routineRunBefore !== undefined) restoreRoutineRun(routineRunBefore);
     }
     state.unlockMessage = `前の問題の評価を保存できませんでした。${error.message}`;
@@ -6002,6 +6028,7 @@ async function rateCurrentQuestion(rating) {
   applyQuestionRating(term, question, rating);
 
   state.unseenQuestionIds.delete(question.id);
+  updateQuestionBatch(question.id, rating);
   if (rating === "again") {
     state.retryQuestionIds.add(question.id);
   } else {
@@ -6146,17 +6173,76 @@ function validateQuestionLimit() {
   return (state.inRoutine && studyRoutineUsesDeckTarget(activeRoutineItem())) || elements.questionLimit.reportValidity();
 }
 
+function refreshQuestionBatchQueue() {
+  const pending = pendingQuestionBatchIds(state.questionBatch);
+  const tasks = new Map(state.sessionTasks.map(task => [task.questionId, task]));
+  const ids = [...new Set([...state.queue.map(task => task.questionId), ...pending])];
+  state.queue = ids.filter(id => pending.has(id) && id !== state.currentTask?.questionId && tasks.has(id))
+    .map(id => cloneTask(tasks.get(id)));
+  if (state.sequentialEnabled) {
+    // 前のパートに不正解が残る間は、その再出題を次のパートより先に行う。
+    const deckOrder = new Map(state.sequentialDeckOrder.map((id, index) => [id, index]));
+    state.queue.sort((left, right) => {
+      const reviewed = task => Boolean(state.progress.questions[task.questionId]?.lastAnsweredAt);
+      if (reviewed(left) !== reviewed(right)) return reviewed(left) ? -1 : 1;
+      return (deckOrder.get(deckForQuestion(left.questionId)?.entry.id) ?? Infinity) -
+        (deckOrder.get(deckForQuestion(right.questionId)?.entry.id) ?? Infinity);
+    });
+    if (isListeningMode()) {
+      const allowed = new Set(sequentialPlanForTerms(state.terms, state.selectedStage).queue.map(task => task.questionId));
+      state.queue = state.queue.filter(task => allowed.has(task.questionId) || state.retryQuestionIds.has(task.questionId));
+    }
+  }
+}
+
+function updateQuestionBatch(questionId, rating = "") {
+  state.questionBatch = rateQuestionBatch(state.questionBatch, questionId, rating);
+}
+
 function initializeQuestionLimit() {
   state.questionLimit = !state.inRoutine && elements.questionLimit.value !== ""
     ? Number(elements.questionLimit.value) : null;
+  const item = activeRoutineItem();
+  const target = item && !studyRoutineUsesDeckTarget(item) ? item.questionTarget : state.questionLimit;
+  if (target === null || target === undefined) { state.questionBatch = null; return; }
+  const routineItemId = item ? `${state.routineRun.id}:${item.id}` : "";
+  const previous = state.questionBatch?.routineItemId === routineItemId && !questionBatchComplete(state.questionBatch)
+    ? state.questionBatch : null;
+  if (previous?.target === target) {
+    refreshQuestionBatchQueue();
+    return;
+  }
+  const remaining = item ? routineRemainingCount(item) : target;
+  const count = remaining + (item ? previous?.completedQuestionIds.length ?? 0 : 0);
+  const countedKeys = new Set(item?.completedQuestionKeys ?? []);
+  const extra = state.sessionTasks.filter(task => state.retryQuestionIds.has(task.questionId) ||
+    (state.unseenQuestionIds.has(task.questionId) &&
+      (!state.progress.questions[task.questionId]?.lastAnsweredAt || isQuestionDue(state.progress, task.questionId))));
+  if (state.sequentialEnabled) {
+    const order = new Map(state.sequentialDeckOrder.map((id, index) => [id, index]));
+    extra.sort((a, b) => (order.get(deckForQuestion(a.questionId)?.entry.id) ?? Infinity) - (order.get(deckForQuestion(b.questionId)?.entry.id) ?? Infinity));
+  }
+  const candidates = [
+    ...(previous ? previous.completedQuestionIds.map(questionId => ({ questionId })) : []),
+    ...(previous ? previous.questionIds.map(questionId => ({ questionId })) : []),
+    ...(state.currentTask ? [state.currentTask] : []), ...state.queue, ...extra,
+  ].filter(task => previous?.completedQuestionIds.includes(task.questionId) ||
+    !countedKeys.has(JSON.stringify([datasetVersionForQuestion(task.questionId), task.questionId])));
+  state.questionBatch = createQuestionBatch(candidates, count, { target, routineItemId });
+  if (previous && state.questionBatch) {
+    state.questionBatch.completedQuestionIds = previous.completedQuestionIds.filter(id => state.questionBatch.questionIds.includes(id));
+  }
+  if (!state.questionBatch?.questionIds.includes(state.currentTask?.questionId) ||
+      state.questionBatch.completedQuestionIds.includes(state.currentTask?.questionId)) state.currentTask = null;
+  refreshQuestionBatchQueue();
+  state.currentTask ??= state.queue.shift() ?? null;
   state.questionLimitStart = state.answeredThisSession;
   state.questionLimitRatings = { ...state.ratingCounts };
   state.questionLimitSeconds = state.studySeconds;
 }
 
 function hasReachedQuestionLimit() {
-  return !state.inRoutine && state.questionLimit !== null &&
-    state.answeredThisSession - state.questionLimitStart >= state.questionLimit;
+  return !state.inRoutine && questionBatchComplete(state.questionBatch);
 }
 
 function showQuestionLimitCompletion() {
@@ -6177,9 +6263,10 @@ function showQuestionLimitCompletion() {
   elements.completionHome.classList.add("is-hidden");
   elements.routineResultSummary.classList.add("is-hidden");
   elements.completionEyebrow.textContent = "指定した問題数を完了";
-  elements.completionTitle.textContent = `${state.questionLimit}問の学習を完了しました`;
+  const completedCount = state.questionBatch.questionIds.length;
+  elements.completionTitle.textContent = `${completedCount}問の学習を完了しました`;
   elements.completionMessage.textContent = `学習時間は${formatStudyDuration(state.studySeconds - state.questionLimitSeconds)}です。${state.activeSession ? "残りの問題は、開始画面の「前回の続きから」で再開できます。" : ""}`;
-  elements.queueProgress.textContent = `今回の学習 ${state.questionLimit}／${state.questionLimit}問`;
+  elements.queueProgress.textContent = `今回の学習 ${completedCount}／${completedCount}問`;
   renderRatingResult(Object.fromEntries(Object.entries(state.ratingCounts).map(
     ([rating, count]) => [rating, Math.max(0, count - (state.questionLimitRatings[rating] ?? 0))],
   )));
@@ -6236,11 +6323,13 @@ async function beginStudy() {
   speechController.stop();
   state.activeSession = false;
   state.retryQuestionIds = new Set();
+  state.questionBatch = null;
   buildQueue();
   state.sessionTasks = state.sequentialEnabled
     ? createSequentialStudyTasks(state.terms, state.selectedStage) : state.queue.map(cloneTask);
   state.unseenQuestionIds = new Set(
-    state.sessionTasks.map((task) => task.questionId),
+    state.sessionTasks.filter(task => !state.progress.questions[task.questionId]?.lastAnsweredAt ||
+      isQuestionDue(state.progress, task.questionId)).map((task) => task.questionId),
   );
   state.retryQuestionIds = new Set();
   state.sessionRoundId = createEventId();
@@ -6344,7 +6433,7 @@ async function resumeStudy() {
   savedSession.excludeTimeQuestions = selectedTimeQuestionExclusion();
   savedSession.sequentialEnabled = selectedSequentialStudy();
   savedSession.deckOrder = setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
-  if (savedSession.sequentialEnabled) {
+  if (savedSession.sequentialEnabled && !savedSession.questionBatch) {
     const terms = filterConfiguredQuestions(state.allTerms.filter(term => savedSession.termIds.includes(term.id)),
       supportsQuestionTypes() ? selectedQuestionTypes() : null, savedSession.excludeTimeQuestions);
     const previousIds = new Set(savedSession.tasks.map(task => task.questionId));
@@ -6377,7 +6466,7 @@ async function resumeStudy() {
     return;
   }
   initializeQuestionLimit();
-  if (state.sequentialEnabled) {
+  if (state.sequentialEnabled && !state.questionBatch) {
     state.currentTask = null;
     state.answerVisible = false;
   }
@@ -6759,11 +6848,11 @@ function restoreStudyRoute(route) {
   ensureUnseenTasksQueued();
   enqueuePendingRetryTasksImmediately();
   state.currentTask ??= state.queue.shift() ?? null;
-  if (!state.currentTask) {
+  if (!state.currentTask && !questionBatchComplete(state.questionBatch)) {
     state.activeSession = false;
     return false;
   }
-  if (!state.sequentialEnabled) {
+  if (!state.sequentialEnabled && !state.questionBatch) {
     elements.questionLimit.value = "";
     initializeQuestionLimit();
   }

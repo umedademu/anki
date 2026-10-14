@@ -6,6 +6,7 @@ import { runInNewContext } from "node:vm";
 import { filterTimeQuestions, hasTimeQuestions, isTimeQuestion } from "../public/time-questions.js";
 import { createEmptyProgress, createQuestionQueue, createTermQuestionQueue, filterTermsBySelection, getTermStage, learningStages } from "../public/learning-engine.js";
 import { normalizeSetupPreferences, normalizeStudySession, switchStudySessionMode } from "../public/cloud-progress.js";
+import { normalizeQuestionBatch } from "../public/question-batch.js";
 import { normalizeSetupPreferences as workerPreferences, normalizeStudySession as workerSession } from "../worker/src/index.js";
 
 for (const question of [
@@ -69,7 +70,7 @@ const context = {
   questionTypes, resolveQuestionTypes, filterQuestionTypes, usesChapterDecks,
   state, elements, filterTimeQuestions, hasTimeQuestions, filterTermsBySelection, learningStages,
   normalizeStudySession, normalizeRatingCounts: v => v, createEventId: () => "round",
-  cloneTask: t => t ? { ...t } : null, setSavedSessionForMode() {}, refreshPendingReviewTasks() {},
+  normalizeQuestionBatch, cloneTask: t => t ? { ...t } : null, setSavedSessionForMode() {}, refreshPendingReviewTasks() {},
   selectedFilters: () => ({}), setSetupControlsFromSession() {},
 };
 runInNewContext([

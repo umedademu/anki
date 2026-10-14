@@ -1,5 +1,6 @@
 import { normalizeSubjectOrder } from "../../public/subject-order.js";
 import { normalizeDeckOrder, normalizeQuestionLimit } from "../../public/sequential-study.js";
+import { normalizeQuestionBatch } from "../../public/question-batch.js";
 import {
   defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
@@ -554,6 +555,7 @@ function normalizeStudySession(value) {
     sequentialEnabled: source.sequentialEnabled === true,
     deckOrder: normalizeDeckOrder(source.deckOrder),
     questionLimit: normalizeQuestionLimit(source.questionLimit),
+    questionBatch: normalizeQuestionBatch(source.questionBatch, validQuestionIds),
     questionLimitStart: integer(source.questionLimitStart, 0),
     questionLimitRatings: normalizeRatingCounts(source.questionLimitRatings),
     questionLimitSeconds: integer(source.questionLimitSeconds, 0),

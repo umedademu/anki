@@ -69,7 +69,7 @@ try {
     await page.goto(`${base}/?subject=english-vocabulary&view=setup&deck=deck-6`);
     await page.locator("#setup-panel").waitFor({ state: "visible" });
     await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
-    assert.equal(await page.locator('#deck-filter input[type="checkbox"]').count(), 6);
+    for (const number of [1, 2, 3, 4, 5, 6]) assert.equal(await page.locator(`#deck-filter input[value="deck-${number}"]`).count(), 1);
     assert.equal(await page.locator('#deck-filter input[value="deck-6"]').isChecked(), true);
     await page.locator("#question-style-filter").selectOption(stage);
     await page.locator("#setup-shuffle").uncheck();

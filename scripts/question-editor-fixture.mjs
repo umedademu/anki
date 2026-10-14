@@ -25,7 +25,9 @@ export function editorFixture() {
     },
     async put(key, body, options = {}) {
       if (this.failPut?.(key)) throw new Error("試験用の保存失敗");
-      if (options.onlyIf && (this.conflictOnCommit || etag(objects.get(key)) !== options.onlyIf.etagMatches)) return null;
+      if (options.onlyIf && (this.conflictOnCommit
+        || (options.onlyIf.etagMatches && (!objects.has(key) || etag(objects.get(key)) !== options.onlyIf.etagMatches))
+        || (options.onlyIf.etagDoesNotMatch === "*" && objects.has(key)))) return null;
       objects.set(key, body); return { etag: etag(body) };
     },
   };

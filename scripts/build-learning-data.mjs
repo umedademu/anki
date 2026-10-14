@@ -3401,6 +3401,8 @@ export async function writeSubjectData(definition, decks) {
     const basePath =
       definition.id === "japanese-history-k"
         ? `subjects/${definition.id}/imports/${deck.id}/${deck.contentVersion}`
+      : definition.id === "english-vocabulary" && deck.number >= 4
+        ? `subjects/${definition.id}/imports/${deck.id}/${deck.contentVersion}`
       : definition.id === "world-history-so"
         ? `subjects/${definition.id}/${deck.id}/${deck.contentVersion}`
       : deck.number === 1

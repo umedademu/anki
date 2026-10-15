@@ -11,6 +11,7 @@ Cloudflareの接続先や操作方法が分からない場合は、ローカル�
 - 科目ごとの順番学習・パートの学習順・指定問題数、進行中メニューだけの目標変更、順番学習の途中記録は既存のCloudflare D1設定と一周の保存窓口へ保存する。習得判定はCloudflareから取得した問題別の現在の評価を使い、単語集や履歴版は変更しない。
 
 - Web上の問題編集は、既存の一人用アクセスキーで保護した`anki-progress-api`の`/v1/question-editor`から、R2の現行索引・デッキ・分割データを読み書きする。端末内や`public/data`を保存先にしない。
+- 英単語Deck 8の追加は `npm run preview:data:english-deck-8` ／ `npm run publish:data:english-deck-8` を使う。Cloudflareの現行索引と既存Deck 1〜7を読み、単語・番号の重複がないことを確認する。新規の索引・分割データだけを登録・全文照合し、既存データと他科目を保持した索引を条件付きで切り替える。登録後の編集を上書きせず、D1へ書き込まない。作業用の保存窓口は実行後に削除する。詳細は[英単語Deck 8](english-deck-8.md)を参照。
 - 英単語Deck 7の追加は `npm run preview:data:english-deck-7` ／ `npm run publish:data:english-deck-7` を使う。Cloudflareの現行索引と既存Deck 1〜6を読み、単語・番号の重複がないことを確認する。新規の索引・分割データだけを登録・全文照合し、既存データと他科目を保持した索引を条件付きで切り替える。登録後の編集を上書きせず、D1へ書き込まない。作業用の保存窓口は実行後に削除する。詳細は[英単語Deck 7](english-deck-7.md)を参照。
 - 英単語Deck 6の追加は `npm run preview:data:english-deck-6` ／ `npm run publish:data:english-deck-6` を使う。Cloudflareの現行索引と既存Deck 1〜5を読み、単語・番号の重複がないことを確認する。新規の索引・分割データだけを登録・全文照合し、既存データと他科目を保持した索引を条件付きで切り替える。登録後の編集を上書きせず、D1へ書き込まない。作業用の保存窓口は実行後に削除する。詳細は[英単語Deck 6](english-deck-6.md)を参照。
 - 英単語Deck 5の追加は `npm run preview:data:english-deck-5` ／ `npm run publish:data:english-deck-5` を使う。Cloudflareの現行索引と既存Deck 1〜4を読み、単語・番号の重複がないことを確認する。新規の索引・分割データだけを登録・全文照合し、既存データと他科目を保持した索引を条件付きで切り替える。登録後の編集を上書きせず、D1へ書き込まない。作業用の保存窓口は実行後に削除する。詳細は[英単語Deck 5](english-deck-5.md)を参照。

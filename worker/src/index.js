@@ -342,6 +342,7 @@ function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      vocabularyStreamEnabled: subjectId === "english-vocabulary" && rawSubject.vocabularyStreamEnabled === true,
       sequentialEnabled: rawSubject.sequentialEnabled === true,
       deckOrder: normalizeDeckOrder(rawSubject.deckOrder),
       questionLimit: normalizeQuestionLimit(rawSubject.questionLimit),
@@ -512,6 +513,33 @@ function normalizeStudySessionQuestionIds(value, validQuestionIds) {
   )];
 }
 
+function normalizeVocabularyStreamRows(value, taskByQuestionId) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, studySessionTaskLimit).flatMap((row) => {
+    const task = normalizeStudySessionTask(row);
+    const validTask = task && taskByQuestionId.get(task.questionId);
+    if (!validTask || task.stage !== "beginner" || task.termId !== validTask.termId ||
+      task.stage !== validTask.stage) return [];
+    let previousRecord = null;
+    if (row.previousRecord != null) {
+      try {
+        previousRecord = normalizeQuestionRecord(row.previousRecord);
+      } catch {
+        // 壊れた評価前の記録は引き継がず、表示中の単語は保持する。
+      }
+    }
+    const activityId = String(row.activityId ?? "");
+    return [{
+      ...task,
+      answerVisible: row.answerVisible === true,
+      rating: ratingValues.has(row.rating) ? row.rating : "",
+      activityId: studyActivityIdPattern.test(activityId) ? activityId : "",
+      previousRecord,
+      routineCounted: row.routineCounted === true,
+    }];
+  }).slice(0, 3);
+}
+
 function normalizeStudySession(value) {
   let source = value;
   if (typeof source === "string") {
@@ -532,10 +560,20 @@ function normalizeStudySession(value) {
   const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
   const currentTask = normalizeStudySessionTask(source.currentTask);
   const studyTimeEventId = String(source.studyTimeEventId ?? "");
+  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true &&
+    source.studyMode !== "listen-answer";
   return {
     schemaVersion: 1,
     roundId: normalizeStudyRoundId(source.roundId),
     studyMode: setupStudyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    ...(source.vocabularyStreamEnabled !== undefined || source.vocabularyStreamRows !== undefined
+      ? {
+          vocabularyStreamEnabled,
+          vocabularyStreamRows: vocabularyStreamEnabled
+            ? normalizeVocabularyStreamRows(source.vocabularyStreamRows, taskByQuestionId)
+            : [],
+        }
+      : {}),
     deckIds: [...new Set(
       (Array.isArray(source.deckIds) ? source.deckIds : [])
         .map(normalizeSetupPreferenceId)
@@ -545,9 +583,8 @@ function normalizeStudySession(value) {
     selectedQuestionTypes: Array.isArray(source.selectedQuestionTypes)
       ? [...new Set(source.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
       : null,
-    selectedStage: setupQuestionStyles.has(source.selectedStage)
-      ? source.selectedStage
-      : "",
+    selectedStage: vocabularyStreamEnabled ? "beginner"
+      : setupQuestionStyles.has(source.selectedStage) ? source.selectedStage : "",
     questionAmountMode: setupQuestionAmountModes.has(source.questionAmountMode)
       ? source.questionAmountMode
       : "all",
@@ -1798,6 +1835,10 @@ async function handleRequest(request, env) {
     const replaceActivityId = body.replaceActivityId == null
       ? null
       : String(body.replaceActivityId);
+    // 3行画面の過去の評価は、同じ回答履歴の評価だけを修正する。
+    const reviseActivityId = body.reviseActivityId == null
+      ? null
+      : String(body.reviseActivityId);
     const completeRoundId = normalizeStudyRoundId(body.completeRoundId) ||
       (!session && activity ? activity.eventId : "");
     const deleteRoundId = normalizeStudyRoundId(
@@ -1842,6 +1883,20 @@ async function handleRequest(request, env) {
     if (completeRoundId && deleteRoundId) {
       return json(request, env, { error: "周回完了の追加と取消は同時に行えません。" }, 400);
     }
+    if (reviseActivityId !== null) {
+      if (!studyActivityIdPattern.test(reviseActivityId) || studyMode !== "memorize" ||
+        !record?.lastRating || activity || deleteActivityId || replaceActivityId ||
+        completeRoundId || deleteRoundId) {
+        return json(request, env, { error: "修正する日別学習記録が正しくありません。" }, 400);
+      }
+      const existingActivity = await env.DB.prepare(
+        `SELECT event_id FROM study_activity_events
+         WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = 'memorize'`,
+      ).bind(reviseActivityId, datasetVersion, questionId).first();
+      if (!existingActivity) {
+        return json(request, env, { error: "修正する日別学習記録が見つかりません。" }, 409);
+      }
+    }
     const updatedAt = new Date().toISOString();
     const statements = [
       record
@@ -1869,6 +1924,14 @@ async function handleRequest(request, env) {
     }
     if (activity) {
       statements.push(studyActivityStatement(env, activity, updatedAt));
+    }
+    if (reviseActivityId) {
+      statements.push(
+        env.DB.prepare(
+          `UPDATE study_activity_events SET rating = ?
+           WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = 'memorize'`,
+        ).bind(record.lastRating, reviseActivityId, datasetVersion, questionId),
+      );
     }
     if (deleteActivityId) {
       statements.push(

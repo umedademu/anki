@@ -4496,3 +4496,114 @@ body.is-listening.is-listening-answer-visible .page {
   .study-edit-button { top: 4px; right: 47px; width: 32px; height: 32px; }
   .question-spoken-block > .study-edit-button { right: 40px; }
 }
+
+/* 横向きのスマートフォンで3語と12個の評価を同時に操作する。 */
+body.is-studying.is-vocabulary-stream .page {
+  width: min(1100px, 100%);
+  height: 100dvh;
+  min-height: 0;
+  padding: max(46px, calc(env(safe-area-inset-top) + 40px)) max(12px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  overflow: hidden;
+}
+.study-shell.is-vocabulary-stream {
+  height: 100%;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+  gap: 0;
+}
+body.is-vocabulary-stream .study-menu-trigger {
+  top: max(6px, env(safe-area-inset-top));
+  width: auto;
+  height: 32px;
+  min-height: 32px;
+  padding: 3px 14px;
+  opacity: 1;
+  background: var(--theme-surface-glass, rgb(255 255 255 / 94%));
+  border: 1px solid var(--theme-border, #c8d6cc);
+  border-radius: 999px;
+  font-size: .7rem;
+}
+.study-shell.is-vocabulary-stream > :is(.context-card, .progress-track, .question-card, .action-dock, .listening-dock) { display: none; }
+.vocabulary-stream-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+.vocabulary-stream-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--theme-muted, #58705d);
+  font-size: .8rem;
+}
+.vocabulary-stream-heading strong { flex: 0 0 auto; white-space: nowrap; color: var(--theme-text, #24442f); }
+.vocabulary-stream-summary { flex: 1; min-width: 0; text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.vocabulary-stream-heading .secondary-button { flex: 0 0 auto; width: auto; min-height: 28px; padding: 3px 12px; font-size: .75rem; white-space: nowrap; }
+.vocabulary-stream-list {
+  display: grid;
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  min-height: 0;
+}
+.vocabulary-stream-row {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 8px 12px;
+  gap: 7px;
+  border: 1px solid var(--theme-border, #c8d6cc);
+  border-radius: 12px;
+  background: var(--theme-surface, #fff);
+  color: var(--theme-text, #24442f);
+}
+.vocabulary-stream-row.is-current { border-color: var(--theme-accent, #2b6747); }
+.vocabulary-stream-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+  min-height: 0;
+}
+.vocabulary-stream-word, .vocabulary-stream-answer {
+  min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  overscroll-behavior: contain;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.vocabulary-stream-word { font-size: clamp(18px, 5.5dvh, 32px); }
+.vocabulary-stream-answer { font-size: clamp(14px, 4.4dvh, 26px); }
+.vocabulary-stream-meaning { white-space: pre-line; }
+.vocabulary-stream-reveal { width: 100%; min-height: 32px; padding: 5px 12px; font-size: .9rem; }
+.vocabulary-stream-ratings { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.vocabulary-stream-ratings .rating-action {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 6px;
+  gap: 1px;
+  border-radius: 7px;
+  font-size: .9rem;
+  line-height: 1.1;
+}
+.vocabulary-stream-ratings .rating-action small { font-size: .65rem; line-height: 1.1; }
+.vocabulary-stream-ratings .rating-action[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: -3px; font-weight: 900; }
+.vocabulary-stream-ratings .rating-action:disabled { opacity: .45; cursor: default; }
+@media (orientation: landscape) and (max-height: 500px) {
+  .vocabulary-stream-panel, .vocabulary-stream-list { gap: 5px; }
+  .vocabulary-stream-heading { font-size: .7rem; }
+  .vocabulary-stream-heading .secondary-button { min-height: 25px; padding: 2px 10px; }
+  .vocabulary-stream-row { padding: 5px 9px; gap: 4px; border-radius: 8px; }
+  .vocabulary-stream-ratings { gap: 6px; }
+  .vocabulary-stream-ratings .rating-action { min-height: 33px; padding: 3px 5px; font-size: .8rem; }
+  .vocabulary-stream-ratings .rating-action small { font-size: .6rem; }
+}

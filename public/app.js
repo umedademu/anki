@@ -1,16 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.406";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.407";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.407";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.406";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.407";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.406";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.406";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.406";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.406";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.406";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.406";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.406";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.406";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.406";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.407";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.407";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.407";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.407";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.407";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.407";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.407";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.407";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.407";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -68,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.406";
+} from "./original-session.js?v=0.407";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -78,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.406";
+} from "./speech.js?v=0.407";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -94,7 +95,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.406";
+} from "./deck-selection.js?v=0.407";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -411,6 +412,8 @@ const state = {
   routineVideoCompleting: false,
   standaloneVideoMode: false,
   studyMode: "memorize",
+  vocabularyStreamEnabled: false,
+  vocabularyStreamRows: [],
   listeningPaused: false,
   inlineEditing: false,
   pendingListeningActivity: null,
@@ -573,10 +576,27 @@ const speechPartDefinitions = {
 };
 
 function selectedStudyMode() {
-  return (
-    [...elements.studyModeOptions].find((option) => option.checked)?.value ??
-    "memorize"
-  );
+  const value = [...elements.studyModeOptions].find(option => option.checked)?.value ?? "memorize";
+  return value === "vocabulary-stream" ? "memorize" : value;
+}
+
+function selectedVocabularyStream() {
+  return state.subject?.learningType === "vocabulary" &&
+    document.querySelector('input[name="study-mode"][value="vocabulary-stream"]').checked;
+}
+
+function isVocabularyStream() {
+  return state.subject?.learningType === "vocabulary" && state.studyMode === "memorize" && state.vocabularyStreamEnabled;
+}
+
+function selectedSetupStage() {
+  return selectedVocabularyStream() ? "beginner" : elements.questionStyleFilter.value;
+}
+
+function setVocabularyStreamScreen(visible) {
+  elements.studyShell.classList.toggle("is-vocabulary-stream", visible);
+  document.body.classList.toggle("is-vocabulary-stream", visible && !elements.studyShell.classList.contains("is-hidden"));
+  document.querySelector("#vocabulary-stream-panel").classList.toggle("is-hidden", !visible);
 }
 
 function createEmptySavedSessions() {
@@ -1529,6 +1549,8 @@ async function skipCurrentRoutineItem({ launchNext = false, showError } = {}) {
 function updateStudyTimeDisplay() {
   elements.studyTime.textContent = formatStudyDuration(state.studySeconds);
   elements.launchStudyTime.textContent = formatStudyDuration(launchStudySeconds());
+  const streamSummary = document.querySelector(".vocabulary-stream-summary");
+  if (streamSummary) streamSummary.textContent = vocabularyStreamSummary();
 }
 
 // アプリを開いている間だけの「今回」の時間と問題数。一周ごとに、この起動で最初に
@@ -1738,6 +1760,8 @@ function captureActiveSession() {
     schemaVersion: 1,
     roundId: state.sessionRoundId,
     studyMode: state.studyMode,
+    vocabularyStreamEnabled: isVocabularyStream(),
+    vocabularyStreamRows: isVocabularyStream() ? state.vocabularyStreamRows : [],
     deckIds: state.activeDeckIds,
     excludeTimeQuestions: state.excludeTimeQuestions,
     selectedQuestionTypes: state.selectedQuestionTypes,
@@ -1870,7 +1894,8 @@ function setSetupControlsFromSession(session) {
   setAvailableSelectValue(elements.questionStyleFilter, session.selectedStage);
   setAvailableSelectValue(elements.questionAmountFilter, session.questionAmountMode);
   for (const option of elements.studyModeOptions) {
-    option.checked = option.value === session.studyMode;
+    option.checked = option.value === (session.vocabularyStreamEnabled && state.subject?.learningType === "vocabulary"
+      ? "vocabulary-stream" : session.studyMode);
   }
   elements.excludeTimeQuestions.checked = session.excludeTimeQuestions;
   renderQuestionTypes(resolveQuestionTypes(session.selectedQuestionTypes, session.excludeTimeQuestions, activeSubjectUsesChapterDecks() ? ["short_answer"] : []));
@@ -1933,6 +1958,8 @@ function restoreActiveSession(value, { updateControls = true } = {}) {
   );
   state.sessionRoundId = session.roundId || createEventId();
   state.studyMode = session.studyMode;
+  state.vocabularyStreamEnabled = session.vocabularyStreamEnabled === true && state.subject?.learningType === "vocabulary" && session.studyMode === "memorize";
+  state.vocabularyStreamRows = state.vocabularyStreamEnabled ? (session.vocabularyStreamRows ?? []).map(row => ({ ...row })) : [];
   state.excludeTimeQuestions = session.excludeTimeQuestions;
   state.selectedQuestionTypes = session.selectedQuestionTypes;
   state.selectedStage = session.selectedStage;
@@ -3122,6 +3149,7 @@ function showOnly(panel) {
     destroyRoutineVideoPlayer();
   }
   document.body.classList.toggle("is-studying", panel === elements.studyShell);
+  document.body.classList.toggle("is-vocabulary-stream", panel === elements.studyShell && elements.studyShell.classList.contains("is-vocabulary-stream"));
   document.body.classList.toggle(
     "is-mindset-playing",
     panel === elements.mindsetPlayerPanel ||
@@ -3335,6 +3363,13 @@ function pushHistory(entry) {
 }
 
 function renderActionControls() {
+  if (isVocabularyStream() && state.currentTask && !hasReachedQuestionLimit()) {
+    renderVocabularyStream();
+    elements.actionDock.classList.add("is-hidden");
+    elements.listeningDock.classList.add("is-hidden");
+    elements.studyMenuTrigger.disabled = state.saving;
+    return;
+  }
   if (hasReachedQuestionLimit()) {
     elements.actionDock.classList.add("is-hidden");
     elements.listeningDock.classList.add("is-hidden");
@@ -3582,6 +3617,7 @@ function captureSetupPreferences() {
         deckOrder: setupDeckOrder(),
         questionLimit: state.inRoutine ? currentSubject.questionLimit : normalizeQuestionLimit(elements.questionLimit.value),
         studyMode,
+        vocabularyStreamEnabled: selectedVocabularyStream(),
         selectedQuestionTypes: supportsQuestionTypes() ? selectedQuestionTypes() : currentSubject.selectedQuestionTypes,
         decks: Object.fromEntries([
           ...Object.entries(currentSubject.decks),
@@ -3803,6 +3839,7 @@ function answerSpeechSequence(task = state.currentTask) {
   const term = termForTask(task);
   const settings = currentSpeechPartSettings();
   if (state.subject?.learningType === "vocabulary") {
+    if (isVocabularyStream()) return settings.meaning ? speechSegmentsFor("vocabulary-meaning", task) : [];
     const layout = vocabularySpeechLayout(question);
     return createVocabularyAutomaticAnswerSequence(
       term,
@@ -4871,7 +4908,7 @@ function renderSequentialSetup() {
   elements.questionAmountFilter.disabled = enabled;
   if (!enabled) return;
   const order = setupDeckOrder().filter(id => selectedDeckIds().includes(id));
-  const plan = sequentialPlanForTerms(selectedStudyTerms(), elements.questionStyleFilter.value);
+  const plan = sequentialPlanForTerms(selectedStudyTerms(), selectedSetupStage());
   elements.sequentialOrder.replaceChildren(...order.map((id, index) => {
     const row = document.createElement("div");
     row.className = "sequential-order-row";
@@ -4944,7 +4981,8 @@ function applySetupPreferences() {
     deck.questionAmountMode === oneQuestionPerTermMode
       ? oneQuestionPerTermMode
       : "all";
-  const savedMode = subject?.studyMode ?? "memorize";
+  const savedMode = subject?.vocabularyStreamEnabled && state.subject?.learningType === "vocabulary" && subject?.studyMode !== "listen-answer"
+    ? "vocabulary-stream" : subject?.studyMode ?? "memorize";
   const restoredMode =
     listeningModes.has(savedMode) && !speechController.supported
       ? "memorize"
@@ -5054,6 +5092,10 @@ function selectedStudyTerms() {
 }
 
 function updateSetupPreview() {
+  const stream = selectedVocabularyStream();
+  elements.questionStyleFilter.disabled = stream;
+  elements.questionStyleFilter.closest(".setup-field").classList.toggle("is-hidden", stream || Boolean(state.subject?.simpleQuestions) ||
+    (availableQuestionStyles().length <= 1 && !availableQuestionStages().includes("beginner")));
   const currentRoutine = activeRoutineItem();
   elements.questionLimitField.classList.toggle("is-hidden", state.inRoutine && studyRoutineUsesDeckTarget(currentRoutine));
   elements.questionLimit.required = Boolean(currentRoutine && !studyRoutineUsesDeckTarget(currentRoutine));
@@ -5067,7 +5109,7 @@ function updateSetupPreview() {
   elements.timeQuestionField.classList.toggle("is-hidden", !supportsTimeQuestionExclusion());
   const noParts = activeSubjectUsesChapterDecks() && selectedDeckIds().length === 0;
   const terms = noParts ? [] : selectedStudyTerms();
-  const selectedStage = elements.questionStyleFilter.value;
+  const selectedStage = selectedSetupStage();
   const studyMode = selectedStudyMode();
   const listening = listeningModes.has(studyMode);
   const questionAmountMode = selectedQuestionAmountMode();
@@ -5108,7 +5150,7 @@ function updateSetupPreview() {
     ? "はじめから"
     : listening
       ? "聞き流しを開始"
-      : "暗記モードを開始";
+      : stream ? "3語表示で開始" : "暗記モードを開始";
   const routineItem = activeRoutineItem();
   if (routineItem) {
     const remaining = routineRemainingCount(routineItem);
@@ -5238,7 +5280,9 @@ function configureSetup() {
   updateRegionDetailOptions();
   elements.setupShuffle.checked = state.shuffleEnabled;
   for (const option of elements.studyModeOptions) {
-    option.closest(".study-mode-choice")?.classList.remove("is-hidden");
+    option.closest(".study-mode-choice")?.classList.toggle("is-hidden",
+      option.value === "vocabulary-stream" && state.subject?.learningType !== "vocabulary");
+    if (option.value === "vocabulary-stream") option.disabled = state.subject?.learningType !== "vocabulary";
     if (listeningModes.has(option.value)) {
       option.disabled = !speechController.supported;
     }
@@ -5361,12 +5405,140 @@ const studyFieldEditor = createStudyFieldEditor({
   finish() {state.inlineEditing=false;renderQuestion();startStudyClock();},
 });
 
+const vocabularyStreamView = createVocabularyStreamView(document.querySelector("#vocabulary-stream-panel"), {
+  reveal: revealCurrentAnswer,
+  rate: (index, rating) => {
+    if (index === 0 && !state.vocabularyStreamRows[0]?.activityId) void rateCurrentQuestion(rating);
+    else void reviseVocabularyStreamRating(index, rating);
+  },
+  back: goBackOneStep,
+});
+
+function vocabularyStreamSummary() {
+  const batch = state.questionBatch;
+  const count = batch ? `${batch.completedQuestionIds.length}／${batch.questionIds.length}問` : `${launchAnsweredCount()}問`;
+  return `今回 ${count} · ${formatStudyDuration(launchStudySeconds())}`;
+}
+
+function renderVocabularyStream() {
+  if (!isVocabularyStream() || !state.currentTask) return;
+  const first = state.vocabularyStreamRows[0];
+  if (!first || first.questionId !== state.currentTask.questionId || first.activityId) {
+    state.vocabularyStreamRows.unshift({ ...state.currentTask, answerVisible: state.answerVisible,
+      rating: "", activityId: "", previousRecord: null, routineCounted: false });
+    state.vocabularyStreamRows = state.vocabularyStreamRows.slice(0, 3);
+  }
+  state.vocabularyStreamRows[0].answerVisible = state.answerVisible;
+  vocabularyStreamView.render({
+    rows: state.vocabularyStreamRows,
+    currentTask: state.currentTask,
+    answerVisible: state.answerVisible,
+    saving: state.saving,
+    canGoBack: state.history.length > 0,
+    summary: vocabularyStreamSummary(),
+    resolve(row) {
+      const term = termForTask(row), question = questionForTask(row);
+      return term && question ? { word: term.term, meaning: getQuestionAnswerDisplayText(question) } : null;
+    },
+    interval(rating) { return formatInterval(state.reviewSettings[`${rating}Seconds`]); },
+  });
+}
+
+async function reviseVocabularyStreamRating(index, rating) {
+  const row = state.vocabularyStreamRows[index];
+  if (!isVocabularyStream() || state.saving || !row?.activityId || !row.rating || row.rating === rating ||
+      state.vocabularyStreamRows.slice(0, index).some(newer => newer.questionId === row.questionId)) return;
+  const question = questionForTask(row);
+  const beforeRecord = state.progress.questions[row.questionId];
+  if (!question || !beforeRecord) return;
+  const beforeSession = captureActiveSession();
+  const beforeHistory = [...state.history];
+  const beforeRoutine = normalizeStudyRoutineRun(state.routineRun);
+  const previousUpdatedAt = state.progress.updatedAt;
+  state.saving = true;
+  renderActionControls();
+  let routineChange = null;
+  try {
+    // 公開操作や計時の保存を先に確定し、訂正後の途中記録で上書きする。
+    await studySessionSave.catch(() => {});
+    if (row.previousRecord) state.progress.questions[row.questionId] = { ...row.previousRecord };
+    else delete state.progress.questions[row.questionId];
+    rateQuestion(state.progress, row.questionId, rating, state.subject.masteryTarget,
+      state.reviewSettings, new Date(beforeRecord.lastAnsweredAt));
+    const oldRating = row.rating;
+    state.ratingCounts = reviseRatingCounts(state.ratingCounts, oldRating, rating);
+    if (state.questionBatch && !state.questionBatch.questionIds.includes(row.questionId)) {
+      state.questionLimitRatings = reviseRatingCounts(state.questionLimitRatings, oldRating, rating);
+    }
+    updateQuestionBatch(row.questionId, rating);
+    state.queue = state.queue.filter(task => task.questionId !== row.questionId);
+    if (rating === "again") state.retryQuestionIds.add(row.questionId);
+    else state.retryQuestionIds.delete(row.questionId);
+    enqueueDueSessionTasks();
+    ensureUnseenTasksQueued();
+    enqueuePendingRetryTasksImmediately();
+    if (state.inRoutine && activeRoutineItem()) {
+      const itemIndex = state.routineRun.currentIndex;
+      const key = JSON.stringify([datasetVersionForQuestion(row.questionId), row.questionId]);
+      const items = state.routineRun.items.map((item, position) => position === itemIndex ? {
+        ...item,
+        completedCount: Math.max(0, item.completedCount - (row.routineCounted ? 1 : 0)),
+        ...(item.completedQuestionKeys ? { completedQuestionKeys: item.completedQuestionKeys.filter(value => value !== key) } : {}),
+        ratingCounts: reviseRatingCounts(item.ratingCounts, oldRating, ""),
+      } : item);
+      routineChange = recordStudyRoutineQuestion({ ...state.routineRun, items }, state.activeSubjectId,
+        datasetVersionForQuestion(row.questionId), row.questionId, 0, rating,
+        { uniqueQuestions: Boolean(state.questionBatch), deferCompletion: hasPendingRoutineOvertimeReview() });
+      restoreRoutineRun(routineChange.run);
+      row.routineCounted = routineChange.counted;
+      if (!activeRoutineItem()?.overtimePending) clearRoutineOvertime();
+    }
+    row.rating = rating;
+    const saved = await saveCloudStudyAnswer(datasetVersionForQuestion(row.questionId), row.questionId,
+      state.progress.questions[row.questionId], captureActiveSession(), {
+        studyMode: "memorize", reviseActivityId: row.activityId,
+        sessionDatasetVersion: state.sessionDatasetVersion,
+        routineRun: routineChange?.changed ? state.routineRun : undefined,
+      });
+    setSavedSessionForMode("memorize", saved.session);
+    // 訂正前の一手戻りで、確定した訂正や後続の記録を取り消さない。
+    state.history = [];
+  } catch (error) {
+    state.progress.questions[row.questionId] = beforeRecord;
+    state.progress.updatedAt = previousUpdatedAt;
+    restoreActiveSession(beforeSession, { updateControls: false });
+    state.history = beforeHistory;
+    restoreRoutineRun(beforeRoutine);
+    state.unlockMessage = `評価を保存できませんでした。${error.message}`;
+  } finally {
+    state.saving = false;
+  }
+  if (routineChange?.completedItem && !state.unlockMessage) {
+    setVocabularyStreamScreen(false);
+    showRoutineStepCompletion(routineChange);
+  } else renderQuestion();
+}
+
 function renderQuestion() {
   if (showQuestionLimitCompletion()) return;
+  setVocabularyStreamScreen(isVocabularyStream() && Boolean(state.currentTask));
   const term = currentTerm();
   const question = currentQuestion();
   if (!term || !question) {
     renderCompletion();
+    return;
+  }
+  if (isVocabularyStream()) {
+    elements.completionCard.classList.add("is-hidden");
+    elements.contextCard.classList.add("is-hidden");
+    elements.questionCard.classList.add("is-hidden");
+    renderVocabularyStream();
+    renderActionControls();
+    updateStudyTimeDisplay();
+    updateOverallProgress();
+    elements.unlockNotice.textContent = state.unlockMessage;
+    elements.unlockNotice.classList.toggle("is-hidden", !state.unlockMessage);
+    state.unlockMessage = "";
     return;
   }
   const vocabularyMode = state.subject?.learningType === "vocabulary";
@@ -5545,6 +5717,7 @@ function renderQuestion() {
 }
 
 function renderCompletion() {
+  setVocabularyStreamScreen(false);
   answerVisuals.reset();
   speechController.stop();
   state.currentTask = null;
@@ -6024,6 +6197,13 @@ async function rateCurrentQuestion(rating) {
   const activity = createRatingActivity(term, question, rating);
   snapshot.studyActivityEventId = activity.eventId;
   const historyBefore = [...state.history];
+  const streamRow = isVocabularyStream() ? state.vocabularyStreamRows[0] : null;
+  if (streamRow) {
+    streamRow.rating = rating;
+    streamRow.activityId = activity.eventId;
+    streamRow.previousRecord = snapshot.previousQuestionRecord;
+    streamRow.answerVisible = true;
+  }
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
 
@@ -6064,6 +6244,7 @@ async function rateCurrentQuestion(rating) {
       completedDeckIds,
     },
   );
+  if (streamRow) streamRow.routineCounted = routineChange?.counted === true;
   if (routineChange?.completedItem) clearRoutineOvertime();
   startNewStudyScreen();
 
@@ -6108,6 +6289,7 @@ async function rateCurrentQuestion(rating) {
   pushHistory(snapshot);
   if (showQuestionLimitCompletion()) return;
   if (routineChange?.completedItem) {
+    setVocabularyStreamScreen(false);
     showRoutineStepCompletion(routineChange);
     return;
   }
@@ -6248,6 +6430,7 @@ function hasReachedQuestionLimit() {
 function showQuestionLimitCompletion() {
   if (!hasReachedQuestionLimit()) return false;
   if (state.saving) return true;
+  setVocabularyStreamScreen(false);
   answerVisuals.reset();
   stopListeningSequence();
   stopStudyClock();
@@ -6314,11 +6497,13 @@ async function beginStudy() {
   state.excludeTimeQuestions = selectedTimeQuestionExclusion();
   state.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
   setStudyTerms(selectedTerms);
-  state.selectedStage = elements.questionStyleFilter.value;
+  state.selectedStage = selectedSetupStage();
   state.sequentialEnabled = selectedSequentialStudy();
   state.sequentialDeckOrder = setupDeckOrder().filter(id => state.activeDeckIds.includes(id));
   state.questionAmountMode = state.sequentialEnabled ? "all" : selectedQuestionAmountMode();
   state.studyMode = studyMode;
+  state.vocabularyStreamEnabled = selectedVocabularyStream();
+  state.vocabularyStreamRows = [];
   state.shuffleEnabled = elements.setupShuffle.checked;
   speechController.stop();
   state.activeSession = false;
@@ -6442,6 +6627,19 @@ async function resumeStudy() {
     savedSession.questionAmountMode = "all";
   }
   savedSession.selectedQuestionTypes = supportsQuestionTypes() ? selectedQuestionTypes() : null;
+  const stream = selectedVocabularyStream();
+  if (stream !== Boolean(savedSession.vocabularyStreamEnabled)) savedSession.vocabularyStreamRows = [];
+  savedSession.vocabularyStreamEnabled = stream;
+  if (stream) {
+    savedSession.selectedStage = "beginner";
+    savedSession.tasks = savedSession.tasks.filter(task => task.stage === "beginner");
+    const ids = new Set(savedSession.tasks.map(task => task.questionId));
+    savedSession.queue = savedSession.queue.filter(task => ids.has(task.questionId));
+    if (!ids.has(savedSession.currentTask?.questionId)) {
+      savedSession.currentTask = null;
+      savedSession.answerVisible = false;
+    }
+  }
   const eligibleIds = new Set(filterConfiguredQuestions(state.allTerms, savedSession.selectedQuestionTypes, savedSession.excludeTimeQuestions)
     .flatMap((term) => Object.values(term.stages).flat().map((question) => question.id)));
   if (!savedSession.tasks.some((task) => eligibleIds.has(task.questionId))) {
@@ -7486,6 +7684,7 @@ elements.studyShell.addEventListener("pointercancel", () => {
 });
 
 elements.studyShell.addEventListener("click", (event) => {
+  if (isVocabularyStream()) return;
   if (hasReachedQuestionLimit()) return;
   if (suppressNextListeningClick) {
     suppressNextListeningClick = false;

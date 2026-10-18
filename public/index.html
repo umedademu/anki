@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.406"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.406" />
-    <link rel="stylesheet" href="/theme.css?v=0.406" />
+    <script src="/theme.js?v=0.407"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.407" />
+    <link rel="stylesheet" href="/theme.css?v=0.407" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.406" type="module"></script>
+    <script src="/app.js?v=0.407" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.406</span>
+        <span class="app-version">v0.407</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -34,7 +34,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.406｜科目別学習</p>
+        <p class="eyebrow">v0.407｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -142,6 +142,10 @@
               <span>
                 <strong>聞き流し</strong>
               </span>
+            </label>
+            <label class="study-mode-choice is-hidden">
+              <input type="radio" name="study-mode" value="vocabulary-stream" />
+              <span><strong>英単語・3語表示</strong><small>英語から意味・横画面向け</small></span>
             </label>
           </div>
         </fieldset>
@@ -685,6 +689,8 @@
         <div class="progress-track" aria-hidden="true">
           <span id="progress-bar"></span>
         </div>
+
+        <section class="vocabulary-stream-panel is-hidden" id="vocabulary-stream-panel" aria-label="英単語の3語表示"></section>
 
         <article class="question-card" id="question-card">
           <div class="question-heading">

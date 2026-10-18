@@ -171,6 +171,47 @@ function normalizeStudySessionQuestionIds(value, validQuestionIds) {
   return [...new Set(value.map(normalizeStudySessionId).filter((id) => validQuestionIds.has(id)))];
 }
 
+function normalizeVocabularyStreamPreviousRecord(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const lastRating = value.lastRating == null ? null : String(value.lastRating);
+  if (lastRating && !["again", "hard", "good", "easy"].includes(lastRating)) return null;
+  const normalizeDate = (date) => {
+    if (date == null || date === "") return null;
+    return Number.isFinite(Date.parse(String(date))) ? new Date(String(date)).toISOString() : "";
+  };
+  const lastAnsweredAt = normalizeDate(value.lastAnsweredAt);
+  const nextReviewAt = normalizeDate(value.nextReviewAt);
+  if (lastAnsweredAt === "" || nextReviewAt === "") return null;
+  const count = (number) => Math.min(1_000_000_000, Math.max(0, Number.parseInt(number, 10) || 0));
+  return {
+    streak: count(value.streak),
+    attempts: count(value.attempts),
+    rememberedCount: count(value.rememberedCount),
+    lastRating,
+    lastAnsweredAt,
+    nextReviewAt,
+    everMastered: Boolean(value.everMastered),
+  };
+}
+
+function normalizeVocabularyStreamRows(value, taskByQuestionId) {
+  if (!Array.isArray(value)) return [];
+  return value.slice(0, studySessionTaskLimit).flatMap((row) => {
+    const task = normalizeStudySessionTask(row);
+    const validTask = task && taskByQuestionId.get(task.questionId);
+    if (!validTask || task.stage !== "beginner" || task.termId !== validTask.termId ||
+      task.stage !== validTask.stage) return [];
+    return [{
+      ...task,
+      answerVisible: row.answerVisible === true,
+      rating: ["again", "hard", "good", "easy"].includes(row.rating) ? row.rating : "",
+      activityId: normalizeStudySessionId(row.activityId),
+      previousRecord: normalizeVocabularyStreamPreviousRecord(row.previousRecord),
+      routineCounted: row.routineCounted === true,
+    }];
+  }).slice(0, 3);
+}
+
 export function normalizeStudySession(value) {
   let source = value;
   if (typeof source === "string") {
@@ -192,10 +233,20 @@ export function normalizeStudySession(value) {
   const normalizedCurrentTask = currentTask && validQuestionIds.has(currentTask.questionId)
     ? taskByQuestionId.get(currentTask.questionId)
     : null;
+  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true &&
+    source.studyMode !== "listen-answer";
   return {
     schemaVersion: 1,
     roundId: normalizeStudySessionId(source.roundId),
     studyMode: studyModes.has(source.studyMode) ? source.studyMode : "memorize",
+    ...(source.vocabularyStreamEnabled !== undefined || source.vocabularyStreamRows !== undefined
+      ? {
+          vocabularyStreamEnabled,
+          vocabularyStreamRows: vocabularyStreamEnabled
+            ? normalizeVocabularyStreamRows(source.vocabularyStreamRows, taskByQuestionId)
+            : [],
+        }
+      : {}),
     deckIds: [...new Set(
       (Array.isArray(source.deckIds) ? source.deckIds : [])
         .map(normalizeStudySessionId)
@@ -205,7 +256,8 @@ export function normalizeStudySession(value) {
     selectedQuestionTypes: Array.isArray(source.selectedQuestionTypes)
       ? [...new Set(source.selectedQuestionTypes.filter(value => typeof value === "string" && /^[a-z_]+$/.test(value) && value.length <= 50))].slice(0, 100)
       : null,
-    selectedStage: questionStyles.has(source.selectedStage) ? source.selectedStage : "",
+    selectedStage: vocabularyStreamEnabled ? "beginner"
+      : questionStyles.has(source.selectedStage) ? source.selectedStage : "",
     questionAmountMode: questionAmountModes.has(source.questionAmountMode)
       ? source.questionAmountMode
       : "all",
@@ -375,6 +427,7 @@ export function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      vocabularyStreamEnabled: subjectId === "english-vocabulary" && rawSubject.vocabularyStreamEnabled === true,
       sequentialEnabled: rawSubject.sequentialEnabled === true,
       deckOrder: normalizeDeckOrder(rawSubject.deckOrder),
       questionLimit: normalizeQuestionLimit(rawSubject.questionLimit),
@@ -795,6 +848,9 @@ export async function saveCloudStudyAnswer(
         deleteActivityId: historyChange.deleteActivityId ?? null,
         ...(historyChange.replaceActivityId
           ? { replaceActivityId: historyChange.replaceActivityId }
+          : {}),
+        ...(historyChange.reviseActivityId
+          ? { reviseActivityId: historyChange.reviseActivityId }
           : {}),
         completeRoundId: historyChange.completeRoundId ?? null,
         deleteRoundId: historyChange.deleteRoundId ?? null,

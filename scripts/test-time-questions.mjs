@@ -122,6 +122,7 @@ const onlyTime = { ...session, termIds: ["t2"], tasks: [tasks.at(-1)], queue: []
 Object.assign(elements, { resumeStudy: {}, startStudy: {}, cloudStatus: {}, setupShuffle: { checked: false } });
 Object.assign(context, {
   validateQuestionLimit: () => true, selectedStudyMode: () => "memorize",
+  selectedVocabularyStream: () => false,
   savedSessionForMode: () => onlyTime, activeRoutineItem: () => null,
   selectedSequentialStudy: () => false, setupDeckOrder: () => [],
   switchStudySessionMode, startingStudy: false, deckSelectionUpdating: false,

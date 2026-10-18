@@ -4537,17 +4537,19 @@ body.is-studying.is-vocabulary-stream .page {
   grid-template-rows: minmax(0, 1fr);
   gap: 0;
 }
-body.is-vocabulary-stream .study-menu-trigger {
-  top: max(6px, env(safe-area-inset-top));
-  width: auto;
-  height: 32px;
-  min-height: 32px;
-  padding: 3px 14px;
-  opacity: 1;
-  background: var(--theme-surface-glass, rgb(255 255 255 / 94%));
-  border: 1px solid var(--theme-border, #c8d6cc);
-  border-radius: 999px;
-  font-size: .7rem;
+@media not all and (orientation: landscape) and (max-height: 600px) {
+  body.is-vocabulary-stream .study-menu-trigger {
+    top: max(6px, env(safe-area-inset-top));
+    width: auto;
+    height: 32px;
+    min-height: 32px;
+    padding: 3px 14px;
+    opacity: 1;
+    background: var(--theme-surface-glass, rgb(255 255 255 / 94%));
+    border: 1px solid var(--theme-border, #c8d6cc);
+    border-radius: 999px;
+    font-size: .7rem;
+  }
 }
 .study-shell.is-vocabulary-stream > :is(.context-card, .progress-track, .question-card, .action-dock, .listening-dock) { display: none; }
 .vocabulary-stream-panel {

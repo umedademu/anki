@@ -4573,6 +4573,7 @@ body.is-vocabulary-stream .study-menu-trigger {
   grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 8px;
   min-height: 0;
+  overflow: hidden;
 }
 .vocabulary-stream-row {
   display: grid;

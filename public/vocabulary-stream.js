@@ -17,6 +17,10 @@ export function reviseRatingCounts(value, previous, next) {
 }
 
 export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance }) {
+  const motionDuration = 180;
+  let previousRows = [];
+  let motion = null;
+  let activeAnimations = [];
   panel.addEventListener("click", event => {
     const button = event.target.closest("button");
     if (!button || button.disabled) return;
@@ -30,6 +34,20 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
 
   return {
     render({ rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval, listening = false, paused = false, ratingSaving = false }) {
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const addsNewRow = previousRows.length > 0 && rows[0] !== previousRows[0] && rows[1] === previousRows[0];
+      const sameRows = rows.length === previousRows.length && rows.every((row, index) => row === previousRows[index]);
+      const previousTops = new Map();
+      if (addsNewRow && !reducedMotion) {
+        panel.querySelectorAll(".vocabulary-stream-row").forEach((card, index) => {
+          previousTops.set(previousRows[index], card.getBoundingClientRect().top);
+        });
+        motion = { startedAt: window.performance.now(), offsets: new Map() };
+      } else if (!sameRows || reducedMotion) {
+        motion = null;
+      }
+      activeAnimations.forEach(animation => animation.cancel());
+      activeAnimations = [];
       const header = document.createElement("div");
       header.className = "vocabulary-stream-heading";
       const title = document.createElement("strong");
@@ -122,6 +140,31 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
         list.append(card);
       }
       panel.replaceChildren(header, list);
+      if (motion) {
+        const cards = [...list.children];
+        if (addsNewRow) {
+          const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
+          cards.forEach((card, index) => {
+            const rect = card.getBoundingClientRect();
+            const previousTop = previousTops.get(rows[index]);
+            motion.offsets.set(rows[index], previousTop === undefined ? -(rect.height + gap) : previousTop - rect.top);
+          });
+        }
+        const elapsed = window.performance.now() - motion.startedAt;
+        if (elapsed < motionDuration) {
+          cards.forEach((card, index) => {
+            const offset = motion.offsets.get(rows[index]) ?? 0;
+            const animation = card.animate([
+              { transform: `translateY(${offset}px)` },
+              { transform: "translateY(0)" },
+            ], { duration: motionDuration, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)", fill: "both" });
+            // 保存状態などの再描画でも、動きを最初からやり直さない。
+            animation.currentTime = elapsed;
+            activeAnimations.push(animation);
+          });
+        } else motion = null;
+      }
+      previousRows = [...rows];
     },
   };
 }

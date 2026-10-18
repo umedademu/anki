@@ -297,6 +297,8 @@ export function createSpeechController(){
   }
   async function assertLayout(viewport, listening = false) {
     await page.setViewportSize(viewport);
+    await page.waitForFunction(() => !document.querySelector("#vocabulary-stream-panel").getAnimations({ subtree: true })
+      .some(animation => animation.playState === "running" || animation.playState === "pending"));
     await page.evaluate(() => window.scrollTo(0, 0));
     const layout = await page.locator("#vocabulary-stream-panel").evaluate(panel => {
       const box = node => {

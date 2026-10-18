@@ -206,6 +206,8 @@ function normalizeVocabularyStreamRows(value, taskByQuestionId) {
       answerVisible: row.answerVisible === true,
       rating: ["again", "hard", "good", "easy"].includes(row.rating) ? row.rating : "",
       activityId: normalizeStudySessionId(row.activityId),
+      answeredAt: typeof row.answeredAt === "string" && Number.isFinite(Date.parse(row.answeredAt))
+        ? new Date(row.answeredAt).toISOString() : null,
       previousRecord: normalizeVocabularyStreamPreviousRecord(row.previousRecord),
       routineCounted: row.routineCounted === true,
     }];
@@ -233,8 +235,7 @@ export function normalizeStudySession(value) {
   const normalizedCurrentTask = currentTask && validQuestionIds.has(currentTask.questionId)
     ? taskByQuestionId.get(currentTask.questionId)
     : null;
-  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true &&
-    source.studyMode !== "listen-answer";
+  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true;
   return {
     schemaVersion: 1,
     roundId: normalizeStudySessionId(source.roundId),
@@ -324,6 +325,8 @@ export function switchStudySessionMode(value, studyMode) {
   return normalizeStudySession({
     ...session,
     studyMode,
+    ...(modeChanged && session.vocabularyStreamRows !== undefined
+      ? { vocabularyStreamRows: [] } : {}),
     answerVisible: modeChanged ? false : session.answerVisible,
     screenStudySeconds: modeChanged ? 0 : session.screenStudySeconds,
     savedScreenStudySeconds: modeChanged ? 0 : session.savedScreenStudySeconds,
@@ -850,7 +853,11 @@ export async function saveCloudStudyAnswer(
           ? { replaceActivityId: historyChange.replaceActivityId }
           : {}),
         ...(historyChange.reviseActivityId
-          ? { reviseActivityId: historyChange.reviseActivityId }
+          ? {
+              reviseActivityId: historyChange.reviseActivityId,
+              ...(historyChange.reviseAnalysis !== undefined
+                ? { reviseAnalysis: historyChange.reviseAnalysis } : {}),
+            }
           : {}),
         completeRoundId: historyChange.completeRoundId ?? null,
         deleteRoundId: historyChange.deleteRoundId ?? null,

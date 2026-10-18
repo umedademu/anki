@@ -16,7 +16,7 @@ export function reviseRatingCounts(value, previous, next) {
   return counts;
 }
 
-export function createVocabularyStreamView(panel, { reveal, rate, back }) {
+export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance }) {
   panel.addEventListener("click", event => {
     const button = event.target.closest("button");
     if (!button || button.disabled) return;
@@ -24,14 +24,16 @@ export function createVocabularyStreamView(panel, { reveal, rate, back }) {
     else if (button.hasAttribute("data-stream-rating")) {
       rate(Number(button.closest(".vocabulary-stream-row").dataset.streamRow), button.dataset.streamRating);
     } else if (button.id === "vocabulary-stream-back") back();
+    else if (button.id === "vocabulary-stream-toggle") toggle();
+    else if (button.id === "vocabulary-stream-next") advance();
   });
 
   return {
-    render({ rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval }) {
+    render({ rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval, listening = false, paused = false, ratingSaving = false }) {
       const header = document.createElement("div");
       header.className = "vocabulary-stream-heading";
       const title = document.createElement("strong");
-      title.textContent = "英単語・3語表示";
+      title.textContent = `${listening ? "聞き流し" : "暗記モード"}・3語表示`;
       const progress = document.createElement("span");
       progress.className = "vocabulary-stream-summary";
       progress.textContent = summary;
@@ -42,6 +44,22 @@ export function createVocabularyStreamView(panel, { reveal, rate, back }) {
       backButton.textContent = "一手戻る";
       backButton.disabled = saving || !canGoBack;
       header.append(title, progress, backButton);
+      if (listening) {
+        const toggleButton = document.createElement("button");
+        toggleButton.id = "vocabulary-stream-toggle";
+        toggleButton.type = "button";
+        toggleButton.className = "secondary-button";
+        toggleButton.textContent = paused ? "再生" : "一時停止";
+        toggleButton.setAttribute("aria-label", paused ? "聞き流しを再生" : "聞き流しを一時停止");
+        toggleButton.disabled = saving;
+        const nextButton = document.createElement("button");
+        nextButton.id = "vocabulary-stream-next";
+        nextButton.type = "button";
+        nextButton.className = "secondary-button";
+        nextButton.textContent = answerVisible ? "次へ" : "答えを表示";
+        nextButton.disabled = saving;
+        header.append(toggleButton, nextButton);
+      }
 
       const list = document.createElement("div");
       list.className = "vocabulary-stream-list";
@@ -89,7 +107,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back }) {
           button.type = "button";
           button.className = `rating-action rating-${style}`;
           button.dataset.streamRating = rating;
-          button.disabled = saving || !visible || superseded;
+          button.disabled = saving || ratingSaving || !visible || superseded;
           button.setAttribute("aria-pressed", String(row.rating === rating));
           button.setAttribute("aria-label", `${content.word}：${label.slice(2)}`);
           if (superseded) button.title = "同じ単語の最新の表示から評価してください";

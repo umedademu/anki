@@ -4498,6 +4498,32 @@ body.is-listening.is-listening-answer-visible .page {
 }
 
 /* 横向きのスマートフォンで3語と12個の評価を同時に操作する。 */
+.vocabulary-stream-setting {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--theme-border, #c8d6cc);
+  border-radius: 12px;
+  color: var(--theme-text, #24442f);
+  background: var(--theme-surface, #fff);
+  cursor: pointer;
+}
+.vocabulary-stream-setting strong { display: block; font-size: 1rem; }
+.vocabulary-stream-setting small { display: block; margin-top: 3px; font-size: .8rem; color: var(--theme-muted, #58705d); }
+.vocabulary-stream-switch { position: relative; flex: 0 0 76px; width: 76px; height: 40px; }
+.vocabulary-stream-switch input { position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.vocabulary-stream-switch-track { position: absolute; inset: 0; border: 1px solid var(--theme-border, #96aa9c); border-radius: 999px; background: var(--theme-track, #dbe3dd); transition: background 160ms; }
+.vocabulary-stream-switch-track::before { content: ""; position: absolute; top: 4px; left: 4px; width: 30px; height: 30px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgb(0 0 0 / 15%); transition: transform 160ms; }
+.vocabulary-stream-switch-track::after { content: "オフ"; position: absolute; top: 11px; right: 7px; color: var(--theme-text, #24442f); font-size: .7rem; font-weight: 800; }
+.vocabulary-stream-switch input:checked + .vocabulary-stream-switch-track { background: #245c3e; border-color: #245c3e; }
+.vocabulary-stream-switch input:checked + .vocabulary-stream-switch-track::before { transform: translateX(36px); }
+.vocabulary-stream-switch input:checked + .vocabulary-stream-switch-track::after { content: "オン"; left: 8px; right: auto; color: #fff; }
+.vocabulary-stream-switch input:focus-visible + .vocabulary-stream-switch-track { outline: 3px solid var(--theme-accent, #2b6747); outline-offset: 3px; }
+.vocabulary-stream-switch input:disabled { cursor: default; }
+.vocabulary-stream-switch input:disabled + .vocabulary-stream-switch-track { opacity: .5; }
 body.is-studying.is-vocabulary-stream .page {
   width: min(1100px, 100%);
   height: 100dvh;

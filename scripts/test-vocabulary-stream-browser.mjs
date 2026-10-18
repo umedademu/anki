@@ -64,13 +64,16 @@ const objects = new Map([
 ]);
 
 let settings, records, sessions, activities, answerRequests, failSave;
+let holdNextRevision = false, holdNextActivity = false, releaseRevision = null, releaseActivity = null;
 const routinePlan = [{ id: "vocabulary", subjectId: "english-vocabulary", questionTarget: 8 }, { id: "history", subjectId: "test-history", questionTarget: 1 }];
 function reset({ routine = false } = {}) {
+  releaseRevision?.(); releaseActivity?.(); releaseRevision = null; releaseActivity = null;
+  holdNextRevision = false; holdNextActivity = false;
   records = new Map(); sessions = new Map(); activities = new Map(); answerRequests = []; failSave = false;
   settings = {
     autoSpeechEnabled: false, speechParts: off, ratingSoundVolume: 0, shuffleEnabled: false,
     againSeconds: 86400, hardSeconds: 86400, goodSeconds: 86400, easySeconds: 86400,
-    studyTimeLimitSeconds: 86400,
+    studyTimeLimitSeconds: 86400, listeningPauseSeconds: 0, listeningQuestionIntervalSeconds: 0,
     setupPreferences: normalizeSetupPreferences({ routinePlan,
       routineRun: routine ? createStudyRoutineRun(routinePlan, "2026-10-19", "vocabulary-stream-run") : null,
       subjects: {
@@ -105,6 +108,11 @@ const server = createServer(async (req, res) => {
       }
       if (url.pathname.startsWith("/v1/study-answer/")) {
         answerRequests.push(structuredClone(body));
+        if (holdNextRevision && body.reviseActivityId) {
+          holdNextRevision = false;
+          await new Promise(resolve => { releaseRevision = resolve; });
+          releaseRevision = null;
+        }
         if (failSave) { reply({ error: "試験用の保存失敗" }, 503); return; }
         const id = decodeURIComponent(url.pathname.split("/").pop());
         const progress = { ...records.get(dataset) };
@@ -115,7 +123,16 @@ const server = createServer(async (req, res) => {
           assert.ok(activities.has(body.reviseActivityId), "修正前の評価記録が存在する");
           activities.set(body.reviseActivityId, { ...activities.get(body.reviseActivityId), rating: body.record.lastRating, questionId: id });
         } else if (body.activity) activities.set(body.activity.eventId, { ...body.activity, questionId: id });
-      } else if (url.pathname !== "/v1/study-session" && !url.pathname.startsWith("/v1/study-time/") && !url.pathname.startsWith("/v1/study-activity/")) {
+      } else if (url.pathname.startsWith("/v1/study-activity/")) {
+        if (holdNextActivity && !url.pathname.endsWith("/undo")) {
+          holdNextActivity = false;
+          await new Promise(resolve => { releaseActivity = resolve; });
+          releaseActivity = null;
+        }
+        if (failSave) { reply({ error: "試験用の保存失敗" }, 503); return; }
+        if (url.pathname.endsWith("/undo")) activities.delete(decodeURIComponent(url.pathname.split("/").at(-2)));
+        else if (body.activity) activities.set(body.activity.eventId, { ...body.activity });
+      } else if (url.pathname !== "/v1/study-session" && !url.pathname.startsWith("/v1/study-time/")) {
         throw new Error("未対応の試験通信：" + url.pathname);
       }
       if (body.routineRun) settings.setupPreferences = normalizeSetupPreferences({ ...settings.setupPreferences, routineRun: body.routineRun });
@@ -162,12 +179,35 @@ try {
   // 試験サーバー以外へ一切通信しない。特に実際のCloudflareへの書き込みを防ぐ。
   await context.route("**/*", route => new URL(route.request().url()).origin === base ? route.continue() : route.abort());
   const speech = (await readFile(path.join(root, "speech.js"), "utf8")).replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + "\nexport function createSpeechController(){return {supported:true,paused:false,currentTarget:null,stop(){},unlock(){},pause(){return false},resume(){return false},speak(){return true},preload(){return Promise.resolve()}};}" }));
+  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + `
+export function createSpeechController(){
+  let paused = false;
+  const control = window.__streamSpeechTest = {
+    pending: null,
+    complete() {
+      if (paused || !this.pending) return false;
+      const done = this.pending; this.pending = null; done(); return true;
+    },
+  };
+  return {
+    supported:true, get paused(){return paused;}, currentTarget:null,
+    stop(){control.pending = null; paused = false;}, unlock(){},
+    pause(){paused = true; return true;},
+    resume(){if (!paused) return false; paused = false; return true;},
+    speak(_segments, callbacks = {}){paused = false; control.pending = callbacks.onComplete ?? callbacks.onEnd ?? null; return true;},
+    preload(){return Promise.resolve()},
+  };
+}` }));
   const page = await context.newPage(), errors = [];
   page.on("pageerror", error => errors.push(error.message));
+  const screenshotDirectory = await mkdtemp(path.join(tmpdir(), "anki-vocabulary-stream-"));
+  const screenshotPath = path.join(screenshotDirectory, "vocabulary-stream-812x375.png");
+  const setupScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-setup-812x375.png");
+  const listeningScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-listening-812x375.png");
+  const viewports = [{ width: 667, height: 375 }, { width: 812, height: 375 }, { width: 932, height: 430 }, { width: 1366, height: 768 }];
   const rows = () => page.locator("#vocabulary-stream-panel .vocabulary-stream-row");
   const current = () => rows().first();
-  const streamRadio = () => page.locator('input[name="study-mode"][value="vocabulary-stream"]');
+  const streamToggle = () => page.locator('input#vocabulary-stream-enabled, #vocabulary-stream-enabled input[type="checkbox"][role="switch"]');
   const savedSession = () => sessions.get(vocabularyDeck.version);
   const progress = () => records.get(vocabularyDeck.version) ?? {};
   const ids = () => rows().evaluateAll(nodes => nodes.map(node => node.dataset.questionId));
@@ -176,17 +216,17 @@ try {
     await page.locator("#setup-panel").waitFor({ state: "visible" });
     await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
   }
-  async function ready(id) {
-    await page.waitForFunction(expected => {
+  async function ready(id, mode = "memorize") {
+    await page.waitForFunction(({ expected, mode }) => {
       const panel = document.querySelector("#vocabulary-stream-panel"), row = panel?.querySelector(".vocabulary-stream-row");
-      const reveal = row?.querySelector("[data-stream-reveal]");
-      return panel && !panel.classList.contains("is-hidden") && row?.dataset.questionId === expected && reveal && !reveal.disabled;
-    }, id);
+      const action = mode === "listen-answer" ? panel?.querySelector("#vocabulary-stream-next") : row?.querySelector("[data-stream-reveal]");
+      return panel && !panel.classList.contains("is-hidden") && row?.dataset.questionId === expected && action && !action.disabled;
+    }, { expected: id, mode });
   }
-  async function start(count = 8) {
-    await setup(); await streamRadio().check();
+  async function start(count = 8, mode = "memorize") {
+    await setup(); await page.locator(`input[name="study-mode"][value="${mode}"]`).check(); await streamToggle().check();
     await page.locator("#question-limit").fill(String(count));
-    await page.locator("#start-study").click(); await ready("q0");
+    await page.locator("#start-study").click(); await ready("q0", mode);
   }
   async function reveal() {
     await current().locator("[data-stream-reveal]").click();
@@ -226,10 +266,81 @@ try {
     }
   }
 
-  // 追加モードは英単語だけに表示し、既存の選択肢を維持する。
+  async function saveSetupChange(action, mode, enabled) {
+    const saved = page.waitForResponse(response => {
+      if (!response.url().includes("/v1/settings") || !response.ok()) return false;
+      const subject = response.request().postDataJSON()?.setupPreferences?.subjects?.["english-vocabulary"];
+      return subject?.studyMode === mode && subject.vocabularyStreamEnabled === enabled;
+    });
+    await action(); await saved;
+    assert.equal(settings.setupPreferences.subjects["english-vocabulary"].studyMode, mode);
+    assert.equal(settings.setupPreferences.subjects["english-vocabulary"].vocabularyStreamEnabled, enabled);
+  }
+  async function listeningNext(nextId = null) {
+    await page.locator("#vocabulary-stream-next").click();
+    if (nextId) await ready(nextId, "listen-answer");
+    else await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row [data-stream-rating="good"]').disabled);
+  }
+  async function finishSpeech() {
+    await page.waitForFunction(() => Boolean(window.__streamSpeechTest?.pending));
+    assert.equal(await page.evaluate(() => window.__streamSpeechTest.complete()), true, "試験用の完了通知だけで聞き流しを進める");
+  }
+  async function assertPlayback(paused) {
+    await page.waitForFunction(paused => document.querySelector("#vocabulary-stream-toggle")?.textContent.includes(paused ? "再生" : "一時停止"), paused);
+  }
+  async function savedWhen(predicate) {
+    const deadline = Date.now() + 5000;
+    while (!predicate()) {
+      assert.ok(Date.now() < deadline, "試験用の保存が完了する");
+      await new Promise(resolve => setTimeout(resolve, 20));
+    }
+  }
+  async function assertLayout(viewport, listening = false) {
+    await page.setViewportSize(viewport);
+    await page.evaluate(() => window.scrollTo(0, 0));
+    const layout = await page.locator("#vocabulary-stream-panel").evaluate(panel => {
+      const box = node => {
+        const rect = node.getBoundingClientRect(); return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height };
+      };
+      return {
+        width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
+        boxes: [...panel.querySelectorAll(".vocabulary-stream-row, [data-stream-rating]")].map(box),
+        heading: [...panel.querySelector(".vocabulary-stream-heading").children].map(box),
+      };
+    });
+    assert.equal(layout.boxes.length, 15);
+    assert.equal(layout.overflow, false, `${viewport.width}×${viewport.height}で横にはみ出さない`);
+    for (const box of layout.boxes) assert.ok(box.width > 0 && box.height > 0 && box.left >= -1 && box.top >= -1 && box.right <= layout.width + 1 && box.bottom <= layout.height + 1,
+      `${viewport.width}×${viewport.height}で3行と12ボタンが画面に収まる：${JSON.stringify(box)}`);
+    if (listening) {
+      assert.equal(layout.heading.length, 5, "聞き流しの見出しと進捗と3つの操作を表示する");
+      for (const box of layout.heading) assert.ok(box.width > 0 && box.height > 0 && box.left >= -1 && box.top >= -1 && box.right <= layout.width + 1 && box.bottom <= layout.height + 1,
+        `${viewport.width}×${viewport.height}で上部操作を画面内に表示する`);
+      for (let i = 0; i < layout.heading.length; i++) for (let j = i + 1; j < layout.heading.length; j++) {
+        const a = layout.heading[i], b = layout.heading[j];
+        assert.ok(Math.min(a.right, b.right) - Math.max(a.left, b.left) <= 1 || Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) <= 1,
+          `${viewport.width}×${viewport.height}で上部の見出し・進捗・操作が重ならない`);
+      }
+      assert.ok(Math.max(...layout.heading.map(box => box.bottom)) <= layout.boxes[0].top + 1, "上部操作と最新の単語が重ならない");
+    }
+    await assertFullTextReachable(rows().nth(1), 2, viewport);
+    await assertFullTextReachable(rows().nth(2), 1, viewport);
+  }
+
+  // 暗記・聞き流しの2択を維持し、3語表示は英単語だけに独立した切替として表示する。
   await setup("test-history");
-  assert.equal(await streamRadio().isVisible(), false);
+  assert.equal(await streamToggle().isVisible(), false);
+  assert.deepEqual(await page.locator('input[name="study-mode"]').evaluateAll(nodes => nodes.map(node => node.value)), ["memorize", "listen-answer"]);
   for (const mode of ["memorize", "listen-answer"]) assert.equal(await page.locator(`input[name="study-mode"][value="${mode}"]`).isVisible(), true);
+  await setup(); assert.equal(await streamToggle().isVisible(), true); assert.equal(await streamToggle().getAttribute("role"), "switch");
+  await saveSetupChange(() => streamToggle().check(), "memorize", true);
+  await saveSetupChange(() => page.locator('input[name="study-mode"][value="listen-answer"]').check(), "listen-answer", true);
+  assert.equal(await streamToggle().isChecked(), true, "聞き流しへ切り替えても3語表示の選択を保持する");
+  await saveSetupChange(() => streamToggle().uncheck(), "listen-answer", false);
+  await saveSetupChange(() => page.locator('input[name="study-mode"][value="memorize"]').check(), "memorize", false);
+  assert.equal(await streamToggle().isChecked(), false, "暗記へ切り替えても3語表示OFFを保持する");
+  await saveSetupChange(() => streamToggle().check(), "memorize", true);
+  await page.screenshot({ path: setupScreenshotPath, fullPage: true });
   await start();
   assert.equal(await rows().count(), 1); assert.deepEqual(await ids(), ["q0"]);
   assert.equal(await current().locator(".vocabulary-stream-word").textContent(), words[0]);
@@ -250,22 +361,8 @@ try {
   assert.equal(answerRequests.every(body => body.studyMode === "memorize"), true, "通常暗記と同じ保存窓口を使う");
 
   // スマートフォンの横画面とパソコンで3行・12個の評価ボタンを同時に表示する。
-  const screenshotPath = path.join(await mkdtemp(path.join(tmpdir(), "anki-vocabulary-stream-")), "vocabulary-stream-812x375.png");
-  for (const viewport of [{ width: 667, height: 375 }, { width: 812, height: 375 }, { width: 932, height: 430 }, { width: 1366, height: 768 }]) {
-    await page.setViewportSize(viewport);
-    await page.evaluate(() => window.scrollTo(0, 0));
-    const layout = await page.locator("#vocabulary-stream-panel").evaluate(panel => ({
-      width: innerWidth, height: innerHeight, overflow: document.documentElement.scrollWidth > innerWidth,
-      boxes: [...panel.querySelectorAll(".vocabulary-stream-row, [data-stream-rating]")].map(node => {
-        const rect = node.getBoundingClientRect(); return { left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom, width: rect.width, height: rect.height };
-      }),
-    }));
-    assert.equal(layout.boxes.length, 15);
-    assert.equal(layout.overflow, false, `${viewport.width}×${viewport.height}で横にはみ出さない`);
-    for (const box of layout.boxes) assert.ok(box.width > 0 && box.height > 0 && box.left >= -1 && box.top >= -1 && box.right <= layout.width + 1 && box.bottom <= layout.height + 1,
-      `${viewport.width}×${viewport.height}で3行と12ボタンが画面に収まる：${JSON.stringify(box)}`);
-    await assertFullTextReachable(rows().nth(1), 2, viewport);
-    await assertFullTextReachable(rows().nth(2), 1, viewport);
+  for (const viewport of viewports) {
+    await assertLayout(viewport);
     if (viewport.width === 812) await page.screenshot({ path: screenshotPath });
   }
 
@@ -318,6 +415,7 @@ try {
   // 通常暗記・聞き流しへ切り替えられる。
   for (const mode of ["memorize", "listen-answer"]) {
     await setup(); await page.locator(`input[name="study-mode"][value="${mode}"]`).check();
+    await streamToggle().uncheck();
     await page.locator("#resume-study").click(); await page.locator("#question-card").waitFor({ state: "visible" });
     assert.equal(await page.locator("#vocabulary-stream-panel").isVisible(), false);
     assert.equal(savedSession().vocabularyStreamEnabled, false);
@@ -337,13 +435,134 @@ try {
   for (const rating of ratings) assert.equal(await rows().nth(1).locator(`[data-stream-rating="${rating}"]`).isDisabled(), true);
   assert.equal(progress().q0.attempts, 1); assert.equal(activities.size, 1);
 
+  // 聞き流しでも3語を残し、手動操作と無音の完了通知のどちらでも訳を順番に出す。
+  reset(); await start(8, "listen-answer");
+  assert.equal(await rows().count(), 1); await assertHiddenMeaning(current()); await assertPlayback(false);
+  assert.equal(savedSession().studyMode, "listen-answer"); assert.equal(savedSession().vocabularyStreamEnabled, true);
+  await listeningNext(); assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[0]);
+  await listeningNext("q1"); assert.deepEqual(await ids(), ["q1", "q0"]); await assertHiddenMeaning(current());
+  await listeningNext(); await listeningNext("q2");
+  await listeningNext(); await listeningNext("q3");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  assert.equal(await page.locator("#vocabulary-stream-panel [data-stream-rating]").count(), 12);
+  assert.equal((await page.locator("#vocabulary-stream-panel").textContent()).includes("表示してはいけない例文"), false);
+  for (const viewport of viewports) {
+    await assertLayout(viewport, true);
+    if (viewport.width === 812) await page.screenshot({ path: listeningScreenshotPath });
+  }
+  await assertHiddenMeaning(current()); await finishSpeech();
+  await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row .vocabulary-stream-meaning').hidden);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[3]);
+  await finishSpeech(); await ready("q4", "listen-answer"); await savedWhen(() => activities.size === 4);
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]); await assertHiddenMeaning(current());
+  assert.equal(progress().q2, undefined, "聞き終えただけでは回答評価を記録しない");
+  assert.equal([...activities.values()].find(activity => activity.questionId === "q2").rating ?? "", "");
+
+  // 表示中の未評価の過去語へ後付けし、再訂正しても現在語や再生を進めない。
+  const listenedCount = savedSession().answeredCount;
+  await revise(2, "good");
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]); await assertHiddenMeaning(current()); await assertPlayback(false);
+  assert.equal(progress().q2.attempts, 1); assert.equal(savedSession().answeredCount, listenedCount);
+  assert.equal(activities.size, 4); assert.equal([...activities.values()].find(activity => activity.questionId === "q2").rating, "good");
+  assert.equal(answerRequests.at(-1).studyMode, "listen-answer"); assert.ok(answerRequests.at(-1).reviseActivityId);
+  await revise(2, "easy");
+  assert.equal(progress().q2.attempts, 1); assert.equal(savedSession().answeredCount, listenedCount); assert.equal(activities.size, 4);
+  assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 0, easy: 1 });
+  await assertHiddenMeaning(current()); await assertPlayback(false);
+
+  // 再読み込みで聞き流しと3語表示・並び・過去評価・未公開の訳を復元する。
+  await page.reload(); await ready("q4", "listen-answer");
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]); await assertHiddenMeaning(current());
+  assert.equal(await rows().nth(2).locator('[data-stream-rating="easy"]').getAttribute("aria-pressed"), "true");
+  assert.equal(savedSession().studyMode, "listen-answer"); assert.equal(savedSession().vocabularyStreamEnabled, true);
+  await assertPlayback(true); await page.locator("#vocabulary-stream-toggle").click(); await assertPlayback(false); await finishSpeech();
+  await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row .vocabulary-stream-meaning').hidden);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[4]);
+  await page.locator("#vocabulary-stream-toggle").click(); await assertPlayback(true);
+  await revise(1, "hard");
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]); await assertPlayback(true);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[4]);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").isVisible(), true, "一時停止中の後付け評価で現在の訳を隠さない");
+  assert.equal(progress().q3.attempts, 1); assert.equal(savedSession().answeredCount, listenedCount); assert.equal(activities.size, 4);
+
+  // 訂正に失敗したら現在の語と公開済みの訳・過去評価を復元して一時停止する。
+  await page.locator("#vocabulary-stream-toggle").click(); await assertPlayback(false);
+  const listeningRecords = structuredClone(progress()), listeningActivities = structuredClone([...activities]);
+  const listeningRatings = structuredClone(savedSession().ratingCounts);
+  failSave = true;
+  await rows().nth(2).locator('[data-stream-rating="again"]').click();
+  await page.waitForFunction(() => document.querySelector("#unlock-notice").textContent.includes("保存失敗") &&
+    !document.querySelectorAll(".vocabulary-stream-row")[2].querySelector('[data-stream-rating="easy"]').disabled);
+  await assertPlayback(true); assert.deepEqual(await ids(), ["q4", "q3", "q2"]);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[4]);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").isVisible(), true);
+  assert.equal(await rows().nth(2).locator('[data-stream-rating="easy"]').getAttribute("aria-pressed"), "true");
+  assert.deepEqual(progress(), listeningRecords); assert.deepEqual([...activities], listeningActivities);
+  assert.deepEqual(savedSession().ratingCounts, listeningRatings); assert.equal(savedSession().answeredCount, listenedCount);
+  failSave = false;
+
+  // 聞き流しの一手戻りでも行と訳を戻し、現在語の評価で次へ進められる。
+  reset(); await start(8, "listen-answer"); await listeningNext(); await listeningNext("q1");
+  await savedWhen(() => activities.size === 1);
+  await page.locator("#vocabulary-stream-back").click();
+  await ready("q0", "listen-answer"); await assertPlayback(true);
+  assert.deepEqual(await ids(), ["q0"]); assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[0]);
+  await savedWhen(() => activities.size === 0);
+  await current().locator('[data-stream-rating="good"]').click(); await ready("q1", "listen-answer");
+  await savedWhen(() => activities.size === 1 && progress().q0?.lastRating === "good");
+  assert.equal(progress().q0.attempts, 1); assert.equal(savedSession().studyMode, "listen-answer");
+
+  // 訂正の保存応答を保留しても現在語の再生を続け、自動送りの保存で訂正を消さない。
+  reset(); await start(8, "listen-answer");
+  await listeningNext(); await listeningNext("q1"); await listeningNext(); await listeningNext("q2");
+  await savedWhen(() => activities.size === 2);
+  holdNextRevision = true;
+  await rows().nth(1).locator('[data-stream-rating="easy"]').click(); await savedWhen(() => Boolean(releaseRevision));
+  await assertPlayback(false); await assertHiddenMeaning(current());
+  await finishSpeech();
+  await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row .vocabulary-stream-meaning').hidden);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[2]);
+  await finishSpeech();
+  assert.equal(activities.size, 2, "訂正の保存前に後続の活動を保存しない");
+  releaseRevision();
+  await ready("q3", "listen-answer");
+  await savedWhen(() => activities.size === 3 && progress().q1?.lastRating === "easy" && savedSession()?.currentTask?.questionId === "q3");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]); await assertHiddenMeaning(current()); await assertPlayback(false);
+  assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 0, easy: 1 });
+  assert.equal(savedSession().vocabularyStreamRows.find(row => row.questionId === "q1").rating, "easy");
+  assert.equal(progress().q1.attempts, 1);
+  await page.reload(); await ready("q3", "listen-answer");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  assert.equal(await rows().nth(2).locator('[data-stream-rating="easy"]').getAttribute("aria-pressed"), "true");
+  assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 0, easy: 1 });
+
+  // 直前の活動保存が遅い場合も、訂正の準備前に次の途中記録を作らない。
+  reset(); await start(8, "listen-answer"); holdNextActivity = true;
+  await listeningNext(); await listeningNext("q1"); await savedWhen(() => Boolean(releaseActivity));
+  await rows().nth(1).locator('[data-stream-rating="good"]').click();
+  await finishSpeech();
+  await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row .vocabulary-stream-meaning').hidden);
+  await finishSpeech();
+  await page.waitForTimeout(80);
+  assert.deepEqual(await ids(), ["q1", "q0"], "訂正前の保存を待つ間は自動送りの境界で待機する");
+  await assertPlayback(false);
+  releaseActivity(); await ready("q2", "listen-answer");
+  await savedWhen(() => activities.size === 2 && progress().q0?.lastRating === "good" && savedSession()?.currentTask?.questionId === "q2");
+  assert.deepEqual(await ids(), ["q2", "q1", "q0"]); await assertHiddenMeaning(current());
+  assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 1, easy: 0 });
+  assert.equal(savedSession().vocabularyStreamRows.find(row => row.questionId === "q0").rating, "good");
+  assert.equal(progress().q0.attempts, 1); assert.equal(activities.size, 2);
+  await page.reload(); await ready("q2", "listen-answer");
+  assert.equal(await rows().nth(2).locator('[data-stream-rating="good"]').getAttribute("aria-pressed"), "true");
+  assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 1, easy: 0 });
+
   // 毎日のメニューでも学習方法を復元し、過去の評価訂正で達成数と内訳を修正する。
   reset({ routine: true });
   await page.goto(base); await page.locator("#continue-routine").waitFor({ state: "visible" });
   await page.locator("#continue-routine").click();
   await page.locator("#setup-panel").waitFor({ state: "visible" });
   await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
-  assert.equal(await streamRadio().isChecked(), true, "保存済みの英単語3語表示をメニュー開始時にも復元する");
+  assert.equal(await streamToggle().isChecked(), true, "保存済みの英単語3語表示をメニュー開始時にも復元する");
   assert.equal(await page.locator("#question-limit").inputValue(), "8");
   await page.locator("#start-study").click(); await ready("q0");
   await rate("good", "q1"); await rate("hard", "q2"); await rate("good", "q3");
@@ -383,8 +602,11 @@ try {
   assert.deepEqual(routine().items[0].ratingCounts, { again: 0, hard: 1, good: 2, easy: 0 }, "失敗後の訂正で画面側に保存失敗の内訳が残らない");
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]); assert.equal(activities.size, 3);
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：英単語限定・訳の順次表示・最大3行と12評価・過去の評価修正・過去と現在の保存失敗の復元・再読み込み・既存モード・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い単語と訳の末尾への到達・毎日のメニューの学習方法復元と訂正時の達成数と内訳と失敗復元・無音を確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・毎日のメニューの達成数と内訳訂正・無音を確認しました。");
   console.log("画面画像：" + screenshotPath);
+  console.log("開始画面の画像：" + setupScreenshotPath);
+  console.log("聞き流しの画像：" + listeningScreenshotPath);
 } finally {
+  releaseRevision?.(); releaseActivity?.();
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

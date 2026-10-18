@@ -534,6 +534,8 @@ function normalizeVocabularyStreamRows(value, taskByQuestionId) {
       answerVisible: row.answerVisible === true,
       rating: ratingValues.has(row.rating) ? row.rating : "",
       activityId: studyActivityIdPattern.test(activityId) ? activityId : "",
+      answeredAt: typeof row.answeredAt === "string" && Number.isFinite(Date.parse(row.answeredAt))
+        ? new Date(row.answeredAt).toISOString() : null,
       previousRecord,
       routineCounted: row.routineCounted === true,
     }];
@@ -560,8 +562,7 @@ function normalizeStudySession(value) {
   const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
   const currentTask = normalizeStudySessionTask(source.currentTask);
   const studyTimeEventId = String(source.studyTimeEventId ?? "");
-  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true &&
-    source.studyMode !== "listen-answer";
+  const vocabularyStreamEnabled = source.vocabularyStreamEnabled === true;
   return {
     schemaVersion: 1,
     roundId: normalizeStudyRoundId(source.roundId),
@@ -1839,6 +1840,9 @@ async function handleRequest(request, env) {
     const reviseActivityId = body.reviseActivityId == null
       ? null
       : String(body.reviseActivityId);
+    const reviseAnalysis = body.reviseAnalysis === undefined
+      ? null
+      : normalizeQuestionAnalysisSnapshot(body.reviseAnalysis);
     const completeRoundId = normalizeStudyRoundId(body.completeRoundId) ||
       (!session && activity ? activity.eventId : "");
     const deleteRoundId = normalizeStudyRoundId(
@@ -1883,16 +1887,19 @@ async function handleRequest(request, env) {
     if (completeRoundId && deleteRoundId) {
       return json(request, env, { error: "周回完了の追加と取消は同時に行えません。" }, 400);
     }
+    if (body.reviseAnalysis !== undefined && (!reviseActivityId || !reviseAnalysis)) {
+      return json(request, env, { error: "修正する日別学習記録の分析情報が正しくありません。" }, 400);
+    }
     if (reviseActivityId !== null) {
-      if (!studyActivityIdPattern.test(reviseActivityId) || studyMode !== "memorize" ||
+      if (!studyActivityIdPattern.test(reviseActivityId) ||
         !record?.lastRating || activity || deleteActivityId || replaceActivityId ||
         completeRoundId || deleteRoundId) {
         return json(request, env, { error: "修正する日別学習記録が正しくありません。" }, 400);
       }
       const existingActivity = await env.DB.prepare(
         `SELECT event_id FROM study_activity_events
-         WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = 'memorize'`,
-      ).bind(reviseActivityId, datasetVersion, questionId).first();
+         WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = ?`,
+      ).bind(reviseActivityId, datasetVersion, questionId, studyMode).first();
       if (!existingActivity) {
         return json(request, env, { error: "修正する日別学習記録が見つかりません。" }, 409);
       }
@@ -1928,9 +1935,10 @@ async function handleRequest(request, env) {
     if (reviseActivityId) {
       statements.push(
         env.DB.prepare(
-          `UPDATE study_activity_events SET rating = ?
-           WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = 'memorize'`,
-        ).bind(record.lastRating, reviseActivityId, datasetVersion, questionId),
+          `UPDATE study_activity_events SET rating = ?, analysis_json = COALESCE(analysis_json, ?)
+           WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = ?`,
+        ).bind(record.lastRating, reviseAnalysis ? JSON.stringify(reviseAnalysis) : null,
+          reviseActivityId, datasetVersion, questionId, studyMode),
       );
     }
     if (deleteActivityId) {

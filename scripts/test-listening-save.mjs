@@ -21,7 +21,7 @@ const context = {
   formatStudyDuration: value => String(value),
   renderRatingResult(value) { results++; resultRatings = value; },
   updateRoundProgressDisplay() {}, updateOverallProgress() {},
-  isListeningMode: () => true, renderActionControls() {},
+  isListeningMode: () => true, isVocabularyStream: () => false, renderActionControls() {},
   studySessionSave: Promise.resolve(), queueCurrentStudyTimeSave: async () => {},
   listeningSaves: { tail: Promise.resolve(), pending: [], failures: 0 },
   listeningSaveBacklogLimit: 3, captureStudyTimeEntry: () => null,

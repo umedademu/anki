@@ -17,10 +17,13 @@ export function reviseRatingCounts(value, previous, next) {
 }
 
 export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance }) {
-  const motionDuration = 180;
+  const list = document.createElement("div");
+  list.className = "vocabulary-stream-list";
+  panel.append(list);
+  let renderedHeader = null;
   let previousRows = [];
-  let motion = null;
-  let activeAnimations = [];
+  let cardsByRow = new Map();
+  const activeAnimations = new Map();
   panel.addEventListener("click", event => {
     const button = event.target.closest("button");
     if (!button || button.disabled) return;
@@ -34,20 +37,17 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
 
   return {
     render({ rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval, listening = false, paused = false, ratingSaving = false }) {
-      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const motionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 160 : 280;
       const addsNewRow = previousRows.length > 0 && rows[0] !== previousRows[0] && rows[1] === previousRows[0];
       const sameRows = rows.length === previousRows.length && rows.every((row, index) => row === previousRows[index]);
       const previousTops = new Map();
-      if (addsNewRow && !reducedMotion) {
-        panel.querySelectorAll(".vocabulary-stream-row").forEach((card, index) => {
-          previousTops.set(previousRows[index], card.getBoundingClientRect().top);
-        });
-        motion = { startedAt: window.performance.now(), offsets: new Map() };
-      } else if (!sameRows || reducedMotion) {
-        motion = null;
+      if (addsNewRow) {
+        for (const [row, card] of cardsByRow) previousTops.set(row, card.getBoundingClientRect().top);
       }
-      activeAnimations.forEach(animation => animation.cancel());
-      activeAnimations = [];
+      if (!sameRows) {
+        activeAnimations.forEach(animation => animation.cancel());
+        activeAnimations.clear();
+      }
       const header = document.createElement("div");
       header.className = "vocabulary-stream-heading";
       const title = document.createElement("strong");
@@ -79,8 +79,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
         header.append(toggleButton, nextButton);
       }
 
-      const list = document.createElement("div");
-      list.className = "vocabulary-stream-list";
+      const nextCardsByRow = new Map();
       for (const [index, row] of rows.entries()) {
         const content = resolve(row);
         if (!content) continue;
@@ -88,7 +87,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
         const visible = current ? answerVisible : row.answerVisible;
         // 同じ問題を再出題したら、古い出現から新しい評価を上書きさせない。
         const superseded = rows.slice(0, index).some(newer => newer.questionId === row.questionId);
-        const card = document.createElement("article");
+        const card = cardsByRow.get(row) ?? document.createElement("article");
         card.className = "vocabulary-stream-row";
         card.classList.toggle("is-current", current);
         card.dataset.questionId = row.questionId;
@@ -136,34 +135,38 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
           button.append(name, due);
           actions.append(button);
         }
-        card.append(pair, actions);
-        list.append(card);
+        card.replaceChildren(pair, actions);
+        nextCardsByRow.set(row, card);
       }
-      panel.replaceChildren(header, list);
-      if (motion) {
-        const cards = [...list.children];
-        if (addsNewRow) {
-          const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
-          cards.forEach((card, index) => {
-            const rect = card.getBoundingClientRect();
-            const previousTop = previousTops.get(rows[index]);
-            motion.offsets.set(rows[index], previousTop === undefined ? -(rect.height + gap) : previousTop - rect.top);
-          });
+      if (renderedHeader) renderedHeader.replaceWith(header);
+      else panel.prepend(header);
+      renderedHeader = header;
+      const cards = [...nextCardsByRow.values()];
+      for (const card of [...list.children]) if (!cards.includes(card)) card.remove();
+      cards.forEach((card, index) => {
+        if (list.children[index] !== card) list.insertBefore(card, list.children[index] ?? null);
+      });
+      if (addsNewRow) {
+        const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
+        for (const [row, card] of nextCardsByRow) {
+          const rect = card.getBoundingClientRect();
+          const previousTop = previousTops.get(row);
+          const offset = previousTop === undefined ? -(rect.height + gap) : previousTop - rect.top;
+          const animation = card.animate([
+            { transform: `translateY(${offset}px)` },
+            { transform: "translateY(0)" },
+          ], { duration: motionDuration, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)", fill: "both" });
+          activeAnimations.set(card, animation);
+          animation.finished.then(() => {
+            if (activeAnimations.get(card) === animation) {
+              animation.cancel();
+              activeAnimations.delete(card);
+            }
+          }, () => {});
         }
-        const elapsed = window.performance.now() - motion.startedAt;
-        if (elapsed < motionDuration) {
-          cards.forEach((card, index) => {
-            const offset = motion.offsets.get(rows[index]) ?? 0;
-            const animation = card.animate([
-              { transform: `translateY(${offset}px)` },
-              { transform: "translateY(0)" },
-            ], { duration: motionDuration, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)", fill: "both" });
-            // 保存状態などの再描画でも、動きを最初からやり直さない。
-            animation.currentTime = elapsed;
-            activeAnimations.push(animation);
-          });
-        } else motion = null;
       }
+      // 行そのものを残し、音声や保存状態の更新で進行中の動きを消さない。
+      cardsByRow = nextCardsByRow;
       previousRows = [...rows];
     },
   };

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { createServer } from "node:http";
-import { mkdtemp, readFile } from "node:fs/promises";
+import { mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { chromium } from "playwright";
@@ -8,6 +8,8 @@ import { createStudyRoutineRun } from "../public/study-routine.js";
 import { normalizeSetupPreferences, normalizeStudySession } from "../worker/src/index.js";
 
 const root = path.resolve(import.meta.dirname, "..", "public");
+const diagnoseMotion = process.env.ANKI_STREAM_DIAGNOSE === "1";
+const diagnosticViewSource = diagnoseMotion ? await readFile(path.join(root, "vocabulary-stream.js"), "utf8") : null;
 const off = {
   history: { question: false, answer: false, explanation: false, mnemonic: false },
   vocabulary: { word: false, meaning: false, exampleEnglish: false, exampleJapanese: false },
@@ -163,7 +165,9 @@ const base = `http://127.0.0.1:${server.address().port}`;
 let browser;
 try {
   browser = await chromium.launch({ channel: "chrome", headless: true });
-  const context = await browser.newContext({ viewport: { width: 812, height: 375 } });
+  const screenshotDirectory = await mkdtemp(path.join(tmpdir(), "anki-vocabulary-stream-"));
+  const context = await browser.newContext({ viewport: { width: 812, height: 375 },
+    ...(diagnoseMotion ? { recordVideo: { dir: screenshotDirectory, size: { width: 812, height: 375 } } } : {}) });
   context.setDefaultTimeout(15000);
   // 最初のページを開く前から自動読み上げをOFFにし、全ての読み上げ対象・音声再生を止める。
   await context.addInitScript(parts => {
@@ -178,6 +182,7 @@ try {
   }, off);
   // 試験サーバー以外へ一切通信しない。特に実際のCloudflareへの書き込みを防ぐ。
   await context.route("**/*", route => new URL(route.request().url()).origin === base ? route.continue() : route.abort());
+  if (diagnoseMotion) await context.route("**/vocabulary-stream.js*", route => route.fulfill({ contentType: "text/javascript", body: diagnosticViewSource }));
   const speech = (await readFile(path.join(root, "speech.js"), "utf8")).replace("export function createSpeechController(", "function unusedSpeechController(");
   await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + `
 export function createSpeechController(){
@@ -210,7 +215,6 @@ export function createRatingSoundPlayer(){
 }` }));
   const page = await context.newPage(), errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  const screenshotDirectory = await mkdtemp(path.join(tmpdir(), "anki-vocabulary-stream-"));
   const screenshotPath = path.join(screenshotDirectory, "vocabulary-stream-812x375.png");
   const setupScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-setup-812x375.png");
   const listeningScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-listening-812x375.png");
@@ -353,7 +357,77 @@ export function createRatingSoundPlayer(){
     await assertFullTextReachable(rows().nth(1), 2, viewport);
     await assertFullTextReachable(rows().nth(2), 1, viewport);
   }
+  async function measureMotion(mode, reducedMotion, captureFrames = false) {
+    reset(); await page.emulateMedia({ reducedMotion }); await page.setViewportSize({ width: 812, height: 375 }); await start(8, mode);
+    if (mode === "memorize") await reveal(); else await listeningNext();
+    await page.waitForFunction(() => !document.querySelector("#vocabulary-stream-panel").getAnimations({ subtree: true }).some(animation => animation.playState === "running"));
+    if (captureFrames) await page.screenshot({ path: path.join(screenshotDirectory, "motion-before.png") });
+    await page.evaluate(mode => {
+      const panel = document.querySelector("#vocabulary-stream-panel");
+      const originalRow = panel.querySelector('[data-question-id="q0"]');
+      let originalAnimation = null;
+      const measure = label => {
+        const row = panel.querySelector('[data-question-id="q0"]');
+        const animations = row.getAnimations();
+        if (label === "immediate") originalAnimation = animations[0] ?? null;
+        return { label, now: performance.now(), top: row.getBoundingClientRect().top,
+          sameNode: row === originalRow, sameAnimation: Boolean(originalAnimation && animations.includes(originalAnimation)),
+          transform: getComputedStyle(row).transform, reducedMotion: matchMedia("(prefers-reduced-motion: reduce)").matches,
+          animations: animations.map(animation => ({ state: animation.playState, currentTime: animation.currentTime, duration: animation.effect.getTiming().duration })) };
+      };
+      const result = window.__streamMotionDiagnosis = { samples: [measure("before")] };
+      const observer = new MutationObserver(() => {
+        if (panel.querySelector(".vocabulary-stream-row")?.dataset.questionId !== "q1") return;
+        observer.disconnect(); result.samples.push(measure("immediate"));
+        for (const delay of [60, 120, 240, 360]) setTimeout(() => {
+          result.samples.push(measure(String(delay)));
+          // 保存や音声の状態が更新される場合と同じ実操作で再描画を挟む。
+          const redraw = delay === 60 ? panel.querySelector(mode === "memorize" ? ".vocabulary-stream-row [data-stream-reveal]" : "#vocabulary-stream-toggle")
+            : delay === 120 && mode === "listen-answer" ? panel.querySelector("#vocabulary-stream-toggle") : null;
+          if (redraw) {
+            const clicked = !redraw.disabled; redraw.click();
+            result.samples.push({ ...measure(`after-${delay}-redraw`), redrawTriggered: clicked });
+          }
+        }, delay);
+      });
+      observer.observe(panel, { childList: true, subtree: true });
+    }, mode);
+    if (mode === "memorize") await assertSoundClick(current().locator('[data-stream-rating="good"]'), "good"); else await finishSpeech();
+    if (captureFrames) {
+      await page.waitForFunction(() => window.__streamMotionDiagnosis.samples.some(sample => sample.label === "60"));
+      await page.screenshot({ path: path.join(screenshotDirectory, "motion-middle.png") });
+    }
+    await page.waitForFunction(() => window.__streamMotionDiagnosis.samples.some(sample => sample.label === "360"));
+    if (captureFrames) await page.screenshot({ path: path.join(screenshotDirectory, "motion-after.png") });
+    return { mode, preference: reducedMotion, ...(await page.evaluate(() => window.__streamMotionDiagnosis)) };
+  }
+  function assertMotion(result) {
+    const sample = label => result.samples.find(item => item.label === label);
+    const before = sample("before"), immediate = sample("immediate"), middle = sample(result.preference === "reduce" ? "60" : "120"), final = sample("360");
+    const context = `${result.mode}・${result.preference}`;
+    assert.ok(final.top - before.top > 50, `${context}で前の単語が実際に1段下へ移動する`);
+    assert.ok(immediate.top < final.top - 10, `${context}で新しい単語の出現直後に終点へ飛ばない`);
+    assert.ok(middle.top > before.top + 2 && middle.top < final.top - 2, `${context}で途中の位置が開始位置と終点の両方から変わる`);
+    assert.ok(middle.animations.some(animation => animation.state === "running"), `${context}の途中では実際の移動が進行中である`);
+    assert.ok(result.samples.every(item => item.sameNode), `${context}で前の単語の行そのものを保持する`);
+    const redraw = sample("after-60-redraw");
+    assert.ok(redraw?.redrawTriggered && redraw.sameAnimation, `${context}で状態の再描画後も同じ移動を維持する`);
+    assert.ok(Math.abs(final.top - sample("240").top) < (result.preference === "reduce" ? 1 : 4), `${context}の移動が終点で止まる`);
+  }
 
+  if (diagnoseMotion) {
+    const diagnosis = [];
+    for (const reducedMotion of ["no-preference", "reduce"]) for (const mode of ["memorize", "listen-answer"]) {
+      const result = await measureMotion(mode, reducedMotion, mode === "memorize" && reducedMotion === "no-preference");
+      diagnosis.push(result);
+      assertMotion(result);
+      await page.screenshot({ path: path.join(screenshotDirectory, `motion-${mode}-${reducedMotion}.png`) });
+    }
+    const jsonPath = path.join(screenshotDirectory, "motion-diagnosis.json");
+    await writeFile(jsonPath, JSON.stringify(diagnosis, null, 2));
+    console.log(JSON.stringify(diagnosis));
+    console.log("動きの計測：" + jsonPath); console.log("動きの動画：" + await page.video().path());
+  } else {
   // 暗記・聞き流しの2択を維持し、3語表示は英単語だけに独立した切替として表示する。
   await setup("test-history");
   assert.equal(await streamToggle().isVisible(), false);
@@ -668,11 +742,20 @@ export function createRatingSoundPlayer(){
   assert.equal(routine().items[0].completedCount, 3, "失敗後の訂正も復元されたメニューの達成数を維持する");
   assert.deepEqual(routine().items[0].ratingCounts, { again: 0, hard: 1, good: 2, easy: 0 }, "失敗後の訂正で画面側に保存失敗の内訳が残らない");
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]); assert.equal(activities.size, 3);
+  // 中間位置を測り、完了を待つだけでは見逃す「コマ送り」への逆戻りを検知する。
+  const motionResults = [];
+  for (const reducedMotion of ["no-preference", "reduce"]) for (const mode of ["memorize", "listen-answer"]) {
+    const result = await measureMotion(mode, reducedMotion); assertMotion(result); motionResults.push(result);
+  }
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await writeFile(path.join(screenshotDirectory, "motion-regression.json"), JSON.stringify(motionResults, null, 2));
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・実音声なしを確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);
+  console.log("動きの実測：" + path.join(screenshotDirectory, "motion-regression.json"));
+  }
 } finally {
   releaseRevision?.(); releaseActivity?.();
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));

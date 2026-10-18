@@ -198,6 +198,16 @@ export function createSpeechController(){
     preload(){return Promise.resolve()},
   };
 }` }));
+  // 評価音は鳴動指示だけを記録し、取得・音声の生成・実際の再生は行わない。
+  await context.route("**/rating-sound.js*", route => route.fulfill({ contentType: "text/javascript", body: `
+export function createRatingSoundPlayer(){
+  const calls = window.__streamRatingSounds = [];
+  return {
+    play(rating){calls.push(rating); return true;},
+    setVolume(value){return value;}, setCustomSound(){return Promise.resolve();},
+    clearCustomSound(){return false;}, hasCustomSound(){return false;}, close(){return Promise.resolve();},
+  };
+}` }));
   const page = await context.newPage(), errors = [];
   page.on("pageerror", error => errors.push(error.message));
   const screenshotDirectory = await mkdtemp(path.join(tmpdir(), "anki-vocabulary-stream-"));
@@ -219,7 +229,7 @@ export function createSpeechController(){
   async function ready(id, mode = "memorize") {
     await page.waitForFunction(({ expected, mode }) => {
       const panel = document.querySelector("#vocabulary-stream-panel"), row = panel?.querySelector(".vocabulary-stream-row");
-      const action = mode === "listen-answer" ? panel?.querySelector("#vocabulary-stream-next") : row?.querySelector("[data-stream-reveal]");
+      const action = mode === "listen-answer" ? panel?.querySelector("#vocabulary-stream-toggle") : row?.querySelector("[data-stream-reveal]");
       return panel && !panel.classList.contains("is-hidden") && row?.dataset.questionId === expected && action && !action.disabled;
     }, { expected: id, mode });
   }
@@ -234,10 +244,10 @@ export function createSpeechController(){
     await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row [data-stream-rating="good"]').disabled);
   }
   async function rate(rating, nextId) {
-    await reveal(); await current().locator(`[data-stream-rating="${rating}"]`).click(); await ready(nextId);
+    await reveal(); await assertSoundClick(current().locator(`[data-stream-rating="${rating}"]`), rating); await ready(nextId);
   }
   async function revise(index, rating) {
-    await rows().nth(index).locator(`[data-stream-rating="${rating}"]`).click();
+    await assertSoundClick(rows().nth(index).locator(`[data-stream-rating="${rating}"]`), rating);
     await page.waitForFunction(({ index, rating }) => {
       const button = document.querySelectorAll(".vocabulary-stream-row")[index]?.querySelector(`[data-stream-rating="${rating}"]`);
       return button && !button.disabled && button.getAttribute("aria-pressed") === "true";
@@ -277,9 +287,16 @@ export function createSpeechController(){
     assert.equal(settings.setupPreferences.subjects["english-vocabulary"].vocabularyStreamEnabled, enabled);
   }
   async function listeningNext(nextId = null) {
-    await page.locator("#vocabulary-stream-next").click();
-    if (nextId) await ready(nextId, "listen-answer");
-    else await page.waitForFunction(() => !document.querySelector('.vocabulary-stream-row [data-stream-rating="good"]').disabled);
+    const next = page.locator("#vocabulary-stream-next");
+    assert.equal((await next.textContent()).trim(), "次へ", "聞き流しの上部は常に次へと表示する");
+    assert.equal(await page.locator("#vocabulary-stream-panel [data-stream-reveal]").count(), 0, "聞き流しに答え表示ボタンを作らない");
+    if (!await current().locator(".vocabulary-stream-meaning").isVisible()) {
+      assert.equal(await next.isDisabled(), true, "訳の自動表示前は次へを無効にする");
+      await finishSpeech();
+    }
+    await page.waitForFunction(() => !document.querySelector("#vocabulary-stream-next").disabled &&
+      !document.querySelector('.vocabulary-stream-row [data-stream-rating="good"]').disabled);
+    if (nextId) { await next.click(); await ready(nextId, "listen-answer"); }
   }
   async function finishSpeech() {
     await page.waitForFunction(() => Boolean(window.__streamSpeechTest?.pending));
@@ -294,6 +311,14 @@ export function createSpeechController(){
       assert.ok(Date.now() < deadline, "試験用の保存が完了する");
       await new Promise(resolve => setTimeout(resolve, 20));
     }
+  }
+  async function assertSoundClick(button, rating = null) {
+    const sounds = await button.evaluate(node => {
+      const before = window.__streamRatingSounds.length;
+      node.click();
+      return window.__streamRatingSounds.slice(before);
+    });
+    assert.deepEqual(sounds, rating ? [rating] : [], rating ? "有効な評価は選んだ音の鳴動指示を同期で1回だけ出す" : "無効な評価は音の鳴動指示を出さない");
   }
   async function assertLayout(viewport, listening = false) {
     await page.setViewportSize(viewport);
@@ -347,7 +372,10 @@ export function createSpeechController(){
   assert.equal(await rows().count(), 1); assert.deepEqual(await ids(), ["q0"]);
   assert.equal(await current().locator(".vocabulary-stream-word").textContent(), words[0]);
   await assertHiddenMeaning(current());
-  for (const rating of ratings) assert.equal(await current().locator(`[data-stream-rating="${rating}"]`).isDisabled(), true);
+  for (const rating of ratings) {
+    const button = current().locator(`[data-stream-rating="${rating}"]`);
+    assert.equal(await button.isDisabled(), true); await assertSoundClick(button);
+  }
   assert.equal(savedSession().vocabularyStreamEnabled, true);
   assert.equal(savedSession().tasks.every(task => task.questionId.startsWith("q")), true, "英語から日本語の問題だけを対象にする");
   await reveal();
@@ -434,12 +462,18 @@ export function createSpeechController(){
   // 同じ問題が再出題されたら、前の出現行から古い評価を変更できない。
   reset(); await start(1); await rate("again", "q0");
   assert.deepEqual(await ids(), ["q0", "q0"]); await assertHiddenMeaning(current());
-  for (const rating of ratings) assert.equal(await rows().nth(1).locator(`[data-stream-rating="${rating}"]`).isDisabled(), true);
+  for (const rating of ratings) {
+    const button = rows().nth(1).locator(`[data-stream-rating="${rating}"]`);
+    assert.equal(await button.isDisabled(), true); await assertSoundClick(button);
+  }
   assert.equal(progress().q0.attempts, 1); assert.equal(activities.size, 1);
 
   // 聞き流しでも3語を残し、手動操作と無音の完了通知のどちらでも訳を順番に出す。
   reset(); await start(8, "listen-answer");
   assert.equal(await rows().count(), 1); await assertHiddenMeaning(current()); await assertPlayback(false);
+  assert.equal(await page.locator("#vocabulary-stream-panel [data-stream-reveal]").count(), 0);
+  assert.equal((await page.locator("#vocabulary-stream-next").textContent()).trim(), "次へ");
+  assert.equal(await page.locator("#vocabulary-stream-next").isDisabled(), true);
   assert.equal(savedSession().studyMode, "listen-answer"); assert.equal(savedSession().vocabularyStreamEnabled, true);
   await listeningNext(); assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[0]);
   await listeningNext("q1"); assert.deepEqual(await ids(), ["q1", "q0"]); await assertHiddenMeaning(current());
@@ -558,6 +592,37 @@ export function createSpeechController(){
   assert.equal(await rows().nth(2).locator('[data-stream-rating="good"]').getAttribute("aria-pressed"), "true");
   assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 1, easy: 0 });
 
+  // 両方の学習方法で、4段階の最新評価・過去評価・同じ評価の押し直しを無音で調べる。
+  for (const mode of ["memorize", "listen-answer"]) {
+    reset(); await start(8, mode);
+    for (const rating of ratings) {
+      const button = current().locator(`[data-stream-rating="${rating}"]`);
+      assert.equal(await button.isDisabled(), true); await assertSoundClick(button);
+    }
+    for (const [index, rating] of ratings.entries()) {
+      if (mode === "memorize") await reveal(); else await listeningNext();
+      await assertSoundClick(current().locator(`[data-stream-rating="${rating}"]`), rating);
+      await ready(`q${index + 1}`, mode);
+      await savedWhen(() => progress()[`q${index}`]?.lastRating === rating);
+      const beforeRepeat = { record: structuredClone(progress()[`q${index}`]), count: savedSession().answeredCount,
+        ratings: structuredClone(savedSession().ratingCounts), activities: structuredClone([...activities]), requests: answerRequests.length };
+      await assertSoundClick(rows().nth(1).locator(`[data-stream-rating="${rating}"]`), rating);
+      assert.deepEqual(progress()[`q${index}`], beforeRepeat.record, "同じ評価の押し直しは学習記録を増やさない");
+      assert.equal(savedSession().answeredCount, beforeRepeat.count); assert.deepEqual(savedSession().ratingCounts, beforeRepeat.ratings);
+      assert.deepEqual([...activities], beforeRepeat.activities); assert.equal(answerRequests.length, beforeRepeat.requests);
+      const revised = ratings[(index + 1) % ratings.length];
+      await revise(1, revised);
+      assert.equal(progress()[`q${index}`].lastRating, revised); assert.equal(progress()[`q${index}`].attempts, 1);
+      assert.equal(savedSession().answeredCount, beforeRepeat.count); assert.equal(activities.size, beforeRepeat.activities.length);
+      assert.equal((await ids())[0], `q${index + 1}`, "音を付けるために現在の問題を進めない");
+      await assertHiddenMeaning(current());
+      if (mode === "listen-answer") {
+        assert.equal(await page.locator("#vocabulary-stream-panel [data-stream-reveal]").count(), 0);
+        assert.equal(await page.locator("#vocabulary-stream-next").isDisabled(), true);
+      }
+    }
+  }
+
   // 毎日のメニューでも学習方法を復元し、過去の評価訂正で達成数と内訳を修正する。
   reset({ routine: true });
   await page.goto(base); await page.locator("#continue-routine").waitFor({ state: "visible" });
@@ -604,7 +669,7 @@ export function createSpeechController(){
   assert.deepEqual(routine().items[0].ratingCounts, { again: 0, hard: 1, good: 2, easy: 0 }, "失敗後の訂正で画面側に保存失敗の内訳が残らない");
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]); assert.equal(activities.size, 3);
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・毎日のメニューの達成数と内訳訂正・無音を確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);

@@ -74,8 +74,8 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
         nextButton.id = "vocabulary-stream-next";
         nextButton.type = "button";
         nextButton.className = "secondary-button";
-        nextButton.textContent = answerVisible ? "次へ" : "答えを表示";
-        nextButton.disabled = saving;
+        nextButton.textContent = "次へ";
+        nextButton.disabled = saving || !answerVisible;
         header.append(toggleButton, nextButton);
       }
 
@@ -108,7 +108,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
         meaning.textContent = visible ? content.meaning : "";
         meaning.hidden = !visible;
         answer.append(meaning);
-        if (current && !visible) {
+        if (current && !visible && !listening) {
           const revealButton = document.createElement("button");
           revealButton.type = "button";
           revealButton.className = "primary-button vocabulary-stream-reveal";

@@ -4627,12 +4627,26 @@ body.is-studying.is-vocabulary-stream .page {
 .vocabulary-stream-ratings .rating-action small { font-size: .65rem; line-height: 1.1; }
 .vocabulary-stream-ratings .rating-action[aria-pressed="true"] { outline: 2px solid currentColor; outline-offset: -3px; font-weight: 900; }
 .vocabulary-stream-ratings .rating-action:disabled { opacity: .45; cursor: default; }
+@media (orientation: landscape) and (max-height: 600px) {
+  body.is-studying.is-vocabulary-stream .page {
+    padding-top: max(6px, env(safe-area-inset-top));
+  }
+  .vocabulary-stream-heading { min-height: 32px; gap: 8px; }
+  .vocabulary-stream-word { font-size: clamp(22px, 6.8dvh, 36px); }
+  .vocabulary-stream-answer { font-size: clamp(18px, 5.6dvh, 30px); }
+  /* 上部を詰めても、見えないメニューより単語欄と操作ボタンを優先する。 */
+  .vocabulary-stream-list,
+  .vocabulary-stream-heading .secondary-button {
+    position: relative;
+    z-index: 33;
+  }
+}
 @media (orientation: landscape) and (max-height: 500px) {
   .vocabulary-stream-panel, .vocabulary-stream-list { gap: 5px; }
   .vocabulary-stream-heading { font-size: .7rem; }
   .vocabulary-stream-heading .secondary-button { min-height: 25px; padding: 2px 10px; }
   .vocabulary-stream-row { padding: 5px 9px; gap: 4px; border-radius: 8px; }
   .vocabulary-stream-ratings { gap: 6px; }
-  .vocabulary-stream-ratings .rating-action { min-height: 33px; padding: 3px 5px; font-size: .8rem; }
-  .vocabulary-stream-ratings .rating-action small { font-size: .6rem; }
+  .vocabulary-stream-ratings .rating-action { min-height: 36px; padding: 3px 5px; font-size: .9rem; }
+  .vocabulary-stream-ratings .rating-action small { font-size: .65rem; }
 }

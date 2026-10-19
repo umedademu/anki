@@ -1382,7 +1382,14 @@ const outputController = createSpeechController({
   audioSession: fakeAudioSession,
   getSettings: () => ({ source: "cloud", rate: 1.6 }),
 });
-if (fakeAudioSession.type !== "playback") throw new Error("iPhoneの音声セッションを再生用と宣言できませんでした。");
+// 音声セッションの種類は既定では変更しない（v0.421の「再生用」宣言は出だしが弱く聞こえるためv0.422でやめた）。
+if (fakeAudioSession.type !== "auto") throw new Error("音声セッションの種類を既定で書き換えてしまいました。");
+{
+  const declared = { type: "auto", state: "inactive", addEventListener() {} };
+  createSpeechController({ synthesis: null, Utterance: null, AudioPlayer: ReconnectedAudio, createObjectUrl: () => "blob:declared", revokeObjectUrl: () => {}, requestCloudAudio: async () => ({}), audioSession: declared, audioSessionType: "playback", getSettings: () => ({ source: "cloud" }) });
+  if (declared.type !== "playback") throw new Error("明示した時だけ音声セッションの種類を宣言できませんでした。");
+  outputPlayers.splice(0);
+}
 const outputSegments = [{ target: "question", text: "apple", language: "en-US" }, { target: "answer", text: "りんご" }];
 outputGesture = true; outputController.unlock(); outputGesture = false;
 await outputController.preload(outputSegments);
@@ -1439,6 +1446,19 @@ await tick();
 if (outputCompletions !== 1 || outputErrors !== 1 || outputRequests !== 2 || outputPlayers.length !== 2) {
   throw new Error("再接続時に音声を再取得せず、古い通知で進行を重複させずに再開できませんでした。");
 }
+// 音が出たことを確かめた後の通常の開始・再開では、準備音を繰り返さない。
+const revocationsBeforeQuietResume = outputRevocations.length;
+outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
+if (outputPlayers.some(player => player.src || !player.paused) || outputRevocations.length !== revocationsBeforeQuietResume) {
+  throw new Error("通常の再開で準備音を繰り返してしまいました。");
+}
+// 音声セッションの中断を観測した後は、次の開始で準備音を鳴らし直す。
+fakeAudioSession.change("interrupted");
+fakeAudioSession.change("active");
+outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
+const secondProbe = outputPlayers.find(player => player.src.includes("準備音") && !player.paused);
+if (!secondProbe) throw new Error("中断を観測した後の開始で準備音を鳴らし直せませんでした。");
+secondProbe.onended();
 // 準備音の結果は、その後の失敗の理由にも添える。
 outputController.speak(outputSegments, outputHandlers);
 await tick();
@@ -1470,6 +1490,43 @@ outputController.stop();
   if (devicePlayers.length !== 2 || devicePlayers.some(player => player.plays > 0 || player.src)) {
     throw new Error("端末音声の設定で準備音を鳴らしてしまいました。");
   }
+}
+
+// 起動後の最初の開始では、自然音声の設定なら一度だけ準備音を鳴らす。単語ごとの切り替えでは鳴らさない。
+{
+  const firstPlayers = [];
+  class FirstStartAudio {
+    constructor() { this.src = ""; this.paused = true; this.playbackRate = 1; this.currentTime = 0; this.plays = 0; firstPlayers.push(this); }
+    load() {}
+    async play() { this.plays += 1; this.paused = false; this.onplaying?.(); }
+    pause() { this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const firstController = createSpeechController({
+    synthesis: null, Utterance: null, AudioPlayer: FirstStartAudio,
+    createObjectUrl: blob => (typeof blob.text === "string" ? `blob:${blob.text}` : "blob:first-probe"),
+    revokeObjectUrl: () => {},
+    requestCloudAudio: async text => ({ text, type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => null,
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  firstController.unlock({ reset: true, probe: true });
+  const firstProbe = firstPlayers.find(player => player.src === "blob:first-probe");
+  if (!firstProbe) throw new Error("起動後の最初の開始で準備音を鳴らせませんでした。");
+  firstProbe.onended();
+  const playsBeforeWords = firstPlayers.reduce((total, player) => total + player.plays, 0);
+  for (const text of ["単語1", "単語2", "単語3"]) {
+    firstController.speak([{ target: "question", text }], {});
+    await new Promise(resolve => setTimeout(resolve, 0));
+    firstPlayers.find(player => !player.paused)?.onended();
+    await new Promise(resolve => setTimeout(resolve, 0));
+  }
+  firstController.unlock({ reset: true, probe: true });
+  const playsAfterWords = firstPlayers.reduce((total, player) => total + player.plays, 0);
+  if (playsAfterWords !== playsBeforeWords + 3 || firstPlayers.some(player => player.src === "blob:first-probe")) {
+    throw new Error("単語ごとの切り替えや通常の再開で準備音を繰り返してしまいました。");
+  }
+  firstController.stop();
 }
 
 // 開始通知の後に再生位置が進まない音声は、音が出ていないとみなして次へ進めずに止める。端末音声へも切り替えない。

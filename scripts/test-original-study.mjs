@@ -3,6 +3,7 @@ import { readFile } from "node:fs/promises";
 import { runInNewContext } from "node:vm";
 import { parseOriginalQuestions, createOriginalDeck, createOriginalStudy, originalQuestionsStorageKey, originalProgressStorageKey } from "../public/original-study.js";
 import * as session from "../public/original-session.js";
+import { getSubjectSpeechSettings } from "../public/speech-settings.js";
 import { createQuestionQueue, getQuestionExplanation, rateQuestion } from "../public/learning-engine.js";
 
 const parsed = parseOriginalQuestions("\uFEFF問1\t答1\r\n\r\n問2\t答2\t解説\r問3\t答3\t");
@@ -224,6 +225,8 @@ const controller = runInNewContext(`${settingsFunction}\n${app.slice(controllerS
   originalSettings: session.originalSettings,
   isOriginalSession: session.isOriginalSession,
   loadStoredSpeechSettings: () => storedVoiceSettings,
+  getSubjectSpeechSettings,
+  state: { activeSubjectId: "original", setupPreferences: { subjects: {} } },
   updateSpeechButtons() {},
 });
 assert.equal(controller.requestCloudAudio, cloudAudio);

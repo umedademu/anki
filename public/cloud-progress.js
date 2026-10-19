@@ -14,6 +14,7 @@ import { normalizeRatingCounts } from "./rating-results.js";
 import {
   defaultSpeechSettings,
   normalizeSpeechSettings,
+  normalizeSubjectSpeechRate,
 } from "./speech-settings.js";
 import {
   defaultStudyTimeLimitSeconds,
@@ -430,6 +431,7 @@ export function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      speechRate: normalizeSubjectSpeechRate(rawSubject.speechRate),
       vocabularyStreamEnabled: subjectId === "english-vocabulary" && rawSubject.vocabularyStreamEnabled === true,
       sequentialEnabled: rawSubject.sequentialEnabled === true,
       deckOrder: normalizeDeckOrder(rawSubject.deckOrder),

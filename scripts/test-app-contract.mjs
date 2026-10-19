@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.417" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.418" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.417") ||
-  !app.includes("app-navigation.js?v=0.417") ||
-  !changelog.includes("v0.417") ||
-  !settingsHtml.includes("v0.417") ||
-  !historyHtml.includes("v0.417") ||
-  !analysisHtml.includes("v0.417")
+  !html.includes("v0.418") ||
+  !app.includes("app-navigation.js?v=0.418") ||
+  !changelog.includes("v0.418") ||
+  !settingsHtml.includes("v0.418") ||
+  !historyHtml.includes("v0.418") ||
+  !analysisHtml.includes("v0.418")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -572,7 +572,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.417"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.418"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -879,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.417"') ||
+  !html.includes('href="/styles.css?v=0.418"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1295,7 +1295,8 @@ if (
 if (
   !cloudProgress.includes("normalizeSharedSettings") ||
   !cloudProgress.includes('method: "PATCH"') ||
-  !settingsApp.includes("saveCloudSettings(readSharedSpeechForm())") ||
+  !settingsApp.includes("const patch = readSharedSpeechForm()") ||
+  !settingsApp.includes("saveCloudSettings(patch)") ||
   !settingsApp.includes("fillSpeechForm(saved)") ||
   !app.includes("queueSetupPreferenceSave") ||
   app.includes("anki-shuffle:") ||

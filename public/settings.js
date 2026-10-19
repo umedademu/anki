@@ -10,6 +10,7 @@ import {
   loadCloudState,
   normalizeListeningPauseSeconds,
   normalizeListeningQuestionIntervalSeconds,
+  normalizeSetupPreferences,
   requestCloudSpeech,
   requestCloudRatingSound,
   saveCloudSettings,
@@ -17,15 +18,17 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.417";
+import { createSpeechController } from "./speech.js?v=0.418";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
   getEnglishVoices,
   getJapaneseVoices,
   getVoiceId,
+  getSubjectSpeechSettings,
   loadSpeechSettings,
   normalizeSpeechSettings,
+  normalizeSubjectSpeechRate,
   saveSpeechSettings,
 } from "./speech-settings.js";
 import {
@@ -39,8 +42,8 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.417";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.417";
+import { usesChapterDecks } from "./so-chapters.js?v=0.418";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.418";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,
@@ -90,6 +93,7 @@ const elements = {
   deviceVoice: document.querySelector("#device-voice"),
   englishDeviceVoice: document.querySelector("#english-device-voice"),
   speechRate: document.querySelector("#speech-rate"),
+  speechRateSubject: document.querySelector("#speech-rate-subject"),
   speechRateOutput: document.querySelector("#speech-rate-output"),
   listeningPauseSeconds: document.querySelector("#listening-pause-seconds"),
   listeningQuestionIntervalSeconds: document.querySelector(
@@ -118,6 +122,8 @@ const fieldPairs = {
 };
 
 let speechSettings = loadSpeechSettings();
+let speechPreferences = normalizeSetupPreferences();
+const speechRateDrafts = new Map();
 let cloudFallbackMessage = "";
 let previewStarted = false;
 let routinePlan = normalizeStudyRoutinePlan(defaultStudyRoutinePlan);
@@ -144,6 +150,7 @@ function readSpeechForm() {
 function readSharedSpeechForm() {
   return {
     ...readSpeechForm(),
+    rate: speechRateDrafts.get("") ?? speechSettings.rate,
     listeningPauseSeconds: normalizeListeningPauseSeconds(
       elements.listeningPauseSeconds.value,
     ),
@@ -301,6 +308,26 @@ function updateSpeechRateOutput() {
   elements.speechRateOutput.value = `${Number(elements.speechRate.value).toFixed(2)}倍`;
 }
 
+function fillSpeechRate() {
+  const subjectId = elements.speechRateSubject.value;
+  const settings = getSubjectSpeechSettings({
+    ...speechSettings,
+    rate: speechRateDrafts.get("") ?? speechSettings.rate,
+  }, subjectId, speechPreferences);
+  elements.speechRate.value = String(speechRateDrafts.get(subjectId) ?? settings.rate);
+  updateSpeechRateOutput();
+}
+
+function populateSpeechRateSubjects() {
+  const selectedId = elements.speechRateSubject.value;
+  elements.speechRateSubject.replaceChildren(new Option("未設定の科目に使う速度", ""));
+  for (const subject of routineSubjects) {
+    elements.speechRateSubject.add(new Option(subject.title, subject.id));
+  }
+  elements.speechRateSubject.value = routineSubjects.some(subject => subject.id === selectedId) ? selectedId : "";
+  fillSpeechRate();
+}
+
 function populateDeviceVoices() {
   const selectedVoiceId = elements.deviceVoice.value || speechSettings.voiceId;
   const voices = getJapaneseVoices();
@@ -368,10 +395,12 @@ function populateAzureVoices() {
 
 function fillSpeechForm(settings) {
   speechSettings = normalizeSpeechSettings(settings);
+  speechPreferences = normalizeSetupPreferences(settings?.setupPreferences);
+  speechRateDrafts.clear();
   elements.speechSource.value = speechSettings.source;
   elements.azureVoice.value = speechSettings.azureVoiceId;
   elements.englishAzureVoice.value = speechSettings.englishAzureVoiceId;
-  elements.speechRate.value = String(speechSettings.rate);
+  fillSpeechRate();
   elements.listeningPauseSeconds.value = String(
     normalizeListeningPauseSeconds(settings?.listeningPauseSeconds),
   );
@@ -428,6 +457,8 @@ function setBusy(busy) {
   elements.saveStudyTimeSettings.disabled = busy;
   elements.saveRoutineOvertimeSettings.disabled = busy;
   elements.saveSpeechSettings.disabled = busy;
+  elements.speechRateSubject.disabled = busy;
+  elements.speechRate.disabled = busy;
   elements.saveRatingSoundVolume.disabled = busy;
   elements.ratingSoundVolume.disabled = busy;
   elements.saveRoutine.disabled = busy || routinePlan.length === 0;
@@ -681,6 +712,7 @@ async function loadRoutineSubjects() {
       ? "周"
       : usesChapterDecks(subject) ? "パート" : "デッキ",
   }));
+  populateSpeechRateSubjects();
   renderRoutineEditor();
 }
 
@@ -978,7 +1010,14 @@ elements.form.addEventListener("submit", async (event) => {
   }
 });
 
-elements.speechRate.addEventListener("input", updateSpeechRateOutput);
+elements.speechRate.addEventListener("input", () => {
+  speechRateDrafts.set(elements.speechRateSubject.value, normalizeSubjectSpeechRate(elements.speechRate.value));
+  updateSpeechRateOutput();
+});
+elements.speechRateSubject.addEventListener("change", () => {
+  previewController.stop();
+  fillSpeechRate();
+});
 elements.previewSpeech.addEventListener("click", () => {
   if (previewController.currentTarget === "preview-japanese") {
     previewStarted = false;
@@ -1018,7 +1057,23 @@ elements.previewEnglishSpeech.addEventListener("click", () => {
 elements.saveSpeechSettings.addEventListener("click", async () => {
   setBusy(true);
   try {
-    const saved = await saveCloudSettings(readSharedSpeechForm());
+    const patch = readSharedSpeechForm();
+    const subjectRates = [...speechRateDrafts].filter(([id]) => id);
+    if (subjectRates.length) {
+      // メニューなどで直前に変更した設定を保持して、速度だけを更新する。
+      const latest = await loadCloudState();
+      const preferences = latest.settings.setupPreferences;
+      patch.setupPreferences = normalizeSetupPreferences({
+        ...preferences,
+        subjects: {
+          ...preferences.subjects,
+          ...Object.fromEntries(subjectRates.map(([id, speechRate]) => [id, {
+            ...preferences.subjects[id], speechRate,
+          }])),
+        },
+      });
+    }
+    const saved = await saveCloudSettings(patch);
     speechSettings = saveSpeechSettings(saved);
     fillSpeechForm(saved);
     setSpeechStatus("音声設定をCloudflareへ保存し、端末間で共有しました。");

@@ -60,6 +60,19 @@ export function normalizeSpeechSettings(value) {
   };
 }
 
+// 未設定の科目は、従来の共通速度を引き継ぐ。
+export function normalizeSubjectSpeechRate(value) {
+  if ((typeof value !== "number" && typeof value !== "string") || value === "") return null;
+  const rate = Number(value);
+  return Number.isFinite(rate) ? Math.min(3, Math.max(0.7, rate)) : null;
+}
+
+export function getSubjectSpeechSettings(value, subjectId, preferences = value?.setupPreferences) {
+  const settings = normalizeSpeechSettings(value);
+  const rate = normalizeSubjectSpeechRate(preferences?.subjects?.[subjectId]?.speechRate);
+  return rate === null ? settings : { ...settings, rate };
+}
+
 export function getVoicesForLanguage(
   language,
   synthesis = globalThis.speechSynthesis,

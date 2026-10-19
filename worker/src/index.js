@@ -1,6 +1,7 @@
 import { normalizeSubjectOrder } from "../../public/subject-order.js";
 import { normalizeDeckOrder, normalizeQuestionLimit } from "../../public/sequential-study.js";
 import { normalizeQuestionBatch } from "../../public/question-batch.js";
+import { normalizeSubjectSpeechRate } from "../../public/speech-settings.js";
 import {
   defaultStudyRoutineMultiplier,
   defaultStudyRoutineOvertimeSeconds,
@@ -342,6 +343,7 @@ function normalizeSetupPreferences(value) {
     )].slice(0, 1000);
     subjects[subjectId] = {
       lastDeckId,
+      speechRate: normalizeSubjectSpeechRate(rawSubject.speechRate),
       vocabularyStreamEnabled: subjectId === "english-vocabulary" && rawSubject.vocabularyStreamEnabled === true,
       sequentialEnabled: rawSubject.sequentialEnabled === true,
       deckOrder: normalizeDeckOrder(rawSubject.deckOrder),

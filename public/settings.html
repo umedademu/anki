@@ -7,17 +7,17 @@
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.417"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.417" />
-    <link rel="stylesheet" href="/theme.css?v=0.417" />
+    <script src="/theme.js?v=0.418"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.418" />
+    <link rel="stylesheet" href="/theme.css?v=0.418" />
     <script src="/config.js" defer></script>
-    <script src="/settings.js?v=0.417" type="module"></script>
+    <script src="/settings.js?v=0.418" type="module"></script>
   </head>
   <body class="settings-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.417</span>
+        <span class="app-version">v0.418</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -210,10 +210,19 @@
           <p class="settings-description speech-setting-note" id="device-voice-note">
             共有された端末音声がこの端末にない場合は、言語ごとに端末の推奨音声を使用します。
           </p>
+          <label class="speech-setting-row" for="speech-rate-subject">
+            <span>速度を設定する科目</span>
+            <select id="speech-rate-subject">
+              <option value="">未設定の科目に使う速度</option>
+            </select>
+          </label>
           <label class="speech-setting-row" for="speech-rate">
             <span>読み上げ速度 <output id="speech-rate-output">1.00倍</output></span>
             <input id="speech-rate" type="range" min="0.7" max="3" step="0.05" value="1" />
           </label>
+          <p class="settings-description speech-setting-note">
+            読み上げ速度は科目ごとに保存できます。個別に設定していない科目は共通の速度を使います。学習中のメニューでも、その科目の速度を変更できます。
+          </p>
           <label class="speech-setting-row" for="listening-pause-seconds">
             <span>問題と回答の間隔</span>
             <span class="seconds-input">

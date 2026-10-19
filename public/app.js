@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.417";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.417";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.418";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.418";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.417";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.418";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.417";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.417";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.417";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.417";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.417";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.417";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.417";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.417";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.417";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.418";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.418";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.418";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.418";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.418";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.418";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.418";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.418";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.418";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.417";
+} from "./original-session.js?v=0.418";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,10 +79,11 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.417";
+} from "./speech.js?v=0.418";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
-  normalizeSpeechSettings,
+  getSubjectSpeechSettings,
+  normalizeSubjectSpeechRate,
   saveSpeechSettings as saveStoredSpeechSettings,
 } from "./speech-settings.js";
 import {
@@ -95,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.417";
+} from "./deck-selection.js?v=0.418";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -119,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.417";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.418";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -134,7 +135,12 @@ import {
 import { createQuestionAnalysisSnapshot } from "./analysis-core.js";
 
 function loadSpeechSettings() {
-  return originalSettings() ?? loadStoredSpeechSettings();
+  const settings = originalSettings();
+  return getSubjectSpeechSettings(
+    settings ?? loadStoredSpeechSettings(),
+    state.activeSubjectId,
+    settings?.setupPreferences ?? state.setupPreferences,
+  );
 }
 function saveSpeechSettings(settings) {
   if (!isOriginalSession()) saveStoredSpeechSettings(settings);
@@ -2358,10 +2364,10 @@ function updateStudyMenuSpeechRateOutput() {
 }
 
 function fillStudyMenuSettings(settings = {}) {
-  const speechSettings = normalizeSpeechSettings({
+  const speechSettings = getSubjectSpeechSettings({
     ...loadSpeechSettings(),
     ...settings,
-  });
+  }, state.activeSubjectId, settings.setupPreferences ?? state.setupPreferences);
   elements.studyMenuSpeechRate.value = String(speechSettings.rate);
   elements.studyMenuQuestionIntervalSeconds.value = String(
     normalizeListeningQuestionIntervalSeconds(
@@ -2391,15 +2397,11 @@ function readStudyMenuSettings() {
       [state.activeSubjectId]: {
         ...currentSubject,
         reviewSettings: usesCustomSettings ? reviewSettings : null,
+        speechRate: normalizeSubjectSpeechRate(elements.studyMenuSpeechRate.value),
       },
     },
   });
-  const speechSettings = normalizeSpeechSettings({
-    ...loadSpeechSettings(),
-    rate: Number(elements.studyMenuSpeechRate.value),
-  });
   return {
-    ...speechSettings,
     listeningQuestionIntervalSeconds:
       normalizeListeningQuestionIntervalSeconds(
         elements.studyMenuQuestionIntervalSeconds.value,
@@ -2480,8 +2482,8 @@ async function saveStudyMenuSettings() {
     if (state.activeSession) await queueActiveSessionSave();
     setStudyMenuStatus(
       currentSubjectReviewSettings()
-        ? isOriginalSession() ? "オリジナルの復習間隔をこのブラウザーに保存しました。" : "この教科の個別設定をCloudflareへ保存し、この学習から反映しました。"
-        : isOriginalSession() ? "全教科共通の復習間隔を使う設定を反映しました。" : "全教科共通の設定を使うようCloudflareへ保存しました。",
+        ? isOriginalSession() ? "今回の読み上げ速度を反映し、復習間隔をこのブラウザーに保存しました。" : "この科目の読み上げ速度と復習間隔をCloudflareへ保存しました。"
+        : isOriginalSession() ? "今回の読み上げ速度と、全教科共通の復習間隔を反映しました。" : "この科目の読み上げ速度と、全教科共通の復習間隔を使う設定をCloudflareへ保存しました。",
     );
   } catch (error) {
     setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
@@ -2948,9 +2950,15 @@ function updateMindsetSpeechRateOutput() {
 
 async function saveMindsetPlaybackSettings({ restartSpeech = false } = {}) {
   const wasPlaying = !state.mindsetPaused;
-  const settings = normalizeSpeechSettings({
-    ...loadSpeechSettings(),
-    rate: Number(elements.mindsetSpeechRate.value),
+  state.setupPreferences = normalizeSetupPreferences({
+    ...state.setupPreferences,
+    subjects: {
+      ...state.setupPreferences.subjects,
+      [state.activeSubjectId]: {
+        ...state.setupPreferences.subjects[state.activeSubjectId],
+        speechRate: normalizeSubjectSpeechRate(elements.mindsetSpeechRate.value),
+      },
+    },
   });
   state.listeningQuestionIntervalSeconds =
     normalizeListeningQuestionIntervalSeconds(
@@ -2959,18 +2967,23 @@ async function saveMindsetPlaybackSettings({ restartSpeech = false } = {}) {
   elements.mindsetIntervalSeconds.value = String(
     state.listeningQuestionIntervalSeconds,
   );
-  saveSpeechSettings(settings);
   updateMindsetSpeechRateOutput();
   if (restartSpeech && wasPlaying) {
     speakCurrentMindset();
   }
   if (!getStoredAccessKey()) return;
+  const saveVersion = ++setupPreferenceSaveVersion;
   try {
-    const saved = await saveCloudSettings({
-      ...settings,
-      listeningQuestionIntervalSeconds: state.listeningQuestionIntervalSeconds,
+    setupPreferenceSave = setupPreferenceSave.catch(() => {}).then(async () => {
+      const saved = await saveCloudSettings({
+        setupPreferences: state.setupPreferences,
+        listeningQuestionIntervalSeconds: state.listeningQuestionIntervalSeconds,
+      });
+      if (saveVersion === setupPreferenceSaveVersion) syncRoutinePreferences(saved.setupPreferences);
+      saveSpeechSettings(saved);
+      return saved;
     });
-    saveSpeechSettings(saved);
+    await setupPreferenceSave;
   } catch (error) {
     state.mindsetErrorMessage = `設定をCloudflareへ保存できませんでした。${error.message}`;
     renderMindsetPlayer();

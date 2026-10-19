@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.415"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.415" />
-    <link rel="stylesheet" href="/theme.css?v=0.415" />
+    <script src="/theme.js?v=0.416"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.416" />
+    <link rel="stylesheet" href="/theme.css?v=0.416" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.415</span>
+        <span class="app-version">v0.416</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,11 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.416</h2><time datetime="2026-10-19">2026年10月19日</time></div>
+        <ul><li>聞き流しで、読み上げと読み上げの間をさらに詰めました。前の音声が終わってから次の音声を鳴らし始めるまでのアプリ内の処理を、スマートフォン相当の速さの試験で約50ミリ秒から約15〜20ミリ秒に短くしました。通常表示・3語表示・全科目に効きます。</li><li>具体的には、画面の描き替えより先に次の音声を鳴らし始めるように順番を入れ替え、取り寄せ済みの音声は待ち時間なしで再生するようにしました。上部を1行に収める計測や読み補正の準備など、毎回くり返していた重い処理も減らしました。</li></ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.415</h2><time datetime="2026-10-19">2026年10月19日</time></div>

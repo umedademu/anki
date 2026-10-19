@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.415";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.415";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.416";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.416";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.415";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.416";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.415";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.415";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.415";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.415";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.415";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.415";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.415";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.415";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.415";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.416";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.416";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.416";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.416";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.416";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.416";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.416";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.416";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.416";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.415";
+} from "./original-session.js?v=0.416";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.415";
+} from "./speech.js?v=0.416";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -95,7 +95,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.415";
+} from "./deck-selection.js?v=0.416";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -119,7 +119,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.415";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.416";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -4181,7 +4181,6 @@ async function advanceListening(runId) {
   state.answerVisible = false;
   startNewStudyScreen();
   if (streamRow) syncVocabularyStreamRows();
-  const advancedSession = captureActiveSession();
   // 保存後に積むと次の問題の回答表示より後ろになり、戻る順番が崩れるため先に積む。
   pushHistory(undoSnapshot);
   const continuesToNextQuestion =
@@ -4205,6 +4204,8 @@ async function advanceListening(runId) {
     state.saving = true;
     renderActionControls();
   }
+  // 次の問題の読み上げを始めてから、進んだ後の途中記録を作る（読み上げ前の待ちを減らす）。
+  const advancedSession = captureActiveSession();
   const failuresBefore = listeningSaves.failures;
   // 学習時間も同じ通信で送り、1問あたりの通信を1回にする。
   const save = listeningSaves.tail.then(async () => {
@@ -4303,7 +4304,6 @@ function speakListeningAnswer(runId) {
   state.answerVisible = true;
   // 次の問題の回答を出したら、前の問題への評価は受け付けない。
   state.lateListeningRating = null;
-  renderQuestion();
   // 3語表示でも訳を出すたびには途中記録を送らない。再読み込みでは今の訳を隠して読み直すため不要で、
   // 送ると1問あたりの通信が2倍になり、保存待ちで次の単語の読み上げが遅れる。
   const segments = [
@@ -4312,8 +4312,7 @@ function speakListeningAnswer(runId) {
       : []),
     ...answerSpeechSequence(),
   ];
-  // 初めて作る音声でも間に合うよう、2問先まで取り寄せておく。
-  state.queue.slice(0, 2).forEach(preloadListeningTask);
+  // 画面の描き替えより先に読み上げを始め、取り寄せ済みの音声はその場で鳴らす。
   const started = speechController.speak(segments, {
     onComplete: () => {
       if (runId !== state.listeningRunId) {
@@ -4326,6 +4325,9 @@ function speakListeningAnswer(runId) {
     },
     onError: (error) => pauseListeningAfterSpeechFailure(runId, error),
   });
+  renderQuestion();
+  // 初めて作る音声でも間に合うよう、2問先まで取り寄せておく。
+  state.queue.slice(0, 2).forEach(preloadListeningTask);
   if (!started) {
     state.listeningTimer = window.setTimeout(() => {
       state.listeningTimer = null;
@@ -4394,8 +4396,8 @@ function beginListeningQuestion() {
   const runId = ++state.listeningRunId;
   state.answerVisible = false;
   state.classicalChineseReadingVisible = false;
-  renderQuestion();
   if (isClassicalChineseMeaningQuestion()) {
+    renderQuestion();
     preloadListeningTask(state.currentTask);
     state.listeningTimer = window.setTimeout(() => {
       state.listeningTimer = null;
@@ -4404,7 +4406,7 @@ function beginListeningQuestion() {
     return;
   }
   const questionSegments = listeningQuestionSpeechSequence();
-  void speechController.preload(answerSpeechSequence());
+  // 画面の描き替えより先に読み上げを始め、取り寄せ済みの音声はその場で鳴らす。
   const started = speechController.speak(questionSegments, {
     onComplete: () => {
       if (
@@ -4424,7 +4426,10 @@ function beginListeningQuestion() {
   });
   if (!started) {
     speakListeningAnswer(runId);
+    return;
   }
+  renderQuestion();
+  void speechController.preload(answerSpeechSequence());
 }
 
 function showSpeechPartNotice(message) {
@@ -5334,6 +5339,17 @@ function configureSetup() {
   renderRoutineSetupContext();
 }
 
+// 1行に収める計測は画面の配置を確定させて重いため、描画の直前に1回だけ行う。
+// 問題の切り替え時に読み上げの開始を待たせない。
+let questionHeadingFitFrame = 0;
+function scheduleQuestionHeadingFit() {
+  if (questionHeadingFitFrame) return;
+  questionHeadingFitFrame = window.requestAnimationFrame(() => {
+    questionHeadingFitFrame = 0;
+    fitQuestionHeading();
+  });
+}
+
 // 上部の問題番号と学習状況を1行に収める。入らない時だけ文字の大きさを縮める。
 function fitQuestionHeading() {
   const heading = elements.questionHeading;
@@ -5785,7 +5801,7 @@ function renderQuestion() {
   state.unlockMessage = "";
 
   updateOverallProgress();
-  fitQuestionHeading();
+  scheduleQuestionHeadingFit();
   setContentDensity(
     elements.questionCard,
     stagedClassicalChineseMeaning ? term.term : displayedQuestionPrompt,

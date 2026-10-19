@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.415" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.416" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.415") ||
-  !app.includes("app-navigation.js?v=0.415") ||
-  !changelog.includes("v0.415") ||
-  !settingsHtml.includes("v0.415") ||
-  !historyHtml.includes("v0.415") ||
-  !analysisHtml.includes("v0.415")
+  !html.includes("v0.416") ||
+  !app.includes("app-navigation.js?v=0.416") ||
+  !changelog.includes("v0.416") ||
+  !settingsHtml.includes("v0.416") ||
+  !historyHtml.includes("v0.416") ||
+  !analysisHtml.includes("v0.416")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -572,7 +572,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.415"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.416"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -879,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.415"') ||
+  !html.includes('href="/styles.css?v=0.416"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1445,6 +1445,13 @@ if (
   !app.includes("normalizeSpeechParts") ||
   !listeningAnswerSpeechBlock?.includes("answerSpeechSequence()") ||
   listeningAnswerSpeechBlock?.includes("queueActiveSessionSave(") ||
+  listeningAnswerSpeechBlock.indexOf("speechController.speak(segments") >
+    listeningAnswerSpeechBlock.indexOf("renderQuestion();") ||
+  listeningQuestionSpeechBlock.indexOf("speechController.speak(questionSegments") >
+    listeningQuestionSpeechBlock.lastIndexOf("renderQuestion();") ||
+  !app.includes("scheduleQuestionHeadingFit();") ||
+  !speech.includes("readyCloudAudio(segment, settings) ??") ||
+  !speech.includes("const readingEntriesCache = new WeakMap();") ||
   !listeningAnswerSpeechBlock?.includes("state.queue.slice(0, 2).forEach(preloadListeningTask)") ||
   !listeningAnswerSpeechBlock?.includes("window.setTimeout") ||
   !listeningQuestionSpeechBlock?.includes(

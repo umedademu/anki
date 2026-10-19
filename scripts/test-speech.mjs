@@ -897,7 +897,9 @@ class PreloadAudio {
     preloadPlayers.push(this);
   }
 
-  async play() {}
+  async play() {
+    preloadPlayCalls += 1;
+  }
 
   load() {}
 
@@ -909,6 +911,7 @@ class PreloadAudio {
 
   pause() {}
 }
+let preloadPlayCalls = 0;
 const preloadController = createSpeechController({
   synthesis,
   Utterance: FakeUtterance,
@@ -939,6 +942,10 @@ for (const resolve of preloadResolvers) {
 }
 await preloadResult;
 preloadController.speak(preloadSegments);
+// 取り寄せ済みの音声は、通信の完了を待つ処理を挟まずにその場で再生を始める。
+if (preloadPlayCalls !== 1) {
+  throw new Error("取り寄せ済みの音声をその場で再生し始められませんでした。");
+}
 await new Promise((resolve) => setTimeout(resolve, 0));
 if (preloadRequests.length !== 2 || preloadPlayers.length !== 1) {
   throw new Error("先読みした音声を再取得せずに再生できませんでした。");

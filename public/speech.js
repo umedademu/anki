@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.415";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.416";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -30,7 +30,23 @@ function applyDynastySpeechReadings(value, additionalReadings = {}) {
   return text.replace(/([\p{Script=Katakana}ー＝・])朝/gu, "$1ちょう");
 }
 
+// 読み補正の一覧は読み上げのたびに作り直すと重いため、同じ一覧には並べ替え済みの結果を使い回す。
+const readingEntriesCache = new WeakMap();
+const emptyReadingsKey = {};
+
 function readingEntries(additionalReadings = {}) {
+  const cacheKey =
+    additionalReadings && typeof additionalReadings === "object"
+      ? additionalReadings
+      : emptyReadingsKey;
+  const cached = readingEntriesCache.get(cacheKey);
+  if (cached) return cached;
+  const sorted = buildReadingEntries(additionalReadings);
+  readingEntriesCache.set(cacheKey, sorted);
+  return sorted;
+}
+
+function buildReadingEntries(additionalReadings = {}) {
   const entries =
     additionalReadings instanceof Map
       ? [...additionalReadings.entries()]
@@ -318,6 +334,7 @@ export function createSpeechController({
   let activePlaybackResume = null;
   let pausedContinuation = null;
   const cloudAudioCache = new Map();
+  const readyCloudAudioBlobs = new WeakMap();
   const cloudAudioCacheLimit = 24;
   const scheduleContinuation =
     typeof globalThis.queueMicrotask === "function"
@@ -473,15 +490,30 @@ export function createSpeechController({
       : settings.azureVoiceId;
   }
 
+  function cloudAudioCacheKey(segment, settings) {
+    return JSON.stringify([
+      segment.text,
+      cloudVoiceFor(segment, settings),
+      segment.language,
+      Boolean(trimCloudSilence),
+    ]);
+  }
+
+  // 取り寄せ済みの音声は待たずに渡し、次の音声をその場で再生し始められるようにする。
+  function readyCloudAudio(segment, settings) {
+    const cacheKey = cloudAudioCacheKey(segment, settings);
+    const request = cloudAudioCache.get(cacheKey);
+    const blob = request ? readyCloudAudioBlobs.get(request) : null;
+    if (!blob) return null;
+    cloudAudioCache.delete(cacheKey);
+    cloudAudioCache.set(cacheKey, request);
+    return blob;
+  }
+
   function loadCloudAudio(segment, settings) {
     const voice = cloudVoiceFor(segment, settings);
     const trimSilence = Boolean(trimCloudSilence);
-    const cacheKey = JSON.stringify([
-      segment.text,
-      voice,
-      segment.language,
-      trimSilence,
-    ]);
+    const cacheKey = cloudAudioCacheKey(segment, settings);
     const cached = cloudAudioCache.get(cacheKey);
     if (cached) {
       cloudAudioCache.delete(cacheKey);
@@ -495,6 +527,10 @@ export function createSpeechController({
           trimSilence,
         }),
       )
+      .then((blob) => {
+        readyCloudAudioBlobs.set(request, blob);
+        return blob;
+      })
       .catch((error) => {
         if (cloudAudioCache.get(cacheKey) === request) {
           cloudAudioCache.delete(cacheKey);
@@ -732,7 +768,9 @@ export function createSpeechController({
         return;
       }
       try {
-        const blob = await loadCloudAudio(segment, settings);
+        const blob =
+          readyCloudAudio(segment, settings) ??
+          (await loadCloudAudio(segment, settings));
         if (ticket !== generation) {
           return;
         }

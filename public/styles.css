@@ -4594,7 +4594,7 @@ body.is-studying.is-vocabulary-stream .page {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   min-height: 0;
 }
 .vocabulary-stream-word, .vocabulary-stream-answer {
@@ -4607,7 +4607,8 @@ body.is-studying.is-vocabulary-stream .page {
   font-weight: 800;
   line-height: 1.25;
 }
-.vocabulary-stream-word { font-size: clamp(18px, 5.5dvh, 32px); }
+/* 英単語の末尾を中央へ寄せ、訳の先頭との空きを小さくする。 */
+.vocabulary-stream-word { font-size: clamp(18px, 5.5dvh, 32px); text-align: right; }
 .vocabulary-stream-answer { font-size: clamp(14px, 4.4dvh, 26px); }
 .vocabulary-stream-meaning { white-space: pre-line; }
 .vocabulary-stream-reveal { width: 100%; min-height: 32px; padding: 5px 12px; font-size: .9rem; }

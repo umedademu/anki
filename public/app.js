@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.414";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.414";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.415";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.415";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.414";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.415";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.414";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.414";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.414";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.414";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.414";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.414";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.414";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.414";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.414";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.415";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.415";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.415";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.415";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.415";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.415";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.415";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.415";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.415";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.414";
+} from "./original-session.js?v=0.415";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.414";
+} from "./speech.js?v=0.415";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -95,7 +95,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.414";
+} from "./deck-selection.js?v=0.415";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -119,7 +119,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.414";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.415";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -4304,11 +4304,8 @@ function speakListeningAnswer(runId) {
   // 次の問題の回答を出したら、前の問題への評価は受け付けない。
   state.lateListeningRating = null;
   renderQuestion();
-  if (isVocabularyStream()) {
-    void queueActiveSessionSave().catch(error => {
-      state.unlockMessage = error.message;
-    });
-  }
+  // 3語表示でも訳を出すたびには途中記録を送らない。再読み込みでは今の訳を隠して読み直すため不要で、
+  // 送ると1問あたりの通信が2倍になり、保存待ちで次の単語の読み上げが遅れる。
   const segments = [
     ...(includesDeferredClassicalChineseReading
       ? classicalChineseReadingSpeechSequence()

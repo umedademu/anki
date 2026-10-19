@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.420";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.421";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -373,6 +373,17 @@ export function createSpeechController({
   minimumSkippedSilenceSeconds = 0.05,
   leadSilenceMarginSeconds = 0.015,
   tailSilenceMarginSeconds = 0.03,
+  // 開始通知の後に再生位置が止まったままなら、音が出ていないとみなして次へ進めない。
+  cloudStallTimeoutMs = 2000,
+  cloudStallCheckIntervalMs = 500,
+  // 再生の受付が中止された時に、同じ音声をやり直すまでの待ち。
+  playRetryDelayMs = 250,
+  // 操作中に鳴らす準備用の無音の見張り時間。
+  probeTimeoutMs = 1500,
+  // iPhoneの音声セッション（navigator.audioSession）。再生用と宣言し、状態を診断に使う。
+  audioSession = globalThis.navigator?.audioSession ?? null,
+  audioSessionType = "playback",
+  now = () => Date.now(),
 } = {}) {
   const deviceSupported = Boolean(
     synthesis &&
@@ -416,6 +427,170 @@ export function createSpeechController({
       ? (callback) => globalThis.queueMicrotask(callback)
       : (callback) => Promise.resolve().then(callback);
 
+  // iPhoneの音声セッション。種類を「再生用」と宣言しておくと、再生の合間に端末へ音声の出力権を返さず、
+  // イヤホンの付け外しの後も同じ区分のまま次の再生に入れる。状態の変化は失敗時の診断に残す。
+  let audioSessionState = "";
+  let audioSessionPrevious = "";
+  let audioSessionChangedAt = 0;
+  if (audioSession && typeof audioSession === "object") {
+    try {
+      if (
+        audioSessionType &&
+        "type" in audioSession &&
+        audioSession.type !== audioSessionType
+      ) {
+        audioSession.type = audioSessionType;
+      }
+    } catch {}
+    audioSessionState = String(audioSession.state ?? "");
+    try {
+      audioSession.addEventListener?.("statechange", () => {
+        const next = String(audioSession.state ?? "");
+        if (next === audioSessionState) return;
+        audioSessionPrevious = audioSessionState;
+        audioSessionState = next;
+        audioSessionChangedAt = now();
+      });
+    } catch {}
+  }
+
+  // 操作中に鳴らす準備用の無音と、その結果。実機の無音の原因を次の報告で特定するために残す。
+  let probe = null;
+  let lastProbe = null;
+  let lastCloudFailure = "";
+
+  function silentWavBlob(durationSeconds = 0.12, sampleRate = 16000) {
+    const samples = Math.max(1, Math.round(durationSeconds * sampleRate));
+    const buffer = new ArrayBuffer(44 + samples * 2);
+    const view = new DataView(buffer);
+    const writeText = (offset, text) => {
+      for (let index = 0; index < text.length; index += 1) {
+        view.setUint8(offset + index, text.charCodeAt(index));
+      }
+    };
+    writeText(0, "RIFF");
+    view.setUint32(4, 36 + samples * 2, true);
+    writeText(8, "WAVE");
+    writeText(12, "fmt ");
+    view.setUint32(16, 16, true);
+    view.setUint16(20, 1, true);
+    view.setUint16(22, 1, true);
+    view.setUint32(24, sampleRate, true);
+    view.setUint32(28, sampleRate * 2, true);
+    view.setUint16(32, 2, true);
+    view.setUint16(34, 16, true);
+    writeText(36, "data");
+    view.setUint32(40, samples * 2, true);
+    return new Blob([buffer], { type: "audio/wav" });
+  }
+
+  function secondsAgo(at) {
+    return `${Math.max(0, Math.round((now() - at) / 1000))}秒前`;
+  }
+
+  // 失敗の理由に、音声セッションの状態と準備音の結果を添える。利用者の画面に短く表示する。
+  function describeFailure(reason) {
+    const parts = [reason];
+    if (audioSession && typeof audioSession === "object") {
+      let session = `音声セッション:${audioSessionState || "不明"}`;
+      if (audioSessionPrevious && now() - audioSessionChangedAt < 120000) {
+        session += `（${audioSessionPrevious}から${secondsAgo(audioSessionChangedAt)}に変化）`;
+      }
+      parts.push(session);
+    }
+    if (lastProbe) {
+      parts.push(`${lastProbe.result}（${secondsAgo(lastProbe.at)}）`);
+    }
+    return parts.join("、");
+  }
+
+  function withDetail(error, reason) {
+    const failure = error instanceof Error ? error : new Error("音声を再生できませんでした。");
+    try {
+      failure.detail = describeFailure(reason);
+    } catch {}
+    return failure;
+  }
+
+  function clearProbe(result = "") {
+    if (!probe) return;
+    const entry = probe;
+    probe = null;
+    if (entry.timer !== null) {
+      globalThis.clearTimeout(entry.timer);
+      entry.timer = null;
+    }
+    const audio = entry.audio;
+    audio.onplaying = null;
+    audio.onended = null;
+    audio.onerror = null;
+    audio.onpause = null;
+    try {
+      audio.pause?.();
+      if (typeof audio.removeAttribute === "function") audio.removeAttribute("src");
+      else audio.src = "";
+      audio.load?.();
+    } catch {}
+    if (entry.url) revokeObjectUrl(entry.url);
+    const settled =
+      result ||
+      (entry.started ? "準備音:開始後に切替" : "準備音:開始前に切替");
+    lastProbe = { result: settled, at: now() };
+  }
+
+  // 操作の中で無音の短い音声を実際に鳴らす。端末へ音声の出力権を操作中に取り、
+  // 中断扱いになっていた再生器があればその解除も操作中に済ませる。開始・完走の有無を診断に残す。
+  function startProbe() {
+    if (!cloudSupported) return false;
+    const settings = normalizeSpeechSettings(getSettings());
+    if (settings.source !== "cloud") return false;
+    clearProbe();
+    const audio = idleCloudAudio();
+    if (!audio) return false;
+    let url = "";
+    try {
+      url = createObjectUrl(silentWavBlob());
+    } catch {
+      return false;
+    }
+    const entry = { audio, url, started: false, timer: null };
+    probe = entry;
+    const settle = (result) => {
+      if (probe === entry) clearProbe(result);
+    };
+    audio.onplaying = () => {
+      if (probe === entry) entry.started = true;
+    };
+    audio.onended = () => settle("準備音:完走");
+    audio.onerror = () => settle("準備音:読込失敗");
+    audio.onpause = null;
+    const timeoutMs = Number(probeTimeoutMs);
+    if (Number.isFinite(timeoutMs) && timeoutMs >= 0) {
+      entry.timer = globalThis.setTimeout(() => {
+        entry.timer = null;
+        settle(
+          entry.started
+            ? `準備音:開始後${Math.round(timeoutMs / 100) / 10}秒で終了せず`
+            : `準備音:${Math.round(timeoutMs / 100) / 10}秒経っても開始せず`,
+        );
+      }, timeoutMs);
+      entry.timer?.unref?.();
+    }
+    try {
+      clearStaging(audio);
+      audio.src = url;
+      audio.load?.();
+      audio.defaultPlaybackRate = 1;
+      audio.playbackRate = 1;
+      Promise.resolve(audio.play()).catch((error) => {
+        settle(`準備音:拒否(${error?.name || "不明"})`);
+      });
+    } catch (error) {
+      settle(`準備音:拒否(${error?.name || "不明"})`);
+    }
+    return true;
+  }
+
   function setCurrentTarget(target) {
     currentTarget = target;
     onTargetChange(target);
@@ -429,6 +604,7 @@ export function createSpeechController({
     activePlaybackResume = null;
     pausedContinuation = null;
     activeQueue = null;
+    clearProbe();
     if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
@@ -528,13 +704,20 @@ export function createSpeechController({
   }
 
   // 鳴っていない方の再生器。どちらも空いていれば、前回使わなかった方を選ぶ。
+  // 準備音を鳴らしている再生器は、他に空きがあればそちらを優先する。
   function idleCloudAudio() {
     const pool = ensureCloudAudio();
+    let probing = null;
     for (let offset = 1; offset <= pool.length; offset += 1) {
       const audio = pool[(lastActiveAudioIndex + offset) % pool.length];
-      if (audio !== activeAudio) return audio;
+      if (audio === activeAudio) continue;
+      if (probe?.audio === audio) {
+        probing = audio;
+        continue;
+      }
+      return audio;
     }
-    return null;
+    return probing;
   }
 
   function analysisFor(blob) {
@@ -680,27 +863,15 @@ export function createSpeechController({
     return entry;
   }
 
-  function unlock({ reset = false } = {}) {
-    // イヤホンの再接続後は、古い出力先を保持した再生器を引き継がない。
-    // 開始・再開ボタンを押した直後に2台とも作り直し、通信を待つ前に許可を準備する。
+  function unlock({ reset = false, probe: playProbe = false } = {}) {
+    // 「はじめから」「前回の続きから」「中断後の再生」では、進行中の列と先読みの割り当てを捨てる。
+    // 再生器そのものは作り直さない。音の出力先は端末側の音声セッションの経路で決まり、再生器を
+    // 入れ替えても変わらない。接続変更で中断扱いになった再生器を使い続ける方が、次の再生で
+    // ブラウザー側の中断状態が解除されやすい。
     if (reset) {
       resetPlayback();
       stagedHint = null;
-      for (const audio of cloudAudioPool.splice(0)) {
-        clearStaging(audio);
-        audio.onplaying = null;
-        audio.onended = null;
-        audio.onerror = null;
-        audio.onpause = null;
-        audio.onloadedmetadata = null;
-        try {
-          audio.pause?.();
-          if (typeof audio.removeAttribute === "function") audio.removeAttribute("src");
-          else audio.src = "";
-          audio.load?.();
-        } catch {}
-        blessedCloudAudios.delete(audio);
-      }
+      for (const audio of cloudAudioPool) clearStaging(audio);
       lastActiveAudioIndex = -1;
     }
     if (!cloudSupported) {
@@ -715,6 +886,9 @@ export function createSpeechController({
         audio.load?.();
         blessedCloudAudios.add(audio);
       }
+      // 開始・再開の操作中は、許可の準備に加えて無音の準備音を実際に鳴らす。
+      // 通信を待つ前に端末へ音声の出力権を取り、鳴らない時はその事実を診断に残す。
+      if (playProbe) startProbe();
       return true;
     } catch (error) {
       onFallback(
@@ -835,6 +1009,7 @@ export function createSpeechController({
     const ticket = ++generation;
     activeQueue = queue;
     stagedHint = null;
+    lastCloudFailure = "";
     void preload(queue);
 
     function continueAfterPlayback(callback) {
@@ -854,11 +1029,15 @@ export function createSpeechController({
         return;
       }
       setCurrentTarget("");
-      onError(
-        error instanceof Error
-          ? error
-          : new Error("音声を再生できませんでした。"),
-      );
+      const failure =
+        error instanceof Error ? error : new Error("音声を再生できませんでした。");
+      // 端末音声へ切り替えた末の失敗にも、先に失敗した自然音声の理由を添える。
+      if (!failure.detail && lastCloudFailure) {
+        try {
+          failure.detail = describeFailure(`自然音声は${lastCloudFailure}`);
+        } catch {}
+      }
+      onError(failure);
     }
 
     function finishCloudAudio(audio, audioUrl) {
@@ -1055,9 +1234,18 @@ export function createSpeechController({
         let finished = false;
         let hasPlayed = false;
         let playAttempt = 0;
+        let retriedStart = false;
         let startTimer = null;
+        let retryTimer = null;
         let playbackTimer = null;
         let earlyFinishTimer = null;
+        let earlyFinishRetries = 0;
+        let progressTimer = null;
+        let lastProgressPosition = NaN;
+        let lastProgressAt = 0;
+        // 時計で終了とみなす時に許す位置のずれと、位置から待ち直す回数の上限。
+        const earlyFinishToleranceSeconds = 0.05;
+        const maximumEarlyFinishRetries = 5;
         const clearEarlyFinishTimer = () => {
           if (earlyFinishTimer !== null) {
             globalThis.clearTimeout(earlyFinishTimer);
@@ -1065,6 +1253,7 @@ export function createSpeechController({
           }
         };
         // 声が終わった後の無音は待たず、終わりの位置に合わせて次へ進む。
+        // ただし時計だけで決めず、その時刻に実際の再生位置が声の終わりへ届いているかを確かめる。
         const armEarlyFinish = () => {
           clearEarlyFinishTimer();
           const bounds = analysisFor(blob);
@@ -1077,13 +1266,26 @@ export function createSpeechController({
             return;
           }
           const rate = Number(audio.playbackRate) > 0 ? Number(audio.playbackRate) : 1;
-          const remainingSeconds =
-            Math.max(0, bounds.soundEndSeconds + tailSilenceMarginSeconds - position) / rate;
+          const target = bounds.soundEndSeconds + tailSilenceMarginSeconds;
+          const remainingSeconds = Math.max(0, target - position) / rate;
           earlyFinishTimer = globalThis.setTimeout(() => {
             earlyFinishTimer = null;
-            if (!finished && !playbackPaused && ticket === generation) {
-              finish();
+            if (finished || playbackPaused || ticket !== generation) {
+              return;
             }
+            const current = Number(audio.currentTime);
+            // 位置が声の終わりに届いていなければ、実際の位置から待ち直す。
+            // 位置が進まない場合は、進行の見張りが音の出ていない再生として止める。
+            if (
+              Number.isFinite(current) &&
+              current < target - earlyFinishToleranceSeconds &&
+              earlyFinishRetries < maximumEarlyFinishRetries
+            ) {
+              earlyFinishRetries += 1;
+              armEarlyFinish();
+              return;
+            }
+            finish();
           }, remainingSeconds * 1000);
         };
         const clearStartTimer = () => {
@@ -1098,10 +1300,24 @@ export function createSpeechController({
             playbackTimer = null;
           }
         };
+        const clearRetryTimer = () => {
+          if (retryTimer !== null) {
+            globalThis.clearTimeout(retryTimer);
+            retryTimer = null;
+          }
+        };
+        const clearProgressWatch = () => {
+          if (progressTimer !== null) {
+            globalThis.clearInterval(progressTimer);
+            progressTimer = null;
+          }
+        };
         const clearPlaybackTimers = () => {
           clearStartTimer();
+          clearRetryTimer();
           clearPlaybackTimer();
           clearEarlyFinishTimer();
+          clearProgressWatch();
         };
         const armPlaybackTimer = () => {
           clearStartTimer();
@@ -1118,7 +1334,9 @@ export function createSpeechController({
                 5000
               : 0;
           playbackTimer = globalThis.setTimeout(() => {
-            fallback(new Error("自然音声の再生が完了しませんでした。"));
+            fallback(
+              withDetail(new Error("自然音声の再生が完了しませんでした。"), "終了通知が来ず"),
+            );
           }, Math.max(minimumTimeoutMs, expectedTimeoutMs));
         };
         const clearCloudControls = () => {
@@ -1148,14 +1366,32 @@ export function createSpeechController({
           }
           clearCloudControls();
           finishCloudAudio(audio, audioUrl);
-          onFallback(error instanceof Error ? error : new Error("音声を再生できません。"));
+          const failure =
+            error instanceof Error ? error : new Error("音声を再生できません。");
+          lastCloudFailure = failure.detail || failure.message;
+          onFallback(failure);
           if (error?.name === "NotAllowedError") {
-            continueAfterPlayback(() => fail(error));
+            continueAfterPlayback(() => fail(failure));
             return;
           }
           continueAfterPlayback(() =>
             speakWithDevice(segment, settings, done, fail),
           );
+        };
+        // 端末側の一時停止や再生位置の停止は、読み上げ終了として次へ進めず同じ問題で止める。
+        const halt = (error) => {
+          if (finished) {
+            return;
+          }
+          finished = true;
+          clearPlaybackTimers();
+          if (activeCloudCancel === cancel) {
+            activeCloudCancel = null;
+          }
+          clearCloudControls();
+          finishCloudAudio(audio, audioUrl);
+          lastCloudFailure = error.detail || error.message;
+          continueAfterPlayback(() => fail(error));
         };
         const cancel = () => {
           if (finished) {
@@ -1175,9 +1411,58 @@ export function createSpeechController({
           const startTimeoutMs = Number(cloudStartTimeoutMs);
           if (Number.isFinite(startTimeoutMs) && startTimeoutMs >= 0) {
             startTimer = globalThis.setTimeout(() => {
-              fallback(new Error("自然音声の再生を開始できませんでした。"));
+              fallback(
+                withDetail(
+                  new Error("自然音声の再生を開始できませんでした。"),
+                  `開始通知が${Math.round(startTimeoutMs / 100) / 10}秒来ず`,
+                ),
+              );
             }, startTimeoutMs);
           }
+        };
+        // 開始通知の後も再生位置が進まなければ、音が出ていないとみなして次へ進めずに止める。
+        const checkProgress = () => {
+          if (finished || playbackPaused || ticket !== generation) {
+            clearProgressWatch();
+            return;
+          }
+          const position = Number(audio.currentTime);
+          if (!Number.isFinite(position)) {
+            return;
+          }
+          const at = now();
+          if (
+            !Number.isFinite(lastProgressPosition) ||
+            position > lastProgressPosition + 0.001
+          ) {
+            lastProgressPosition = position;
+            lastProgressAt = at;
+            return;
+          }
+          if (at - lastProgressAt < Number(cloudStallTimeoutMs)) {
+            return;
+          }
+          halt(
+            withDetail(
+              new Error("音声の再生が進まなかったため、この問題で止めました。再生を押して続けてください。"),
+              `開始後${Math.round((at - lastProgressAt) / 100) / 10}秒間、再生位置が${position.toFixed(2)}秒で停止`,
+            ),
+          );
+        };
+        const armProgressWatch = () => {
+          clearProgressWatch();
+          const timeoutMs = Number(cloudStallTimeoutMs);
+          if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) {
+            return;
+          }
+          lastProgressPosition = Number(audio.currentTime);
+          lastProgressAt = now();
+          const intervalMs = Math.max(
+            50,
+            Math.min(Number(cloudStallCheckIntervalMs) || 500, timeoutMs / 2),
+          );
+          progressTimer = globalThis.setInterval(checkProgress, intervalMs);
+          progressTimer?.unref?.();
         };
         const beginPlayback = () => {
           if (finished || ticket !== generation || playbackPaused) {
@@ -1188,17 +1473,36 @@ export function createSpeechController({
           try {
             Promise.resolve(audio.play()).catch((error) => {
               if (
-                attempt === playAttempt &&
-                !playbackPaused &&
-                !finished &&
-                ticket === generation
+                attempt !== playAttempt ||
+                playbackPaused ||
+                finished ||
+                ticket !== generation
               ) {
-                fallback(error);
+                return;
               }
+              // 接続の切り替え直後は再生の受付が一度だけ中止されることがある。
+              // 少し待って同じ再生器で同じ音声をやり直し、それでも駄目なら従来の切り替えへ進む。
+              if (error?.name !== "NotAllowedError" && !retriedStart) {
+                retriedStart = true;
+                clearStartTimer();
+                retryTimer = globalThis.setTimeout(() => {
+                  retryTimer = null;
+                  beginPlayback();
+                }, Math.max(0, Number(playRetryDelayMs) || 0));
+                return;
+              }
+              fallback(
+                withDetail(
+                  error,
+                  `再生を拒否(${error?.name || "不明"})${retriedStart ? "・やり直し後" : ""}`,
+                ),
+              );
             });
           } catch (error) {
             if (attempt === playAttempt && !playbackPaused) {
-              fallback(error);
+              fallback(
+                withDetail(error, `再生の呼び出しに失敗(${error?.name || "不明"})`),
+              );
             }
           }
         };
@@ -1220,22 +1524,30 @@ export function createSpeechController({
             return;
           }
           hasPlayed = true;
+          clearRetryTimer();
           armPlaybackTimer();
           armEarlyFinish();
+          armProgressWatch();
           // 鳴り始めたら、もう片方の再生器へ次の音声を読み込んでおく。
           stageUpcoming(queue);
         };
         audio.onended = finish;
-        audio.onerror = fallback;
+        audio.onerror = () =>
+          fallback(
+            withDetail(
+              new Error("自然音声を読み込めませんでした。"),
+              `再生器のエラー${audio.error?.code ? `(code ${audio.error.code})` : ""}`,
+            ),
+          );
         audio.onpause = () => {
           // 接続変更などで端末側が止めた時は、終了扱いにして問題を進めない。
           if (finished || !hasPlayed || playbackPaused || ticket !== generation || audio.ended === true || audio.paused === false) return;
-          finished = true;
-          clearPlaybackTimers();
-          if (activeCloudCancel === cancel) activeCloudCancel = null;
-          clearCloudControls();
-          finishCloudAudio(audio, audioUrl);
-          continueAfterPlayback(() => fail(new Error("音声の再生が中断されました。再生を押して続けてください。")));
+          halt(
+            withDetail(
+              new Error("音声の再生が中断されました。再生を押して続けてください。"),
+              "端末側で一時停止",
+            ),
+          );
         };
         try {
           if (!staged) {

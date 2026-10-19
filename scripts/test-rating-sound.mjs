@@ -349,4 +349,19 @@ for (const speed of [...speeds, NaN, Infinity, undefined, "速い", -1]) {
 assert.equal(rateReadCount, expectedRateReads);
 await speedPlayer.close();
 
-console.log("4段階評価の既定音・差替音の速度追従、音程維持、途中変更と1倍の下限を確認しました。");
+// iPhoneで通話やイヤホンの付け外しの後に「interrupted」で止まった評価音の出力も、鳴らす直前に再開を頼む。
+{
+  const interruptedPlayer = createRatingSoundPlayer({ AudioContextClass: FakeAudioContext });
+  assert.equal(interruptedPlayer.play("good"), true);
+  const interruptedContext = FakeAudioContext.instances.at(-1);
+  assert.equal(interruptedContext.resumeCount, 1);
+  interruptedContext.state = "interrupted";
+  assert.equal(interruptedPlayer.play("easy"), true);
+  assert.equal(interruptedContext.resumeCount, 2, "中断状態の評価音の出力にも再開を頼む");
+  assert.equal(interruptedContext.state, "running");
+  assert.equal(interruptedPlayer.play("hard"), true);
+  assert.equal(interruptedContext.resumeCount, 2, "再生中の出力には再開を頼まない");
+  await interruptedPlayer.close();
+}
+
+console.log("4段階評価の既定音・差替音の速度追従、音程維持、途中変更と1倍の下限、中断後の再開を確認しました。");

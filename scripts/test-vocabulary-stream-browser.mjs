@@ -198,7 +198,7 @@ export function createSpeechController(){
   return {
     supported:true, get paused(){return paused;}, currentTarget:null,
     stop(){control.pending = null; paused = false;},
-    unlock(options = {}) { control.preparations.push({ reset: options.reset === true, gesture: navigator.userActivation?.isActive }); },
+    unlock(options = {}) { control.preparations.push({ reset: options.reset === true, probe: options.probe === true, gesture: navigator.userActivation?.isActive }); },
     pause(){paused = true; return true;},
     resume(){if (!paused) return false; paused = false; return true;},
     speak(_segments, callbacks = {}){paused = false; control.pending = callbacks.onComplete ?? callbacks.onEnd ?? null; return true;},
@@ -629,6 +629,7 @@ export function createRatingSoundPlayer(){
   await page.locator("#resume-study").click(); await ready("q1", "listen-answer");
   const reconnectPreparation = await page.evaluate(() => window.__streamSpeechTest.preparations.find(entry => entry.reset));
   assert.equal(reconnectPreparation?.gesture, true, "再開ボタンを押した時の操作中に再生許可を準備する");
+  assert.equal(reconnectPreparation?.probe, true, "再開ボタンを押した時の操作中に無音の準備音を鳴らす");
   assert.deepEqual(await ids(), ["q1", "q0"], "音声の再準備で途中の表示行や問題を変えない");
   await assertPlayback(false);
 

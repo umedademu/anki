@@ -1188,7 +1188,8 @@ class StagedAudio {
     this.src = "";
     this.playbackRate = 1;
     this.defaultPlaybackRate = 1;
-    this.currentTime = 0;
+    this.position = 0;
+    this.playStartedAt = 0;
     this.readyState = 0;
     this.loads = 0;
     this.playing = false;
@@ -1196,6 +1197,17 @@ class StagedAudio {
     this.onended = null;
     this.onerror = null;
     this.onloadedmetadata = null;
+  }
+
+  // 本物の再生器と同じく、鳴っている間は再生位置が速度に応じて進む。
+  get currentTime() {
+    if (!this.playing) return this.position;
+    return this.position + ((Date.now() - this.playStartedAt) / 1000) * this.playbackRate;
+  }
+
+  set currentTime(value) {
+    this.position = Number(value);
+    if (this.playing) this.playStartedAt = Date.now();
   }
 
   load() {
@@ -1211,10 +1223,12 @@ class StagedAudio {
   async play() {
     stagedEvents.push(`再生:${this.index}:${this.src}:${this.currentTime.toFixed(3)}`);
     this.playing = true;
+    this.playStartedAt = Date.now();
     queueMicrotask(() => this.onplaying?.());
   }
 
   pause() {
+    if (this.playing) this.position = this.currentTime;
     this.playing = false;
   }
 
@@ -1317,21 +1331,25 @@ if (
 }
 stagedController.stop();
 
-// イヤホンを切り替えると古い再生器が使えなくなる状況を、実音声なしで再現する。
-let outputRoute = 0;
+// イヤホンの付け外しで端末側の音声経路が切り替わる状況を、実音声なしで再現する。
+// 音の出力先は再生器ではなく端末側の音声セッションで決まり、利用者の操作の中で鳴らすと取り直せるものとして模擬する。
+let outputSessionReady = true;
 let outputGesture = false;
 let outputRequests = 0;
 let outputCompletions = 0;
 let outputErrors = 0;
+const outputErrorDetails = [];
 const outputPlayers = [];
 const outputRevocations = [];
+const tick = () => new Promise(resolve => setTimeout(resolve, 0));
 class ReconnectedAudio {
   constructor() {
-    this.route = outputRoute;
     this.src = "";
     this.paused = true;
     this.currentTime = 0;
+    this.playbackRate = 1;
     this.permitted = false;
+    this.plays = 0;
     outputPlayers.push(this);
   }
   load() { if (outputGesture) this.permitted = true; }
@@ -1339,62 +1357,255 @@ class ReconnectedAudio {
     if (!this.permitted) {
       const error = new Error("再生許可が必要です。"); error.name = "NotAllowedError"; throw error;
     }
+    this.plays += 1;
     this.paused = false;
-    // 古い出力先の再生器では、成功通知だけが来て実際の出力が戻らない。
-    this.audible = this.route === outputRoute;
+    // 利用者の操作の中で鳴らした時だけ、端末側の音声の出力権を取り直せる。
+    if (outputGesture) outputSessionReady = true;
+    this.audible = outputSessionReady;
     this.onplaying?.();
   }
   pause() { this.paused = true; queueMicrotask(() => this.onpause?.()); }
   removeAttribute(name) { if (name === "src") this.src = ""; }
 }
+const fakeAudioSession = {
+  type: "auto", state: "inactive", listeners: [],
+  addEventListener(name, listener) { if (name === "statechange") this.listeners.push(listener); },
+  change(state) { this.state = state; for (const listener of this.listeners) listener(); },
+};
 const outputController = createSpeechController({
   synthesis: null, Utterance: null, AudioPlayer: ReconnectedAudio,
-  createObjectUrl: blob => `blob:output-${blob.text}-${outputPlayers.length}`,
+  // 準備音は本物のBlobで渡されるため、試験用の印は文字列の名前がある時だけ使う。
+  createObjectUrl: blob => `blob:output-${typeof blob.text === "string" ? blob.text : "準備音"}-${outputPlayers.length}`,
   revokeObjectUrl: url => outputRevocations.push(url),
   requestCloudAudio: async text => { outputRequests++; return { text, type: "audio/mpeg", size: 100 }; },
   decodeAudioBounds: async () => null,
+  audioSession: fakeAudioSession,
   getSettings: () => ({ source: "cloud", rate: 1.6 }),
 });
+if (fakeAudioSession.type !== "playback") throw new Error("iPhoneの音声セッションを再生用と宣言できませんでした。");
 const outputSegments = [{ target: "question", text: "apple", language: "en-US" }, { target: "answer", text: "りんご" }];
 outputGesture = true; outputController.unlock(); outputGesture = false;
 await outputController.preload(outputSegments);
-const outputHandlers = { onComplete: () => outputCompletions++, onError: () => outputErrors++ };
+const outputHandlers = {
+  onComplete: () => outputCompletions++,
+  onError: error => { outputErrors++; outputErrorDetails.push(String(error.detail ?? "")); },
+};
 outputController.speak(outputSegments, outputHandlers);
-await new Promise(resolve => setTimeout(resolve, 0));
+await tick();
 const oldActive = outputPlayers.find(player => !player.paused);
 const oldStandby = outputPlayers.find(player => player !== oldActive);
 const oldStandbyUrl = oldStandby.src;
 const oldEnd = oldActive.onended;
 if (!oldActive.audible || !oldStandbyUrl) throw new Error("接続変更の試験用音声を準備できませんでした。");
-outputRoute++;
+// イヤホンOFF：端末側が再生を止め、音声セッションは中断になる。
+outputSessionReady = false;
+fakeAudioSession.change("interrupted");
 oldActive.paused = true; oldActive.onpause();
-await new Promise(resolve => setTimeout(resolve, 0));
-if (outputErrors !== 1 || outputCompletions !== 0 || outputController.currentTarget) {
-  throw new Error("端末側の一時停止を検出して、次の単語へ進まず停止できませんでした。");
+await tick();
+if (
+  outputErrors !== 1 || outputCompletions !== 0 || outputController.currentTarget ||
+  !outputErrorDetails[0].includes("端末側で一時停止") || !outputErrorDetails[0].includes("音声セッション:interrupted")
+) {
+  throw new Error("端末側の一時停止を検出して止め、理由と音声セッションの状態を添えられませんでした。");
 }
-outputGesture = true; outputController.unlock({ reset: true }); outputGesture = false;
+// イヤホンON → 「前回の続きから」：操作の中で先読みを捨てて準備音を鳴らす。再生器は作り直さない。
+fakeAudioSession.change("inactive");
+outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
+const probePlayer = outputPlayers.find(player => !player.paused);
+if (
+  outputPlayers.length !== 2 || !probePlayer || !probePlayer.src.includes("準備音") || !probePlayer.audible ||
+  !outputRevocations.includes(oldStandbyUrl) || outputPlayers.some(player => player !== probePlayer && player.src)
+) {
+  throw new Error("再開操作中に再生器を作り直さずに先読みを解放し、準備音を鳴らせませんでした。");
+}
+probePlayer.onended();
+if (probePlayer.src || !outputRevocations.some(url => url.includes("準備音"))) {
+  throw new Error("鳴り終えた準備音を片付けられませんでした。");
+}
 oldEnd();
-if (outputPlayers.length !== 4 || outputPlayers.slice(2).some(player => !player.permitted) ||
-    outputPlayers.slice(0, 2).some(player => player.src) || !outputRevocations.includes(oldStandbyUrl)) {
-  throw new Error("再開操作中に古い2台を解放し、新しい出力先で両方の再生許可を準備できませんでした。");
-}
-// 通信待ちで利用者の操作が終わった後でも、先に準備した再生器を使う。
-await new Promise(resolve => setTimeout(resolve, 0));
+if (outputCompletions !== 0) throw new Error("古い終了通知で進行を進めてしまいました。");
+// 通信待ちで利用者の操作が終わった後でも、同じ2台でそのまま再生する。
+await tick();
 outputController.speak(outputSegments, outputHandlers);
-await new Promise(resolve => setTimeout(resolve, 0));
-const newQuestion = outputPlayers.slice(2).find(player => !player.paused);
+await tick();
+const newQuestion = outputPlayers.find(player => !player.paused);
 if (!newQuestion?.audible || newQuestion.playbackRate !== 1.6) throw new Error("再接続後の問題を保存した速度で再生できませんでした。");
 newQuestion.onended();
-await new Promise(resolve => setTimeout(resolve, 0));
-const newAnswer = outputPlayers.slice(2).find(player => !player.paused);
+await tick();
+const newAnswer = outputPlayers.find(player => !player.paused);
 if (!newAnswer?.audible || newAnswer === newQuestion) throw new Error("再接続後の回答をもう一方の再生器で再生できませんでした。");
 newAnswer.onended();
-await new Promise(resolve => setTimeout(resolve, 0));
-if (outputCompletions !== 1 || outputErrors !== 1 || outputRequests !== 2) {
+await tick();
+if (outputCompletions !== 1 || outputErrors !== 1 || outputRequests !== 2 || outputPlayers.length !== 2) {
   throw new Error("再接続時に音声を再取得せず、古い通知で進行を重複させずに再開できませんでした。");
+}
+// 準備音の結果は、その後の失敗の理由にも添える。
+outputController.speak(outputSegments, outputHandlers);
+await tick();
+const haltedPlayer = outputPlayers.find(player => !player.paused);
+haltedPlayer.paused = true; haltedPlayer.onpause();
+await tick();
+if (outputErrors !== 2 || !outputErrorDetails[1].includes("準備音:完走")) {
+  throw new Error("準備音の結果を失敗の理由に添えられませんでした。");
 }
 outputController.stop();
 
+// 端末音声の設定では準備音を鳴らさない。
+{
+  const devicePlayers = [];
+  class DeviceOnlyAudio {
+    constructor() { this.src = ""; this.plays = 0; devicePlayers.push(this); }
+    load() {}
+    async play() { this.plays += 1; }
+    pause() {}
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const deviceController = createSpeechController({
+    synthesis, Utterance: FakeUtterance, AudioPlayer: DeviceOnlyAudio,
+    createObjectUrl: () => "blob:device", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    getSettings: () => ({ source: "device", rate: 1 }),
+  });
+  deviceController.unlock({ reset: true, probe: true });
+  if (devicePlayers.length !== 2 || devicePlayers.some(player => player.plays > 0 || player.src)) {
+    throw new Error("端末音声の設定で準備音を鳴らしてしまいました。");
+  }
+}
+
+// 開始通知の後に再生位置が進まない音声は、音が出ていないとみなして次へ進めずに止める。端末音声へも切り替えない。
+{
+  let deviceSpeaks = 0;
+  const completions = [];
+  const errors = [];
+  class StalledAudio {
+    constructor() { this.src = ""; this.currentTime = 0; this.paused = true; this.playbackRate = 1; }
+    load() {}
+    async play() { this.paused = false; queueMicrotask(() => this.onplaying?.()); }
+    pause() { this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const stalled = createSpeechController({
+    synthesis: { cancel() {}, resume() {}, getVoices() { return []; }, speak() { deviceSpeaks += 1; } },
+    Utterance: FakeUtterance, AudioPlayer: StalledAudio,
+    createObjectUrl: () => "blob:stalled", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => null,
+    cloudStallTimeoutMs: 40, cloudStallCheckIntervalMs: 10,
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  stalled.speak([{ target: "question", text: "止まる音声" }], {
+    onComplete: () => completions.push(1),
+    onError: error => errors.push(error),
+  });
+  await new Promise(resolve => setTimeout(resolve, 150));
+  if (
+    completions.length !== 0 || errors.length !== 1 || deviceSpeaks !== 0 || stalled.currentTarget ||
+    !String(errors[0].detail).includes("再生位置が0.00秒で停止")
+  ) {
+    throw new Error("再生位置が進まない音声を、次へ進めずに止められませんでした。");
+  }
+}
+
+// 無音の飛ばしは時計だけで終わりにせず、実際の再生位置が声の終わりへ届くまで待ち直す。
+{
+  const completions = [];
+  class LaggingAudio {
+    constructor() { this.src = ""; this.paused = true; this.playbackRate = 1; this.defaultPlaybackRate = 1; this.readyState = 1; this.position = 0; this.startedAt = 0; }
+    // 端末の都合で実際の進みが半分の速さになった再生器。
+    get currentTime() { return this.paused ? this.position : this.position + ((Date.now() - this.startedAt) / 1000) * 0.5; }
+    set currentTime(value) { this.position = Number(value); if (!this.paused) this.startedAt = Date.now(); }
+    load() {}
+    async play() { this.paused = false; this.startedAt = Date.now(); queueMicrotask(() => this.onplaying?.()); }
+    pause() { if (!this.paused) this.position = this.currentTime; this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const lagging = createSpeechController({
+    synthesis: null, Utterance: null, AudioPlayer: LaggingAudio,
+    createObjectUrl: () => "blob:lagging", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => ({ leadSeconds: 0, soundEndSeconds: 0.3, tailSeconds: 0.2, durationSeconds: 0.5 }),
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  const laggingSegments = [{ target: "answer", text: "遅れる音声" }];
+  await lagging.preload(laggingSegments);
+  await tick(); await tick();
+  const startedAt = Date.now();
+  lagging.speak(laggingSegments, {
+    onComplete: () => completions.push(Date.now() - startedAt),
+    onError: error => { throw error; },
+  });
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  // 時計だけなら約330ミリ秒で終わるが、実際の位置が声の終わりへ届く約580ミリ秒まで待つ。
+  if (completions.length !== 1 || completions[0] < 500 || completions[0] > 900) {
+    throw new Error(`実際の再生位置に合わせて終了を待ち直せませんでした（${completions[0]}ms）。`);
+  }
+}
+
+// 再生の受付が一度だけ中止された時は、同じ再生器で同じ音声をやり直し、端末音声へ切り替えない。
+{
+  let plays = 0;
+  let deviceSpeaks = 0;
+  const completions = [];
+  class AbortingAudio {
+    constructor() { this.src = ""; this.paused = true; this.playbackRate = 1; this.currentTime = 0; }
+    load() {}
+    async play() {
+      plays += 1;
+      if (plays === 1) { const error = new Error("受付中止"); error.name = "AbortError"; throw error; }
+      this.paused = false;
+      this.onplaying?.();
+      queueMicrotask(() => this.onended?.());
+    }
+    pause() { this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const aborting = createSpeechController({
+    synthesis: { cancel() {}, resume() {}, getVoices() { return []; }, speak() { deviceSpeaks += 1; } },
+    Utterance: FakeUtterance, AudioPlayer: AbortingAudio,
+    createObjectUrl: () => "blob:aborting", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => null, playRetryDelayMs: 5,
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  aborting.speak([{ target: "question", text: "やり直す音声" }], {
+    onComplete: () => completions.push(1),
+    onError: error => { throw error; },
+  });
+  await new Promise(resolve => setTimeout(resolve, 60));
+  if (plays !== 2 || completions.length !== 1 || deviceSpeaks !== 0) {
+    throw new Error("再生の受付が中止された時に同じ音声をやり直せませんでした。");
+  }
+}
+
+// 再生許可の拒否はやり直さず、同じ問題で止めて理由と音声セッションの状態を添える。
+{
+  let plays = 0;
+  let deviceSpeaks = 0;
+  const errors = [];
+  class RefusingAudio {
+    constructor() { this.src = ""; this.paused = true; this.playbackRate = 1; this.currentTime = 0; }
+    load() {}
+    async play() { plays += 1; const error = new Error("利用者操作が必要です。"); error.name = "NotAllowedError"; throw error; }
+    pause() { this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const refusing = createSpeechController({
+    synthesis: { cancel() {}, resume() {}, getVoices() { return []; }, speak() { deviceSpeaks += 1; } },
+    Utterance: FakeUtterance, AudioPlayer: RefusingAudio,
+    createObjectUrl: () => "blob:refusing", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => null, playRetryDelayMs: 5,
+    audioSession: { type: "auto", state: "interrupted", addEventListener() {} },
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  refusing.speak([{ target: "question", text: "拒否される音声" }], { onError: error => errors.push(error) });
+  await new Promise(resolve => setTimeout(resolve, 30));
+  const detail = String(errors[0]?.detail ?? "");
+  if (plays !== 1 || deviceSpeaks !== 0 || errors.length !== 1 || !detail.includes("再生を拒否(NotAllowedError)") || !detail.includes("音声セッション:interrupted")) {
+    throw new Error("再生許可の拒否を、やり直さずに理由付きで止められませんでした。");
+  }
+}
+
 console.log(
-  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開・2台の先読み切替・無音の飛ばし・出力先変更後の再準備と中断時の停止を確認",
+  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開・2台の先読み切替・無音の飛ばし（実際の再生位置で確認）・接続変更後の操作中の準備音と再生器の再利用・中断と進行停止時の停止・受付中止のやり直し・音声セッションの宣言と診断を確認",
 );

@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.420";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.420";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.421";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.421";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.420";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.421";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.420";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.420";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.420";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.420";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.420";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.420";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.420";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.420";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.420";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.421";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.421";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.421";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.421";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.421";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.421";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.421";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.421";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.421";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.420";
+} from "./original-session.js?v=0.421";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.420";
+} from "./speech.js?v=0.421";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.420";
+} from "./deck-selection.js?v=0.421";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.420";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.421";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -2859,7 +2859,7 @@ function speakCurrentMindset() {
         if (runId !== state.mindsetRunId) return;
         state.mindsetPaused = true;
         state.mindsetSpeechComplete = false;
-        state.mindsetErrorMessage = `${error.message} 再生ボタンを押してやり直してください。`;
+        state.mindsetErrorMessage = `${error.message}${error.detail ? `（${error.detail}）` : ""} 再生ボタンを押してやり直してください。`;
         renderMindsetPlayer();
       },
     },
@@ -2916,7 +2916,9 @@ function toggleMindsetPlayback() {
   ) {
     return;
   }
-  speechController.unlock({ reset: state.mindsetPaused && !speechController.paused });
+  // 中断後に読み直す時だけ、進行中の列を捨てて準備音を鳴らす。通常の一時停止からの再開は位置を保つ。
+  const restartsMindset = state.mindsetPaused && !speechController.paused;
+  speechController.unlock({ reset: restartsMindset, probe: restartsMindset });
   if (!state.mindsetPaused) {
     state.mindsetPaused = true;
     clearMindsetTimer();
@@ -3027,7 +3029,7 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
 // 選んだ位置からすぐ読み上げ、他の科目の「前回の続きから」「はじめから」と同じ流れにする。
 function chooseMindsetStart({ fromBeginning = false } = {}) {
   if (!state.mindsetChoosingStart) return;
-  speechController.unlock({ reset: true });
+  speechController.unlock({ reset: true, probe: true });
   if (fromBeginning) {
     showMindsetPlayer({ fromBeginning: true });
   }
@@ -4408,10 +4410,14 @@ function pauseListeningAfterSpeechFailure(runId, error = null) {
   }
   state.listeningPaused = true;
   stopListeningSequence();
+  // 失敗の理由（開始通知の有無、再生位置、音声セッションの状態、準備音の結果）を短く添え、
+  // 実機で無音になった時に原因を特定できるようにする。
+  const detail = error?.detail ? `（${error.detail}）` : "";
   state.unlockMessage =
-    error?.name === "NotAllowedError"
+    (error?.name === "NotAllowedError"
       ? "音声の再生許可が必要です。画面中央を押すと、同じ問題から読み上げを再開します。"
-      : "音声を再生できなかったため、この問題で一時停止しました。画面中央を押すと、同じ問題からもう一度読み上げます。";
+      : "音声を再生できなかったため、この問題で一時停止しました。画面中央を押すと、同じ問題からもう一度読み上げます。") +
+    detail;
   renderQuestion();
 }
 
@@ -4597,7 +4603,9 @@ function toggleListening() {
   if (!isListeningMode() || !state.currentTask || state.saving) {
     return;
   }
-  speechController.unlock({ reset: state.listeningPaused && !speechController.paused });
+  // 中断後に読み直す時だけ、進行中の列を捨てて準備音を鳴らす。通常の一時停止からの再開は位置を保つ。
+  const restartsListening = state.listeningPaused && !speechController.paused;
+  speechController.unlock({ reset: restartsListening, probe: restartsListening });
   if (state.listeningPaused) {
     state.listeningPaused = false;
     if (isVocabularyStream()) renderActionControls();
@@ -6630,7 +6638,8 @@ async function beginStudy() {
 
   startingStudy = true;
   elements.startStudy.disabled = true;
-  speechController.unlock({ reset: true });
+  // ボタンを押した操作の中で再生許可と準備音を済ませ、保存通信の後の読み上げに備える。
+  speechController.unlock({ reset: true, probe: true });
   try {
     if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }
     await queueSetupPreferenceSave();
@@ -6749,7 +6758,8 @@ async function resumeStudy() {
   startingStudy = true;
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
-  speechController.unlock({ reset: true });
+  // ボタンを押した操作の中で再生許可と準備音を済ませ、保存通信の後の読み上げに備える。
+  speechController.unlock({ reset: true, probe: true });
   try {
     if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }
     await queueSetupPreferenceSave();

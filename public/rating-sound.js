@@ -402,7 +402,9 @@ export function createRatingSoundPlayer({
       if (!context) {
         return false;
       }
-      if (context.state === "suspended") {
+      // iPhoneでは、通話やイヤホンの付け外しの後に「interrupted」で止まったままになるため、
+      // 鳴らす直前に「suspended」と同じく再開を頼む。
+      if (context.state === "suspended" || context.state === "interrupted") {
         void context.resume?.().catch?.(() => {});
       }
       const customBuffer = customBuffers.get(normalizedRating);

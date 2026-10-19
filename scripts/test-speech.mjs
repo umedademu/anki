@@ -1341,6 +1341,7 @@ let outputErrors = 0;
 const outputErrorDetails = [];
 const outputPlayers = [];
 const outputRevocations = [];
+const probeBlobSizes = [];
 const tick = () => new Promise(resolve => setTimeout(resolve, 0));
 class ReconnectedAudio {
   constructor() {
@@ -1374,8 +1375,11 @@ const fakeAudioSession = {
 };
 const outputController = createSpeechController({
   synthesis: null, Utterance: null, AudioPlayer: ReconnectedAudio,
-  // 準備音は本物のBlobで渡されるため、試験用の印は文字列の名前がある時だけ使う。
-  createObjectUrl: blob => `blob:output-${typeof blob.text === "string" ? blob.text : "準備音"}-${outputPlayers.length}`,
+  // 準備音は本物のBlobで渡されるため、試験用の印は文字列の名前がある時だけ使い、準備音の大きさを記録する。
+  createObjectUrl: blob => {
+    if (typeof blob.text !== "string") probeBlobSizes.push(Number(blob.size));
+    return `blob:output-${typeof blob.text === "string" ? blob.text : "準備音"}-${outputPlayers.length}`;
+  },
   revokeObjectUrl: url => outputRevocations.push(url),
   requestCloudAudio: async text => { outputRequests++; return { text, type: "audio/mpeg", size: 100 }; },
   decodeAudioBounds: async () => null,
@@ -1415,15 +1419,27 @@ if (
 ) {
   throw new Error("端末側の一時停止を検出して止め、理由と音声セッションの状態を添えられませんでした。");
 }
-// イヤホンON → 「前回の続きから」：操作の中で先読みを捨てて準備音を鳴らす。再生器は作り直さない。
+// イヤホンON → 「前回の続きから」：操作の中で先読みを捨て、専用の再生器で準備音を鳴らす。読み上げ用の2台は作り直さない。
 fakeAudioSession.change("inactive");
 outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
-const probePlayer = outputPlayers.find(player => !player.paused);
+const pool = outputPlayers.slice(0, 2);
+const probePlayer = outputPlayers[2];
 if (
-  outputPlayers.length !== 2 || !probePlayer || !probePlayer.src.includes("準備音") || !probePlayer.audible ||
-  !outputRevocations.includes(oldStandbyUrl) || outputPlayers.some(player => player !== probePlayer && player.src)
+  outputPlayers.length !== 3 || !probePlayer || probePlayer.paused || !probePlayer.src.includes("準備音") || !probePlayer.audible ||
+  !outputRevocations.includes(oldStandbyUrl) || pool.some(player => player.src || !player.paused)
 ) {
-  throw new Error("再開操作中に再生器を作り直さずに先読みを解放し、準備音を鳴らせませんでした。");
+  throw new Error("再開操作中に専用の再生器で準備音を鳴らし、読み上げ用の2台の先読みを解放できませんでした。");
+}
+// 準備音はWebKitが出力権を手放す条件（0.95秒より長い音声の自然終了）を満たす長さにする。
+if (probeBlobSizes.length !== 1 || probeBlobSizes[0] <= 44 + Math.ceil(0.95 * 16000) * 2) {
+  throw new Error(`準備音が0.95秒より長くありません（${probeBlobSizes[0]}バイト）。`);
+}
+// 通信待ちの後の最初の読み上げは、準備音が自然に終わるまで鳴らさない（出力権を手放してから取り直す順番）。
+await tick();
+outputController.speak(outputSegments, outputHandlers);
+await tick(); await tick();
+if (pool.some(player => !player.paused) || outputRequests !== 2) {
+  throw new Error("準備音が終わる前に最初の読み上げを始めてしまいました。");
 }
 probePlayer.onended();
 if (probePlayer.src || !outputRevocations.some(url => url.includes("準備音"))) {
@@ -1431,42 +1447,36 @@ if (probePlayer.src || !outputRevocations.some(url => url.includes("準備音"))
 }
 oldEnd();
 if (outputCompletions !== 0) throw new Error("古い終了通知で進行を進めてしまいました。");
-// 通信待ちで利用者の操作が終わった後でも、同じ2台でそのまま再生する。
 await tick();
-outputController.speak(outputSegments, outputHandlers);
-await tick();
-const newQuestion = outputPlayers.find(player => !player.paused);
-if (!newQuestion?.audible || newQuestion.playbackRate !== 1.6) throw new Error("再接続後の問題を保存した速度で再生できませんでした。");
+const newQuestion = pool.find(player => !player.paused);
+if (!newQuestion?.audible || newQuestion.playbackRate !== 1.6) throw new Error("準備音の終了後に、再接続後の問題を保存した速度で再生できませんでした。");
 newQuestion.onended();
 await tick();
-const newAnswer = outputPlayers.find(player => !player.paused);
+const newAnswer = pool.find(player => !player.paused);
 if (!newAnswer?.audible || newAnswer === newQuestion) throw new Error("再接続後の回答をもう一方の再生器で再生できませんでした。");
 newAnswer.onended();
 await tick();
-if (outputCompletions !== 1 || outputErrors !== 1 || outputRequests !== 2 || outputPlayers.length !== 2) {
+if (outputCompletions !== 1 || outputErrors !== 1 || outputRequests !== 2 || outputPlayers.length !== 3) {
   throw new Error("再接続時に音声を再取得せず、古い通知で進行を重複させずに再開できませんでした。");
 }
-// 音が出たことを確かめた後の通常の開始・再開では、準備音を繰り返さない。
-const revocationsBeforeQuietResume = outputRevocations.length;
-outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
-if (outputPlayers.some(player => player.src || !player.paused) || outputRevocations.length !== revocationsBeforeQuietResume) {
-  throw new Error("通常の再開で準備音を繰り返してしまいました。");
+// 学習画面を離れる時は同じ専用の再生器で準備音を鳴らし、出力権を手放す。
+if (!outputController.release() || probePlayer.paused || !probePlayer.src.includes("準備音") || outputPlayers.length !== 3) {
+  throw new Error("学習画面を離れる時に準備音で出力権を手放せませんでした。");
 }
-// 音声セッションの中断を観測した後は、次の開始で準備音を鳴らし直す。
-fakeAudioSession.change("interrupted");
-fakeAudioSession.change("active");
+probePlayer.onended();
+// 次の明示的な開始でも同じ専用の再生器で準備音を鳴らし直し、その結果は後の失敗の理由にも添える。
 outputGesture = true; outputController.unlock({ reset: true, probe: true }); outputGesture = false;
-const secondProbe = outputPlayers.find(player => player.src.includes("準備音") && !player.paused);
-if (!secondProbe) throw new Error("中断を観測した後の開始で準備音を鳴らし直せませんでした。");
-secondProbe.onended();
-// 準備音の結果は、その後の失敗の理由にも添える。
+if (probePlayer.paused || !probePlayer.src.includes("準備音") || outputPlayers.length !== 3 || probeBlobSizes.length !== 3) {
+  throw new Error("開始の操作ごとに専用の再生器で準備音を鳴らし直せませんでした。");
+}
+probePlayer.onended();
 outputController.speak(outputSegments, outputHandlers);
 await tick();
-const haltedPlayer = outputPlayers.find(player => !player.paused);
+const haltedPlayer = pool.find(player => !player.paused);
 haltedPlayer.paused = true; haltedPlayer.onpause();
 await tick();
-if (outputErrors !== 2 || !outputErrorDetails[1].includes("準備音:完走")) {
-  throw new Error("準備音の結果を失敗の理由に添えられませんでした。");
+if (outputErrors !== 2 || !outputErrorDetails[1].includes("準備音:完走") || !outputErrorDetails[1].includes("終了時セッション:inactive")) {
+  throw new Error("準備音の結果と終了時のセッション状態を失敗の理由に添えられませんでした。");
 }
 outputController.stop();
 
@@ -1492,7 +1502,8 @@ outputController.stop();
   }
 }
 
-// 起動後の最初の開始では、自然音声の設定なら一度だけ準備音を鳴らす。単語ごとの切り替えでは鳴らさない。
+// 準備音は明示的な開始の操作ごとに専用の再生器で鳴らし、単語ごとの切り替えでは鳴らさない。
+// 最初の読み上げは準備音の自然な終了を待ち、終了が来ない時は見張り時間の後に進む。
 {
   const firstPlayers = [];
   class FirstStartAudio {
@@ -1508,25 +1519,84 @@ outputController.stop();
     revokeObjectUrl: () => {},
     requestCloudAudio: async text => ({ text, type: "audio/mpeg", size: 100 }),
     decodeAudioBounds: async () => null,
+    probeTimeoutMs: 40,
     getSettings: () => ({ source: "cloud", rate: 1 }),
   });
+  const poolPlays = () => firstPlayers.slice(0, 2).reduce((total, player) => total + player.plays, 0);
   firstController.unlock({ reset: true, probe: true });
-  const firstProbe = firstPlayers.find(player => player.src === "blob:first-probe");
-  if (!firstProbe) throw new Error("起動後の最初の開始で準備音を鳴らせませんでした。");
+  const firstProbe = firstPlayers[2];
+  if (firstPlayers.length !== 3 || firstProbe?.src !== "blob:first-probe" || firstProbe.plays !== 1) {
+    throw new Error("最初の開始で専用の再生器の準備音を鳴らせませんでした。");
+  }
   firstProbe.onended();
-  const playsBeforeWords = firstPlayers.reduce((total, player) => total + player.plays, 0);
   for (const text of ["単語1", "単語2", "単語3"]) {
     firstController.speak([{ target: "question", text }], {});
     await new Promise(resolve => setTimeout(resolve, 0));
-    firstPlayers.find(player => !player.paused)?.onended();
+    firstPlayers.slice(0, 2).find(player => !player.paused)?.onended();
     await new Promise(resolve => setTimeout(resolve, 0));
   }
+  if (poolPlays() !== 3 || firstProbe.plays !== 1 || firstProbe.src) {
+    throw new Error("単語ごとの切り替えで準備音を鳴らしてしまいました。");
+  }
+  // 次の明示的な開始では再び準備音を鳴らし、最初の読み上げはその終了を待つ。
   firstController.unlock({ reset: true, probe: true });
-  const playsAfterWords = firstPlayers.reduce((total, player) => total + player.plays, 0);
-  if (playsAfterWords !== playsBeforeWords + 3 || firstPlayers.some(player => player.src === "blob:first-probe")) {
-    throw new Error("単語ごとの切り替えや通常の再開で準備音を繰り返してしまいました。");
+  firstController.speak([{ target: "question", text: "単語4" }], {});
+  await new Promise(resolve => setTimeout(resolve, 10));
+  if (firstProbe.plays !== 2 || poolPlays() !== 3) {
+    throw new Error("準備音の終了を待たずに最初の読み上げを始めてしまいました。");
+  }
+  firstProbe.onended();
+  await new Promise(resolve => setTimeout(resolve, 0));
+  if (poolPlays() !== 4) throw new Error("準備音の終了後に最初の読み上げを始められませんでした。");
+  firstPlayers.slice(0, 2).find(player => !player.paused)?.onended();
+  // 準備音の終了通知が来ない端末では、見張り時間の後に読み上げへ進む。
+  firstController.unlock({ reset: true, probe: true });
+  firstController.speak([{ target: "question", text: "単語5" }], {});
+  await new Promise(resolve => setTimeout(resolve, 10));
+  if (poolPlays() !== 4) throw new Error("見張り時間の前に読み上げを始めてしまいました。");
+  await new Promise(resolve => setTimeout(resolve, 80));
+  if (poolPlays() !== 5 || firstProbe.src) {
+    throw new Error("準備音の終了通知が来ない時に、見張り時間の後で読み上げへ進めませんでした。");
   }
   firstController.stop();
+}
+
+// 再生通知と再生位置が進んでいても、ブラウザー自身が音声セッションを有効と見なしていなければ無音の再生として止める。
+// 端末の先（イヤホン）で実際に鳴っているかはWebアプリから分からないため、確認はこの範囲に限られる。
+{
+  let deviceSpeaks = 0;
+  const completions = [];
+  const errors = [];
+  class AdvancingAudio {
+    constructor() { this.src = ""; this.paused = true; this.playbackRate = 1; this.position = 0; this.startedAt = 0; }
+    get currentTime() { return this.paused ? this.position : this.position + (Date.now() - this.startedAt) / 1000; }
+    set currentTime(value) { this.position = Number(value); if (!this.paused) this.startedAt = Date.now(); }
+    load() {}
+    async play() { this.paused = false; this.startedAt = Date.now(); queueMicrotask(() => this.onplaying?.()); }
+    pause() { if (!this.paused) this.position = this.currentTime; this.paused = true; }
+    removeAttribute(name) { if (name === "src") this.src = ""; }
+  }
+  const inactiveSession = createSpeechController({
+    synthesis: { cancel() {}, resume() {}, getVoices() { return []; }, speak() { deviceSpeaks += 1; } },
+    Utterance: FakeUtterance, AudioPlayer: AdvancingAudio,
+    createObjectUrl: () => "blob:inactive-session", revokeObjectUrl: () => {},
+    requestCloudAudio: async () => ({ type: "audio/mpeg", size: 100 }),
+    decodeAudioBounds: async () => null,
+    cloudStallTimeoutMs: 1000, cloudStallCheckIntervalMs: 10,
+    audioSession: { type: "auto", state: "inactive", addEventListener() {} },
+    getSettings: () => ({ source: "cloud", rate: 1 }),
+  });
+  inactiveSession.speak([{ target: "question", text: "鳴らない再生" }], {
+    onComplete: () => completions.push(1),
+    onError: error => errors.push(error),
+  });
+  await new Promise(resolve => setTimeout(resolve, 120));
+  if (
+    completions.length !== 0 || errors.length !== 1 || deviceSpeaks !== 0 || inactiveSession.currentTarget ||
+    !String(errors[0].detail).includes("再生中も音声セッションがinactive")
+  ) {
+    throw new Error("音声セッションが有効にならないまま進む再生を、次へ進めずに止められませんでした。");
+  }
 }
 
 // 開始通知の後に再生位置が進まない音声は、音が出ていないとみなして次へ進めずに止める。端末音声へも切り替えない。
@@ -1664,5 +1734,5 @@ outputController.stop();
 }
 
 console.log(
-  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開・2台の先読み切替・無音の飛ばし（実際の再生位置で確認）・接続変更後の操作中の準備音と再生器の再利用・中断と進行停止時の停止・受付中止のやり直し・音声セッションの宣言と診断を確認",
+  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開・2台の先読み切替・無音の飛ばし（実際の再生位置で確認）・開始操作ごとの専用再生器での準備音（0.95秒超・自然終了待ち・見張り）・学習画面を離れる時の出力権の解放・中断と進行停止時の停止・音声セッションが有効にならない再生の停止・受付中止のやり直し・診断を確認",
 );

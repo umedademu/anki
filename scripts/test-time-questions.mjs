@@ -127,6 +127,7 @@ Object.assign(context, {
   selectedSequentialStudy: () => false, setupDeckOrder: () => [],
   switchStudySessionMode, startingStudy: false, deckSelectionUpdating: false,
   speechController: { stop() {}, unlock(options) { assert.equal(options.reset, true); } },
+  ratingSoundPlayer: { releaseOutput() { return Promise.resolve(); } },
   queueSetupPreferenceSave: async () => { if (saveFails) throw Error("保存失敗"); },
   updateSetupPreview() { elements.cloudStatus.textContent = "接続済み"; },
   deleteCloudStudySession: async () => { deleted++; },

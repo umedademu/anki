@@ -18,7 +18,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.422";
+import { createSpeechController } from "./speech.js?v=0.423";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -42,8 +42,8 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.422";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.422";
+import { usesChapterDecks } from "./so-chapters.js?v=0.423";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.423";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,

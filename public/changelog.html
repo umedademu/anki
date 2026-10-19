@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.422"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.422" />
-    <link rel="stylesheet" href="/theme.css?v=0.422" />
+    <script src="/theme.js?v=0.423"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.423" />
+    <link rel="stylesheet" href="/theme.css?v=0.423" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.422</span>
+        <span class="app-version">v0.423</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,16 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.423</h2><time datetime="2026-10-19">2026年10月19日</time></div>
+        <ul>
+          <li>「前回の続きから」で音が出ないまま単語だけが進む件の対処です。ブラウザー（WebKit）の実装から確認できた原因は、v0.417以降は音声の再生器を使い回し、声の終わりで早めに止めるため、ブラウザーが端末の音声出力権を手放す機会がなくなったことです。WebKitは「0.95秒より長い音声が自然に終わり、他に鳴っている音声がない」時だけ出力権を手放して次の再生で取り直すため、出力権を持ったまま待機中にイヤホンの接続が変わると、音は出ず再生位置だけが進みます。</li>
+          <li>「はじめから」「前回の続きから」「中断後の再生」を押した操作の中で、専用の再生器で1.1秒の無音を自然に終わるまで鳴らし、その直後の最初の読み上げで出力権を取り直して現在のイヤホンへつなぎ直すようにしました。開始時だけ最大約1秒待ちます。学習画面を離れる時も同じ準備音で出力権を手放し、待機中に無音を流し続けません。評価音の出力も同じ時点で閉じ、次の評価音で作り直します。単語・回答ごとには何もしません。</li>
+          <li>再生中にブラウザー自身が音声の出力を有効と見なしていない状態が1秒続いた場合は、音の出ない再生とみなして次へ進めず、その問題で止めてお知らせを出します。イヤホンの先で本当に鳴っているかはWebアプリからは分かりません。</li>
+          <li>v0.422で防げなかったのは、準備音を「最初の開始と中断の検出後」に絞り、待機中のイヤホンの切り替えが通知されないため省かれ、さらに準備音が0.12秒と短く出力権を手放す条件を満たしていなかったためです。読み上げの出だしが弱く聞こえる件は原因が確定していません。実機での確認はできていません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.422</h2><time datetime="2026-10-19">2026年10月19日</time></div>

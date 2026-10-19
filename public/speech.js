@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.422";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.423";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -378,12 +378,15 @@ export function createSpeechController({
   cloudStallCheckIntervalMs = 500,
   // 再生の受付が中止された時に、同じ音声をやり直すまでの待ち。
   playRetryDelayMs = 250,
-  // 操作中に鳴らす準備用の無音の見張り時間。
-  probeTimeoutMs = 1500,
-  // iPhoneの音声セッション（navigator.audioSession）。状態の変化を診断と準備音の要否に使う。
-  // 種類の宣言は既定では行わない。v0.421で「再生用」と宣言したところ、再生の合間も端末の音声出力を
-  // 開いたままにして無音を流し続けるため、イヤホン側が無音の後の出だしを弱め、読み上げの出だしが
-  // 徐々に大きくなる聞こえ方になったと考えられる（v0.422で宣言をやめた）。
+  // 開始・再開の操作で鳴らす準備用の無音の長さと見張り時間。
+  // WebKitは「0.95秒より長い音声が自然に終わり、他に鳴っている音声がない」時に端末の音声出力権
+  // （音声セッション）を手放し、次の再生で取り直す。準備音はこの条件を満たす長さにして自然に終わらせ、
+  // その直後の最初の読み上げで出力権を現在のイヤホンへつなぎ直す。
+  probeDurationSeconds = 1.1,
+  probeTimeoutMs = 2500,
+  // iPhoneの音声セッション（navigator.audioSession）。状態の変化を診断に使う。
+  // 種類の宣言は既定では行わない（v0.421で「再生用」と宣言した後に出だしが弱く聞こえる報告があり、
+  // v0.422でやめた。宣言があると再生の合間も出力権を手放さない。因果は実機で未確認）。
   audioSession = globalThis.navigator?.audioSession ?? null,
   audioSessionType = null,
   now = () => Date.now(),
@@ -430,12 +433,11 @@ export function createSpeechController({
       ? (callback) => globalThis.queueMicrotask(callback)
       : (callback) => Promise.resolve().then(callback);
 
-  // 準備音は、起動後にまだ音が出たことを確かめていない時と、中断を検出した後だけ鳴らす。
-  // 通常の開始・再開や単語ごとの切り替えでは、端末の音声出力へ毎回働きかけない。
-  let outputVerified = false;
+  // 準備音専用の再生器。2台の読み上げ用とは分け、準備音を途中で奪われずに自然に終わらせる。
+  // 鳴らすのは利用者の明示的な開始・再開・中断後の再生と、学習画面を離れる時だけで、単語ごとには鳴らさない。
+  let probeAudio = null;
 
-  // iPhoneの音声セッション。種類の宣言は指定された時だけ行い、状態の変化は失敗時の診断と
-  // 準備音の要否に残す。中断を観測したら、次の開始で準備音を鳴らし直す。
+  // iPhoneの音声セッション。種類の宣言は指定された時だけ行い、状態の変化は失敗時の診断に残す。
   let audioSessionState = "";
   let audioSessionPrevious = "";
   let audioSessionChangedAt = 0;
@@ -457,7 +459,6 @@ export function createSpeechController({
         audioSessionPrevious = audioSessionState;
         audioSessionState = next;
         audioSessionChangedAt = now();
-        if (next === "interrupted") outputVerified = false;
       });
     } catch {}
   }
@@ -467,7 +468,7 @@ export function createSpeechController({
   let lastProbe = null;
   let lastCloudFailure = "";
 
-  function silentWavBlob(durationSeconds = 0.12, sampleRate = 16000) {
+  function silentWavBlob(durationSeconds = probeDurationSeconds, sampleRate = 16000) {
     const samples = Math.max(1, Math.round(durationSeconds * sampleRate));
     const buffer = new ArrayBuffer(44 + samples * 2);
     const view = new DataView(buffer);
@@ -520,6 +521,15 @@ export function createSpeechController({
     return failure;
   }
 
+  function currentAudioSessionState() {
+    if (!audioSession || typeof audioSession !== "object") return "";
+    try {
+      return String(audioSession.state ?? "");
+    } catch {
+      return "";
+    }
+  }
+
   function clearProbe(result = "") {
     if (!probe) return;
     const entry = probe;
@@ -540,30 +550,40 @@ export function createSpeechController({
       audio.load?.();
     } catch {}
     if (entry.url) revokeObjectUrl(entry.url);
-    const settled =
+    let settled =
       result ||
       (entry.started ? "準備音:開始後に切替" : "準備音:開始前に切替");
+    // 自然に終わった直後は、ブラウザーが出力権を手放していれば「inactive」になる。実機の診断に残す。
+    const sessionState = currentAudioSessionState();
+    if (sessionState) settled += `・終了時セッション:${sessionState}`;
     lastProbe = { result: settled, at: now() };
+    entry.resolveSettled();
   }
 
-  // 操作の中で無音の短い音声を実際に鳴らす。端末へ音声の出力権を操作中に取り、
-  // 中断扱いになっていた再生器があればその解除も操作中に済ませる。開始・完走の有無を診断に残す。
+  // 無音の準備音を専用の再生器で実際に鳴らし、自然に終わらせる。WebKitは0.95秒より長い音声が自然に終わり
+  // 他に鳴っている音声がなければ端末の音声出力権を手放すため、続く最初の読み上げで出力権を取り直し、
+  // 現在のイヤホンへつなぎ直せる。開始・完走の有無と終了時のセッション状態を診断に残す。
   function startProbe() {
     if (!cloudSupported) return false;
-    // 起動後に一度でも音声が鳴り始め、その後に中断を検出していなければ鳴らさない。
-    if (outputVerified) return false;
     const settings = normalizeSpeechSettings(getSettings());
     if (settings.source !== "cloud") return false;
     clearProbe();
-    const audio = idleCloudAudio();
-    if (!audio) return false;
+    if (!probeAudio) {
+      probeAudio = new AudioPlayer();
+      probeAudio.preload = "auto";
+    }
+    const audio = probeAudio;
     let url = "";
     try {
       url = createObjectUrl(silentWavBlob());
     } catch {
       return false;
     }
-    const entry = { audio, url, started: false, timer: null };
+    let resolveSettled = () => {};
+    const settled = new Promise((resolve) => {
+      resolveSettled = resolve;
+    });
+    const entry = { audio, url, started: false, timer: null, settled, resolveSettled };
     probe = entry;
     const settle = (result) => {
       if (probe === entry) clearProbe(result);
@@ -587,7 +607,6 @@ export function createSpeechController({
       entry.timer?.unref?.();
     }
     try {
-      clearStaging(audio);
       audio.src = url;
       audio.load?.();
       audio.defaultPlaybackRate = 1;
@@ -614,7 +633,6 @@ export function createSpeechController({
     activePlaybackResume = null;
     pausedContinuation = null;
     activeQueue = null;
-    clearProbe();
     if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
@@ -714,20 +732,13 @@ export function createSpeechController({
   }
 
   // 鳴っていない方の再生器。どちらも空いていれば、前回使わなかった方を選ぶ。
-  // 準備音を鳴らしている再生器は、他に空きがあればそちらを優先する。
   function idleCloudAudio() {
     const pool = ensureCloudAudio();
-    let probing = null;
     for (let offset = 1; offset <= pool.length; offset += 1) {
       const audio = pool[(lastActiveAudioIndex + offset) % pool.length];
-      if (audio === activeAudio) continue;
-      if (probe?.audio === audio) {
-        probing = audio;
-        continue;
-      }
-      return audio;
+      if (audio !== activeAudio) return audio;
     }
-    return probing;
+    return null;
   }
 
   function analysisFor(blob) {
@@ -896,8 +907,9 @@ export function createSpeechController({
         audio.load?.();
         blessedCloudAudios.add(audio);
       }
-      // 開始・再開の操作中は、許可の準備に加えて無音の準備音を実際に鳴らす。
-      // 通信を待つ前に端末へ音声の出力権を取り、鳴らない時はその事実を診断に残す。
+      // 開始・再開の操作中は、許可の準備に加えて無音の準備音を実際に鳴らす。操作の中で端末へ
+      // 音声の出力権を取り、自然に終わらせて一度手放し、続く最初の読み上げで取り直す。
+      // 鳴らない時はその事実を診断に残す。
       if (playProbe) startProbe();
       return true;
     } catch (error) {
@@ -906,6 +918,22 @@ export function createSpeechController({
           ? error
           : new Error("自然音声の再生準備に失敗しました。"),
       );
+      return false;
+    }
+  }
+
+  // 学習画面を離れる時に呼ぶ。進行中の読み上げと先読みを捨て、自然音声の設定なら準備音を鳴らして
+  // 自然に終わらせ、端末の音声出力権を手放す。待機中に無音を流し続けないためで、次の開始では
+  // 操作中の準備音と最初の読み上げで出力権を取り直す。まだ一度も操作中に準備していなければ何もしない。
+  function release() {
+    resetPlayback();
+    stagedHint = null;
+    for (const audio of cloudAudioPool) clearStaging(audio);
+    lastActiveAudioIndex = -1;
+    if (!cloudSupported || !probeAudio) return false;
+    try {
+      return startProbe();
+    } catch {
       return false;
     }
   }
@@ -1253,6 +1281,7 @@ export function createSpeechController({
         let progressTimer = null;
         let lastProgressPosition = NaN;
         let lastProgressAt = 0;
+        let inactiveSessionChecks = 0;
         // 時計で終了とみなす時に許す位置のずれと、位置から待ち直す回数の上限。
         const earlyFinishToleranceSeconds = 0.05;
         const maximumEarlyFinishRetries = 5;
@@ -1379,7 +1408,6 @@ export function createSpeechController({
           const failure =
             error instanceof Error ? error : new Error("音声を再生できません。");
           lastCloudFailure = failure.detail || failure.message;
-          outputVerified = false;
           onFallback(failure);
           if (error?.name === "NotAllowedError") {
             continueAfterPlayback(() => fail(failure));
@@ -1402,8 +1430,6 @@ export function createSpeechController({
           clearCloudControls();
           finishCloudAudio(audio, audioUrl);
           lastCloudFailure = error.detail || error.message;
-          // 中断を検出したので、次の開始では準備音を鳴らして出力を確かめ直す。
-          outputVerified = false;
           continueAfterPlayback(() => fail(error));
         };
         const cancel = () => {
@@ -1438,6 +1464,23 @@ export function createSpeechController({
           if (finished || playbackPaused || ticket !== generation) {
             clearProgressWatch();
             return;
+          }
+          // ブラウザー自身が音声セッションを有効と見なしていないのに再生だけが進むのは、音が出ていない再生。
+          // 端末の先（イヤホン）で本当に鳴っているかはWebアプリからは分からないため、分かる範囲で止める。
+          const sessionState = currentAudioSessionState();
+          if (sessionState === "interrupted" || sessionState === "inactive") {
+            inactiveSessionChecks += 1;
+            if (inactiveSessionChecks >= 2) {
+              halt(
+                withDetail(
+                  new Error("音声の出力が有効にならないまま再生が進んだため、この問題で止めました。画面中央を押して再開し、それでも無音ならアプリを一度閉じて開き直してください。"),
+                  `再生中も音声セッションが${sessionState}`,
+                ),
+              );
+              return;
+            }
+          } else {
+            inactiveSessionChecks = 0;
           }
           const position = Number(audio.currentTime);
           if (!Number.isFinite(position)) {
@@ -1537,7 +1580,6 @@ export function createSpeechController({
             return;
           }
           hasPlayed = true;
-          outputVerified = true;
           clearRetryTimer();
           armPlaybackTimer();
           armEarlyFinish();
@@ -1573,6 +1615,15 @@ export function createSpeechController({
         } catch (error) {
           fallback(error);
           return;
+        }
+        // 開始・再開の操作で鳴らした準備音が自然に終わるまで待ってから鳴らす。準備音が終わった時に
+        // ブラウザーが出力権を手放し、この再生で取り直す順番を守るため。待つのは最初の読み上げだけで、
+        // 単語ごとの切り替えでは準備音を鳴らさないので待ちは生じない。
+        if (probe) {
+          await probe.settled;
+          if (finished || ticket !== generation) {
+            return;
+          }
         }
         beginPlayback();
       } catch (error) {
@@ -1628,5 +1679,6 @@ export function createSpeechController({
     pause,
     resume,
     unlock,
+    release,
   };
 }

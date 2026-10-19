@@ -488,11 +488,12 @@ export function createRatingSoundPlayer({
     return volume;
   }
 
-  function close() {
+  // 出力だけを閉じ、登録済みの評価音は保持する。学習の開始・再開と学習画面を離れる時に呼び、
+  // 鳴らしていない評価音の出力が端末の音声出力権を握り続けないようにする。次の評価音で作り直す。
+  function releaseOutput() {
     const context = audioContext;
     audioContext = null;
     outputNodes = null;
-    customBuffers.clear();
     if (!context || context.state === "closed") {
       return Promise.resolve();
     }
@@ -503,9 +504,15 @@ export function createRatingSoundPlayer({
     }
   }
 
+  function close() {
+    customBuffers.clear();
+    return releaseOutput();
+  }
+
   return {
     play,
     close,
+    releaseOutput,
     setCustomSound,
     clearCustomSound,
     hasCustomSound,

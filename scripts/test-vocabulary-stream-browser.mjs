@@ -199,6 +199,7 @@ export function createSpeechController(){
     supported:true, get paused(){return paused;}, currentTarget:null,
     stop(){control.pending = null; paused = false;},
     unlock(options = {}) { control.preparations.push({ reset: options.reset === true, probe: options.probe === true, gesture: navigator.userActivation?.isActive }); },
+    release() { control.releases = (control.releases ?? 0) + 1; control.pending = null; paused = false; return false; },
     pause(){paused = true; return true;},
     resume(){if (!paused) return false; paused = false; return true;},
     speak(_segments, callbacks = {}){paused = false; control.pending = callbacks.onComplete ?? callbacks.onEnd ?? null; return true;},
@@ -213,6 +214,7 @@ export function createRatingSoundPlayer(){
     play(rating){calls.push(rating); return true;},
     setVolume(value){return value;}, setCustomSound(){return Promise.resolve();},
     clearCustomSound(){return false;}, hasCustomSound(){return false;}, close(){return Promise.resolve();},
+    releaseOutput(){ window.__streamRatingReleases = (window.__streamRatingReleases ?? 0) + 1; return Promise.resolve(); },
   };
 }` }));
   const page = await context.newPage(), errors = [];

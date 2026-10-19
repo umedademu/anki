@@ -364,4 +364,20 @@ await speedPlayer.close();
   await interruptedPlayer.close();
 }
 
+// 学習の開始・再開と学習画面を離れる時は出力だけを閉じ、登録済みの評価音は保持して次の評価音で作り直す。
+{
+  const releasedPlayer = createRatingSoundPlayer({ AudioContextClass: FakeAudioContext });
+  await releasedPlayer.setCustomSound("good", Uint8Array.from([1, 2, 3]));
+  const firstContext = FakeAudioContext.instances.at(-1);
+  await releasedPlayer.releaseOutput();
+  assert.equal(firstContext.state, "closed", "出力を閉じて端末の音声出力権を握り続けない");
+  assert.equal(releasedPlayer.hasCustomSound("good"), true, "登録済みの評価音は保持する");
+  await releasedPlayer.releaseOutput();
+  assert.equal(releasedPlayer.play("good"), true);
+  const secondContext = FakeAudioContext.instances.at(-1);
+  assert.notEqual(secondContext, firstContext, "次の評価音で出力を作り直す");
+  assert.equal(secondContext.bufferSources.length, 1, "保持した登録音をそのまま鳴らす");
+  await releasedPlayer.close();
+}
+
 console.log("4段階評価の既定音・差替音の速度追従、音程維持、途中変更と1倍の下限、中断後の再開を確認しました。");

@@ -297,6 +297,7 @@ export function createRatingSoundPlayer({
   AudioContextClass =
     globalThis.AudioContext ?? globalThis.webkitAudioContext ?? null,
   initialVolume = 1,
+  getPlaybackRate = () => 1,
 } = {}) {
   let audioContext = null;
   let outputNodes = null;
@@ -350,12 +351,12 @@ export function createRatingSoundPlayer({
     return audioContext;
   }
 
-  function scheduleNote(context, note, baseTime) {
-    const startTime = baseTime + note.delaySeconds;
-    const endTime = startTime + note.durationSeconds;
-    const attackEndTime = Math.min(startTime + 0.008, endTime);
+  function scheduleNote(context, note, baseTime, playbackRate) {
+    const startTime = baseTime + note.delaySeconds / playbackRate;
+    const endTime = startTime + note.durationSeconds / playbackRate;
+    const attackEndTime = Math.min(startTime + 0.008 / playbackRate, endTime);
     const glideEndTime = Math.min(
-      startTime + (note.glideSeconds ?? note.durationSeconds),
+      startTime + (note.glideSeconds ?? note.durationSeconds) / playbackRate,
       endTime,
     );
     const oscillator = context.createOscillator();
@@ -374,7 +375,7 @@ export function createRatingSoundPlayer({
     oscillator.connect(gain);
     gain.connect(outputNodes?.builtIn ?? context.destination);
     oscillator.start(startTime);
-    oscillator.stop(endTime + 0.02);
+    oscillator.stop(endTime + 0.02 / playbackRate);
     oscillator.addEventListener?.(
       "ended",
       () => {
@@ -392,6 +393,11 @@ export function createRatingSoundPlayer({
       return false;
     }
     try {
+      // 読み上げを速くしたときだけ合わせ、遅い設定でも評価音は1倍を保つ。
+      const requestedRate = Number(getPlaybackRate());
+      const playbackRate = Number.isFinite(requestedRate)
+        ? Math.max(1, requestedRate)
+        : 1;
       const context = ensureAudioContext();
       if (!context) {
         return false;
@@ -403,6 +409,7 @@ export function createRatingSoundPlayer({
       if (customBuffer && typeof context.createBufferSource === "function") {
         const source = context.createBufferSource();
         source.buffer = customBuffer;
+        source.playbackRate.setValueAtTime(playbackRate, context.currentTime);
         source.connect(outputNodes?.custom ?? context.destination);
         source.start(context.currentTime + 0.005);
         source.addEventListener?.(
@@ -414,7 +421,7 @@ export function createRatingSoundPlayer({
       }
       const baseTime = context.currentTime + 0.005;
       for (const note of pattern) {
-        scheduleNote(context, note, baseTime);
+        scheduleNote(context, note, baseTime, playbackRate);
       }
       return true;
     } catch {

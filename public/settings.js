@@ -17,7 +17,7 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.413";
+import { createSpeechController } from "./speech.js?v=0.414";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,8 +39,8 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.413";
-import { createRatingSoundPlayer } from "./rating-sound.js";
+import { usesChapterDecks } from "./so-chapters.js?v=0.414";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.414";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,
@@ -126,7 +126,9 @@ let routineVideos = [];
 let draggedRoutineItemId = "";
 let ratingSounds = normalizeRatingSounds();
 const pendingRatingSoundFiles = new Map();
-const ratingSoundPlayer = createRatingSoundPlayer();
+const ratingSoundPlayer = createRatingSoundPlayer({
+  getPlaybackRate: () => readSpeechForm().rate,
+});
 
 function readSpeechForm() {
   return normalizeSpeechSettings({
@@ -1073,7 +1075,7 @@ elements.ratingSoundList.addEventListener("click", async (event) => {
     if (!ratingSoundPlayer.play(rating)) {
       setRatingSoundStatus("この端末では効果音を再生できません。", true);
     } else {
-      setRatingSoundStatus("選んだ音量で試聴しています。");
+      setRatingSoundStatus("選んだ音量と読み上げ速度（1倍以上）で試聴しています。");
     }
     return;
   }

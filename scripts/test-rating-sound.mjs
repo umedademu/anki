@@ -61,9 +61,12 @@ class FakeDynamicsCompressor extends FakeAudioNode {
 
 class FakeBufferSource extends FakeAudioNode {
   buffer = null;
+  playbackRate = new FakeAudioParameter();
   starts = [];
+  playbackRateAtStart = [];
 
   start(time) {
+    this.playbackRateAtStart.push(this.playbackRate.events.map((event) => [...event]));
     this.starts.push(time);
   }
 
@@ -222,6 +225,7 @@ assert.equal(context.oscillators.length, oscillatorCountBeforeCustomPlay);
 assert.equal(context.bufferSources.length, 1);
 assert.equal(context.bufferSources[0].connections[0], customGain);
 assert.equal(context.bufferSources[0].starts.length, 1);
+assert.deepEqual(context.bufferSources[0].playbackRateAtStart, [[["set", 1, context.currentTime]]], "速度取得を省略した差替音は1倍で再生する");
 assert.equal(player.setVolume(1.5), 1.5);
 assert.deepEqual(builtInGain.gain.events.at(-1), [
   "set",
@@ -243,4 +247,106 @@ assert.equal(context.state, "closed");
 const silentPlayer = createRatingSoundPlayer({ AudioContextClass: null });
 assert.equal(silentPlayer.play("good"), false);
 
-console.log("4段階評価の効果音テストに成功しました。");
+function assertNear(actual, expected, message) {
+  assert.ok(Number.isFinite(actual) && Math.abs(actual - expected) < 1e-9,
+    `${message}: ${actual} / ${expected}`);
+}
+
+function assertParameterEvent(actual, type, value, time, message) {
+  assert.equal(actual?.[0], type, message);
+  assertNear(actual?.[1], value, `${message}の値`);
+  assertNear(actual?.[2], time, `${message}の時刻`);
+}
+
+function assertScheduledPattern(context, rating, rate, noteStart, gainStart, currentTime) {
+  const notes = ratingSoundPatterns[rating];
+  const oscillators = context.oscillators.slice(noteStart);
+  const gains = context.gains.slice(gainStart);
+  assert.equal(oscillators.length, notes.length, `${rating}の音数を維持する`);
+  assert.equal(gains.length, notes.length);
+  for (const [index, note] of notes.entries()) {
+    const oscillator = oscillators[index];
+    const gain = gains[index];
+    const startTime = currentTime + 0.005 + note.delaySeconds / rate;
+    const endTime = startTime + note.durationSeconds / rate;
+    const glideTime = Math.min(startTime + note.glideSeconds / rate, endTime);
+    const attackTime = Math.min(startTime + 0.008 / rate, endTime);
+    assert.equal(oscillator.type, note.wave, "速度を変えても音色を維持する");
+    assert.equal(oscillator.starts.length, 1);
+    assert.equal(oscillator.stops.length, 1);
+    assertNear(oscillator.starts[0], startTime, "速度に合わせた各音の開始時刻");
+    assertNear(oscillator.stops[0], endTime + 0.02 / rate, "余韻まで同じ割合で短くする");
+    assert.equal(oscillator.frequency.events.length, 3);
+    assertParameterEvent(oscillator.frequency.events[0], "set", note.startFrequency, startTime, "開始音程を維持する");
+    assertParameterEvent(oscillator.frequency.events[1], "exponential", note.endFrequency, glideTime, "音程を維持して変化の時間だけを短くする");
+    assertParameterEvent(oscillator.frequency.events[2], "set", note.endFrequency, endTime, "終了音程を維持する");
+    assert.equal(gain.gain.events.length, 3);
+    assertParameterEvent(gain.gain.events[0], "set", 0.0001, startTime, "音量の開始");
+    assertParameterEvent(gain.gain.events[1], "linear", note.volume, attackTime, "音量の立ち上がりも速度に合わせる");
+    assertParameterEvent(gain.gain.events[2], "exponential", 0.0001, endTime, "速度に合わせた終了時刻");
+  }
+}
+
+// 同じ再生器を使い続け、途中で変更した読み上げ速度を次の評価音へ反映する。
+let playbackRate = 0.7;
+let rateReadCount = 0;
+const speedPlayer = createRatingSoundPlayer({
+  AudioContextClass: FakeAudioContext,
+  getPlaybackRate() { rateReadCount += 1; return playbackRate; },
+});
+let speedContext = null;
+let expectedRateReads = 0;
+const speeds = [0.7, 1, 1.5, 3, 1];
+for (const speed of speeds) {
+  playbackRate = speed;
+  for (const rating of Object.keys(ratingSoundPatterns)) {
+    const noteStart = speedContext?.oscillators.length ?? 0;
+    const gainStart = speedContext?.gains.length ?? 2;
+    const currentTime = speedContext?.currentTime ?? 10;
+    assert.equal(speedPlayer.play(rating), true);
+    speedContext ??= FakeAudioContext.instances.at(-1);
+    expectedRateReads += 1;
+    assert.equal(rateReadCount, expectedRateReads, "速度は評価音を鳴らすたびに取得する");
+    assertScheduledPattern(speedContext, rating, Math.max(1, speed), noteStart, gainStart, currentTime);
+    speedContext.currentTime += 2;
+  }
+}
+
+// 数値でない設定や無限大でも予定時刻を壊さず、1倍で再生する。
+for (const invalidRate of [NaN, Infinity, -Infinity, undefined, null, "速い", -1, 0]) {
+  playbackRate = invalidRate;
+  const noteStart = speedContext.oscillators.length;
+  const gainStart = speedContext.gains.length;
+  const currentTime = speedContext.currentTime;
+  assert.equal(speedPlayer.play("good"), true, "不正な速度でも既定音を再生できる");
+  expectedRateReads += 1;
+  assertScheduledPattern(speedContext, "good", 1, noteStart, gainStart, currentTime);
+  speedContext.currentTime += 2;
+}
+
+for (const rating of Object.keys(ratingSoundPatterns)) {
+  await speedPlayer.setCustomSound(rating, Uint8Array.from([1, 2, 3]));
+}
+const builtInCount = speedContext.oscillators.length;
+for (const speed of [...speeds, NaN, Infinity, undefined, "速い", -1]) {
+  playbackRate = speed;
+  const expectedRate = Number.isFinite(speed) ? Math.max(1, speed) : 1;
+  for (const rating of Object.keys(ratingSoundPatterns)) {
+    const currentTime = speedContext.currentTime;
+    const previousSourceCount = speedContext.bufferSources.length;
+    assert.equal(speedPlayer.play(rating), true, "差替音も速度変更後に再生できる");
+    expectedRateReads += 1;
+    const source = speedContext.bufferSources.at(-1);
+    assert.equal(speedContext.bufferSources.length, previousSourceCount + 1);
+    assert.equal(speedContext.oscillators.length, builtInCount, "差替音と既定音を重ねて再生しない");
+    assert.equal(source.buffer.duration, 0.8, "元の音声を変更せず再生速度を変える");
+    assert.deepEqual(source.playbackRate.events, [["set", expectedRate, currentTime]], "現在の速度を差替音の再生係数に反映する");
+    assert.deepEqual(source.playbackRateAtStart, [[["set", expectedRate, currentTime]]], "開始する前に再生係数を設定する");
+    assertNear(source.starts[0], currentTime + 0.005, "差替音の再生開始時刻");
+    speedContext.currentTime += 2;
+  }
+}
+assert.equal(rateReadCount, expectedRateReads);
+await speedPlayer.close();
+
+console.log("4段階評価の既定音・差替音の速度追従、音程維持、途中変更と1倍の下限を確認しました。");

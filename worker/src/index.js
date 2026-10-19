@@ -31,6 +31,12 @@ import {
 } from "../../public/rating-sound-settings.js";
 import { normalizeQuestionAnalysisSnapshot } from "../../public/analysis-core.js";
 import { normalizeSubjectReviewSettings } from "../../public/learning-engine.js";
+import {
+  applyStudySessionPatch,
+  studySessionFingerprint,
+  studySessionPatchMatches,
+  studySessionPatchVersion,
+} from "../../public/study-session-patch.js";
 import { loadEditableSubject, loadEditableQuestion, mutateEditableSubject } from "./question-editor.js";
 
 const defaultAzureSpeechVoice = "ja-JP-NanamiNeural";
@@ -1000,6 +1006,78 @@ function progressStatement(env, datasetVersion, questionId, record, updatedAt) {
   );
 }
 
+// 途中記録の差分が保存内容と合わない時の失敗。409で理由を返し、ブラウザーは全体を送り直す。
+class StudySessionPatchRejected extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
+    this.status = 409;
+  }
+}
+
+async function readStoredStudySession(env, datasetVersion) {
+  const row = await env.DB.prepare(
+    "SELECT session_json, updated_at FROM study_sessions WHERE dataset_version = ?",
+  ).bind(datasetVersion).first();
+  if (!row?.session_json) return null;
+  try {
+    return JSON.parse(row.session_json);
+  } catch {
+    return null;
+  }
+}
+
+// 本文の途中記録を、全体（session）か差分（sessionPatch）から求める。
+// 差分は保存済みの途中記録へ当てはめ、既存の正規化に通した上で、ブラウザー側の要約と一致する時だけ使う。
+// 前提が合わない時は409で知らせる。required が真の時は、全体も差分もない本文を従来どおり拒否する。
+async function resolveStudySessionInput(
+  env,
+  datasetVersion,
+  body,
+  { required = false } = {},
+) {
+  const patch = body?.sessionPatch;
+  if (patch !== undefined && patch !== null) {
+    const stored = await readStoredStudySession(env, datasetVersion);
+    let session;
+    try {
+      session = normalizeStudySession(applyStudySessionPatch(stored, patch));
+    } catch (error) {
+      throw new StudySessionPatchRejected(
+        error.message,
+        error.code ?? "study-session-patch-invalid",
+      );
+    }
+    if (!studySessionPatchMatches(patch, session)) {
+      throw new StudySessionPatchRejected(
+        "途中記録の差分を当てはめた結果がブラウザー側と一致しません。",
+        "study-session-patch-result",
+      );
+    }
+    return { session, patched: true };
+  }
+  if (body?.session == null && !required) {
+    return { session: null, patched: false };
+  }
+  return { session: normalizeStudySession(body?.session), patched: false };
+}
+
+// 返答に含める途中記録。全体を受け取った時はそのまま返し、差分の時は更新日時と要約だけを返して
+// 1語ごとの通信を往復とも小さく保つ。
+function studySessionReply(resolved, updatedAt) {
+  if (resolved.patched) {
+    return {
+      session: null,
+      sessionPatched: true,
+      sessionUpdatedAt: updatedAt,
+      sessionFingerprint: studySessionFingerprint(resolved.session),
+    };
+  }
+  return {
+    session: resolved.session ? { ...resolved.session, updatedAt } : null,
+  };
+}
+
 function studySessionStatement(env, datasetVersion, session, updatedAt) {
   return env.DB.prepare(
     `INSERT INTO study_sessions (dataset_version, session_json, updated_at)
@@ -1480,7 +1558,12 @@ async function handleRequest(request, env) {
     return json(
       request,
       env,
-      { ...state, studyDate: studyDateAtFourJst(new Date()) },
+      {
+        ...state,
+        studyDate: studyDateAtFourJst(new Date()),
+        // ブラウザーはこの表示を見て、途中記録を差分で送れる保存窓口かどうかを判断する。
+        features: { studySessionPatch: studySessionPatchVersion },
+      },
     );
   }
 
@@ -1600,12 +1683,17 @@ async function handleRequest(request, env) {
   if (url.pathname === "/v1/study-session") {
     const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
     if (request.method === "PUT") {
-      const session = normalizeStudySession(await request.json());
+      const body = await request.json();
+      // 本文は途中記録の全体そのものか、{ sessionPatch } の差分。
+      const resolved = body?.sessionPatch !== undefined && body?.sessionPatch !== null
+        ? await resolveStudySessionInput(env, datasetVersion, body, { required: true })
+        : { session: normalizeStudySession(body), patched: false };
       const updatedAt = new Date().toISOString();
-      await studySessionStatement(env, datasetVersion, session, updatedAt).run();
+      await studySessionStatement(env, datasetVersion, resolved.session, updatedAt).run();
       return json(request, env, {
         ok: true,
-        session: { ...session, updatedAt },
+        updatedAt,
+        ...studySessionReply(resolved, updatedAt),
       });
     }
     if (request.method === "DELETE") {
@@ -1646,10 +1734,16 @@ async function handleRequest(request, env) {
         ok: true, updatedAt, studyDate: studyDateAtFourJst(updatedAt), session: null,
       });
     }
-    const session = normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const resolvedSession = await resolveStudySessionInput(
+      env,
+      sessionDatasetVersion,
+      body,
+      { required: true },
+    );
+    const session = resolvedSession.session;
     if (session.studyMode !== timeEntry.studyMode) {
       return json(request, env, { error: "学習時間と一周の学習方法が一致しません。" }, 400);
     }
@@ -1675,7 +1769,7 @@ async function handleRequest(request, env) {
       ok: true,
       updatedAt,
       studyDate: studyDateAtFourJst(updatedAt),
-      session: { ...session, updatedAt },
+      ...studySessionReply(resolvedSession, updatedAt),
     });
   }
 
@@ -1689,10 +1783,16 @@ async function handleRequest(request, env) {
       return json(request, env, { error: "取り消す日別学習記録が正しくありません。" }, 400);
     }
     const body = await request.json();
-    const session = normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const resolvedSession = await resolveStudySessionInput(
+      env,
+      sessionDatasetVersion,
+      body,
+      { required: true },
+    );
+    const session = resolvedSession.session;
     const deleteRoundId = normalizeStudyRoundId(
       body.deleteRoundId ?? eventId,
     );
@@ -1725,7 +1825,7 @@ async function handleRequest(request, env) {
     return json(request, env, {
       ok: true,
       updatedAt,
-      session: { ...session, updatedAt },
+      ...studySessionReply(resolvedSession, updatedAt),
       roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
@@ -1736,10 +1836,15 @@ async function handleRequest(request, env) {
     const datasetVersion = normalizeDatasetVersion(url.searchParams.get("dataset"));
     const body = await request.json();
     const activity = normalizeStudyActivity(body.activity, datasetVersion, eventId);
-    const session = body.session == null ? null : normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const resolvedSession = await resolveStudySessionInput(
+      env,
+      sessionDatasetVersion,
+      body,
+    );
+    const session = resolvedSession.session;
     const completeSession = body.completeSession === true;
     const completeRoundId = completeSession
       ? normalizeStudyRoundId(body.completeRoundId) ||
@@ -1804,9 +1909,10 @@ async function handleRequest(request, env) {
       ok: true,
       occurredAt,
       studyDate: studyDateAtFourJst(occurredAt),
-      session: !completeSession && session
-        ? { ...session, updatedAt: occurredAt }
-        : null,
+      // 一周を完了した時は途中記録を消しているため、差分で受け取っていても途中記録なしと返す。
+      ...(completeSession
+        ? { session: null }
+        : studySessionReply(resolvedSession, occurredAt)),
       roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
@@ -1820,10 +1926,15 @@ async function handleRequest(request, env) {
     }
     const body = await request.json();
     const record = body.record == null ? null : normalizeQuestionRecord(body.record);
-    const session = body.session == null ? null : normalizeStudySession(body.session);
     const sessionDatasetVersion = normalizeDatasetVersion(
       body.sessionDatasetVersion ?? datasetVersion,
     );
+    const resolvedSession = await resolveStudySessionInput(
+      env,
+      sessionDatasetVersion,
+      body,
+    );
+    const session = resolvedSession.session;
     const activity = body.activity == null
       ? null
       : normalizeStudyActivity(
@@ -1972,7 +2083,7 @@ async function handleRequest(request, env) {
     return json(request, env, {
       ok: true,
       updatedAt,
-      session: session ? { ...session, updatedAt } : null,
+      ...studySessionReply(resolvedSession, updatedAt),
       roundProgress: await readRoundProgress(env, sessionDatasetVersion),
     });
   }
@@ -2064,7 +2175,15 @@ export default {
     try {
       return await handleRequest(request, env);
     } catch (error) {
-      return json(request, env, { error: error.message || "処理に失敗しました。" }, error.status ?? 400);
+      return json(
+        request,
+        env,
+        {
+          error: error.message || "処理に失敗しました。",
+          ...(error.code ? { code: error.code } : {}),
+        },
+        error.status ?? 400,
+      );
     }
   },
 };

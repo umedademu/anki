@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.423"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.423" />
-    <link rel="stylesheet" href="/theme.css?v=0.423" />
+    <script src="/theme.js?v=0.424"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.424" />
+    <link rel="stylesheet" href="/theme.css?v=0.424" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.423</span>
+        <span class="app-version">v0.424</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,16 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.424</h2><time datetime="2026-10-20">2026年10月20日</time></div>
+        <ul>
+          <li>英単語の3語表示の聞き流しで、開始から数語は読み上げが続けざまに進むのに、10語目あたりから読み上げの間が長くなり途切れがちになる件を直しました。原因は、1語進むごとにCloudflareへ送っていた途中記録の大きさです。途中記録には出題対象・出題順・未出題の一覧が入り、単語集1冊で約85KB、8冊で約700KBを上りと下りの両方で毎回やり取りしていました。携帯回線では1回の保存が読み上げ1語分より長くかかり、未保存が3語たまった時点から、次の単語へ進む前に古い保存の完了を待つようになっていました。</li>
+          <li>対処として、途中記録は前回保存した内容との違い（差分）だけを送るようにしました。1語あたりの通信は上り約2KB・下り約0.5KBになります。保存窓口は保存済みの途中記録へ差分を当てはめ、内容の要約が画面側と一致する時だけ保存します。前提が合わない時（別の端末で先に進めていた時など）や保存窓口側の失敗時は、画面側が途中記録の全体を1回だけ送り直します。暗記モードの評価後の保存、学習時間の保存、一手戻りにも同じ仕組みを使います。</li>
+          <li>画面側でも、1語ごとに数千件の出題対象を複製・並べ直していた処理をやめ、同じ内容の一覧は使い回すようにしました。v0.423で加えた音声出力権の解放は、対応していない再生器でも画面の切り替えを止めないようにしました。</li>
+          <li>スマートフォン相当の処理速度と携帯回線相当の通信速度で2,000語の聞き流しを30語分実測したところ、前の訳を読み終えてから次の単語を読み始めるまでの間は、修正前は8語目以降で約740ミリ秒に固定されていたのが、修正後は序盤・終盤とも10〜60ミリ秒程度で一定になりました。1語ごとの保存通信は最大263KBから約2KBになりました。実機（iPhone）での確認はできていません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.423</h2><time datetime="2026-10-19">2026年10月19日</time></div>

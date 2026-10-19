@@ -81,7 +81,10 @@
     "test:question-batch:browser": "node scripts/test-question-batch-browser.mjs",
     "test:shuffle:browser": "node scripts/test-shuffle-browser.mjs",
     "test:subject-speech-rate:browser": "node scripts/test-subject-speech-rate-browser.mjs",
-    "test:vocabulary-stream:browser": "node scripts/test-vocabulary-stream-browser.mjs"
+    "test:vocabulary-stream:browser": "node scripts/test-vocabulary-stream-browser.mjs",
+    "test:study-session-patch": "node scripts/test-study-session-patch.mjs",
+    "test:study-session-save": "node scripts/test-study-session-save.mjs",
+    "test:listening-gap:browser": "node scripts/test-listening-gap-browser.mjs"
   },
   "devDependencies": {
     "playwright": "^1.63.0",

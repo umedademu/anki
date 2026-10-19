@@ -44,6 +44,10 @@ import {
   normalizeRatingSoundVolume,
 } from "./rating-sound-settings.js";
 import { normalizeRatingAnalysis } from "./analysis-core.js";
+import {
+  createStudySessionPatch,
+  studySessionPatchVersion,
+} from "./study-session-patch.js";
 
 export const accessKeyStorageKey = "anki-cloud-access-key:v1";
 
@@ -148,23 +152,86 @@ function normalizeStudySessionId(value) {
   return studySessionIdPattern.test(id) ? id : "";
 }
 
+function hasOnlyTaskFields(value) {
+  for (const key in value) {
+    if (key !== "termId" && key !== "questionId" && key !== "stage") return false;
+  }
+  return true;
+}
+
 function normalizeStudySessionTask(value) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
   const termId = normalizeStudySessionId(value.termId);
   const questionId = normalizeStudySessionId(value.questionId);
   const stage = questionStages.has(value.stage) ? value.stage : "";
-  return termId && questionId && stage ? { termId, questionId, stage } : null;
+  if (!(termId && questionId && stage)) return null;
+  // 既に正規化済みの形はそのまま使い回し、聞き流しの1語ごとに数千件を作り直さない。
+  // 学習中の問題は書き換えずに複製して扱うため、同じ物を共有しても内容は変わらない。
+  if (
+    value.termId === termId &&
+    value.questionId === questionId &&
+    value.stage === stage &&
+    hasOnlyTaskFields(value)
+  ) {
+    return value;
+  }
+  return { termId, questionId, stage };
+}
+
+// 同じ一覧を同じ内容のまま渡された時は、前回の正規化結果を使い回す。
+// 途中記録は1語ごとに2〜3回作るため、出題対象や用語の一覧（数千件）を毎回作り直さないようにする。
+const normalizedListCache = new WeakMap();
+
+function memoizeListNormalization(value, compute) {
+  const cached = normalizedListCache.get(value);
+  if (
+    cached &&
+    cached.source.length === value.length &&
+    cached.source.every((item, index) => item === value[index])
+  ) {
+    return cached.result;
+  }
+  const result = compute(value);
+  normalizedListCache.set(value, { source: value.slice(), result });
+  return result;
 }
 
 function normalizeStudySessionTasks(value) {
   if (!Array.isArray(value)) return [];
-  const seen = new Set();
-  return value.slice(0, studySessionTaskLimit).flatMap((item) => {
-    const task = normalizeStudySessionTask(item);
-    if (!task || seen.has(task.questionId)) return [];
-    seen.add(task.questionId);
-    return [task];
+  return memoizeListNormalization(value, (items) => {
+    const seen = new Set();
+    return items.slice(0, studySessionTaskLimit).flatMap((item) => {
+      const task = normalizeStudySessionTask(item);
+      if (!task || seen.has(task.questionId)) return [];
+      seen.add(task.questionId);
+      return [task];
+    });
   });
+}
+
+function normalizeStudySessionTermIds(value) {
+  if (!Array.isArray(value)) return [];
+  return memoizeListNormalization(value, (items) =>
+    [...new Set(items.map(normalizeStudySessionId).filter(Boolean))].slice(
+      0,
+      studySessionTaskLimit,
+    ),
+  );
+}
+
+// 出題対象の一覧から引く索引。同じ一覧には同じ索引を使い回す。
+const taskIndexCache = new WeakMap();
+
+function indexStudySessionTasks(tasks) {
+  let cached = taskIndexCache.get(tasks);
+  if (!cached) {
+    cached = {
+      validQuestionIds: new Set(tasks.map((task) => task.questionId)),
+      taskByQuestionId: new Map(tasks.map((task) => [task.questionId, task])),
+    };
+    taskIndexCache.set(tasks, cached);
+  }
+  return cached;
 }
 
 function normalizeStudySessionQuestionIds(value, validQuestionIds) {
@@ -227,8 +294,7 @@ export function normalizeStudySession(value) {
   if (!source || typeof source !== "object" || Array.isArray(source)) return null;
   const tasks = normalizeStudySessionTasks(source.tasks);
   if (tasks.length === 0) return null;
-  const validQuestionIds = new Set(tasks.map((task) => task.questionId));
-  const taskByQuestionId = new Map(tasks.map((task) => [task.questionId, task]));
+  const { validQuestionIds, taskByQuestionId } = indexStudySessionTasks(tasks);
   const queue = normalizeStudySessionTasks(source.queue).filter((task) =>
     validQuestionIds.has(task.questionId),
   );
@@ -277,11 +343,7 @@ export function normalizeStudySession(value) {
       regionDetail: normalizeSetupSelection(source.filters?.regionDetail),
       category: normalizeSetupSelection(source.filters?.category),
     },
-    termIds: [...new Set(
-      (Array.isArray(source.termIds) ? source.termIds : [])
-        .map(normalizeStudySessionId)
-        .filter(Boolean),
-    )].slice(0, studySessionTaskLimit),
+    termIds: normalizeStudySessionTermIds(source.termIds),
     tasks,
     queue,
     currentTask: normalizedCurrentTask,
@@ -625,9 +687,85 @@ export async function cloudRequest(path, options = {}) {
     if (response.status === 401) {
       throw new Error("Cloudflareのアクセスキーが正しくありません。");
     }
-    throw Object.assign(new Error(payload.error || `Cloudflareへの保存に失敗しました（${response.status}）。`), { status: response.status });
+    throw Object.assign(
+      new Error(payload.error || `Cloudflareへの保存に失敗しました（${response.status}）。`),
+      { status: response.status, ...(payload.code ? { code: payload.code } : {}) },
+    );
   }
   return payload;
+}
+
+// 保存窓口が持っている途中記録の控え。次の保存で差分を作る前提に使い、保存に失敗した時は捨てる。
+// 問題集の版（複数デッキの組合せ）ごとに持ち、直近の数件だけを残す。
+const cloudSessionMirror = new Map();
+const cloudSessionMirrorLimit = 8;
+let studySessionPatchSupported = false;
+
+export function rememberCloudSession(datasetVersion, session) {
+  const key = String(datasetVersion ?? "");
+  if (!key) return;
+  cloudSessionMirror.delete(key);
+  if (!session) return;
+  cloudSessionMirror.set(key, session);
+  while (cloudSessionMirror.size > cloudSessionMirrorLimit) {
+    cloudSessionMirror.delete(cloudSessionMirror.keys().next().value);
+  }
+}
+
+export function forgetCloudSession(datasetVersion) {
+  if (datasetVersion == null) cloudSessionMirror.clear();
+  else cloudSessionMirror.delete(String(datasetVersion));
+}
+
+export function isStudySessionPatchSupported() {
+  return studySessionPatchSupported;
+}
+
+export function setStudySessionPatchSupported(value) {
+  studySessionPatchSupported = value === true;
+}
+
+// 途中記録を本文へ入れる形を決める。差分で送れる時は { sessionPatch }、それ以外は { session }。
+function studySessionBody(datasetVersion, session, { allowPatch = true } = {}) {
+  if (!session) return { fields: { session: null }, patched: false };
+  if (allowPatch && studySessionPatchSupported) {
+    const base = cloudSessionMirror.get(String(datasetVersion ?? ""));
+    const sessionPatch = base ? createStudySessionPatch(base, session) : null;
+    if (sessionPatch) return { fields: { sessionPatch }, patched: true };
+  }
+  return { fields: { session }, patched: false };
+}
+
+// 返答から途中記録を取り出す。差分で送った時は返答に途中記録が入らないため、送った内容に更新日時を付けて使う。
+function studySessionFromReply(payload, sent) {
+  if (payload?.sessionPatched === true) {
+    if (!sent) return null;
+    const updatedAt = typeof payload.sessionUpdatedAt === "string"
+      ? payload.sessionUpdatedAt
+      : payload.updatedAt ?? payload.occurredAt ?? null;
+    return { ...sent, updatedAt };
+  }
+  return normalizeStudySession(payload?.session);
+}
+
+// 途中記録を含む保存を送る。差分が拒否された時（409）や保存窓口側の失敗（5xx）は、全体で1回だけ送り直す。
+// 成功したら保存された途中記録を控えとして覚え、失敗したら控えを捨てて次回は全体を送る。
+async function requestWithStudySession(path, datasetVersion, session, buildOptions) {
+  const first = studySessionBody(datasetVersion, session);
+  let payload;
+  try {
+    payload = await cloudRequest(path, buildOptions(first.fields, first.patched));
+  } catch (error) {
+    forgetCloudSession(datasetVersion);
+    if (!first.patched || !(error.status === 409 || error.status >= 500)) {
+      throw error;
+    }
+    const retry = studySessionBody(datasetVersion, session, { allowPatch: false });
+    payload = await cloudRequest(path, buildOptions(retry.fields, retry.patched));
+  }
+  const saved = studySessionFromReply(payload, session);
+  rememberCloudSession(datasetVersion, saved);
+  return { payload, session: saved };
 }
 
 export async function requestCloudSpeech(
@@ -753,11 +891,16 @@ export async function loadCloudState(masteryTarget = 2, datasetVersion = "") {
     ? `?dataset=${encodeURIComponent(datasetVersion)}`
     : "";
   const payload = await cloudRequest(`/v1/state${query}`);
+  studySessionPatchSupported =
+    payload.features?.studySessionPatch === studySessionPatchVersion;
+  const sessions = normalizeStudySessions(payload.sessions, payload.session);
+  // 読み込んだ途中記録を控えとして覚え、再開後の最初の保存から差分で送れるようにする。
+  if (datasetVersion) rememberCloudSession(datasetVersion, sessions["listen-answer"]);
   return {
     progress: normalizeProgress(payload.progress ?? createEmptyProgress(), masteryTarget),
     roundProgress: normalizeRoundProgress(payload.roundProgress),
     settings: normalizeSharedSettings(payload.settings),
-    sessions: normalizeStudySessions(payload.sessions, payload.session),
+    sessions,
     session: normalizeStudySession(payload.session),
     studyDate: typeof payload.studyDate === "string" ? payload.studyDate : "",
   };
@@ -811,23 +954,28 @@ export async function importCloudProgress(datasetVersion, progress) {
 }
 
 export async function resetCloudProgress(datasetVersion) {
+  forgetCloudSession(datasetVersion);
   return cloudRequest(`/v1/progress?dataset=${encodeURIComponent(datasetVersion)}`, {
     method: "DELETE",
   });
 }
 
 export async function saveCloudStudySession(datasetVersion, session) {
-  const payload = await cloudRequest(
+  const { session: saved } = await requestWithStudySession(
     `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
-    {
+    datasetVersion,
+    session,
+    (fields, patched) => ({
       method: "PUT",
-      body: JSON.stringify(session),
-    },
+      // この窓口は本文が途中記録そのもの。差分の時だけ { sessionPatch } の形にする。
+      body: JSON.stringify(patched ? fields : session),
+    }),
   );
-  return normalizeStudySession(payload.session);
+  return saved;
 }
 
 export async function deleteCloudStudySession(datasetVersion) {
+  forgetCloudSession(datasetVersion);
   return cloudRequest(
     `/v1/study-session?dataset=${encodeURIComponent(datasetVersion)}`,
     { method: "DELETE" },
@@ -841,13 +989,15 @@ export async function saveCloudStudyAnswer(
   session,
   historyChange = {},
 ) {
-  const payload = await cloudRequest(
+  const { payload, session: saved } = await requestWithStudySession(
     `/v1/study-answer/${encodeURIComponent(questionId)}?dataset=${encodeURIComponent(datasetVersion)}`,
-    {
+    historyChange.sessionDatasetVersion ?? datasetVersion,
+    session,
+    (sessionFields) => ({
       method: "PUT",
       body: JSON.stringify({
         record,
-        session,
+        ...sessionFields,
         studyMode: historyChange.studyMode ?? session?.studyMode ?? null,
         activity: historyChange.activity ?? null,
         deleteActivityId: historyChange.deleteActivityId ?? null,
@@ -867,11 +1017,11 @@ export async function saveCloudStudyAnswer(
           historyChange.sessionDatasetVersion ?? datasetVersion,
         routineRun: historyChange.routineRun,
       }),
-    },
+    }),
   );
   return {
     updatedAt: payload.updatedAt,
-    session: normalizeStudySession(payload.session),
+    session: saved,
     roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }
@@ -888,25 +1038,27 @@ export async function saveCloudStudyActivity(
     timeEntry = null,
   } = {},
 ) {
-  const payload = await cloudRequest(
+  const { payload, session: saved } = await requestWithStudySession(
     `/v1/study-activity/${encodeURIComponent(activity.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
-    {
+    sessionDatasetVersion,
+    session,
+    (sessionFields) => ({
       method: "PUT",
       body: JSON.stringify({
         activity,
-        session,
+        ...sessionFields,
         sessionDatasetVersion,
         completeSession,
         completeRoundId,
         routineRun,
         ...(timeEntry ? { timeEntry } : {}),
       }),
-    },
+    }),
   );
   return {
     occurredAt: payload.occurredAt,
     studyDate: payload.studyDate,
-    session: normalizeStudySession(payload.session),
+    session: saved,
     roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }
@@ -917,18 +1069,20 @@ export async function saveCloudStudyTime(
   session,
   { keepalive = false, sessionDatasetVersion = datasetVersion } = {},
 ) {
-  const payload = await cloudRequest(
+  const { payload, session: saved } = await requestWithStudySession(
     `/v1/study-time/${encodeURIComponent(timeEntry.eventId)}?dataset=${encodeURIComponent(datasetVersion)}`,
-    {
+    sessionDatasetVersion,
+    session,
+    (sessionFields) => ({
       method: "PUT",
-      body: JSON.stringify({ timeEntry, session, sessionDatasetVersion }),
+      body: JSON.stringify({ timeEntry, ...sessionFields, sessionDatasetVersion }),
       keepalive,
-    },
+    }),
   );
   return {
     updatedAt: payload.updatedAt,
     studyDate: payload.studyDate,
-    session: normalizeStudySession(payload.session),
+    session: saved,
   };
 }
 
@@ -938,21 +1092,23 @@ export async function undoCloudStudyActivity(
   session,
   { sessionDatasetVersion = datasetVersion, deleteRoundId = null, routineRun } = {},
 ) {
-  const payload = await cloudRequest(
+  const { payload, session: saved } = await requestWithStudySession(
     `/v1/study-activity/${encodeURIComponent(eventId)}/undo?dataset=${encodeURIComponent(datasetVersion)}`,
-    {
+    sessionDatasetVersion,
+    session,
+    (sessionFields) => ({
       method: "PUT",
       body: JSON.stringify({
-        session,
+        ...sessionFields,
         sessionDatasetVersion,
         deleteRoundId,
         routineRun,
       }),
-    },
+    }),
   );
   return {
     updatedAt: payload.updatedAt,
-    session: normalizeStudySession(payload.session),
+    session: saved,
     roundProgress: normalizeRoundProgress(payload.roundProgress),
   };
 }

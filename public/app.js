@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.423";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.423";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.424";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.424";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.423";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.424";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.423";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.423";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.423";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.423";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.423";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.423";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.423";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.423";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.423";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.424";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.424";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.424";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.424";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.424";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.424";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.424";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.424";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.424";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.423";
+} from "./original-session.js?v=0.424";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.423";
+} from "./speech.js?v=0.424";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.423";
+} from "./deck-selection.js?v=0.424";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.423";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.424";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -1764,6 +1764,19 @@ function setStudyTerms(terms) {
   );
 }
 
+// 一周の用語の一覧。用語集が変わらない間は同じ一覧を使い回し、途中記録を作るたびに数千件を並べ直さない。
+let cachedSessionTermIds = { terms: null, ids: [] };
+
+function sessionTermIds() {
+  if (cachedSessionTermIds.terms !== state.terms) {
+    cachedSessionTermIds = {
+      terms: state.terms,
+      ids: state.terms.map((term) => term.id),
+    };
+  }
+  return cachedSessionTermIds.ids;
+}
+
 function captureActiveSession() {
   if (!state.activeSession || state.sessionTasks.length === 0) return null;
   return normalizeStudySession({
@@ -1787,7 +1800,7 @@ function captureActiveSession() {
     questionLimitSeconds: state.questionLimitSeconds,
     autoSpeechEnabled: true,
     filters: selectedFilters(),
-    termIds: state.terms.map((term) => term.id),
+    termIds: sessionTermIds(),
     tasks: state.sessionTasks,
     queue: state.queue,
     currentTask: state.currentTask,
@@ -2918,7 +2931,7 @@ function toggleMindsetPlayback() {
   }
   // 中断後に読み直す時だけ、進行中の列を捨てて準備音を鳴らす。通常の一時停止からの再開は位置を保つ。
   const restartsMindset = state.mindsetPaused && !speechController.paused;
-  if (restartsMindset) void ratingSoundPlayer.releaseOutput();
+  if (restartsMindset) void ratingSoundPlayer.releaseOutput?.();
   speechController.unlock({ reset: restartsMindset, probe: restartsMindset });
   if (!state.mindsetPaused) {
     state.mindsetPaused = true;
@@ -3030,7 +3043,7 @@ function showMindsetPlayer({ fromBeginning = false } = {}) {
 // 選んだ位置からすぐ読み上げ、他の科目の「前回の続きから」「はじめから」と同じ流れにする。
 function chooseMindsetStart({ fromBeginning = false } = {}) {
   if (!state.mindsetChoosingStart) return;
-  void ratingSoundPlayer.releaseOutput();
+  void ratingSoundPlayer.releaseOutput?.();
   speechController.unlock({ reset: true, probe: true });
   if (fromBeginning) {
     showMindsetPlayer({ fromBeginning: true });
@@ -3165,8 +3178,9 @@ function showOnly(panel) {
   if (panel !== elements.studyShell && panel !== elements.mindsetPlayerPanel) {
     speechController.stop();
     // 学習画面を離れる時は端末の音声出力権を手放し、待機中に無音を流し続けない。
-    speechController.release();
-    void ratingSoundPlayer.releaseOutput();
+    // 出力権の解放に対応していない再生器（試験用の簡易な物など）でも画面の切り替えを止めない。
+    speechController.release?.();
+    void ratingSoundPlayer.releaseOutput?.();
     stopStudyClock();
     stopMindsetStudyClock();
     hideListeningPlaybackFeedback();
@@ -4187,7 +4201,8 @@ async function advanceListening(runId) {
       ? { ...state.progress.questions[completedTask.questionId] } : null;
     streamRow.answeredAt = new Date().toISOString();
   }
-  const previousQueue = state.queue.map(cloneTask);
+  // 巻き戻し用の控え。問題は書き換えずに扱うため、一覧だけを写せばよい（数千件の複製を1語ごとに作らない）。
+  const previousQueue = state.queue.slice();
   const previousUnseenQuestionIds = new Set(state.unseenQuestionIds);
   const previousAnsweredCount = state.answeredThisSession;
   state.pendingListeningActivity = activity;
@@ -4610,7 +4625,7 @@ function toggleListening() {
   }
   // 中断後に読み直す時だけ、進行中の列を捨てて準備音を鳴らす。通常の一時停止からの再開は位置を保つ。
   const restartsListening = state.listeningPaused && !speechController.paused;
-  if (restartsListening) void ratingSoundPlayer.releaseOutput();
+  if (restartsListening) void ratingSoundPlayer.releaseOutput?.();
   speechController.unlock({ reset: restartsListening, probe: restartsListening });
   if (state.listeningPaused) {
     state.listeningPaused = false;
@@ -6645,7 +6660,7 @@ async function beginStudy() {
   startingStudy = true;
   elements.startStudy.disabled = true;
   // ボタンを押した操作の中で評価音の出力を閉じ、再生許可と準備音を済ませて、保存通信の後の読み上げに備える。
-  void ratingSoundPlayer.releaseOutput();
+  void ratingSoundPlayer.releaseOutput?.();
   speechController.unlock({ reset: true, probe: true });
   try {
     if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }
@@ -6766,7 +6781,7 @@ async function resumeStudy() {
   elements.resumeStudy.disabled = true;
   elements.startStudy.disabled = true;
   // ボタンを押した操作の中で評価音の出力を閉じ、再生許可と準備音を済ませて、保存通信の後の読み上げに備える。
-  void ratingSoundPlayer.releaseOutput();
+  void ratingSoundPlayer.releaseOutput?.();
   speechController.unlock({ reset: true, probe: true });
   try {
     if (state.inRoutine && !await saveRoutineQuestionLimit()) { startingStudy = false; return; }

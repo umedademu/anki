@@ -69,7 +69,7 @@ try {
   await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speechModule + `
     export function createSpeechController() {
       return window.__testSpeech = { supported: true, currentTarget: null, paused: false, calls: [],
-        stop() { this.currentTarget = null; this.paused = false; }, unlock() {}, preload() { return Promise.resolve(); },
+        stop() { this.currentTarget = null; this.paused = false; }, unlock() {}, preload() { return Promise.resolve(); }, stage() { return false; },
         pause() { this.paused = true; return true; }, resume() { this.paused = false; return true; },
         speak(segments) { this.calls.push(segments); this.currentTarget = segments[0]?.target; return true; } };
     }` }));

@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.416";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.416";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.417";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.417";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.416";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.417";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.416";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.416";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.416";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.416";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.416";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.416";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.416";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.416";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.416";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.417";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.417";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.417";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.417";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.417";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.417";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.417";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.417";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.417";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.416";
+} from "./original-session.js?v=0.417";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.416";
+} from "./speech.js?v=0.417";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   normalizeSpeechSettings,
@@ -95,7 +95,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.416";
+} from "./deck-selection.js?v=0.417";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -119,7 +119,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.416";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.417";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -2833,11 +2833,6 @@ function speakCurrentMindset() {
   state.mindsetErrorMessage = "";
   renderMindsetPlayer();
   const nextItem = state.mindsetOrder[state.mindsetIndex + 1];
-  if (nextItem) {
-    void speechController.preload([
-      { target: "mindset", language: "ja-JP", text: mindsetSpeechText(nextItem) },
-    ]);
-  }
   const started = speechController.speak(
     [{ target: "mindset", language: "ja-JP", text: mindsetSpeechText(item) }],
     {
@@ -2867,6 +2862,12 @@ function speakCurrentMindset() {
       },
     },
   );
+  if (nextItem) {
+    // 次の言葉は空いている再生器へ読み込んでおき、間隔が0秒ならその場で続けて鳴らす。
+    speechController.stage([
+      { target: "mindset", language: "ja-JP", text: mindsetSpeechText(nextItem) },
+    ]);
+  }
   if (!started) {
     state.mindsetPaused = true;
     state.mindsetErrorMessage = "音声を開始できませんでした。再生ボタンを押してやり直してください。";
@@ -3939,6 +3940,16 @@ function preloadListeningTask(task) {
   ]);
 }
 
+// 聞き流しで、その問題に入って最初に読み上げる内容。読み上げる問題文がなければ回答側になる。
+function firstListeningSpeechSequence(task) {
+  if (!task) return [];
+  if (isClassicalChineseMeaningQuestion(task)) {
+    return classicalChineseReadingSpeechSequence(task);
+  }
+  const questionSegments = listeningQuestionSpeechSequence(task);
+  return questionSegments.length > 0 ? questionSegments : answerSpeechSequence(task);
+}
+
 function autoSpeakQuestion() {
   if (
     !hasReachedQuestionLimit() &&
@@ -4328,6 +4339,8 @@ function speakListeningAnswer(runId) {
   renderQuestion();
   // 初めて作る音声でも間に合うよう、2問先まで取り寄せておく。
   state.queue.slice(0, 2).forEach(preloadListeningTask);
+  // 次の問題の最初の音声は空いている再生器へ読み込んでおき、切り替えをその場で始める。
+  speechController.stage(firstListeningSpeechSequence(state.queue[0]));
   if (!started) {
     state.listeningTimer = window.setTimeout(() => {
       state.listeningTimer = null;
@@ -4365,6 +4378,7 @@ function speakClassicalChineseListeningReading(runId) {
       onError: (error) => pauseListeningAfterSpeechFailure(runId, error),
     },
   );
+  speechController.stage(answerSpeechSequence());
   if (!started) {
     scheduleClassicalChineseListeningAnswer(runId);
   }
@@ -4399,6 +4413,7 @@ function beginListeningQuestion() {
   if (isClassicalChineseMeaningQuestion()) {
     renderQuestion();
     preloadListeningTask(state.currentTask);
+    speechController.stage(classicalChineseReadingSpeechSequence());
     state.listeningTimer = window.setTimeout(() => {
       state.listeningTimer = null;
       speakClassicalChineseListeningReading(runId);
@@ -4429,7 +4444,8 @@ function beginListeningQuestion() {
     return;
   }
   renderQuestion();
-  void speechController.preload(answerSpeechSequence());
+  // 回答側の音声は空いている再生器へ読み込んでおき、問題を読み終えたらその場で鳴らす。
+  speechController.stage(answerSpeechSequence());
 }
 
 function showSpeechPartNotice(message) {

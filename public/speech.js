@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.416";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.417";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -292,6 +292,66 @@ export function createVocabularyAutomaticAnswerSequence(
     .filter((segment) => segment?.text);
 }
 
+// 復号した波形から、声の始まりと終わりの位置を探す。MP3の詰め物やAzureが残した無音を
+// 再生で飛ばすために使う。しきい値は語尾の「s」「f」のような小さな音も声として残る大きさにする。
+export const audioSilenceThreshold = 0.004;
+
+export function findAudioBounds(samples, sampleRate, threshold = audioSilenceThreshold) {
+  const length = Number(samples?.length ?? 0);
+  const rate = Number(sampleRate);
+  if (!length || !Number.isFinite(rate) || rate <= 0) return null;
+  let first = -1;
+  for (let index = 0; index < length; index += 1) {
+    if (Math.abs(samples[index]) > threshold) {
+      first = index;
+      break;
+    }
+  }
+  const durationSeconds = length / rate;
+  if (first < 0) {
+    return { leadSeconds: 0, soundEndSeconds: durationSeconds, tailSeconds: 0, durationSeconds };
+  }
+  let last = length - 1;
+  while (last > first && Math.abs(samples[last]) <= threshold) last -= 1;
+  const soundEndSeconds = (last + 1) / rate;
+  return {
+    leadSeconds: first / rate,
+    soundEndSeconds,
+    tailSeconds: Math.max(0, durationSeconds - soundEndSeconds),
+    durationSeconds,
+  };
+}
+
+// 解析は音を出さない復号専用の処理で行い、端末の音声出力やiPhoneの消音スイッチの扱いに影響させない。
+const maximumAnalyzedAudioBytes = 600_000;
+let sharedOfflineAudioContext = null;
+let offlineAudioUnavailable = false;
+
+async function decodeCloudAudioBounds(blob) {
+  const Offline =
+    globalThis.OfflineAudioContext ?? globalThis.webkitOfflineAudioContext;
+  if (
+    offlineAudioUnavailable ||
+    typeof Offline !== "function" ||
+    typeof blob?.arrayBuffer !== "function" ||
+    Number(blob.size) > maximumAnalyzedAudioBytes
+  ) {
+    return null;
+  }
+  try {
+    sharedOfflineAudioContext ??= new Offline(1, 1, 48000);
+  } catch {
+    offlineAudioUnavailable = true;
+    return null;
+  }
+  const encoded = await blob.arrayBuffer();
+  const decoded = await new Promise((resolve, reject) => {
+    const result = sharedOfflineAudioContext.decodeAudioData(encoded, resolve, reject);
+    if (result && typeof result.then === "function") result.then(resolve, reject);
+  });
+  return findAudioBounds(decoded.getChannelData(0), decoded.sampleRate);
+}
+
 export function createSpeechController({
   synthesis = globalThis.speechSynthesis,
   Utterance = globalThis.SpeechSynthesisUtterance,
@@ -308,6 +368,11 @@ export function createSpeechController({
   deviceStartTimeoutMs = 1500,
   cloudStartTimeoutMs = 3000,
   cloudPlaybackTimeoutMs = 60000,
+  decodeAudioBounds = decodeCloudAudioBounds,
+  // 飛ばす価値のある無音の長さと、声を欠けさせないための余白。
+  minimumSkippedSilenceSeconds = 0.05,
+  leadSilenceMarginSeconds = 0.015,
+  tailSilenceMarginSeconds = 0.03,
 } = {}) {
   const deviceSupported = Boolean(
     synthesis &&
@@ -326,7 +391,17 @@ export function createSpeechController({
   let currentTarget = "";
   let activeAudio = null;
   let activeAudioUrl = "";
-  let sharedCloudAudio = null;
+  // 自然音声の再生器は2台を交互に使う。片方が鳴っている間にもう片方へ次の音声を
+  // 読み込んでおき、切り替え時の読み込み待ちをなくす。
+  const cloudAudioPool = [];
+  const cloudAudioPoolSize = 2;
+  const blessedCloudAudios = new WeakSet();
+  let lastActiveAudioIndex = -1;
+  const stagedByAudio = new Map();
+  let stagedHint = null;
+  let activeQueue = null;
+  const audioBoundsByBlob = new WeakMap();
+  const audioBoundsPending = new WeakMap();
   let activeCloudCancel = null;
   let playbackPaused = false;
   let activePlaybackType = "";
@@ -353,6 +428,7 @@ export function createSpeechController({
     activePlaybackPause = null;
     activePlaybackResume = null;
     pausedContinuation = null;
+    activeQueue = null;
     if (deviceSupported && cancelDevice) {
       synthesis.cancel();
     }
@@ -442,11 +518,165 @@ export function createSpeechController({
   }
 
   function ensureCloudAudio() {
-    if (!sharedCloudAudio) {
-      sharedCloudAudio = new AudioPlayer();
-      sharedCloudAudio.preload = "auto";
+    while (cloudAudioPool.length < cloudAudioPoolSize) {
+      const audio = new AudioPlayer();
+      audio.preload = "auto";
+      cloudAudioPool.push(audio);
     }
-    return sharedCloudAudio;
+    return cloudAudioPool;
+  }
+
+  // 鳴っていない方の再生器。どちらも空いていれば、前回使わなかった方を選ぶ。
+  function idleCloudAudio() {
+    const pool = ensureCloudAudio();
+    for (let offset = 1; offset <= pool.length; offset += 1) {
+      const audio = pool[(lastActiveAudioIndex + offset) % pool.length];
+      if (audio !== activeAudio) return audio;
+    }
+    return null;
+  }
+
+  function analysisFor(blob) {
+    return blob ? audioBoundsByBlob.get(blob) ?? null : null;
+  }
+
+  function analyzeCloudAudio(blob) {
+    if (!blob) return Promise.resolve(null);
+    if (audioBoundsByBlob.has(blob)) return Promise.resolve(analysisFor(blob));
+    const pending = audioBoundsPending.get(blob);
+    if (pending) return pending;
+    const promise = Promise.resolve()
+      .then(() => decodeAudioBounds(blob))
+      .then((bounds) => bounds ?? null)
+      .catch(() => null)
+      .then((bounds) => {
+        audioBoundsByBlob.set(blob, bounds);
+        audioBoundsPending.delete(blob);
+        return bounds;
+      });
+    audioBoundsPending.set(blob, promise);
+    return promise;
+  }
+
+  function clearStaging(audio) {
+    const entry = stagedByAudio.get(audio);
+    if (!entry) return;
+    stagedByAudio.delete(audio);
+    try {
+      audio.onloadedmetadata = null;
+    } catch {}
+    if (!entry.url) return;
+    revokeObjectUrl(entry.url);
+    try {
+      if (typeof audio.removeAttribute === "function") {
+        audio.removeAttribute("src");
+      } else {
+        audio.src = "";
+      }
+      audio.load?.();
+    } catch {}
+  }
+
+  // 読み込み済みの再生器の位置を、声の始まる直前へ進めておく。
+  function applyLeadSkip(audio, entry) {
+    const lead = entry.analysis?.leadSeconds;
+    if (!(lead > minimumSkippedSilenceSeconds) || entry.seekApplied) return;
+    const seek = () => {
+      if (stagedByAudio.get(audio) !== entry || entry.seekApplied) return;
+      try {
+        audio.currentTime = Math.max(0, lead - leadSilenceMarginSeconds);
+        entry.seekApplied = true;
+      } catch {}
+    };
+    if (Number(audio.readyState) >= 1) {
+      seek();
+    } else {
+      try {
+        audio.onloadedmetadata = seek;
+      } catch {}
+    }
+  }
+
+  // 空いている再生器へ次の音声を読み込んでおく。同じ音声が入っていれば何もしない。
+  function stageSegment(audio, segment, settings) {
+    const cacheKey = cloudAudioCacheKey(segment, settings);
+    if (stagedByAudio.get(audio)?.cacheKey === cacheKey) return;
+    clearStaging(audio);
+    const entry = {
+      cacheKey,
+      blob: null,
+      url: "",
+      ready: false,
+      analysis: null,
+      seekApplied: false,
+    };
+    stagedByAudio.set(audio, entry);
+    const apply = (blob) => {
+      if (stagedByAudio.get(audio) !== entry || activeAudio === audio) return;
+      try {
+        const url = createObjectUrl(blob);
+        entry.blob = blob;
+        entry.url = url;
+        audio.src = url;
+        audio.load?.();
+        entry.ready = true;
+      } catch {
+        stagedByAudio.delete(audio);
+        return;
+      }
+      void analyzeCloudAudio(blob).then((bounds) => {
+        if (stagedByAudio.get(audio) !== entry) return;
+        entry.analysis = bounds;
+        applyLeadSkip(audio, entry);
+      });
+    };
+    const ready = readyCloudAudio(segment, settings);
+    if (ready) {
+      apply(ready);
+      return;
+    }
+    loadCloudAudio(segment, settings).then(apply, () => {
+      if (stagedByAudio.get(audio) === entry) stagedByAudio.delete(audio);
+    });
+  }
+
+  // 今の列の残り、なければ利用者側から知らされた次の読み上げを、空いている再生器へ読み込む。
+  function stageUpcoming(queue = activeQueue) {
+    if (!cloudSupported) return;
+    const nextSegment = queue?.[0] ?? stagedHint?.[0] ?? null;
+    if (!nextSegment) return;
+    const settings = normalizeSpeechSettings(getSettings());
+    if (settings.source !== "cloud") return;
+    const audio = idleCloudAudio();
+    if (audio) stageSegment(audio, nextSegment, settings);
+  }
+
+  // 次に読み上げる予定の内容を知らせる。取り寄せと再生器への読み込みを先に済ませておく。
+  function stage(segments) {
+    if (!cloudSupported) return false;
+    const settings = normalizeSpeechSettings(getSettings());
+    if (settings.source !== "cloud") return false;
+    const hint = normalizedSegments(segments);
+    if (hint.length === 0) {
+      stagedHint = null;
+      return false;
+    }
+    stagedHint = hint;
+    void preloadNormalized(hint, settings);
+    stageUpcoming();
+    return true;
+  }
+
+  function takeStaged(audio, segment, settings) {
+    const entry = stagedByAudio.get(audio);
+    if (!entry?.ready || entry.cacheKey !== cloudAudioCacheKey(segment, settings)) {
+      return null;
+    }
+    stagedByAudio.delete(audio);
+    try {
+      audio.onloadedmetadata = null;
+    } catch {}
+    return entry;
   }
 
   function unlock() {
@@ -454,11 +684,14 @@ export function createSpeechController({
       return false;
     }
     try {
-      const audio = ensureCloudAudio();
-      if (activeAudio === audio) {
-        return true;
+      // 利用者の操作の中で一度読み込みを行った再生器は、以後は操作なしでも再生できる。
+      // 2台とも許可しておき、どちらへ切り替えても自動再生が止まらないようにする。
+      for (const audio of ensureCloudAudio()) {
+        if (audio === activeAudio || blessedCloudAudios.has(audio)) continue;
+        clearStaging(audio);
+        audio.load?.();
+        blessedCloudAudios.add(audio);
       }
-      audio.load?.();
       return true;
     } catch (error) {
       onFallback(
@@ -529,6 +762,7 @@ export function createSpeechController({
       )
       .then((blob) => {
         readyCloudAudioBlobs.set(request, blob);
+        void analyzeCloudAudio(blob);
         return blob;
       })
       .catch((error) => {
@@ -544,6 +778,12 @@ export function createSpeechController({
     return request;
   }
 
+  function preloadNormalized(queue, settings) {
+    return Promise.allSettled(
+      queue.map((segment) => loadCloudAudio(segment, settings)),
+    );
+  }
+
   function preload(segments) {
     if (!cloudSupported) {
       return Promise.resolve([]);
@@ -552,11 +792,7 @@ export function createSpeechController({
     if (settings.source !== "cloud") {
       return Promise.resolve([]);
     }
-    return Promise.allSettled(
-      normalizedSegments(segments).map((segment) =>
-        loadCloudAudio(segment, settings),
-      ),
-    );
+    return preloadNormalized(normalizedSegments(segments), settings);
   }
 
   function speak(
@@ -574,6 +810,8 @@ export function createSpeechController({
 
     resetPlayback();
     const ticket = ++generation;
+    activeQueue = queue;
+    stagedHint = null;
     void preload(queue);
 
     function continueAfterPlayback(callback) {
@@ -767,21 +1005,62 @@ export function createSpeechController({
         speakWithDevice(segment, settings, done, fail);
         return;
       }
+      let reservedAudio = null;
       try {
-        const blob =
-          readyCloudAudio(segment, settings) ??
-          (await loadCloudAudio(segment, settings));
-        if (ticket !== generation) {
-          return;
-        }
-        const audio = ensureCloudAudio();
-        const audioUrl = createObjectUrl(blob);
+        const audio = idleCloudAudio();
+        // この再生器を使う予定にし、待っている間に次の音声の読み込み先へ選ばれないようにする。
+        reservedAudio = audio;
         activeAudio = audio;
+        lastActiveAudioIndex = cloudAudioPool.indexOf(audio);
+        // 空いている再生器へ読み込み済みなら、通信も読み込みも待たずにそのまま鳴らす。
+        const staged = takeStaged(audio, segment, settings);
+        let blob = staged?.blob ?? null;
+        let audioUrl = staged?.url ?? "";
+        if (!staged) {
+          clearStaging(audio);
+          blob =
+            readyCloudAudio(segment, settings) ??
+            (await loadCloudAudio(segment, settings));
+          if (ticket !== generation) {
+            return;
+          }
+          clearStaging(audio);
+          audioUrl = createObjectUrl(blob);
+        }
         activeAudioUrl = audioUrl;
         let finished = false;
         let playAttempt = 0;
         let startTimer = null;
         let playbackTimer = null;
+        let earlyFinishTimer = null;
+        const clearEarlyFinishTimer = () => {
+          if (earlyFinishTimer !== null) {
+            globalThis.clearTimeout(earlyFinishTimer);
+            earlyFinishTimer = null;
+          }
+        };
+        // 声が終わった後の無音は待たず、終わりの位置に合わせて次へ進む。
+        const armEarlyFinish = () => {
+          clearEarlyFinishTimer();
+          const bounds = analysisFor(blob);
+          const position = Number(audio.currentTime);
+          if (
+            !bounds ||
+            !(bounds.tailSeconds > minimumSkippedSilenceSeconds) ||
+            !Number.isFinite(position)
+          ) {
+            return;
+          }
+          const rate = Number(audio.playbackRate) > 0 ? Number(audio.playbackRate) : 1;
+          const remainingSeconds =
+            Math.max(0, bounds.soundEndSeconds + tailSilenceMarginSeconds - position) / rate;
+          earlyFinishTimer = globalThis.setTimeout(() => {
+            earlyFinishTimer = null;
+            if (!finished && !playbackPaused && ticket === generation) {
+              finish();
+            }
+          }, remainingSeconds * 1000);
+        };
         const clearStartTimer = () => {
           if (startTimer !== null) {
             globalThis.clearTimeout(startTimer);
@@ -797,6 +1076,7 @@ export function createSpeechController({
         const clearPlaybackTimers = () => {
           clearStartTimer();
           clearPlaybackTimer();
+          clearEarlyFinishTimer();
         };
         const armPlaybackTimer = () => {
           clearStartTimer();
@@ -914,12 +1194,17 @@ export function createSpeechController({
             return;
           }
           armPlaybackTimer();
+          armEarlyFinish();
+          // 鳴り始めたら、もう片方の再生器へ次の音声を読み込んでおく。
+          stageUpcoming(queue);
         };
         audio.onended = finish;
         audio.onerror = fallback;
         try {
-          audio.src = audioUrl;
-          audio.load?.();
+          if (!staged) {
+            audio.src = audioUrl;
+            audio.load?.();
+          }
           audio.defaultPlaybackRate = settings.rate;
           audio.playbackRate = settings.rate;
         } catch (error) {
@@ -928,6 +1213,9 @@ export function createSpeechController({
         }
         beginPlayback();
       } catch (error) {
+        if (reservedAudio && activeAudio === reservedAudio) {
+          activeAudio = null;
+        }
         if (ticket !== generation) {
           return;
         }
@@ -971,6 +1259,7 @@ export function createSpeechController({
       return playbackPaused;
     },
     preload,
+    stage,
     speak,
     stop,
     pause,

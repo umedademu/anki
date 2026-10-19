@@ -129,7 +129,7 @@ try {
         return window.__testSpeech = {
           supported: true, paused: false, currentTarget: null, calls: [], pending: null,
           stop() { this.pending = null; this.currentTarget = null; this.paused = false; },
-          unlock() {}, preload() { return Promise.resolve(); },
+          unlock() {}, preload() { return Promise.resolve(); }, stage() { return false; },
           pause() { this.paused = true; return true; },
           resume() { this.paused = false; return true; },
           speak(segments, handlers = {}) {

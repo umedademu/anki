@@ -3,6 +3,7 @@ import {
   createVocabularySpeechGroups,
   createHistorySpeechReadings,
   createSpeechController,
+  findAudioBounds,
   prepareClassicalChineseSpeechText,
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
@@ -816,10 +817,11 @@ class PausedCloudAudio {
     this.onplaying = null;
     this.onended = null;
     this.onerror = null;
-    pausedCloudAudio = this;
   }
 
   async play() {
+    // 再生器は2台あるため、実際に鳴っている方を確認対象にする。
+    pausedCloudAudio = this;
     this.playCount += 1;
     this.onplaying?.();
   }
@@ -947,15 +949,16 @@ if (preloadPlayCalls !== 1) {
   throw new Error("取り寄せ済みの音声をその場で再生し始められませんでした。");
 }
 await new Promise((resolve) => setTimeout(resolve, 0));
-if (preloadRequests.length !== 2 || preloadPlayers.length !== 1) {
+if (preloadRequests.length !== 2 || preloadPlayers.length !== 2) {
   throw new Error("先読みした音声を再取得せずに再生できませんでした。");
 }
 preloadPlayers[0].onended();
 await new Promise((resolve) => setTimeout(resolve, 0));
-if (preloadPlayers.length !== 1) {
-  throw new Error("先読みした別パーツを同じ音声再生器で続けて再生できませんでした。");
+// 再生器は最初に用意した2台だけを交互に使い、パーツごとに作り直さない。
+if (preloadPlayers.length !== 2 || preloadPlayCalls !== 2) {
+  throw new Error("先読みした別パーツを2台の音声再生器で交互に再生できませんでした。");
 }
-preloadPlayers[0].onended();
+preloadPlayers[1].onended();
 
 // Azure音声は前後の無音を削った音声を頼み、削らない設定の音声とは別に覚えておく。
 const trimRequests = [];
@@ -1080,7 +1083,7 @@ iosController.speak([{ target: "question", text: "次の問題" }], {
 });
 await new Promise((resolve) => setTimeout(resolve, 0));
 if (
-  iosAudioPlayers !== 1 ||
+  iosAudioPlayers !== 2 ||
   iosCloudRequests !== 2 ||
   iosDeviceAttempts !== 0 ||
   iosPlaybackErrors !== 1 ||
@@ -1088,7 +1091,7 @@ if (
   iosPlayResults.join("|") !== "blocked|played|played" ||
   iosPlayedRates.some((rate) => rate !== 1.75)
 ) {
-  throw new Error("iPhoneで同じ音声再生器と設定速度を維持できませんでした。");
+  throw new Error("iPhoneで最初に許可した2台の音声再生器と設定速度を維持できませんでした。");
 }
 
 const fallbackSpokenBefore = spoken.length;
@@ -1157,6 +1160,163 @@ if (unsupported.supported || unsupported.speak([{ target: "question", text: "問
   throw new Error("読み上げ非対応端末の判定が不正です。");
 }
 
+// 波形から声の範囲を探す。しきい値以下の小さな揺れは無音として扱う。
+{
+  const samples = new Float32Array(1000);
+  samples.fill(0.001, 0, 100);
+  samples.fill(0.3, 100, 700);
+  samples[750] = 0.002;
+  const bounds = findAudioBounds(samples, 1000);
+  if (
+    Math.abs(bounds.leadSeconds - 0.1) > 1e-9 ||
+    Math.abs(bounds.soundEndSeconds - 0.7) > 1e-9 ||
+    Math.abs(bounds.tailSeconds - 0.3) > 1e-9 ||
+    findAudioBounds(new Float32Array(10), 1000).tailSeconds !== 0 ||
+    findAudioBounds([], 1000) !== null
+  ) {
+    throw new Error("波形から声の始まりと終わりを求められませんでした。");
+  }
+}
+
+// 2台の再生器を交互に使い、次の音声を先に読み込んで待ちなしで切り替える。無音は解析結果で飛ばす。
+const stagedPlayers = [];
+const stagedEvents = [];
+class StagedAudio {
+  constructor() {
+    this.index = stagedPlayers.length;
+    stagedPlayers.push(this);
+    this.src = "";
+    this.playbackRate = 1;
+    this.defaultPlaybackRate = 1;
+    this.currentTime = 0;
+    this.readyState = 0;
+    this.loads = 0;
+    this.playing = false;
+    this.onplaying = null;
+    this.onended = null;
+    this.onerror = null;
+    this.onloadedmetadata = null;
+  }
+
+  load() {
+    this.loads += 1;
+    if (this.src) {
+      this.readyState = 1;
+      queueMicrotask(() => this.onloadedmetadata?.());
+    } else {
+      this.readyState = 0;
+    }
+  }
+
+  async play() {
+    stagedEvents.push(`再生:${this.index}:${this.src}:${this.currentTime.toFixed(3)}`);
+    this.playing = true;
+    queueMicrotask(() => this.onplaying?.());
+  }
+
+  pause() {
+    this.playing = false;
+  }
+
+  removeAttribute(name) {
+    if (name === "src") {
+      this.src = "";
+    }
+  }
+}
+const stagedBounds = {
+  "問題A": null,
+  "回答A": { leadSeconds: 0.1, soundEndSeconds: 0.5, tailSeconds: 0.2, durationSeconds: 0.7 },
+  "問題B": { leadSeconds: 0.08, soundEndSeconds: 0.4, tailSeconds: 0.01, durationSeconds: 0.41 },
+};
+let stagedUrlCount = 0;
+const stagedController = createSpeechController({
+  synthesis,
+  Utterance: FakeUtterance,
+  AudioPlayer: StagedAudio,
+  createObjectUrl: (blob) => `blob:staged-${blob.text}-${++stagedUrlCount}`,
+  revokeObjectUrl: (url) => stagedEvents.push(`解放:${url}`),
+  requestCloudAudio: async (text) => {
+    stagedEvents.push(`取得:${text}`);
+    return { type: "audio/mpeg", size: 100, text };
+  },
+  decodeAudioBounds: async (blob) => stagedBounds[blob.text] ?? null,
+  getSettings: () => ({ source: "cloud", azureVoiceId: "ja-JP-KeitaNeural", rate: 2 }),
+});
+const settleStaged = async (times = 3) => {
+  for (let index = 0; index < times; index += 1) {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+  }
+};
+const stagedCompletions = [];
+const speakStaged = (text, target) =>
+  stagedController.speak([{ target, text }], {
+    onComplete: () => stagedCompletions.push({ text, at: Date.now() }),
+  });
+stagedController.unlock();
+if (stagedPlayers.length !== 2 || stagedPlayers.some((player) => player.loads !== 1)) {
+  throw new Error("2台の音声再生器を最初の操作でまとめて許可できませんでした。");
+}
+speakStaged("問題A", "question");
+stagedController.stage([{ target: "answer", text: "回答A" }]);
+await settleStaged();
+const answerPlayer = stagedPlayers[1];
+if (
+  !stagedPlayers[0].playing ||
+  !answerPlayer.src.startsWith("blob:staged-回答A") ||
+  Math.abs(answerPlayer.currentTime - 0.085) > 0.001
+) {
+  throw new Error("次の音声を空いている再生器へ読み込み、声の直前へ位置を進められませんでした。");
+}
+const fetchesBeforeAnswer = stagedEvents.filter((event) => event.startsWith("取得:")).length;
+stagedPlayers[0].onended();
+await new Promise((resolve) => queueMicrotask(resolve));
+if (stagedCompletions.length !== 1 || stagedCompletions[0].text !== "問題A") {
+  throw new Error("問題Aの読み上げ完了を知らせられませんでした。");
+}
+// 問題Aの終了直後に、利用者側が回答Aの読み上げを頼む。
+const answerStartedAt = Date.now();
+speakStaged("回答A", "answer");
+if (
+  stagedEvents.at(-1) !== `再生:1:${answerPlayer.src}:0.085` ||
+  stagedEvents.filter((event) => event.startsWith("取得:")).length !== fetchesBeforeAnswer ||
+  answerPlayer.playbackRate !== 2
+) {
+  throw new Error("読み込み済みの再生器を、通信や読み込みを待たずにその場で再生できませんでした。");
+}
+stagedController.stage([{ target: "question", text: "問題B" }]);
+await settleStaged();
+if (
+  !stagedPlayers[0].src.startsWith("blob:staged-問題B") ||
+  Math.abs(stagedPlayers[0].currentTime - 0.065) > 0.001
+) {
+  throw new Error("回答の再生中に次の問題を空いた再生器へ読み込めませんでした。");
+}
+// 回答Aは声の終わり0.5秒＋余白0.03秒を2倍速で再生した約0.22秒後に、無音を待たず終了扱いになる。
+await new Promise((resolve) => setTimeout(resolve, 320));
+const answerCompletion = stagedCompletions.find((entry) => entry.text === "回答A");
+const answerCompletedAfterMs = answerCompletion ? answerCompletion.at - answerStartedAt : -1;
+if (
+  !answerCompletion ||
+  answerPlayer.playing ||
+  answerCompletedAfterMs < 150 ||
+  answerCompletedAfterMs > 310
+) {
+  throw new Error(`声の終わりに合わせて次へ進めませんでした（${answerCompletedAfterMs}ms）。`);
+}
+// 読み込み済みの内容と違う音声を頼んだ時は、その読み込みを捨てて同じ再生器を使い直す。
+const staleUrl = stagedPlayers[0].src;
+speakStaged("問題C", "question");
+await settleStaged();
+if (
+  !stagedEvents.includes(`解放:${staleUrl}`) ||
+  !stagedPlayers[0].src.startsWith("blob:staged-問題C") ||
+  !stagedPlayers[0].playing
+) {
+  throw new Error("読み込み済みと違う音声を頼んだ時に再生器を使い直せませんでした。");
+}
+stagedController.stop();
+
 console.log(
-  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開を確認",
+  "音声読み上げ検証完了: Azure音声・端末音声選択・自動切替・停止・途中再開・2台の再生器の先読み切替・無音の飛ばしを確認",
 );

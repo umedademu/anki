@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.416" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.417" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.416") ||
-  !app.includes("app-navigation.js?v=0.416") ||
-  !changelog.includes("v0.416") ||
-  !settingsHtml.includes("v0.416") ||
-  !historyHtml.includes("v0.416") ||
-  !analysisHtml.includes("v0.416")
+  !html.includes("v0.417") ||
+  !app.includes("app-navigation.js?v=0.417") ||
+  !changelog.includes("v0.417") ||
+  !settingsHtml.includes("v0.417") ||
+  !historyHtml.includes("v0.417") ||
+  !analysisHtml.includes("v0.417")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -572,7 +572,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.416"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.417"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -879,7 +879,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.416"') ||
+  !html.includes('href="/styles.css?v=0.417"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1455,8 +1455,12 @@ if (
   !listeningAnswerSpeechBlock?.includes("state.queue.slice(0, 2).forEach(preloadListeningTask)") ||
   !listeningAnswerSpeechBlock?.includes("window.setTimeout") ||
   !listeningQuestionSpeechBlock?.includes(
-    "speechController.preload(answerSpeechSequence())",
+    "speechController.stage(answerSpeechSequence())",
   ) ||
+  !listeningAnswerSpeechBlock?.includes(
+    "speechController.stage(firstListeningSpeechSequence(state.queue[0]))",
+  ) ||
+  !app.includes("function firstListeningSpeechSequence(task)") ||
   listeningQuestionSpeechBlock?.includes("if (pauseSeconds === 0)") ||
   !listeningQuestionSpeechBlock?.includes("window.setTimeout") ||
   !speech.includes("function preload(segments)") ||
@@ -1466,12 +1470,18 @@ if (
   !speech.includes("deviceStartTimeoutMs = 1500") ||
   !speech.includes("cloudStartTimeoutMs = 3000") ||
   !speech.includes("cloudPlaybackTimeoutMs = 60000") ||
-  !speech.includes("let sharedCloudAudio = null") ||
+  !speech.includes("const cloudAudioPool = [];") ||
+  !speech.includes("const cloudAudioPoolSize = 2;") ||
+  !speech.includes("function stage(segments)") ||
+  !speech.includes("function takeStaged(audio, segment, settings)") ||
+  !speech.includes("export function findAudioBounds(") ||
+  !speech.includes("const armEarlyFinish = () => {") ||
+  !speech.includes("function applyLeadSkip(audio, entry)") ||
   !speech.includes("function unlock()") ||
-  !speech.includes("const audio = ensureCloudAudio()") ||
+  !speech.includes("const audio = idleCloudAudio();") ||
   !speech.includes("audio.src = audioUrl") ||
   !speech.includes(
-    "audio.load?.();\n          audio.defaultPlaybackRate = settings.rate;\n          audio.playbackRate = settings.rate;",
+    "if (!staged) {\n            audio.src = audioUrl;\n            audio.load?.();\n          }\n          audio.defaultPlaybackRate = settings.rate;\n          audio.playbackRate = settings.rate;",
   ) ||
   !speech.includes("beginPlayback();") ||
   speech.includes("new AudioPlayer(audioUrl)") ||

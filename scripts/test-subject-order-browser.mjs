@@ -92,7 +92,7 @@ try {
     body: speechModule + `\nexport function createSpeechController() {
       return { supported: true, paused: false, currentTarget: null,
         stop() {}, unlock() {}, pause() { return false; }, resume() { return false; },
-        speak() { return false; }, preload() { return Promise.resolve(); } };
+        speak() { return false; }, preload() { return Promise.resolve(); }, stage() { return false; } };
     }`,
   }));
   const page = await context.newPage(), errors = [];

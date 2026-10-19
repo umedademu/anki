@@ -82,7 +82,7 @@ try {
   }, off);
   await context.route("https://**/*", route => route.abort());
   const speech = (await readFile(path.join(root, "speech.js"), "utf8")).replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + "\nexport function createSpeechController() { return { supported:true,paused:false,currentTarget:null,stop(){},unlock(){},pause(){return false},resume(){return false},speak(){return true},preload(){return Promise.resolve()} }; }" }));
+  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + "\nexport function createSpeechController() { return { supported:true,paused:false,currentTarget:null,stop(){},unlock(){},pause(){return false},resume(){return false},speak(){return true},preload(){return Promise.resolve()}, stage(){return false} }; }" }));
   const page = await context.newPage(), errors = [];
   page.on("pageerror", error => errors.push(error.message));
   const shown = id => page.locator(`#${id}`).waitFor({ state: "visible" });

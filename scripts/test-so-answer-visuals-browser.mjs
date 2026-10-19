@@ -85,7 +85,7 @@ try {
   const cloudProgress = (await readFile(path.join(root, "cloud-progress.js"), "utf8")).replace("export function normalizeSpeechParts(value)", "function unusedNormalizeSpeechParts(value)");
   await context.route("**/cloud-progress.js*", route => route.fulfill({ contentType: "text/javascript", body: cloudProgress + `\nexport function normalizeSpeechParts() { return ${JSON.stringify(off)}; }` }));
   const speech = (await readFile(path.join(root, "speech.js"), "utf8")).replace("export function createSpeechController(", "function unusedSpeechController(");
-  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + `\nexport function createSpeechController() { return {supported:true, paused:false, currentTarget:null, stop(){}, unlock(){}, pause(){return false;}, resume(){return false;}, speak(){return false;}, preload(){return Promise.resolve();}}; }` }));
+  await context.route("**/speech.js*", route => route.fulfill({ contentType: "text/javascript", body: speech + `\nexport function createSpeechController() { return {supported:true, paused:false, currentTarget:null, stop(){}, unlock(){}, pause(){return false;}, resume(){return false;}, speak(){return false;}, preload(){return Promise.resolve();}, stage(){return false}}; }` }));
   const page = await context.newPage(); page.on("pageerror", e => errors.push(e.message));
   const visible = id => page.locator("#" + id).waitFor({ state: "visible" });
   const loadedMap = () => page.waitForFunction(() => { const img = document.querySelector('[data-map="image"]'); return img.complete && img.naturalWidth > 0; });

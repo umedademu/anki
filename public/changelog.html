@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.416"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.416" />
-    <link rel="stylesheet" href="/theme.css?v=0.416" />
+    <script src="/theme.js?v=0.417"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.417" />
+    <link rel="stylesheet" href="/theme.css?v=0.417" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.416</span>
+        <span class="app-version">v0.417</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,11 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.417</h2><time datetime="2026-10-19">2026年10月19日</time></div>
+        <ul><li>聞き流しで、読み上げと読み上げの間をさらに詰めました。音声の再生器を2台にして、片方が鳴っている間にもう片方へ次の音声を読み込んでおき、切り替え時の読み込み待ちをなくしました。さらに音声の波形を調べて声の始まりと終わりの位置を求め、先頭の無音を飛ばし、声が終わった時点で次へ進むようにしました。</li><li>本物のブラウザでスマートフォン相当の速さにして測ったところ、前の声が終わってから次の声が始まるまでの無音は、約310ミリ秒から約65ミリ秒に縮みました。全科目の聞き流しとマインドセットに効き、暗記モードでも回答・語呂合わせ・解説のつなぎ目が詰まります。</li><li>iPhoneでは、最初に画面を押した時に2台とも再生の許可を取り、どちらへ切り替えても自動再生が続くようにしています。音声の波形を調べる処理は音を出さない方法で行い、消音スイッチの扱いは変わりません。</li></ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.416</h2><time datetime="2026-10-19">2026年10月19日</time></div>

@@ -200,7 +200,7 @@ export function createSpeechController(){
     pause(){paused = true; return true;},
     resume(){if (!paused) return false; paused = false; return true;},
     speak(_segments, callbacks = {}){paused = false; control.pending = callbacks.onComplete ?? callbacks.onEnd ?? null; return true;},
-    preload(){return Promise.resolve()},
+    preload(){return Promise.resolve()}, stage(){return false},
   };
 }` }));
   // 評価音は鳴動指示だけを記録し、取得・音声の生成・実際の再生は行わない。

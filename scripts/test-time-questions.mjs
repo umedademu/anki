@@ -126,7 +126,7 @@ Object.assign(context, {
   savedSessionForMode: () => onlyTime, activeRoutineItem: () => null,
   selectedSequentialStudy: () => false, setupDeckOrder: () => [],
   switchStudySessionMode, startingStudy: false, deckSelectionUpdating: false,
-  speechController: { stop() {} },
+  speechController: { stop() {}, unlock(options) { assert.equal(options.reset, true); } },
   queueSetupPreferenceSave: async () => { if (saveFails) throw Error("保存失敗"); },
   updateSetupPreview() { elements.cloudStatus.textContent = "接続済み"; },
   deleteCloudStudySession: async () => { deleted++; },

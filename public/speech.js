@@ -1,4 +1,4 @@
-import { requiredHistoryReadings } from "./reading-rules.js?v=0.419";
+import { requiredHistoryReadings } from "./reading-rules.js?v=0.420";
 import {
   defaultSpeechSettings,
   getVoiceId,
@@ -440,6 +440,7 @@ export function createSpeechController({
       activeAudio.onplaying = null;
       activeAudio.onended = null;
       activeAudio.onerror = null;
+      activeAudio.onpause = null;
       activeAudio.pause?.();
       activeAudio = null;
     }
@@ -679,7 +680,29 @@ export function createSpeechController({
     return entry;
   }
 
-  function unlock() {
+  function unlock({ reset = false } = {}) {
+    // イヤホンの再接続後は、古い出力先を保持した再生器を引き継がない。
+    // 開始・再開ボタンを押した直後に2台とも作り直し、通信を待つ前に許可を準備する。
+    if (reset) {
+      resetPlayback();
+      stagedHint = null;
+      for (const audio of cloudAudioPool.splice(0)) {
+        clearStaging(audio);
+        audio.onplaying = null;
+        audio.onended = null;
+        audio.onerror = null;
+        audio.onpause = null;
+        audio.onloadedmetadata = null;
+        try {
+          audio.pause?.();
+          if (typeof audio.removeAttribute === "function") audio.removeAttribute("src");
+          else audio.src = "";
+          audio.load?.();
+        } catch {}
+        blessedCloudAudios.delete(audio);
+      }
+      lastActiveAudioIndex = -1;
+    }
     if (!cloudSupported) {
       return false;
     }
@@ -848,6 +871,7 @@ export function createSpeechController({
       audio.onended = null;
       audio.onerror = null;
       audio.onplaying = null;
+      audio.onpause = null;
       audio.pause?.();
       revokeObjectUrl(audioUrl);
       try {
@@ -1029,6 +1053,7 @@ export function createSpeechController({
         }
         activeAudioUrl = audioUrl;
         let finished = false;
+        let hasPlayed = false;
         let playAttempt = 0;
         let startTimer = null;
         let playbackTimer = null;
@@ -1189,10 +1214,12 @@ export function createSpeechController({
         activePlaybackPause = pausePlayback;
         activePlaybackResume = resumePlayback;
         audio.onplaying = () => {
+          if (finished || ticket !== generation) return;
           if (playbackPaused) {
             audio.pause?.();
             return;
           }
+          hasPlayed = true;
           armPlaybackTimer();
           armEarlyFinish();
           // 鳴り始めたら、もう片方の再生器へ次の音声を読み込んでおく。
@@ -1200,6 +1227,16 @@ export function createSpeechController({
         };
         audio.onended = finish;
         audio.onerror = fallback;
+        audio.onpause = () => {
+          // 接続変更などで端末側が止めた時は、終了扱いにして問題を進めない。
+          if (finished || !hasPlayed || playbackPaused || ticket !== generation || audio.ended === true || audio.paused === false) return;
+          finished = true;
+          clearPlaybackTimers();
+          if (activeCloudCancel === cancel) activeCloudCancel = null;
+          clearCloudControls();
+          finishCloudAudio(audio, audioUrl);
+          continueAfterPlayback(() => fail(new Error("音声の再生が中断されました。再生を押して続けてください。")));
+        };
         try {
           if (!staged) {
             audio.src = audioUrl;

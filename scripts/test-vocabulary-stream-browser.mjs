@@ -189,6 +189,7 @@ export function createSpeechController(){
   let paused = false;
   const control = window.__streamSpeechTest = {
     pending: null,
+    preparations: [],
     complete() {
       if (paused || !this.pending) return false;
       const done = this.pending; this.pending = null; done(); return true;
@@ -196,7 +197,8 @@ export function createSpeechController(){
   };
   return {
     supported:true, get paused(){return paused;}, currentTarget:null,
-    stop(){control.pending = null; paused = false;}, unlock(){},
+    stop(){control.pending = null; paused = false;},
+    unlock(options = {}) { control.preparations.push({ reset: options.reset === true, gesture: navigator.userActivation?.isActive }); },
     pause(){paused = true; return true;},
     resume(){if (!paused) return false; paused = false; return true;},
     speak(_segments, callbacks = {}){paused = false; control.pending = callbacks.onComplete ?? callbacks.onEnd ?? null; return true;},
@@ -621,6 +623,14 @@ export function createRatingSoundPlayer(){
   await current().locator('[data-stream-rating="good"]').click(); await ready("q1", "listen-answer");
   await savedWhen(() => activities.size === 1 && progress().q0?.lastRating === "good");
   assert.equal(progress().q0.attempts, 1); assert.equal(savedSession().studyMode, "listen-answer");
+
+  // iPhoneの「続きから」では、保存通信を待つ前の利用者操作中に音声を準備し直す。
+  await setup();
+  await page.locator("#resume-study").click(); await ready("q1", "listen-answer");
+  const reconnectPreparation = await page.evaluate(() => window.__streamSpeechTest.preparations.find(entry => entry.reset));
+  assert.equal(reconnectPreparation?.gesture, true, "再開ボタンを押した時の操作中に再生許可を準備する");
+  assert.deepEqual(await ids(), ["q1", "q0"], "音声の再準備で途中の表示行や問題を変えない");
+  await assertPlayback(false);
 
   // 訂正の保存応答を保留しても現在語の再生を続け、自動送りの保存で訂正を消さない。
   reset(); await start(8, "listen-answer");

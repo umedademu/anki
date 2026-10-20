@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.424";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.424";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.425";
+import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.425";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.424";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.425";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.424";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.424";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.424";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.424";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.424";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.424";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.424";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.424";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.424";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.425";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.425";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.425";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.425";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.425";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.425";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.425";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.425";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.425";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.424";
+} from "./original-session.js?v=0.425";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.424";
+} from "./speech.js?v=0.425";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.424";
+} from "./deck-selection.js?v=0.425";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.424";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -295,6 +295,7 @@ const elements = {
   termTitle: document.querySelector("#term-title"),
   termReading: document.querySelector("#term-reading"),
   overallProgress: document.querySelector("#overall-progress"),
+  passProgress: document.querySelector("#pass-progress"),
   termProgress: document.querySelector("#term-progress"),
   routineProgress: document.querySelector("#routine-progress"),
   queueProgress: document.querySelector("#queue-progress"),
@@ -5431,10 +5432,20 @@ function setQueueProgressText(remaining) {
   elements.queueProgress.replaceChildren(scope, `残り ${remaining}問`);
 }
 
+// 開始画面の選択で決まる学習対象のうち、最新の評価が不正解以外の問題数を「20／100」の形で示す。未回答は分子に数えない。
+function setPassProgressText(questionIds) {
+  const passed = questionIds.filter(id => hasPassingRating(state.progress.questions[id])).length;
+  const scope = document.createElement("span");
+  scope.className = "pass-progress-scope";
+  scope.textContent = "不正解以外 ";
+  elements.passProgress.replaceChildren(scope, `${passed}／${questionIds.length}`);
+}
+
 function updateOverallProgress() {
   if (state.sequentialEnabled) {
     const tasks = createSequentialStudyTasks(state.terms, state.selectedStage);
     const passed = tasks.filter(task => hasPassingRating(state.progress.questions[task.questionId])).length;
+    setPassProgressText(tasks.map(task => task.questionId));
     const plan = sequentialPlanForTerms(state.terms, state.selectedStage);
     elements.overallProgress.textContent = `習得 ${passed} / ${tasks.length}問`;
     elements.termProgress.classList.remove("is-hidden");
@@ -5453,6 +5464,8 @@ function updateOverallProgress() {
       ? 0
       : (mastery.masteredQuestions / mastery.totalQuestions) * 100;
   elements.overallProgress.textContent = `習得 ${mastery.masteredQuestions} / ${mastery.totalQuestions}問`;
+  const stages = activeStages();
+  setPassProgressText(state.terms.flatMap(term => stages.flatMap(stage => (term.stages[stage] ?? []).map(question => question.id))));
   // 問題スタイルを選んだ時の習得数は「習得」と重なるので表示しない。
   elements.termProgress.classList.toggle("is-hidden", Boolean(state.selectedStage));
   elements.termProgress.textContent = `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`;

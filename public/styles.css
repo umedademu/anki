@@ -3489,6 +3489,7 @@ body.is-listening.is-listening-answer-visible .page {
   /* 上部を1行に収めるため、縦向きでは科目名・デッキ名と残り数の前置きを省く。 */
   .question-heading .subject-progress-name,
   .question-heading .deck-progress-name,
+  .question-heading .pass-progress-scope,
   .question-heading .queue-progress-scope {
     display: none;
   }

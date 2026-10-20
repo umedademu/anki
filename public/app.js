@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.425";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.425";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.426";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.426";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.425";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.426";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.425";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.425";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.425";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.425";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.425";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.425";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.425";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.425";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.425";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.426";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.426";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.426";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.426";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.426";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.426";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.426";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.426";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.426";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.425";
+} from "./original-session.js?v=0.426";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.425";
+} from "./speech.js?v=0.426";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.425";
+} from "./deck-selection.js?v=0.426";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.426";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -5565,7 +5565,8 @@ async function reviseVocabularyStreamRating(index, rating) {
   const term = termForTask(row);
   if (!question || !term) return;
   ratingSoundPlayer.play(rating);
-  if (row.rating === rating) return;
+  // 選択中の評価をもう一度押した時は押下を取り消し、評価なし（回答前の学習記録）へ戻す。
+  if (row.rating === rating) rating = "";
   const reviseAnalysis = createQuestionAnalysisSnapshot(state.subject, term, question);
   const listening = isListeningMode();
   const studyMode = state.studyMode;
@@ -5595,7 +5596,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     if (row.previousRecord) state.progress.questions[row.questionId] = { ...row.previousRecord };
     else delete state.progress.questions[row.questionId];
     const answeredAt = row.answeredAt || (row.rating ? beforeRecord?.lastAnsweredAt : null) || new Date().toISOString();
-    rateQuestion(state.progress, row.questionId, rating, state.subject.masteryTarget,
+    if (rating) rateQuestion(state.progress, row.questionId, rating, state.subject.masteryTarget,
       state.reviewSettings, new Date(answeredAt));
     const oldRating = row.rating;
     state.ratingCounts = reviseRatingCounts(state.ratingCounts, oldRating, rating);
@@ -5629,7 +5630,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     row.answeredAt = answeredAt;
     // 訂正より古い操作は戻さず、この後に進んだ問題の戻り方だけを残す。
     state.history = [];
-    const record = { ...state.progress.questions[row.questionId] };
+    const record = state.progress.questions[row.questionId] ? { ...state.progress.questions[row.questionId] } : null;
     const session = captureActiveSession();
     const routineRun = routineChange?.changed ? normalizeStudyRoutineRun(state.routineRun) : undefined;
     if (listening && routineChange?.completedItem) {
@@ -5640,7 +5641,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     finishPreparation();
     studySessionSave = studySessionSave.catch(() => {}).then(() => saveCloudStudyAnswer(
       datasetVersionForQuestion(row.questionId), row.questionId, record, session, {
-        studyMode, reviseActivityId: row.activityId, reviseAnalysis, sessionDatasetVersion, routineRun,
+        studyMode, reviseActivityId: row.activityId, reviseAnalysis, reviseRating: rating, sessionDatasetVersion, routineRun,
       },
     ));
     const saved = await studySessionSave;

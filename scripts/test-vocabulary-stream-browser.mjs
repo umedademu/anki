@@ -123,7 +123,8 @@ const server = createServer(async (req, res) => {
         if (body.deleteActivityId) activities.delete(body.deleteActivityId);
         else if (body.reviseActivityId) {
           assert.ok(activities.has(body.reviseActivityId), "修正前の評価記録が存在する");
-          activities.set(body.reviseActivityId, { ...activities.get(body.reviseActivityId), rating: body.record.lastRating, questionId: id });
+          activities.set(body.reviseActivityId, { ...activities.get(body.reviseActivityId),
+            rating: body.reviseRating !== undefined ? body.reviseRating : body.record.lastRating, questionId: id });
         } else if (body.activity) activities.set(body.activity.eventId, { ...body.activity, questionId: id });
       } else if (url.pathname.startsWith("/v1/study-activity/")) {
         if (holdNextActivity && !url.pathname.endsWith("/undo")) {
@@ -680,7 +681,7 @@ export function createRatingSoundPlayer(){
   assert.equal(await rows().nth(2).locator('[data-stream-rating="good"]').getAttribute("aria-pressed"), "true");
   assert.deepEqual(savedSession().ratingCounts, { again: 0, hard: 0, good: 1, easy: 0 });
 
-  // 両方の学習方法で、4段階の最新評価・過去評価・同じ評価の押し直しを無音で調べる。
+  // 両方の学習方法で、4段階の最新評価・過去評価・同じ評価の押し直しによる取り消しを無音で調べる。
   for (const mode of ["memorize", "listen-answer"]) {
     reset(); await start(8, mode);
     for (const rating of ratings) {
@@ -694,14 +695,28 @@ export function createRatingSoundPlayer(){
       await savedWhen(() => progress()[`q${index}`]?.lastRating === rating);
       const beforeRepeat = { record: structuredClone(progress()[`q${index}`]), count: savedSession().answeredCount,
         ratings: structuredClone(savedSession().ratingCounts), activities: structuredClone([...activities]), requests: answerRequests.length };
+      const activityId = beforeRepeat.activities.at(-1)[0];
       await assertSoundClick(rows().nth(1).locator(`[data-stream-rating="${rating}"]`), rating);
-      assert.deepEqual(progress()[`q${index}`], beforeRepeat.record, "同じ評価の押し直しは学習記録を増やさない");
-      assert.equal(savedSession().answeredCount, beforeRepeat.count); assert.deepEqual(savedSession().ratingCounts, beforeRepeat.ratings);
-      assert.deepEqual([...activities], beforeRepeat.activities); assert.equal(answerRequests.length, beforeRepeat.requests);
+      await page.waitForFunction(() => [...document.querySelectorAll(".vocabulary-stream-row")[1].querySelectorAll("[data-stream-rating]")]
+        .every(button => !button.disabled && button.getAttribute("aria-pressed") === "false"));
+      await savedWhen(() => progress()[`q${index}`] === undefined);
+      assert.equal(progress()[`q${index}`], undefined, "同じ評価の押し直しで回答前の学習記録へ戻す");
+      assert.equal(activities.get(activityId).rating, "", "取り消した回答履歴は評価なしで残す");
+      assert.equal(activities.size, beforeRepeat.activities.length); assert.equal(savedSession().answeredCount, beforeRepeat.count);
+      assert.deepEqual(savedSession().ratingCounts, { ...beforeRepeat.ratings, [rating]: beforeRepeat.ratings[rating] - 1 }, "取り消しで評価の内訳を減らす");
+      assert.equal(answerRequests.length, beforeRepeat.requests + 1); assert.equal(answerRequests.at(-1).reviseActivityId, activityId);
+      assert.equal(answerRequests.at(-1).reviseRating, ""); assert.equal(answerRequests.at(-1).record, null);
+      assert.deepEqual(savedSession().vocabularyStreamRows[1].rating, "", "途中記録の表示行も未評価へ戻す");
+      assert.equal((await ids())[0], `q${index + 1}`, "取り消しで現在の問題を進めない");
       const revised = ratings[(index + 1) % ratings.length];
       await revise(1, revised);
       assert.equal(progress()[`q${index}`].lastRating, revised); assert.equal(progress()[`q${index}`].attempts, 1);
+      assert.equal(answerRequests.at(-1).reviseRating, revised);
       assert.equal(savedSession().answeredCount, beforeRepeat.count); assert.equal(activities.size, beforeRepeat.activities.length);
+      await assertSoundClick(rows().nth(1).locator(`[data-stream-rating="${revised}"]`), revised);
+      await savedWhen(() => progress()[`q${index}`] === undefined);
+      await revise(1, rating);
+      assert.equal(progress()[`q${index}`].lastRating, rating, "取り消した後も評価し直せる");
       assert.equal((await ids())[0], `q${index + 1}`, "音を付けるために現在の問題を進めない");
       await assertHiddenMeaning(current());
       if (mode === "listen-answer") {
@@ -847,7 +862,7 @@ export function createRatingSoundPlayer(){
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await writeFile(path.join(screenshotDirectory, "motion-regression.json"), JSON.stringify(motionResults, null, 2));
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直しによる取り消し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);

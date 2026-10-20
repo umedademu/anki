@@ -137,6 +137,15 @@ assert.deepEqual(listeningUpdate.values, ["easy", JSON.stringify(normalizedAnaly
 assert.ok(listeningUpdate.sql.includes("analysis_json = COALESCE(analysis_json, ?)"), "未評価の履歴で不足する分析情報だけを補完する");
 assert.equal(/occurred_at\s*=|study_date\s*=|study_seconds\s*=/.test(listeningUpdate.sql), false, "元の回答日時と学習時間は変更しない");
 assert.equal(batches.at(-1).some(({ sql }) => /INSERT INTO study_activity_events|DELETE FROM study_activity_events|INSERT INTO study_time_events/.test(sql)), false, "後からの評価で回答回数と日時・学習時間を増やさない");
+// 同じ評価の押し直しによる取り消しは、回答履歴を残したまま評価なしへ戻し、問題記録を回答前の内容にする。
+assert.equal((await save({ record: previousRecord, reviseRating: "" })).status, 200, "同じ評価の押し直しで評価なしへ戻す");
+const cancelled = batches.at(-1).find(({ sql }) => sql.includes("UPDATE study_activity_events SET rating"));
+assert.deepEqual(cancelled.values, [null, null, "answer-1", "en-test", "EN-1-B01", "memorize"]);
+assert.equal(batches.at(-1).some(({ sql }) => /INSERT INTO study_activity_events|DELETE FROM study_activity_events/.test(sql)), false, "取り消しでも回答履歴の件数を変えない");
+assert.equal((await save({ record: null, reviseRating: null })).status, 200, "回答前の記録がなければ問題記録を消して評価なしへ戻す");
+assert.ok(batches.at(-1).some(({ sql }) => sql.includes("DELETE FROM question_progress")));
+assert.equal((await save({ reviseRating: "easy" })).status, 200, "修正後の評価を明示しても問題記録と一致すれば受け付ける");
+assert.deepEqual(batches.at(-1).find(({ sql }) => sql.includes("UPDATE study_activity_events SET rating")).values[0], "easy");
 const batchCount = batches.length;
 existingEvent = false;
 assert.equal((await save()).status, 409, "存在しない履歴の修正は拒否する");
@@ -151,6 +160,7 @@ for (const change of [
   { reviseAnalysis: {} }, { reviseAnalysis: { ...analysis, dimensions: [] } },
   { reviseAnalysis: analysis, reviseActivityId: null },
   { record: { ...previousRecord, lastRating: null } },
+  { reviseRating: "good" }, { reviseRating: "invalid" }, { reviseRating: "", reviseActivityId: null },
   { studyMode: "invalid", session: null },
   { deleteActivityId: "other" }, { completeRoundId: "round-1" }, { deleteRoundId: "round-1" },
   { replaceActivityId: "other" },

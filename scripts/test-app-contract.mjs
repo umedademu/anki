@@ -1928,6 +1928,8 @@ if (
     !app.includes("function setQueueProgressText(remaining)") ||
     !html.includes('<span id="pass-progress"><span class="pass-progress-scope">不正解以外 </span>0／0</span>') ||
     !app.includes("function setPassProgressText(questionIds)") ||
+    !app.includes("return [...passProgressParts(), ` · 今回 ${count} · ${formatStudyDuration(launchStudySeconds())}`];") ||
+    !styles.includes(".vocabulary-stream-heading .pass-progress-scope,") ||
     !styles.includes(".question-heading .pass-progress-scope,") ||
     !styles.includes(".question-heading.is-measuring .progress-summary") ||
     !styles.includes("font-size: calc(0.42rem * var(--heading-fit, 1));") ||

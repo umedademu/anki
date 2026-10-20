@@ -3490,6 +3490,7 @@ body.is-listening.is-listening-answer-visible .page {
   .question-heading .subject-progress-name,
   .question-heading .deck-progress-name,
   .question-heading .pass-progress-scope,
+  .vocabulary-stream-heading .pass-progress-scope,
   .question-heading .queue-progress-scope {
     display: none;
   }

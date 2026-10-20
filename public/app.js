@@ -1561,7 +1561,7 @@ function updateStudyTimeDisplay() {
   elements.studyTime.textContent = formatStudyDuration(state.studySeconds);
   elements.launchStudyTime.textContent = formatStudyDuration(launchStudySeconds());
   const streamSummary = document.querySelector(".vocabulary-stream-summary");
-  if (streamSummary) streamSummary.textContent = vocabularyStreamSummary();
+  if (streamSummary) streamSummary.replaceChildren(...vocabularyStreamSummary());
 }
 
 // アプリを開いている間だけの「今回」の時間と問題数。一周ごとに、この起動で最初に
@@ -5433,12 +5433,22 @@ function setQueueProgressText(remaining) {
 }
 
 // 開始画面の選択で決まる学習対象のうち、最新の評価が不正解以外の問題数を「20／100」の形で示す。未回答は分子に数えない。
-function setPassProgressText(questionIds) {
+function passProgressQuestionIds() {
+  if (state.sequentialEnabled) return createSequentialStudyTasks(state.terms, state.selectedStage).map(task => task.questionId);
+  const stages = activeStages();
+  return state.terms.flatMap(term => stages.flatMap(stage => (term.stages[stage] ?? []).map(question => question.id)));
+}
+
+function passProgressParts(questionIds = passProgressQuestionIds()) {
   const passed = questionIds.filter(id => hasPassingRating(state.progress.questions[id])).length;
   const scope = document.createElement("span");
   scope.className = "pass-progress-scope";
   scope.textContent = "不正解以外 ";
-  elements.passProgress.replaceChildren(scope, `${passed}／${questionIds.length}`);
+  return [scope, `${passed}／${questionIds.length}`];
+}
+
+function setPassProgressText(questionIds) {
+  elements.passProgress.replaceChildren(...passProgressParts(questionIds));
 }
 
 function updateOverallProgress() {
@@ -5464,8 +5474,7 @@ function updateOverallProgress() {
       ? 0
       : (mastery.masteredQuestions / mastery.totalQuestions) * 100;
   elements.overallProgress.textContent = `習得 ${mastery.masteredQuestions} / ${mastery.totalQuestions}問`;
-  const stages = activeStages();
-  setPassProgressText(state.terms.flatMap(term => stages.flatMap(stage => (term.stages[stage] ?? []).map(question => question.id))));
+  setPassProgressText(passProgressQuestionIds());
   // 問題スタイルを選んだ時の習得数は「習得」と重なるので表示しない。
   elements.termProgress.classList.toggle("is-hidden", Boolean(state.selectedStage));
   elements.termProgress.textContent = `完全習得 ${mastery.masteredTerms} / ${mastery.totalTerms}${termUnitLabel()}`;
@@ -5535,7 +5544,8 @@ const vocabularyStreamView = createVocabularyStreamView(document.querySelector("
 function vocabularyStreamSummary() {
   const batch = state.questionBatch;
   const count = batch ? `${batch.completedQuestionIds.length}／${batch.questionIds.length}問` : `${launchAnsweredCount()}問`;
-  return `今回 ${count} · ${formatStudyDuration(launchStudySeconds())}`;
+  // 3語表示（暗記・聞き流し）でも「不正解以外 20／100」を同じ定義で見せる。
+  return [...passProgressParts(), ` · 今回 ${count} · ${formatStudyDuration(launchStudySeconds())}`];
 }
 
 function syncVocabularyStreamRows() {

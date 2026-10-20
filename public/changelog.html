@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.425"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.425" />
-    <link rel="stylesheet" href="/theme.css?v=0.425" />
+    <script src="/theme.js?v=0.426"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.426" />
+    <link rel="stylesheet" href="/theme.css?v=0.426" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.425</span>
+        <span class="app-version">v0.426</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -34,7 +34,15 @@
       </section>
 
       <article class="release-card">
-        <div class="release-heading"><h2>v0.425</h2><time datetime="2026-10-20">2026年10月20日</time></div>
+        <div class="release-heading"><h2>v0.426</h2><time datetime="2026-10-20">2026年10月20日</time></div>
+        <ul>
+          <li>設定ページと学習中メニューの各項目を、「保存」ボタンを押さなくても変更した時点で保存するようにしました。対象は、毎日の学習メニュー（並び・科目・学習量）、目標達成後の復習猶予、学習時間の上限、音声読み上げ（優先する音声・日本語と英語の各音声・科目別の読み上げ速度・問題と回答の間隔・次の問題までの間隔）、効果音の音量、全教科共通の復習間隔、学習中メニューの読み上げ速度・次の問題までの間隔・復習間隔です。数値の入力欄は入力を止めて約0.4秒後と欄を離れた時に、選択欄・つまみ・切替は変えた直後にCloudflareへ保存します。</li>
+          <li>これに伴い「設定を保存」「メニューを保存」「復習猶予を保存」「学習時間の上限を保存」「音声設定を保存」「音量を保存」「復習間隔を保存」の7つのボタンを取り除きました。アクセスキーの「接続を確認」、ランダム動画の「動画を登録」、評価音の「登録」「初期音へ戻す」は保存ではなく確認・登録の操作なので残しています。開始画面の選択、今日の学習量、動画スキップ、マインドセットの再生設定、科目の並び、配色、読み上げのオン・オフは以前から変更時に保存しています。</li>
+        </ul>
+      </article>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.426</h2><time datetime="2026-10-20">2026年10月20日</time></div>
         <ul>
           <li>英単語の3語表示で、画面に残る3行より前の単語の評価を直したい時に「一手戻る」を何度も押さなくて済むようにしました。単語欄の上で上へスワイプすると、表示中の3行が1つずつ過去の単語へずれ、最新の単語から10個前まで戻れます。行の高さを超える長いスワイプではその分だけまとめて動き、下へスワイプすると新しい側へ戻ります。パソコンではマウスのホイールでも1つずつ動かせます。</li>
           <li>過去の単語を表示中は、一番上の行の左上に「2〜4つ前の単語を表示中 ▼ 最新へ戻る」のような表示を重ね、押すと最新の3行へ戻ります。呼び戻した行の4つの評価ボタンは、これまでの過去行と同じ手順で評価を訂正できます。聞き流しで過去を表示中に次の単語へ進んでも、見ている行はそのまま残します。長い単語や訳の欄で始めた操作は従来どおり欄の中身を上下に動かします。</li>

@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.425";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.425";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.426";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.426";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.425";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.426";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.425";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.425";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.425";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.425";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.425";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.425";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.425";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.425";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.425";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.426";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.426";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.426";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.426";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.426";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.426";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.426";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.426";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.426";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.425";
+} from "./original-session.js?v=0.426";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.425";
+} from "./speech.js?v=0.426";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.425";
+} from "./deck-selection.js?v=0.426";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.426";
+import { createAutoSave } from "./settings-autosave.js?v=0.426";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -180,7 +181,6 @@ const elements = {
   studyMenuSetup: document.querySelector("#study-menu-setup"),
   studyMenuHome: document.querySelector("#study-menu-home"),
   studyMenuSettings: document.querySelector("#study-menu-settings"),
-  studyMenuSave: document.querySelector("#study-menu-save"),
   studyMenuStatus: document.querySelector("#study-menu-status"),
   studyMenuSpeechRate: document.querySelector("#study-menu-speech-rate"),
   studyMenuSpeechRateOutput: document.querySelector(
@@ -2473,10 +2473,17 @@ function closeStudyMenu({ resumeStudy = true } = {}) {
     studyMenuLastFocused.focus();
   }
   studyMenuLastFocused = null;
+  // 入力の少し後に保存する予定が残っていれば、メニューを閉じる時点で送る。
+  if (studyMenuAutoSave.pending) void studyMenuAutoSave.now();
 }
 
+// 学習中メニューは「設定を保存」ボタンを使わず、各項目を変えた時点で保存する。
+const studyMenuAutoSave = createAutoSave({
+  read: readStudyMenuSettings,
+  save: saveStudyMenuSettings,
+});
+
 async function saveStudyMenuSettings() {
-  elements.studyMenuSave.disabled = true;
   setStudyMenuStatus(isOriginalSession() ? "今回の設定を反映しています。" : "Cloudflareへ保存しています。");
   try {
     const saved = await saveCloudSettings(readStudyMenuSettings());
@@ -2489,7 +2496,8 @@ async function saveStudyMenuSettings() {
         saved.listeningQuestionIntervalSeconds,
       );
     saveSpeechSettings(saved);
-    fillStudyMenuSettings(saved);
+    // 続けて変更している間は欄を書き戻さず、入力を続けられるようにする。
+    if (!studyMenuAutoSave.pending) fillStudyMenuSettings(saved);
     updateRatingIntervals();
     refreshPendingReviewTasks();
     if (state.activeSession) await queueActiveSessionSave();
@@ -2500,8 +2508,6 @@ async function saveStudyMenuSettings() {
     );
   } catch (error) {
     setStudyMenuStatus(`保存できませんでした。${error.message}`, true);
-  } finally {
-    elements.studyMenuSave.disabled = false;
   }
 }
 
@@ -7733,28 +7739,46 @@ elements.studyMenuSpeechRate.addEventListener(
   "input",
   updateStudyMenuSpeechRateOutput,
 );
+elements.studyMenuSpeechRate.addEventListener("change", () => {
+  void studyMenuAutoSave.now();
+});
+elements.studyMenuQuestionIntervalSeconds.addEventListener("input", () => {
+  if (elements.studyMenuQuestionIntervalSeconds.checkValidity()) studyMenuAutoSave.later();
+});
+elements.studyMenuQuestionIntervalSeconds.addEventListener("change", () => {
+  if (elements.studyMenuQuestionIntervalSeconds.checkValidity()) void studyMenuAutoSave.now();
+});
 elements.studyMenuReviewShared.addEventListener("change", () => {
   if (!elements.studyMenuReviewShared.checked) return;
   studyMenuCustomReviewDraft = readStudyMenuReviewFields();
   updateStudyMenuReviewScope();
+  void studyMenuAutoSave.now();
 });
 elements.studyMenuReviewCustom.addEventListener("change", () => {
   if (elements.studyMenuReviewCustom.checked) {
     updateStudyMenuReviewScope();
+    void studyMenuAutoSave.now();
   }
 });
 for (const [valueInput, unitSelect] of Object.values(studyMenuReviewFields)) {
   for (const control of [valueInput, unitSelect]) {
+    control.addEventListener("input", () => {
+      if (elements.studyMenuReviewCustom.checked && elements.studyMenuSettings.checkValidity()) {
+        studyMenuCustomReviewDraft = readStudyMenuReviewFields();
+        studyMenuAutoSave.later();
+      }
+    });
     control.addEventListener("change", () => {
       if (elements.studyMenuReviewCustom.checked) {
         studyMenuCustomReviewDraft = readStudyMenuReviewFields();
+        if (elements.studyMenuSettings.checkValidity()) void studyMenuAutoSave.now();
       }
     });
   }
 }
 elements.studyMenuSettings.addEventListener("submit", (event) => {
   event.preventDefault();
-  void saveStudyMenuSettings();
+  if (elements.studyMenuSettings.checkValidity()) void studyMenuAutoSave.now();
 });
 elements.studyStop.addEventListener("click", () => void returnToSetup());
 elements.backAction.addEventListener("click", goBackOneStep);

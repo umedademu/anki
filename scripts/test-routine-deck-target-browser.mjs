@@ -276,7 +276,7 @@ try {
   assert.equal(await rows.nth(2).locator('input[data-routine-field="deckTarget"]').inputValue(), "1", "マインドセットは1周から選べる");
   await rows.nth(1).locator(".routine-subject-select").selectOption("mindset");
   assert.deepEqual(await rows.nth(1).locator(".routine-unit-select option").allTextContents(), ["問", "周"], "科目を変えると単位の名前も変える");
-  await page.locator("#save-routine").click();
+  // 「保存」ボタンはなく、変更のたびに保存する。最後の変更の保存完了を待つ。
   await page.waitForFunction(() => /保存しました/.test(document.querySelector("#routine-status").textContent));
   const savedPlan = routinePatches.at(-1).routinePlan;
   assert.equal(savedPlan[0].targetUnit, "decks");

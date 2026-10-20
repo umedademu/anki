@@ -18,7 +18,8 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.425";
+import { createSpeechController } from "./speech.js?v=0.426";
+import { createAutoSave } from "./settings-autosave.js?v=0.426";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -42,8 +43,8 @@ import {
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.425";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425";
+import { usesChapterDecks } from "./so-chapters.js?v=0.426";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.426";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,
@@ -57,22 +58,16 @@ const elements = {
   accessKey: document.querySelector("#access-key"),
   connectCloud: document.querySelector("#connect-cloud"),
   form: document.querySelector("#review-settings-form"),
-  saveSettings: document.querySelector("#save-settings"),
   status: document.querySelector("#settings-status"),
   studyTimeForm: document.querySelector("#study-time-settings-form"),
   studyTimeLimitSeconds: document.querySelector("#study-time-limit-seconds"),
-  saveStudyTimeSettings: document.querySelector("#save-study-time-settings"),
   studyTimeStatus: document.querySelector("#study-time-settings-status"),
   routineEditor: document.querySelector("#routine-editor"),
   addRoutineItem: document.querySelector("#add-routine-item"),
   addRoutineVideoItem: document.querySelector("#add-routine-video-item"),
-  saveRoutine: document.querySelector("#save-routine"),
   routineStatus: document.querySelector("#routine-status"),
   routineOvertimeForm: document.querySelector("#routine-overtime-settings-form"),
   routineOvertimeMinutes: document.querySelector("#routine-overtime-minutes"),
-  saveRoutineOvertimeSettings: document.querySelector(
-    "#save-routine-overtime-settings",
-  ),
   routineOvertimeStatus: document.querySelector("#routine-overtime-status"),
   routineVideoForm: document.querySelector("#routine-video-form"),
   routineVideoUrl: document.querySelector("#routine-video-url"),
@@ -101,15 +96,11 @@ const elements = {
   ),
   previewSpeech: document.querySelector("#preview-speech"),
   previewEnglishSpeech: document.querySelector("#preview-english-speech"),
-  saveSpeechSettings: document.querySelector("#save-speech-settings"),
   speechStatus: document.querySelector("#speech-settings-status"),
   ratingSoundList: document.querySelector("#rating-sound-list"),
   ratingSoundVolume: document.querySelector("#rating-sound-volume"),
   ratingSoundVolumeOutput: document.querySelector(
     "#rating-sound-volume-output",
-  ),
-  saveRatingSoundVolume: document.querySelector(
-    "#save-rating-sound-volume",
   ),
   ratingSoundStatus: document.querySelector("#rating-sound-status"),
 };
@@ -453,15 +444,9 @@ const previewController = createSpeechController({
 
 function setBusy(busy) {
   elements.connectCloud.disabled = busy;
-  elements.saveSettings.disabled = busy;
-  elements.saveStudyTimeSettings.disabled = busy;
-  elements.saveRoutineOvertimeSettings.disabled = busy;
-  elements.saveSpeechSettings.disabled = busy;
   elements.speechRateSubject.disabled = busy;
   elements.speechRate.disabled = busy;
-  elements.saveRatingSoundVolume.disabled = busy;
   elements.ratingSoundVolume.disabled = busy;
-  elements.saveRoutine.disabled = busy || routinePlan.length === 0;
   elements.addRoutineItem.disabled = busy;
   elements.addRoutineVideoItem.disabled = busy;
   elements.addRoutineVideo.disabled = busy;
@@ -623,7 +608,6 @@ function renderRoutineEditor() {
       return row;
     }),
   );
-  elements.saveRoutine.disabled = routinePlan.length === 0;
 }
 
 function renderRoutineVideos() {
@@ -803,7 +787,11 @@ function handleRoutineFieldChange(event) {
       .querySelector(`[data-routine-item-id="${CSS.escape(itemId)}"] [data-routine-field="${field}"]`)
       ?.focus();
   }
-  setRoutineStatus("変更があります。「メニューを保存」を押してください。");
+  if (event.type === "change") {
+    void routineAutoSave.now();
+  } else {
+    routineAutoSave.later();
+  }
 }
 
 elements.routineEditor.addEventListener("input", handleRoutineFieldChange);
@@ -832,7 +820,7 @@ elements.routineEditor.addEventListener("click", (event) => {
     routinePlan = routinePlan.filter((item) => item.id !== itemId);
     renderRoutineEditor();
   }
-  setRoutineStatus("変更があります。「メニューを保存」を押してください。");
+  void routineAutoSave.now();
 });
 
 elements.routineEditor.addEventListener("dragstart", (event) => {
@@ -862,7 +850,7 @@ elements.routineEditor.addEventListener("drop", (event) => {
     (item) => item.id === targetRow.dataset.routineItemId,
   );
   moveRoutineItem(draggedRoutineItemId, targetIndex);
-  setRoutineStatus("並び順を変更しました。「メニューを保存」を押してください。");
+  void routineAutoSave.now();
 });
 
 elements.addRoutineItem.addEventListener("click", () => {
@@ -876,7 +864,7 @@ elements.addRoutineItem.addEventListener("click", () => {
     behavior: "smooth",
     block: "nearest",
   });
-  setRoutineStatus("科目を追加しました。「メニューを保存」を押してください。");
+  void routineAutoSave.now();
 });
 
 elements.addRoutineVideoItem.addEventListener("click", () => {
@@ -889,38 +877,43 @@ elements.addRoutineVideoItem.addEventListener("click", () => {
     behavior: "smooth",
     block: "nearest",
   });
-  setRoutineStatus("動画を追加しました。「メニューを保存」を押してください。");
+  void routineAutoSave.now();
 });
 
-elements.saveRoutine.addEventListener("click", async () => {
-  const normalized = normalizeStudyRoutinePlan(routinePlan, {
-    fallbackToDefault: false,
-  });
-  if (normalized.length === 0) {
-    setRoutineStatus("科目を1つ以上追加してください。", true);
-    return;
-  }
-  setBusy(true);
-  try {
-    const saved = await saveCloudStudyRoutine({ routinePlan: normalized });
-    fillRoutinePlan(saved.setupPreferences.routinePlan);
-    const deckItemCount = (plan) =>
-      plan.filter((item) => item.targetUnit === "decks").length;
-    if (deckItemCount(saved.setupPreferences.routinePlan) !== deckItemCount(normalized)) {
-      setRoutineStatus(
-        "Cloudflare側がパート数・デッキ数の指定にまだ対応していないため、問題数として保存されました。",
-        true,
-      );
+// 毎日のメニューは「保存」ボタンを使わず、並び・科目・学習量を変えるたびにCloudflareへ保存する。
+const routineAutoSave = createAutoSave({
+  read: () => normalizeStudyRoutinePlan(routinePlan, { fallbackToDefault: false }),
+  async save() {
+    const normalized = normalizeStudyRoutinePlan(routinePlan, {
+      fallbackToDefault: false,
+    });
+    if (normalized.length === 0) {
+      setRoutineStatus("科目を1つ以上追加してください。", true);
       return;
     }
-    setRoutineStatus(
-      "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
-    );
-  } catch (error) {
-    setRoutineStatus(error.message, true);
-  } finally {
-    setBusy(false);
-  }
+    setRoutineStatus("毎日のメニューをCloudflareへ保存しています。");
+    try {
+      const saved = await saveCloudStudyRoutine({ routinePlan: normalized });
+      // 入力中や保存待ちがある時は欄を作り直さず、入力を続けられるようにする。
+      if (!routineAutoSave.pending && !elements.routineEditor.contains(document.activeElement)) {
+        fillRoutinePlan(saved.setupPreferences.routinePlan);
+      }
+      const deckItemCount = (plan) =>
+        plan.filter((item) => item.targetUnit === "decks").length;
+      if (deckItemCount(saved.setupPreferences.routinePlan) !== deckItemCount(normalized)) {
+        setRoutineStatus(
+          "Cloudflare側がパート数・デッキ数の指定にまだ対応していないため、問題数として保存されました。",
+          true,
+        );
+        return;
+      }
+      setRoutineStatus(
+        "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
+      );
+    } catch (error) {
+      setRoutineStatus(error.message, true);
+    }
+  },
 });
 
 elements.routineVideoForm.addEventListener("submit", async (event) => {
@@ -966,53 +959,69 @@ elements.routineVideoList.addEventListener("click", async (event) => {
 });
 
 elements.connectCloud.addEventListener("click", connect);
-elements.routineOvertimeForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  setBusy(true);
-  try {
-    const saved = await saveCloudSettings(readRoutineOvertimeForm());
-    fillRoutineOvertimeForm(saved);
-    setRoutineOvertimeStatus(
-      "目標達成後の復習猶予をCloudflareへ保存しました。",
-    );
-  } catch (error) {
-    setRoutineOvertimeStatus(error.message, true);
-  } finally {
-    setBusy(false);
-  }
+const routineOvertimeAutoSave = createAutoSave({
+  read: readRoutineOvertimeForm,
+  async save() {
+    try {
+      const saved = await saveCloudSettings(readRoutineOvertimeForm());
+      if (!routineOvertimeAutoSave.pending) fillRoutineOvertimeForm(saved);
+      setRoutineOvertimeStatus(
+        "目標達成後の復習猶予をCloudflareへ保存しました。",
+      );
+    } catch (error) {
+      setRoutineOvertimeStatus(error.message, true);
+    }
+  },
 });
-elements.studyTimeForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  setBusy(true);
-  try {
-    const saved = await saveCloudSettings(readStudyTimeForm());
-    fillStudyTimeForm(saved);
-    setStudyTimeStatus(
-      "学習時間の上限をCloudflareへ保存し、暗記・聞き流しで共有しました。",
-    );
-  } catch (error) {
-    setStudyTimeStatus(error.message, true);
-  } finally {
-    setBusy(false);
-  }
+const studyTimeAutoSave = createAutoSave({
+  read: readStudyTimeForm,
+  async save() {
+    try {
+      const saved = await saveCloudSettings(readStudyTimeForm());
+      if (!studyTimeAutoSave.pending) fillStudyTimeForm(saved);
+      setStudyTimeStatus(
+        "学習時間の上限をCloudflareへ保存し、暗記・聞き流しで共有しました。",
+      );
+    } catch (error) {
+      setStudyTimeStatus(error.message, true);
+    }
+  },
 });
-elements.form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  setBusy(true);
-  try {
-    const saved = await saveCloudSettings(readForm());
-    fillForm(saved);
-    setStatus("4段階の復習間隔をCloudflareへ保存しました。");
-  } catch (error) {
-    setStatus(error.message, true);
-  } finally {
-    setBusy(false);
-  }
+const reviewAutoSave = createAutoSave({
+  read: readForm,
+  async save() {
+    try {
+      const saved = await saveCloudSettings(readForm());
+      if (!reviewAutoSave.pending) fillForm(saved);
+      setStatus("4段階の復習間隔をCloudflareへ保存しました。");
+    } catch (error) {
+      setStatus(error.message, true);
+    }
+  },
 });
+// 入力欄はキー入力の少し後に、選択欄と欄を離れた時はすぐに保存する。欄の値が範囲外の間は保存しない。
+function bindFormAutoSave(form, autoSave) {
+  form.addEventListener("input", () => {
+    if (form.checkValidity()) autoSave.later();
+  });
+  form.addEventListener("change", () => {
+    if (form.checkValidity()) void autoSave.now();
+  });
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (form.checkValidity()) void autoSave.now();
+  });
+}
+bindFormAutoSave(elements.routineOvertimeForm, routineOvertimeAutoSave);
+bindFormAutoSave(elements.studyTimeForm, studyTimeAutoSave);
+bindFormAutoSave(elements.form, reviewAutoSave);
 
 elements.speechRate.addEventListener("input", () => {
   speechRateDrafts.set(elements.speechRateSubject.value, normalizeSubjectSpeechRate(elements.speechRate.value));
   updateSpeechRateOutput();
+});
+elements.speechRate.addEventListener("change", () => {
+  void speechAutoSave.now();
 });
 elements.speechRateSubject.addEventListener("change", () => {
   previewController.stop();
@@ -1054,8 +1063,9 @@ elements.previewEnglishSpeech.addEventListener("click", () => {
   ]);
   previewStarted = previewController.currentTarget === "preview-english";
 });
-elements.saveSpeechSettings.addEventListener("click", async () => {
-  setBusy(true);
+const speechAutoSave = createAutoSave({
+  read: () => [readSharedSpeechForm(), [...speechRateDrafts]],
+  async save() {
   try {
     const patch = readSharedSpeechForm();
     const subjectRates = [...speechRateDrafts].filter(([id]) => id);
@@ -1075,34 +1085,56 @@ elements.saveSpeechSettings.addEventListener("click", async () => {
     }
     const saved = await saveCloudSettings(patch);
     speechSettings = saveSpeechSettings(saved);
-    fillSpeechForm(saved);
+    if (!speechAutoSave.pending) fillSpeechForm(saved);
     setSpeechStatus("音声設定をCloudflareへ保存し、端末間で共有しました。");
   } catch (error) {
     setSpeechStatus(error.message, true);
-  } finally {
-    setBusy(false);
   }
+  },
 });
+for (const control of [
+  elements.speechSource,
+  elements.azureVoice,
+  elements.englishAzureVoice,
+  elements.deviceVoice,
+  elements.englishDeviceVoice,
+]) {
+  control.addEventListener("change", () => void speechAutoSave.now());
+}
+for (const control of [
+  elements.listeningPauseSeconds,
+  elements.listeningQuestionIntervalSeconds,
+]) {
+  control.addEventListener("input", () => {
+    if (control.checkValidity()) speechAutoSave.later();
+  });
+  control.addEventListener("change", () => {
+    if (control.checkValidity()) void speechAutoSave.now();
+  });
+}
 
 elements.ratingSoundVolume.addEventListener(
   "input",
   updateRatingSoundVolumeOutput,
 );
-elements.saveRatingSoundVolume.addEventListener("click", async () => {
-  setBusy(true);
-  try {
-    const saved = await saveCloudSettings({
-      ratingSoundVolume: normalizeRatingSoundVolume(
-        Number(elements.ratingSoundVolume.value) / 100,
-      ),
-    });
-    fillRatingSoundSettings(saved);
-    setRatingSoundStatus("効果音の音量をCloudflareへ保存しました。");
-  } catch (error) {
-    setRatingSoundStatus(error.message, true);
-  } finally {
-    setBusy(false);
-  }
+const ratingSoundVolumeAutoSave = createAutoSave({
+  read: () => normalizeRatingSoundVolume(Number(elements.ratingSoundVolume.value) / 100),
+  async save() {
+    try {
+      const saved = await saveCloudSettings({
+        ratingSoundVolume: normalizeRatingSoundVolume(
+          Number(elements.ratingSoundVolume.value) / 100,
+        ),
+      });
+      if (!ratingSoundVolumeAutoSave.pending) fillRatingSoundSettings(saved);
+      setRatingSoundStatus("効果音の音量をCloudflareへ保存しました。");
+    } catch (error) {
+      setRatingSoundStatus(error.message, true);
+    }
+  },
+});
+elements.ratingSoundVolume.addEventListener("change", () => {
+  void ratingSoundVolumeAutoSave.now();
 });
 
 elements.ratingSoundList.addEventListener("change", async (event) => {
@@ -1182,6 +1214,17 @@ globalThis.speechSynthesis?.addEventListener?.("voiceschanged", populateDeviceVo
 window.addEventListener("pagehide", () => {
   previewController.stop();
   void ratingSoundPlayer.close();
+  // 保存待ちの入力があれば、ページを離れる前に送る。
+  for (const autoSave of [
+    routineAutoSave,
+    routineOvertimeAutoSave,
+    studyTimeAutoSave,
+    reviewAutoSave,
+    speechAutoSave,
+    ratingSoundVolumeAutoSave,
+  ]) {
+    if (autoSave.pending) void autoSave.now();
+  }
 });
 
 fillForm(defaultReviewSettings);

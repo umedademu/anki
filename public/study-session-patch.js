@@ -45,7 +45,20 @@ export const studySessionPatchFields = Object.freeze([
 ]);
 const patchFieldSet = new Set(studySessionPatchFields);
 
-// 一覧として差分を取る項目と、要素を見分ける名前。null は文字列の一覧。
+// 3語表示の表示行は問題番号だけでは評価の訂正や訳の公開を見分けられないため、
+// 行の要点をまとめて1つの名前にする。要点が変わった行は消してから足し直す形で送る。
+function vocabularyStreamRowKey(row) {
+  return [
+    row?.questionId ?? "",
+    row?.rating ?? "",
+    row?.answerVisible === true ? 1 : 0,
+    row?.activityId ?? "",
+    row?.answeredAt ?? "",
+    row?.routineCounted === true ? 1 : 0,
+  ].join(":");
+}
+
+// 一覧として差分を取る項目と、要素を見分ける名前。null は文字列の一覧、関数は要素から名前を作る。
 const listFields = Object.freeze({
   tasks: "questionId",
   queue: "questionId",
@@ -53,10 +66,12 @@ const listFields = Object.freeze({
   deckIds: null,
   unseenQuestionIds: null,
   retryQuestionIds: null,
+  vocabularyStreamRows: vocabularyStreamRowKey,
 });
 
 function listKey(field, item) {
   const name = listFields[field];
+  if (typeof name === "function") return name(item);
   return name ? String(item?.[name] ?? "") : String(item ?? "");
 }
 

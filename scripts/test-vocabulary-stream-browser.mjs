@@ -222,6 +222,7 @@ export function createRatingSoundPlayer(){
   const screenshotPath = path.join(screenshotDirectory, "vocabulary-stream-812x375.png");
   const setupScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-setup-812x375.png");
   const listeningScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-listening-812x375.png");
+  const pastScreenshotPath = path.join(screenshotDirectory, "vocabulary-stream-past-812x375.png");
   const viewports = [{ width: 667, height: 375 }, { width: 812, height: 375 }, { width: 932, height: 430 }, { width: 1366, height: 768 }];
   const rows = () => page.locator("#vocabulary-stream-panel .vocabulary-stream-row");
   const current = () => rows().first();
@@ -710,6 +711,89 @@ export function createRatingSoundPlayer(){
     }
   }
 
+  // 上下のスワイプで10個前の単語まで戻り、見えている過去の行の評価を訂正できる。
+  reset(); await page.setViewportSize({ width: 812, height: 375 }); await start(12);
+  for (let index = 0; index < 11; index += 1) await rate(ratings[index % 4], `q${index + 1}`);
+  assert.deepEqual(await ids(), ["q11", "q10", "q9"]);
+  assert.equal(savedSession().vocabularyStreamRows.length, 11, "表示する3行に加えて10個前までの行を途中記録へ残す");
+  assert.equal(savedSession().vocabularyStreamRows.at(-1).questionId, "q1");
+  const latest = () => page.locator("#vocabulary-stream-latest");
+  assert.equal(await latest().isVisible(), false, "最新を表示中は位置の表示を出さない");
+  async function swipe(dy, steps = 6) {
+    // 上へ動かす時は一番下の行、下へ動かす時は一番上の行の評価ボタンの列の中央（ボタンの間の空白）から始める。
+    const box = await rows().nth(dy < 0 ? -1 : 0).locator(".vocabulary-stream-ratings").boundingBox();
+    const x = box.x + box.width / 2, y = box.y + box.height / 2;
+    await page.mouse.move(x, y); await page.mouse.down();
+    for (let step = 1; step <= steps; step += 1) await page.mouse.move(x, y + dy * step / steps);
+    await page.mouse.up();
+    await page.waitForFunction(() => !document.querySelector("#vocabulary-stream-panel").getAnimations({ subtree: true })
+      .some(animation => animation.playState === "running" || animation.playState === "pending"));
+  }
+  const requestsBeforeSwipe = answerRequests.length;
+  await swipe(-40);
+  assert.deepEqual(await ids(), ["q10", "q9", "q8"], "短い上スワイプで1つ前の単語へ移動する");
+  assert.equal(await latest().isVisible(), true);
+  assert.equal((await latest().textContent()).includes("1〜3つ前"), true, "何個前を表示中かを示す");
+  assert.equal(answerRequests.length, requestsBeforeSwipe, "スワイプの終わりで指の下のボタンを押した扱いにしない");
+  await swipe(-40); await swipe(-40);
+  assert.deepEqual(await ids(), ["q8", "q7", "q6"]);
+  assert.equal(await page.locator("#vocabulary-stream-panel [data-stream-rating]").count(), 12, "過去を表示中も3行と12ボタンだけを置く");
+  const pastBoxes = await page.locator("#vocabulary-stream-panel").evaluate(panel => [...panel.querySelectorAll(".vocabulary-stream-row, [data-stream-rating]")]
+    .map(node => { const rect = node.getBoundingClientRect(); return { top: rect.top, bottom: rect.bottom, height: rect.height }; }));
+  assert.equal(pastBoxes.length, 15);
+  for (const box of pastBoxes) assert.ok(box.height > 0 && box.top >= -1 && box.bottom <= 376, `過去を表示中も3行と12ボタンが画面に収まる：${JSON.stringify(box)}`);
+  await revise(2, "easy");
+  assert.deepEqual(await ids(), ["q8", "q7", "q6"], "過去の評価を訂正しても表示位置を変えない");
+  assert.equal(progress().q6.lastRating, "easy"); assert.equal(progress().q6.attempts, 1);
+  assert.equal(savedSession().vocabularyStreamRows.find(row => row.questionId === "q6").rating, "easy");
+  assert.equal(savedSession().vocabularyStreamRows.length, 11);
+  const rowStep = await rows().first().evaluate(node => node.getBoundingClientRect().height + 8);
+  await swipe(-rowStep * 2.6);
+  assert.deepEqual(await ids(), ["q5", "q4", "q3"], "行の高さを超える長いスワイプではその分だけまとめて動く");
+  await swipe(-rowStep * 2.6); await swipe(-40);
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"], "10個前の単語で止まる");
+  assert.equal((await latest().textContent()).includes("8〜10つ前"), true);
+  await page.screenshot({ path: pastScreenshotPath });
+  await assertFullTextReachable(rows().nth(1), 2, { width: 812, height: 375 });
+  await assertFullTextReachable(rows().nth(2), 1, { width: 812, height: 375 });
+  const scrolled = await rows().nth(1).locator(".vocabulary-stream-answer").evaluate(async container => {
+    // 長い本文の欄の中で始めた上スワイプは欄の中身を動かし、表示位置を変えない。
+    const rect = container.getBoundingClientRect();
+    const at = (y) => ({ clientX: rect.left + rect.width / 2, clientY: y, pointerId: 7, pointerType: "touch", isPrimary: true, bubbles: true });
+    container.dispatchEvent(new PointerEvent("pointerdown", at(rect.top + rect.height - 4)));
+    for (let step = 1; step <= 5; step += 1) container.dispatchEvent(new PointerEvent("pointermove", at(rect.top + rect.height - 4 - step * 12)));
+    container.dispatchEvent(new PointerEvent("pointerup", at(rect.top + rect.height - 64)));
+    const scrollTop = container.scrollTop; container.scrollTop = 0; return scrollTop;
+  });
+  assert.ok(scrolled > 0, "長い訳の欄ではスワイプで欄の中身を動かす");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  await swipe(rowStep * 2);
+  assert.deepEqual(await ids(), ["q5", "q4", "q3"], "下スワイプで新しい側へ戻る");
+  await page.mouse.wheel(0, 120); await page.waitForTimeout(100);
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"], "パソコンのホイールでも1つずつ移動する");
+  await latest().click(); await ready("q11");
+  assert.deepEqual(await ids(), ["q11", "q10", "q9"], "位置の表示を押すと最新へ戻る");
+  assert.equal(await latest().isVisible(), false);
+  await page.reload(); await ready("q11");
+  assert.deepEqual(await ids(), ["q11", "q10", "q9"]);
+  await swipe(-rowStep * 2.6); await swipe(-rowStep * 2.6); await swipe(-rowStep * 2.6);
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"], "再読み込み後も10個前まで戻れる");
+  assert.equal(await rows().nth(1).locator('[data-stream-rating="good"]').getAttribute("aria-pressed"), "true", "復元した過去の評価を表示する");
+
+  // 聞き流しで過去を表示中に次の単語へ進んでも、見ている行を保つ。
+  // 開始画面へ戻って前の学習の離脱時保存を済ませてから、試験用の記録を空にする。
+  await setup(); reset(); await start(12, "listen-answer");
+  for (let index = 0; index < 5; index += 1) { await listeningNext(); await listeningNext(`q${index + 1}`); }
+  assert.deepEqual(await ids(), ["q5", "q4", "q3"]);
+  await swipe(-40);
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]);
+  await finishSpeech(); await finishSpeech();
+  await page.waitForFunction(() => document.querySelector(".vocabulary-stream-row")?.dataset.streamRow === "2");
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"], "聞き流しの自動送りで見ている過去の行を動かさない");
+  await savedWhen(() => savedSession()?.currentTask?.questionId === "q6");
+  await latest().click(); await ready("q6", "listen-answer");
+  assert.deepEqual(await ids(), ["q6", "q5", "q4"]);
+
   // 毎日のメニューでも学習方法を復元し、過去の評価訂正で達成数と内訳を修正する。
   reset({ routine: true });
   await page.goto(base); await page.locator("#continue-routine").waitFor({ state: "visible" });
@@ -763,10 +847,11 @@ export function createRatingSoundPlayer(){
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await writeFile(path.join(screenshotDirectory, "motion-regression.json"), JSON.stringify(motionResults, null, 2));
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);
+  console.log("過去の単語を表示中の画像：" + pastScreenshotPath);
   console.log("動きの実測：" + path.join(screenshotDirectory, "motion-regression.json"));
   }
 } finally {

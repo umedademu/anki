@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.424"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.424" />
-    <link rel="stylesheet" href="/theme.css?v=0.424" />
+    <script src="/theme.js?v=0.425"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.425" />
+    <link rel="stylesheet" href="/theme.css?v=0.425" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.424</span>
+        <span class="app-version">v0.425</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,15 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.425</h2><time datetime="2026-10-20">2026年10月20日</time></div>
+        <ul>
+          <li>英単語の3語表示で、画面に残る3行より前の単語の評価を直したい時に「一手戻る」を何度も押さなくて済むようにしました。単語欄の上で上へスワイプすると、表示中の3行が1つずつ過去の単語へずれ、最新の単語から10個前まで戻れます。行の高さを超える長いスワイプではその分だけまとめて動き、下へスワイプすると新しい側へ戻ります。パソコンではマウスのホイールでも1つずつ動かせます。</li>
+          <li>過去の単語を表示中は、一番上の行の左上に「2〜4つ前の単語を表示中 ▼ 最新へ戻る」のような表示を重ね、押すと最新の3行へ戻ります。呼び戻した行の4つの評価ボタンは、これまでの過去行と同じ手順で評価を訂正できます。聞き流しで過去を表示中に次の単語へ進んでも、見ている行はそのまま残します。長い単語や訳の欄で始めた操作は従来どおり欄の中身を上下に動かします。</li>
+          <li>途中記録に残す表示行を3行から11行（表示する3行と10個前まで）に増やし、再開と再読み込みの後も10個前まで戻れるようにしました。保存窓口（Cloudflare Worker）も11行まで受け付けます。表示行は「消す行・先頭へ足す行」の差分で送るため、聞き流しの1語あたりの通信は約2KBのまま増えません。実機での確認はできていません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.424</h2><time datetime="2026-10-20">2026年10月20日</time></div>

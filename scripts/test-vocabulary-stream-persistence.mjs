@@ -10,7 +10,7 @@ import {
   switchStudySessionMode,
 } from "../public/cloud-progress.js";
 
-const tasks = Array.from({ length: 4 }, (_, index) => ({
+const tasks = Array.from({ length: 13 }, (_, index) => ({
   termId: `EN-${index + 1}`,
   questionId: `EN-${index + 1}-B01`,
   stage: "beginner",
@@ -43,9 +43,9 @@ for (const normalize of [normalizeBrowserSession, normalizeWorkerSession]) {
   const actual = normalize(session);
   assert.equal(actual.vocabularyStreamEnabled, true);
   assert.equal(actual.selectedStage, "beginner", "3行画面では英単語から意味を答える問題に固定する");
-  assert.deepEqual(actual.vocabularyStreamRows, rows.slice(0, 3), "最新の3行と評価前の回答回数を保持する");
+  assert.deepEqual(actual.vocabularyStreamRows, rows.slice(0, 11), "最新の11行（表示3行と10個前まで）と評価前の回答回数を保持する");
   assert.equal(normalize({ tasks }).vocabularyStreamEnabled, undefined, "従来の途中記録の形を維持する");
-  assert.deepEqual(normalize({ ...session, studyMode: "listen-answer" }).vocabularyStreamRows, rows.slice(0, 3), "聞き流しにも3行画面を適用する");
+  assert.deepEqual(normalize({ ...session, studyMode: "listen-answer" }).vocabularyStreamRows, rows.slice(0, 11), "聞き流しにも3行画面を適用する");
   assert.equal(normalize({ ...session, studyMode: "listen-answer" }).vocabularyStreamEnabled, true);
   assert.equal(normalize({ tasks, selectedStage: "reverse" }).selectedStage, "reverse", "既存画面の問題の向きは変えない");
   assert.deepEqual(normalize({ ...session, vocabularyStreamRows: [rows[0], rows[0], rows[1]] }).vocabularyStreamRows, [rows[0], rows[0], rows[1]], "同じ問題が再登場した場合も直近3回の表示を残す");
@@ -65,7 +65,7 @@ for (const normalize of [normalizeBrowserSession, normalizeWorkerSession]) {
 assert.deepEqual(normalizeBrowserSession(session), normalizeWorkerSession(session), "画面側と保存側で同じ途中記録を扱う");
 for (const studyMode of ["memorize", "listen-answer"]) {
   const original = { ...session, studyMode };
-  assert.deepEqual(switchStudySessionMode(original, studyMode).vocabularyStreamRows, rows.slice(0, 3), "同じ学習方法の再開では表示行を保持する");
+  assert.deepEqual(switchStudySessionMode(original, studyMode).vocabularyStreamRows, rows.slice(0, 11), "同じ学習方法の再開では表示行を保持する");
   const nextMode = studyMode === "memorize" ? "listen-answer" : "memorize";
   const switched = switchStudySessionMode(original, nextMode);
   assert.equal(switched.vocabularyStreamEnabled, true, "学習方法を変えても3語表示の選択を保持する");

@@ -6,6 +6,10 @@ const ratings = [
   ["good", "○ 正解", "good"],
   ["easy", "◎ 簡単", "easy"],
 ];
+// 画面に同時に置く行数と、途中記録に残す行数（最新の単語と10個前まで）。
+export const vocabularyStreamVisibleRows = 3;
+export const vocabularyStreamRowLimit = 11;
+const scrollableSelector = ".vocabulary-stream-word, .vocabulary-stream-answer";
 
 // 同じ回答の評価を訂正する。回答した回数そのものは増やさない。
 export function reviseRatingCounts(value, previous, next) {
@@ -16,15 +20,37 @@ export function reviseRatingCounts(value, previous, next) {
   return counts;
 }
 
+function overflowing(element) {
+  return element && element.scrollHeight > element.clientHeight + 1 ? element : null;
+}
+
 export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance }) {
   const list = document.createElement("div");
   list.className = "vocabulary-stream-list";
-  panel.append(list);
+  const position = document.createElement("button");
+  position.id = "vocabulary-stream-latest";
+  position.type = "button";
+  position.className = "vocabulary-stream-position";
+  position.hidden = true;
+  panel.append(list, position);
   let renderedHeader = null;
   let previousRows = [];
+  let previousOffset = 0;
+  // 上から何個前の単語を一番上に置いているか。0なら最新の単語を表示している。
+  let offset = 0;
+  let topRow = null;
+  let lastArguments = null;
   let cardsByRow = new Map();
   const activeAnimations = new Map();
+  let suppressClick = false;
+  let gesture = null;
+  let wheelDistance = 0;
+  let wheelTimer = 0;
+  let wheelCooldownUntil = 0;
+
   panel.addEventListener("click", event => {
+    // スワイプの終わりに起きるクリックで、指の下のボタンを押した扱いにしない。
+    if (suppressClick) return;
     const button = event.target.closest("button");
     if (!button || button.disabled) return;
     if (button.hasAttribute("data-stream-reveal")) reveal();
@@ -33,18 +59,96 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
     } else if (button.id === "vocabulary-stream-back") back();
     else if (button.id === "vocabulary-stream-toggle") toggle();
     else if (button.id === "vocabulary-stream-next") advance();
+    else if (button.id === "vocabulary-stream-latest") setOffset(0);
   });
 
-  return {
-    render({ rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval, listening = false, paused = false, ratingSaving = false }) {
+  function rowStep() {
+    const card = list.firstElementChild;
+    const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
+    return card ? card.getBoundingClientRect().height + gap : 120;
+  }
+  function setOffset(next) {
+    const max = Math.max(0, previousRows.length - vocabularyStreamVisibleRows);
+    const clamped = Math.max(0, Math.min(max, next));
+    if (clamped === offset) return;
+    offset = clamped;
+    topRow = previousRows[offset] ?? null;
+    if (lastArguments) view.render(lastArguments);
+  }
+
+  // 上下のスワイプで過去の単語へ移動する。長い本文の欄の中では、欄の中身を上下に動かす。
+  list.addEventListener("pointerdown", event => {
+    if (!event.isPrimary || (event.pointerType === "mouse" && event.button !== 0)) return;
+    const scroller = overflowing(event.target.closest(scrollableSelector));
+    gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, offset, moved: false,
+      scroller, scrollTop: scroller?.scrollTop ?? 0 };
+  });
+  list.addEventListener("pointermove", event => {
+    if (!gesture || event.pointerId !== gesture.id) return;
+    const dy = event.clientY - gesture.y;
+    const dx = event.clientX - gesture.x;
+    if (gesture.scroller) {
+      gesture.scroller.scrollTop = gesture.scrollTop - dy;
+      if (Math.abs(dy) > 8) gesture.moved = true;
+      return;
+    }
+    if (!gesture.moved) {
+      if (Math.abs(dy) < 14 || Math.abs(dy) <= Math.abs(dx) * 1.2) return;
+      gesture.moved = true;
+      try { list.setPointerCapture(event.pointerId); } catch { /* 取得できなくても移動は続ける */ }
+    }
+    // 短いスワイプで1つ、行の高さを超える長いスワイプではその分だけまとめて動かす。
+    const rowsMoved = Math.max(1, Math.round(Math.abs(dy) / rowStep()));
+    setOffset(gesture.offset + (dy < 0 ? rowsMoved : -rowsMoved));
+  });
+  const endGesture = event => {
+    if (!gesture || event.pointerId !== gesture.id) return;
+    if (gesture.moved) {
+      suppressClick = true;
+      window.setTimeout(() => { suppressClick = false; }, 0);
+    }
+    gesture = null;
+  };
+  list.addEventListener("pointerup", endGesture);
+  list.addEventListener("pointercancel", endGesture);
+  // パソコンではマウスのホイールでも1つずつ移動する。
+  list.addEventListener("wheel", event => {
+    if (overflowing(event.target.closest(scrollableSelector))) return;
+    if (previousRows.length <= vocabularyStreamVisibleRows) return;
+    event.preventDefault();
+    const now = performance.now();
+    if (now < wheelCooldownUntil) return;
+    wheelDistance += event.deltaY;
+    window.clearTimeout(wheelTimer);
+    wheelTimer = window.setTimeout(() => { wheelDistance = 0; }, 200);
+    if (Math.abs(wheelDistance) < 40) return;
+    setOffset(offset + Math.sign(wheelDistance));
+    wheelDistance = 0;
+    wheelCooldownUntil = now + 220;
+  }, { passive: false });
+
+  const view = {
+    render(renderArguments) {
+      lastArguments = renderArguments;
+      const { rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval,
+        listening = false, paused = false, ratingSaving = false } = renderArguments;
       const motionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 160 : 280;
       const addsNewRow = previousRows.length > 0 && rows[0] !== previousRows[0] && rows[1] === previousRows[0];
       const sameRows = rows.length === previousRows.length && rows.every((row, index) => row === previousRows[index]);
+      // 最新を見ている時は最新に留まり、過去を見ている時は同じ単語を一番上に残す。
+      if (offset > 0) {
+        const index = rows.indexOf(topRow);
+        offset = index >= 0 ? index : 0;
+      }
+      offset = Math.max(0, Math.min(offset, rows.length - vocabularyStreamVisibleRows));
+      topRow = rows[offset] ?? null;
+      const windowMoved = sameRows && offset !== previousOffset;
+      const animates = addsNewRow || windowMoved;
       const previousTops = new Map();
-      if (addsNewRow) {
+      if (animates) {
         for (const [row, card] of cardsByRow) previousTops.set(row, card.getBoundingClientRect().top);
       }
-      if (!sameRows) {
+      if (!sameRows || windowMoved) {
         activeAnimations.forEach(animation => animation.cancel());
         activeAnimations.clear();
       }
@@ -80,7 +184,9 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
       }
 
       const nextCardsByRow = new Map();
-      for (const [index, row] of rows.entries()) {
+      const visibleRows = rows.slice(offset, offset + vocabularyStreamVisibleRows);
+      for (const [position, row] of visibleRows.entries()) {
+        const index = offset + position;
         const content = resolve(row);
         if (!content) continue;
         const current = index === 0 && !row.activityId && row.questionId === currentTask?.questionId;
@@ -146,14 +252,26 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
       cards.forEach((card, index) => {
         if (list.children[index] !== card) list.insertBefore(card, list.children[index] ?? null);
       });
-      if (addsNewRow) {
+      const oldest = Math.min(rows.length - 1, offset + vocabularyStreamVisibleRows - 1);
+      position.hidden = offset === 0;
+      position.textContent = offset > 0 ? `${offset}〜${oldest}つ前の単語を表示中 ▼ 最新へ戻る` : "";
+      position.setAttribute("aria-label", "最新の単語へ戻る");
+      if (offset > 0) position.style.top = `${list.offsetTop + 4}px`;
+      if (animates) {
         const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
         for (const [row, card] of nextCardsByRow) {
           const rect = card.getBoundingClientRect();
           const previousTop = previousTops.get(row);
-          const offset = previousTop === undefined ? -(rect.height + gap) : previousTop - rect.top;
+          let travel;
+          if (previousTop === undefined) {
+            // 新しく現れた行は、前の表示位置が上なら上から、下なら下から入る。
+            const index = Number(card.dataset.streamRow);
+            const previousPosition = (addsNewRow ? index - 1 : index) - previousOffset;
+            travel = (previousPosition < 0 ? -1 : 1) * (rect.height + gap);
+          } else travel = previousTop - rect.top;
+          if (Math.abs(travel) < 1) continue;
           const animation = card.animate([
-            { transform: `translateY(${offset}px)` },
+            { transform: `translateY(${travel}px)` },
             { transform: "translateY(0)" },
           ], { duration: motionDuration, easing: "cubic-bezier(0.22, 0.61, 0.36, 1)", fill: "both" });
           activeAnimations.set(card, animation);
@@ -168,6 +286,8 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
       // 行そのものを残し、音声や保存状態の更新で進行中の動きを消さない。
       cardsByRow = nextCardsByRow;
       previousRows = [...rows];
+      previousOffset = offset;
     },
   };
+  return view;
 }

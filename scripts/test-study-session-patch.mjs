@@ -119,6 +119,34 @@ assert.throws(
   (error) => error.code === "study-session-patch-version",
 );
 
+// 3語表示の表示行が11行（表示3行と10個前まで）たまった後も、1語進む差分は行の入れ替わりだけで済む。
+const row = (index, extra = {}) => ({ ...tasks[index], answerVisible: true, rating: "good", activityId: `activity-${index}`,
+  answeredAt: "2026-10-20T00:00:02.000Z", previousRecord: null, routineCounted: false, ...extra });
+const fullRows = [row(11, { answerVisible: false, rating: "", activityId: "", answeredAt: null }), ...Array.from({ length: 10 }, (_, offset) => row(10 - offset))];
+const fullBase = makeSession({ vocabularyStreamRows: fullRows, currentTask: tasks[11], queue: tasks.slice(12), answeredCount: 11 });
+const fullNext = makeSession({
+  vocabularyStreamRows: [row(12, { answerVisible: false, rating: "", activityId: "", answeredAt: null }), row(11), ...fullRows.slice(1, 10)],
+  currentTask: tasks[12], queue: tasks.slice(13), answeredCount: 12, updatedAt: null,
+});
+const fullPatch = createStudySessionPatch(fullBase, fullNext);
+assert.deepEqual(Object.keys(fullPatch.lists.vocabularyStreamRows).sort(), ["remove", "unshift"], "表示行は消す行と先頭へ足す行だけを送る");
+assert.equal(fullPatch.lists.vocabularyStreamRows.unshift.length, 2, "新しい現在語と評価の付いた前の現在語を先頭へ足す");
+assert.equal(fullPatch.lists.vocabularyStreamRows.remove.length, 2, "評価前の現在語と11行目を消す");
+const fullPatchBytes = Buffer.byteLength(JSON.stringify(fullPatch));
+assert.ok(fullPatchBytes < 2000, `11行の表示行があっても1語分の差分は2KB未満に収まる（${fullPatchBytes}バイト）`);
+const fullApplied = normalizeWorkerSession(applyStudySessionPatch(JSON.parse(JSON.stringify({ ...fullBase, updatedAt: "2026-10-20T00:00:01.000Z" })), fullPatch));
+assert.ok(studySessionPatchMatches(fullPatch, fullApplied));
+assert.equal(fullApplied.vocabularyStreamRows.length, 11);
+assert.deepEqual(fullApplied.vocabularyStreamRows.map((item) => item.questionId), fullNext.vocabularyStreamRows.map((item) => item.questionId));
+assert.equal(fullApplied.vocabularyStreamRows[1].activityId, "activity-11");
+// 途中の行の評価を訂正した時も、当てはめた結果が画面側と一致する。
+const revisedNext = makeSession({ ...fullNext, vocabularyStreamRows: fullNext.vocabularyStreamRows.map((item, index) => index === 6 ? { ...item, rating: "again" } : item), updatedAt: null });
+const revisedPatch = createStudySessionPatch(fullNext, revisedNext);
+const revisedApplied = normalizeWorkerSession(applyStudySessionPatch(JSON.parse(JSON.stringify({ ...fullApplied, updatedAt: "2026-10-20T00:00:03.000Z" })), revisedPatch));
+assert.ok(studySessionPatchMatches(revisedPatch, revisedApplied), "過去の行の評価訂正も差分で当てはまる");
+assert.equal(revisedApplied.vocabularyStreamRows[6].rating, "again");
+assert.equal(revisedApplied.vocabularyStreamRows.length, 11);
+
 // 不正解の再出題：出題待ちの末尾へ戻る変化は「消して末尾へ足す」で表せる。
 const requeued = makeSession({
   queue: [...tasks.slice(2), tasks[1]],

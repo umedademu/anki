@@ -4553,6 +4553,7 @@ body.is-studying.is-vocabulary-stream .page {
 }
 .study-shell.is-vocabulary-stream > :is(.context-card, .progress-track, .question-card, .action-dock, .listening-dock) { display: none; }
 .vocabulary-stream-panel {
+  position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 8px;
@@ -4560,6 +4561,25 @@ body.is-studying.is-vocabulary-stream .page {
   min-height: 0;
   height: 100%;
 }
+/* 過去の単語を表示中に、一番上の行の左上へ現在位置と最新へ戻る操作を重ねる。 */
+.vocabulary-stream-position {
+  position: absolute;
+  z-index: 34;
+  top: 4px;
+  left: 4px;
+  margin: 0;
+  padding: 3px 10px;
+  border: 1px solid var(--theme-accent, #2b6747);
+  border-radius: 999px;
+  background: var(--theme-surface-glass, rgb(255 255 255 / 94%));
+  color: var(--theme-accent, #2b6747);
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.vocabulary-stream-position[hidden] { display: none; }
 .vocabulary-stream-heading {
   display: flex;
   align-items: center;
@@ -4576,6 +4596,8 @@ body.is-studying.is-vocabulary-stream .page {
   gap: 8px;
   min-height: 0;
   overflow: hidden;
+  /* 上下のスワイプを画面側で受け取り、過去の単語へ移動する。 */
+  touch-action: none;
 }
 .vocabulary-stream-row {
   display: grid;

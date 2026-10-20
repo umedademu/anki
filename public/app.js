@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.424";
-import { createVocabularyStreamView, reviseRatingCounts } from "./vocabulary-stream.js?v=0.424";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.425";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.425";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.424";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.425";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.424";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.424";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.424";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.424";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.424";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.424";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.424";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.424";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.424";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.425";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.425";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.425";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.425";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.425";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.425";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.425";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.425";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.425";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.424";
+} from "./original-session.js?v=0.425";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.424";
+} from "./speech.js?v=0.425";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.424";
+} from "./deck-selection.js?v=0.425";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,7 +120,7 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.424";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -5531,7 +5531,7 @@ function syncVocabularyStreamRows() {
   if (!first || first.questionId !== state.currentTask.questionId || first.activityId) {
     state.vocabularyStreamRows.unshift({ ...state.currentTask, answerVisible: state.answerVisible,
       rating: "", activityId: "", previousRecord: null, answeredAt: "", routineCounted: false });
-    state.vocabularyStreamRows = state.vocabularyStreamRows.slice(0, 3);
+    state.vocabularyStreamRows = state.vocabularyStreamRows.slice(0, vocabularyStreamRowLimit);
   }
   state.vocabularyStreamRows[0].answerVisible = state.answerVisible;
 }

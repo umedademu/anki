@@ -279,7 +279,8 @@ function normalizeVocabularyStreamRows(value, taskByQuestionId) {
       previousRecord: normalizeVocabularyStreamPreviousRecord(row.previousRecord),
       routineCounted: row.routineCounted === true,
     }];
-  }).slice(0, 3);
+  // 画面に出す3行に加え、スワイプで戻れる10個前までを残す。
+  }).slice(0, 11);
 }
 
 export function normalizeStudySession(value) {

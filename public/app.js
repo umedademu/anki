@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.426";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.426";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.429";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.429";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.426";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.429";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.426";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.426";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.426";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.426";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.426";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.426";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.426";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.426";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.426";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.429";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.429";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.429";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.429";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.429";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.429";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.429";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.429";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.429";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.426";
+} from "./original-session.js?v=0.429";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.426";
+} from "./speech.js?v=0.429";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.426";
+} from "./deck-selection.js?v=0.429";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.426";
-import { createAutoSave } from "./settings-autosave.js?v=0.426";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.429";
+import { createAutoSave } from "./settings-autosave.js?v=0.429";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -4992,6 +4992,7 @@ function sequentialPlanForTerms(terms, stage, now = new Date()) {
     tasks: createSequentialStudyTasks(terms, stage), progress: state.progress, deckOrder,
     questionDeckIds: new Map([...state.questionDeckById].map(([id, deck]) => [id, deck.entry.id])),
     retryQuestionIds: !isListeningMode() && state.activeSession ? state.retryQuestionIds : new Set(),
+    queuedQuestionIds: state.activeSession ? state.queue.map(task => task.questionId) : [],
     now, shuffle: state.activeSession ? state.shuffleEnabled : elements.setupShuffle.checked,
   });
 }
@@ -6568,12 +6569,15 @@ function refreshQuestionBatchQueue() {
     .map(id => cloneTask(tasks.get(id)));
   if (state.sequentialEnabled) {
     // 前のパートに不正解が残る間は、その再出題を次のパートより先に行う。
+    // 同じパートでは、不正解の再出題を未出題の問題の後ろへ回し、すぐ次に繰り返さない。
     const deckOrder = new Map(state.sequentialDeckOrder.map((id, index) => [id, index]));
+    const retrying = task => state.retryQuestionIds.has(task.questionId);
     state.queue.sort((left, right) => {
-      const reviewed = task => Boolean(state.progress.questions[task.questionId]?.lastAnsweredAt);
+      const reviewed = task => Boolean(state.progress.questions[task.questionId]?.lastAnsweredAt) && !retrying(task);
       if (reviewed(left) !== reviewed(right)) return reviewed(left) ? -1 : 1;
-      return (deckOrder.get(deckForQuestion(left.questionId)?.entry.id) ?? Infinity) -
+      const deckGap = (deckOrder.get(deckForQuestion(left.questionId)?.entry.id) ?? Infinity) -
         (deckOrder.get(deckForQuestion(right.questionId)?.entry.id) ?? Infinity);
+      return deckGap || Number(retrying(left)) - Number(retrying(right));
     });
     if (isListeningMode()) {
       const allowed = new Set(sequentialPlanForTerms(state.terms, state.selectedStage).queue.map(task => task.questionId));

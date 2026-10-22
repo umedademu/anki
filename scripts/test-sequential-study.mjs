@@ -47,4 +47,21 @@ let current = changed;
 for (let i = 0; i < 30; i++) current = recordStudyRoutineQuestion(current, "test", "dataset", `q${i}`, 0, "good").run;
 assert.equal(current.currentIndex, 1, "変更後の目標でメニューを完了する");
 assert.equal(setStudyRoutineQuestionTarget(run, "a", 20).items[0].completedCount, 30, "目標を下げても達成済み件数を削らない");
-console.log("順番学習：習得判定・復習優先・順序変更・同じ回の次パート・不正解・途中記録・保存側の一致・今回だけの目標変更を確認しました。");
+// 不正解の再出題は、今のパートの未出題問題の後ろへ回し、すぐ次に繰り返さない。
+const wrong = { lastRating: "again", lastAnsweredAt: "2026-10-12T23:59:00Z", nextReviewAt: "2026-10-12T23:59:30Z", streak: 0 };
+const retryProgress = { questions: { "part-1-a": wrong } };
+const retryPlan = extra => sequentialStudyPlan({ tasks, progress: retryProgress, deckOrder, questionDeckIds, now,
+  retryQuestionIds: new Set(["part-1-a"]), ...extra });
+for (const shuffle of [false, true]) {
+  assert.deepEqual(retryPlan({ shuffle }).queue.map(task => task.questionId), ["part-1-b", "part-1-a"],
+    `不正解は未出題の問題の後ろで再出題する（シャッフル${shuffle ? "ON" : "OFF"}）`);
+}
+retryProgress.questions["part-3-a"] = passed("2026-10-12T00:00:00Z");
+assert.deepEqual(retryPlan().queue.map(task => task.questionId), ["part-3-a", "part-1-b", "part-1-a"], "復習時期の問題は従来どおり先に出す");
+retryProgress.questions["part-1-b"] = wrong;
+const twoRetries = new Set(["part-1-b", "part-1-a"]);
+assert.deepEqual(retryPlan({ retryQuestionIds: twoRetries, queuedQuestionIds: ["part-1-b"] }).queue.map(task => task.questionId),
+  ["part-3-a", "part-1-b", "part-1-a"], "待っている再出題を先にし、直前に不正解にした問題を最後へ回す");
+assert.deepEqual(retryPlan({ retryQuestionIds: twoRetries, queuedQuestionIds: ["part-1-a"], shuffle: true }).queue.slice(1).map(task => task.questionId),
+  ["part-1-a", "part-1-b"], "シャッフル中も直前に不正解にした問題をすぐ次に出さない");
+console.log("順番学習：習得判定・復習優先・順序変更・同じ回の次パート・不正解・不正解の再出題位置・途中記録・保存側の一致・今回だけの目標変更を確認しました。");

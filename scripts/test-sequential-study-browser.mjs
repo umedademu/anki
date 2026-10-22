@@ -143,6 +143,21 @@ try {
   await answer("again"); assert.equal(await text("question-text"), "part-1の問題1");
   await answer("good"); assert.equal(await text("question-text"), "part-2の問題0");
 
+  // 不正解の問題は、今のパートの未出題問題の後ろで再出題し、すぐ次に繰り返さない。
+  for (const limit of ["3", ""]) for (const shuffle of [false, true]) {
+    reset(); await setup();
+    if (await page.locator("#setup-shuffle").isChecked() !== shuffle) await page.locator("#setup-shuffle").click();
+    await page.locator("#question-limit").fill(limit); await page.locator("#start-study").click();
+    await shown("study-shell"); await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
+    const first = await text("question-text"), other = first.endsWith("0") ? "part-1の問題1" : "part-1の問題0";
+    assert.match(first, /^part-1の問題[01]$/);
+    const label = `問題数${limit || "指定なし"}・シャッフル${shuffle ? "ON" : "OFF"}`;
+    await answer("again"); assert.equal(await text("question-text"), other, `${label}：不正解の直後は未出題の問題を出す`);
+    await answer("good"); assert.equal(await text("question-text"), first, `${label}：未出題がなくなれば不正解を再出題する`);
+    await answer("good"); assert.equal(await text("question-text"), "part-2の問題0", `${label}：全問が不正解以外で次のパートへ進む`);
+    assert.equal(answers.length, 3);
+  }
+
   // ２問の復習の後でパート４を８問進め、10問で止める。
   reset({ learned: true }); await setup(); await start(10);
   for (let i = 0; i < 10; i++) await answer("good");
@@ -222,7 +237,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "スマートフォン幅で横にはみ出さない");
   assert.deepEqual(errors, []);
   assert.equal(requests.some(url => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
-  console.log("順番学習の画面確認：段階をまたぐ習得・復習２問と新規８問・指定数終了・再読み込み・保存失敗・学習順保存・メニュー100問の引継ぎと今回だけの変更・途中件数・スマートフォン幅・無音を確認しました。");
+  console.log("順番学習の画面確認：段階をまたぐ習得・不正解の再出題位置・復習２問と新規８問・指定数終了・再読み込み・保存失敗・学習順保存・メニュー100問の引継ぎと今回だけの変更・途中件数・スマートフォン幅・無音を確認しました。");
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

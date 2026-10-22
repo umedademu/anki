@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.425"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.425" />
-    <link rel="stylesheet" href="/theme.css?v=0.425" />
+    <script src="/theme.js?v=0.426"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.426" />
+    <link rel="stylesheet" href="/theme.css?v=0.426" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.425</span>
+        <span class="app-version">v0.426</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,14 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.426</h2><time datetime="2026-10-22">2026年10月22日</time></div>
+        <ul>
+          <li>「選んだパートを順番に覚える」をオンにしている時、不正解にした問題が「不正解」以外を押すまで連続で出題され続ける件を直しました。不正解の再出題待ちを、復習時期の来た問題と一緒に出題候補の先頭へ置いていたことが原因で、シャッフルのオン・オフや問題数の指定に関係なく起きていました。</li>
+          <li>通常の暗記モードと同じく、不正解の問題は今のパートでまだ出していない問題の後ろで再出題します。不正解が複数たまった時は、先に不正解にした問題から順に出します。今のパートの残りが不正解の問題だけになった時は、従来どおり続けて出題します。復習時期の来た問題を先に出すこと、前のパートの不正解を次のパートより先に片付けることは変えていません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.425</h2><time datetime="2026-10-20">2026年10月20日</time></div>

@@ -486,7 +486,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.425" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.426" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -505,12 +505,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.425") ||
-  !app.includes("app-navigation.js?v=0.425") ||
-  !changelog.includes("v0.425") ||
-  !settingsHtml.includes("v0.425") ||
-  !historyHtml.includes("v0.425") ||
-  !analysisHtml.includes("v0.425")
+  !html.includes("v0.426") ||
+  !app.includes("app-navigation.js?v=0.426") ||
+  !changelog.includes("v0.426") ||
+  !settingsHtml.includes("v0.426") ||
+  !historyHtml.includes("v0.426") ||
+  !analysisHtml.includes("v0.426")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -572,7 +572,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.425"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.426"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -641,7 +641,8 @@ if (
   !settingsHtml.includes('id="add-routine-video-item"') ||
   !settingsHtml.includes('id="routine-video-form"') ||
   !settingsHtml.includes('id="routine-video-list"') ||
-  !settingsHtml.includes('id="save-routine"') ||
+  settingsHtml.includes('id="save-routine"') ||
+  !settingsApp.includes("routineAutoSave.now()") ||
   !settingsApp.includes("handleRoutineFieldChange") ||
   !settingsApp.includes('addEventListener("input", handleRoutineFieldChange)') ||
   !app.includes("recordActiveRoutineQuestion") ||
@@ -879,7 +880,7 @@ if (
   throw new Error("Cloudflareの段階的な登録・照合・再開処理が揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.425"') ||
+  !html.includes('href="/styles.css?v=0.426"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1267,10 +1268,11 @@ if (
   !settingsHtml.includes('id="review-settings-form"') ||
   !settingsHtml.includes('id="study-time-settings-form"') ||
   !settingsHtml.includes('id="study-time-limit-seconds"') ||
-  !settingsHtml.includes('id="save-study-time-settings"') ||
+  settingsHtml.includes('id="save-study-time-settings"') ||
   !settingsHtml.includes('id="routine-overtime-settings-form"') ||
   !settingsHtml.includes('id="routine-overtime-minutes"') ||
-  !settingsHtml.includes('id="save-routine-overtime-settings"') ||
+  settingsHtml.includes('id="save-routine-overtime-settings"') ||
+  !settingsApp.includes("createAutoSave") ||
   !settingsHtml.includes('id="access-key"') ||
   !settingsApp.includes("normalizeStudyTimeLimitSeconds") ||
   !settingsApp.includes("normalizeStudyRoutineOvertimeSeconds") ||

@@ -100,10 +100,10 @@ try {
   await page.locator("#speech-rate-subject").selectOption("english-vocabulary"); await range("speech-rate", 0.9);
   await page.locator("#speech-rate-subject").selectOption("test");
   assert.equal(await page.locator("#speech-rate").inputValue(), "1.85", "科目切替でも未保存の入力を保持");
-  await page.locator("#speech-rate-subject").selectOption(""); await range("speech-rate", 1.45);
-  // 別の設定を変更してから保存しても、その変更を速度設定で戻さない。
+  await page.locator("#speech-rate-subject").selectOption("");
+  // 別の設定を変更してから保存しても、その変更を速度設定で戻さない。つまみを離した時（change）に保存する。
   settings.setupPreferences.subjects.other = { ...settings.setupPreferences.subjects.other, sequentialEnabled: true };
-  await page.locator("#save-speech-settings").click();
+  await range("speech-rate", 1.45, true);
   await page.waitForFunction(() => document.querySelector("#speech-settings-status").textContent.includes("保存し"));
   assert.equal(settings.rate, 1.45);
   assert.equal(settings.setupPreferences.subjects.test.speechRate, 1.85);
@@ -113,8 +113,8 @@ try {
   await page.waitForFunction(() => document.querySelector("#settings-status").textContent.includes("接続しました"));
   await page.locator("#speech-rate-subject").selectOption("test");
   assert.equal(await page.locator("#speech-rate").inputValue(), "1.85", "再読込で科目別速度を復元");
-  await range("speech-rate", 2); failSave = true;
-  await page.locator("#save-speech-settings").click();
+  failSave = true;
+  await range("speech-rate", 2, true);
   await page.locator("#speech-settings-status.is-error").waitFor();
   assert.equal(settings.setupPreferences.subjects.test.speechRate, 1.85);
   assert.equal(await page.locator("#speech-rate").inputValue(), "2", "保存失敗でも入力を保持");
@@ -132,7 +132,7 @@ try {
   };
   await study("test");
   assert.equal(await page.locator("#study-menu-speech-rate").inputValue(), "1.85");
-  await range("study-menu-speech-rate", 2.3); await page.locator("#study-menu-save").click();
+  await range("study-menu-speech-rate", 2.3, true);
   await page.waitForFunction(() => document.querySelector("#study-menu-status").textContent.includes("保存しました"));
   assert.equal(settings.rate, 1.45, "学習中の変更で共通速度を変更しない");
   assert.equal(settings.setupPreferences.subjects.test.speechRate, 2.3);

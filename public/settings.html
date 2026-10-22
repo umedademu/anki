@@ -7,17 +7,17 @@
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.425"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.425" />
-    <link rel="stylesheet" href="/theme.css?v=0.425" />
+    <script src="/theme.js?v=0.426"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.426" />
+    <link rel="stylesheet" href="/theme.css?v=0.426" />
     <script src="/config.js" defer></script>
-    <script src="/settings.js?v=0.425" type="module"></script>
+    <script src="/settings.js?v=0.426" type="module"></script>
   </head>
   <body class="settings-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.425</span>
+        <span class="app-version">v0.426</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -79,7 +79,7 @@
       <section class="settings-card" id="study-routine-settings" data-settings-subpage hidden>
         <h2 tabindex="-1">毎日の学習メニュー</h2>
         <p class="settings-description">
-          科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。デッキや学習方法は、それぞれの科目を始める直前に選びます。学習量は「問」のほか、日本史K・世界史SOでは「パート」、その他の科目では「デッキ」で指定でき、選んだパート（デッキ）を一周し終えるごとに、その数だけ進みます。マインドセットでは「周」を選ぶと、全部の言葉を1回ずつ聞き終えるごとに1周として進みます。パート数・デッキ数・周の数には今日の学習量の倍率を掛けません。進行中のメニューには次に1番から始めるまで変更を反映しません。
+          科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。変更するとCloudflareへ保存します。デッキや学習方法は、それぞれの科目を始める直前に選びます。学習量は「問」のほか、日本史K・世界史SOでは「パート」、その他の科目では「デッキ」で指定でき、選んだパート（デッキ）を一周し終えるごとに、その数だけ進みます。マインドセットでは「周」を選ぶと、全部の言葉を1回ずつ聞き終えるごとに1周として進みます。パート数・デッキ数・周の数には今日の学習量の倍率を掛けません。進行中のメニューには次に1番から始めるまで変更を反映しません。
         </p>
         <div class="routine-editor" id="routine-editor" aria-label="毎日の学習メニュー"></div>
         <div class="routine-editor-actions">
@@ -88,9 +88,6 @@
           </button>
           <button class="secondary-button" id="add-routine-video-item" type="button">
             動画を追加
-          </button>
-          <button class="primary-button" id="save-routine" type="button">
-            メニューを保存
           </button>
         </div>
         <p class="settings-status" id="routine-status" role="status"></p>
@@ -116,9 +113,6 @@
               <span>分</span>
             </span>
           </label>
-          <button class="primary-button settings-save" id="save-routine-overtime-settings" type="submit">
-            復習猶予を保存
-          </button>
           <p class="settings-status" id="routine-overtime-status" role="status"></p>
         </form>
 
@@ -172,9 +166,6 @@
             </span>
           </label>
         </div>
-        <button class="primary-button settings-save" id="save-study-time-settings" type="submit">
-          学習時間の上限を保存
-        </button>
         <p class="settings-status" id="study-time-settings-status" role="status"></p>
       </form>
 
@@ -263,7 +254,6 @@
         <div class="speech-setting-actions">
           <button class="secondary-button" id="preview-speech" type="button">日本語音声を試す</button>
           <button class="secondary-button" id="preview-english-speech" type="button">英語音声を試す</button>
-          <button class="primary-button" id="save-speech-settings" type="button">音声設定を保存</button>
         </div>
         <p class="speech-settings-status" id="speech-settings-status" role="status"></p>
       </section>
@@ -278,9 +268,6 @@
           <span>効果音の音量 <output id="rating-sound-volume-output">100%</output></span>
           <input id="rating-sound-volume" type="range" min="25" max="200" step="5" value="100" />
         </label>
-        <button class="primary-button settings-save" id="save-rating-sound-volume" type="button">
-          音量を保存
-        </button>
         <div class="rating-sound-list" id="rating-sound-list">
           <article class="rating-sound-item rating-incorrect-row" data-rating-sound="again">
             <strong>× 不正解</strong>
@@ -340,7 +327,7 @@
 
       <form class="settings-card" id="review-settings-form">
         <h2>次の復習までの時間（全教科共通）</h2>
-        <p class="settings-description">各教科で個別設定を選んでいない場合に使う時間です。教科別の切替と数値は、学習中の「メニュー」から設定できます。回答済みの問題も、最後の回答時刻を基準に変更後の間隔で復習予定を更新します。</p>
+        <p class="settings-description">変更するとCloudflareへ保存します。各教科で個別設定を選んでいない場合に使う時間です。教科別の切替と数値は、学習中の「メニュー」から設定できます。回答済みの問題も、最後の回答時刻を基準に変更後の間隔で復習予定を更新します。</p>
         <div class="interval-list">
           <label class="interval-row rating-incorrect-row">
             <strong>× 不正解</strong>
@@ -383,9 +370,6 @@
             </select>
           </label>
         </div>
-        <button class="primary-button settings-save" id="save-settings" type="submit">
-          復習間隔を保存
-        </button>
       </form>
 
       <p class="settings-status" id="settings-status" role="status"></p>

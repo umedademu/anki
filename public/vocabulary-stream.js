@@ -158,7 +158,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
       title.textContent = `${listening ? "聞き流し" : "暗記モード"}・3語表示`;
       const progress = document.createElement("span");
       progress.className = "vocabulary-stream-summary";
-      progress.textContent = summary;
+      progress.append(...[].concat(summary));
       const backButton = document.createElement("button");
       backButton.id = "vocabulary-stream-back";
       backButton.type = "button";

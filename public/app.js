@@ -5594,7 +5594,8 @@ async function reviseVocabularyStreamRating(index, rating) {
   const term = termForTask(row);
   if (!question || !term) return;
   ratingSoundPlayer.play(rating);
-  if (row.rating === rating) return;
+  // 選択中の評価をもう一度押した時は押下を取り消し、評価なし（回答前の学習記録）へ戻す。
+  if (row.rating === rating) rating = "";
   const reviseAnalysis = createQuestionAnalysisSnapshot(state.subject, term, question);
   const listening = isListeningMode();
   const studyMode = state.studyMode;
@@ -5624,7 +5625,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     if (row.previousRecord) state.progress.questions[row.questionId] = { ...row.previousRecord };
     else delete state.progress.questions[row.questionId];
     const answeredAt = row.answeredAt || (row.rating ? beforeRecord?.lastAnsweredAt : null) || new Date().toISOString();
-    rateQuestion(state.progress, row.questionId, rating, state.subject.masteryTarget,
+    if (rating) rateQuestion(state.progress, row.questionId, rating, state.subject.masteryTarget,
       state.reviewSettings, new Date(answeredAt));
     const oldRating = row.rating;
     state.ratingCounts = reviseRatingCounts(state.ratingCounts, oldRating, rating);
@@ -5658,7 +5659,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     row.answeredAt = answeredAt;
     // 訂正より古い操作は戻さず、この後に進んだ問題の戻り方だけを残す。
     state.history = [];
-    const record = { ...state.progress.questions[row.questionId] };
+    const record = state.progress.questions[row.questionId] ? { ...state.progress.questions[row.questionId] } : null;
     const session = captureActiveSession();
     const routineRun = routineChange?.changed ? normalizeStudyRoutineRun(state.routineRun) : undefined;
     if (listening && routineChange?.completedItem) {
@@ -5669,7 +5670,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     finishPreparation();
     studySessionSave = studySessionSave.catch(() => {}).then(() => saveCloudStudyAnswer(
       datasetVersionForQuestion(row.questionId), row.questionId, record, session, {
-        studyMode, reviseActivityId: row.activityId, reviseAnalysis, sessionDatasetVersion, routineRun,
+        studyMode, reviseActivityId: row.activityId, reviseAnalysis, reviseRating: rating, sessionDatasetVersion, routineRun,
       },
     ));
     const saved = await studySessionSave;

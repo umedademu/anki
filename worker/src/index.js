@@ -1957,6 +1957,10 @@ async function handleRequest(request, env) {
     const reviseAnalysis = body.reviseAnalysis === undefined
       ? null
       : normalizeQuestionAnalysisSnapshot(body.reviseAnalysis);
+    // 修正後の評価。空なら同じボタンの押し直しによる取り消しで、評価なしへ戻す。
+    const reviseRating = body.reviseRating === undefined
+      ? undefined
+      : (body.reviseRating == null || body.reviseRating === "" ? null : String(body.reviseRating));
     const completeRoundId = normalizeStudyRoundId(body.completeRoundId) ||
       (!session && activity ? activity.eventId : "");
     const deleteRoundId = normalizeStudyRoundId(
@@ -2004,9 +2008,13 @@ async function handleRequest(request, env) {
     if (body.reviseAnalysis !== undefined && (!reviseActivityId || !reviseAnalysis)) {
       return json(request, env, { error: "修正する日別学習記録の分析情報が正しくありません。" }, 400);
     }
+    if (reviseRating !== undefined && (!reviseActivityId ||
+      (reviseRating !== null && (!ratingValues.has(reviseRating) || reviseRating !== record?.lastRating)))) {
+      return json(request, env, { error: "修正後の評価が正しくありません。" }, 400);
+    }
     if (reviseActivityId !== null) {
       if (!studyActivityIdPattern.test(reviseActivityId) ||
-        !record?.lastRating || activity || deleteActivityId || replaceActivityId ||
+        (reviseRating === undefined && !record?.lastRating) || activity || deleteActivityId || replaceActivityId ||
         completeRoundId || deleteRoundId) {
         return json(request, env, { error: "修正する日別学習記録が正しくありません。" }, 400);
       }
@@ -2051,7 +2059,8 @@ async function handleRequest(request, env) {
         env.DB.prepare(
           `UPDATE study_activity_events SET rating = ?, analysis_json = COALESCE(analysis_json, ?)
            WHERE event_id = ? AND dataset_version = ? AND question_id = ? AND study_mode = ?`,
-        ).bind(record.lastRating, reviseAnalysis ? JSON.stringify(reviseAnalysis) : null,
+        ).bind(reviseRating === undefined ? record.lastRating : reviseRating,
+          reviseAnalysis ? JSON.stringify(reviseAnalysis) : null,
           reviseActivityId, datasetVersion, questionId, studyMode),
       );
     }

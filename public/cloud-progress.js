@@ -1010,6 +1010,8 @@ export async function saveCloudStudyAnswer(
               reviseActivityId: historyChange.reviseActivityId,
               ...(historyChange.reviseAnalysis !== undefined
                 ? { reviseAnalysis: historyChange.reviseAnalysis } : {}),
+              ...(historyChange.reviseRating !== undefined
+                ? { reviseRating: historyChange.reviseRating } : {}),
             }
           : {}),
         completeRoundId: historyChange.completeRoundId ?? null,

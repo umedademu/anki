@@ -1418,24 +1418,6 @@ body.is-study-menu-open {
   white-space: nowrap;
 }
 
-.subject-progress-name,
-.deck-progress-name {
-  min-width: 0;
-  max-width: min(30vw, 240px);
-  overflow: hidden;
-  color: var(--theme-accent, #2e6a49);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.subject-progress-name {
-  max-width: min(18vw, 160px);
-}
-
-.deck-progress-name {
-  min-width: 4.5em;
-}
-
 .study-time {
   color: var(--theme-accent, #2e6a49);
   font-variant-numeric: tabular-nums;
@@ -3583,19 +3565,7 @@ body.is-listening.is-listening-answer-visible .page {
     letter-spacing: -0.02em;
   }
 
-  .question-heading .subject-progress-name,
-  .question-heading .deck-progress-name {
-    min-width: 0;
-    max-width: 20vw;
-  }
-
-  .question-heading .subject-progress-name {
-    max-width: 15vw;
-  }
-
-  /* 上部を1行に収めるため、縦向きでは科目名・デッキ名と残り数の前置きを省く。 */
-  .question-heading .subject-progress-name,
-  .question-heading .deck-progress-name,
+  /* 上部を1行に収めるため、縦向きでは残り数の前置きを省く。 */
   .question-heading .pass-progress-scope,
   .vocabulary-stream-heading .pass-progress-scope,
   .question-heading .queue-progress-scope {

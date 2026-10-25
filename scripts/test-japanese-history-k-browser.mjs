@@ -174,16 +174,12 @@ try {
     assert.equal(await page.locator("#answer-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#overview-speech").getAttribute("aria-pressed"), "false");
     assert.equal(await page.locator("#answer-panel").isVisible(), answerVisible);
-    const progressName = page.locator("#deck-progress-name");
-    if (question.stage === "beginner" && !answerVisible) {
-      assert.equal(await progressName.textContent(), "日本史K", "基礎問題では小項目名を正答のヒントにしません。");
-      assert.equal(await progressName.getAttribute("title"), "日本史K", "説明表示にも小項目名を残しません。");
-    } else {
-      const deckName = decksByQuestionId.get(question.id).datasetLabel.split("｜").slice(1).join("｜");
-      assert.ok(deckName.length > 0);
-      assert.equal(await progressName.textContent(), deckName.replaceAll("｜", " "), "回答後や説明問題では正しい小項目名を確認できます。");
-      assert.equal(await progressName.getAttribute("title"), deckName, "説明表示も正しい小項目名に戻ります。");
-    }
+    // 学習中の上部の行には、科目名も小項目名（デッキ名）も出しません。
+    const deckName = decksByQuestionId.get(question.id).datasetLabel.split("｜").slice(1).join("｜");
+    assert.ok(deckName.length > 0);
+    const summaryText = await page.locator(".question-heading").textContent();
+    assert.equal(summaryText.includes("日本史K"), false, "上部の行に科目名を出しません。");
+    assert.equal(summaryText.includes(deckName.replaceAll("｜", " ")), false, "上部の行に小項目名を出しません。");
     const layout = await page.evaluate(() => ({
       width: innerWidth, scrollWidth: document.documentElement.scrollWidth,
       overflow: [...document.querySelectorAll("body *")].flatMap(element => {

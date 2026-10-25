@@ -962,6 +962,49 @@ export function createRatingSoundPlayer(){
   assert.equal(routine().items[0].completedCount, 3, "失敗後の訂正も復元されたメニューの達成数を維持する");
   assert.deepEqual(routine().items[0].ratingCounts, { again: 0, hard: 1, good: 2, easy: 0 }, "失敗後の訂正で画面側に保存失敗の内訳が残らない");
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]); assert.equal(activities.size, 3);
+  // メニューの項目を3語表示で終えた完了画面から、左半分のタップで最後の単語へ戻り、評価・訂正して完了し直せる。
+  await page.setViewportSize({ width: 812, height: 375 });
+  for (const mode of ["listen-answer", "memorize"]) {
+    reset({ routine: true });
+    await page.goto(base); await page.locator("#continue-routine").waitFor({ state: "visible" });
+    await page.locator("#continue-routine").click();
+    await page.locator("#setup-panel").waitFor({ state: "visible" });
+    await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+    await page.locator(`input[name="study-mode"][value="${mode}"]`).check();
+    await page.locator("#start-study").click(); await ready("q0", mode);
+    if (mode === "listen-answer") {
+      for (let index = 0; index < 60 && !await page.locator("#completion-card").isVisible(); index += 1) {
+        await page.evaluate(() => window.__streamSpeechTest.pending && window.__streamSpeechTest.complete());
+        await page.waitForTimeout(80);
+      }
+    } else {
+      for (let index = 0; index < 7; index += 1) await rate("good", `q${index + 1}`);
+      await reveal(); await current().locator('[data-stream-rating="good"]').click();
+    }
+    await page.locator("#completion-card").waitFor({ state: "visible" });
+    await savedWhen(() => routine().currentIndex === 1 && activities.size === 8);
+    assert.equal(routine().items[0].completedCount, 8);
+    await page.mouse.click(100, 200);
+    // 暗記モードは答えを出した状態へ戻るため、答え表示のボタンではなく評価のボタンが押せるのを待つ。
+    await page.waitForFunction(() => {
+      const panel = document.querySelector("#vocabulary-stream-panel"), row = panel.querySelector(".vocabulary-stream-row");
+      return !panel.classList.contains("is-hidden") && row?.dataset.questionId === "q7" && !row.querySelector('[data-stream-rating="easy"]').disabled;
+    });
+    assert.equal(await page.locator("#completion-card").isVisible(), false, `${mode}の完了画面から一手戻る`);
+    assert.deepEqual(await ids(), ["q7", "q6", "q5"]);
+    assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[7]);
+    await savedWhen(() => routine().currentIndex === 0 && activities.size === 7);
+    assert.equal(routine().items[0].completedCount, 7, "完了扱いの項目の達成数を戻す");
+    assert.equal(savedSession().currentTask.questionId, "q7", "途中記録も最後の単語へ戻す");
+    await revise(1, "hard");
+    assert.equal([...activities.values()].find(activity => activity.questionId === "q6").rating, "hard");
+    assert.equal(routine().currentIndex, 0);
+    await current().locator('[data-stream-rating="easy"]').click();
+    await page.locator("#completion-card").waitFor({ state: "visible" });
+    await savedWhen(() => routine().currentIndex === 1 && activities.size === 8);
+    assert.equal(routine().items[0].completedCount, 8); assert.equal(progress().q7.lastRating, "easy");
+    assert.equal(routine().items[0].ratingCounts.easy, 1); assert.equal(routine().items[0].ratingCounts.hard, 1);
+  }
   // 中間位置を測り、完了を待つだけでは見逃す「コマ送り」への逆戻りを検知する。
   const motionResults = [];
   for (const reducedMotion of ["no-preference", "reduce"]) for (const mode of ["memorize", "listen-answer"]) {
@@ -970,7 +1013,7 @@ export function createRatingSoundPlayer(){
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await writeFile(path.join(screenshotDirectory, "motion-regression.json"), JSON.stringify(motionResults, null, 2));
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・ボタン以外のタップによる一時停止と再生（暗記・聞き流し）・遡り始めた時の一時停止とスワイプで再開しないこと・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直しによる取り消し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・ボタン以外のタップによる一時停止と再生（暗記・聞き流し）・遡り始めた時の一時停止とスワイプで再開しないこと・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直しによる取り消し・無効操作の無音・毎日のメニューの達成数と内訳訂正・メニュー完了画面からの一手戻りと最後の単語の評価（暗記・聞き流し）・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);

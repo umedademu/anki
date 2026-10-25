@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.438";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.438";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.439";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.439";
 import { avoidImmediateRepeat, createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.438";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.439";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.438";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.438";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.438";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.438";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.438";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.438";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.438";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.438";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.438";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.439";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.439";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.439";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.439";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.439";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.439";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.439";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.439";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.439";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.438";
+} from "./original-session.js?v=0.439";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.438";
+} from "./speech.js?v=0.439";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.438";
+} from "./deck-selection.js?v=0.439";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.438";
-import { createAutoSave } from "./settings-autosave.js?v=0.438";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.439";
+import { createAutoSave } from "./settings-autosave.js?v=0.439";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -5839,6 +5839,9 @@ function renderQuestion() {
     renderCompletion();
     return;
   }
+  // 完了画面から一手戻った時に、完了画面の続きの操作を残さない。
+  state.routineCompletionAction = "";
+  state.routineTransition = null;
   if (isVocabularyStream()) {
     elements.completionCard.classList.add("is-hidden");
     elements.contextCard.classList.add("is-hidden");
@@ -5855,8 +5858,6 @@ function renderQuestion() {
   const vocabularyMode = state.subject?.learningType === "vocabulary";
   const stagedClassicalChineseMeaning =
     isClassicalChineseMeaningQuestion(state.currentTask, question);
-  state.routineCompletionAction = "";
-  state.routineTransition = null;
 
   elements.completionCard.classList.add("is-hidden");
   elements.contextCard.classList.remove("is-hidden");
@@ -8056,7 +8057,8 @@ elements.studyShell.addEventListener("pointercancel", () => {
 });
 
 elements.studyShell.addEventListener("click", (event) => {
-  if (isVocabularyStream()) return;
+  // 3語表示の画面の操作は3語表示側で扱う。完了画面では通常の表示と同じく左半分のタップで一手戻る。
+  if (isVocabularyStream() && state.currentTask) return;
   if (hasReachedQuestionLimit()) return;
   if (suppressNextListeningClick) {
     suppressNextListeningClick = false;

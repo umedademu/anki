@@ -1,4 +1,4 @@
-// 分類作業中だけ使用する、認証付きのCloudflare保存窓口。
+// 分類・問題文の一括修正中だけ使用する、認証付きのCloudflare保存窓口。
 export default {
   async fetch(request, env) {
     if (request.method !== "POST" || request.headers.get("Authorization") !== `Bearer ${env.ACCESS_TOKEN}`) {
@@ -6,7 +6,8 @@ export default {
     }
     const { action, key, value, expectedEtag } = await request.json();
     const allowedRead = key === "index.json" || /^subjects\/world-history-so\/[a-zA-Z0-9_/-]+\.json$/.test(key);
-    const allowedWrite = key.startsWith("subjects/world-history-so/question-types/") && allowedRead;
+    const writePrefix = env.WRITE_PREFIX ?? "subjects/world-history-so/question-types/";
+    const allowedWrite = key.startsWith(writePrefix) && allowedRead;
     if (!allowedRead) return new Response("Forbidden", { status: 403 });
     if (action === "read") {
       const object = await env.BUCKET.get(key);

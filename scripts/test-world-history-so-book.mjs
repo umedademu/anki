@@ -56,9 +56,18 @@ for(const deck of imported) {
     assert.equal(q.source.originalTermId,row.term_id);assert.equal(term.term,row.term);assert.equal(term.reading,row.reading);
     assert.equal(q.answerNote,row.answer_note);assert.equal(q.yearMnemonic,row.year_mnemonic);
     assert.equal(q.stage,"beginner");assert.equal(q.hideTermUntilAnswer,true);
+    // 逆向きの問題は用語欄を表示しないため、問題文だけで対象が分かる普通の疑問文にする（v0.432）。
+    if(row.stage==="reverse") {
+      assert.doesNotMatch(q.prompt,/[：:]/,`逆向きの問題文に「：」があります: ${q.id} ${q.prompt}`);
+      assert.ok([row.term,row.term.replace(/[（(].*[）)]$/,""),...row.aliases.split("|").filter(Boolean)].some(name=>q.prompt.includes(name)),`逆向きの問題文に対象の語がありません: ${q.id} ${q.prompt}`);
+    }
     typeCounts[q.type]=(typeCounts[q.type]??0)+1;
   }
 }
+const revisions=JSON.parse(await readFile(new URL("../data/source/world-history-so/reverse-prompt-revisions.json",import.meta.url),"utf8")).revisions;
+assert.equal(revisions.length,2075);
+assert.equal(new Set(revisions.map(r=>`${r.file}|${r.questionId}`)).size,2075);
+for(const r of revisions) assert.ok(imported.some(d=>d.sourceFile===r.file && d.terms.some(t=>t.stages.beginner[0].source.originalQuestionId===r.questionId && t.stages.beginner[0].prompt===r.after)),`書き換え記録とCSVが一致しません: ${r.file} ${r.questionId}`);
 assert.throws(()=>importSOBookFiles([...files,files[0]],contents),/重複/);
 assert.throws(()=>importSOBookFiles([{...files[0],name:files[0].name.replace("古代オリエント世界の特徴","誤った見出し")}],contents),/見出し/);
 const chapter3File=files.find(file=>file.name.startsWith("第08回_01_"));

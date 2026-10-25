@@ -21,12 +21,29 @@ const decks = deckIds.map((id, i) => {
   objects.set(`${id}/chunk.json`, JSON.stringify({ terms }));
   return entry;
 });
+// 3語表示を確かめる英単語の２デッキ（各２語）。
+const vocabDeckIds = ["vocab-1", "vocab-2"];
+const vocabDecks = vocabDeckIds.map((id, i) => {
+  const terms = [0, 1].map(j => {
+    const word = `${id}-word${j}`, meaning = `${id}の意味${j}`;
+    const question = (stage, prompt, answer, prefix) => ({ id: `${id}-${prefix}${j}`, stage, type: stage === "beginner" ? "identify" : stage,
+      prompt, answer, acceptedAnswers: [], keywords: [answer], answerNote: "品詞：試験", hideTermUntilAnswer: stage === "reverse" });
+    return { id: `${id}-t${j}`, term: word, reading: "品詞：試験", category: "試験", importanceRank: j + 1, geography: {}, chronology: { sortYear: j + 1 },
+      stages: { beginner: [question("beginner", word, meaning, "q")], reverse: [question("reverse", meaning, word, "r")], integrated: [] } };
+  });
+  const entry = { id, number: i + 1, datasetLabel: `試験用英単語${i + 1}`, indexPath: `${id}/index.json`, version: `${id}-v1`, questionCount: 4, termCount: 2 };
+  objects.set(`${id}/index.json`, JSON.stringify({ id: "vocab", deckId: id, version: entry.version, title: "試験用英単語", learningType: "vocabulary", masteryTarget: 2,
+    availableStages: ["beginner", "reverse"], chunks: [{ path: `${id}/chunk.json` }] }));
+  objects.set(`${id}/chunk.json`, JSON.stringify({ terms }));
+  return entry;
+});
 objects.set("index.json", JSON.stringify({ schemaVersion: 3, version: "test-v1", subjects: [{ id: "test", title: "試験科目", learningType: "history", defaultDeckId: deckIds[0], decks,
-  chapterGroups: [{ id: "chapter-1", number: 1, title: "第1章 試験", deckIds }] }] }));
+  chapterGroups: [{ id: "chapter-1", number: 1, title: "第1章 試験", deckIds }] },
+  { id: "vocab", title: "試験用英単語", learningType: "vocabulary", defaultDeckId: vocabDeckIds[0], decks: vocabDecks }] }));
 objects.set("term-images.json", JSON.stringify({ schemaVersion: 2, assets: [], assignments: [] }));
 const basicPlan = [{ id: "study", subjectId: "test", questionTarget: 100 }, { id: "next", subjectId: "test", questionTarget: 10 }];
 let settings, progress, sessions, answers, requests, failAnswer, failRoutine;
-function reset({ learned = false, routine = false, completed = 0 } = {}) {
+function reset({ learned = false, routine = false, completed = 0, plan = basicPlan } = {}) {
   progress = new Map(); sessions = new Map(); answers = []; requests = []; failAnswer = false; failRoutine = false;
   const future = new Date(Date.now() + 86400000).toISOString();
   const past = new Date(Date.now() - 86400000).toISOString();
@@ -37,11 +54,12 @@ function reset({ learned = false, routine = false, completed = 0 } = {}) {
     // この２問だけが開始時点で復習時期に達している。
     for (const id of ["part-1", "part-3"]) progress.get(`${id}-v1`)[`${id}-q0`].lastAnsweredAt = new Date(Date.now() - 2 * 86400000).toISOString();
   }
-  const run = routine ? createStudyRoutineRun(basicPlan, "2026-10-13", "sequential-run") : null;
+  const run = routine ? createStudyRoutineRun(plan, "2026-10-13", "sequential-run") : null;
   if (run) run.items[0].completedCount = completed;
   settings = { autoSpeechEnabled: false, speechParts: off, ratingSoundVolume: 0, studyTimeLimitSeconds: 600,
     studyRoutineOvertimeSeconds: 86400, goodSeconds: 86400, hardSeconds: 86400, easySeconds: 86400,
-    setupPreferences: normalizeSetupPreferences({ subjects: { test: { selectedDeckIds: deckIds, sequentialEnabled: true, deckOrder: deckIds } }, routinePlan: basicPlan, routineRun: run }) };
+    setupPreferences: normalizeSetupPreferences({ subjects: { test: { selectedDeckIds: deckIds, sequentialEnabled: true, deckOrder: deckIds },
+      vocab: { selectedDeckIds: vocabDeckIds, sequentialEnabled: true, deckOrder: vocabDeckIds } }, routinePlan: plan, routineRun: run }) };
 }
 reset();
 const server = createServer(async (req, res) => {
@@ -140,8 +158,80 @@ try {
   await page.locator("#back-action").click();
   await page.waitForFunction(() => document.querySelector("#question-text").textContent === "part-1の問題1" && !document.querySelector("#good-action").disabled);
   assert.equal(progress.get("part-1-v1")["part-1-q1"], undefined);
-  await answer("again"); assert.equal(await text("question-text"), "part-1の問題1");
-  await answer("good"); assert.equal(await text("question-text"), "part-2の問題0");
+  // パートの残りが不正解の問題だけなら、次のパートの問題を間にはさんで連続させない。
+  await answer("again"); assert.equal(await text("question-text"), "part-2の問題0");
+  await answer("good"); assert.equal(await text("question-text"), "part-1の問題1");
+  await answer("good"); assert.equal(await text("question-text"), "part-2の問題1");
+
+  // シャッフルONで、問題数の指定なし・指定あり・毎日のメニュー（10問）のいずれでも、
+  // 不正解にした問題をすぐ次に出さない。パートの途中と、残りが不正解だけになった時の両方を確かめる。
+  const menuPlan = [{ id: "study", subjectId: "test", questionTarget: 10 }, { id: "next", subjectId: "test", questionTarget: 10 }];
+  for (const way of ["指定なし", "3問", "メニュー10問"]) {
+    const begin = async () => {
+      if (way === "メニュー10問") {
+        reset({ routine: true, plan: menuPlan });
+        await page.goto(base); await shown("continue-routine"); await page.locator("#continue-routine").click(); await shown("setup-panel");
+        await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+        assert.equal(await page.locator("#question-limit").inputValue(), "10");
+      } else {
+        reset(); await setup(); await page.locator("#question-limit").fill(way === "3問" ? "3" : "");
+      }
+      if (!await page.locator("#setup-shuffle").isChecked()) await page.locator("#setup-shuffle").click();
+      await page.locator("#start-study").click();
+      await shown("study-shell"); await page.waitForFunction(() => !document.querySelector("#next-action").disabled);
+      const first = await text("question-text");
+      assert.match(first, /^part-1の問題[01]$/);
+      return [first, first.endsWith("0") ? "part-1の問題1" : "part-1の問題0"];
+    };
+    let [first, other] = await begin();
+    await answer("again"); assert.equal(await text("question-text"), other, `${way}・パートの途中：不正解の直後は未出題の問題を出す`);
+    [first, other] = await begin();
+    await answer("good"); assert.equal(await text("question-text"), other);
+    await answer("again");
+    const between = await text("question-text");
+    assert.notEqual(between, other, `${way}・残りが不正解だけ：同じ問題を続けて出さない`);
+    assert.match(between, /^part-2の問題[01]$/, `${way}・残りが不正解だけ：次のパートの問題を間にはさむ`);
+    assert.match(await text("term-progress"), /マスター 0 \//, `${way}：不正解が残るパートは習得扱いにしない`);
+    await answer("again"); assert.equal(await text("question-text"), other, `${way}：はさんだ問題の後で不正解を再出題する`);
+    await answer("again"); assert.notEqual(await text("question-text"), other, `${way}：もう一度不正解にしても続けて出さない`);
+    if (way === "3問") assert.equal(await text("question-text"), between, `${way}：固定した問題が不正解２問だけなら交互に出す`);
+  }
+
+  // 英単語の3語表示でも、不正解にした単語をすぐ次の行に出さない。
+  for (const limit of ["", "3"]) {
+    const label = `3語表示・問題数${limit || "指定なし"}`;
+    const top = () => page.locator(".vocabulary-stream-row").first();
+    const topId = async () => {
+      await page.waitForFunction(() => !document.querySelector(".vocabulary-stream-row [data-stream-reveal]")?.disabled);
+      return top().getAttribute("data-question-id");
+    };
+    const rate = async rating => {
+      await top().locator("[data-stream-reveal]").click();
+      await top().locator(`[data-stream-rating="${rating}"]`).click();
+      await page.waitForFunction(() => !document.querySelector(".vocabulary-stream-row [data-stream-reveal]")?.disabled ||
+        !document.querySelector("#completion-card").classList.contains("is-hidden"));
+    };
+    const begin = async () => {
+      reset();
+      await page.goto(base + "/?subject=vocab&view=setup&" + vocabDeckIds.map(id => `deck=${id}`).join("&"));
+      await shown("setup-panel"); await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+      assert.equal(await page.locator("#sequential-study").isChecked(), true);
+      await page.locator('input#vocabulary-stream-enabled, #vocabulary-stream-enabled input[type="checkbox"][role="switch"]').check();
+      if (!await page.locator("#setup-shuffle").isChecked()) await page.locator("#setup-shuffle").click();
+      await page.locator("#question-limit").fill(limit); await page.locator("#start-study").click();
+      await shown("vocabulary-stream-panel");
+      const first = await topId();
+      assert.match(first, /^vocab-1-q[01]$/);
+      return [first, first.endsWith("0") ? "vocab-1-q1" : "vocab-1-q0"];
+    };
+    let [first, other] = await begin();
+    await rate("again"); assert.equal(await topId(), other, `${label}・デッキの途中：不正解の直後は未出題の単語を出す`);
+    [first, other] = await begin();
+    await rate("good"); assert.equal(await topId(), other);
+    await rate("again");
+    assert.match(await topId(), /^vocab-2-q[01]$/, `${label}・残りが不正解だけ：次のデッキの単語をはさんで続けて出さない`);
+    await rate("good"); assert.equal(await topId(), other, `${label}：はさんだ単語の後で不正解を再出題する`);
+  }
 
   // 不正解の問題は、今のパートの未出題問題の後ろで再出題し、すぐ次に繰り返さない。
   for (const limit of ["3", ""]) for (const shuffle of [false, true]) {
@@ -154,7 +244,7 @@ try {
     const label = `問題数${limit || "指定なし"}・シャッフル${shuffle ? "ON" : "OFF"}`;
     await answer("again"); assert.equal(await text("question-text"), other, `${label}：不正解の直後は未出題の問題を出す`);
     await answer("good"); assert.equal(await text("question-text"), first, `${label}：未出題がなくなれば不正解を再出題する`);
-    await answer("good"); assert.equal(await text("question-text"), "part-2の問題0", `${label}：全問が不正解以外で次のパートへ進む`);
+    await answer("good"); assert.match(await text("question-text"), shuffle ? /^part-2の問題[01]$/ : /^part-2の問題0$/, `${label}：全問が不正解以外で次のパートへ進む`);
     assert.equal(answers.length, 3);
   }
 
@@ -237,7 +327,7 @@ try {
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "スマートフォン幅で横にはみ出さない");
   assert.deepEqual(errors, []);
   assert.equal(requests.some(url => /\/v1\/.*(speech|rating-sound)/.test(url)), false);
-  console.log("順番学習の画面確認：段階をまたぐ習得・不正解の再出題位置・復習２問と新規８問・指定数終了・再読み込み・保存失敗・学習順保存・メニュー100問の引継ぎと今回だけの変更・途中件数・スマートフォン幅・無音を確認しました。");
+  console.log("順番学習の画面確認：段階をまたぐ習得・不正解の再出題位置・不正解の問題を続けて出さない（指定なし・指定あり・メニュー10問・3語表示）・復習２問と新規８問・指定数終了・再読み込み・保存失敗・学習順保存・メニュー100問の引継ぎと今回だけの変更・途中件数・スマートフォン幅・無音を確認しました。");
 } finally {
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

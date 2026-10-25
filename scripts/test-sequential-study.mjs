@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { createSequentialStudyTasks, orderedDeckIds, sequentialStudyPlan } from "../public/sequential-study.js";
+import { avoidImmediateRepeat, createSequentialStudyTasks, orderedDeckIds, sequentialStudyPlan } from "../public/sequential-study.js";
 import { normalizeSetupPreferences, normalizeStudySession } from "../public/cloud-progress.js";
 import { normalizeSetupPreferences as workerPreferences, normalizeStudySession as workerSession } from "../worker/src/index.js";
 import { applyStudyRoutineMultiplier, createStudyRoutineRun, recordStudyRoutineQuestion, setStudyRoutineQuestionTarget } from "../public/study-routine.js";
@@ -64,4 +64,24 @@ assert.deepEqual(retryPlan({ retryQuestionIds: twoRetries, queuedQuestionIds: ["
   ["part-3-a", "part-1-b", "part-1-a"], "待っている再出題を先にし、直前に不正解にした問題を最後へ回す");
 assert.deepEqual(retryPlan({ retryQuestionIds: twoRetries, queuedQuestionIds: ["part-1-a"], shuffle: true }).queue.slice(1).map(task => task.questionId),
   ["part-1-a", "part-1-b"], "シャッフル中も直前に不正解にした問題をすぐ次に出さない");
-console.log("順番学習：習得判定・復習優先・順序変更・同じ回の次パート・不正解・不正解の再出題位置・途中記録・保存側の一致・今回だけの目標変更を確認しました。");
+// 今のパートに不正解の問題しか残らない時は、次のパートの新しい問題を１問はさみ、同じ問題を続けて出さない。
+const onlyRetry = { questions: { "part-1-a": { ...passed("2026-10-20T00:00:00Z") }, "part-1-b": wrong } };
+for (const shuffle of [false, true]) {
+  const avoided = sequentialStudyPlan({ tasks, progress: onlyRetry, deckOrder, questionDeckIds, now, shuffle,
+    retryQuestionIds: new Set(["part-1-b"]), avoidQuestionId: "part-1-b" });
+  assert.match(avoided.queue[0].questionId, /^part-2-[ab]$/, `次のパートの問題をはさむ（シャッフル${shuffle ? "ON" : "OFF"}）`);
+  assert.equal(avoided.queue[1].questionId, "part-1-b");
+  assert.equal(avoided.currentDeckId, "part-1", "はさんでも不正解が残るパートは習得扱いにしない");
+}
+assert.deepEqual(sequentialStudyPlan({ tasks, progress: onlyRetry, deckOrder, questionDeckIds, now,
+  retryQuestionIds: new Set(["part-1-b"]) }).queue.map(task => task.questionId), ["part-1-b"], "直前の問題でなければ、次のパートを開かず再出題する");
+const allAnswered = { questions: Object.fromEntries(tasks.map(task => [task.questionId, passed("2026-10-20T00:00:00Z")])) };
+allAnswered.questions["part-6-b"] = wrong;
+assert.notEqual(sequentialStudyPlan({ tasks, progress: allAnswered, deckOrder, questionDeckIds, now,
+  retryQuestionIds: new Set(["part-6-b"]), avoidQuestionId: "part-6-b" }).queue[0].questionId, "part-6-b", "新しい問題が無ければ範囲内の別の問題をはさむ");
+const single = tasks.filter(task => task.questionId === "part-1-a");
+assert.deepEqual(sequentialStudyPlan({ tasks: single, progress: { questions: { "part-1-a": wrong } }, deckOrder, questionDeckIds, now,
+  retryQuestionIds: new Set(["part-1-a"]), avoidQuestionId: "part-1-a" }).queue.map(task => task.questionId), ["part-1-a"], "範囲にほかの問題が無い時だけ続けて出す");
+const swapped = avoidImmediateRepeat([{ questionId: "x" }, { questionId: "y" }, { questionId: "z" }], "x");
+assert.deepEqual(swapped.map(task => task.questionId), ["y", "x", "z"], "固定した問題の中に別の問題があれば先に出す");
+console.log("順番学習：習得判定・復習優先・順序変更・同じ回の次パート・不正解・不正解の再出題位置・同じ問題を続けて出さない・途中記録・保存側の一致・今回だけの目標変更を確認しました。");

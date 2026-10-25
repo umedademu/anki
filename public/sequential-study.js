@@ -28,10 +28,19 @@ export function hasPassingRating(record) {
   return ["hard", "good", "easy"].includes(record?.lastRating);
 }
 
+// 直前に出した問題を先頭から外し、ほかの候補を先に出す。候補が無ければ fillers から１問はさむ。
+export function avoidImmediateRepeat(queue, questionId, fillers = []) {
+  if (!questionId || queue[0]?.questionId !== questionId) return queue;
+  const index = queue.findIndex(task => task.questionId !== questionId);
+  if (index > 0) return [queue[index], ...queue.slice(0, index), ...queue.slice(index + 1)];
+  const filler = fillers.find(task => task.questionId !== questionId);
+  return filler ? [filler, ...queue] : queue;
+}
+
 // 復習は全パートから先に出し、新しい問題は最初の未習得パートだけを開く。
 // 習得には過去の連続正解数を使わず、現在の全問題の評価を使う。
 export function sequentialStudyPlan({ tasks, progress, deckOrder, questionDeckIds,
-  retryQuestionIds = new Set(), queuedQuestionIds = [], now = new Date(), shuffle = false }) {
+  retryQuestionIds = new Set(), queuedQuestionIds = [], avoidQuestionId = "", now = new Date(), shuffle = false }) {
   const groups = new Map(deckOrder.map(id => [id, []]));
   for (const task of tasks) groups.get(questionDeckIds.get(task.questionId))?.push(task);
   const masteredDeckIds = deckOrder.filter(id => groups.get(id)?.length &&
@@ -52,5 +61,15 @@ export function sequentialStudyPlan({ tasks, progress, deckOrder, questionDeckId
   const queued = new Map(queuedQuestionIds.map((id, index) => [id, index]));
   const rank = task => queued.get(task.questionId) ?? queued.size;
   const orderedRetry = (shuffle ? shuffleTasks(retry) : retry).sort((left, right) => rank(left) - rank(right));
-  return { queue: [...orderedReview, ...orderedFresh, ...orderedRetry], currentDeckId, masteredDeckIds };
+  const queue = [...orderedReview, ...orderedFresh, ...orderedRetry];
+  // 今のパートに不正解の問題しか残らない時も、直前の問題を続けて出さない。
+  // 次のパートの新しい問題（無ければ範囲内の別の問題）を１問はさむ。はさんでも今のパートは習得扱いにしない。
+  const fillers = [];
+  if (avoidQuestionId && queue.length && queue.every(task => task.questionId === avoidQuestionId)) {
+    const later = deckOrder.slice(deckOrder.indexOf(currentDeckId) + 1).map(id =>
+      (groups.get(id) ?? []).filter(task => !progress.questions[task.questionId]?.lastAnsweredAt)).find(list => list.length) ?? [];
+    const others = tasks.filter(task => task.questionId !== avoidQuestionId);
+    fillers.push(...(shuffle ? shuffleTasks(later) : later), ...(shuffle ? shuffleTasks(others) : others));
+  }
+  return { queue: avoidImmediateRepeat(queue, avoidQuestionId, fillers), currentDeckId, masteredDeckIds };
 }

@@ -131,7 +131,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
     render(renderArguments) {
       lastArguments = renderArguments;
       const { rows, currentTask, answerVisible, saving, canGoBack, summary, resolve, interval,
-        listening = false, paused = false, ratingSaving = false } = renderArguments;
+        listening = false, paused = false, savingRows = new Set() } = renderArguments;
       const motionDuration = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 160 : 280;
       const addsNewRow = previousRows.length > 0 && rows[0] !== previousRows[0] && rows[1] === previousRows[0];
       const sameRows = rows.length === previousRows.length && rows.every((row, index) => row === previousRows[index]);
@@ -230,7 +230,8 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
           button.type = "button";
           button.className = `rating-action rating-${style}`;
           button.dataset.streamRating = rating;
-          button.disabled = saving || ratingSaving || !visible || superseded;
+          // 保存中に止めるのは押した行だけにし、ほかの行はすぐ押せるようにする。
+          button.disabled = saving || savingRows.has(row) || !visible || superseded;
           button.setAttribute("aria-pressed", String(row.rating === rating));
           button.setAttribute("aria-label", `${content.word}：${label.slice(2)}`);
           if (superseded) button.title = "同じ単語の最新の表示から評価してください";

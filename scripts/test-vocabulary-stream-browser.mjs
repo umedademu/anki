@@ -67,10 +67,11 @@ const objects = new Map([
 
 let settings, records, sessions, activities, answerRequests, failSave;
 let holdNextRevision = false, holdNextActivity = false, releaseRevision = null, releaseActivity = null;
+let holdNextAnswer = false, releaseAnswer = null;
 const routinePlan = [{ id: "vocabulary", subjectId: "english-vocabulary", questionTarget: 8 }, { id: "history", subjectId: "test-history", questionTarget: 1 }];
 function reset({ routine = false } = {}) {
-  releaseRevision?.(); releaseActivity?.(); releaseRevision = null; releaseActivity = null;
-  holdNextRevision = false; holdNextActivity = false;
+  releaseRevision?.(); releaseActivity?.(); releaseAnswer?.(); releaseRevision = null; releaseActivity = null; releaseAnswer = null;
+  holdNextRevision = false; holdNextActivity = false; holdNextAnswer = false;
   records = new Map(); sessions = new Map(); activities = new Map(); answerRequests = []; failSave = false;
   settings = {
     autoSpeechEnabled: false, speechParts: off, ratingSoundVolume: 0, shuffleEnabled: false,
@@ -114,6 +115,11 @@ const server = createServer(async (req, res) => {
           holdNextRevision = false;
           await new Promise(resolve => { releaseRevision = resolve; });
           releaseRevision = null;
+        }
+        if (holdNextAnswer && !body.reviseActivityId) {
+          holdNextAnswer = false;
+          await new Promise(resolve => { releaseAnswer = resolve; });
+          releaseAnswer = null;
         }
         if (failSave) { reply({ error: "試験用の保存失敗" }, 503); return; }
         const id = decodeURIComponent(url.pathname.split("/").pop());
@@ -539,6 +545,52 @@ export function createRatingSoundPlayer(){
   assert.deepEqual(await ids(), ["q1", "q0"]);
   assert.equal(progress().q1, undefined); assert.equal(savedSession().answeredCount, 1); assert.equal(activities.size, 1);
 
+  // 評価の保存を待つ間も、押した行以外（次の答えの表示・ほかの行の訂正・一手戻り）はすぐ押せる。
+  reset(); await start(); await rate("good", "q1"); await rate("hard", "q2");
+  holdNextAnswer = true; await reveal();
+  await assertSoundClick(current().locator('[data-stream-rating="easy"]'), "easy");
+  await savedWhen(() => Boolean(releaseAnswer)); await ready("q3");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  for (const rating of ratings) {
+    assert.equal(await rows().nth(1).locator(`[data-stream-rating="${rating}"]`).isDisabled(), true, "保存中は押した行の評価だけを止める");
+    assert.equal(await rows().nth(2).locator(`[data-stream-rating="${rating}"]`).isDisabled(), false, "保存中もほかの行の評価を押せる");
+  }
+  assert.equal(await page.locator("#vocabulary-stream-back").isDisabled(), false, "保存中も一手戻りを押せる");
+  assert.equal(await page.locator("#study-menu-trigger").isDisabled(), false, "保存中も学習メニューを押せる");
+  await assertSoundClick(rows().nth(2).locator('[data-stream-rating="again"]'), "again");
+  await current().locator("[data-stream-reveal]").click();
+  assert.equal(progress().q2, undefined, "押した評価は保存を待ってから記録する");
+  releaseAnswer();
+  await page.waitForFunction(() => !document.querySelector(".vocabulary-stream-row .vocabulary-stream-meaning").hidden);
+  await savedWhen(() => progress().q2?.lastRating === "easy" && progress().q1?.lastRating === "again");
+  await page.waitForFunction(() => document.querySelectorAll(".vocabulary-stream-row")[2]
+    ?.querySelector('[data-stream-rating="again"]')?.getAttribute("aria-pressed") === "true");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[3], "保存中に押した答えの表示を保存後に行う");
+  assert.equal(progress().q1.attempts, 1); assert.equal(activities.size, 3);
+  assert.deepEqual(savedSession().ratingCounts, { again: 1, hard: 0, good: 1, easy: 1 });
+
+  // 聞き流しでも、評価の保存中にほかの行の訂正と再生の操作を押せる。
+  reset(); await start(8, "listen-answer");
+  await listeningNext(); await listeningNext("q1"); await listeningNext(); await listeningNext("q2"); await listeningNext();
+  await savedWhen(() => activities.size === 2);
+  holdNextAnswer = true;
+  await assertSoundClick(current().locator('[data-stream-rating="good"]'), "good");
+  await savedWhen(() => Boolean(releaseAnswer));
+  await page.waitForFunction(() => document.querySelector(".vocabulary-stream-row")?.dataset.questionId === "q3");
+  assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  for (const rating of ratings) {
+    assert.equal(await rows().nth(1).locator(`[data-stream-rating="${rating}"]`).isDisabled(), true, "聞き流しでも押した行だけを止める");
+    assert.equal(await rows().nth(2).locator(`[data-stream-rating="${rating}"]`).isDisabled(), false, "聞き流しでも保存中にほかの行の評価を押せる");
+  }
+  assert.equal(await page.locator("#vocabulary-stream-toggle").isDisabled(), false, "保存中も一時停止を押せる");
+  await assertSoundClick(rows().nth(2).locator('[data-stream-rating="easy"]'), "easy");
+  releaseAnswer();
+  await savedWhen(() => progress().q2?.lastRating === "good" && progress().q1?.lastRating === "easy");
+  await page.waitForFunction(() => document.querySelectorAll(".vocabulary-stream-row")[2]
+    ?.querySelector('[data-stream-rating="easy"]')?.getAttribute("aria-pressed") === "true");
+  assert.equal(progress().q1.attempts, 1); assert.equal(activities.size, 3);
+
   // 同じ問題が再出題されたら、前の出現行から古い評価を変更できない。
   reset(); await start(1); await rate("again", "q0");
   assert.deepEqual(await ids(), ["q0", "q0"]); await assertHiddenMeaning(current());
@@ -870,6 +922,6 @@ export function createRatingSoundPlayer(){
   console.log("動きの実測：" + path.join(screenshotDirectory, "motion-regression.json"));
   }
 } finally {
-  releaseRevision?.(); releaseActivity?.();
+  releaseRevision?.(); releaseActivity?.(); releaseAnswer?.();
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

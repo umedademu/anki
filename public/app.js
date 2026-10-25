@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.432";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.432";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.433";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.433";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.432";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.433";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.432";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.432";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.432";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.432";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.432";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.432";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.432";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.432";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.432";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.433";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.433";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.433";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.433";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.433";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.433";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.433";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.433";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.433";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.432";
+} from "./original-session.js?v=0.433";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.432";
+} from "./speech.js?v=0.433";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.432";
+} from "./deck-selection.js?v=0.433";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.432";
-import { createAutoSave } from "./settings-autosave.js?v=0.432";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.433";
+import { createAutoSave } from "./settings-autosave.js?v=0.433";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -490,6 +490,11 @@ let studySessionSaveVersion = 0;
 // 聞き流しで終えた問題の保存は、次の問題を読み上げながら古い順に送る。
 // 失敗したら回数を進め、それより後に並んでいた保存は送らずに捨てる。
 const listeningSaves = { tail: Promise.resolve(), pending: [], failures: 0 };
+// 評価の保存中も学習画面のボタンは押せるようにし、その間に押された操作は保存が終わってから順に行う。
+// 保存に失敗して巻き戻した時や区切りの完了画面へ移った時は generation を進め、それより前に押された操作を捨てる。
+// 押した行のボタンだけは、その保存中に止める。
+const ratingSaves = { pending: new Set(), generation: 0, queue: Promise.resolve() };
+const vocabularyStreamSavingRows = new Set();
 let studyClockTimer = null;
 let studyClockLastTick = 0;
 let mindsetStudyClockTimer = null;
@@ -1167,6 +1172,7 @@ function renderRatingResult(value = state.ratingCounts) {
 }
 
 function showRoutineStepCompletion(change) {
+  ratingSaves.generation += 1;
   setVocabularyStreamScreen(false);
   clearRoutineOvertime();
   stopListeningSequence();
@@ -2437,13 +2443,9 @@ function setStudyMenuStatus(message, isError = false) {
 }
 
 function openStudyMenu() {
-  if (
-    state.studyMenuOpen ||
-    state.saving ||
-    !document.body.classList.contains("is-studying")
-  ) {
-    return;
-  }
+  if (state.studyMenuOpen || !document.body.classList.contains("is-studying")) return;
+  if (deferUntilRatingSaved(openStudyMenu)) return;
+  if (state.saving) return;
   state.studyMenuOpen = true;
   state.resumeListeningAfterMenu =
     isListeningMode() && Boolean(state.currentTask) && !state.listeningPaused;
@@ -3416,12 +3418,51 @@ function pushHistory(entry) {
   }
 }
 
+// 評価の保存を始める。終わったら finish() を呼ぶ。区切りの完了画面へ移る時などは locksControls で従来どおり止める。
+function startRatingSave() {
+  let resolve;
+  const entry = { locksControls: false, done: new Promise((done) => { resolve = done; }) };
+  entry.finish = () => {
+    if (ratingSaves.pending.delete(entry)) resolve();
+  };
+  ratingSaves.pending.add(entry);
+  return entry;
+}
+
+function studyControlsLocked() {
+  if (!state.saving) return false;
+  return ratingSaves.pending.size === 0 ||
+    [...ratingSaves.pending].some((entry) => entry.locksControls);
+}
+
+// 評価の保存中に押された操作を、保存が終わってから行う予約にする。予約した時は true を返す。
+function deferUntilRatingSaved(action, busy = state.saving) {
+  if (!busy || ratingSaves.pending.size === 0 || studyControlsLocked()) return false;
+  const generation = ratingSaves.generation;
+  ratingSaves.queue = ratingSaves.queue
+    .then(async () => {
+      while (ratingSaves.pending.size > 0) {
+        await Promise.all([...ratingSaves.pending].map((entry) => entry.done));
+      }
+      if (generation === ratingSaves.generation) await action();
+    })
+    .catch(() => {});
+  return true;
+}
+
+// 評価は押した時に音を鳴らし、保存の終わりを待ってから記録する。
+function deferRatingUntilSaved(rating, action, busy) {
+  if (!deferUntilRatingSaved(action, busy)) return false;
+  ratingSoundPlayer.play(rating);
+  return true;
+}
+
 function renderActionControls() {
   if (isVocabularyStream() && state.currentTask && !hasReachedQuestionLimit()) {
     renderVocabularyStream();
     elements.actionDock.classList.add("is-hidden");
     elements.listeningDock.classList.add("is-hidden");
-    elements.studyMenuTrigger.disabled = state.saving;
+    elements.studyMenuTrigger.disabled = studyControlsLocked();
     return;
   }
   if (hasReachedQuestionLimit()) {
@@ -3459,32 +3500,28 @@ function renderActionControls() {
     "is-listening-answer-visible",
     showsListeningRatingActions,
   );
-  elements.backAction.disabled = !canGoBack || state.saving;
+  const locked = studyControlsLocked();
+  elements.backAction.disabled = !canGoBack || locked;
   elements.nextAction.classList.toggle(
     "is-hidden",
     !hasQuestion || state.answerVisible,
   );
-  elements.nextAction.disabled = state.saving;
+  elements.nextAction.disabled = locked;
   elements.ratingButtons.classList.toggle("is-hidden", !showsRatingActions);
   elements.ratingActions.forEach((button) => {
-    button.disabled = state.saving;
+    button.disabled = locked;
   });
-  elements.listeningBackAction.disabled = !canGoBack || state.saving;
-  elements.listeningToggleAction.disabled = state.saving;
-  elements.listeningNextAction.disabled = state.saving;
-  elements.studyMenuTrigger.disabled = state.saving;
+  elements.listeningBackAction.disabled = !canGoBack || locked;
+  elements.listeningToggleAction.disabled = locked;
+  elements.listeningNextAction.disabled = locked;
+  elements.studyMenuTrigger.disabled = locked;
 }
 
 function revealCurrentAnswer() {
   if (hasReachedQuestionLimit()) return;
-  if (
-    isListeningMode() ||
-    !state.currentTask ||
-    state.answerVisible ||
-    state.saving
-  ) {
-    return;
-  }
+  if (isListeningMode() || !state.currentTask || state.answerVisible) return;
+  if (deferUntilRatingSaved(revealCurrentAnswer)) return;
+  if (state.saving) return;
   speechController.stop();
   pushHistory({
     type: "reveal",
@@ -3501,9 +3538,9 @@ function revealCurrentAnswer() {
 }
 
 async function goBackOneStep() {
-  if (isListeningMode() || state.saving) {
-    return;
-  }
+  if (isListeningMode()) return;
+  if (deferUntilRatingSaved(goBackOneStep)) return;
+  if (state.saving) return;
   speechController.stop();
   const snapshot = state.history.at(-1);
   if (!snapshot) {
@@ -4019,9 +4056,9 @@ function autoSpeakAnswerAndOverview() {
 
 async function goBackListeningOneStep() {
   if (hasReachedQuestionLimit()) return;
-  if (!isListeningMode() || state.saving) {
-    return;
-  }
+  if (!isListeningMode()) return;
+  if (deferUntilRatingSaved(goBackListeningOneStep)) return;
+  if (state.saving) return;
   state.lateListeningRating = null;
   if (listeningSaves.pending.length > 0) {
     // 進めた問題の保存が終わってから戻す。保存に失敗して巻き戻った時は、その位置で止める。
@@ -4634,9 +4671,9 @@ function toggleSpeechPart(target) {
 
 function toggleListening() {
   if (hasReachedQuestionLimit()) return;
-  if (!isListeningMode() || !state.currentTask || state.saving) {
-    return;
-  }
+  if (!isListeningMode() || !state.currentTask) return;
+  if (deferUntilRatingSaved(toggleListening)) return;
+  if (state.saving) return;
   // 中断後に読み直す時だけ、進行中の列を捨てて準備音を鳴らす。通常の一時停止からの再開は位置を保つ。
   const restartsListening = state.listeningPaused && !speechController.paused;
   if (restartsListening) void ratingSoundPlayer.releaseOutput?.();
@@ -4674,9 +4711,9 @@ function toggleListening() {
 
 function advanceListeningManually() {
   if (hasReachedQuestionLimit()) return;
-  if (!isListeningMode() || !state.currentTask || state.saving) {
-    return;
-  }
+  if (!isListeningMode() || !state.currentTask) return;
+  if (deferUntilRatingSaved(advanceListeningManually)) return;
+  if (state.saving) return;
   stopListeningSequence();
   state.listeningPaused = false;
   if (!state.answerVisible) {
@@ -5580,10 +5617,10 @@ function renderVocabularyStream() {
     rows: state.vocabularyStreamRows,
     currentTask: state.currentTask,
     answerVisible: state.answerVisible,
-    saving: state.saving,
+    saving: studyControlsLocked(),
     listening: isListeningMode(),
     paused: state.listeningPaused,
-    ratingSaving: state.vocabularyStreamRatingSaving,
+    savingRows: vocabularyStreamSavingRows,
     canGoBack: state.history.length > 0,
     summary: vocabularyStreamSummary(),
     resolve(row) {
@@ -5594,14 +5631,21 @@ function renderVocabularyStream() {
   });
 }
 
-async function reviseVocabularyStreamRating(index, rating) {
+async function reviseVocabularyStreamRating(index, rating, { soundPlayed = false } = {}) {
   const row = state.vocabularyStreamRows[index];
-  if (!isVocabularyStream() || state.saving || state.vocabularyStreamRatingSaving || !row?.activityId ||
+  if (!isVocabularyStream() || !row?.activityId || vocabularyStreamSavingRows.has(row) ||
       state.vocabularyStreamRows.slice(0, index).some(newer => newer.questionId === row.questionId)) return;
   const question = questionForTask(row);
   const term = termForTask(row);
   if (!question || !term) return;
-  ratingSoundPlayer.play(rating);
+  const busy = state.saving || state.vocabularyStreamRatingSaving;
+  // 待つ間に新しい行が増えても、押した行を訂正する。
+  if (deferRatingUntilSaved(rating, () => {
+    const position = state.vocabularyStreamRows.indexOf(row);
+    return position >= 0 ? reviseVocabularyStreamRating(position, rating, { soundPlayed: true }) : undefined;
+  }, busy)) return;
+  if (busy) return;
+  if (!soundPlayed) ratingSoundPlayer.play(rating);
   // 選択中の評価をもう一度押した時は押下を取り消し、評価なし（回答前の学習記録）へ戻す。
   if (row.rating === rating) rating = "";
   const reviseAnalysis = createQuestionAnalysisSnapshot(state.subject, term, question);
@@ -5611,6 +5655,8 @@ async function reviseVocabularyStreamRating(index, rating) {
   const failuresBefore = listeningSaves.failures;
   let finishPreparation;
   vocabularyStreamRatingPreparation = new Promise(resolve => { finishPreparation = resolve; });
+  const ratingSave = startRatingSave();
+  vocabularyStreamSavingRows.add(row);
   state.vocabularyStreamRatingSaving = true;
   if (!listening) state.saving = true;
   renderActionControls();
@@ -5670,6 +5716,7 @@ async function reviseVocabularyStreamRating(index, rating) {
     const record = state.progress.questions[row.questionId] ? { ...state.progress.questions[row.questionId] } : null;
     const session = captureActiveSession();
     const routineRun = routineChange?.changed ? normalizeStudyRoutineRun(state.routineRun) : undefined;
+    if (routineChange?.completedItem) ratingSave.locksControls = true;
     if (listening && routineChange?.completedItem) {
       stopListeningSequence();
       state.listeningPaused = true;
@@ -5710,17 +5757,23 @@ async function reviseVocabularyStreamRating(index, rating) {
       stopListeningSequence();
       state.listeningPaused = true;
     }
+    ratingSaves.generation += 1;
     state.unlockMessage = `評価を保存できませんでした。${error.message}`;
   } finally {
     finishPreparation();
+    vocabularyStreamSavingRows.delete(row);
     state.vocabularyStreamRatingSaving = false;
     if (!listening || failed || routineChange?.completedItem) state.saving = false;
     if (listening) listeningSaves.pending.splice(listeningSaves.pending.indexOf(settled), 1);
   }
-  if (routineChange?.completedItem && !failed) {
-    setVocabularyStreamScreen(false);
-    showRoutineStepCompletion(routineChange);
-  } else renderQuestion();
+  try {
+    if (routineChange?.completedItem && !failed) {
+      setVocabularyStreamScreen(false);
+      showRoutineStepCompletion(routineChange);
+    } else renderQuestion();
+  } finally {
+    ratingSave.finish();
+  }
 }
 
 function renderQuestion() {
@@ -6078,7 +6131,7 @@ function applyQuestionRating(term, question, rating) {
   );
 }
 
-async function rateListeningQuestion(rating) {
+async function rateListeningQuestion(rating, { soundPlayed = false } = {}) {
   if (hasReachedQuestionLimit()) return;
   const late = isVocabularyStream() ? null : lateListeningRatingTarget();
   if (late) {
@@ -6088,10 +6141,10 @@ async function rateListeningQuestion(rating) {
   state.lateListeningRating = null;
   const term = currentTerm();
   const question = currentQuestion();
-  if (!term || !question || !state.answerVisible || state.saving) {
-    return;
-  }
-  ratingSoundPlayer.play(rating);
+  if (!term || !question || !state.answerVisible) return;
+  if (deferRatingUntilSaved(rating, () => rateListeningQuestion(rating, { soundPlayed: true }))) return;
+  if (state.saving) return;
+  if (!soundPlayed) ratingSoundPlayer.play(rating);
   const resumesFromPause = state.listeningPaused;
   stopListeningSequence();
   if (listeningSaves.pending.length > 0) {
@@ -6103,6 +6156,15 @@ async function rateListeningQuestion(rating) {
     state.saving = false;
     if (failuresBefore !== listeningSaves.failures) return;
   }
+  const ratingSave = startRatingSave();
+  try {
+    await recordListeningRating(term, question, rating, resumesFromPause, ratingSave);
+  } finally {
+    ratingSave.finish();
+  }
+}
+
+async function recordListeningRating(term, question, rating, resumesFromPause, ratingSave) {
   stopStudyClock();
   state.saving = true;
   renderActionControls();
@@ -6132,6 +6194,7 @@ async function rateListeningQuestion(rating) {
     streamRow.activityId = activity.eventId;
     streamRow.previousRecord = snapshot.previousQuestionRecord;
     streamRow.answerVisible = true;
+    vocabularyStreamSavingRows.add(streamRow);
   }
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
@@ -6156,6 +6219,7 @@ async function rateListeningQuestion(rating) {
     { completedDeckIds: state.inRoutine && sessionComplete ? [...state.activeDeckIds] : [] },
   );
   if (streamRow) streamRow.routineCounted = routineChange?.counted === true;
+  ratingSave.locksControls = Boolean(routineChange?.completedItem) || listeningPassComplete;
   snapshot.completedRoundId = sessionComplete
     ? snapshot.studySession?.roundId
     : null;
@@ -6185,9 +6249,12 @@ async function rateListeningQuestion(rating) {
         routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
+    vocabularyStreamSavingRows.delete(streamRow);
     setSavedSessionForMode("listen-answer", saved.session);
     setRoundProgress(saved.roundProgress);
   } catch (error) {
+    vocabularyStreamSavingRows.delete(streamRow);
+    ratingSaves.generation += 1;
     restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
     restoreActiveSession(snapshot.studySession, { updateControls: false });
     if (Object.hasOwn(snapshot, "routineRun")) {
@@ -6369,24 +6436,28 @@ async function ratePreviousListeningQuestion(rating, late) {
   }
 }
 
-async function rateCurrentQuestion(rating) {
+async function rateCurrentQuestion(rating, { soundPlayed = false } = {}) {
   if (hasReachedQuestionLimit()) return;
   if (isListeningMode()) {
-    await rateListeningQuestion(rating);
+    await rateListeningQuestion(rating, { soundPlayed });
     return;
   }
   const term = currentTerm();
   const question = currentQuestion();
-  if (
-    !term ||
-    !question ||
-    !state.answerVisible ||
-    state.saving
-  ) {
-    return;
-  }
+  if (!term || !question || !state.answerVisible) return;
+  if (deferRatingUntilSaved(rating, () => rateCurrentQuestion(rating, { soundPlayed: true }))) return;
+  if (state.saving) return;
   speechController.stop();
-  ratingSoundPlayer.play(rating);
+  if (!soundPlayed) ratingSoundPlayer.play(rating);
+  const ratingSave = startRatingSave();
+  try {
+    await recordCurrentQuestionRating(term, question, rating, ratingSave);
+  } finally {
+    ratingSave.finish();
+  }
+}
+
+async function recordCurrentQuestionRating(term, question, rating, ratingSave) {
   stopStudyClock();
   state.saving = true;
   renderActionControls();
@@ -6416,6 +6487,7 @@ async function rateCurrentQuestion(rating) {
     streamRow.activityId = activity.eventId;
     streamRow.previousRecord = snapshot.previousQuestionRecord;
     streamRow.answerVisible = true;
+    vocabularyStreamSavingRows.add(streamRow);
   }
   state.ratingCounts = addRatingCount(state.ratingCounts, rating);
   applyQuestionRating(term, question, rating);
@@ -6459,6 +6531,8 @@ async function rateCurrentQuestion(rating) {
   );
   if (streamRow) streamRow.routineCounted = routineChange?.counted === true;
   if (routineChange?.completedItem) clearRoutineOvertime();
+  // 区切りの完了画面や一周の終わりへ移る時は、次の問題がないため保存中のボタンを止めておく。
+  ratingSave.locksControls = Boolean(routineChange?.completedItem) || sessionComplete;
   startNewStudyScreen();
 
   if (!routineChange?.completedItem) {
@@ -6482,9 +6556,12 @@ async function rateCurrentQuestion(rating) {
         routineRun: routineChange?.changed ? state.routineRun : undefined,
       },
     );
+    vocabularyStreamSavingRows.delete(streamRow);
     setSavedSessionForMode("memorize", saved.session);
     setRoundProgress(saved.roundProgress);
   } catch (error) {
+    vocabularyStreamSavingRows.delete(streamRow);
+    ratingSaves.generation += 1;
     speechController.stop();
     restoreRatingUndoSnapshot(state.progress, snapshot, state.reviewSettings);
     restoreActiveSession(snapshot.studySession, { updateControls: false });

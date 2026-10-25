@@ -19,8 +19,9 @@ const objects = new Map([
   ["deck/chunk.json", { terms }], ["term-images.json", { schemaVersion: 2, assets: [], assignments: [] }],
 ]);
 const plan = [{ id: "study", subjectId: "test", questionTarget: 10 }, { id: "next", subjectId: "test", questionTarget: 5 }];
-let settings, records, session, answers, failSave;
+let settings, records, session, answers, failSave, holdNextAnswer = false, releaseAnswer = null;
 function reset({ routine = false, shuffle = false, sequential = false } = {}) {
+  releaseAnswer?.(); releaseAnswer = null; holdNextAnswer = false;
   records = {}; session = null; answers = []; failSave = false;
   settings = { autoSpeechEnabled: false, speechParts: off, ratingSoundVolume: 0, goodSeconds: 1, hardSeconds: 1, easySeconds: 1,
     studyRoutineOvertimeSeconds: 600, shuffleEnabled: shuffle,
@@ -47,6 +48,11 @@ const server = createServer(async (req, res) => {
         reply({ setupPreferences: settings.setupPreferences, studyDate: "2026-10-14" }); return;
       }
       if (url.pathname.startsWith("/v1/study-answer/")) {
+        if (holdNextAnswer) {
+          holdNextAnswer = false;
+          await new Promise(resolve => { releaseAnswer = resolve; });
+          releaseAnswer = null;
+        }
         if (failSave) { reply({ error: "試験用の保存失敗" }, 503); return; }
         const id = decodeURIComponent(url.pathname.split("/").pop());
         if (body.record == null) delete records[id]; else records[id] = body.record;
@@ -142,6 +148,23 @@ try {
   await answer("again");
   assert.equal(session.questionBatch.completedQuestionIds.length, 1);
 
+  // 評価の保存を待つ間も、次の問題の答えの表示・一手戻り・メニューをすぐ押せる。答えの表示は保存の後に行う。
+  reset(); await start(false); holdNextAnswer = true;
+  await page.locator("#next-action").click(); await page.locator('#rating-buttons [data-rating="good"]').click();
+  await page.waitForFunction(() => document.querySelector("#question-text").textContent === "問題1");
+  while (!releaseAnswer) await new Promise(resolve => setTimeout(resolve, 10));
+  for (const id of ["next-action", "back-action", "study-menu-trigger"]) {
+    assert.equal(await page.locator(`#${id}`).isDisabled(), false, `保存中も${id}を押せる`);
+  }
+  await page.locator("#next-action").click();
+  assert.equal(answers.length, 0); assert.equal(await page.locator("#answer-panel").isVisible(), false);
+  releaseAnswer();
+  await page.locator('#rating-buttons [data-rating="hard"]').waitFor({ state: "visible" });
+  await page.locator('#rating-buttons [data-rating="hard"]').click();
+  await page.waitForFunction(() => document.querySelector("#question-text").textContent === "問題2");
+  while (answers.length < 2) await new Promise(resolve => setTimeout(resolve, 10));
+  assert.deepEqual(answers, [{ id: "q0", rating: "good" }, { id: "q1", rating: "hard" }]);
+
   // 聞き流しでも任意評価の不正解は、残り１問として繰り返す。
   for (const routine of [false, true]) {
     reset({ routine, shuffle: true }); const selected = await start(routine, true);
@@ -180,5 +203,6 @@ try {
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
   console.log("画面確認：５００問から１０問固定・通常とメニュー・シャッフル有無・順番学習・最後の１問反復・再読み込み・保存失敗・一手戻り・次の１０問・聞き流し・無音を確認しました。");
 } finally {
+  releaseAnswer?.();
   await browser?.close(); server.closeAllConnections(); await new Promise(resolve => server.close(resolve));
 }

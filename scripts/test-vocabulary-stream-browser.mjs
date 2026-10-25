@@ -962,7 +962,8 @@ export function createRatingSoundPlayer(){
   assert.equal(routine().items[0].completedCount, 3, "失敗後の訂正も復元されたメニューの達成数を維持する");
   assert.deepEqual(routine().items[0].ratingCounts, { again: 0, hard: 1, good: 2, easy: 0 }, "失敗後の訂正で画面側に保存失敗の内訳が残らない");
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]); assert.equal(activities.size, 3);
-  // メニューの項目を3語表示で終えた完了画面から、左半分のタップで最後の単語へ戻り、評価・訂正して完了し直せる。
+  // メニューの問題数目標の項目（内部は問題数指定と同じ出題の束）を3語表示で終えた完了画面から、
+  // 左半分のタップで最後の単語へ戻り、評価・訂正して完了し直せる。
   await page.setViewportSize({ width: 812, height: 375 });
   for (const mode of ["listen-answer", "memorize"]) {
     reset({ routine: true });
@@ -972,6 +973,8 @@ export function createRatingSoundPlayer(){
     await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
     await page.locator(`input[name="study-mode"][value="${mode}"]`).check();
     await page.locator("#start-study").click(); await ready("q0", mode);
+    await savedWhen(() => savedSession()?.questionBatch?.questionIds.length === 8);
+    assert.equal(savedSession().questionBatch.target, 8, "メニューの問題数目標は問題数指定の束で出題する");
     if (mode === "listen-answer") {
       for (let index = 0; index < 60 && !await page.locator("#completion-card").isVisible(); index += 1) {
         await page.evaluate(() => window.__streamSpeechTest.pending && window.__streamSpeechTest.complete());
@@ -996,6 +999,8 @@ export function createRatingSoundPlayer(){
     await savedWhen(() => routine().currentIndex === 0 && activities.size === 7);
     assert.equal(routine().items[0].completedCount, 7, "完了扱いの項目の達成数を戻す");
     assert.equal(savedSession().currentTask.questionId, "q7", "途中記録も最後の単語へ戻す");
+    assert.equal(savedSession().questionBatch.completedQuestionIds.length, 7, "問題数の束も最後の単語を未完了へ戻す");
+    assert.equal(savedSession().questionBatch.completedQuestionIds.includes("q7"), false);
     await revise(1, "hard");
     assert.equal([...activities.values()].find(activity => activity.questionId === "q6").rating, "hard");
     assert.equal(routine().currentIndex, 0);

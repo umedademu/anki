@@ -7,17 +7,17 @@
     <title>Anki | 設定</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.429"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.429" />
-    <link rel="stylesheet" href="/theme.css?v=0.429" />
+    <script src="/theme.js?v=0.431"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.431" />
+    <link rel="stylesheet" href="/theme.css?v=0.431" />
     <script src="/config.js" defer></script>
-    <script src="/settings.js?v=0.429" type="module"></script>
+    <script src="/settings.js?v=0.431" type="module"></script>
   </head>
   <body class="settings-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.429</span>
+        <span class="app-version">v0.431</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -79,9 +79,10 @@
       <section class="settings-card" id="study-routine-settings" data-settings-subpage hidden>
         <h2 tabindex="-1">毎日の学習メニュー</h2>
         <p class="settings-description">
-          科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。変更するとCloudflareへ保存します。デッキや学習方法は、それぞれの科目を始める直前に選びます。学習量は「問」のほか、日本史K・世界史SOでは「パート」、その他の科目では「デッキ」で指定でき、選んだパート（デッキ）を一周し終えるごとに、その数だけ進みます。マインドセットでは「周」を選ぶと、全部の言葉を1回ずつ聞き終えるごとに1周として進みます。パート数・デッキ数・周の数には今日の学習量の倍率を掛けません。進行中のメニューには次に1番から始めるまで変更を反映しません。
+          科目学習と、登録動画から重複なくランダムに選ぶ動画視聴を順番に並べます。変更するとCloudflareへ保存します。デッキや学習方法は、それぞれの科目を始める直前に選びます。学習量は「問」のほか、日本史K・世界史SOでは「パート」、その他の科目では「デッキ」で指定でき、選んだパート（デッキ）を一周し終えるごとに、その数だけ進みます。マインドセットでは「周」を選ぶと、全部の言葉を1回ずつ聞き終えるごとに1周として進みます。パート数・デッキ数・周の数には今日の学習量の倍率を掛けません。項目のあいだの「✂ ここで区切る」を押すとメニューがそこで切れ、区切りから次の区切りまでのまとまりを、見出しの［−］［＋］で決めたセット数だけくり返します（例：1番の後と4番の後で区切り、2〜4番を3セットにすると「1, 2, 3, 4, 2, 3, 4, 2, 3, 4, 5」の順）。進行中のメニューには次に1番から始めるまで変更を反映しません。
         </p>
         <div class="routine-editor" id="routine-editor" aria-label="毎日の学習メニュー"></div>
+        <p class="routine-expanded-summary" id="routine-expanded-summary" role="status"></p>
         <div class="routine-editor-actions">
           <button class="secondary-button" id="add-routine-item" type="button">
             科目を追加

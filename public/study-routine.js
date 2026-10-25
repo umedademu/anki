@@ -8,6 +8,9 @@ import {
 const routineIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const routineItemLimit = 100;
+// セット数でくり返した後の1日の進行は、設定の項目数より多くなる。
+const routineRunItemLimit = 1000;
+const routineSetCountLimit = 20;
 const routineVideoLimit = 200;
 const routineQuestionTargetLimit = 10_000;
 const routineDeckTargetLimit = 500;
@@ -133,6 +136,13 @@ function normalizeDeckTarget(value) {
     : 1;
 }
 
+function normalizeRoutineSetCount(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(routineSetCountLimit, Math.max(1, parsed))
+    : 1;
+}
+
 function normalizeCompletedDeckIds(value) {
   return Array.isArray(value)
     ? [...new Set(value.map(normalizeRoutineId).filter(Boolean))]
@@ -173,9 +183,15 @@ export function scaledStudyRoutineQuestionTarget(value, multiplier = 1) {
   );
 }
 
-function normalizeRoutineItem(value, index, usedIds) {
+// 設定のメニューには、科目・動画の項目のほかに「区切り」を置ける。
+// 区切りから次の区切りまでを1つのまとまりとし、区切りに持たせたセット数だけくり返す。
+// 1日の進行（run）では区切りを置かず、各項目へセット数と何セット目かを持たせる。
+function normalizeRoutineItem(value, index, usedIds, { run = false } = {}) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const kind = value.kind === "video" ? "video" : "study";
+  if (value.kind === "divider" && run) return null;
+  const kind = value.kind === "video" || value.kind === "divider"
+    ? value.kind
+    : "study";
   const subjectId = kind === "study" ? normalizeRoutineId(value.subjectId) : "";
   if (kind === "study" && !subjectId) return null;
   const requestedId = normalizeRoutineId(value.id);
@@ -186,8 +202,17 @@ function normalizeRoutineItem(value, index, usedIds) {
     suffix += 1;
   }
   usedIds.add(id);
+  // セット数は2以上の時だけ持たせ、今までの保存データと同じ形を保つ。
+  const sets = normalizeRoutineSetCount(value.sets);
+  if (kind === "divider") return { id, kind, ...(sets > 1 ? { sets } : {}) };
+  const setFields = run && sets > 1
+    ? {
+        sets,
+        setRound: Math.min(sets, normalizeRoutineSetCount(value.setRound)),
+      }
+    : {};
   return kind === "video"
-    ? { id, kind }
+    ? { id, kind, ...setFields }
     : {
         id,
         kind,
@@ -196,6 +221,7 @@ function normalizeRoutineItem(value, index, usedIds) {
         ...(value.targetUnit === "decks"
           ? { targetUnit: "decks", deckTarget: normalizeDeckTarget(value.deckTarget) }
           : {}),
+        ...setFields,
       };
 }
 
@@ -207,21 +233,89 @@ function cloneDefaultVideos() {
   return defaultStudyRoutineVideos.map((video) => ({ ...video }));
 }
 
-export function normalizeStudyRoutinePlan(value, { fallbackToDefault = true } = {}) {
+// v0.430では項目ごとにセット数を持たせ、続けて並んだ同じセット数をまとめていた。
+// その保存データは、セット数の変わり目へ区切りを置いた形へ読み替える。
+function itemSetsToDividers(value) {
+  if (
+    value.some((item) => item?.kind === "divider") ||
+    !value.some((item) => normalizeRoutineSetCount(item?.sets) > 1)
+  ) {
+    return value;
+  }
+  let previousSets = 1;
+  return value.flatMap((item, index) => {
+    const sets = normalizeRoutineSetCount(item?.sets);
+    const divider = sets !== previousSets
+      ? [{ id: `divider-${String(index + 1).padStart(2, "0")}`, kind: "divider", sets }]
+      : [];
+    previousSets = sets;
+    return [...divider, item];
+  });
+}
+
+// 項目を含まないまとまり（続く区切りや末尾の区切り）と、1セットの先頭の区切りは保存しない。
+function removeEmptyRoutineBlocks(entries) {
+  const kept = entries.filter((entry, index) =>
+    entry.kind !== "divider" ||
+    (index + 1 < entries.length && entries[index + 1].kind !== "divider"));
+  return kept[0]?.kind === "divider" && !kept[0].sets ? kept.slice(1) : kept;
+}
+
+export function normalizeStudyRoutinePlan(
+  value,
+  { fallbackToDefault = true, itemLimit = routineItemLimit, run = false } = {},
+) {
   if (!Array.isArray(value)) {
     return fallbackToDefault ? cloneDefaultPlan() : [];
   }
   const usedIds = new Set();
-  const plan = value.slice(0, routineItemLimit).flatMap((item, index) => {
-    const normalized = normalizeRoutineItem(item, index, usedIds);
-    return normalized ? [normalized] : [];
-  });
+  const entries = (run ? value : itemSetsToDividers(value))
+    .slice(0, itemLimit)
+    .flatMap((item, index) => {
+      const normalized = normalizeRoutineItem(item, index, usedIds, { run });
+      return normalized ? [normalized] : [];
+    });
+  const plan = run ? entries : removeEmptyRoutineBlocks(entries);
   return plan.length > 0 || !fallbackToDefault ? plan : cloneDefaultPlan();
+}
+
+// 区切りで分けたまとまりを、まとまりごとにセット数だけくり返して1日の進行の並びにする。
+// 例：1番の後と4番の後に区切りを置き、2〜4番のまとまりを3セットにすると
+// 「1, 2, 3, 4, 2, 3, 4, 2, 3, 4, 5」。
+export function expandStudyRoutinePlan(plan) {
+  const blocks = [{ sets: 1, items: [] }];
+  for (const entry of normalizeStudyRoutinePlan(plan)) {
+    if (entry.kind === "divider") {
+      blocks.push({ sets: entry.sets ?? 1, items: [] });
+    } else {
+      blocks.at(-1).items.push(entry);
+    }
+  }
+  const expanded = blocks.flatMap(({ sets, items }) =>
+    Array.from({ length: sets }, (_, roundIndex) =>
+      items.map((item) => sets > 1
+        ? {
+            ...item,
+            // 2セット目以降は別の回として数えるため、別のIDにする。
+            id: roundIndex === 0
+              ? item.id
+              : `${item.id.slice(0, 90)}-set${roundIndex + 1}`,
+            sets,
+            setRound: roundIndex + 1,
+          }
+        : item),
+    ).flat(),
+  );
+  return normalizeStudyRoutinePlan(expanded.slice(0, routineRunItemLimit), {
+    fallbackToDefault: false,
+    itemLimit: routineRunItemLimit,
+    run: true,
+  });
 }
 
 export function scaleStudyRoutinePlan(plan, multiplier = 1) {
   const normalizedMultiplier = normalizeStudyRoutineMultiplier(multiplier);
-  return normalizeStudyRoutinePlan(plan).map((item) =>
+  return expandStudyRoutinePlan(plan).map((item) =>
     item.kind === "study"
       ? {
           ...item,
@@ -355,6 +449,8 @@ export function normalizeStudyRoutineRun(value) {
   const hasStoredMultiplier = Object.hasOwn(source, "routineMultiplier");
   const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
+    itemLimit: routineRunItemLimit,
+    run: true,
   });
   const items = normalizedPlan.map((item, index) => {
     const sourceItem = source.items?.[index] ?? {};
@@ -429,7 +525,7 @@ export function migrateLegacyStudyRoutineRun(run, plan) {
   const normalized = normalizeStudyRoutineRun(run);
   const normalizedPlan = normalizeStudyRoutinePlan(plan, {
     fallbackToDefault: false,
-  });
+  }).filter((item) => item.kind !== "divider");
   if (
     !normalized ||
     normalized.items.some((item) => item.kind === "video") ||
@@ -507,7 +603,7 @@ export function createStudyRoutineRun(
   skipVideos = false,
 ) {
   const routineMultiplier = normalizeStudyRoutineMultiplier(multiplier);
-  const items = normalizeStudyRoutinePlan(plan).map((item) =>
+  const items = expandStudyRoutinePlan(plan).map((item) =>
     item.kind === "video"
       ? {
           ...item,

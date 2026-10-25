@@ -288,10 +288,94 @@ try {
   assert.equal(savedPlan[2].deckTarget, 1);
   assert.equal(await rows.nth(0).locator(".routine-unit-select").inputValue(), "decks");
 
+  // 4. セット数：1番の後で区切り、2番のまとまりを2セットにすると「1, 2, 2」の3項目になり、順に進めて最後で完了する。
+  reset([
+    { id: "once", kind: "study", subjectId: "test", questionTarget: 1 },
+    { id: "twice-divider", kind: "divider", sets: 2 },
+    { id: "twice", kind: "study", subjectId: "test", questionTarget: 1 },
+  ]);
+  await page.goto(base);
+  await shown("subject-panel");
+  await page.waitForFunction(() => !document.querySelector("#continue-routine").disabled);
+  const setList = await page.locator("#routine-dashboard-list li").allTextContents();
+  assert.deepEqual(setList, [
+    "1. 試験科目 1問",
+    "2. 試験科目（1／2セット目） 1問",
+    "3. 試験科目（2／2セット目） 1問",
+  ]);
+  await openRoutine();
+  for (const [index, deckId] of [[0, "deck-1"], [1, "deck-1"], [2, "deck-2"]]) {
+    if (index > 0) {
+      await page.locator("#completion-return").click();
+      await shown("setup-panel");
+      await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+    }
+    assert.equal(
+      await text("routine-setup-title"),
+      `毎日のメニュー ${index + 1}／3｜試験科目${index === 0 ? "" : `（${index}／2セット目）`}`,
+    );
+    await choosePart(deckId);
+    // 2項目目は1項目目で途中まで進めたパートの続きから出す。
+    await page.locator(index === 1 ? "#resume-study" : "#start-study").click();
+    await shown("study-shell");
+    await answer("good");
+    await shown("completion-card");
+    assert.equal(settings.setupPreferences.routineRun.currentIndex, index + 1, "セットごとに別の項目として数える");
+  }
+  assert.deepEqual(
+    settings.setupPreferences.routineRun.items.map((item) => item.completedCount),
+    [1, 1, 1],
+  );
+  await page.goto(base);
+  await shown("subject-panel");
+  await page.waitForFunction(() => document.querySelector("#routine-dashboard-title").textContent === "メニューをすべて完了しました");
+
+  // 5. 設定画面で項目のあいだを区切り、まとまりごとに［＋］［−］でセット数を決める。
+  reset([
+    { id: "edit-1", kind: "study", subjectId: "mindset", questionTarget: 100, targetUnit: "decks", deckTarget: 1 },
+    { id: "edit-2", kind: "study", subjectId: "test", questionTarget: 100 },
+    { id: "edit-3", kind: "study", subjectId: "test", questionTarget: 10 },
+    { id: "edit-4", kind: "study", subjectId: "other", questionTarget: 10 },
+    { id: "edit-5", kind: "video" },
+  ]);
+  await page.goto(`${base}/settings.html#study-routine-settings`);
+  await page.waitForFunction(() => /読み込みました/.test(document.querySelector("#routine-status").textContent));
+  const summary = () => text("routine-expanded-summary");
+  assert.equal(await summary(), "1日のメニュー：全5項目（1〜5）");
+  assert.equal(await page.locator(".routine-divider").count(), 1, "最初は全体で1つのまとまり");
+  assert.equal(await page.locator(".routine-cut").count(), 4);
+  await page.getByRole("button", { name: "1番と2番のあいだで区切る" }).click();
+  await page.getByRole("button", { name: "4番と5番のあいだで区切る" }).click();
+  assert.equal(await page.locator(".routine-divider").count(), 3);
+  const secondBlock = page.locator(".routine-divider").nth(1);
+  await secondBlock.getByRole("button", { name: "セット数を1増やす" }).click();
+  await secondBlock.getByRole("button", { name: "セット数を1増やす" }).click();
+  assert.equal(await secondBlock.locator("output").textContent(), "×3セット");
+  assert.equal(await summary(), "1日のメニュー：全11項目（1 → 2〜4を3セット → 5）");
+  await page.waitForFunction(() => /1日のメニューは11項目です/.test(document.querySelector("#routine-status").textContent));
+  const setSavedPlan = routinePatches.at(-1).routinePlan;
+  assert.deepEqual(setSavedPlan.map((item) => item.kind === "divider" ? `|${item.sets ?? 1}` : item.id), [
+    "edit-1", "|3", "edit-2", "edit-3", "edit-4", "|1", "edit-5",
+  ]);
+  // 区切りをまたいで「上へ」動かすと上のまとまりへ入り、区切りを外すと上のまとまりとつながる。
+  await page.getByRole("button", { name: "2番を上へ" }).click();
+  assert.equal(await summary(), "1日のメニュー：全9項目（1〜2 → 3〜4を3セット → 5）");
+  await secondBlock.getByRole("button", { name: "セット数を1減らす" }).click();
+  assert.equal(await summary(), "1日のメニュー：全7項目（1〜2 → 3〜4を2セット → 5）");
+  await page.locator(".routine-divider").nth(2).getByRole("button", { name: "この区切りを外して上のまとまりとつなげる" }).click();
+  assert.equal(await summary(), "1日のメニュー：全8項目（1〜2 → 3〜5を2セット）");
+  // 先頭のまとまりもセット数を変えられる。
+  await page.locator(".routine-divider").nth(0).getByRole("button", { name: "セット数を1増やす" }).click();
+  assert.equal(await summary(), "1日のメニュー：全10項目（1〜2を2セット → 3〜5を2セット）");
+  await page.waitForFunction(() => /1日のメニューは10項目です/.test(document.querySelector("#routine-status").textContent));
+  assert.deepEqual(routinePatches.at(-1).routinePlan.map((item) => item.kind === "divider" ? `|${item.sets ?? 1}` : item.id), [
+    "|2", "edit-1", "edit-2", "|2", "edit-3", "edit-4", "edit-5",
+  ]);
+
   const audioCalls = await page.evaluate(() => window.__actualAudioCalls ?? 0);
   assert.equal(audioCalls, 0, "実際の音声は一切再生しない");
   assert.deepEqual(errors, []);
-  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替（マインドセットの周を含む）を無音で確認");
+  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替（マインドセットの周を含む）・セット数のくり返しと設定を無音で確認");
 } finally {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));

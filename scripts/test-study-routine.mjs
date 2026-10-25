@@ -12,6 +12,7 @@ import {
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   drawStudyRoutineVideo,
+  expandStudyRoutinePlan,
   extractYouTubeVideoId,
   migrateLegacyStudyRoutineRun,
   normalizeStudyRoutineMultiplier,
@@ -717,4 +718,117 @@ if (
   }
 }
 
-console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップ・聞き流しの後からの評価を確認");
+// セット数：続けて並んだ同じセット数の項目を、まとまりごとにくり返して1日の進行を作る。
+{
+  const setPlan = [
+    { id: "mindset", subjectId: "mindset", targetUnit: "decks", deckTarget: 1 },
+    { id: "repeat", kind: "divider", sets: 3 },
+    { id: "english", subjectId: "english-vocabulary", questionTarget: 100 },
+    { id: "world", subjectId: "world-history", questionTarget: 10 },
+    { id: "japan", subjectId: "japanese-history", questionTarget: 10 },
+  ];
+  const kinds = (plan) => plan.map((item) => item.kind === "divider" ? `|${item.sets ?? 1}` : item.id).join(",");
+  // 空のまとまり・末尾の区切り・1セットの先頭の区切りは保存せず、セット数は20までにする。
+  const tidied = normalizeStudyRoutinePlan([
+    { id: "lead", kind: "divider" },
+    { id: "a", subjectId: "geography" },
+    { id: "empty", kind: "divider", sets: 5 },
+    { id: "b-block", kind: "divider", sets: 99 },
+    { id: "b", subjectId: "geography" },
+    { id: "tail", kind: "divider", sets: 2 },
+  ]);
+  // v0.430の「項目ごとのセット数」は、セット数の変わり目へ区切りを置いた形へ読み替える。
+  const migrated = normalizeStudyRoutinePlan([
+    { id: "a", subjectId: "geography", sets: 3 },
+    { id: "b", subjectId: "geography", sets: 3 },
+    { id: "c", subjectId: "geography" },
+  ]);
+  if (
+    kinds(normalizeStudyRoutinePlan(setPlan)) !== "mindset,|3,english,world,japan" ||
+    kinds(tidied) !== "a,|20,b" ||
+    kinds(migrated) !== "|3,a,b,|1,c" ||
+    migrated.some((item) => item.kind !== "divider" && "sets" in item) ||
+    kinds(normalizeStudyRoutinePlan([{ id: "d", kind: "divider", sets: 2 }], { fallbackToDefault: false })) !== ""
+  ) {
+    throw new Error("毎日のメニューの区切りとセット数を保存用に整形できませんでした。");
+  }
+  let setRun = createStudyRoutineRun(setPlan, "2026-10-25", "set-run", 2);
+  const order = setRun.items.map((item) => item.subjectId).join(",");
+  const expectedOrder = [
+    "mindset",
+    "english-vocabulary", "world-history", "japanese-history",
+    "english-vocabulary", "world-history", "japanese-history",
+    "english-vocabulary", "world-history", "japanese-history",
+  ].join(",");
+  if (
+    order !== expectedOrder ||
+    new Set(setRun.items.map((item) => item.id)).size !== 10 ||
+    setRun.items[4].setRound !== 2 ||
+    setRun.items[9].setRound !== 3 ||
+    setRun.items[0].setRound !== undefined ||
+    setRun.items[4].questionTarget !== 200 ||
+    scaleStudyRoutinePlan(setPlan).length !== 10 ||
+    expandStudyRoutinePlan(setPlan).length !== 10
+  ) {
+    throw new Error("同じセット数のまとまりを、まとまりごとにくり返せませんでした。");
+  }
+  // 区切りごとに別のまとまりになり、隣り合うまとまりが同じセット数でも別々にくり返す。
+  const splitOrder = expandStudyRoutinePlan([
+    { id: "a", subjectId: "geography" },
+    { id: "b-block", kind: "divider", sets: 2 },
+    { id: "b", subjectId: "world-history" },
+    { id: "c-block", kind: "divider", sets: 2 },
+    { id: "c", subjectId: "japanese-history" },
+    { id: "d", kind: "video" },
+    { id: "e-block", kind: "divider" },
+    { id: "e", subjectId: "biology-basics" },
+  ]).map((item) => item.id).join(",");
+  if (splitOrder !== "a,b,b-set2,c,d,c-set2,d-set2,e") {
+    throw new Error("区切りで分けたまとまりを別々にくり返せませんでした。");
+  }
+  // 順に進めると、2セット目の英単語は1セット目とは別に数え、最後の項目で1日のメニューが完了する。
+  setRun = recordStudyRoutineQuestion(setRun, "mindset", "mindset-deck", "m1", 1, "", {
+    completedDeckIds: ["mindset-deck"],
+  }).run;
+  setRun = applyStudyRoutineMultiplier(setRun, 1);
+  for (let index = 1; index < 10; index += 1) {
+    const item = currentStudyRoutineItem(setRun);
+    if (setRun.currentIndex !== index || item.id !== setRun.items[index].id) {
+      throw new Error("セット数でくり返したメニューを順番に進められませんでした。");
+    }
+    if (index === 5) {
+      setRun = skipStudyRoutineItem(setRun).run;
+      continue;
+    }
+    for (let count = 0; count < item.questionTarget; count += 1) {
+      setRun = recordStudyRoutineQuestion(
+        setRun, item.subjectId, "deck", `q${count}`, 1, "good", { uniqueQuestions: true },
+      ).run;
+    }
+  }
+  const setTotals = studyRoutineTotals(setRun);
+  if (
+    setRun.currentIndex !== 10 ||
+    currentStudyRoutineItem(setRun) !== null ||
+    setRun.items[1].completedCount !== 100 ||
+    setRun.items[4].completedCount !== 100 ||
+    setRun.items[5].skipped !== true ||
+    setTotals.completedItems !== 10 ||
+    setTotals.skippedItems !== 1 ||
+    normalizeStudyRoutineRun(JSON.parse(JSON.stringify(setRun))).currentIndex !== 10
+  ) {
+    throw new Error("セット数でくり返したメニューを最後まで終えられませんでした。");
+  }
+  // 設定の項目上限（100）を超えても、くり返した後の進行は保てる。
+  const bigRun = createStudyRoutineRun(
+    [{ id: "big", kind: "divider", sets: 3 },
+      ...Array.from({ length: 60 }, (_, index) => ({ id: `big-${index}`, subjectId: "geography" }))],
+    "2026-10-25",
+    "big-run",
+  );
+  if (bigRun.items.length !== 180 || normalizeStudyRoutineRun(bigRun).items.length !== 180) {
+    throw new Error("100項目を超えるくり返し後のメニューを保てませんでした。");
+  }
+}
+
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップ・聞き流しの後からの評価・セット数のくり返しを確認");

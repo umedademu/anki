@@ -18,8 +18,8 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.429";
-import { createAutoSave } from "./settings-autosave.js?v=0.429";
+import { createSpeechController } from "./speech.js?v=0.431";
+import { createAutoSave } from "./settings-autosave.js?v=0.431";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,12 +39,13 @@ import {
 import {
   defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
+  expandStudyRoutinePlan,
   normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.429";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.429";
+import { usesChapterDecks } from "./so-chapters.js?v=0.431";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.431";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,
@@ -63,6 +64,7 @@ const elements = {
   studyTimeLimitSeconds: document.querySelector("#study-time-limit-seconds"),
   studyTimeStatus: document.querySelector("#study-time-settings-status"),
   routineEditor: document.querySelector("#routine-editor"),
+  routineExpandedSummary: document.querySelector("#routine-expanded-summary"),
   addRoutineItem: document.querySelector("#add-routine-item"),
   addRoutineVideoItem: document.querySelector("#add-routine-video-item"),
   routineStatus: document.querySelector("#routine-status"),
@@ -118,6 +120,7 @@ const speechRateDrafts = new Map();
 let cloudFallbackMessage = "";
 let previewStarted = false;
 let routinePlan = normalizeStudyRoutinePlan(defaultStudyRoutinePlan);
+const routineSetCountLimit = 20;
 let routineSubjects = [];
 let routineVideos = [];
 let draggedRoutineItemId = "";
@@ -552,62 +555,156 @@ function createRoutineSubjectSelect(item) {
   return select;
 }
 
+// 区切りの見出し。区切りから次の区切りまでのまとまりを、ここで指定したセット数だけくり返す。
+// 先頭のまとまりの見出しには「区切りを外す」を置かない。
+function createRoutineDivider(divider, isFirst) {
+  const sets = divider.sets ?? 1;
+  const element = document.createElement("div");
+  element.className = "routine-divider";
+  element.classList.toggle("is-first", isFirst);
+  element.classList.toggle("is-repeated", sets > 1);
+  element.dataset.routineDividerId = divider.id;
+  const stepper = document.createElement("div");
+  stepper.className = "routine-sets-stepper";
+  const label = document.createElement("span");
+  label.textContent = "くり返し";
+  const minus = document.createElement("button");
+  minus.type = "button";
+  minus.dataset.routineDividerAction = "minus";
+  minus.textContent = "−";
+  minus.disabled = sets <= 1;
+  minus.setAttribute("aria-label", "セット数を1減らす");
+  const count = document.createElement("output");
+  count.tabIndex = -1;
+  count.textContent = `×${sets}セット`;
+  const plus = document.createElement("button");
+  plus.type = "button";
+  plus.dataset.routineDividerAction = "plus";
+  plus.textContent = "＋";
+  plus.disabled = sets >= routineSetCountLimit;
+  plus.setAttribute("aria-label", "セット数を1増やす");
+  stepper.append(label, minus, count, plus);
+  element.append(stepper);
+  if (!isFirst) {
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "routine-divider-remove";
+    remove.dataset.routineDividerAction = "remove";
+    remove.textContent = "✂ 区切りを外す";
+    remove.setAttribute("aria-label", "この区切りを外して上のまとまりとつなげる");
+    element.append(remove);
+  }
+  return element;
+}
+
+function createRoutineCut(previousItemId, number) {
+  const cut = document.createElement("button");
+  cut.type = "button";
+  cut.className = "routine-cut";
+  cut.dataset.routineCutAfter = previousItemId;
+  cut.textContent = "✂ ここで区切る";
+  cut.setAttribute("aria-label", `${number}番と${number + 1}番のあいだで区切る`);
+  return cut;
+}
+
+// 「1 → 2〜4を3セット → 5」の形で、くり返した後の1日のメニューを示す。
+function renderRoutineExpandedSummary() {
+  const blocks = [];
+  let number = 0;
+  for (const entry of routinePlan) {
+    if (entry.kind === "divider") {
+      blocks.push({ sets: entry.sets ?? 1, first: 0, last: 0 });
+    } else {
+      number += 1;
+      const block = blocks.at(-1);
+      block.first ||= number;
+      block.last = number;
+    }
+  }
+  if (number === 0) {
+    elements.routineExpandedSummary.textContent = "";
+    return;
+  }
+  const steps = blocks.filter((block) => block.first).map((block) => {
+    const range = block.first === block.last ? `${block.first}` : `${block.first}〜${block.last}`;
+    return block.sets > 1 ? `${range}を${block.sets}セット` : range;
+  });
+  const dailyCount = expandStudyRoutinePlan(routinePlan).length;
+  elements.routineExpandedSummary.textContent =
+    `1日のメニュー：全${dailyCount}項目（${steps.join(" → ")}）`;
+}
+
 function renderRoutineEditor() {
-  elements.routineEditor.replaceChildren(
-    ...routinePlan.map((item, index) => {
-      const row = document.createElement("article");
-      row.className = "routine-editor-item";
-      row.classList.toggle("is-video", item.kind === "video");
-      row.dataset.routineItemId = item.id;
+  const nodes = [];
+  let number = 0;
+  let blockSets = 1;
+  const itemCount = routinePlan.filter((entry) => entry.kind !== "divider").length;
+  routinePlan.forEach((item, index) => {
+    if (item.kind === "divider") {
+      blockSets = item.sets ?? 1;
+      nodes.push(createRoutineDivider(item, index === 0));
+      return;
+    }
+    number += 1;
+    const previous = routinePlan[index - 1];
+    if (previous && previous.kind !== "divider") {
+      nodes.push(createRoutineCut(previous.id, number - 1));
+    }
+    const row = document.createElement("article");
+    row.className = "routine-editor-item";
+    row.classList.toggle("is-video", item.kind === "video");
+    row.classList.toggle("is-repeated", blockSets > 1);
+    row.dataset.routineItemId = item.id;
 
-      const handle = document.createElement("button");
-      handle.type = "button";
-      handle.className = "routine-drag-handle";
-      handle.draggable = true;
-      handle.setAttribute("aria-label", `${index + 1}番をつかんで並べ替える`);
-      handle.textContent = "☰";
+    const handle = document.createElement("button");
+    handle.type = "button";
+    handle.className = "routine-drag-handle";
+    handle.draggable = true;
+    handle.setAttribute("aria-label", `${number}番をつかんで並べ替える`);
+    handle.textContent = "☰";
 
-      const order = document.createElement("strong");
-      order.className = "routine-order";
-      order.textContent = String(index + 1);
+    const order = document.createElement("strong");
+    order.className = "routine-order";
+    order.textContent = String(number);
 
-      const actions = document.createElement("div");
-      actions.className = "routine-item-actions";
-      const actionDefinitions = [
-        ["up", "↑", "上へ"],
-        ["down", "↓", "下へ"],
-        ["copy", "複製", "複製"],
-        ["delete", "削除", "削除"],
-      ];
-      for (const [action, text, label] of actionDefinitions) {
-        const button = document.createElement("button");
-        button.type = "button";
-        button.dataset.routineAction = action;
-        button.textContent = text;
-        button.setAttribute("aria-label", `${index + 1}番を${label}`);
-        button.disabled =
-          (action === "up" && index === 0) ||
-          (action === "down" && index === routinePlan.length - 1);
-        actions.append(button);
-      }
+    const actions = document.createElement("div");
+    actions.className = "routine-item-actions";
+    const actionDefinitions = [
+      ["up", "↑", "上へ"],
+      ["down", "↓", "下へ"],
+      ["copy", "複製", "複製"],
+      ["delete", "削除", "削除"],
+    ];
+    for (const [action, text, label] of actionDefinitions) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.routineAction = action;
+      button.textContent = text;
+      button.setAttribute("aria-label", `${number}番を${label}`);
+      button.disabled =
+        (action === "up" && number === 1) ||
+        (action === "down" && number === itemCount);
+      actions.append(button);
+    }
 
-      if (item.kind === "video") {
-        const videoLabel = document.createElement("div");
-        videoLabel.className = "routine-video-item-label";
-        const title = document.createElement("strong");
-        title.textContent = "動画をランダム再生";
-        const description = document.createElement("small");
-        description.textContent = "一巡するまで同じ動画を重ねません";
-        videoLabel.append(title, description);
-        row.append(handle, order, videoLabel, actions);
-      } else {
-        const subject = createRoutineSubjectSelect(item);
-        subject.dataset.routineField = "subjectId";
-        row.append(handle, order, subject, createRoutineAmount(item), actions);
-      }
-      return row;
-    }),
-  );
+    if (item.kind === "video") {
+      const videoLabel = document.createElement("div");
+      videoLabel.className = "routine-video-item-label";
+      const title = document.createElement("strong");
+      title.textContent = "動画をランダム再生";
+      const description = document.createElement("small");
+      description.textContent = "一巡するまで同じ動画を重ねません";
+      videoLabel.append(title, description);
+      row.append(handle, order, videoLabel, actions);
+    } else {
+      const subject = createRoutineSubjectSelect(item);
+      subject.dataset.routineField = "subjectId";
+      row.append(handle, order, subject, createRoutineAmount(item), actions);
+    }
+    nodes.push(row);
+  });
+  elements.routineEditor.replaceChildren(...nodes);
+  renderRoutineExpandedSummary();
 }
 
 function renderRoutineVideos() {
@@ -645,8 +742,21 @@ function renderRoutineVideos() {
   );
 }
 
+function createRoutineDividerId() {
+  return `divider-${globalThis.crypto?.randomUUID?.() ?? `${Date.now()}-${Math.random().toString(36).slice(2)}`}`;
+}
+
+// 編集中は先頭のまとまりにも見出し（区切り）を置き、セット数を変えられるようにする。
+// 項目のなくなったまとまりは取り除く。
+function tidyRoutinePlan(plan) {
+  const normalized = normalizeStudyRoutinePlan(plan, { fallbackToDefault: false });
+  return normalized[0]?.kind === "divider" || normalized.length === 0
+    ? normalized
+    : [{ id: createRoutineDividerId(), kind: "divider" }, ...normalized];
+}
+
 function fillRoutinePlan(value) {
-  routinePlan = normalizeStudyRoutinePlan(value);
+  routinePlan = tidyRoutinePlan(normalizeStudyRoutinePlan(value));
   renderRoutineEditor();
 }
 
@@ -661,15 +771,16 @@ function updateRoutineItem(itemId, patch) {
   );
 }
 
+// 区切りをまたいで動かすと、その項目は隣のまとまりへ入る。先頭の見出しより上へは動かさない。
 function moveRoutineItem(itemId, nextIndex) {
   const currentIndex = routinePlan.findIndex((item) => item.id === itemId);
   if (currentIndex < 0) return;
-  const boundedIndex = Math.max(0, Math.min(routinePlan.length - 1, nextIndex));
+  const boundedIndex = Math.max(1, Math.min(routinePlan.length - 1, nextIndex));
   if (boundedIndex === currentIndex) return;
   const next = [...routinePlan];
   const [item] = next.splice(currentIndex, 1);
   next.splice(boundedIndex, 0, item);
-  routinePlan = next;
+  routinePlan = tidyRoutinePlan(next);
   renderRoutineEditor();
 }
 
@@ -794,10 +905,60 @@ function handleRoutineFieldChange(event) {
   }
 }
 
+// 「ここで区切る」で新しいまとまりを作り（セット数は上のまとまりを引き継ぐ）、
+// 見出しの［−］［＋］でセット数を変え、「区切りを外す」で上のまとまりへつなげる。
+function handleRoutineDividerClick(cut, dividerButton) {
+  if (cut) {
+    const index = routinePlan.findIndex((item) => item.id === cut.dataset.routineCutAfter);
+    if (index < 0) return;
+    const previousDivider = routinePlan.slice(0, index).findLast((item) => item.kind === "divider");
+    const divider = {
+      id: createRoutineDividerId(),
+      kind: "divider",
+      ...(previousDivider?.sets ? { sets: previousDivider.sets } : {}),
+    };
+    routinePlan = [...routinePlan.slice(0, index + 1), divider, ...routinePlan.slice(index + 1)];
+    renderRoutineEditor();
+    elements.routineEditor
+      .querySelector(`[data-routine-divider-id="${CSS.escape(divider.id)}"] [data-routine-divider-action="plus"]`)
+      ?.focus();
+    return;
+  }
+  const dividerId = dividerButton.closest("[data-routine-divider-id]")?.dataset.routineDividerId;
+  const action = dividerButton.dataset.routineDividerAction;
+  if (action === "remove") {
+    routinePlan = tidyRoutinePlan(routinePlan.filter((item) => item.id !== dividerId));
+    renderRoutineEditor();
+    return;
+  }
+  routinePlan = routinePlan.map((item) => {
+    if (item.id !== dividerId) return item;
+    const sets = Math.min(
+      routineSetCountLimit,
+      Math.max(1, (item.sets ?? 1) + (action === "plus" ? 1 : -1)),
+    );
+    const { sets: _sets, ...divider } = item;
+    return sets > 1 ? { ...divider, sets } : divider;
+  });
+  renderRoutineEditor();
+  const divider = elements.routineEditor.querySelector(
+    `[data-routine-divider-id="${CSS.escape(dividerId)}"]`,
+  );
+  const target = divider?.querySelector(`[data-routine-divider-action="${action}"]`);
+  (target?.disabled ? divider.querySelector("output") : target)?.focus();
+}
+
 elements.routineEditor.addEventListener("input", handleRoutineFieldChange);
 elements.routineEditor.addEventListener("change", handleRoutineFieldChange);
 
 elements.routineEditor.addEventListener("click", (event) => {
+  const cut = event.target.closest("button[data-routine-cut-after]");
+  const dividerButton = event.target.closest("button[data-routine-divider-action]");
+  if (cut || dividerButton) {
+    handleRoutineDividerClick(cut, dividerButton);
+    void routineAutoSave.now();
+    return;
+  }
   const button = event.target.closest("button[data-routine-action]");
   const row = event.target.closest("[data-routine-item-id]");
   if (!button || !row) return;
@@ -817,7 +978,7 @@ elements.routineEditor.addEventListener("click", (event) => {
     routinePlan = next;
     renderRoutineEditor();
   } else if (button.dataset.routineAction === "delete") {
-    routinePlan = routinePlan.filter((item) => item.id !== itemId);
+    routinePlan = tidyRoutinePlan(routinePlan.filter((item) => item.id !== itemId));
     renderRoutineEditor();
   }
   void routineAutoSave.now();
@@ -907,8 +1068,17 @@ const routineAutoSave = createAutoSave({
         );
         return;
       }
+      const setCount = (plan) => plan.filter((item) => item.kind === "divider").length;
+      if (setCount(saved.setupPreferences.routinePlan) !== setCount(normalized)) {
+        setRoutineStatus(
+          "Cloudflare側がセット数の指定にまだ対応していないため、1セットとして保存されました。",
+          true,
+        );
+        return;
+      }
+      const dailyCount = expandStudyRoutinePlan(saved.setupPreferences.routinePlan).length;
       setRoutineStatus(
-        "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
+        `毎日のメニューをCloudflareへ保存しました。1日のメニューは${dailyCount}項目です。次に1番から始めるときに使います。`,
       );
     } catch (error) {
       setRoutineStatus(error.message, true);

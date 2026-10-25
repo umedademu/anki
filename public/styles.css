@@ -2761,6 +2761,103 @@ body.is-listening.is-listening-answer-visible .page {
   font-weight: 800;
 }
 
+/* 区切りの見出し。区切りから次の区切りまでのまとまりをセット数だけくり返す。 */
+.routine-divider {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  margin-top: 6px;
+  padding: 8px 2px 0;
+  border-top: 2px dashed var(--theme-accent, #2b6543);
+}
+
+.routine-divider.is-first {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.routine-sets-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--theme-muted, #52655a);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.routine-sets-stepper output {
+  min-width: 4.6em;
+  text-align: center;
+  color: var(--theme-text, #26372c);
+}
+
+.routine-divider.is-repeated .routine-sets-stepper output {
+  color: var(--theme-accent, #2b6543);
+  font-size: 0.9rem;
+}
+
+.routine-sets-stepper button,
+.routine-divider-remove,
+.routine-cut {
+  min-height: 32px;
+  padding: 4px 10px;
+  color: var(--theme-text, #3b5e47);
+  background: var(--theme-surface, #fff);
+  border: 1px solid var(--theme-border, rgb(34 80 53 / 16%));
+  border-radius: 8px;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.routine-sets-stepper button {
+  min-width: 34px;
+}
+
+.routine-sets-stepper button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+.routine-divider-remove {
+  font-size: 0.72rem;
+}
+
+/* 項目のあいだの「ここで区切る」は目立たせず、押すと区切りを入れる。 */
+.routine-cut {
+  justify-self: center;
+  min-height: 22px;
+  margin: -6px 0;
+  padding: 0 12px;
+  color: var(--theme-muted, #6b7d72);
+  background: transparent;
+  border-color: transparent;
+  font-size: 0.68rem;
+  opacity: 0.7;
+}
+
+.routine-cut:hover,
+.routine-cut:focus-visible {
+  border-color: var(--theme-border, rgb(34 80 53 / 16%));
+  background: var(--theme-surface, #fff);
+  opacity: 1;
+}
+
+.routine-editor-item.is-repeated {
+  border-left: 4px solid var(--theme-accent, #2b6543);
+}
+
+.routine-expanded-summary {
+  margin: 0 0 12px;
+  color: var(--theme-muted, #52655a);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
 .routine-unit-select {
   width: auto;
   min-width: 6.2em;

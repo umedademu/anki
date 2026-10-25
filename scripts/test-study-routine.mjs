@@ -12,6 +12,7 @@ import {
   defaultStudyRoutineVideos,
   defaultStudyRoutineVideoShuffle,
   drawStudyRoutineVideo,
+  expandStudyRoutinePlan,
   extractYouTubeVideoId,
   migrateLegacyStudyRoutineRun,
   normalizeStudyRoutineMultiplier,
@@ -717,4 +718,97 @@ if (
   }
 }
 
-console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップ・聞き流しの後からの評価を確認");
+// セット数：続けて並んだ同じセット数の項目を、まとまりごとにくり返して1日の進行を作る。
+{
+  const setPlan = [
+    { id: "mindset", subjectId: "mindset", targetUnit: "decks", deckTarget: 1 },
+    { id: "english", subjectId: "english-vocabulary", questionTarget: 100, sets: 3 },
+    { id: "world", subjectId: "world-history", questionTarget: 10, sets: 3 },
+    { id: "japan", subjectId: "japanese-history", questionTarget: 10, sets: 3 },
+  ];
+  const normalizedSetPlan = normalizeStudyRoutinePlan(setPlan);
+  const legacyPlan = normalizeStudyRoutinePlan([{ id: "old", subjectId: "geography", sets: 1 }]);
+  if (
+    "sets" in normalizedSetPlan[0] ||
+    normalizedSetPlan[1].sets !== 3 ||
+    "sets" in legacyPlan[0] ||
+    normalizeStudyRoutinePlan([{ id: "x", subjectId: "geography", sets: 99 }])[0].sets !== 20
+  ) {
+    throw new Error("毎日のメニューのセット数を保存用に整形できませんでした。");
+  }
+  let setRun = createStudyRoutineRun(setPlan, "2026-10-25", "set-run", 2);
+  const order = setRun.items.map((item) => item.subjectId).join(",");
+  const expectedOrder = [
+    "mindset",
+    "english-vocabulary", "world-history", "japanese-history",
+    "english-vocabulary", "world-history", "japanese-history",
+    "english-vocabulary", "world-history", "japanese-history",
+  ].join(",");
+  if (
+    order !== expectedOrder ||
+    new Set(setRun.items.map((item) => item.id)).size !== 10 ||
+    setRun.items[4].setRound !== 2 ||
+    setRun.items[9].setRound !== 3 ||
+    setRun.items[0].setRound !== undefined ||
+    setRun.items[4].questionTarget !== 200 ||
+    scaleStudyRoutinePlan(setPlan).length !== 10 ||
+    expandStudyRoutinePlan(setPlan).length !== 10
+  ) {
+    throw new Error("同じセット数のまとまりを、まとまりごとにくり返せませんでした。");
+  }
+  // 1セット・3セット・1セットのように分かれていれば、それぞれ別のまとまりになる。
+  const splitOrder = expandStudyRoutinePlan([
+    { id: "a", subjectId: "geography" },
+    { id: "b", subjectId: "world-history", sets: 2 },
+    { id: "c", subjectId: "japanese-history" },
+    { id: "d", kind: "video", sets: 2 },
+    { id: "e", subjectId: "biology-basics", sets: 2 },
+  ]).map((item) => item.id).join(",");
+  if (splitOrder !== "a,b,b-set2,c,d,e,d-set2,e-set2") {
+    throw new Error("セット数の違う項目を別々のまとまりとして扱えませんでした。");
+  }
+  // 順に進めると、2セット目の英単語は1セット目とは別に数え、最後の項目で1日のメニューが完了する。
+  setRun = recordStudyRoutineQuestion(setRun, "mindset", "mindset-deck", "m1", 1, "", {
+    completedDeckIds: ["mindset-deck"],
+  }).run;
+  setRun = applyStudyRoutineMultiplier(setRun, 1);
+  for (let index = 1; index < 10; index += 1) {
+    const item = currentStudyRoutineItem(setRun);
+    if (setRun.currentIndex !== index || item.id !== setRun.items[index].id) {
+      throw new Error("セット数でくり返したメニューを順番に進められませんでした。");
+    }
+    if (index === 5) {
+      setRun = skipStudyRoutineItem(setRun).run;
+      continue;
+    }
+    for (let count = 0; count < item.questionTarget; count += 1) {
+      setRun = recordStudyRoutineQuestion(
+        setRun, item.subjectId, "deck", `q${count}`, 1, "good", { uniqueQuestions: true },
+      ).run;
+    }
+  }
+  const setTotals = studyRoutineTotals(setRun);
+  if (
+    setRun.currentIndex !== 10 ||
+    currentStudyRoutineItem(setRun) !== null ||
+    setRun.items[1].completedCount !== 100 ||
+    setRun.items[4].completedCount !== 100 ||
+    setRun.items[5].skipped !== true ||
+    setTotals.completedItems !== 10 ||
+    setTotals.skippedItems !== 1 ||
+    normalizeStudyRoutineRun(JSON.parse(JSON.stringify(setRun))).currentIndex !== 10
+  ) {
+    throw new Error("セット数でくり返したメニューを最後まで終えられませんでした。");
+  }
+  // 設定の項目上限（100）を超えても、くり返した後の進行は保てる。
+  const bigRun = createStudyRoutineRun(
+    Array.from({ length: 60 }, (_, index) => ({ id: `big-${index}`, subjectId: "geography", sets: 3 })),
+    "2026-10-25",
+    "big-run",
+  );
+  if (bigRun.items.length !== 180 || normalizeStudyRoutineRun(bigRun).items.length !== 180) {
+    throw new Error("100項目を超えるくり返し後のメニューを保てませんでした。");
+  }
+}
+
+console.log("毎日のメニュー検証完了: 学習量調整・動画一括スキップ・27本一巡・連続防止・パート数の目標・科目のスキップ・聞き流しの後からの評価・セット数のくり返しを確認");

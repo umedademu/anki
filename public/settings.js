@@ -18,8 +18,8 @@ import {
   storeAccessKey,
   uploadCloudRatingSound,
 } from "./cloud-progress.js";
-import { createSpeechController } from "./speech.js?v=0.429";
-import { createAutoSave } from "./settings-autosave.js?v=0.429";
+import { createSpeechController } from "./speech.js?v=0.430";
+import { createAutoSave } from "./settings-autosave.js?v=0.430";
 import {
   azureSpeechVoices,
   englishAzureSpeechVoices,
@@ -39,12 +39,13 @@ import {
 import {
   defaultStudyRoutineOvertimeSeconds,
   defaultStudyRoutinePlan,
+  expandStudyRoutinePlan,
   normalizeStudyRoutineOvertimeSeconds,
   normalizeStudyRoutinePlan,
   normalizeStudyRoutineVideoLibrary,
 } from "./study-routine.js";
-import { usesChapterDecks } from "./so-chapters.js?v=0.429";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.429";
+import { usesChapterDecks } from "./so-chapters.js?v=0.430";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.430";
 import {
   defaultRatingSoundVolume,
   maximumRatingSoundFileBytes,
@@ -533,6 +534,23 @@ function createRoutineAmount(item) {
   return amount;
 }
 
+// 続けて並んだ同じセット数の項目は、まとまりごとにくり返して1日のメニューにする。
+function createRoutineSets(item, index) {
+  const label = document.createElement("label");
+  label.className = "routine-sets";
+  const input = document.createElement("input");
+  input.type = "number";
+  input.min = "1";
+  input.max = "20";
+  input.step = "1";
+  input.inputMode = "numeric";
+  input.value = String(item.sets ?? 1);
+  input.dataset.routineField = "sets";
+  input.setAttribute("aria-label", `${index + 1}番のセット数`);
+  label.append("×", input, "セット");
+  return label;
+}
+
 function createRoutineSubjectSelect(item) {
   const select = document.createElement("select");
   select.className = "routine-subject-select";
@@ -599,11 +617,18 @@ function renderRoutineEditor() {
         const description = document.createElement("small");
         description.textContent = "一巡するまで同じ動画を重ねません";
         videoLabel.append(title, description);
-        row.append(handle, order, videoLabel, actions);
+        row.append(handle, order, videoLabel, createRoutineSets(item, index), actions);
       } else {
         const subject = createRoutineSubjectSelect(item);
         subject.dataset.routineField = "subjectId";
-        row.append(handle, order, subject, createRoutineAmount(item), actions);
+        row.append(
+          handle,
+          order,
+          subject,
+          createRoutineAmount(item),
+          createRoutineSets(item, index),
+          actions,
+        );
       }
       return row;
     }),
@@ -771,7 +796,7 @@ function handleRoutineFieldChange(event) {
   if (!row || !field) return;
   const itemId = row.dataset.routineItemId;
   const value = event.target.value;
-  if (field === "questionTarget" || field === "deckTarget") {
+  if (field === "questionTarget" || field === "deckTarget" || field === "sets") {
     updateRoutineItem(itemId, { [field]: Number.parseInt(value, 10) || 1 });
   } else if (field === "targetUnit") {
     updateRoutineItem(itemId, value === "decks"
@@ -907,8 +932,17 @@ const routineAutoSave = createAutoSave({
         );
         return;
       }
+      const setCount = (plan) => plan.filter((item) => item.sets > 1).length;
+      if (setCount(saved.setupPreferences.routinePlan) !== setCount(normalized)) {
+        setRoutineStatus(
+          "Cloudflare側がセット数の指定にまだ対応していないため、1セットとして保存されました。",
+          true,
+        );
+        return;
+      }
+      const dailyCount = expandStudyRoutinePlan(saved.setupPreferences.routinePlan).length;
       setRoutineStatus(
-        "毎日のメニューをCloudflareへ保存しました。次に1番から始めるときに使います。",
+        `毎日のメニューをCloudflareへ保存しました。1日のメニューは${dailyCount}項目です。次に1番から始めるときに使います。`,
       );
     } catch (error) {
       setRoutineStatus(error.message, true);

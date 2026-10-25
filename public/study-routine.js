@@ -8,6 +8,9 @@ import {
 const routineIdPattern = /^[A-Za-z0-9_-]{1,100}$/;
 const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 const routineItemLimit = 100;
+// セット数でくり返した後の1日の進行は、設定の項目数より多くなる。
+const routineRunItemLimit = 1000;
+const routineSetCountLimit = 20;
 const routineVideoLimit = 200;
 const routineQuestionTargetLimit = 10_000;
 const routineDeckTargetLimit = 500;
@@ -133,6 +136,13 @@ function normalizeDeckTarget(value) {
     : 1;
 }
 
+function normalizeRoutineSetCount(value) {
+  const parsed = Number.parseInt(value, 10);
+  return Number.isFinite(parsed)
+    ? Math.min(routineSetCountLimit, Math.max(1, parsed))
+    : 1;
+}
+
 function normalizeCompletedDeckIds(value) {
   return Array.isArray(value)
     ? [...new Set(value.map(normalizeRoutineId).filter(Boolean))]
@@ -186,8 +196,19 @@ function normalizeRoutineItem(value, index, usedIds) {
     suffix += 1;
   }
   usedIds.add(id);
+  // セット数は2以上の時だけ持たせ、今までの保存データと同じ形を保つ。
+  // setRoundは1日の進行へ展開した後の「何セット目か」。
+  const sets = normalizeRoutineSetCount(value.sets);
+  const setFields = sets > 1
+    ? {
+        sets,
+        ...(value.setRound != null
+          ? { setRound: Math.min(sets, normalizeRoutineSetCount(value.setRound)) }
+          : {}),
+      }
+    : {};
   return kind === "video"
-    ? { id, kind }
+    ? { id, kind, ...setFields }
     : {
         id,
         kind,
@@ -196,6 +217,7 @@ function normalizeRoutineItem(value, index, usedIds) {
         ...(value.targetUnit === "decks"
           ? { targetUnit: "decks", deckTarget: normalizeDeckTarget(value.deckTarget) }
           : {}),
+        ...setFields,
       };
 }
 
@@ -207,21 +229,60 @@ function cloneDefaultVideos() {
   return defaultStudyRoutineVideos.map((video) => ({ ...video }));
 }
 
-export function normalizeStudyRoutinePlan(value, { fallbackToDefault = true } = {}) {
+export function normalizeStudyRoutinePlan(
+  value,
+  { fallbackToDefault = true, itemLimit = routineItemLimit } = {},
+) {
   if (!Array.isArray(value)) {
     return fallbackToDefault ? cloneDefaultPlan() : [];
   }
   const usedIds = new Set();
-  const plan = value.slice(0, routineItemLimit).flatMap((item, index) => {
+  const plan = value.slice(0, itemLimit).flatMap((item, index) => {
     const normalized = normalizeRoutineItem(item, index, usedIds);
     return normalized ? [normalized] : [];
   });
   return plan.length > 0 || !fallbackToDefault ? plan : cloneDefaultPlan();
 }
 
+// 続けて並んだ同じセット数の項目を1つのまとまりとし、まとまりごとにセット数だけくり返す。
+// 例：1番が1セット、2〜4番が3セットなら「1, 2, 3, 4, 2, 3, 4, 2, 3, 4」。
+export function expandStudyRoutinePlan(plan) {
+  const normalized = normalizeStudyRoutinePlan(plan);
+  const groups = [];
+  for (const item of normalized) {
+    const sets = item.sets ?? 1;
+    const group = groups.at(-1);
+    if (group?.sets === sets) {
+      group.items.push(item);
+    } else {
+      groups.push({ sets, items: [item] });
+    }
+  }
+  const expanded = groups.flatMap(({ sets, items }) =>
+    Array.from({ length: sets }, (_, roundIndex) =>
+      items.map((item) => {
+        const { setRound: _setRound, ...base } = item;
+        return sets > 1
+          ? {
+              ...base,
+              // 2セット目以降は別の回として数えるため、別のIDにする。
+              id: roundIndex === 0
+                ? item.id
+                : `${item.id.slice(0, 90)}-set${roundIndex + 1}`,
+              setRound: roundIndex + 1,
+            }
+          : base;
+      }),
+    ).flat(),
+  );
+  return normalizeStudyRoutinePlan(expanded.slice(0, routineRunItemLimit), {
+    itemLimit: routineRunItemLimit,
+  });
+}
+
 export function scaleStudyRoutinePlan(plan, multiplier = 1) {
   const normalizedMultiplier = normalizeStudyRoutineMultiplier(multiplier);
-  return normalizeStudyRoutinePlan(plan).map((item) =>
+  return expandStudyRoutinePlan(plan).map((item) =>
     item.kind === "study"
       ? {
           ...item,
@@ -355,6 +416,7 @@ export function normalizeStudyRoutineRun(value) {
   const hasStoredMultiplier = Object.hasOwn(source, "routineMultiplier");
   const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
+    itemLimit: routineRunItemLimit,
   });
   const items = normalizedPlan.map((item, index) => {
     const sourceItem = source.items?.[index] ?? {};
@@ -507,7 +569,7 @@ export function createStudyRoutineRun(
   skipVideos = false,
 ) {
   const routineMultiplier = normalizeStudyRoutineMultiplier(multiplier);
-  const items = normalizeStudyRoutinePlan(plan).map((item) =>
+  const items = expandStudyRoutinePlan(plan).map((item) =>
     item.kind === "video"
       ? {
           ...item,

@@ -288,10 +288,70 @@ try {
   assert.equal(savedPlan[2].deckTarget, 1);
   assert.equal(await rows.nth(0).locator(".routine-unit-select").inputValue(), "decks");
 
+  // 4. セット数：2番を2セットにすると「1, 2, 2」の3項目になり、順に進めて最後で完了する。
+  reset([
+    { id: "once", kind: "study", subjectId: "test", questionTarget: 1 },
+    { id: "twice", kind: "study", subjectId: "test", questionTarget: 1, sets: 2 },
+  ]);
+  await page.goto(base);
+  await shown("subject-panel");
+  await page.waitForFunction(() => !document.querySelector("#continue-routine").disabled);
+  const setList = await page.locator("#routine-dashboard-list li").allTextContents();
+  assert.deepEqual(setList, [
+    "1. 試験科目 1問",
+    "2. 試験科目（1／2セット目） 1問",
+    "3. 試験科目（2／2セット目） 1問",
+  ]);
+  await openRoutine();
+  for (const [index, deckId] of [[0, "deck-1"], [1, "deck-1"], [2, "deck-2"]]) {
+    if (index > 0) {
+      await page.locator("#completion-return").click();
+      await shown("setup-panel");
+      await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+    }
+    assert.equal(
+      await text("routine-setup-title"),
+      `毎日のメニュー ${index + 1}／3｜試験科目${index === 0 ? "" : `（${index}／2セット目）`}`,
+    );
+    await choosePart(deckId);
+    // 2項目目は1項目目で途中まで進めたパートの続きから出す。
+    await page.locator(index === 1 ? "#resume-study" : "#start-study").click();
+    await shown("study-shell");
+    await answer("good");
+    await shown("completion-card");
+    assert.equal(settings.setupPreferences.routineRun.currentIndex, index + 1, "セットごとに別の項目として数える");
+  }
+  assert.deepEqual(
+    settings.setupPreferences.routineRun.items.map((item) => item.completedCount),
+    [1, 1, 1],
+  );
+  await page.goto(base);
+  await shown("subject-panel");
+  await page.waitForFunction(() => document.querySelector("#routine-dashboard-title").textContent === "メニューをすべて完了しました");
+
+  // 5. 設定画面で各項目のセット数を指定でき、1セットの項目にはセット数を保存しない。
+  reset([
+    { id: "edit-once", kind: "study", subjectId: "test", questionTarget: 100 },
+    { id: "edit-sets", kind: "study", subjectId: "test", questionTarget: 10 },
+    { id: "edit-video", kind: "video" },
+  ]);
+  await page.goto(`${base}/settings.html#study-routine-settings`);
+  await page.waitForFunction(() => /読み込みました/.test(document.querySelector("#routine-status").textContent));
+  const setRows = page.locator(".routine-editor-item");
+  assert.equal(await setRows.nth(0).locator('input[data-routine-field="sets"]').inputValue(), "1");
+  await setRows.nth(1).locator('input[data-routine-field="sets"]').fill("3");
+  await setRows.nth(2).locator('input[data-routine-field="sets"]').fill("3");
+  await setRows.nth(2).locator('input[data-routine-field="sets"]').blur();
+  await page.waitForFunction(() => /1日のメニューは7項目です/.test(document.querySelector("#routine-status").textContent));
+  const setSavedPlan = routinePatches.at(-1).routinePlan;
+  assert.equal(Object.hasOwn(setSavedPlan[0], "sets"), false);
+  assert.equal(setSavedPlan[1].sets, 3);
+  assert.equal(setSavedPlan[2].sets, 3);
+
   const audioCalls = await page.evaluate(() => window.__actualAudioCalls ?? 0);
   assert.equal(audioCalls, 0, "実際の音声は一切再生しない");
   assert.deepEqual(errors, []);
-  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替（マインドセットの周を含む）を無音で確認");
+  console.log("パート数の毎日メニュー検証完了: 一周ごとの加算・目標前の選び直し・次の項目・復習猶予・設定画面の単位切替（マインドセットの周を含む）・セット数のくり返しと設定を無音で確認");
 } finally {
   await browser?.close();
   await new Promise((resolve) => server.close(resolve));

@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.429";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.429";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.430";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.430";
 import { createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.429";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.430";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.429";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.429";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.429";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.429";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.429";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.429";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.429";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.429";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.429";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.430";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.430";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.430";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.430";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.430";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.430";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.430";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.430";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.430";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.429";
+} from "./original-session.js?v=0.430";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.429";
+} from "./speech.js?v=0.430";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.429";
+} from "./deck-selection.js?v=0.430";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.429";
-import { createAutoSave } from "./settings-autosave.js?v=0.429";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.430";
+import { createAutoSave } from "./settings-autosave.js?v=0.430";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -737,10 +737,17 @@ function routineSubjectTitle(subjectId) {
     subjectId;
 }
 
+// セット数でくり返した項目には「（2／3セット目）」を添える。
+function routineSetText(item) {
+  return item?.sets > 1 && item.setRound
+    ? `（${item.setRound}／${item.sets}セット目）`
+    : "";
+}
+
 function routineItemTitle(item) {
-  return item?.kind === "video"
+  return (item?.kind === "video"
     ? item.videoTitle || "動画をランダム再生"
-    : routineSubjectTitle(item?.subjectId);
+    : routineSubjectTitle(item?.subjectId)) + routineSetText(item);
 }
 
 // 日本史K・世界史SOのように章の中を分けた科目では、デッキを「パート」と呼ぶ。
@@ -1030,7 +1037,7 @@ function renderRoutineSetupContext() {
   if (!item) return;
   const run = normalizeStudyRoutineRun(state.routineRun);
   elements.routineSetupTitle.textContent =
-    `毎日のメニュー ${run.currentIndex + 1}／${run.items.length}｜${routineSubjectTitle(item.subjectId)}`;
+    `毎日のメニュー ${run.currentIndex + 1}／${run.items.length}｜${routineSubjectTitle(item.subjectId)}${routineSetText(item)}`;
   const unit = routineUnitLabel(item);
   elements.routineSetupProgress.textContent = studyRoutineUsesDeckTarget(item)
     ? `${routineItemCompleted(item)}／${item.deckTarget}${unit}完了・残り${routineRemainingText(item)}。学習する${unit}を選んで一周し終えると、選んだ${unit}の数だけ進みます。`

@@ -262,6 +262,7 @@ try {
   assert.match(await text("routine-dashboard-summary"), /4項目・1問・動画0本をすべて進めました。（3項目は今日はスキップ）/);
   assert.match(await text("routine-dashboard-list"), /2\. 試験科目 5問（今日はスキップ）/);
   assert.equal(run().currentIndex, 4);
+  assert.equal(await text("routine-dashboard-count"), "4／4", "スキップした項目も消化済みに数える");
 
   // 途中まで進めた記録があれば確認文で知らせる。
   reset([
@@ -277,6 +278,7 @@ try {
     document.querySelector("#routine-dashboard-list li.is-current")?.textContent.startsWith("2. "));
   assert.equal(run().items[0].completedCount, 2);
   assert.equal(run().currentIndex, 1);
+  assert.equal(await text("routine-dashboard-count"), "1／2");
 
   const audioCalls = await page.evaluate(() => window.__actualAudioCalls ?? 0);
   assert.equal(audioCalls, 0, "実際の音声は一切再生しない");

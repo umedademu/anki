@@ -896,6 +896,16 @@ body.is-study-menu-open {
   transition: width 180ms ease;
 }
 
+/* グリッドの間隔を詰めて、数字をバーのすぐ下に置く。 */
+.routine-dashboard .routine-dashboard-count {
+  margin-top: -9px;
+  color: var(--theme-muted, #637269);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
 .routine-dashboard-list {
   display: flex;
   margin: 0;

@@ -303,6 +303,7 @@ try {
     "2. 試験科目（1／2セット目） 1問",
     "3. 試験科目（2／2セット目） 1問",
   ]);
+  assert.equal(await text("routine-dashboard-count"), "0／3", "セット数で展開した項目数を数える");
   await openRoutine();
   for (const [index, deckId] of [[0, "deck-1"], [1, "deck-1"], [2, "deck-2"]]) {
     if (index > 0) {
@@ -329,6 +330,7 @@ try {
   await page.goto(base);
   await shown("subject-panel");
   await page.waitForFunction(() => document.querySelector("#routine-dashboard-title").textContent === "メニューをすべて完了しました");
+  assert.equal(await text("routine-dashboard-count"), "3／3");
 
   // 5. 設定画面で項目のあいだを区切り、まとまりごとに［＋］［−］でセット数を決める。
   reset([

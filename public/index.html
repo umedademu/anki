@@ -10,17 +10,17 @@
     <title>Anki | 科目別学習</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.434"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.434" />
-    <link rel="stylesheet" href="/theme.css?v=0.434" />
+    <script src="/theme.js?v=0.435"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.435" />
+    <link rel="stylesheet" href="/theme.css?v=0.435" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.434" type="module"></script>
+    <script src="/app.js?v=0.435" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.434</span>
+        <span class="app-version">v0.435</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -34,7 +34,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.434｜科目別学習</p>
+        <p class="eyebrow">v0.435｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -76,6 +76,7 @@
           <div class="routine-dashboard-progress" aria-hidden="true">
             <span id="routine-dashboard-progress"></span>
           </div>
+          <p class="routine-dashboard-count" id="routine-dashboard-count"></p>
           <ol class="routine-dashboard-list" id="routine-dashboard-list"></ol>
           <div class="routine-dashboard-actions">
             <button class="primary-button is-hidden" id="continue-routine" type="button">

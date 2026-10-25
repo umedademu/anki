@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.434";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.434";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.435";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.435";
 import { avoidImmediateRepeat, createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.434";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.435";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.434";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.434";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.434";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.434";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.434";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.434";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.434";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.434";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.434";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.435";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.435";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.435";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.435";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.435";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.435";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.435";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.435";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.435";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.434";
+} from "./original-session.js?v=0.435";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.434";
+} from "./speech.js?v=0.435";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.434";
+} from "./deck-selection.js?v=0.435";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.434";
-import { createAutoSave } from "./settings-autosave.js?v=0.434";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.435";
+import { createAutoSave } from "./settings-autosave.js?v=0.435";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -159,6 +159,7 @@ const elements = {
   routineDashboardTitle: document.querySelector("#routine-dashboard-title"),
   routineDashboardSummary: document.querySelector("#routine-dashboard-summary"),
   routineDashboardProgress: document.querySelector("#routine-dashboard-progress"),
+  routineDashboardCount: document.querySelector("#routine-dashboard-count"),
   routineDashboardList: document.querySelector("#routine-dashboard-list"),
   routineMultiplier: document.querySelector("#routine-multiplier"),
   routineMultiplierOutput: document.querySelector("#routine-multiplier-output"),
@@ -1012,16 +1013,17 @@ function renderRoutineDashboard() {
       : `${plan.length}項目・合計${routineAmountText(plan)}・動画${totals.totalVideos}本のメニューです。`;
   }
 
-  const completedUnits = run
-    ? run.items.reduce(
-        (sum, item) => sum + (item.kind === "video"
-          ? item.completed || routineSkipVideos ? 1 : 0
-          : item.skipped ? 1 : Math.min(1, routineItemCompleted(item) / routineItemTarget(item))),
-        0,
-      )
-    : 0;
+  const itemUnits = run
+    ? run.items.map((item) => item.kind === "video"
+        ? item.completed || routineSkipVideos ? 1 : 0
+        : item.skipped ? 1 : Math.min(1, routineItemCompleted(item) / routineItemTarget(item)))
+    : [];
+  const completedUnits = itemUnits.reduce((sum, unit) => sum + unit, 0);
   const percent = plan.length > 0 ? (completedUnits / plan.length) * 100 : 0;
   elements.routineDashboardProgress.style.width = `${Math.min(100, percent)}%`;
+  // 途中まで進めた項目は数えず、終えた項目（スキップを含む）だけを数える。
+  elements.routineDashboardCount.textContent =
+    `${itemUnits.filter((unit) => unit >= 1).length}／${plan.length}`;
   const previewStart = activeItem ? run.currentIndex : 0;
   const previewItems = plan.slice(previewStart, previewStart + 6);
   elements.routineDashboardList.replaceChildren(

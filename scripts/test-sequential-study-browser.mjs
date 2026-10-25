@@ -302,6 +302,37 @@ try {
   await page.locator("#question-limit").fill("2"); await page.locator("#start-study").click(); await shown("completion-card");
   assert.equal(settings.setupPreferences.routineRun.items[0].completedCount, 3); assert.equal(answers.length, 0);
 
+  // 以前の回の語だけが途中記録に残っていても、「前回の続きから」は今の選択範囲の未習得パートから出す。
+  // 問題数の指定なしと、毎日のメニュー（10問）の両方で確かめる。
+  const staleTerms = ["part-1-t0", "part-1-t1", "part-2-t0", "part-2-t1"];
+  for (const way of ["指定なし", "メニュー10問"]) {
+    const menu = way === "メニュー10問";
+    reset({ learned: true, routine: menu, plan: menuPlan });
+    if (menu) {
+      await page.goto(base); await shown("continue-routine"); await page.locator("#continue-routine").click(); await shown("setup-panel");
+      await page.waitForFunction(() => !document.querySelector("#start-study").disabled);
+    } else await setup();
+    await start(menu ? 10 : "");
+    for (let i = 0; i < 3; i++) await answer("good");
+    assert.deepEqual(answers, ["part-1-q0", "part-3-q0", "part-4-q0"]);
+    for (const session of sessions.values()) Object.assign(session, { termIds: staleTerms,
+      tasks: staleTerms.map(termId => ({ termId, questionId: termId.replace("-t", "-q"), stage: "beginner" })),
+      queue: [], currentTask: null, unseenQuestionIds: [], retryQuestionIds: [], questionBatch: null });
+    if (menu) {
+      await page.goto(base); await shown("continue-routine"); await page.locator("#continue-routine").click(); await shown("setup-panel");
+    } else await setup();
+    await page.waitForFunction(() => !document.querySelector("#resume-study").disabled);
+    await page.locator("#resume-study").click();
+    await page.waitForFunction(() => !document.querySelector("#question-card").classList.contains("is-hidden") ||
+      !document.querySelector("#completion-card").classList.contains("is-hidden"));
+    assert.equal(await page.locator("#completion-card").isHidden(), true, `${way}：古い語だけで完了にしない`);
+    assert.equal(await text("question-text"), "part-4の問題1", `${way}：今の範囲の未習得パートから再開する`);
+    if (menu) {
+      for (let i = 0; i < 7; i++) await answer("good");
+      await shown("completion-card"); assert.equal(answers.length, 10, "メニューの残り7問で終える");
+    }
+  }
+
   // 聞き流しでも評価で習得を判定し、評価なしで次の未回答パートを開かない。
   reset(); await setup(); await page.locator('input[name="study-mode"][value="listen-answer"]').check();
   await start(3); await shown("listening-dock");

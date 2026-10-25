@@ -197,6 +197,7 @@ export function createSpeechController(){
   const control = window.__streamSpeechTest = {
     pending: null,
     preparations: [],
+    get paused() { return paused; },
     complete() {
       if (paused || !this.pending) return false;
       const done = this.pending; this.pending = null; done(); return true;
@@ -320,6 +321,12 @@ export function createRatingSoundPlayer(){
   }
   async function assertPlayback(paused) {
     await page.waitForFunction(paused => document.querySelector("#vocabulary-stream-toggle")?.textContent.includes(paused ? "再生" : "一時停止"), paused);
+  }
+  const pausedLabel = () => page.locator("#vocabulary-stream-paused");
+  async function assertStreamPaused(paused, message) {
+    await page.waitForFunction(paused => document.querySelector("#vocabulary-stream-paused")?.hidden === !paused, paused);
+    assert.equal(await pausedLabel().isVisible(), paused, message);
+    if (paused) assert.equal((await pausedLabel().textContent()).includes("一時停止中"), true, "一時停止中であることを表示する");
   }
   async function savedWhen(predicate) {
     const deadline = Date.now() + 5000;
@@ -607,6 +614,13 @@ export function createRatingSoundPlayer(){
   assert.equal((await page.locator("#vocabulary-stream-next").textContent()).trim(), "次へ");
   assert.equal(await page.locator("#vocabulary-stream-next").isDisabled(), true);
   assert.equal(savedSession().studyMode, "listen-answer"); assert.equal(savedSession().vocabularyStreamEnabled, true);
+  // 聞き流しでもボタン以外のタップで、既存の一時停止ボタンと同じ状態に切り替える。
+  await assertStreamPaused(false, "再生中は一時停止の表示を出さない");
+  await current().locator(".vocabulary-stream-word").click(); await assertPlayback(true);
+  await assertStreamPaused(true, "聞き流しで単語の欄をタップすると一時停止する");
+  assert.equal(await page.evaluate(() => window.__streamSpeechTest.complete()), false, "一時停止中は読み上げと自動送りを進めない");
+  await page.locator(".vocabulary-stream-summary").click(); await assertPlayback(false);
+  await assertStreamPaused(false, "上部の空白をタップすると再生に戻る");
   await listeningNext(); assert.equal(await current().locator(".vocabulary-stream-meaning").textContent(), meanings[0]);
   await listeningNext("q1"); assert.deepEqual(await ids(), ["q1", "q0"]); await assertHiddenMeaning(current());
   await listeningNext(); await listeningNext("q2");
@@ -778,6 +792,33 @@ export function createRatingSoundPlayer(){
     }
   }
 
+  // 暗記モードの3語表示でも、ボタン以外のどこをタップしても自動の読み上げを一時停止・再生する。
+  reset(); await page.setViewportSize({ width: 812, height: 375 }); await start(8);
+  const feedback = () => page.locator("#listening-playback-feedback").getAttribute("data-feedback");
+  await assertStreamPaused(false, "開始直後は再生中");
+  await current().locator(".vocabulary-stream-word").click();
+  await assertStreamPaused(true, "単語の欄をタップすると一時停止する");
+  assert.equal(await page.evaluate(() => window.__streamSpeechTest.paused), true, "暗記モードの読み上げを止める");
+  assert.equal(await feedback(), "pause", "一時停止の印を出す");
+  await page.locator("#vocabulary-stream-panel .vocabulary-stream-heading strong").click();
+  await assertStreamPaused(false, "上部の空白をタップすると再生に戻る");
+  assert.equal(await feedback(), "play", "再生の印を出す");
+  await current().locator(".vocabulary-stream-word").click(); await assertStreamPaused(true);
+  await reveal();
+  await assertStreamPaused(true, "答えを表示のボタンでは一時停止・再生を切り替えない");
+  await current().locator(".vocabulary-stream-meaning").click();
+  await assertStreamPaused(false, "訳の欄をタップすると再生する");
+  await current().locator(".vocabulary-stream-meaning").click(); await assertStreamPaused(true);
+  await assertSoundClick(current().locator('[data-stream-rating="good"]'), "good"); await ready("q1");
+  await assertStreamPaused(true, "評価のボタンでは切り替えず、次の単語へ進んでも一時停止のまま");
+  const wordBox = await current().locator(".vocabulary-stream-word").boundingBox();
+  await page.mouse.move(wordBox.x + 4, wordBox.y + wordBox.height / 2); await page.mouse.down();
+  await page.mouse.move(wordBox.x + 44, wordBox.y + wordBox.height / 2, { steps: 4 }); await page.mouse.up();
+  await page.waitForTimeout(50);
+  await assertStreamPaused(true, "指が動いた操作はタップとみなさない");
+  await current().locator(".vocabulary-stream-word").click(); await assertStreamPaused(false, "タップで再生する");
+  assert.deepEqual(await ids(), ["q1", "q0"], "タップで行を動かさない");
+
   // 上下のスワイプで10個前の単語まで戻り、見えている過去の行の評価を訂正できる。
   reset(); await page.setViewportSize({ width: 812, height: 375 }); await start(12);
   for (let index = 0; index < 11; index += 1) await rate(ratings[index % 4], `q${index + 1}`);
@@ -799,6 +840,7 @@ export function createRatingSoundPlayer(){
   const requestsBeforeSwipe = answerRequests.length;
   await swipe(-40);
   assert.deepEqual(await ids(), ["q10", "q9", "q8"], "短い上スワイプで1つ前の単語へ移動する");
+  await assertStreamPaused(true, "暗記モードでも過去の単語へ遡り始めたら一時停止する");
   assert.equal(await latest().isVisible(), true);
   assert.equal((await latest().textContent()).includes("1〜3つ前"), true, "何個前を表示中かを示す");
   assert.equal(answerRequests.length, requestsBeforeSwipe, "スワイプの終わりで指の下のボタンを押した扱いにしない");
@@ -836,8 +878,13 @@ export function createRatingSoundPlayer(){
   assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
   await swipe(rowStep * 2);
   assert.deepEqual(await ids(), ["q5", "q4", "q3"], "下スワイプで新しい側へ戻る");
+  await assertStreamPaused(true, "スワイプでは再開しない");
+  await rows().first().locator(".vocabulary-stream-word").click();
+  await assertStreamPaused(false, "過去を表示中もタップで再生する");
+  assert.deepEqual(await ids(), ["q5", "q4", "q3"], "タップで表示位置を変えない");
   await page.mouse.wheel(0, 120); await page.waitForTimeout(100);
   assert.deepEqual(await ids(), ["q4", "q3", "q2"], "パソコンのホイールでも1つずつ移動する");
+  await assertStreamPaused(true, "ホイールで遡り始めた時も一時停止する");
   await latest().click(); await ready("q11");
   assert.deepEqual(await ids(), ["q11", "q10", "q9"], "位置の表示を押すと最新へ戻る");
   assert.equal(await latest().isVisible(), false);
@@ -853,6 +900,15 @@ export function createRatingSoundPlayer(){
   for (let index = 0; index < 5; index += 1) { await listeningNext(); await listeningNext(`q${index + 1}`); }
   assert.deepEqual(await ids(), ["q5", "q4", "q3"]);
   await swipe(-40);
+  assert.deepEqual(await ids(), ["q4", "q3", "q2"]);
+  await assertPlayback(true); await assertStreamPaused(true, "聞き流しで遡り始めたら一時停止する");
+  assert.equal(await page.evaluate(() => window.__streamSpeechTest.complete()), false, "遡っている間は自動送りを止める");
+  await swipe(-40); assert.deepEqual(await ids(), ["q3", "q2", "q1"]);
+  await assertPlayback(true); await assertStreamPaused(true, "一時停止中に遡っても一時停止のまま");
+  await swipe(40); assert.deepEqual(await ids(), ["q4", "q3", "q2"]);
+  await assertPlayback(true); await assertStreamPaused(true, "新しい側へのスワイプでも再開しない");
+  await rows().first().locator(".vocabulary-stream-word").click(); await assertPlayback(false);
+  await assertStreamPaused(false, "タップで聞き流しを再開する");
   assert.deepEqual(await ids(), ["q4", "q3", "q2"]);
   await finishSpeech(); await finishSpeech();
   await page.waitForFunction(() => document.querySelector(".vocabulary-stream-row")?.dataset.streamRow === "2");
@@ -914,7 +970,7 @@ export function createRatingSoundPlayer(){
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await writeFile(path.join(screenshotDirectory, "motion-regression.json"), JSON.stringify(motionResults, null, 2));
   assert.equal(speechRequests, 0); assert.deepEqual(errors, []);
-  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直しによる取り消し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
+  console.log("英単語3段の画面確認：暗記と聞き流しの2択・独立した3語表示切替・訳の順次表示・最大3行と12評価・過去の評価修正・保存失敗の復元・再読み込み・一手戻り・上下スワイプとホイールによる10個前までの移動と最新へ戻る操作・ボタン以外のタップによる一時停止と再生（暗記・聞き流し）・遡り始めた時の一時停止とスワイプで再開しないこと・同問の再出題・スマートフォン横画面3サイズとパソコン・長い本文の末尾への到達・聞き流しの手動と自動進行と後付け評価と再生状態維持・聞き流しの答え表示ボタン省略と訳前の次へ無効・最新と過去の4評価の鳴動指示・同じ評価の押し直しによる取り消し・無効操作の無音・毎日のメニューの達成数と内訳訂正・通常と動作軽減設定の途中座標と再描画中の移動継続・実音声なしを確認しました。");
   console.log("画面画像：" + screenshotPath);
   console.log("開始画面の画像：" + setupScreenshotPath);
   console.log("聞き流しの画像：" + listeningScreenshotPath);

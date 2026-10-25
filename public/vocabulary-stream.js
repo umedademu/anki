@@ -10,6 +10,10 @@ const ratings = [
 export const vocabularyStreamVisibleRows = 3;
 export const vocabularyStreamRowLimit = 11;
 const scrollableSelector = ".vocabulary-stream-word, .vocabulary-stream-answer";
+// ここを押した時は今まで通りの操作にし、一時停止・再生を切り替えない。
+const interactiveSelector = "button, a, input, select, textarea, label, summary, [contenteditable], [role='button']";
+// 押してから離すまでの指の移動がこれ以内ならタップとみなす。
+const tapSlop = 10;
 
 // 同じ回答の評価を訂正する。回答した回数そのものは増やさない。
 export function reviseRatingCounts(value, previous, next) {
@@ -24,7 +28,7 @@ function overflowing(element) {
   return element && element.scrollHeight > element.clientHeight + 1 ? element : null;
 }
 
-export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance }) {
+export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, advance, togglePlayback, pausePlayback }) {
   const list = document.createElement("div");
   list.className = "vocabulary-stream-list";
   const position = document.createElement("button");
@@ -32,7 +36,13 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
   position.type = "button";
   position.className = "vocabulary-stream-position";
   position.hidden = true;
-  panel.append(list, position);
+  // 一時停止中は、一番上の行の右上に止まっていることを出し続ける。
+  const pausedLabel = document.createElement("span");
+  pausedLabel.id = "vocabulary-stream-paused";
+  pausedLabel.className = "vocabulary-stream-paused";
+  pausedLabel.setAttribute("role", "status");
+  pausedLabel.hidden = true;
+  panel.append(list, position, pausedLabel);
   let renderedHeader = null;
   let previousRows = [];
   let previousOffset = 0;
@@ -47,6 +57,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
   let wheelDistance = 0;
   let wheelTimer = 0;
   let wheelCooldownUntil = 0;
+  let tap = null;
 
   panel.addEventListener("click", event => {
     // スワイプの終わりに起きるクリックで、指の下のボタンを押した扱いにしない。
@@ -67,10 +78,12 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
     const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
     return card ? card.getBoundingClientRect().height + gap : 120;
   }
-  function setOffset(next) {
+  // スワイプやホイールで過去へ遡り始めたら一時停止する。再開はタップだけで行う。
+  function setOffset(next, { byGesture = false } = {}) {
     const max = Math.max(0, previousRows.length - vocabularyStreamVisibleRows);
     const clamped = Math.max(0, Math.min(max, next));
     if (clamped === offset) return;
+    if (byGesture && clamped > offset) pausePlayback?.();
     offset = clamped;
     topRow = previousRows[offset] ?? null;
     if (lastArguments) view.render(lastArguments);
@@ -99,7 +112,7 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
     }
     // 短いスワイプで1つ、行の高さを超える長いスワイプではその分だけまとめて動かす。
     const rowsMoved = Math.max(1, Math.round(Math.abs(dy) / rowStep()));
-    setOffset(gesture.offset + (dy < 0 ? rowsMoved : -rowsMoved));
+    setOffset(gesture.offset + (dy < 0 ? rowsMoved : -rowsMoved), { byGesture: true });
   });
   const endGesture = event => {
     if (!gesture || event.pointerId !== gesture.id) return;
@@ -122,10 +135,31 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
     window.clearTimeout(wheelTimer);
     wheelTimer = window.setTimeout(() => { wheelDistance = 0; }, 200);
     if (Math.abs(wheelDistance) < 40) return;
-    setOffset(offset + Math.sign(wheelDistance));
+    setOffset(offset + Math.sign(wheelDistance), { byGesture: true });
     wheelDistance = 0;
     wheelCooldownUntil = now + 220;
   }, { passive: false });
+
+  // 3語表示が出ている間は、ボタンや入力欄以外のどこをタップしても一時停止・再生を切り替える。
+  // 指が動いた操作（スワイプや欄の中のスクロール）はタップとして扱わない。
+  const page = panel.ownerDocument;
+  const showing = () => panel.isConnected && !panel.classList.contains("is-hidden") && panel.getClientRects().length > 0;
+  page.addEventListener("pointerdown", event => {
+    tap = event.isPrimary && showing() ? { id: event.pointerId, x: event.clientX, y: event.clientY, moved: false } : null;
+  });
+  page.addEventListener("pointermove", event => {
+    if (!tap || event.pointerId !== tap.id) return;
+    if (Math.hypot(event.clientX - tap.x, event.clientY - tap.y) > tapSlop) tap.moved = true;
+  });
+  page.addEventListener("pointercancel", () => { tap = null; });
+  page.addEventListener("click", event => {
+    const start = tap;
+    tap = null;
+    if (!togglePlayback || suppressClick || !showing() || start?.moved || event.button !== 0) return;
+    if (start && Math.hypot(event.clientX - start.x, event.clientY - start.y) > tapSlop) return;
+    if (!(event.target instanceof Element) || event.target.closest(interactiveSelector)) return;
+    togglePlayback(event.target);
+  });
 
   const view = {
     render(renderArguments) {
@@ -258,6 +292,9 @@ export function createVocabularyStreamView(panel, { reveal, rate, back, toggle, 
       position.textContent = offset > 0 ? `${offset}〜${oldest}つ前の単語を表示中 ▼ 最新へ戻る` : "";
       position.setAttribute("aria-label", "最新の単語へ戻る");
       if (offset > 0) position.style.top = `${list.offsetTop + 4}px`;
+      pausedLabel.hidden = !paused;
+      pausedLabel.textContent = paused ? "Ⅱ 一時停止中" : "";
+      if (paused) pausedLabel.style.top = `${list.offsetTop + 4}px`;
       if (animates) {
         const gap = Number.parseFloat(window.getComputedStyle(list).rowGap) || 0;
         for (const [row, card] of nextCardsByRow) {

@@ -1,17 +1,17 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.437";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.437";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.438";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.438";
 import { avoidImmediateRepeat, createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.437";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.438";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.437";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.437";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.437";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.437";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.437";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.437";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.437";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.437";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.437";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.438";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.438";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.438";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.438";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.438";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.438";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.438";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.438";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.438";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -69,7 +69,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.437";
+} from "./original-session.js?v=0.438";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -79,7 +79,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.437";
+} from "./speech.js?v=0.438";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -96,7 +96,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.437";
+} from "./deck-selection.js?v=0.438";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -120,8 +120,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.437";
-import { createAutoSave } from "./settings-autosave.js?v=0.437";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.438";
+import { createAutoSave } from "./settings-autosave.js?v=0.438";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -422,6 +422,8 @@ const state = {
   vocabularyStreamRows: [],
   vocabularyStreamRatingSaving: false,
   listeningPaused: false,
+  // 暗記モードの3語表示で、タップやスワイプにより自動の読み上げを止めているか。
+  vocabularyStreamSpeechPaused: false,
   inlineEditing: false,
   pendingListeningActivity: null,
   listeningTimer: null,
@@ -611,6 +613,7 @@ function setVocabularyStreamScreen(visible) {
   elements.studyShell.classList.toggle("is-vocabulary-stream", visible);
   document.body.classList.toggle("is-vocabulary-stream", visible && !elements.studyShell.classList.contains("is-hidden"));
   document.querySelector("#vocabulary-stream-panel").classList.toggle("is-hidden", !visible);
+  if (!visible) state.vocabularyStreamSpeechPaused = false;
 }
 
 function createEmptySavedSessions() {
@@ -4041,6 +4044,7 @@ function autoSpeakQuestion() {
     !hasReachedQuestionLimit() &&
     speechController.supported &&
     !isListeningMode() &&
+    !memorizeStreamSpeechPaused() &&
     currentQuestionSpeechEnabled()
   ) {
     speechController.speak(listeningQuestionSpeechSequence());
@@ -4048,7 +4052,7 @@ function autoSpeakQuestion() {
 }
 
 function autoSpeakAnswerAndOverview() {
-  if (!speechController.supported || isListeningMode()) {
+  if (!speechController.supported || isListeningMode() || memorizeStreamSpeechPaused()) {
     return;
   }
   speechController.speak(answerSpeechSequence());
@@ -5594,7 +5598,53 @@ const vocabularyStreamView = createVocabularyStreamView(document.querySelector("
   back: () => isListeningMode() ? goBackListeningOneStep() : goBackOneStep(),
   toggle: toggleListening,
   advance: advanceListeningManually,
+  togglePlayback: target => {
+    if (!elements.studyMenuLayer.contains(target)) toggleVocabularyStreamPlayback();
+  },
+  pausePlayback: pauseVocabularyStreamPlayback,
 });
+
+function memorizeStreamSpeechPaused() {
+  return isVocabularyStream() && state.vocabularyStreamSpeechPaused;
+}
+
+function vocabularyStreamPlaybackReady() {
+  return isVocabularyStream() && Boolean(state.currentTask) && !hasReachedQuestionLimit() &&
+    !state.studyMenuOpen && !state.inlineEditing;
+}
+
+// 3語表示でボタン以外をタップした時。聞き流しは読み上げと自動送りを、暗記モードは自動の読み上げを止め・再開する。
+function toggleVocabularyStreamPlayback() {
+  if (!vocabularyStreamPlaybackReady()) return;
+  if (isListeningMode()) {
+    toggleListening();
+    return;
+  }
+  // 再開は利用者の操作の中で行い、止めていた読み上げを続きから鳴らす。読み終えていた時は今の単語を読み直す。
+  speechController.unlock();
+  if (state.vocabularyStreamSpeechPaused) {
+    state.vocabularyStreamSpeechPaused = false;
+    renderVocabularyStream();
+    showListeningPlaybackFeedback("play");
+    if (speechController.paused && speechController.resume()) return;
+    speechController.stop();
+    if (state.answerVisible) autoSpeakAnswerAndOverview();
+    else autoSpeakQuestion();
+    return;
+  }
+  state.vocabularyStreamSpeechPaused = true;
+  renderVocabularyStream();
+  if (!speechController.pause()) speechController.stop();
+  showListeningPlaybackFeedback("pause");
+}
+
+// 過去の単語へ遡り始めた時は止めるだけにし、止まっている時はそのままにする。
+function pauseVocabularyStreamPlayback() {
+  if (!vocabularyStreamPlaybackReady()) return;
+  if (isListeningMode() ? state.listeningPaused : state.vocabularyStreamSpeechPaused) return;
+  if (isListeningMode() && deferUntilRatingSaved(pauseVocabularyStreamPlayback)) return;
+  toggleVocabularyStreamPlayback();
+}
 
 function vocabularyStreamSummary() {
   const batch = state.questionBatch;
@@ -5623,7 +5673,7 @@ function renderVocabularyStream() {
     answerVisible: state.answerVisible,
     saving: studyControlsLocked(),
     listening: isListeningMode(),
-    paused: state.listeningPaused,
+    paused: isListeningMode() ? state.listeningPaused : state.vocabularyStreamSpeechPaused,
     savingRows: vocabularyStreamSavingRows,
     canGoBack: state.history.length > 0,
     summary: vocabularyStreamSummary(),

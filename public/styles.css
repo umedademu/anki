@@ -4659,6 +4659,23 @@ body.is-studying.is-vocabulary-stream .page {
   cursor: pointer;
 }
 .vocabulary-stream-position[hidden] { display: none; }
+/* 一時停止中は一番上の行の右上へ小さく重ねる。下の行のタップは妨げない。 */
+.vocabulary-stream-paused {
+  position: absolute;
+  z-index: 34;
+  top: 4px;
+  right: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgb(25 31 27 / 72%);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.vocabulary-stream-paused[hidden] { display: none; }
 .vocabulary-stream-heading {
   display: flex;
   align-items: center;

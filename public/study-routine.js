@@ -183,9 +183,15 @@ export function scaledStudyRoutineQuestionTarget(value, multiplier = 1) {
   );
 }
 
-function normalizeRoutineItem(value, index, usedIds) {
+// 設定のメニューには、科目・動画の項目のほかに「区切り」を置ける。
+// 区切りから次の区切りまでを1つのまとまりとし、区切りに持たせたセット数だけくり返す。
+// 1日の進行（run）では区切りを置かず、各項目へセット数と何セット目かを持たせる。
+function normalizeRoutineItem(value, index, usedIds, { run = false } = {}) {
   if (!value || typeof value !== "object" || Array.isArray(value)) return null;
-  const kind = value.kind === "video" ? "video" : "study";
+  if (value.kind === "divider" && run) return null;
+  const kind = value.kind === "video" || value.kind === "divider"
+    ? value.kind
+    : "study";
   const subjectId = kind === "study" ? normalizeRoutineId(value.subjectId) : "";
   if (kind === "study" && !subjectId) return null;
   const requestedId = normalizeRoutineId(value.id);
@@ -197,14 +203,12 @@ function normalizeRoutineItem(value, index, usedIds) {
   }
   usedIds.add(id);
   // セット数は2以上の時だけ持たせ、今までの保存データと同じ形を保つ。
-  // setRoundは1日の進行へ展開した後の「何セット目か」。
   const sets = normalizeRoutineSetCount(value.sets);
-  const setFields = sets > 1
+  if (kind === "divider") return { id, kind, ...(sets > 1 ? { sets } : {}) };
+  const setFields = run && sets > 1
     ? {
         sets,
-        ...(value.setRound != null
-          ? { setRound: Math.min(sets, normalizeRoutineSetCount(value.setRound)) }
-          : {}),
+        setRound: Math.min(sets, normalizeRoutineSetCount(value.setRound)),
       }
     : {};
   return kind === "video"
@@ -229,54 +233,83 @@ function cloneDefaultVideos() {
   return defaultStudyRoutineVideos.map((video) => ({ ...video }));
 }
 
+// v0.430では項目ごとにセット数を持たせ、続けて並んだ同じセット数をまとめていた。
+// その保存データは、セット数の変わり目へ区切りを置いた形へ読み替える。
+function itemSetsToDividers(value) {
+  if (
+    value.some((item) => item?.kind === "divider") ||
+    !value.some((item) => normalizeRoutineSetCount(item?.sets) > 1)
+  ) {
+    return value;
+  }
+  let previousSets = 1;
+  return value.flatMap((item, index) => {
+    const sets = normalizeRoutineSetCount(item?.sets);
+    const divider = sets !== previousSets
+      ? [{ id: `divider-${String(index + 1).padStart(2, "0")}`, kind: "divider", sets }]
+      : [];
+    previousSets = sets;
+    return [...divider, item];
+  });
+}
+
+// 項目を含まないまとまり（続く区切りや末尾の区切り）と、1セットの先頭の区切りは保存しない。
+function removeEmptyRoutineBlocks(entries) {
+  const kept = entries.filter((entry, index) =>
+    entry.kind !== "divider" ||
+    (index + 1 < entries.length && entries[index + 1].kind !== "divider"));
+  return kept[0]?.kind === "divider" && !kept[0].sets ? kept.slice(1) : kept;
+}
+
 export function normalizeStudyRoutinePlan(
   value,
-  { fallbackToDefault = true, itemLimit = routineItemLimit } = {},
+  { fallbackToDefault = true, itemLimit = routineItemLimit, run = false } = {},
 ) {
   if (!Array.isArray(value)) {
     return fallbackToDefault ? cloneDefaultPlan() : [];
   }
   const usedIds = new Set();
-  const plan = value.slice(0, itemLimit).flatMap((item, index) => {
-    const normalized = normalizeRoutineItem(item, index, usedIds);
-    return normalized ? [normalized] : [];
-  });
+  const entries = (run ? value : itemSetsToDividers(value))
+    .slice(0, itemLimit)
+    .flatMap((item, index) => {
+      const normalized = normalizeRoutineItem(item, index, usedIds, { run });
+      return normalized ? [normalized] : [];
+    });
+  const plan = run ? entries : removeEmptyRoutineBlocks(entries);
   return plan.length > 0 || !fallbackToDefault ? plan : cloneDefaultPlan();
 }
 
-// 続けて並んだ同じセット数の項目を1つのまとまりとし、まとまりごとにセット数だけくり返す。
-// 例：1番が1セット、2〜4番が3セットなら「1, 2, 3, 4, 2, 3, 4, 2, 3, 4」。
+// 区切りで分けたまとまりを、まとまりごとにセット数だけくり返して1日の進行の並びにする。
+// 例：1番の後と4番の後に区切りを置き、2〜4番のまとまりを3セットにすると
+// 「1, 2, 3, 4, 2, 3, 4, 2, 3, 4, 5」。
 export function expandStudyRoutinePlan(plan) {
-  const normalized = normalizeStudyRoutinePlan(plan);
-  const groups = [];
-  for (const item of normalized) {
-    const sets = item.sets ?? 1;
-    const group = groups.at(-1);
-    if (group?.sets === sets) {
-      group.items.push(item);
+  const blocks = [{ sets: 1, items: [] }];
+  for (const entry of normalizeStudyRoutinePlan(plan)) {
+    if (entry.kind === "divider") {
+      blocks.push({ sets: entry.sets ?? 1, items: [] });
     } else {
-      groups.push({ sets, items: [item] });
+      blocks.at(-1).items.push(entry);
     }
   }
-  const expanded = groups.flatMap(({ sets, items }) =>
+  const expanded = blocks.flatMap(({ sets, items }) =>
     Array.from({ length: sets }, (_, roundIndex) =>
-      items.map((item) => {
-        const { setRound: _setRound, ...base } = item;
-        return sets > 1
-          ? {
-              ...base,
-              // 2セット目以降は別の回として数えるため、別のIDにする。
-              id: roundIndex === 0
-                ? item.id
-                : `${item.id.slice(0, 90)}-set${roundIndex + 1}`,
-              setRound: roundIndex + 1,
-            }
-          : base;
-      }),
+      items.map((item) => sets > 1
+        ? {
+            ...item,
+            // 2セット目以降は別の回として数えるため、別のIDにする。
+            id: roundIndex === 0
+              ? item.id
+              : `${item.id.slice(0, 90)}-set${roundIndex + 1}`,
+            sets,
+            setRound: roundIndex + 1,
+          }
+        : item),
     ).flat(),
   );
   return normalizeStudyRoutinePlan(expanded.slice(0, routineRunItemLimit), {
+    fallbackToDefault: false,
     itemLimit: routineRunItemLimit,
+    run: true,
   });
 }
 
@@ -417,6 +450,7 @@ export function normalizeStudyRoutineRun(value) {
   const normalizedPlan = normalizeStudyRoutinePlan(source.items, {
     fallbackToDefault: false,
     itemLimit: routineRunItemLimit,
+    run: true,
   });
   const items = normalizedPlan.map((item, index) => {
     const sourceItem = source.items?.[index] ?? {};
@@ -491,7 +525,7 @@ export function migrateLegacyStudyRoutineRun(run, plan) {
   const normalized = normalizeStudyRoutineRun(run);
   const normalizedPlan = normalizeStudyRoutinePlan(plan, {
     fallbackToDefault: false,
-  });
+  }).filter((item) => item.kind !== "divider");
   if (
     !normalized ||
     normalized.items.some((item) => item.kind === "video") ||

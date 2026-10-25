@@ -7,15 +7,15 @@
     <title>Anki | 更新情報</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.430"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.430" />
-    <link rel="stylesheet" href="/theme.css?v=0.430" />
+    <script src="/theme.js?v=0.431"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.431" />
+    <link rel="stylesheet" href="/theme.css?v=0.431" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.430</span>
+        <span class="app-version">v0.431</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -32,6 +32,15 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.431</h2><time datetime="2026-10-25">2026年10月25日</time></div>
+        <ul>
+          <li>毎日の学習メニューのくり返しの指定方法を、項目ごとに「×セット」を入れる形から、項目のあいだに「区切り」を入れる形へ変えました。設定画面で項目と項目のあいだの「✂ ここで区切る」を押すとメニューがそこで切れ、区切りから次の区切りまでが1つのまとまりになります。まとまりの見出しの［−］［＋］で、そのまとまりをくり返すセット数（1〜20）を決めます。</li>
+          <li>たとえば1番の後と4番の後で区切り、2〜4番のまとまりの［＋］を2回押して3セットにすると、1日のメニューは「1, 2, 3, 4, 2, 3, 4, 2, 3, 4, 5」の順になります。区切りはいくつでも入れられ、隣り合うまとまりが同じセット数でも別々にくり返します。先頭のまとまりもセット数を変えられます。区切りの「✂ 区切りを外す」で上のまとまりとつながり、項目を「上へ」「下へ」やつかんで区切りの向こうへ動かすと、隣のまとまりへ入ります。編集欄の下には「1日のメニュー：全11項目（1 → 2〜4を3セット → 5）」の形で、くり返した後の並びを示します。</li>
+          <li>v0.430で項目ごとに入れたセット数は、セット数の変わり目に区切りを置いた形へ自動で読み替えます。くり返した各回の数え方（達成数・学習時間・完了判定・スキップ・途中再開・倍率、「（2／3セット目）」の表示）は変えていません。保存窓口（Cloudflare Worker）も区切りを受け付けるよう更新しました。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.430</h2><time datetime="2026-10-25">2026年10月25日</time></div>

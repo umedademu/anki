@@ -77,6 +77,7 @@
     "test:subject-order:browser": "node scripts/test-subject-order-browser.mjs",
     "test:editor-order:browser": "node scripts/test-editor-row-order-browser.mjs",
     "test:study-editor:browser": "node scripts/test-study-field-editor-browser.mjs",
+    "test:claude-question:browser": "node scripts/test-claude-question-browser.mjs",
     "test:sequential:browser": "node scripts/test-sequential-study-browser.mjs",
     "test:question-batch:browser": "node scripts/test-question-batch-browser.mjs",
     "test:shuffle:browser": "node scripts/test-shuffle-browser.mjs",

@@ -481,7 +481,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.440" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.441" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -500,12 +500,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.440") ||
-  !app.includes("app-navigation.js?v=0.440") ||
-  !changelog.includes("v0.440") ||
-  !settingsHtml.includes("v0.440") ||
-  !historyHtml.includes("v0.440") ||
-  !analysisHtml.includes("v0.440")
+  !html.includes("v0.441") ||
+  !app.includes("app-navigation.js?v=0.441") ||
+  !changelog.includes("v0.441") ||
+  !settingsHtml.includes("v0.441") ||
+  !historyHtml.includes("v0.441") ||
+  !analysisHtml.includes("v0.441")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -567,7 +567,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.440"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.441"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -902,7 +902,7 @@ if (
   throw new Error("Web App Manifestの名前・表示方法・アイコンが揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.440"') ||
+  !html.includes('href="/styles.css?v=0.441"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1953,6 +1953,34 @@ if (
     styles.includes("  flex-wrap: wrap;\n  gap: 8px;\n}")
   ) {
     throw new Error("学習中の「今回」の時間・問題数、または周回表示が正しくありません。");
+  }
+}
+{
+  // 答えの表示中だけ、問題・答え・解説を入れた claude.ai を開くリンクを出す。
+  const claudeQuestion = await import("../public/claude-question.js");
+  const text = claudeQuestion.buildClaudeQuestionText({
+    prompt: "東ローマ帝国とも呼ばれる国(くに)は？",
+    answer: "**ビザンツ帝国** / 東ローマ帝国",
+    explanation: "<b>首都</b>はコンスタンティノープル。\n#世界史\n1453年に滅亡。",
+  });
+  if (
+    text !== "次の一問一答について質問します。\n問題：東ローマ帝国とも呼ばれる国は？\n答え：ビザンツ帝国 / 東ローマ帝国\n解説：首都はコンスタンティノープル。\n1453年に滅亡。\n質問：" ||
+    claudeQuestion.buildClaudeQuestionText({ prompt: "問", answer: "答", explanation: "" }) !==
+      "次の一問一答について質問します。\n問題：問\n答え：答\n質問：" ||
+    !claudeQuestion.claudeQuestionUrl({ prompt: "問", answer: "答" })
+      .startsWith("https://claude.ai/new?q=%E6%AC%A1") ||
+    ["english-vocabulary", "classical-japanese", "classical-chinese", "mindset"]
+      .some((id) => claudeQuestion.showsClaudeQuestion({ id, learningType: "cards" })) ||
+    !["world-history", "world-history-so", "japanese-history-k", "politics-economics-k", "geography", "biology-basics"]
+      .every((id) => claudeQuestion.showsClaudeQuestion({ id, learningType: "cards" })) ||
+    !html.includes('id="claude-question-link"') ||
+    !html.includes('target="_blank"') ||
+    !app.includes('import { claudeQuestionUrl, showsClaudeQuestion } from "./claude-question.js?v=0.441";') ||
+    !app.includes("const visible = state.answerVisible && showsClaudeQuestion(state.subject);") ||
+    !app.includes("if (!state.listeningPaused) toggleListening();") ||
+    !styles.includes(".answer:has(> .claude-question-link:not(.is-hidden)) .answer-line")
+  ) {
+    throw new Error("Claudeへ質問するリンクの文章・表示条件・一時停止が正しくありません。");
   }
 }
 console.log(

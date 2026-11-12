@@ -4576,6 +4576,20 @@ body.is-listening.is-listening-answer-visible .page {
   .question-spoken-block > .study-edit-button { right: 40px; }
 }
 
+/* 答えの表示中だけ、編集ボタンの左にClaudeへ質問するリンクを小さく置く。 */
+.claude-question-link {
+  position: absolute; top: 9px; right: 85px; z-index: 2;
+  display: grid; place-items: center; width: 32px; height: 32px; padding: 0;
+  border: 1px solid var(--theme-border, #c8d6cc); border-radius: 50%;
+  background: var(--theme-surface, #fff); color: #c4643f; text-decoration: none;
+}
+.claude-question-link:hover, .claude-question-link:focus-visible { outline: 2px solid var(--theme-border-accent, #478c65); }
+.claude-question-link.is-hidden { display: none; }
+.answer:has(> .claude-question-link:not(.is-hidden)) .answer-line { padding-right: 124px; }
+@media (max-width: 760px) {
+  .claude-question-link { top: 4px; }
+}
+
 /* 横向きのスマートフォンで3語と12個の評価を同時に操作する。 */
 .vocabulary-stream-setting {
   display: flex;

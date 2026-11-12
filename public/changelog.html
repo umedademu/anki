@@ -11,15 +11,15 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Anki" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.440"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.440" />
-    <link rel="stylesheet" href="/theme.css?v=0.440" />
+    <script src="/theme.js?v=0.441"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.441" />
+    <link rel="stylesheet" href="/theme.css?v=0.441" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.440</span>
+        <span class="app-version">v0.441</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -36,6 +36,16 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.441</h2><time datetime="2026-11-12">2026年11月12日</time></div>
+        <ul>
+          <li>答えを表示している間、回答欄の右上（編集の鉛筆ボタンの左）に、Claudeへ質問する小さなボタン（オレンジの星形）を表示するようにしました。押すと claude.ai が新しいタブ（スマートフォンでは別の画面）で開き、入力欄に「次の一問一答について質問します。」に続けて、今の問題・答え・解説と「質問：」が最初から入った状態になります。「質問：」の後ろに聞きたいこと（例：ビザンツ帝国って東ローマの事ですよね？）を書き足して送ってください。返事は claude.ai の画面に表示されます。</li>
+          <li>入る文章は、読み仮名・強調の記号・タグを除いた文字だけです。解説のない問題では解説の行を省きます。</li>
+          <li>世界史・世界史S・世界史SO・日本史・日本史K・地理・政治経済・政治経済K・生物基礎・地学基礎などで、暗記モード・聞き流しのどちらでも表示します。英単語・古文・漢文・マインドセットでは表示しません。答えを表示する前も表示しません。</li>
+          <li>押した時に読み上げ中なら一時停止します。聞き流しでは一時停止の状態になり、勝手に次の問題へ進みません。評価や学習記録は変わりません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.440</h2><time datetime="2026-11-02">2026年11月2日</time></div>

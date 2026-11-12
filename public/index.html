@@ -14,17 +14,17 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Anki" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.441"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.441" />
-    <link rel="stylesheet" href="/theme.css?v=0.441" />
+    <script src="/theme.js?v=0.442"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.442" />
+    <link rel="stylesheet" href="/theme.css?v=0.442" />
     <script src="/config.js" defer></script>
-    <script src="/app.js?v=0.441" type="module"></script>
+    <script src="/app.js?v=0.442" type="module"></script>
   </head>
   <body>
     <header class="site-header">
       <a class="brand" id="home-link" href="/" aria-label="科目選択へ戻る">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.441</span>
+        <span class="app-version">v0.442</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" id="header-home-link" aria-current="page" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -38,7 +38,7 @@
 
     <main class="page" id="app" aria-live="polite">
       <section class="loading-panel is-hidden" id="loading-panel">
-        <p class="eyebrow">v0.441｜科目別学習</p>
+        <p class="eyebrow">v0.442｜科目別学習</p>
         <h1>学習データを準備しています</h1>
         <p>少しだけお待ちください。</p>
       </section>
@@ -745,15 +745,14 @@
               <span aria-hidden="true">🔊</span>
             </button>
             <button class="study-edit-button" type="button" data-edit-study="answer" aria-label="回答を編集" title="回答を編集"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z"/></svg></button>
-            <a
-              class="claude-question-link is-hidden"
-              id="claude-question-link"
-              href="https://claude.ai/new"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="この問題についてClaudeに質問する（claude.aiを開く）"
-              title="この問題についてClaudeに質問する"
-            ><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 3v18M3 12h18M5.6 5.6l12.8 12.8M18.4 5.6 5.6 18.4"/></svg></a>
+            <button
+              class="ai-question-button is-hidden"
+              id="ai-question-button"
+              type="button"
+              aria-haspopup="dialog"
+              aria-label="この問題についてAIに質問する"
+              title="この問題についてAIに質問する（Claude・ChatGPT）"
+            ><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/><path d="M10 9.2a2 2 0 1 1 2.6 1.9c-.4.2-.6.5-.6.9v.4"/><path d="M12 14.2h.01"/></svg></button>
             <div class="answer-line">
               <p id="answer-text"></p>
               <p class="answer-note is-hidden" id="answer-note"></p>
@@ -989,6 +988,25 @@
         </button>
       </section>
     </main>
+    <dialog class="ai-question-dialog" id="ai-question-dialog" aria-labelledby="ai-question-title">
+      <div class="ai-question-body">
+        <div class="ai-question-header">
+          <strong id="ai-question-title">AIに質問</strong>
+          <button type="button" class="ai-question-close" data-ai-question="close" aria-label="質問欄を閉じる">×</button>
+        </div>
+        <textarea
+          id="ai-question-input"
+          rows="4"
+          maxlength="2000"
+          aria-label="質問の内容"
+          placeholder="例：ビザンツ帝国って東ローマの事ですよね？"
+        ></textarea>
+        <div class="ai-question-actions">
+          <button type="button" class="ai-question-send" data-ai-service="claude" disabled>Claudeで聞く</button>
+          <button type="button" class="ai-question-send" data-ai-service="chatgpt" disabled>ChatGPTで聞く</button>
+        </div>
+      </div>
+    </dialog>
     <dialog class="answer-map-dialog" id="answer-map-dialog" aria-label="地図の拡大表示">
       <div class="answer-map-toolbar">
         <strong>地図の拡大表示</strong>

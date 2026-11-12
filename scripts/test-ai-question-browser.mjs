@@ -123,79 +123,136 @@ try {
   };
 
 
-  // 外部の claude.ai へは出ず、開こうとしたURLだけを記録する。
-  const claudeOpened = [];
-  await context.route('https://claude.ai/**', (route) => { claudeOpened.push(route.request().url()); return route.fulfill({ contentType: 'text/html', body: '<p>claude</p>' }); });
-  const link = page.locator('#claude-question-link');
-  const studyUrl = new URL(base + '/?subject=test');
-  studyUrl.searchParams.set('order', 'sequential');
+  // 外部の claude.ai・chatgpt.com へは出ず、開こうとしたURLだけを記録する。
+  const opened = [];
+  for (const pattern of ['https://claude.ai/**', 'https://chatgpt.com/**']) {
+    await context.route(pattern, (route) => { opened.push(route.request().url()); return route.fulfill({ contentType: 'text/html', body: '<p>ai</p>' }); });
+  }
+  const button = page.locator('#ai-question-button');
+  const dialog = page.locator('#ai-question-dialog');
+  const input = dialog.locator('textarea');
+  const claude = dialog.getByRole('button', { name: 'Claudeで聞く' });
+  const chatgpt = dialog.getByRole('button', { name: 'ChatGPTで聞く' });
+  const expectedText = (prompt, question) => prompt.startsWith('東ローマ')
+    ? `次の一問一答について質問します。\n問題：東ローマ帝国とも呼ばれる国は？\n答え：ビザンツ帝国\n解説：首都はコンスタンティノープル。\n質問：${question}`
+    : `次の一問一答について質問します。\n問題：${prompt}\n答え：回答：${prompt}\n質問：${question}`;
+  async function send(target, service) {
+    const [popup] = await Promise.all([page.waitForEvent('popup'), target.click()]);
+    await popup.waitForLoadState();
+    const url = popup.url();
+    await popup.close();
+    const prefix = service === 'claude' ? 'https://claude.ai/new?q=' : 'https://chatgpt.com/?q=';
+    assert.ok(url.startsWith(prefix), url);
+    assert.equal(opened.at(-1), url);
+    return decodeURIComponent(url.slice(prefix.length));
+  }
+
   await page.goto(base + '/?subject=test'); await shown('setup-panel'); await ready();
   await page.locator('#start-study').click(); await shown('study-shell');
   // 答えを表示する前は出さない。
-  assert.equal(await link.isVisible(), false);
+  assert.equal(await button.isVisible(), false);
   await page.locator('#next-action').click();
-  await link.waitFor({ state: 'visible' });
-  const href = await link.getAttribute('href');
-  assert.ok(href.startsWith('https://claude.ai/new?q='));
-  const text = decodeURIComponent(href.slice('https://claude.ai/new?q='.length));
+  await button.waitFor({ state: 'visible' });
   const prompt = await page.locator('#question-text').textContent();
-  assert.match(text, /^次の一問一答について質問します。\n問題：.+\n答え：.+\n(解説：.+\n)?質問：$/);
-  assert.ok(!/[<>*#]|\(くに\)/.test(text), text);
-  if (prompt.startsWith('東ローマ')) {
-    assert.equal(text, '次の一問一答について質問します。\n問題：東ローマ帝国とも呼ばれる国は？\n答え：ビザンツ帝国\n解説：首都はコンスタンティノープル。\n質問：');
-  } else {
-    assert.equal(text, `次の一問一答について質問します。\n問題：${prompt}\n答え：回答：${prompt}\n質問：`);
-  }
-  assert.equal(await link.getAttribute('target'), '_blank');
-  // 押しても評価・学習記録・表示中の問題は変わらない。
   const progressBefore = await page.locator('#queue-progress').textContent();
-  const answerRequests = requests.filter((url) => url.startsWith('/v1/study-answer/')).length;
-  const [popup] = await Promise.all([page.waitForEvent('popup'), link.click()]);
-  await popup.waitForLoadState();
-  assert.equal(popup.url(), href);
-  assert.equal(claudeOpened.at(-1), href);
-  await popup.close();
+  const answerRequests = () => requests.filter((url) => url.startsWith('/v1/study-answer/')).length;
+  const answerRequestsBefore = answerRequests();
+
+  // 欄を開くと、空の間は送れない。入力中のキーは学習画面のショートカットにならない。
+  await button.click();
+  await dialog.waitFor({ state: 'visible' });
+  assert.equal(await page.evaluate(() => document.activeElement?.id), 'ai-question-input');
+  assert.ok(await claude.isDisabled()); assert.ok(await chatgpt.isDisabled());
+  await input.fill('   ');
+  assert.ok(await claude.isDisabled());
+  await input.fill('');
+  await page.keyboard.type('3 1 4 ');
+  await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('End'); await page.keyboard.press('Enter');
+  assert.equal(await input.inputValue(), '3 1 4 \n');
+  assert.equal(await page.locator('#question-text').textContent(), prompt);
+  assert.equal(answerRequests(), answerRequestsBefore);
+  // 欄の外のタップで閉じる。学習画面の左右のタップ操作は働かない。
+  await page.setViewportSize({ width: 844, height: 390 });
+  await page.mouse.click(30, 370);
+  await dialog.waitFor({ state: 'hidden' });
+  assert.equal(await page.locator('#question-text').textContent(), prompt);
+  assert.ok(await page.locator('#answer-panel').isVisible());
+  await page.setViewportSize({ width: 1280, height: 800 });
+
+  // 同じ問題で開き直すと書きかけが残る。Claudeで聞くと問題・答え・解説・質問が入る。
+  await button.click();
+  assert.equal(await input.inputValue(), '3 1 4 \n');
+  await input.fill('ビザンツ帝国って東ローマの事ですよね？');
+  assert.ok(await claude.isEnabled());
+  assert.equal(await send(claude, 'claude'), expectedText(prompt, 'ビザンツ帝国って東ローマの事ですよね？'));
+  await dialog.waitFor({ state: 'hidden' });
+  // ChatGPTで聞く。複数行の質問もそのまま渡す。
+  await button.click();
+  await input.fill('首都は？\nいつ滅びた？');
+  assert.equal(await send(chatgpt, 'chatgpt'), expectedText(prompt, '首都は？\nいつ滅びた？'));
+  // ×とEscでも閉じる。
+  await button.click(); await dialog.getByRole('button', { name: '質問欄を閉じる' }).click();
+  await dialog.waitFor({ state: 'hidden' });
+  await button.click(); await page.keyboard.press('Escape');
+  await dialog.waitFor({ state: 'hidden' });
+  // ここまで評価・学習記録・表示中の問題は変わらない。閉じた後は評価のキーが使える。
   assert.equal(await page.locator('#question-text').textContent(), prompt);
   assert.equal(await page.locator('#queue-progress').textContent(), progressBefore);
-  assert.ok(await page.locator('#answer-panel').isVisible());
-  assert.equal(requests.filter((url) => url.startsWith('/v1/study-answer/')).length, answerRequests);
-  assert.notEqual(await page.evaluate(() => document.activeElement?.id), 'claude-question-link');
-  // 4段階評価はそのまま使える。
+  assert.equal(answerRequests(), answerRequestsBefore);
+  assert.equal(await page.evaluate(() => document.activeElement?.id ?? ""), "");
   await page.keyboard.press('3');
   await page.waitForFunction((before) => document.querySelector('#question-text').textContent !== before, prompt);
-  assert.equal(await link.isVisible(), false);
+  assert.equal(await button.isVisible(), false);
+  // 別の問題で開くと欄は空になる。
+  await page.locator('#next-action').click(); await button.waitFor({ state: 'visible' });
+  await button.click();
+  assert.equal(await input.inputValue(), '');
+  await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
 
-  // スマートフォンの縦・横で、ボタン同士や答えの文字と重ならない。
-  await page.locator('#next-action').click(); await link.waitFor({ state: 'visible' });
+  // スマートフォンの縦・横で、ボタン同士や答えの文字と重ならない。欄と2つのボタンは画面内に収まる。
   for (const [width, height, name] of [[390, 844, 'portrait'], [844, 390, 'landscape'], [1280, 800, 'desktop']]) {
     await page.setViewportSize({ width, height });
     await page.waitForTimeout(100);
-    const boxes = await page.evaluate(() => Object.fromEntries(['#claude-question-link', '#answer-panel [data-edit-study="answer"]', '#answer-speech', '#answer-text', '#answer-panel']
+    const boxes = await page.evaluate(() => Object.fromEntries(['#ai-question-button', '#answer-panel [data-edit-study="answer"]', '#answer-speech', '#answer-text', '#answer-panel']
       .map((selector) => { const r = document.querySelector(selector).getBoundingClientRect(); return [selector, { left: r.left, right: r.right, top: r.top, bottom: r.bottom }]; })));
-    const claude = boxes['#claude-question-link'], edit = boxes['#answer-panel [data-edit-study="answer"]'], speech = boxes['#answer-speech'], answer = boxes['#answer-text'], panel = boxes['#answer-panel'];
+    const ai = boxes['#ai-question-button'], edit = boxes['#answer-panel [data-edit-study="answer"]'], speech = boxes['#answer-speech'], answer = boxes['#answer-text'], panel = boxes['#answer-panel'];
     const overlaps = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
-    assert.ok(!overlaps(claude, edit) && !overlaps(claude, speech), `${name}: ボタンが重なっています`);
-    assert.ok(!overlaps(claude, answer), `${name}: 答えの文字と重なっています ${JSON.stringify(boxes)}`);
-    assert.ok(claude.left >= panel.left && claude.right <= panel.right && claude.top >= panel.top - 1, `${name}: 回答欄からはみ出しています`);
+    assert.ok(!overlaps(ai, edit) && !overlaps(ai, speech), `${name}: ボタンが重なっています`);
+    assert.ok(!overlaps(ai, answer), `${name}: 答えの文字と重なっています ${JSON.stringify(boxes)}`);
+    assert.ok(ai.left >= panel.left && ai.right <= panel.right && ai.top >= panel.top - 1, `${name}: 回答欄からはみ出しています`);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), `${name}: 横にはみ出しています`);
-    await page.screenshot({ path: `.wrangler/claude-question-${name}.png` });
+    await page.screenshot({ path: `.wrangler/ai-question-${name}.png` });
+    // キーボードが出て見える高さが減った時を、画面の高さを縮めて確かめる。
+    await button.click(); await input.fill('質問');
+    for (const visibleHeight of [height, Math.round(height * 0.45)]) {
+      await page.setViewportSize({ width, height: visibleHeight });
+      await page.waitForTimeout(150);
+      const inside = await page.evaluate(() => [...document.querySelectorAll('#ai-question-dialog textarea, #ai-question-dialog [data-ai-service], #ai-question-dialog [data-ai-question="close"]')]
+        .every((element) => { const r = element.getBoundingClientRect(); return r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth && r.height > 20; }));
+      await page.screenshot({ path: `.wrangler/ai-question-${name}-${visibleHeight}-dialog.png` });
+      assert.ok(inside, `${name}（高さ${visibleHeight}）: 欄かボタンが画面外です`);
+    }
+    await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
+    await page.setViewportSize({ width, height });
   }
+  await page.setViewportSize({ width: 1280, height: 800 });
 
-  // 聞き流しでは押すと一時停止し、もう一度押しても再開しない。
+  // 聞き流しでは開くと一時停止し、閉じても再開しない。
   const listenUrl = new URL(page.url()); listenUrl.searchParams.set('mode', 'listen-answer');
   await page.goto(listenUrl.href); await shown('study-shell');
   // 進むで答えを出すと、読み上げ中（試験では終わらない無音の読み上げ）の状態になる。
-  if (!(await link.isVisible())) await page.locator('#listening-next-action').click();
-  await link.waitFor({ state: 'visible' });
+  if (!(await button.isVisible())) await page.locator('#listening-next-action').click();
+  await button.waitFor({ state: 'visible' });
   const listeningPrompt = await page.locator('#question-text').textContent();
-  for (let count = 0; count < 2; count += 1) {
-    const [listenPopup] = await Promise.all([page.waitForEvent('popup'), link.click()]);
-    await listenPopup.close();
-    assert.equal(await page.locator('#listening-playback-feedback').getAttribute('data-feedback'), 'pause');
-  }
-  await page.waitForTimeout(3000);
+  await button.click();
+  assert.equal(await page.locator('#listening-playback-feedback').getAttribute('data-feedback'), 'pause');
+  await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
+  await button.click();
+  assert.equal(await page.locator('#listening-playback-feedback').getAttribute('data-feedback'), 'pause');
+  await page.keyboard.press('Escape');
+  await page.waitForTimeout(1500);
   assert.equal(await page.locator('#question-text').textContent(), listeningPrompt);
-  assert.ok(await link.isVisible());
+  assert.ok(await button.isVisible());
   assert.deepEqual(errors, []);
-  console.log('Claudeへ質問：答えの表示中だけ表示・文章（読み仮名とタグなし、解説なしの省略）・評価と記録に影響なし・スマートフォン縦横・聞き流しの一時停止を確認しました。');
+  console.log('AIへ質問：答えの表示中だけ表示・空欄では送れない・入力中のキーと欄の外のタップは学習画面に効かない・Claude/ChatGPTへの文章・×/外側/Escで閉じる・評価と記録に影響なし・スマートフォン縦横とキーボード表示時・聞き流しの一時停止を確認しました。');
 }finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}

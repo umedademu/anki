@@ -1,18 +1,18 @@
-import { createStudyFieldEditor } from "./study-field-editor.js?v=0.441";
-import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.441";
+import { createStudyFieldEditor } from "./study-field-editor.js?v=0.442";
+import { createVocabularyStreamView, reviseRatingCounts, vocabularyStreamRowLimit } from "./vocabulary-stream.js?v=0.442";
 import { avoidImmediateRepeat, createSequentialStudyTasks, hasPassingRating, normalizeQuestionLimit, orderedDeckIds, sequentialStudyPlan } from "./sequential-study.js";
-import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.441";
+import { createQuestionBatch, normalizeQuestionBatch, pendingQuestionBatchIds, questionBatchComplete, rateQuestionBatch } from "./question-batch.js?v=0.442";
 import { cloudRequest } from "./cloud-progress.js";
-import { saveOriginalQuestionEdit } from "./original-session.js?v=0.441";
-import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.441";
-import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.441";
-import { createAnswerVisuals } from "./answer-visuals.js?v=0.441";
-import { claudeQuestionUrl, showsClaudeQuestion } from "./claude-question.js?v=0.441";
-import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.441";
-import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.441";
-import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.441";
-import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.441";
-import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.441";
+import { saveOriginalQuestionEdit } from "./original-session.js?v=0.442";
+import { createSubjectSorter, orderSubjects } from "./subject-order.js?v=0.442";
+import { questionTypes, resolveQuestionTypes, filterQuestionTypes } from "./question-types.js?v=0.442";
+import { createAnswerVisuals } from "./answer-visuals.js?v=0.442";
+import { createAiQuestionDialog, showsAiQuestion } from "./ai-question.js?v=0.442";
+import { groupSODecks, soStudyLabel, usesChapterDecks } from "./so-chapters.js?v=0.442";
+import { readAppRoute, appRouteUrl } from "./app-navigation.js?v=0.442";
+import { filterTimeQuestions, hasTimeQuestions } from "./time-questions.js?v=0.442";
+import { beginOriginalSession, endOriginalSession, isOriginalSession, originalSettings, originalReviewStorageNotice, saveOriginalSessionSnapshot } from "./original-session.js?v=0.442";
+import { createOriginalStudy, createOriginalDeck } from "./original-study.js?v=0.442";
 import {
   combinedQuestionStyles,
   createEmptyProgress,
@@ -70,7 +70,7 @@ import {
   saveCloudStudySession,
   saveCloudStudyTime,
   undoCloudStudyActivity,
-} from "./original-session.js?v=0.441";
+} from "./original-session.js?v=0.442";
 import {
   createHistorySpeechReadings,
   createSpeechController,
@@ -80,7 +80,7 @@ import {
   prepareMnemonicDisplayText,
   prepareMnemonicSpeechText,
   vocabularySpeechLayoutByStage,
-} from "./speech.js?v=0.441";
+} from "./speech.js?v=0.442";
 import {
   loadSpeechSettings as loadStoredSpeechSettings,
   getSubjectSpeechSettings,
@@ -97,7 +97,7 @@ import {
   createSessionDatasetVersion,
   mergeDeckProgress,
   normalizeDeckSelection,
-} from "./deck-selection.js?v=0.441";
+} from "./deck-selection.js?v=0.442";
 import {
   applyStudyRoutineMultiplier,
   applyStudyRoutineVideoSkip,
@@ -121,8 +121,8 @@ import {
   studyRoutineTotals,
   studyRoutineUsesDeckTarget,
 } from "./study-routine.js";
-import { createRatingSoundPlayer } from "./rating-sound.js?v=0.441";
-import { createAutoSave } from "./settings-autosave.js?v=0.441";
+import { createRatingSoundPlayer } from "./rating-sound.js?v=0.442";
+import { createAutoSave } from "./settings-autosave.js?v=0.442";
 import {
   defaultRatingSoundVolume,
   normalizeRatingSounds,
@@ -313,7 +313,8 @@ const elements = {
   answerPanel: document.querySelector("#answer-panel"),
   answerText: document.querySelector("#answer-text"),
   answerSpeech: document.querySelector("#answer-speech"),
-  claudeQuestionLink: document.querySelector("#claude-question-link"),
+  aiQuestionButton: document.querySelector("#ai-question-button"),
+  aiQuestionDialog: document.querySelector("#ai-question-dialog"),
   vocabularySpeechGroups: document.querySelector("#vocabulary-speech-groups"),
   vocabularySpeechButtons: document.querySelectorAll("[data-vocabulary-speech]"),
   answerNote: document.querySelector("#answer-note"),
@@ -4743,21 +4744,16 @@ async function returnToSubjectSelection() {
   return navigateToRoute({ view: "home" });
 }
 
-// 答えの表示中だけ、今の問題・答え・解説を入れた claude.ai へのリンクを出す。
-function renderClaudeQuestionLink(term, question) {
-  const visible = state.answerVisible && showsClaudeQuestion(state.subject);
-  elements.claudeQuestionLink.classList.toggle("is-hidden", !visible);
-  elements.claudeQuestionLink.href = visible
-    ? claudeQuestionUrl({
-        prompt: question.prompt,
-        answer: getQuestionAnswerDisplayText(question),
-        explanation: getQuestionExplanation(term, question),
-      })
-    : "https://claude.ai/new";
+// 答えの表示中だけ、AIへ質問するボタンを出す。
+function renderAiQuestionButton() {
+  const visible = state.answerVisible && showsAiQuestion(state.subject);
+  elements.aiQuestionButton.classList.toggle("is-hidden", !visible);
+  // 答えが隠れたり問題が変わったりしたら、書く欄も閉じる。
+  if (!visible && elements.aiQuestionDialog.open) elements.aiQuestionDialog.close();
 }
 
-// Claudeへ質問しに行く時は読み上げを止め、聞き流しでも勝手に次へ進まないようにする。評価や学習記録は変えない。
-function pauseForClaudeQuestion() {
+// 質問を書き始めたら読み上げを止め、聞き流しでも勝手に次へ進まないようにする。評価や学習記録は変えない。
+function pauseForAiQuestion() {
   if (isListeningMode()) {
     if (!state.listeningPaused) toggleListening();
     return;
@@ -5564,6 +5560,21 @@ function updateOverallProgress() {
   elements.progressBar.style.width = `${percent}%`;
 }
 
+const aiQuestion = createAiQuestionDialog({
+  dialog: elements.aiQuestionDialog,
+  getFields() {
+    const question = currentQuestion(), term = currentTerm();
+    if (!question || !term || !state.answerVisible || !showsAiQuestion(state.subject)) return null;
+    return {
+      key: `${state.activeSubjectId}:${question.id}`,
+      prompt: question.prompt,
+      answer: getQuestionAnswerDisplayText(question),
+      explanation: getQuestionExplanation(term, question),
+    };
+  },
+  onOpen: pauseForAiQuestion,
+});
+
 const studyFieldEditor = createStudyFieldEditor({
   root: elements.studyShell,
   context() {
@@ -6002,7 +6013,7 @@ function renderQuestion() {
     elements.termOverviewText,
     explanation,
   );
-  renderClaudeQuestionLink(term, question);
+  renderAiQuestionButton();
   renderQuestionMap(question, state.answerVisible);
   answerVisuals.render(question, state.answerVisible, state.activeSubjectId);
   const showsTermImage = renderQuestionImage(question, state.answerVisible);
@@ -7981,11 +7992,7 @@ elements.listeningNextAction.addEventListener("click", advanceListeningManually)
 elements.questionSpeech.addEventListener("click", () =>
   toggleSpeechPart("question"),
 );
-elements.claudeQuestionLink.addEventListener("click", () => {
-  pauseForClaudeQuestion();
-  // 戻ってきた時にキーボードの評価操作が効くよう、リンクに焦点を残さない。
-  elements.claudeQuestionLink.blur();
-});
+elements.aiQuestionButton.addEventListener("click", () => aiQuestion.open());
 elements.answerSpeech.addEventListener("click", () =>
   toggleSpeechPart("answer"),
 );
@@ -8150,7 +8157,7 @@ elements.studyShell.addEventListener("click", (event) => {
 });
 
 window.addEventListener("keydown", (event) => {
-  if (answerVisuals.modalOpen) return;
+  if (answerVisuals.modalOpen || aiQuestion.isOpen) return;
   if (hasReachedQuestionLimit() && !elements.studyShell.classList.contains("is-hidden")) return;
   if (!elements.mindsetPlayerPanel.classList.contains("is-hidden")) {
     if (event.target.closest("button, a, input, textarea, select") || event.repeat) {

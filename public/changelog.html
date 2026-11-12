@@ -11,15 +11,15 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Anki" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.441"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.441" />
-    <link rel="stylesheet" href="/theme.css?v=0.441" />
+    <script src="/theme.js?v=0.442"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.442" />
+    <link rel="stylesheet" href="/theme.css?v=0.442" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.441</span>
+        <span class="app-version">v0.442</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -36,6 +36,16 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.442</h2><time datetime="2026-11-12">2026年11月12日</time></div>
+        <ul>
+          <li>v0.441 で追加したClaudeへ質問するボタンを、アプリの中で質問を書いてから Claude か ChatGPT を開く形に作り直しました。答えを表示している間、回答欄の右上（編集の鉛筆ボタンの左）に吹き出しの形の小さなボタンを表示します。表示する科目と条件はこれまでどおりです（英単語・古文・漢文・マインドセットでは表示しません）。</li>
+          <li>ボタンを押すと、画面の上側に質問を書く欄が開き、読み上げは一時停止します。聞きたいこと（例：ビザンツ帝国って東ローマの事ですよね？）を書いて「Claudeで聞く」か「ChatGPTで聞く」を押すと、押した方が新しいタブ（スマートフォンでは別の画面）で開き、今の問題・答え・解説と書いた質問が入った状態になります。ChatGPT はそのまま送信されることがあります。</li>
+          <li>質問欄が空の間は、2つのボタンは押せません。欄は右上の×、欄の外のタップ、またはEscキーで閉じられます。開いている間は、学習画面のタップ操作（戻る・進む・一時停止など）やキーボードのショートカットは働きません。同じ問題で開き直すと、書きかけの質問が残っています。</li>
+          <li>スマートフォンでキーボードが出ても、質問欄と2つのボタンが見える範囲に収まるようにしました。評価や学習記録は変わりません。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.441</h2><time datetime="2026-11-12">2026年11月12日</time></div>

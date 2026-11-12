@@ -5,9 +5,10 @@
 # 暗記アプリ「AIに質問」の中継役（ai-relay\main.mjs relay）と専用のトンネル（ai-relay\main.mjs tunnel）を、
 # 画面を出さずに動かし続ける見張り役。Windowsへのログイン時にタスク AnkiAI-Autostart が起動する。
 # gonta の start-gonta.ps1 と同じ作り：落ちたら10秒後（起動して30秒以内に落ちた時は60秒後）に起動し直す。
-# ログは %LOCALAPPDATA%\AnkiAI（gonta の %LOCALAPPDATA%\Gonta とは別）。
+# 起動ファイル・作業フォルダ・ログは %USERPROFILE%\.anki-ai\runtime に置く。%LOCALAPPDATA% は、Claude デスクトップ
+# （MSIXでパッケージ化されたアプリ）から作ると別の場所に振り替えられ、タスク スケジューラから見えないため使わない。
 $ErrorActionPreference = 'Stop'
-$runtimeDirectory = Join-Path $env:LOCALAPPDATA 'AnkiAI'
+$runtimeDirectory = Join-Path $env:USERPROFILE '.anki-ai\runtime'
 New-Item -ItemType Directory -Path $runtimeDirectory -Force | Out-Null
 $logPath = Join-Path $runtimeDirectory 'startup.log'
 

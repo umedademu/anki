@@ -93,6 +93,15 @@ function storeService(value) {
   try { window.localStorage.setItem(serviceStorageKey, value); } catch {}
 }
 
+// マウスの無いタッチ画面（スマートフォン・タブレット）。ここでは Enter を改行に使う。
+function usesTouchKeyboard() {
+  try {
+    return window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  } catch {
+    return false;
+  }
+}
+
 // 「**強調**」だけを太字にし、ほかは文字のまま表示する。
 function renderAnswerText(element, text) {
   const parts = String(text ?? "").split("**");
@@ -120,6 +129,7 @@ export function createAiChat({
   const contextLine = dialog.querySelector("[data-ai-chat='context']");
   const serviceButtons = [...dialog.querySelectorAll("[data-ai-service]")];
   let service = readStoredService();
+  if (!usesTouchKeyboard()) input.placeholder = "質問を書く（Enterで送る・Shift+Enterで改行）";
   let conversation = null; // {key, context, messages: [{role, text, service}]}
   let pending = null; // {controller}
   let relayUrl = null;
@@ -296,11 +306,15 @@ export function createAiChat({
 
   input.addEventListener("input", update);
   input.addEventListener("keydown", (event) => {
-    // パソコンでは Ctrl（または ⌘）+ Enter でも送れる。Enter だけは改行。
-    if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) {
-      event.preventDefault();
-      void send();
-    }
+    if (event.key !== "Enter") return;
+    // 日本語入力の変換を確定する Enter では送らない。
+    if (event.isComposing || event.keyCode === 229) return;
+    // Shift + Enter は改行。スマートフォンなどのタッチ画面では、キーボードの改行キーは改行のままにし、
+    // 送るボタンで送る（変換や改行のつもりで押した時に送ってしまわないように）。Ctrl（⌘）+ Enter はどちらでも送る。
+    const sends = event.ctrlKey || event.metaKey || (!event.shiftKey && !usesTouchKeyboard());
+    if (!sends) return;
+    event.preventDefault();
+    void send();
   });
   sendButton.addEventListener("click", () => void send());
   serviceButtons.forEach((button) => button.addEventListener("click", () => {

@@ -18,7 +18,7 @@
 | | gonta | この中継役 |
 |---|---|---|
 | ポート | 18890・18891 | 18920 |
-| 自動起動のタスク・ログ | `Gonta-Autostart`・`%LOCALAPPDATA%\Gonta` | `AnkiAI-Autostart`・`%LOCALAPPDATA%\AnkiAI` |
+| 自動起動のタスク・ログ | `Gonta-Autostart`・`%LOCALAPPDATA%\Gonta` | `AnkiAI-Autostart`・`%USERPROFILE%\.anki-ai\runtime` |
 | 保存場所 | `%USERPROFILE%\.gonta` | `%USERPROFILE%\.anki-ai` |
 | トンネル | gonta 用の cloudflared | この中継役が自分で起動する別の cloudflared |
 | 会話ID | `claude-session.json` | 持たない（毎回1回だけ起動） |
@@ -42,9 +42,10 @@ PCがスリープ中・電源オフの時は使えません。アプリには「
 gonta の自動起動と同じ作りです。
 
 - **登録するもの**：タスク スケジューラのタスク `AnkiAI-Autostart`（このWindowsユーザーのログオン時に起動。画面は出しません）。gonta の `Gonta-Autostart` とは別のタスクです。
-- **動くもの**：タスクが `%LOCALAPPDATA%\AnkiAI\Start-AnkiAI.ps1`（`autostart.ps1` の写し）を実行し、これが見張り役になって、中継役（`node ai-relay\main.mjs relay`）と専用のトンネル（`node ai-relay\main.mjs tunnel`。中で cloudflared を起動）を別々に動かし続けます。
+- **動くもの**：タスクが `%USERPROFILE%\.anki-ai\runtime\Start-AnkiAI.ps1`（`autostart.ps1` の写し）を実行し、これが見張り役になって、中継役（`node ai-relay\main.mjs relay`）と専用のトンネル（`node ai-relay\main.mjs tunnel`。中で cloudflared を起動）を別々に動かし続けます。
 - **落ちたとき**：見張り役が10秒後に起動し直します（起動して30秒以内に落ちたときは、設定や環境の問題とみなして60秒後）。トンネルの cloudflared が止まったときは、トンネル側が10秒後に起動し直します。タスク自体も、失敗したら1分おきに3回まで起動し直します。
-- **ログ**：`%LOCALAPPDATA%\AnkiAI\` の `startup.log`・`relay.log`・`relay.err.log`・`tunnel.log`・`tunnel.err.log`（2MBを超えると `.previous` に回します）。
+- **置き場所**：起動ファイル・作業フォルダ・ログは `%USERPROFILE%\.anki-ai\runtime` に置きます。`%LOCALAPPDATA%` は使いません。Claude デスクトップ（MSIXでパッケージ化されたアプリ）から作ったフォルダは `%LOCALAPPDATA%\Packages\Claude_…\LocalCache\Local` に振り替えられ、タスク スケジューラから見えず、起動が 0x8007010B（ディレクトリ名が無効）で失敗するためです。
+- **ログ**：`%USERPROFILE%\.anki-ai\runtime\` の `startup.log`・`relay.log`・`relay.err.log`・`tunnel.log`・`tunnel.err.log`（2MBを超えると `.previous` に回します）。
 
 | したいこと | ダブルクリックするもの |
 |---|---|

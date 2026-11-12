@@ -187,8 +187,9 @@ try {
   assert.ok(await send.isDisabled());
   await input.fill('');
   await page.keyboard.type('3 1 4 ');
-  await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('End'); await page.keyboard.press('Enter');
-  assert.equal(await input.inputValue(), '3 1 4 \n');
+  await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('End'); await page.keyboard.press('Shift+Enter');
+  assert.equal(await input.inputValue(), '3 1 4 \n', 'Shift+Enter は改行');
+  assert.match(await input.getAttribute('placeholder'), /Enterで送る・Shift\+Enterで改行/);
   assert.equal(await page.locator('#question-text').textContent(), prompt);
   assert.equal(answerRequests(), answerRequestsBefore);
 
@@ -214,8 +215,25 @@ try {
   } else {
     assert.deepEqual(first.body.context, { prompt, answer: `回答：${prompt}`, explanation: '' });
   }
-  // 続けて質問すると、前のやりとりも一緒に送る。
-  await ask('首都は？');
+  // 日本語入力の変換を確定する Enter では送らない。
+  const sentBefore = relayRequests.length;
+  await input.fill('しゅと');
+  await input.evaluate((element) => element.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', keyCode: 229, isComposing: true, bubbles: true, cancelable: true })));
+  await page.waitForTimeout(300);
+  assert.equal(relayRequests.length, sentBefore);
+  assert.equal(await input.inputValue(), 'しゅと');
+  // タッチ画面（スマートフォン）では、キーボードの改行キーは改行のまま。
+  await page.evaluate(() => { window.__matchMedia = window.matchMedia; window.matchMedia = (query) => ({ matches: query.includes('pointer: coarse'), media: query, addEventListener() {}, removeEventListener() {} }); });
+  await input.focus(); await page.keyboard.press('End'); await page.keyboard.press('Enter');
+  await page.waitForTimeout(300);
+  assert.equal(relayRequests.length, sentBefore);
+  assert.equal(await input.inputValue(), 'しゅと\n');
+  await page.evaluate(() => { window.matchMedia = window.__matchMedia; });
+  // 続けて質問すると、前のやりとりも一緒に送る。パソコンでは Enter で送る。
+  await input.fill('首都は？');
+  await page.keyboard.press('Enter');
+  await page.waitForFunction(() => !document.querySelector('.ai-chat-message.is-thinking') && [...document.querySelectorAll('[data-ai-service]')].every((b) => !b.disabled) && document.querySelectorAll('.ai-chat-message.is-assistant').length === 2);
+  assert.equal(await input.inputValue(), '');
   assert.deepEqual(relayRequests.at(-1).body.messages.map((m) => m.role), ['user', 'assistant', 'user']);
   assert.equal(relayRequests.at(-1).body.messages[1].text, 'Claudeの答え（1件目）：**はい**、そうです。');
   // ChatGPT に切り替えて聞く。

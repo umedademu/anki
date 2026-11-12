@@ -25,7 +25,7 @@ for ($i = 0; $i -lt 40 -and -not ($relayOk -and $tunnelOk); $i++) {
     }
     if (-not $tunnelOk -and (Test-Path -LiteralPath $urlFile)) { $tunnelOk = (Get-Item -LiteralPath $urlFile).LastWriteTime -gt $since }
 }
-$logs = Join-Path $env:LOCALAPPDATA 'AnkiAI'
+$logs = Join-Path $env:USERPROFILE '.anki-ai\runtime'
 if ($relayOk -and $tunnelOk) {
     Write-Host ('起動しました。接続先：{0}' -f (Get-Content -LiteralPath $urlFile -Raw).Trim()) -ForegroundColor Green
     Write-Host 'スマートフォンのアプリで「AIに質問」から聞いて、返事が来るか確かめてください。'

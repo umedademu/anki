@@ -481,7 +481,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.443" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.444" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -500,12 +500,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.443") ||
-  !app.includes("app-navigation.js?v=0.443") ||
-  !changelog.includes("v0.443") ||
-  !settingsHtml.includes("v0.443") ||
-  !historyHtml.includes("v0.443") ||
-  !analysisHtml.includes("v0.443")
+  !html.includes("v0.444") ||
+  !app.includes("app-navigation.js?v=0.444") ||
+  !changelog.includes("v0.444") ||
+  !settingsHtml.includes("v0.444") ||
+  !historyHtml.includes("v0.444") ||
+  !analysisHtml.includes("v0.444")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -567,7 +567,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.443"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.444"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -902,7 +902,7 @@ if (
   throw new Error("Web App Manifestの名前・表示方法・アイコンが揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.443"') ||
+  !html.includes('href="/styles.css?v=0.444"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1958,6 +1958,7 @@ if (
 {
   // 答えの表示中だけ、アプリ内でAI（PCの中継役）と会話する。問題・答え・解説は飾りを外して渡す。
   const aiQuestion = await import("../public/ai-question.js");
+  const aiQuestionSource = await readFile(path.join(projectRoot, "public", "ai-question.js"), "utf8");
   const context = aiQuestion.aiQuestionContext({
     prompt: "東ローマ帝国とも呼ばれる国(くに)は？",
     answer: "**ビザンツ帝国** / 東ローマ帝国",
@@ -1989,13 +1990,16 @@ if (
     !html.includes('data-ai-service="codex" aria-pressed="false">ChatGPT</button>') ||
     !html.includes('data-ai-chat="send" disabled>送る</button>') ||
     html.includes("claude.ai/new") || html.includes("chatgpt.com") ||
-    !app.includes('import { createAiChat, showsAiQuestion } from "./ai-question.js?v=0.443";') ||
+    !app.includes('import { createAiChat, showsAiQuestion } from "./ai-question.js?v=0.444";') ||
     !app.includes('requestRelayUrl: () => cloudRequest("/v1/ai-relay"),') ||
     !app.includes("const visible = state.answerVisible && showsAiQuestion(state.subject);") ||
     !app.includes("if (answerVisuals.modalOpen || aiQuestion.isOpen) return;") ||
     !app.includes("if (!state.listeningPaused) toggleListening();") ||
     !styles.includes(".answer:has(> .ai-question-button:not(.is-hidden)) .answer-line") ||
-    !styles.includes("max-height: var(--ai-chat-max-height, calc(100dvh - 24px));")
+    !styles.includes("max-height: var(--ai-chat-max-height, calc(100dvh - 24px));") ||
+    !aiQuestionSource.includes("if (event.isComposing || event.keyCode === 229) return;") ||
+    !aiQuestionSource.includes("const sends = event.ctrlKey || event.metaKey || (!event.shiftKey && !usesTouchKeyboard());") ||
+    !aiQuestionSource.includes('window.matchMedia("(hover: none) and (pointer: coarse)").matches')
   ) {
     throw new Error("AIとの会話欄の前提・返事の読み取り・表示条件・一時停止が正しくありません。");
   }

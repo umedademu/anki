@@ -11,15 +11,15 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Anki" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.443"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.443" />
-    <link rel="stylesheet" href="/theme.css?v=0.443" />
+    <script src="/theme.js?v=0.444"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.444" />
+    <link rel="stylesheet" href="/theme.css?v=0.444" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.443</span>
+        <span class="app-version">v0.444</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -36,6 +36,15 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.444</h2><time datetime="2026-11-12">2026年11月12日</time></div>
+        <ul>
+          <li>「AIに質問」の入力欄で、Enter キーで質問を送れるようにしました。改行したいときは Shift + Enter を押します。日本語入力で変換を確定するための Enter では送りません。</li>
+          <li>スマートフォンなどのタッチ画面では、キーボードの改行キーはこれまでどおり改行になります。送るときは「送る」ボタンを押してください（変換や改行のつもりで押して送ってしまわないため）。</li>
+          <li>PCの中継役の自動起動で、起動ファイル・ログの置き場所を %USERPROFILE%\.anki-ai\runtime に変えました。以前の置き場所では、Claude デスクトップから登録すると自動起動が失敗することがありました。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.443</h2><time datetime="2026-11-12">2026年11月12日</time></div>

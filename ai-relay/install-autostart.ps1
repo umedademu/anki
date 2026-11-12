@@ -2,12 +2,13 @@
 
 # Windowsへのログイン時に、暗記アプリ「AIに質問」の中継役と専用のトンネルを画面なしで起動するタスクを登録する。
 #   タスク名: AnkiAI-Autostart（このWindowsユーザーのログオン時。gonta の Gonta-Autostart とは別）
-#   実行内容: %LOCALAPPDATA%\AnkiAI\Start-AnkiAI.ps1（autostart.ps1 の写し）が、中継役とトンネルを見張って動かし続ける。
+#   実行内容: %USERPROFILE%\.anki-ai\runtime\Start-AnkiAI.ps1（autostart.ps1 の写し）が、中継役とトンネルを見張って動かし続ける。
 # gonta の install-windows-startup.ps1 と同じ作り。外すときは uninstall-autostart.cmd。
 $ErrorActionPreference = 'Stop'
 $repo = Split-Path -Parent $PSScriptRoot
 if ($repo -match '\\\.claude\\worktrees\\') { throw 'worktree からは登録できません。C:\Users\USER\Desktop\anki の ai-relay から実行してください。' }
-$runtimeDirectory = Join-Path $env:LOCALAPPDATA 'AnkiAI'
+# %LOCALAPPDATA% は Claude デスクトップ（MSIX）から作ると振り替えられてタスクから見えないので、%USERPROFILE% の下に置く。
+$runtimeDirectory = Join-Path $env:USERPROFILE '.anki-ai\runtime'
 $launcherPath = Join-Path $runtimeDirectory 'Start-AnkiAI.ps1'
 $powershellPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
 $account = [Security.Principal.WindowsIdentity]::GetCurrent().Name
@@ -21,6 +22,10 @@ $action = New-ScheduledTaskAction -Execute $powershellPath -Argument $arguments 
 $trigger = New-ScheduledTaskTrigger -AtLogOn -User $account
 $task = New-ScheduledTask -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Description 'Start the anki AI relay and its Cloudflare tunnel at Windows sign-in without a window.'
 Register-ScheduledTask -TaskName 'AnkiAI-Autostart' -InputObject $task -Force | Out-Null
+
+# 以前の置き場所（%LOCALAPPDATA%\AnkiAI）が残っていれば片付ける。
+$legacy = Join-Path $env:LOCALAPPDATA 'AnkiAI'
+if (Test-Path -LiteralPath $legacy) { Remove-Item -LiteralPath $legacy -Recurse -Force -ErrorAction SilentlyContinue }
 
 if (-not $NoStart) { Start-ScheduledTask -TaskName 'AnkiAI-Autostart' }
 Write-Host ('自動起動のタスク AnkiAI-Autostart を登録しました。ログは {0} にあります。' -f $runtimeDirectory) -ForegroundColor Green

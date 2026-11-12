@@ -1,5 +1,5 @@
 ﻿# 自動起動のタスク AnkiAI-Autostart を外し、動いている中継役・トンネルを止める。
-# 設定（%USERPROFILE%\.anki-ai）とログ（%LOCALAPPDATA%\AnkiAI）は消さない。gonta には触れない。
+# 設定（%USERPROFILE%\.anki-ai）とログ（%USERPROFILE%\.anki-ai\runtime）は消さない。gonta には触れない。
 $ErrorActionPreference = 'Stop'
 $task = Get-ScheduledTask -TaskName 'AnkiAI-Autostart' -ErrorAction SilentlyContinue
 if ($task) {

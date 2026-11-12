@@ -11,15 +11,15 @@
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="apple-mobile-web-app-title" content="Anki" />
     <meta name="theme-color" content="#f3f5f0" />
-    <script src="/theme.js?v=0.442"></script>
-    <link rel="stylesheet" href="/styles.css?v=0.442" />
-    <link rel="stylesheet" href="/theme.css?v=0.442" />
+    <script src="/theme.js?v=0.443"></script>
+    <link rel="stylesheet" href="/styles.css?v=0.443" />
+    <link rel="stylesheet" href="/theme.css?v=0.443" />
   </head>
   <body class="changelog-body">
     <header class="site-header">
       <a class="brand" href="/">Anki</a>
       <div class="header-meta">
-        <span class="app-version">v0.442</span>
+        <span class="app-version">v0.443</span>
         <button class="header-link theme-toggle" type="button" data-theme-toggle>ダークモードへ</button>
         <a class="header-link" href="/">学習画面</a>
         <a class="header-link" href="/settings.html#study-routine-settings">学習メニュー</a>
@@ -36,6 +36,16 @@
         <h1>アプリの変更履歴</h1>
         <p>学習方法や収録内容の主な変更をお知らせします。</p>
       </section>
+
+      <article class="release-card">
+        <div class="release-heading"><h2>v0.443</h2><time datetime="2026-11-12">2026年11月12日</time></div>
+        <ul>
+          <li>「AIに質問」を、アプリの中でAIと会話する形に作り直しました。v0.441・v0.442 の、claude.ai や ChatGPT を別の画面で開く形はやめました。答えを表示している間、回答欄の右上（編集の鉛筆ボタンの左）の吹き出しのボタンを押すと、会話の欄が開きます。表示する科目と条件はこれまでどおりです（英単語・古文・漢文・マインドセットでは表示しません）。</li>
+          <li>質問を書いて「送る」を押すと、AIが今の問題・答え・解説を前提にして日本語で簡潔に答え、返事が少しずつ欄の中に表示されます。同じ問題なら続けて質問でき、欄を閉じて開き直しても会話は残ります。別の問題では新しい会話になります。欄の上で「Claude」と「ChatGPT」のどちらに聞くかを選べます（選んだ方を覚えます）。</li>
+          <li>答えるのは利用者のPCで動く中継役（ai-relay）で、PCのサブスクの Claude Code と、ChatGPTでログイン済みの Codex を使います。APIの従量課金は使いません。AIはファイル操作やコマンド実行をせず、質問に答えるだけです。PCが止まっている時や中継役が動いていない時は「PCのAIに接続できません」と表示し、書いた質問は入力欄に戻ります。</li>
+          <li>会話の欄を開くと読み上げは一時停止し、聞き流しでも勝手に次へ進みません。開いている間は学習画面のタップ操作やキーボードのショートカットは働きません。×・欄の外のタップ・Escキーで閉じられます。評価や学習記録は変わりません。スマートフォンでキーボードが出ても、入力欄と送るボタンは見える範囲に収まります。</li>
+        </ul>
+      </article>
 
       <article class="release-card">
         <div class="release-heading"><h2>v0.442</h2><time datetime="2026-11-12">2026年11月12日</time></div>

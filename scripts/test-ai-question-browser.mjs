@@ -65,6 +65,7 @@ const server = createServer(async (req, res) => {
         reply({ session: body.session, studyDate: "2026-09-17" }); return;
       }
       if (url.pathname.startsWith("/v1/study-activity/")) { reply({ ok: true }); return; }
+      if (url.pathname === "/v1/ai-relay") { reply({ url: controls.relayUrl ?? null, updatedAt: null }); return; }
       throw new Error("未対応の試験用通信: " + url.pathname);
     }
     if (url.pathname === "/config.js") {
@@ -123,28 +124,44 @@ try {
   };
 
 
-  // 外部の claude.ai・chatgpt.com へは出ず、開こうとしたURLだけを記録する。
-  const opened = [];
-  for (const pattern of ['https://claude.ai/**', 'https://chatgpt.com/**']) {
-    await context.route(pattern, (route) => { opened.push(route.request().url()); return route.fulfill({ contentType: 'text/html', body: '<p>ai</p>' }); });
-  }
+  // 偽の中継役（PC）。アクセスキーと接続元を確かめ、返事を少しずつ返す。
+  const relayRequests = [];
+  const relay = createServer(async (req, res) => {
+    const cors = { "Access-Control-Allow-Origin": base, "Access-Control-Allow-Headers": "Authorization, Content-Type", "Access-Control-Allow-Methods": "GET, POST, OPTIONS" };
+    if (req.method === "OPTIONS") { res.writeHead(204, cors); res.end(); return; }
+    const chunks = []; for await (const part of req) chunks.push(part);
+    const body = JSON.parse(Buffer.concat(chunks).toString() || "{}");
+    relayRequests.push({ auth: req.headers.authorization, body });
+    if (req.headers.authorization !== "Bearer editor-test-key") { res.writeHead(401, { ...cors, "Content-Type": "application/json" }); res.end('{"error":"x"}'); return; }
+    res.writeHead(200, { ...cors, "Content-Type": "application/x-ndjson" });
+    const question = body.messages.at(-1).text;
+    if (question.includes("失敗")) { res.end(JSON.stringify({ type: "error", message: "Claudeの利用上限に達しているようです。" }) + "\n"); return; }
+    const name = body.service === "claude" ? "Claude" : "ChatGPT";
+    const full = `${name}の答え（${body.messages.length}件目）：**はい**、そうです。`;
+    res.write(JSON.stringify({ type: "start" }) + "\n");
+    await sleep(80);
+    res.write(JSON.stringify({ type: "delta", text: full.slice(0, 8) }) + "\n");
+    await sleep(relayDelay);
+    res.write(JSON.stringify({ type: "delta", text: full }) + "\n");
+    res.end(JSON.stringify({ type: "done", text: full }) + "\n");
+  });
+  let relayDelay = 120;
+  await new Promise((resolve) => relay.listen(0, "127.0.0.1", resolve));
+  const relayBase = `http://127.0.0.1:${relay.address().port}`;
+  controls.relayUrl = relayBase;
+
   const button = page.locator('#ai-question-button');
   const dialog = page.locator('#ai-question-dialog');
   const input = dialog.locator('textarea');
-  const claude = dialog.getByRole('button', { name: 'Claudeで聞く' });
-  const chatgpt = dialog.getByRole('button', { name: 'ChatGPTで聞く' });
-  const expectedText = (prompt, question) => prompt.startsWith('東ローマ')
-    ? `次の一問一答について質問します。\n問題：東ローマ帝国とも呼ばれる国は？\n答え：ビザンツ帝国\n解説：首都はコンスタンティノープル。\n質問：${question}`
-    : `次の一問一答について質問します。\n問題：${prompt}\n答え：回答：${prompt}\n質問：${question}`;
-  async function send(target, service) {
-    const [popup] = await Promise.all([page.waitForEvent('popup'), target.click()]);
-    await popup.waitForLoadState();
-    const url = popup.url();
-    await popup.close();
-    const prefix = service === 'claude' ? 'https://claude.ai/new?q=' : 'https://chatgpt.com/?q=';
-    assert.ok(url.startsWith(prefix), url);
-    assert.equal(opened.at(-1), url);
-    return decodeURIComponent(url.slice(prefix.length));
+  const send = dialog.getByRole('button', { name: '送る', exact: true });
+  const claudeChoice = dialog.getByRole('button', { name: 'Claude', exact: true });
+  const chatgptChoice = dialog.getByRole('button', { name: 'ChatGPT', exact: true });
+  const status = dialog.locator('[data-ai-chat="status"]');
+  const assistantTexts = () => dialog.locator('.ai-chat-message.is-assistant p').allTextContents();
+  async function ask(text) {
+    await input.fill(text);
+    await send.click();
+    await page.waitForFunction(() => !document.querySelector('.ai-chat-message.is-thinking') && [...document.querySelectorAll('[data-ai-service]')].every((b) => !b.disabled));
   }
 
   await page.goto(base + '/?subject=test'); await shown('setup-panel'); await ready();
@@ -153,6 +170,7 @@ try {
   assert.equal(await button.isVisible(), false);
   await page.locator('#next-action').click();
   await button.waitFor({ state: 'visible' });
+  assert.equal(await button.getAttribute('aria-label'), 'AIに質問');
   const prompt = await page.locator('#question-text').textContent();
   const progressBefore = await page.locator('#queue-progress').textContent();
   const answerRequests = () => requests.filter((url) => url.startsWith('/v1/study-answer/')).length;
@@ -162,54 +180,107 @@ try {
   await button.click();
   await dialog.waitFor({ state: 'visible' });
   assert.equal(await page.evaluate(() => document.activeElement?.id), 'ai-question-input');
-  assert.ok(await claude.isDisabled()); assert.ok(await chatgpt.isDisabled());
+  assert.ok(await send.isDisabled());
+  assert.equal(await claudeChoice.getAttribute('aria-pressed'), 'true');
+  assert.match(await dialog.locator('[data-ai-chat="context"]').textContent(), /^問題：.+　答え：.+/);
   await input.fill('   ');
-  assert.ok(await claude.isDisabled());
+  assert.ok(await send.isDisabled());
   await input.fill('');
   await page.keyboard.type('3 1 4 ');
   await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowLeft'); await page.keyboard.press('End'); await page.keyboard.press('Enter');
   assert.equal(await input.inputValue(), '3 1 4 \n');
   assert.equal(await page.locator('#question-text').textContent(), prompt);
   assert.equal(answerRequests(), answerRequestsBefore);
-  // 欄の外のタップで閉じる。学習画面の左右のタップ操作は働かない。
+
+  // Claude に聞く。返事は少しずつ表示され、問題・答え・解説（飾りなし）と質問が中継役に届く。
+  await input.fill('ビザンツ帝国って東ローマの事ですよね？');
+  relayDelay = 600;
+  await send.click();
+  await dialog.locator('.ai-chat-message.is-user').first().waitFor();
+  assert.ok(await send.isDisabled(), '答えている間は送れない');
+  await page.waitForFunction(() => document.querySelector('.ai-chat-message.is-assistant p')?.textContent.startsWith('Claudeの答え'));
+  await page.waitForFunction(() => document.querySelector('.ai-chat-message.is-assistant p')?.textContent.endsWith('そうです。'));
+  relayDelay = 120;
+  await page.waitForFunction(() => [...document.querySelectorAll('[data-ai-service]')].every((b) => !b.disabled));
+  assert.deepEqual(await assistantTexts(), ['Claudeの答え（1件目）：はい、そうです。']);
+  assert.equal(await dialog.locator('.ai-chat-message.is-assistant strong').first().textContent(), 'はい');
+  assert.equal(await dialog.locator('.ai-chat-speaker').first().textContent(), 'Claude');
+  const first = relayRequests.at(-1);
+  assert.equal(first.auth, 'Bearer editor-test-key');
+  assert.equal(first.body.service, 'claude');
+  assert.deepEqual(first.body.messages, [{ role: 'user', text: 'ビザンツ帝国って東ローマの事ですよね？' }]);
+  if (prompt.startsWith('東ローマ')) {
+    assert.deepEqual(first.body.context, { prompt: '東ローマ帝国とも呼ばれる国は？', answer: 'ビザンツ帝国', explanation: '首都はコンスタンティノープル。' });
+  } else {
+    assert.deepEqual(first.body.context, { prompt, answer: `回答：${prompt}`, explanation: '' });
+  }
+  // 続けて質問すると、前のやりとりも一緒に送る。
+  await ask('首都は？');
+  assert.deepEqual(relayRequests.at(-1).body.messages.map((m) => m.role), ['user', 'assistant', 'user']);
+  assert.equal(relayRequests.at(-1).body.messages[1].text, 'Claudeの答え（1件目）：**はい**、そうです。');
+  // ChatGPT に切り替えて聞く。
+  await chatgptChoice.click();
+  assert.equal(await chatgptChoice.getAttribute('aria-pressed'), 'true');
+  await ask('いつ滅びた？');
+  assert.equal(relayRequests.at(-1).body.service, 'codex');
+  assert.equal(await dialog.locator('.ai-chat-speaker').last().textContent(), 'ChatGPT');
+  assert.equal((await assistantTexts()).length, 3);
+
+  // Esc で閉じて開き直しても会話は残る。欄の外のタップでも閉じる。学習画面のタップは働かない。
+  await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
+  await button.click();
+  assert.equal((await assistantTexts()).length, 3);
+  assert.equal(await chatgptChoice.getAttribute('aria-pressed'), 'true', '選んだAIを覚える');
   await page.setViewportSize({ width: 844, height: 390 });
-  await page.mouse.click(30, 370);
+  await page.mouse.click(30, 385);
   await dialog.waitFor({ state: 'hidden' });
   assert.equal(await page.locator('#question-text').textContent(), prompt);
   assert.ok(await page.locator('#answer-panel').isVisible());
   await page.setViewportSize({ width: 1280, height: 800 });
 
-  // 同じ問題で開き直すと書きかけが残る。Claudeで聞くと問題・答え・解説・質問が入る。
+  // 中継役の返事が失敗なら、説明を出して質問を入力欄に戻す。
   await button.click();
-  assert.equal(await input.inputValue(), '3 1 4 \n');
-  await input.fill('ビザンツ帝国って東ローマの事ですよね？');
-  assert.ok(await claude.isEnabled());
-  assert.equal(await send(claude, 'claude'), expectedText(prompt, 'ビザンツ帝国って東ローマの事ですよね？'));
-  await dialog.waitFor({ state: 'hidden' });
-  // ChatGPTで聞く。複数行の質問もそのまま渡す。
+  await ask('失敗させて');
+  assert.match(await status.textContent(), /利用上限/);
+  assert.equal(await input.inputValue(), '失敗させて');
+  assert.equal((await assistantTexts()).length, 3);
+  // PCが止まっている（中継役につながらない）時は「PCのAIに接続できません」。
+  const closedPort = createServer(); await new Promise((resolve) => closedPort.listen(0, '127.0.0.1', resolve));
+  const deadUrl = `http://127.0.0.1:${closedPort.address().port}`; await new Promise((resolve) => closedPort.close(resolve));
+  controls.relayUrl = deadUrl;
+  await page.reload(); await shown('study-shell');
+  if (!(await button.isVisible())) await page.locator('#next-action').click();
   await button.click();
-  await input.fill('首都は？\nいつ滅びた？');
-  assert.equal(await send(chatgpt, 'chatgpt'), expectedText(prompt, '首都は？\nいつ滅びた？'));
-  // ×とEscでも閉じる。
-  await button.click(); await dialog.getByRole('button', { name: '質問欄を閉じる' }).click();
-  await dialog.waitFor({ state: 'hidden' });
-  await button.click(); await page.keyboard.press('Escape');
-  await dialog.waitFor({ state: 'hidden' });
-  // ここまで評価・学習記録・表示中の問題は変わらない。閉じた後は評価のキーが使える。
-  assert.equal(await page.locator('#question-text').textContent(), prompt);
-  assert.equal(await page.locator('#queue-progress').textContent(), progressBefore);
-  assert.equal(answerRequests(), answerRequestsBefore);
-  assert.equal(await page.evaluate(() => document.activeElement?.id ?? ""), "");
-  await page.keyboard.press('3');
-  await page.waitForFunction((before) => document.querySelector('#question-text').textContent !== before, prompt);
-  assert.equal(await button.isVisible(), false);
-  // 別の問題で開くと欄は空になる。
-  await page.locator('#next-action').click(); await button.waitFor({ state: 'visible' });
-  await button.click();
-  assert.equal(await input.inputValue(), '');
+  await ask('つながる？');
+  assert.match(await status.textContent(), /^PCのAIに接続できません/);
+  assert.equal(await input.inputValue(), 'つながる？');
+  controls.relayUrl = null;
+  await ask('つながる？');
+  assert.match(await status.textContent(), /^PCのAIに接続できません/);
+  // PCが起動し直して接続先が変わっても、取り直してつながる。
+  controls.relayUrl = relayBase;
+  await ask('つながる？');
+  assert.equal(await status.isVisible(), false);
+  assert.match((await assistantTexts()).at(-1), /^ChatGPTの答え/);
   await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
 
-  // スマートフォンの縦・横で、ボタン同士や答えの文字と重ならない。欄と2つのボタンは画面内に収まる。
+  // ここまで評価・学習記録は変わらない。閉じた後は評価のキーが使え、次の問題では新しい会話になる。
+  const promptNow = await page.locator('#question-text').textContent();
+  assert.equal(answerRequests(), answerRequestsBefore);
+  assert.equal(await page.evaluate(() => document.activeElement?.id ?? ''), '');
+  await page.keyboard.press('3');
+  await page.waitForFunction((before) => document.querySelector('#question-text').textContent !== before, promptNow);
+  assert.equal(await button.isVisible(), false);
+  assert.equal(answerRequests(), answerRequestsBefore + 1);
+  await page.locator('#next-action').click(); await button.waitFor({ state: 'visible' });
+  await button.click();
+  assert.equal((await assistantTexts()).length, 0);
+  assert.equal(await input.inputValue(), '');
+  assert.ok(await dialog.locator('.ai-chat-hint').isVisible());
+  await ask('この問題のポイントは？');
+  await page.keyboard.press('Escape'); await dialog.waitFor({ state: 'hidden' });
+
+  // スマートフォンの縦・横で、ボタン同士や答えの文字と重ならない。会話欄・入力欄・送るボタンは画面内に収まる。
   for (const [width, height, name] of [[390, 844, 'portrait'], [844, 390, 'landscape'], [1280, 800, 'desktop']]) {
     await page.setViewportSize({ width, height });
     await page.waitForTimeout(100);
@@ -227,8 +298,8 @@ try {
     for (const visibleHeight of [height, Math.round(height * 0.45)]) {
       await page.setViewportSize({ width, height: visibleHeight });
       await page.waitForTimeout(150);
-      const inside = await page.evaluate(() => [...document.querySelectorAll('#ai-question-dialog textarea, #ai-question-dialog [data-ai-service], #ai-question-dialog [data-ai-question="close"]')]
-        .every((element) => { const r = element.getBoundingClientRect(); return r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth && r.height > 20; }));
+      const inside = await page.evaluate(() => [...document.querySelectorAll('#ai-question-dialog textarea, #ai-question-dialog [data-ai-chat="send"], #ai-question-dialog [data-ai-chat="close"], #ai-question-dialog [data-ai-service]')]
+        .every((element) => { const r = element.getBoundingClientRect(), d = document.querySelector('#ai-question-dialog').getBoundingClientRect(); return r.top >= Math.max(0, d.top) && r.bottom <= Math.min(window.innerHeight, d.bottom) && r.left >= 0 && r.right <= window.innerWidth && r.height > 20; }));
       await page.screenshot({ path: `.wrangler/ai-question-${name}-${visibleHeight}-dialog.png` });
       assert.ok(inside, `${name}（高さ${visibleHeight}）: 欄かボタンが画面外です`);
     }
@@ -254,5 +325,6 @@ try {
   assert.equal(await page.locator('#question-text').textContent(), listeningPrompt);
   assert.ok(await button.isVisible());
   assert.deepEqual(errors, []);
-  console.log('AIへ質問：答えの表示中だけ表示・空欄では送れない・入力中のキーと欄の外のタップは学習画面に効かない・Claude/ChatGPTへの文章・×/外側/Escで閉じる・評価と記録に影響なし・スマートフォン縦横とキーボード表示時・聞き流しの一時停止を確認しました。');
+  relay.close();
+  console.log('AIとの会話：答えの表示中だけ表示・空欄では送れない・入力中のキーと欄の外のタップは学習画面に効かない・少しずつの返事・続けての質問・Claude/ChatGPTの切り替え・失敗とPC停止の表示と入力の復元・接続先の取り直し・評価と記録に影響なし・次の問題で新しい会話・スマートフォン縦横とキーボード表示時・聞き流しの一時停止を確認しました。');
 }finally{await browser?.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}

@@ -1497,6 +1497,36 @@ async function saveSettings(env, patch) {
   return { ...settings, updatedAt };
 }
 
+// Quick Tunnel のURLだけを受け付け、1件だけ保存する。
+export const aiRelayUrlPattern = /^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/;
+const aiRelayTable =
+  "CREATE TABLE IF NOT EXISTS ai_relay (id INTEGER PRIMARY KEY CHECK (id = 1), url TEXT NOT NULL, updated_at TEXT NOT NULL)";
+
+async function handleAiRelay(request, env) {
+  await env.DB.prepare(aiRelayTable).run();
+  if (request.method === "GET") {
+    const row = await env.DB.prepare("SELECT url, updated_at FROM ai_relay WHERE id = 1").first();
+    return json(request, env, { url: row?.url ?? null, updatedAt: row?.updated_at ?? null });
+  }
+  if (request.method === "PUT") {
+    const body = await request.json().catch(() => null);
+    const relayUrl = String(body?.url ?? "");
+    if (!aiRelayUrlPattern.test(relayUrl)) {
+      return json(request, env, { error: "接続先の形式が正しくありません。" }, 400);
+    }
+    const updatedAt = new Date().toISOString();
+    await env.DB.prepare(
+      "INSERT INTO ai_relay (id, url, updated_at) VALUES (1, ?, ?) ON CONFLICT(id) DO UPDATE SET url = excluded.url, updated_at = excluded.updated_at",
+    ).bind(relayUrl, updatedAt).run();
+    return json(request, env, { ok: true, url: relayUrl, updatedAt });
+  }
+  if (request.method === "DELETE") {
+    await env.DB.prepare("DELETE FROM ai_relay WHERE id = 1").run();
+    return json(request, env, { ok: true });
+  }
+  return json(request, env, { error: "この操作には対応していません。" }, 405);
+}
+
 async function handleRequest(request, env) {
   const url = new URL(request.url);
   if (request.method === "OPTIONS") {
@@ -1509,6 +1539,11 @@ async function handleRequest(request, env) {
   }
   if (!(await isAuthorized(request, env))) {
     return json(request, env, { error: "認証に失敗しました。" }, 401);
+  }
+
+  // 「AIに質問」の中継役（利用者のPC）の接続先。中継役が登録し、アプリが読む。
+  if (url.pathname === "/v1/ai-relay") {
+    return handleAiRelay(request, env);
   }
 
   if (url.pathname === "/v1/question-editor") {

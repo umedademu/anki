@@ -481,7 +481,7 @@ const missingIds = selectedIds.filter((id) => !htmlIds.has(id));
 if (missingIds.length > 0) {
   throw new Error(`画面に存在しない部品を参照しています: ${missingIds.join(", ")}`);
 }
-if (!html.includes('<script src="/app.js?v=0.442" type="module"></script>')) {
+if (!html.includes('<script src="/app.js?v=0.443" type="module"></script>')) {
   throw new Error("学習処理が部品分割に対応した読込方法になっていません。");
 }
 if (
@@ -500,12 +500,12 @@ if (
   !html.includes('id="setup-easy-value"') ||
   !html.includes('href="/changelog.html"') ||
   !html.includes('href="/settings.html"') ||
-  !html.includes("v0.442") ||
-  !app.includes("app-navigation.js?v=0.442") ||
-  !changelog.includes("v0.442") ||
-  !settingsHtml.includes("v0.442") ||
-  !historyHtml.includes("v0.442") ||
-  !analysisHtml.includes("v0.442")
+  !html.includes("v0.443") ||
+  !app.includes("app-navigation.js?v=0.443") ||
+  !changelog.includes("v0.443") ||
+  !settingsHtml.includes("v0.443") ||
+  !historyHtml.includes("v0.443") ||
+  !analysisHtml.includes("v0.443")
 ) {
   throw new Error("開始前の条件選択画面、更新情報ページ、版番号が揃っていません。");
 }
@@ -567,7 +567,7 @@ if ([html, app, settingsHtml, changelog].some((source) => source.includes(unused
   throw new Error("画面に使用しない呼び方が残っています。");
 }
 if (
-  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.442"') ||
+  !app.includes('import { createRatingSoundPlayer } from "./rating-sound.js?v=0.443"') ||
   !rateCurrentQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !rateListeningQuestionBlock?.includes("ratingSoundPlayer.play(rating)") ||
   !ratingSound.includes("again: freezePattern") ||
@@ -902,7 +902,7 @@ if (
   throw new Error("Web App Manifestの名前・表示方法・アイコンが揃っていません。");
 }
 if (
-  !html.includes('href="/styles.css?v=0.442"') ||
+  !html.includes('href="/styles.css?v=0.443"') ||
   !styles.includes("-webkit-text-size-adjust: 100%") ||
   !styles.includes("text-size-adjust: 100%")
 ) {
@@ -1956,36 +1956,48 @@ if (
   }
 }
 {
-  // 答えの表示中だけ、アプリ内で書いた質問を問題・答え・解説と一緒に Claude か ChatGPT へ渡す。
+  // 答えの表示中だけ、アプリ内でAI（PCの中継役）と会話する。問題・答え・解説は飾りを外して渡す。
   const aiQuestion = await import("../public/ai-question.js");
-  const text = aiQuestion.buildAiQuestionText({
+  const context = aiQuestion.aiQuestionContext({
     prompt: "東ローマ帝国とも呼ばれる国(くに)は？",
     answer: "**ビザンツ帝国** / 東ローマ帝国",
     explanation: "<b>首都</b>はコンスタンティノープル。\n#世界史\n1453年に滅亡。",
-    question: "  ビザンツ帝国って東ローマの事ですよね？\n首都は？  ",
   });
-  const simple = { prompt: "問", answer: "答", explanation: "", question: "なぜ？" };
+  const encoder = new TextEncoder();
+  const stream = (lines) => ({ body: new ReadableStream({ start(controller) {
+    for (const line of lines) controller.enqueue(encoder.encode(line));
+    controller.close();
+  } }) });
+  const seen = [];
+  const streamed = await aiQuestion.readRelayStream(stream(['{"type":"start"}\n{"type":"delta","text":"は', 'い"}\n{"type":"ping"}\n', '{"type":"done","text":"はい。"}']), (text) => seen.push(text));
+  const failed = await aiQuestion.readRelayStream(stream(['{"type":"error","message":"上限です。"}\n']), () => {});
+  const cut = await aiQuestion.readRelayStream(stream(['{"type":"delta","text":"途中"}\n']), () => {});
   if (
-    text !== "次の一問一答について質問します。\n問題：東ローマ帝国とも呼ばれる国は？\n答え：ビザンツ帝国 / 東ローマ帝国\n解説：首都はコンスタンティノープル。\n1453年に滅亡。\n質問：ビザンツ帝国って東ローマの事ですよね？\n首都は？" ||
-    aiQuestion.buildAiQuestionText(simple) !== "次の一問一答について質問します。\n問題：問\n答え：答\n質問：なぜ？" ||
-    aiQuestion.aiQuestionUrl("claude", simple) !== "https://claude.ai/new?q=" + encodeURIComponent(aiQuestion.buildAiQuestionText(simple)) ||
-    aiQuestion.aiQuestionUrl("chatgpt", simple) !== "https://chatgpt.com/?q=" + encodeURIComponent(aiQuestion.buildAiQuestionText(simple)) ||
+    JSON.stringify(context) !== JSON.stringify({ prompt: "東ローマ帝国とも呼ばれる国は？", answer: "ビザンツ帝国 / 東ローマ帝国", explanation: "首都はコンスタンティノープル。\n1453年に滅亡。" }) ||
+    JSON.stringify(seen) !== JSON.stringify(["はい", "はい。"]) || !streamed.ok || streamed.text !== "はい。" ||
+    failed.ok || failed.message !== "上限です。" || cut.ok ||
+    JSON.stringify(aiQuestion.aiServices) !== JSON.stringify({ claude: "Claude", codex: "ChatGPT" }) ||
+    !aiQuestion.relayOfflineMessage.startsWith("PCのAIに接続できません") ||
     ["english-vocabulary", "classical-japanese", "classical-chinese", "mindset"]
       .some((id) => aiQuestion.showsAiQuestion({ id, learningType: "cards" })) ||
     !["world-history", "world-history-so", "japanese-history-k", "politics-economics-k", "geography", "biology-basics"]
       .every((id) => aiQuestion.showsAiQuestion({ id, learningType: "cards" })) ||
     !html.includes('id="ai-question-button"') ||
+    !html.includes('aria-label="AIに質問"') ||
     !html.includes('id="ai-question-dialog"') ||
-    !html.includes('data-ai-service="claude" disabled>Claudeで聞く</button>') ||
-    !html.includes('data-ai-service="chatgpt" disabled>ChatGPTで聞く</button>') ||
-    !app.includes('import { createAiQuestionDialog, showsAiQuestion } from "./ai-question.js?v=0.442";') ||
+    !html.includes('data-ai-service="claude" aria-pressed="true">Claude</button>') ||
+    !html.includes('data-ai-service="codex" aria-pressed="false">ChatGPT</button>') ||
+    !html.includes('data-ai-chat="send" disabled>送る</button>') ||
+    html.includes("claude.ai/new") || html.includes("chatgpt.com") ||
+    !app.includes('import { createAiChat, showsAiQuestion } from "./ai-question.js?v=0.443";') ||
+    !app.includes('requestRelayUrl: () => cloudRequest("/v1/ai-relay"),') ||
     !app.includes("const visible = state.answerVisible && showsAiQuestion(state.subject);") ||
     !app.includes("if (answerVisuals.modalOpen || aiQuestion.isOpen) return;") ||
     !app.includes("if (!state.listeningPaused) toggleListening();") ||
     !styles.includes(".answer:has(> .ai-question-button:not(.is-hidden)) .answer-line") ||
-    !styles.includes("max-height: var(--ai-question-max-height, calc(100dvh - 24px));")
+    !styles.includes("max-height: var(--ai-chat-max-height, calc(100dvh - 24px));")
   ) {
-    throw new Error("AIへ質問する欄の文章・送り先・表示条件・一時停止が正しくありません。");
+    throw new Error("AIとの会話欄の前提・返事の読み取り・表示条件・一時停止が正しくありません。");
   }
 }
 console.log(

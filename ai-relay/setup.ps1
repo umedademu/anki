@@ -96,5 +96,17 @@ if ((Test-Path -LiteralPath $codex) -and $node) {
 } else {
     Write-Host 'Codex CLI（codex）が見つかりません。ChatGPT で聞く機能は使えません。' -ForegroundColor Yellow
 }
+# --- 4. 自動起動 ---
 Write-Host ''
-Write-Host '設定が終わりました。ai-relay\start.cmd をダブルクリックすると中継役が動きます。' -ForegroundColor Green
+Write-Host 'PCにログインしたとき、中継役と専用のトンネルが画面なしで自動で起動するように登録できます。'
+Write-Host '（タスク AnkiAI-Autostart。落ちても自動で起動し直します。外すときは ai-relay\uninstall-autostart.cmd）'
+$answer = Read-Host '自動起動を登録しますか？（Enter = はい / n = しない）'
+if ($answer -notmatch '^[nN]') {
+    & (Join-Path $PSScriptRoot 'install-autostart.ps1')
+    Write-Host ''
+    Write-Host '設定が終わりました。いま中継役を起動したので、1分ほどでアプリの「AIに質問」が使えます。' -ForegroundColor Green
+    Write-Host '新しいプログラムを読み込ませたいときは ai-relay\restart.cmd をダブルクリックしてください。'
+} else {
+    Write-Host ''
+    Write-Host '設定が終わりました。ai-relay\start.cmd をダブルクリックすると中継役が動きます（画面を閉じると止まります）。' -ForegroundColor Green
+}

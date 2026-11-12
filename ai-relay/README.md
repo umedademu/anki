@@ -18,6 +18,7 @@
 | | gonta | この中継役 |
 |---|---|---|
 | ポート | 18890・18891 | 18920 |
+| 自動起動のタスク・ログ | `Gonta-Autostart`・`%LOCALAPPDATA%\Gonta` | `AnkiAI-Autostart`・`%LOCALAPPDATA%\AnkiAI` |
 | 保存場所 | `%USERPROFILE%\.gonta` | `%USERPROFILE%\.anki-ai` |
 | トンネル | gonta 用の cloudflared | この中継役が自分で起動する別の cloudflared |
 | 会話ID | `claude-session.json` | 持たない（毎回1回だけ起動） |
@@ -31,19 +32,33 @@ gonta のファイルは使いません。
 1. `ai-relay\setup.cmd` をダブルクリックします。
 2. アプリの設定ページで登録している「Cloudflareのアクセスキー」を貼り付けて Enter を押します。
 3. 「合言葉を作りますか？」と聞かれたら `y` を押し、ブラウザで Claude の「承認」を押して、表示された `sk-ant-oat…` を貼り付けます（PCのふだんの Claude ログインは約2週間で切れるため。作らなくても、ふだんのログインが有効な間は動きます）。
-4. 最後に Codex のログイン状態が表示されます。「Logged in using ChatGPT」と出ていれば ChatGPT も使えます。
+4. Codex のログイン状態が表示されます。「Logged in using ChatGPT」と出ていれば ChatGPT も使えます。
+5. 「自動起動を登録しますか？」で Enter を押すと、自動起動を登録して、その場で中継役を起動します（次の節）。1分ほどでアプリの「AIに質問」が使えます。
 
-使うとき:
+PCがスリープ中・電源オフの時は使えません。アプリには「PCのAIに接続できません」と出ます。
 
-1. `ai-relay\start.cmd` をダブルクリックします。黒い画面に「アプリへ接続先を知らせました。」と出たら準備完了です。
-2. この画面を開いている間だけ「AIに質問」が使えます（最小化してかまいません。閉じると止まります）。
-3. PCがスリープ中・電源オフの時は使えません。アプリには「PCのAIに接続できません」と出ます。
+## 自動起動（Windowsへのログイン時）
 
-自動起動（Windowsへのログイン時に起動）は登録していません。必要になったら別途設定します。
+gonta の自動起動と同じ作りです。
+
+- **登録するもの**：タスク スケジューラのタスク `AnkiAI-Autostart`（このWindowsユーザーのログオン時に起動。画面は出しません）。gonta の `Gonta-Autostart` とは別のタスクです。
+- **動くもの**：タスクが `%LOCALAPPDATA%\AnkiAI\Start-AnkiAI.ps1`（`autostart.ps1` の写し）を実行し、これが見張り役になって、中継役（`node ai-relay\main.mjs relay`）と専用のトンネル（`node ai-relay\main.mjs tunnel`。中で cloudflared を起動）を別々に動かし続けます。
+- **落ちたとき**：見張り役が10秒後に起動し直します（起動して30秒以内に落ちたときは、設定や環境の問題とみなして60秒後）。トンネルの cloudflared が止まったときは、トンネル側が10秒後に起動し直します。タスク自体も、失敗したら1分おきに3回まで起動し直します。
+- **ログ**：`%LOCALAPPDATA%\AnkiAI\` の `startup.log`・`relay.log`・`relay.err.log`・`tunnel.log`・`tunnel.err.log`（2MBを超えると `.previous` に回します）。
+
+| したいこと | ダブルクリックするもの |
+|---|---|
+| 自動起動を登録する（その場で起動もする） | `ai-relay\install-autostart.cmd`（`setup.cmd` の最後でも登録できます） |
+| 起動し直す（新しいプログラムや設定を読み込ませる） | `ai-relay\restart.cmd` |
+| 自動起動を外す（動いているものも止める） | `ai-relay\uninstall-autostart.cmd` |
+| 自動起動なしで手動で動かす | `ai-relay\start.cmd`（画面を閉じると止まります。自動起動で動いている間はポートが使用中と出ます） |
+
+PowerShell で外すときは `Unregister-ScheduledTask -TaskName AnkiAI-Autostart -Confirm:$false` でも外せます（動いている中継役は別に止めてください）。登録は、worktree ではなく `C:\Users\USER\Desktop\anki` の `ai-relay` から行います。
 
 ## ファイル
 
-- `main.mjs` — 起動。中継役とトンネルを動かし、接続先を Worker に登録する。終了時は登録を消す。
+- `main.mjs` — 起動。引数なしなら中継役とトンネルを両方、`relay` なら中継役だけ、`tunnel` ならトンネルだけを動かす。トンネルは接続先を Worker に登録し、終了時は登録を消す。
+- `autostart.ps1` — 自動起動の見張り役。`install-autostart.ps1` / `.cmd` が登録し、`uninstall-autostart.ps1` / `.cmd` が外す。`restart.ps1` / `.cmd` で起動し直す。`stop-processes.ps1` はこの中継役のプロセスだけを止める共通部品。
 - `server.mjs` — 受け口（`/health`、`/v1/status`、`/v1/ask`）。アクセスキーと接続元を確かめ、同時に2件まで答える。
 - `engines.mjs` — 前提文、claude・codex の起動設定、返事の読み取り。
 - `setup.ps1` / `setup.cmd` — 初回設定（アクセスキー・Claudeの合言葉・Codexの確認）。
